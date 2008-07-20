@@ -1,0 +1,29 @@
+#!/bin/bash
+# 2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+if which gettext.sh &>/dev/null ; then
+	. gettext.sh
+else
+	eval_gettext()
+	{
+		echo -n $@
+	}
+fi
+
+TEXTDOMAIN=etersoft-build-utils
+export TEXTDOMAIN
+TEXTDOMAINDIR='/usr/share/locale'
+export TEXTDOMAINDIR
+
+echog()
+{
+	if [ "$1" = "-n" ] ; then
+		shift
+		eval_gettext "$@"
+	else
+		eval_gettext "$@"; echo
+	fi
+}
+

@@ -1,0 +1,60 @@
+#!/bin/bash
+# 2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# Определяем SUDO для использования
+SUDO="sudo"
+# for some shells? not for bash
+test -z "$UID" && UID=`id -u`
+if [ $UID = "0" ]; then
+	SUDO=""
+fi
+
+# Get tmp dir for our using
+OURTMPDIR=$TMPDIR
+[ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
+
+# It can be overrides in config
+DEFAULTARCH=i586
+[ `uname -m` = "x86_64" ] && DEFAULTARCH=`uname -m`
+NICE="nice"
+RPMBUILD=rpmbuild
+
+is_git()
+{
+	local DIR=$1
+	[ -n "$DIR" ] && [ -d "$DIR/.git" ] && return 0
+	[ -d ".git" ] && return 0
+	# hack for support spec in some subdir
+	[ -d "../.git" ] && return 0
+	return 1
+}
+
+RPMDIR="$HOME/RPM"
+[ -n "$APTCONF" ] || APTCONF=$ETERBUILDETC/apt/apt.conf
+#OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
+OWNERMAIL=`rpm --eval %packager`
+
+UPLOADDIR="$RPMDIR/upload"
+LOGDIR="$RPMDIR/log"
+REMOTERPMDIR=
+HASHERDIR="$HOME/hasher"
+HASHER_NOCHECK=nvr,gpg,packager,buildtime
+HASHERARG="--eager-cleanup"
+[ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
+
+RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
+RSYNCINCOMING=devel:/incoming
+#SSH_KEYFILE=~/.ssh/id_dsa
+
+BUILDSERVER=
+#BUILDSERVERPATH="$HASHERDIR/repo/i586/RPMS.hasher"
+
+PKGREPLBASE=$ETERBUILDDIR/pkgrepl
+
+test -f /etc/eterbuild/config && . /etc/eterbuild/config
+test -f ~/.eterbuild-config  && . ~/.eterbuild-config
+# obsoleted
+test -f ~/.ebconfig  && . ~/.ebconfig
+
