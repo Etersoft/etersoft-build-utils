@@ -7,4 +7,4 @@ Dir::Etc::main "/dev/null";
 Dir::Etc::parts "/var/empty";
 Dir::Etc::SourceParts "/var/empty";
 
-Dir::Etc::sourcelist "/etc/apt/sources.list.SS";
+Dir::Etc::sourcelist "/etc/eterbuild/apt/sources.list.SS";

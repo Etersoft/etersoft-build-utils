@@ -3,12 +3,12 @@
 # Copyright (C) 2005, 2006 Etersoft
 # Vitaly Lipatov <lav@etersoft.ru>, 2005, 2006.
 #
-#: ../bin/rpmgs:111 ../bin/rpmgs:182 ../bin/rpmunmets:71 ../bin/rpmunmets:85
+#: ../bin/rpmgs:111 ../bin/rpmgs:182 ../bin/rpmunmets:65 ../bin/rpmunmets:79
 msgid ""
 msgstr ""
 "Project-Id-Version: etersoft-build-utils 0.99.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-20 15:05+0400\n"
+"POT-Creation-Date: 2008-07-20 15:36+0400\n"
 "PO-Revision-Date: 2006-02-19 20:42MSK\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -19,49 +19,48 @@ msgstr ""
 
 #: ../share/common:10 ../share/common:26 ../share/common:39 ../share/common:81
 #: ../share/common:121 ../share/common:125 ../share/common:157
-#: ../share/common:177 ../share/common:197 ../share/common:211
-#: ../share/common:215 ../share/common:221 ../share/common:226
-#: ../share/common:230 ../share/common:257 ../share/common:278
-#: ../share/common:313 ../share/common:330 ../share/common:357
-#: ../share/common:364 ../share/common:367 ../share/common:379
-#: ../share/common:411 ../share/common:430 ../share/common:445
-#: ../share/common:529 ../share/common:537 ../bin/loginhsh:50
+#: ../share/common:178 ../share/common:198 ../share/common:212
+#: ../share/common:216 ../share/common:222 ../share/common:227
+#: ../share/common:231 ../share/common:258 ../share/common:279
+#: ../share/common:314 ../share/common:331 ../share/common:358
+#: ../share/common:365 ../share/common:368 ../share/common:380
+#: ../share/common:412 ../share/common:431 ../share/common:446
+#: ../share/common:530 ../share/common:538 ../bin/loginhsh:50
 #: ../bin/loginhsh:62 ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83
 #: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
 #: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:46 ../bin/mkpatch:55
-#: ../bin/mkpatch:64 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
-#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
-#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
-#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:99
-#: ../bin/rpmbb:100 ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:46
-#: ../bin/rpmbph:54 ../bin/rpmbph:55 ../bin/rpmbph:141 ../bin/rpmbph:169
-#: ../bin/rpmbph:227 ../bin/rpmbph:240 ../bin/rpmbs:73 ../bin/rpmbs:89
-#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
-#: ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:169 ../bin/rpmbs:179
-#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
-#: ../bin/rpmbsh:76 ../bin/rpmbugs:18 ../bin/rpmbugs:37 ../bin/rpmbugs:42
-#: ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmbugs:60 ../bin/rpmbugs:68
-#: ../bin/rpmbugs:75 ../bin/rpmbugs:77 ../bin/rpmbugs:91 ../bin/rpmcs:49
-#: ../bin/rpmcs:56 ../bin/rpmcs:68 ../bin/rpmcs:74 ../bin/rpmcs:79
-#: ../bin/rpmcs:81 ../bin/rpmcs:115 ../bin/rpmgp:79 ../bin/rpmgp:92
-#: ../bin/rpmgp:102 ../bin/rpmgp:107 ../bin/rpmgp:113 ../bin/rpmgp:132
-#: ../bin/rpmgp:149 ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:166
-#: ../bin/rpmgp:174 ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197
-#: ../bin/rpmgp:215 ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmgp:238
-#: ../bin/rpmgp:257 ../bin/rpmgp:262 ../bin/rpmgs:83 ../bin/rpmgs:178
-#: ../bin/rpmgs:193 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
-#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
-#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12 ../bin/rpmunmets:62
-#: ../bin/rpmunmets:88 ../bin/rpmurl:49 ../bin/rpmurl:63 ../bin/rpmurl:73
-#: ../bin/rpmurl:75 ../bin/rpmurl:96 ../bin/rpmurl:98 ../bin/rpmurl:114
-#: ../bin/rpmurl:116 ../bin/rpmurl:121 ../bin/rpmurl:126 ../bin/rpmurl:127
-#: ../bin/rpmurl:134 ../bin/rpmurl:139
+#: ../bin/mkpatch:64 ../bin/myhsh:48 ../bin/myhsh:67 ../bin/myhsh:82
+#: ../bin/myhsh:89 ../bin/myhsh:100 ../bin/myhsh:120 ../bin/myhsh:133
+#: ../bin/myhsh:157 ../bin/myhsh:169 ../bin/rpmbb:17 ../bin/rpmbb:57
+#: ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:99 ../bin/rpmbb:100
+#: ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:46 ../bin/rpmbph:54
+#: ../bin/rpmbph:55 ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227
+#: ../bin/rpmbph:240 ../bin/rpmbs:73 ../bin/rpmbs:89 ../bin/rpmbs:102
+#: ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132 ../bin/rpmbs:141
+#: ../bin/rpmbs:154 ../bin/rpmbs:169 ../bin/rpmbs:179 ../bin/rpmbs:181
+#: ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55 ../bin/rpmbsh:76
+#: ../bin/rpmbugs:19 ../bin/rpmbugs:38 ../bin/rpmbugs:43 ../bin/rpmbugs:48
+#: ../bin/rpmbugs:57 ../bin/rpmbugs:61 ../bin/rpmbugs:69 ../bin/rpmbugs:76
+#: ../bin/rpmbugs:78 ../bin/rpmbugs:92 ../bin/rpmcs:50 ../bin/rpmcs:57
+#: ../bin/rpmcs:69 ../bin/rpmcs:75 ../bin/rpmcs:80 ../bin/rpmcs:82
+#: ../bin/rpmcs:116 ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:102
+#: ../bin/rpmgp:107 ../bin/rpmgp:113 ../bin/rpmgp:132 ../bin/rpmgp:149
+#: ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:166 ../bin/rpmgp:174
+#: ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:215
+#: ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmgp:238 ../bin/rpmgp:257
+#: ../bin/rpmgp:262 ../bin/rpmgs:83 ../bin/rpmgs:178 ../bin/rpmgs:193
+#: ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25 ../bin/rpmqf:31
+#: ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21 ../bin/rpmrb:30
+#: ../bin/rpmU:8 ../bin/rpmunmets:56 ../bin/rpmunmets:82 ../bin/rpmurl:50
+#: ../bin/rpmurl:64 ../bin/rpmurl:74 ../bin/rpmurl:76 ../bin/rpmurl:97
+#: ../bin/rpmurl:99 ../bin/rpmurl:115 ../bin/rpmurl:117 ../bin/rpmurl:122
+#: ../bin/rpmurl:127 ../bin/rpmurl:128 ../bin/rpmurl:135 ../bin/rpmurl:140
 msgid "if"
 msgstr ""
 
 #: ../share/common:10 ../bin/mkpatch:31 ../bin/mkpatch:32 ../bin/mkpatch:33
-#: ../bin/myhsh:68 ../bin/rpmbs:169 ../bin/rpmbugs:50 ../bin/rpmgs:82
-#: ../bin/rpmqf:23 ../bin/rpmurl:14
+#: ../bin/myhsh:63 ../bin/rpmbs:169 ../bin/rpmbugs:51 ../bin/rpmgs:82
+#: ../bin/rpmqf:23 ../bin/rpmurl:15
 msgid "which"
 msgstr ""
 
@@ -69,80 +68,80 @@ msgstr ""
 msgid "gettext.sh"
 msgstr ""
 
-#: ../share/common:10 ../share/common:180 ../share/common:278
-#: ../bin/mkpatch:31 ../bin/mkpatch:32 ../bin/mkpatch:33 ../bin/myhsh:68
-#: ../bin/myhsh:74 ../bin/rpmbph:43 ../bin/rpmbph:55 ../bin/rpmbs:169
-#: ../bin/rpmbugs:50 ../bin/rpmcs:35 ../bin/rpmcs:37 ../bin/rpmcs:38
-#: ../bin/rpmcs:74 ../bin/rpmgp:242 ../bin/rpmgp:248 ../bin/rpmgs:82
-#: ../bin/rpmqf:23 ../bin/rpmurl:14
+#: ../share/common:10 ../share/common:181 ../share/common:279
+#: ../bin/mkpatch:31 ../bin/mkpatch:32 ../bin/mkpatch:33 ../bin/myhsh:63
+#: ../bin/myhsh:69 ../bin/rpmbph:43 ../bin/rpmbph:55 ../bin/rpmbs:169
+#: ../bin/rpmbugs:51 ../bin/rpmcs:36 ../bin/rpmcs:38 ../bin/rpmcs:39
+#: ../bin/rpmcs:75 ../bin/rpmgp:242 ../bin/rpmgp:248 ../bin/rpmgs:82
+#: ../bin/rpmqf:23 ../bin/rpmurl:15
 msgid "/dev/null"
 msgstr ""
 
 #: ../share/common:10 ../share/common:26 ../share/common:39 ../share/common:81
 #: ../share/common:121 ../share/common:125 ../share/common:157
-#: ../share/common:177 ../share/common:197 ../share/common:211
-#: ../share/common:215 ../share/common:221 ../share/common:226
-#: ../share/common:230 ../share/common:257 ../share/common:278
-#: ../share/common:313 ../share/common:331 ../share/common:357
-#: ../share/common:364 ../share/common:367 ../share/common:379
-#: ../share/common:411 ../share/common:430 ../share/common:445
-#: ../share/common:529 ../share/common:537 ../bin/loginhsh:50
+#: ../share/common:178 ../share/common:198 ../share/common:212
+#: ../share/common:216 ../share/common:222 ../share/common:227
+#: ../share/common:231 ../share/common:258 ../share/common:279
+#: ../share/common:314 ../share/common:332 ../share/common:358
+#: ../share/common:365 ../share/common:368 ../share/common:380
+#: ../share/common:412 ../share/common:431 ../share/common:446
+#: ../share/common:530 ../share/common:538 ../bin/loginhsh:50
 #: ../bin/loginhsh:62 ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83
 #: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
 #: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:46 ../bin/mkpatch:55
-#: ../bin/mkpatch:64 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
-#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
-#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
-#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:99
-#: ../bin/rpmbb:100 ../bin/rpmbb:113 ../bin/rpmbph:27 ../bin/rpmbph:46
-#: ../bin/rpmbph:54 ../bin/rpmbph:55 ../bin/rpmbph:141 ../bin/rpmbph:169
-#: ../bin/rpmbph:227 ../bin/rpmbph:240 ../bin/rpmbs:73 ../bin/rpmbs:89
-#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
-#: ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:169 ../bin/rpmbs:180
-#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
-#: ../bin/rpmbsh:76 ../bin/rpmbugs:18 ../bin/rpmbugs:37 ../bin/rpmbugs:42
-#: ../bin/rpmbugs:47 ../bin/rpmbugs:57 ../bin/rpmbugs:60 ../bin/rpmbugs:68
-#: ../bin/rpmbugs:76 ../bin/rpmbugs:78 ../bin/rpmbugs:91 ../bin/rpmcs:49
-#: ../bin/rpmcs:56 ../bin/rpmcs:68 ../bin/rpmcs:74 ../bin/rpmcs:79
-#: ../bin/rpmcs:81 ../bin/rpmcs:115 ../bin/rpmgp:79 ../bin/rpmgp:92
-#: ../bin/rpmgp:102 ../bin/rpmgp:107 ../bin/rpmgp:113 ../bin/rpmgp:132
-#: ../bin/rpmgp:149 ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:166
-#: ../bin/rpmgp:174 ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197
-#: ../bin/rpmgp:215 ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmgp:238
-#: ../bin/rpmgp:258 ../bin/rpmgp:262 ../bin/rpmgs:83 ../bin/rpmgs:178
-#: ../bin/rpmgs:193 ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18
-#: ../bin/rpmqf:25 ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12
-#: ../bin/rpmrb:21 ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12
-#: ../bin/rpmunmets:62 ../bin/rpmunmets:88 ../bin/rpmurl:49 ../bin/rpmurl:63
-#: ../bin/rpmurl:74 ../bin/rpmurl:76 ../bin/rpmurl:97 ../bin/rpmurl:99
-#: ../bin/rpmurl:114 ../bin/rpmurl:116 ../bin/rpmurl:121 ../bin/rpmurl:126
-#: ../bin/rpmurl:127 ../bin/rpmurl:134 ../bin/rpmurl:139
+#: ../bin/mkpatch:64 ../bin/myhsh:48 ../bin/myhsh:67 ../bin/myhsh:82
+#: ../bin/myhsh:89 ../bin/myhsh:100 ../bin/myhsh:120 ../bin/myhsh:133
+#: ../bin/myhsh:157 ../bin/myhsh:169 ../bin/rpmbb:17 ../bin/rpmbb:57
+#: ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:99 ../bin/rpmbb:100
+#: ../bin/rpmbb:113 ../bin/rpmbph:27 ../bin/rpmbph:46 ../bin/rpmbph:54
+#: ../bin/rpmbph:55 ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227
+#: ../bin/rpmbph:240 ../bin/rpmbs:73 ../bin/rpmbs:89 ../bin/rpmbs:102
+#: ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132 ../bin/rpmbs:141
+#: ../bin/rpmbs:154 ../bin/rpmbs:169 ../bin/rpmbs:180 ../bin/rpmbs:181
+#: ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55 ../bin/rpmbsh:76
+#: ../bin/rpmbugs:19 ../bin/rpmbugs:38 ../bin/rpmbugs:43 ../bin/rpmbugs:48
+#: ../bin/rpmbugs:58 ../bin/rpmbugs:61 ../bin/rpmbugs:69 ../bin/rpmbugs:77
+#: ../bin/rpmbugs:79 ../bin/rpmbugs:92 ../bin/rpmcs:50 ../bin/rpmcs:57
+#: ../bin/rpmcs:69 ../bin/rpmcs:75 ../bin/rpmcs:80 ../bin/rpmcs:82
+#: ../bin/rpmcs:116 ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:102
+#: ../bin/rpmgp:107 ../bin/rpmgp:113 ../bin/rpmgp:132 ../bin/rpmgp:149
+#: ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:166 ../bin/rpmgp:174
+#: ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:215
+#: ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmgp:238 ../bin/rpmgp:258
+#: ../bin/rpmgp:262 ../bin/rpmgs:83 ../bin/rpmgs:178 ../bin/rpmgs:193
+#: ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
+#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
+#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:56 ../bin/rpmunmets:82
+#: ../bin/rpmurl:50 ../bin/rpmurl:64 ../bin/rpmurl:75 ../bin/rpmurl:77
+#: ../bin/rpmurl:98 ../bin/rpmurl:100 ../bin/rpmurl:115 ../bin/rpmurl:117
+#: ../bin/rpmurl:122 ../bin/rpmurl:127 ../bin/rpmurl:128 ../bin/rpmurl:135
+#: ../bin/rpmurl:140
 msgid "then"
 msgstr ""
 
 #: ../share/common:11 ../share/common:128 ../share/common:162
-#: ../share/common:163 ../share/common:164 ../share/common:337
+#: ../share/common:163 ../share/common:165 ../share/common:338
 #: ../tools/upload-to-alt:8 ../bin/loginhsh:13 ../bin/mkpatch:8
-#: ../bin/myhsh:18 ../bin/rpmbb:14 ../bin/rpmbph:13 ../bin/rpmbs:21
-#: ../bin/rpmbsh:16 ../bin/rpmbugs:11 ../bin/rpmcs:9 ../bin/rpmgp:12
+#: ../bin/myhsh:13 ../bin/rpmbb:14 ../bin/rpmbph:13 ../bin/rpmbs:21
+#: ../bin/rpmbsh:16 ../bin/rpmbugs:12 ../bin/rpmcs:10 ../bin/rpmgp:12
 #: ../bin/rpmgs:15 ../bin/rpmgs:146 ../bin/rpmrb:26 ../bin/rpmU:6
-#: ../bin/rpmunmets:18 ../bin/rpmurl:10
+#: ../bin/rpmunmets:12 ../bin/rpmurl:11
 msgid "."
 msgstr ""
 
 #: ../share/common:12 ../share/common:29 ../share/common:130
-#: ../share/common:179 ../share/common:232 ../share/common:235
-#: ../share/common:280 ../share/common:360 ../share/common:374
-#: ../share/common:381 ../share/common:415 ../share/common:447
-#: ../bin/loginhsh:98 ../bin/mkpatch:13 ../bin/myhsh:141 ../bin/rpmbph:34
+#: ../share/common:180 ../share/common:233 ../share/common:236
+#: ../share/common:281 ../share/common:361 ../share/common:375
+#: ../share/common:382 ../share/common:416 ../share/common:448
+#: ../bin/loginhsh:98 ../bin/mkpatch:13 ../bin/myhsh:136 ../bin/rpmbph:34
 #: ../bin/rpmbph:48 ../bin/rpmbph:179 ../bin/rpmbph:247 ../bin/rpmbs:173
 #: ../bin/rpmbs:200 ../bin/rpmbs:221 ../bin/rpmbs:227 ../bin/rpmbsh:92
-#: ../bin/rpmbugs:21 ../bin/rpmbugs:62 ../bin/rpmbugs:81 ../bin/rpmbugs:85
-#: ../bin/rpmbugs:100 ../bin/rpmcs:87 ../bin/rpmgp:84 ../bin/rpmgp:188
+#: ../bin/rpmbugs:22 ../bin/rpmbugs:63 ../bin/rpmbugs:82 ../bin/rpmbugs:86
+#: ../bin/rpmbugs:101 ../bin/rpmcs:88 ../bin/rpmgp:84 ../bin/rpmgp:188
 #: ../bin/rpmgp:192 ../bin/rpmgp:241 ../bin/rpmgp:261 ../bin/rpmgp:265
-#: ../bin/rpmgs:87 ../bin/rpmgs:199 ../bin/rpmqf:37 ../bin/rpmurl:80
-#: ../bin/rpmurl:84 ../bin/rpmurl:102 ../bin/rpmurl:105 ../bin/rpmurl:119
-#: ../bin/rpmurl:130 ../bin/rpmurl:133 ../bin/rpmurl:137 ../bin/rpmurl:141
+#: ../bin/rpmgs:87 ../bin/rpmgs:199 ../bin/rpmqf:37 ../bin/rpmurl:81
+#: ../bin/rpmurl:85 ../bin/rpmurl:103 ../bin/rpmurl:106 ../bin/rpmurl:120
+#: ../bin/rpmurl:131 ../bin/rpmurl:134 ../bin/rpmurl:138 ../bin/rpmurl:142
 msgid "else"
 msgstr ""
 
@@ -152,20 +151,20 @@ msgstr ""
 
 #: ../share/common:14 ../share/common:25 ../share/common:49 ../share/common:56
 #: ../share/common:62 ../share/common:100 ../share/common:114
-#: ../share/common:167 ../share/common:174 ../share/common:185
-#: ../share/common:190 ../share/common:195 ../share/common:207
-#: ../share/common:242 ../share/common:252 ../share/common:271
-#: ../share/common:305 ../share/common:329 ../share/common:346
-#: ../share/common:392 ../share/common:405 ../share/common:428
-#: ../share/common:457 ../share/common:464 ../share/common:495
-#: ../share/common:527 ../share/common:535 ../share/common:552
-#: ../bin/loginhsh:21 ../bin/loginhsh:26 ../bin/myhsh:24 ../bin/myhsh:29
-#: ../bin/myhsh:66 ../bin/myhsh:154 ../bin/rpmbb:27 ../bin/rpmbb:32
+#: ../share/common:168 ../share/common:175 ../share/common:186
+#: ../share/common:191 ../share/common:196 ../share/common:208
+#: ../share/common:243 ../share/common:253 ../share/common:272
+#: ../share/common:306 ../share/common:330 ../share/common:347
+#: ../share/common:393 ../share/common:406 ../share/common:429
+#: ../share/common:458 ../share/common:465 ../share/common:496
+#: ../share/common:528 ../share/common:536 ../share/common:553
+#: ../bin/loginhsh:21 ../bin/loginhsh:26 ../bin/myhsh:19 ../bin/myhsh:24
+#: ../bin/myhsh:61 ../bin/myhsh:149 ../bin/rpmbb:27 ../bin/rpmbb:32
 #: ../bin/rpmbph:19 ../bin/rpmbph:97 ../bin/rpmbph:103 ../bin/rpmbph:109
 #: ../bin/rpmbph:115 ../bin/rpmbph:121 ../bin/rpmbph:127 ../bin/rpmbph:135
 #: ../bin/rpmbph:197 ../bin/rpmbph:202 ../bin/rpmbs:35 ../bin/rpmbs:40
-#: ../bin/rpmbs:121 ../bin/rpmbsh:24 ../bin/rpmbsh:29 ../bin/rpmbugs:16
-#: ../bin/rpmbugs:28 ../bin/rpmcs:12 ../bin/rpmcs:27 ../bin/rpmgp:45
+#: ../bin/rpmbs:121 ../bin/rpmbsh:24 ../bin/rpmbsh:29 ../bin/rpmbugs:17
+#: ../bin/rpmbugs:29 ../bin/rpmcs:13 ../bin/rpmcs:28 ../bin/rpmgp:45
 #: ../bin/rpmgp:53 ../bin/rpmgp:61 ../bin/rpmgp:66 ../bin/rpmgp:73
 #: ../bin/rpmgp:90 ../bin/rpmgp:101 ../bin/rpmgp:122 ../bin/rpmgp:248
 #: ../bin/rpmgp:272 ../bin/rpmgs:24 ../bin/rpmgs:29 ../bin/rpmgs:55
@@ -173,21 +172,21 @@ msgstr ""
 #: ../bin/rpmgs:104 ../bin/rpmgs:110 ../bin/rpmgs:117 ../bin/rpmgs:124
 #: ../bin/rpmgs:130 ../bin/rpmgs:136 ../bin/rpmgs:142 ../bin/rpmgs:152
 #: ../bin/rpmgs:159 ../bin/rpmgs:164 ../bin/rpmgs:185 ../bin/rpmgs:190
-#: ../bin/rpmunmets:21 ../bin/rpmunmets:29 ../bin/rpmunmets:39
-#: ../bin/rpmunmets:44 ../bin/rpmurl:20 ../bin/rpmurl:25 ../bin/rpmurl:71
-#: ../bin/rpmurl:93
+#: ../bin/rpmunmets:15 ../bin/rpmunmets:23 ../bin/rpmunmets:33
+#: ../bin/rpmunmets:38 ../bin/rpmurl:21 ../bin/rpmurl:26 ../bin/rpmurl:72
+#: ../bin/rpmurl:94
 msgid "{"
 msgstr ""
 
 #: ../share/common:15 ../share/common:30 ../share/common:133
-#: ../share/common:159 ../share/common:219 ../share/common:220
-#: ../share/common:307 ../share/common:308 ../share/common:332
-#: ../share/common:334 ../share/common:337 ../share/common:340
-#: ../share/common:352 ../share/common:453 ../share/common:530
-#: ../share/common:535 ../share/common:553 ../tools/upload-to-alt:23
-#: ../bin/loginhsh:63 ../bin/loginhsh:105 ../bin/myhsh:88 ../bin/myhsh:95
-#: ../bin/myhsh:115 ../bin/myhsh:132 ../bin/myhsh:137 ../bin/myhsh:146
-#: ../bin/myhsh:150 ../bin/myhsh:159 ../bin/myhsh:168 ../bin/myhsh:169
+#: ../share/common:159 ../share/common:220 ../share/common:221
+#: ../share/common:308 ../share/common:309 ../share/common:333
+#: ../share/common:335 ../share/common:338 ../share/common:341
+#: ../share/common:353 ../share/common:454 ../share/common:531
+#: ../share/common:536 ../share/common:554 ../tools/upload-to-alt:23
+#: ../bin/loginhsh:63 ../bin/loginhsh:105 ../bin/myhsh:83 ../bin/myhsh:90
+#: ../bin/myhsh:110 ../bin/myhsh:127 ../bin/myhsh:132 ../bin/myhsh:141
+#: ../bin/myhsh:145 ../bin/myhsh:154 ../bin/myhsh:163 ../bin/myhsh:164
 #: ../bin/rpmbb:103 ../bin/rpmbb:108 ../bin/rpmbb:114 ../bin/rpmbb:139
 #: ../bin/rpmbb:141 ../bin/rpmbb:144 ../bin/rpmbph:63 ../bin/rpmbph:64
 #: ../bin/rpmbph:69 ../bin/rpmbph:77 ../bin/rpmbph:82 ../bin/rpmbph:88
@@ -196,32 +195,32 @@ msgstr ""
 #: ../bin/rpmbs:171 ../bin/rpmbs:189 ../bin/rpmbs:194 ../bin/rpmbs:196
 #: ../bin/rpmbs:197 ../bin/rpmbs:210 ../bin/rpmbs:218 ../bin/rpmbs:220
 #: ../bin/rpmbs:222 ../bin/rpmbsh:73 ../bin/rpmbsh:79 ../bin/rpmbsh:80
-#: ../bin/rpmbsh:82 ../bin/rpmbsh:90 ../bin/rpmbsh:96 ../bin/rpmbugs:22
-#: ../bin/rpmbugs:68 ../bin/rpmcs:37 ../bin/rpmcs:38 ../bin/rpmcs:39
-#: ../bin/rpmcs:40 ../bin/rpmcs:88 ../bin/rpmgp:46 ../bin/rpmgp:56
+#: ../bin/rpmbsh:82 ../bin/rpmbsh:90 ../bin/rpmbsh:96 ../bin/rpmbugs:23
+#: ../bin/rpmbugs:69 ../bin/rpmcs:38 ../bin/rpmcs:39 ../bin/rpmcs:40
+#: ../bin/rpmcs:41 ../bin/rpmcs:89 ../bin/rpmgp:46 ../bin/rpmgp:56
 #: ../bin/rpmgp:74 ../bin/rpmgp:80 ../bin/rpmgp:85 ../bin/rpmgp:93
 #: ../bin/rpmgp:103 ../bin/rpmgp:114 ../bin/rpmgp:200 ../bin/rpmgp:242
 #: ../bin/rpmgp:255 ../bin/rpmgp:256 ../bin/rpmgp:277 ../bin/rpmgp:283
 #: ../bin/rpmgs:202 ../bin/rpmqf:14 ../bin/rpmqf:35 ../bin/rpmqf:38
-#: ../bin/rpmrb:22 ../bin/rpmU:9 ../bin/rpmunmets:23 ../bin/rpmunmets:31
-#: ../bin/rpmunmets:91 ../bin/rpmunmets:92 ../bin/rpmunmets:98
-#: ../bin/rpmunmets:103 ../bin/rpmunmets:107 ../bin/rpmunmets:108
-#: ../bin/rpmurl:64
+#: ../bin/rpmrb:22 ../bin/rpmU:9 ../bin/rpmunmets:17 ../bin/rpmunmets:25
+#: ../bin/rpmunmets:85 ../bin/rpmunmets:86 ../bin/rpmunmets:92
+#: ../bin/rpmunmets:97 ../bin/rpmunmets:101 ../bin/rpmunmets:102
+#: ../bin/rpmurl:65
 msgid "echo"
 msgstr ""
 
 #: ../share/common:15 ../share/common:26 ../share/common:102
 #: ../share/common:121 ../share/common:128 ../share/common:133
-#: ../share/common:137 ../share/common:147 ../share/common:168
-#: ../share/common:226 ../share/common:228 ../share/common:230
-#: ../share/common:289 ../share/common:334 ../share/common:337
-#: ../share/common:352 ../share/common:364 ../share/common:411
-#: ../share/common:431 ../share/common:453 ../share/common:540
+#: ../share/common:137 ../share/common:147 ../share/common:169
+#: ../share/common:227 ../share/common:229 ../share/common:231
+#: ../share/common:290 ../share/common:335 ../share/common:338
+#: ../share/common:353 ../share/common:365 ../share/common:412
+#: ../share/common:432 ../share/common:454 ../share/common:541
 #: ../tools/upload-to-alt:12 ../bin/loginhsh:70 ../bin/loginhsh:72
 #: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:17 ../bin/mkpatch:22
 #: ../bin/mkpatch:38 ../bin/mkpatch:46 ../bin/mkpatch:48 ../bin/mkpatch:55
-#: ../bin/mkpatch:57 ../bin/mkpatch:64 ../bin/mkpatch:66 ../bin/myhsh:72
-#: ../bin/myhsh:99 ../bin/myhsh:162 ../bin/myhsh:175 ../bin/rpmbb:72
+#: ../bin/mkpatch:57 ../bin/mkpatch:64 ../bin/mkpatch:66 ../bin/myhsh:67
+#: ../bin/myhsh:94 ../bin/myhsh:157 ../bin/myhsh:170 ../bin/rpmbb:72
 #: ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:104 ../bin/rpmbph:69
 #: ../bin/rpmbph:77 ../bin/rpmbph:82 ../bin/rpmbph:88 ../bin/rpmbph:98
 #: ../bin/rpmbph:104 ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122
@@ -230,35 +229,35 @@ msgstr ""
 #: ../bin/rpmbs:139 ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:164
 #: ../bin/rpmbs:165 ../bin/rpmbs:170 ../bin/rpmbs:176 ../bin/rpmbs:181
 #: ../bin/rpmbs:218 ../bin/rpmbsh:76 ../bin/rpmbsh:78 ../bin/rpmbsh:79
-#: ../bin/rpmbugs:13 ../bin/rpmbugs:42 ../bin/rpmbugs:91 ../bin/rpmbugs:97
-#: ../bin/rpmcs:41 ../bin/rpmcs:108 ../bin/rpmcs:110 ../bin/rpmcs:115
-#: ../bin/rpmcs:292 ../bin/rpmgp:74 ../bin/rpmgp:149 ../bin/rpmgp:166
+#: ../bin/rpmbugs:14 ../bin/rpmbugs:43 ../bin/rpmbugs:92 ../bin/rpmbugs:98
+#: ../bin/rpmcs:42 ../bin/rpmcs:109 ../bin/rpmcs:111 ../bin/rpmcs:116
+#: ../bin/rpmcs:293 ../bin/rpmgp:74 ../bin/rpmgp:149 ../bin/rpmgp:166
 #: ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:243
 #: ../bin/rpmgp:248 ../bin/rpmgs:67 ../bin/rpmgs:76 ../bin/rpmgs:83
 #: ../bin/rpmgs:84 ../bin/rpmgs:88 ../bin/rpmgs:178 ../bin/rpmgs:188
 #: ../bin/rpmgs:193 ../bin/rpmgs:196 ../bin/rpmrb:30 ../bin/rpmrb:31
-#: ../bin/rpmunmets:88 ../bin/rpmurl:12 ../bin/rpmurl:63 ../bin/rpmurl:114
-#: ../bin/rpmurl:116 ../bin/rpmurl:121 ../bin/rpmurl:127 ../bin/rpmurl:135
-#: ../bin/rpmurl:139
+#: ../bin/rpmunmets:82 ../bin/rpmurl:13 ../bin/rpmurl:64 ../bin/rpmurl:115
+#: ../bin/rpmurl:117 ../bin/rpmurl:122 ../bin/rpmurl:128 ../bin/rpmurl:136
+#: ../bin/rpmurl:140
 msgid "-n"
 msgstr ""
 
 #: ../share/common:16 ../share/common:32 ../share/common:52 ../share/common:58
 #: ../share/common:65 ../share/common:107 ../share/common:134
-#: ../share/common:170 ../share/common:182 ../share/common:187
-#: ../share/common:192 ../share/common:201 ../share/common:238
-#: ../share/common:248 ../share/common:263 ../share/common:302
-#: ../share/common:325 ../share/common:342 ../share/common:388
-#: ../share/common:400 ../share/common:418 ../share/common:454
-#: ../share/common:461 ../share/common:492 ../share/common:523
-#: ../share/common:535 ../share/common:547 ../share/common:556
-#: ../bin/loginhsh:34 ../bin/loginhsh:55 ../bin/myhsh:38 ../bin/myhsh:58
-#: ../bin/myhsh:70 ../bin/myhsh:160 ../bin/rpmbb:40 ../bin/rpmbb:63
+#: ../share/common:171 ../share/common:183 ../share/common:188
+#: ../share/common:193 ../share/common:202 ../share/common:239
+#: ../share/common:249 ../share/common:264 ../share/common:303
+#: ../share/common:326 ../share/common:343 ../share/common:389
+#: ../share/common:401 ../share/common:419 ../share/common:455
+#: ../share/common:462 ../share/common:493 ../share/common:524
+#: ../share/common:536 ../share/common:548 ../share/common:557
+#: ../bin/loginhsh:34 ../bin/loginhsh:55 ../bin/myhsh:33 ../bin/myhsh:53
+#: ../bin/myhsh:65 ../bin/myhsh:155 ../bin/rpmbb:40 ../bin/rpmbb:63
 #: ../bin/rpmbph:99 ../bin/rpmbph:105 ../bin/rpmbph:111 ../bin/rpmbph:117
 #: ../bin/rpmbph:123 ../bin/rpmbph:131 ../bin/rpmbph:139 ../bin/rpmbph:190
 #: ../bin/rpmbph:212 ../bin/rpmbph:233 ../bin/rpmbs:52 ../bin/rpmbs:79
-#: ../bin/rpmbs:137 ../bin/rpmbsh:39 ../bin/rpmbsh:61 ../bin/rpmbugs:25
-#: ../bin/rpmbugs:32 ../bin/rpmcs:23 ../bin/rpmcs:44 ../bin/rpmgp:50
+#: ../bin/rpmbs:137 ../bin/rpmbsh:39 ../bin/rpmbsh:61 ../bin/rpmbugs:26
+#: ../bin/rpmbugs:33 ../bin/rpmcs:24 ../bin/rpmcs:45 ../bin/rpmgp:50
 #: ../bin/rpmgp:58 ../bin/rpmgp:63 ../bin/rpmgp:68 ../bin/rpmgp:87
 #: ../bin/rpmgp:98 ../bin/rpmgp:119 ../bin/rpmgp:129 ../bin/rpmgp:248
 #: ../bin/rpmgp:272 ../bin/rpmgs:35 ../bin/rpmgs:52 ../bin/rpmgs:58
@@ -266,51 +265,50 @@ msgstr ""
 #: ../bin/rpmgs:107 ../bin/rpmgs:113 ../bin/rpmgs:121 ../bin/rpmgs:127
 #: ../bin/rpmgs:133 ../bin/rpmgs:139 ../bin/rpmgs:149 ../bin/rpmgs:156
 #: ../bin/rpmgs:161 ../bin/rpmgs:168 ../bin/rpmgs:185 ../bin/rpmgs:190
-#: ../bin/rpmunmets:26 ../bin/rpmunmets:34 ../bin/rpmunmets:50
-#: ../bin/rpmunmets:68 ../bin/rpmurl:33 ../bin/rpmurl:55 ../bin/rpmurl:89
-#: ../bin/rpmurl:110
+#: ../bin/rpmunmets:20 ../bin/rpmunmets:28 ../bin/rpmunmets:44
+#: ../bin/rpmunmets:62 ../bin/rpmurl:34 ../bin/rpmurl:56 ../bin/rpmurl:90
+#: ../bin/rpmurl:111
 msgid "}"
 msgstr ""
 
 #: ../share/common:17 ../share/common:31 ../share/common:41 ../share/common:83
 #: ../share/common:124 ../share/common:132 ../share/common:160
-#: ../share/common:181 ../share/common:199 ../share/common:213
-#: ../share/common:217 ../share/common:223 ../share/common:234
-#: ../share/common:237 ../share/common:261 ../share/common:282
-#: ../share/common:316 ../share/common:341 ../share/common:372
-#: ../share/common:377 ../share/common:378 ../share/common:383
-#: ../share/common:417 ../share/common:433 ../share/common:449
-#: ../share/common:532 ../share/common:545 ../bin/loginhsh:52
+#: ../share/common:182 ../share/common:200 ../share/common:214
+#: ../share/common:218 ../share/common:224 ../share/common:235
+#: ../share/common:238 ../share/common:262 ../share/common:283
+#: ../share/common:317 ../share/common:342 ../share/common:373
+#: ../share/common:378 ../share/common:379 ../share/common:384
+#: ../share/common:418 ../share/common:434 ../share/common:450
+#: ../share/common:533 ../share/common:546 ../bin/loginhsh:52
 #: ../bin/loginhsh:65 ../bin/loginhsh:75 ../bin/loginhsh:81 ../bin/loginhsh:86
 #: ../bin/loginhsh:100 ../bin/loginhsh:107 ../bin/mkpatch:15 ../bin/mkpatch:20
 #: ../bin/mkpatch:25 ../bin/mkpatch:43 ../bin/mkpatch:53 ../bin/mkpatch:62
-#: ../bin/mkpatch:71 ../bin/myhsh:17 ../bin/myhsh:55 ../bin/myhsh:78
-#: ../bin/myhsh:90 ../bin/myhsh:97 ../bin/myhsh:107 ../bin/myhsh:128
-#: ../bin/myhsh:143 ../bin/myhsh:171 ../bin/myhsh:176 ../bin/rpmbb:21
-#: ../bin/rpmbb:59 ../bin/rpmbb:80 ../bin/rpmbb:89 ../bin/rpmbb:102
-#: ../bin/rpmbb:106 ../bin/rpmbb:116 ../bin/rpmbph:40 ../bin/rpmbph:50
-#: ../bin/rpmbph:58 ../bin/rpmbph:59 ../bin/rpmbph:144 ../bin/rpmbph:183
-#: ../bin/rpmbph:229 ../bin/rpmbph:249 ../bin/rpmbs:75 ../bin/rpmbs:92
-#: ../bin/rpmbs:116 ../bin/rpmbs:127 ../bin/rpmbs:130 ../bin/rpmbs:135
-#: ../bin/rpmbs:152 ../bin/rpmbs:175 ../bin/rpmbs:205 ../bin/rpmbs:212
-#: ../bin/rpmbs:223 ../bin/rpmbs:232 ../bin/rpmbs:233 ../bin/rpmbsh:57
-#: ../bin/rpmbsh:97 ../bin/rpmbugs:24 ../bin/rpmbugs:40 ../bin/rpmbugs:45
-#: ../bin/rpmbugs:51 ../bin/rpmbugs:64 ../bin/rpmbugs:65 ../bin/rpmbugs:71
-#: ../bin/rpmbugs:84 ../bin/rpmbugs:87 ../bin/rpmbugs:102 ../bin/rpmcs:52
-#: ../bin/rpmcs:58 ../bin/rpmcs:71 ../bin/rpmcs:76 ../bin/rpmcs:91
-#: ../bin/rpmcs:92 ../bin/rpmcs:119 ../bin/rpmgp:86 ../bin/rpmgp:95
-#: ../bin/rpmgp:105 ../bin/rpmgp:111 ../bin/rpmgp:116 ../bin/rpmgp:145
-#: ../bin/rpmgp:152 ../bin/rpmgp:158 ../bin/rpmgp:170 ../bin/rpmgp:171
-#: ../bin/rpmgp:177 ../bin/rpmgp:190 ../bin/rpmgp:194 ../bin/rpmgp:204
-#: ../bin/rpmgp:225 ../bin/rpmgp:232 ../bin/rpmgp:244 ../bin/rpmgp:253
-#: ../bin/rpmgp:267 ../bin/rpmgp:268 ../bin/rpmgs:91 ../bin/rpmgs:180
-#: ../bin/rpmgs:201 ../bin/rpmqf:16 ../bin/rpmqf:21 ../bin/rpmqf:29
-#: ../bin/rpmqf:40 ../bin/rpmqf:41 ../bin/rpmrb:15 ../bin/rpmrb:24
-#: ../bin/rpmrb:35 ../bin/rpmU:11 ../bin/rpmunmets:16 ../bin/rpmunmets:64
-#: ../bin/rpmunmets:96 ../bin/rpmurl:51 ../bin/rpmurl:68 ../bin/rpmurl:83
-#: ../bin/rpmurl:88 ../bin/rpmurl:104 ../bin/rpmurl:108 ../bin/rpmurl:118
-#: ../bin/rpmurl:123 ../bin/rpmurl:124 ../bin/rpmurl:132 ../bin/rpmurl:143
-#: ../bin/rpmurl:145 ../bin/rpmurl:146
+#: ../bin/mkpatch:71 ../bin/myhsh:50 ../bin/myhsh:73 ../bin/myhsh:85
+#: ../bin/myhsh:92 ../bin/myhsh:102 ../bin/myhsh:123 ../bin/myhsh:138
+#: ../bin/myhsh:166 ../bin/myhsh:171 ../bin/rpmbb:21 ../bin/rpmbb:59
+#: ../bin/rpmbb:80 ../bin/rpmbb:89 ../bin/rpmbb:102 ../bin/rpmbb:106
+#: ../bin/rpmbb:116 ../bin/rpmbph:40 ../bin/rpmbph:50 ../bin/rpmbph:58
+#: ../bin/rpmbph:59 ../bin/rpmbph:144 ../bin/rpmbph:183 ../bin/rpmbph:229
+#: ../bin/rpmbph:249 ../bin/rpmbs:75 ../bin/rpmbs:92 ../bin/rpmbs:116
+#: ../bin/rpmbs:127 ../bin/rpmbs:130 ../bin/rpmbs:135 ../bin/rpmbs:152
+#: ../bin/rpmbs:175 ../bin/rpmbs:205 ../bin/rpmbs:212 ../bin/rpmbs:223
+#: ../bin/rpmbs:232 ../bin/rpmbs:233 ../bin/rpmbsh:57 ../bin/rpmbsh:97
+#: ../bin/rpmbugs:25 ../bin/rpmbugs:41 ../bin/rpmbugs:46 ../bin/rpmbugs:52
+#: ../bin/rpmbugs:65 ../bin/rpmbugs:66 ../bin/rpmbugs:72 ../bin/rpmbugs:85
+#: ../bin/rpmbugs:88 ../bin/rpmbugs:103 ../bin/rpmcs:53 ../bin/rpmcs:59
+#: ../bin/rpmcs:72 ../bin/rpmcs:77 ../bin/rpmcs:92 ../bin/rpmcs:93
+#: ../bin/rpmcs:120 ../bin/rpmgp:86 ../bin/rpmgp:95 ../bin/rpmgp:105
+#: ../bin/rpmgp:111 ../bin/rpmgp:116 ../bin/rpmgp:145 ../bin/rpmgp:152
+#: ../bin/rpmgp:158 ../bin/rpmgp:170 ../bin/rpmgp:171 ../bin/rpmgp:177
+#: ../bin/rpmgp:190 ../bin/rpmgp:194 ../bin/rpmgp:204 ../bin/rpmgp:225
+#: ../bin/rpmgp:232 ../bin/rpmgp:244 ../bin/rpmgp:253 ../bin/rpmgp:267
+#: ../bin/rpmgp:268 ../bin/rpmgs:91 ../bin/rpmgs:180 ../bin/rpmgs:201
+#: ../bin/rpmqf:16 ../bin/rpmqf:21 ../bin/rpmqf:29 ../bin/rpmqf:40
+#: ../bin/rpmqf:41 ../bin/rpmrb:15 ../bin/rpmrb:24 ../bin/rpmrb:35
+#: ../bin/rpmU:11 ../bin/rpmunmets:58 ../bin/rpmunmets:90 ../bin/rpmurl:52
+#: ../bin/rpmurl:69 ../bin/rpmurl:84 ../bin/rpmurl:89 ../bin/rpmurl:105
+#: ../bin/rpmurl:109 ../bin/rpmurl:119 ../bin/rpmurl:124 ../bin/rpmurl:125
+#: ../bin/rpmurl:133 ../bin/rpmurl:144 ../bin/rpmurl:146 ../bin/rpmurl:147
 msgid "fi"
 msgstr ""
 
@@ -318,7 +316,7 @@ msgstr ""
 msgid "TEXTDOMAIN=etersoft-build-utils"
 msgstr ""
 
-#: ../share/common:20 ../share/common:22 ../share/common:554 ../bin/mkpatch:18
+#: ../share/common:20 ../share/common:22 ../share/common:555 ../bin/mkpatch:18
 #: ../bin/mkpatch:23 ../bin/mkpatch:29 ../bin/rpmbph:71 ../bin/rpmbph:174
 #: ../bin/rpmbs:63
 msgid "export"
@@ -337,53 +335,52 @@ msgid "TEXTDOMAINDIR"
 msgstr ""
 
 #: ../share/common:24 ../share/common:50 ../share/common:57
-#: ../share/common:309 ../share/common:314 ../share/common:333
-#: ../share/common:365 ../share/common:368 ../share/common:369
-#: ../share/common:375 ../share/common:413 ../share/common:416
-#: ../share/common:431 ../share/common:458 ../tools/upload-to-alt:16
+#: ../share/common:310 ../share/common:315 ../share/common:334
+#: ../share/common:366 ../share/common:369 ../share/common:370
+#: ../share/common:376 ../share/common:414 ../share/common:417
+#: ../share/common:432 ../share/common:459 ../tools/upload-to-alt:16
 #: ../tools/upload-to-alt:19 ../tools/upload-to-alt:20 ../bin/loginhsh:27
 #: ../bin/loginhsh:28 ../bin/loginhsh:29 ../bin/loginhsh:30 ../bin/loginhsh:31
 #: ../bin/loginhsh:32 ../bin/loginhsh:33 ../bin/loginhsh:43 ../bin/loginhsh:78
-#: ../bin/loginhsh:84 ../bin/loginhsh:92 ../bin/loginhsh:102 ../bin/myhsh:14
-#: ../bin/myhsh:15 ../bin/myhsh:30 ../bin/myhsh:31 ../bin/myhsh:32
-#: ../bin/myhsh:33 ../bin/myhsh:34 ../bin/myhsh:35 ../bin/myhsh:36
-#: ../bin/myhsh:37 ../bin/myhsh:46 ../bin/myhsh:73 ../bin/myhsh:75
-#: ../bin/myhsh:76 ../bin/myhsh:92 ../bin/myhsh:99 ../bin/myhsh:101
-#: ../bin/myhsh:121 ../bin/myhsh:131 ../bin/myhsh:139 ../bin/myhsh:140
-#: ../bin/myhsh:142 ../bin/myhsh:166 ../bin/rpmbb:33 ../bin/rpmbb:34
-#: ../bin/rpmbb:35 ../bin/rpmbb:36 ../bin/rpmbb:37 ../bin/rpmbb:38
-#: ../bin/rpmbb:39 ../bin/rpmbb:49 ../bin/rpmbb:72 ../bin/rpmbb:78
-#: ../bin/rpmbb:118 ../bin/rpmbb:128 ../bin/rpmbb:134 ../bin/rpmbb:135
-#: ../bin/rpmbb:140 ../bin/rpmbb:145 ../bin/rpmbph:203 ../bin/rpmbph:204
-#: ../bin/rpmbph:205 ../bin/rpmbph:206 ../bin/rpmbph:208 ../bin/rpmbph:209
-#: ../bin/rpmbph:210 ../bin/rpmbph:211 ../bin/rpmbph:220 ../bin/rpmbs:41
-#: ../bin/rpmbs:42 ../bin/rpmbs:43 ../bin/rpmbs:44 ../bin/rpmbs:45
-#: ../bin/rpmbs:46 ../bin/rpmbs:47 ../bin/rpmbs:48 ../bin/rpmbs:49
-#: ../bin/rpmbs:50 ../bin/rpmbs:51 ../bin/rpmbs:66 ../bin/rpmbs:108
-#: ../bin/rpmbs:110 ../bin/rpmbs:142 ../bin/rpmbs:156 ../bin/rpmbs:162
-#: ../bin/rpmbs:164 ../bin/rpmbs:166 ../bin/rpmbs:170 ../bin/rpmbs:174
-#: ../bin/rpmbs:182 ../bin/rpmbs:190 ../bin/rpmbs:202 ../bin/rpmbs:203
-#: ../bin/rpmbs:204 ../bin/rpmbs:207 ../bin/rpmbs:228 ../bin/rpmbs:229
-#: ../bin/rpmbsh:30 ../bin/rpmbsh:31 ../bin/rpmbsh:32 ../bin/rpmbsh:33
-#: ../bin/rpmbsh:34 ../bin/rpmbsh:35 ../bin/rpmbsh:36 ../bin/rpmbsh:37
-#: ../bin/rpmbsh:38 ../bin/rpmbsh:48 ../bin/rpmbsh:81 ../bin/rpmbsh:83
-#: ../bin/rpmbsh:91 ../bin/rpmbugs:19 ../bin/rpmbugs:38 ../bin/rpmbugs:94
-#: ../bin/rpmbugs:96 ../bin/rpmcs:50 ../bin/rpmcs:94 ../bin/rpmcs:104
-#: ../bin/rpmcs:110 ../bin/rpmcs:289 ../bin/rpmcs:292 ../bin/rpmcs:306
-#: ../bin/rpmgp:133 ../bin/rpmgp:134 ../bin/rpmgp:135 ../bin/rpmgp:136
-#: ../bin/rpmgp:137 ../bin/rpmgp:138 ../bin/rpmgp:139 ../bin/rpmgp:140
-#: ../bin/rpmgp:141 ../bin/rpmgp:142 ../bin/rpmgp:143 ../bin/rpmgp:219
-#: ../bin/rpmgp:247 ../bin/rpmgp:250 ../bin/rpmgp:270 ../bin/rpmgp:273
-#: ../bin/rpmgp:284 ../bin/rpmgs:30 ../bin/rpmgs:31 ../bin/rpmgs:32
-#: ../bin/rpmgs:33 ../bin/rpmgs:34 ../bin/rpmgs:42 ../bin/rpmgs:43
-#: ../bin/rpmgs:67 ../bin/rpmgs:76 ../bin/rpmgs:84 ../bin/rpmgs:88
-#: ../bin/rpmgs:165 ../bin/rpmgs:166 ../bin/rpmgs:185 ../bin/rpmgs:190
-#: ../bin/rpmgs:192 ../bin/rpmrb:34 ../bin/rpmunmets:13 ../bin/rpmunmets:14
-#: ../bin/rpmunmets:45 ../bin/rpmunmets:46 ../bin/rpmunmets:47
-#: ../bin/rpmunmets:48 ../bin/rpmunmets:49 ../bin/rpmurl:26 ../bin/rpmurl:27
-#: ../bin/rpmurl:28 ../bin/rpmurl:29 ../bin/rpmurl:30 ../bin/rpmurl:31
-#: ../bin/rpmurl:32 ../bin/rpmurl:42 ../bin/rpmurl:128 ../bin/rpmurl:131
-#: ../bin/rpmurl:135 ../bin/rpmurl:142
+#: ../bin/loginhsh:84 ../bin/loginhsh:92 ../bin/loginhsh:102 ../bin/myhsh:25
+#: ../bin/myhsh:26 ../bin/myhsh:27 ../bin/myhsh:28 ../bin/myhsh:29
+#: ../bin/myhsh:30 ../bin/myhsh:31 ../bin/myhsh:32 ../bin/myhsh:41
+#: ../bin/myhsh:68 ../bin/myhsh:70 ../bin/myhsh:71 ../bin/myhsh:87
+#: ../bin/myhsh:94 ../bin/myhsh:96 ../bin/myhsh:116 ../bin/myhsh:126
+#: ../bin/myhsh:134 ../bin/myhsh:135 ../bin/myhsh:137 ../bin/myhsh:161
+#: ../bin/rpmbb:33 ../bin/rpmbb:34 ../bin/rpmbb:35 ../bin/rpmbb:36
+#: ../bin/rpmbb:37 ../bin/rpmbb:38 ../bin/rpmbb:39 ../bin/rpmbb:49
+#: ../bin/rpmbb:72 ../bin/rpmbb:78 ../bin/rpmbb:118 ../bin/rpmbb:128
+#: ../bin/rpmbb:134 ../bin/rpmbb:135 ../bin/rpmbb:140 ../bin/rpmbb:145
+#: ../bin/rpmbph:203 ../bin/rpmbph:204 ../bin/rpmbph:205 ../bin/rpmbph:206
+#: ../bin/rpmbph:208 ../bin/rpmbph:209 ../bin/rpmbph:210 ../bin/rpmbph:211
+#: ../bin/rpmbph:220 ../bin/rpmbs:41 ../bin/rpmbs:42 ../bin/rpmbs:43
+#: ../bin/rpmbs:44 ../bin/rpmbs:45 ../bin/rpmbs:46 ../bin/rpmbs:47
+#: ../bin/rpmbs:48 ../bin/rpmbs:49 ../bin/rpmbs:50 ../bin/rpmbs:51
+#: ../bin/rpmbs:66 ../bin/rpmbs:108 ../bin/rpmbs:110 ../bin/rpmbs:142
+#: ../bin/rpmbs:156 ../bin/rpmbs:162 ../bin/rpmbs:164 ../bin/rpmbs:166
+#: ../bin/rpmbs:170 ../bin/rpmbs:174 ../bin/rpmbs:182 ../bin/rpmbs:190
+#: ../bin/rpmbs:202 ../bin/rpmbs:203 ../bin/rpmbs:204 ../bin/rpmbs:207
+#: ../bin/rpmbs:228 ../bin/rpmbs:229 ../bin/rpmbsh:30 ../bin/rpmbsh:31
+#: ../bin/rpmbsh:32 ../bin/rpmbsh:33 ../bin/rpmbsh:34 ../bin/rpmbsh:35
+#: ../bin/rpmbsh:36 ../bin/rpmbsh:37 ../bin/rpmbsh:38 ../bin/rpmbsh:48
+#: ../bin/rpmbsh:81 ../bin/rpmbsh:83 ../bin/rpmbsh:91 ../bin/rpmbugs:20
+#: ../bin/rpmbugs:39 ../bin/rpmbugs:95 ../bin/rpmbugs:97 ../bin/rpmcs:51
+#: ../bin/rpmcs:95 ../bin/rpmcs:105 ../bin/rpmcs:111 ../bin/rpmcs:290
+#: ../bin/rpmcs:293 ../bin/rpmcs:307 ../bin/rpmgp:133 ../bin/rpmgp:134
+#: ../bin/rpmgp:135 ../bin/rpmgp:136 ../bin/rpmgp:137 ../bin/rpmgp:138
+#: ../bin/rpmgp:139 ../bin/rpmgp:140 ../bin/rpmgp:141 ../bin/rpmgp:142
+#: ../bin/rpmgp:143 ../bin/rpmgp:219 ../bin/rpmgp:247 ../bin/rpmgp:250
+#: ../bin/rpmgp:270 ../bin/rpmgp:273 ../bin/rpmgp:284 ../bin/rpmgs:30
+#: ../bin/rpmgs:31 ../bin/rpmgs:32 ../bin/rpmgs:33 ../bin/rpmgs:34
+#: ../bin/rpmgs:42 ../bin/rpmgs:43 ../bin/rpmgs:67 ../bin/rpmgs:76
+#: ../bin/rpmgs:84 ../bin/rpmgs:88 ../bin/rpmgs:165 ../bin/rpmgs:166
+#: ../bin/rpmgs:185 ../bin/rpmgs:190 ../bin/rpmgs:192 ../bin/rpmrb:34
+#: ../bin/rpmunmets:39 ../bin/rpmunmets:40 ../bin/rpmunmets:41
+#: ../bin/rpmunmets:42 ../bin/rpmunmets:43 ../bin/rpmurl:27 ../bin/rpmurl:28
+#: ../bin/rpmurl:29 ../bin/rpmurl:30 ../bin/rpmurl:31 ../bin/rpmurl:32
+#: ../bin/rpmurl:33 ../bin/rpmurl:43 ../bin/rpmurl:129 ../bin/rpmurl:132
+#: ../bin/rpmurl:136 ../bin/rpmurl:143
 msgid "echog"
 msgstr ""
 
@@ -391,65 +388,65 @@ msgstr ""
 #: ../share/common:95 ../share/common:102 ../share/common:103
 #: ../share/common:105 ../share/common:121 ../share/common:126
 #: ../share/common:128 ../share/common:133 ../share/common:137
-#: ../share/common:147 ../share/common:157 ../share/common:197
-#: ../share/common:211 ../share/common:215 ../share/common:221
-#: ../share/common:226 ../share/common:230 ../share/common:257
-#: ../share/common:289 ../share/common:313 ../share/common:330
-#: ../share/common:352 ../share/common:357 ../share/common:364
-#: ../share/common:367 ../share/common:379 ../share/common:411
-#: ../share/common:430 ../share/common:431 ../share/common:445
-#: ../share/common:453 ../share/common:529 ../share/common:535
-#: ../share/common:537 ../bin/loginhsh:50 ../bin/loginhsh:62
+#: ../share/common:147 ../share/common:157 ../share/common:198
+#: ../share/common:212 ../share/common:216 ../share/common:222
+#: ../share/common:227 ../share/common:231 ../share/common:258
+#: ../share/common:290 ../share/common:314 ../share/common:331
+#: ../share/common:353 ../share/common:358 ../share/common:365
+#: ../share/common:368 ../share/common:380 ../share/common:412
+#: ../share/common:431 ../share/common:432 ../share/common:446
+#: ../share/common:454 ../share/common:530 ../share/common:536
+#: ../share/common:538 ../bin/loginhsh:50 ../bin/loginhsh:62
 #: ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/loginhsh:95
 #: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
 #: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:38 ../bin/mkpatch:46
 #: ../bin/mkpatch:48 ../bin/mkpatch:55 ../bin/mkpatch:57 ../bin/mkpatch:64
-#: ../bin/mkpatch:66 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
-#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
-#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
-#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:92
-#: ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:29 ../bin/rpmbph:36
-#: ../bin/rpmbph:46 ../bin/rpmbph:54 ../bin/rpmbph:69 ../bin/rpmbph:77
-#: ../bin/rpmbph:82 ../bin/rpmbph:88 ../bin/rpmbph:98 ../bin/rpmbph:104
-#: ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130
-#: ../bin/rpmbph:138 ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227
-#: ../bin/rpmbph:240 ../bin/rpmbph:251 ../bin/rpmbs:73 ../bin/rpmbs:89
-#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
-#: ../bin/rpmbs:139 ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:179
-#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
-#: ../bin/rpmbsh:76 ../bin/rpmbugs:13 ../bin/rpmbugs:18 ../bin/rpmbugs:37
-#: ../bin/rpmbugs:42 ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmbugs:60
-#: ../bin/rpmbugs:68 ../bin/rpmbugs:75 ../bin/rpmbugs:77 ../bin/rpmbugs:91
-#: ../bin/rpmcs:49 ../bin/rpmcs:56 ../bin/rpmcs:115 ../bin/rpmgp:74
-#: ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:102 ../bin/rpmgp:107
-#: ../bin/rpmgp:113 ../bin/rpmgp:132 ../bin/rpmgp:149 ../bin/rpmgp:155
-#: ../bin/rpmgp:161 ../bin/rpmgp:166 ../bin/rpmgp:174 ../bin/rpmgp:183
-#: ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:215 ../bin/rpmgp:228
-#: ../bin/rpmgp:235 ../bin/rpmgp:238 ../bin/rpmgp:257 ../bin/rpmgp:262
-#: ../bin/rpmgs:83 ../bin/rpmgs:178 ../bin/rpmgs:188 ../bin/rpmgs:193
-#: ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
-#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
-#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12 ../bin/rpmunmets:62
-#: ../bin/rpmunmets:88 ../bin/rpmunmets:89 ../bin/rpmurl:12 ../bin/rpmurl:49
-#: ../bin/rpmurl:63 ../bin/rpmurl:73 ../bin/rpmurl:75 ../bin/rpmurl:96
-#: ../bin/rpmurl:98 ../bin/rpmurl:114 ../bin/rpmurl:116 ../bin/rpmurl:121
-#: ../bin/rpmurl:126 ../bin/rpmurl:127 ../bin/rpmurl:134 ../bin/rpmurl:139
+#: ../bin/mkpatch:66 ../bin/myhsh:48 ../bin/myhsh:67 ../bin/myhsh:82
+#: ../bin/myhsh:89 ../bin/myhsh:100 ../bin/myhsh:120 ../bin/myhsh:133
+#: ../bin/myhsh:157 ../bin/myhsh:169 ../bin/rpmbb:17 ../bin/rpmbb:57
+#: ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:92 ../bin/rpmbb:112
+#: ../bin/rpmbph:27 ../bin/rpmbph:29 ../bin/rpmbph:36 ../bin/rpmbph:46
+#: ../bin/rpmbph:54 ../bin/rpmbph:69 ../bin/rpmbph:77 ../bin/rpmbph:82
+#: ../bin/rpmbph:88 ../bin/rpmbph:98 ../bin/rpmbph:104 ../bin/rpmbph:110
+#: ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130 ../bin/rpmbph:138
+#: ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227 ../bin/rpmbph:240
+#: ../bin/rpmbph:251 ../bin/rpmbs:73 ../bin/rpmbs:89 ../bin/rpmbs:102
+#: ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132 ../bin/rpmbs:139
+#: ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:179 ../bin/rpmbs:181
+#: ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55 ../bin/rpmbsh:76
+#: ../bin/rpmbugs:14 ../bin/rpmbugs:19 ../bin/rpmbugs:38 ../bin/rpmbugs:43
+#: ../bin/rpmbugs:48 ../bin/rpmbugs:57 ../bin/rpmbugs:61 ../bin/rpmbugs:69
+#: ../bin/rpmbugs:76 ../bin/rpmbugs:78 ../bin/rpmbugs:92 ../bin/rpmcs:50
+#: ../bin/rpmcs:57 ../bin/rpmcs:116 ../bin/rpmgp:74 ../bin/rpmgp:79
+#: ../bin/rpmgp:92 ../bin/rpmgp:102 ../bin/rpmgp:107 ../bin/rpmgp:113
+#: ../bin/rpmgp:132 ../bin/rpmgp:149 ../bin/rpmgp:155 ../bin/rpmgp:161
+#: ../bin/rpmgp:166 ../bin/rpmgp:174 ../bin/rpmgp:183 ../bin/rpmgp:186
+#: ../bin/rpmgp:197 ../bin/rpmgp:215 ../bin/rpmgp:228 ../bin/rpmgp:235
+#: ../bin/rpmgp:238 ../bin/rpmgp:257 ../bin/rpmgp:262 ../bin/rpmgs:83
+#: ../bin/rpmgs:178 ../bin/rpmgs:188 ../bin/rpmgs:193 ../bin/rpmgs:196
+#: ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25 ../bin/rpmqf:31
+#: ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21 ../bin/rpmrb:30
+#: ../bin/rpmU:8 ../bin/rpmunmets:56 ../bin/rpmunmets:82 ../bin/rpmunmets:83
+#: ../bin/rpmurl:13 ../bin/rpmurl:50 ../bin/rpmurl:64 ../bin/rpmurl:74
+#: ../bin/rpmurl:76 ../bin/rpmurl:97 ../bin/rpmurl:99 ../bin/rpmurl:115
+#: ../bin/rpmurl:117 ../bin/rpmurl:122 ../bin/rpmurl:127 ../bin/rpmurl:128
+#: ../bin/rpmurl:135 ../bin/rpmurl:140
 msgid "["
 msgstr ""
 
 #: ../share/common:26 ../share/common:39 ../share/common:81 ../share/common:95
-#: ../share/common:257 ../share/common:313 ../share/common:367
-#: ../share/common:411 ../share/common:537 Makefile:1 Makefile:2 Makefile:3
+#: ../share/common:258 ../share/common:314 ../share/common:368
+#: ../share/common:412 ../share/common:538 Makefile:1 Makefile:2 Makefile:3
 #: Makefile:4 Makefile:5 Makefile:6 ../bin/loginhsh:77 ../bin/loginhsh:83
-#: ../bin/loginhsh:95 ../bin/myhsh:130 ../bin/myhsh:138 ../bin/myhsh:162
-#: ../bin/myhsh:174 ../bin/rpmbb:17 ../bin/rpmbb:92 ../bin/rpmbph:27
+#: ../bin/loginhsh:95 ../bin/myhsh:125 ../bin/myhsh:133 ../bin/myhsh:157
+#: ../bin/myhsh:169 ../bin/rpmbb:17 ../bin/rpmbb:92 ../bin/rpmbph:27
 #: ../bin/rpmbph:46 ../bin/rpmbph:54 ../bin/rpmbph:169 ../bin/rpmbph:240
-#: ../bin/rpmbs:122 ../bin/rpmbs:179 ../bin/rpmbsh:91 ../bin/rpmbugs:37
-#: ../bin/rpmbugs:42 ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmcs:49
+#: ../bin/rpmbs:122 ../bin/rpmbs:179 ../bin/rpmbsh:91 ../bin/rpmbugs:38
+#: ../bin/rpmbugs:43 ../bin/rpmbugs:48 ../bin/rpmbugs:57 ../bin/rpmcs:50
 #: ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:132 ../bin/rpmgp:149
 #: ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:174 ../bin/rpmgp:215
 #: ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmqf:13 ../bin/rpmqf:18
-#: ../bin/rpmrb:12 ../bin/rpmrb:21 ../bin/rpmU:8 ../bin/rpmurl:140
+#: ../bin/rpmrb:12 ../bin/rpmrb:21 ../bin/rpmU:8 ../bin/rpmurl:141
 msgid "="
 msgstr ""
 
@@ -457,59 +454,59 @@ msgstr ""
 #: ../share/common:95 ../share/common:102 ../share/common:103
 #: ../share/common:105 ../share/common:121 ../share/common:126
 #: ../share/common:128 ../share/common:133 ../share/common:137
-#: ../share/common:147 ../share/common:157 ../share/common:197
-#: ../share/common:211 ../share/common:215 ../share/common:221
-#: ../share/common:226 ../share/common:230 ../share/common:257
-#: ../share/common:289 ../share/common:313 ../share/common:330
-#: ../share/common:352 ../share/common:357 ../share/common:364
-#: ../share/common:367 ../share/common:379 ../share/common:411
-#: ../share/common:430 ../share/common:431 ../share/common:445
-#: ../share/common:453 ../share/common:529 ../share/common:535
-#: ../share/common:537 ../bin/loginhsh:50 ../bin/loginhsh:62
+#: ../share/common:147 ../share/common:157 ../share/common:198
+#: ../share/common:212 ../share/common:216 ../share/common:222
+#: ../share/common:227 ../share/common:231 ../share/common:258
+#: ../share/common:290 ../share/common:314 ../share/common:331
+#: ../share/common:353 ../share/common:358 ../share/common:365
+#: ../share/common:368 ../share/common:380 ../share/common:412
+#: ../share/common:431 ../share/common:432 ../share/common:446
+#: ../share/common:454 ../share/common:530 ../share/common:536
+#: ../share/common:538 ../bin/loginhsh:50 ../bin/loginhsh:62
 #: ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/loginhsh:95
 #: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
 #: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:38 ../bin/mkpatch:46
 #: ../bin/mkpatch:48 ../bin/mkpatch:55 ../bin/mkpatch:57 ../bin/mkpatch:64
-#: ../bin/mkpatch:66 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
-#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
-#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
-#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:92
-#: ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:29 ../bin/rpmbph:36
-#: ../bin/rpmbph:46 ../bin/rpmbph:54 ../bin/rpmbph:69 ../bin/rpmbph:77
-#: ../bin/rpmbph:82 ../bin/rpmbph:88 ../bin/rpmbph:98 ../bin/rpmbph:104
-#: ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130
-#: ../bin/rpmbph:138 ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227
-#: ../bin/rpmbph:240 ../bin/rpmbph:251 ../bin/rpmbs:73 ../bin/rpmbs:89
-#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
-#: ../bin/rpmbs:139 ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:179
-#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
-#: ../bin/rpmbsh:76 ../bin/rpmbugs:13 ../bin/rpmbugs:18 ../bin/rpmbugs:37
-#: ../bin/rpmbugs:42 ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmbugs:60
-#: ../bin/rpmbugs:68 ../bin/rpmbugs:75 ../bin/rpmbugs:77 ../bin/rpmbugs:91
-#: ../bin/rpmcs:49 ../bin/rpmcs:56 ../bin/rpmcs:115 ../bin/rpmgp:74
-#: ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:102 ../bin/rpmgp:107
-#: ../bin/rpmgp:113 ../bin/rpmgp:132 ../bin/rpmgp:149 ../bin/rpmgp:155
-#: ../bin/rpmgp:161 ../bin/rpmgp:166 ../bin/rpmgp:174 ../bin/rpmgp:183
-#: ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:215 ../bin/rpmgp:228
-#: ../bin/rpmgp:235 ../bin/rpmgp:238 ../bin/rpmgp:257 ../bin/rpmgp:262
-#: ../bin/rpmgs:83 ../bin/rpmgs:178 ../bin/rpmgs:188 ../bin/rpmgs:193
-#: ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
-#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
-#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12 ../bin/rpmunmets:62
-#: ../bin/rpmunmets:88 ../bin/rpmunmets:89 ../bin/rpmurl:12 ../bin/rpmurl:49
-#: ../bin/rpmurl:63 ../bin/rpmurl:73 ../bin/rpmurl:75 ../bin/rpmurl:96
-#: ../bin/rpmurl:98 ../bin/rpmurl:114 ../bin/rpmurl:116 ../bin/rpmurl:121
-#: ../bin/rpmurl:126 ../bin/rpmurl:127 ../bin/rpmurl:134 ../bin/rpmurl:139
+#: ../bin/mkpatch:66 ../bin/myhsh:48 ../bin/myhsh:67 ../bin/myhsh:82
+#: ../bin/myhsh:89 ../bin/myhsh:100 ../bin/myhsh:120 ../bin/myhsh:133
+#: ../bin/myhsh:157 ../bin/myhsh:169 ../bin/rpmbb:17 ../bin/rpmbb:57
+#: ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:92 ../bin/rpmbb:112
+#: ../bin/rpmbph:27 ../bin/rpmbph:29 ../bin/rpmbph:36 ../bin/rpmbph:46
+#: ../bin/rpmbph:54 ../bin/rpmbph:69 ../bin/rpmbph:77 ../bin/rpmbph:82
+#: ../bin/rpmbph:88 ../bin/rpmbph:98 ../bin/rpmbph:104 ../bin/rpmbph:110
+#: ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130 ../bin/rpmbph:138
+#: ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227 ../bin/rpmbph:240
+#: ../bin/rpmbph:251 ../bin/rpmbs:73 ../bin/rpmbs:89 ../bin/rpmbs:102
+#: ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132 ../bin/rpmbs:139
+#: ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:179 ../bin/rpmbs:181
+#: ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55 ../bin/rpmbsh:76
+#: ../bin/rpmbugs:14 ../bin/rpmbugs:19 ../bin/rpmbugs:38 ../bin/rpmbugs:43
+#: ../bin/rpmbugs:48 ../bin/rpmbugs:57 ../bin/rpmbugs:61 ../bin/rpmbugs:69
+#: ../bin/rpmbugs:76 ../bin/rpmbugs:78 ../bin/rpmbugs:92 ../bin/rpmcs:50
+#: ../bin/rpmcs:57 ../bin/rpmcs:116 ../bin/rpmgp:74 ../bin/rpmgp:79
+#: ../bin/rpmgp:92 ../bin/rpmgp:102 ../bin/rpmgp:107 ../bin/rpmgp:113
+#: ../bin/rpmgp:132 ../bin/rpmgp:149 ../bin/rpmgp:155 ../bin/rpmgp:161
+#: ../bin/rpmgp:166 ../bin/rpmgp:174 ../bin/rpmgp:183 ../bin/rpmgp:186
+#: ../bin/rpmgp:197 ../bin/rpmgp:215 ../bin/rpmgp:228 ../bin/rpmgp:235
+#: ../bin/rpmgp:238 ../bin/rpmgp:257 ../bin/rpmgp:262 ../bin/rpmgs:83
+#: ../bin/rpmgs:178 ../bin/rpmgs:188 ../bin/rpmgs:193 ../bin/rpmgs:196
+#: ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25 ../bin/rpmqf:31
+#: ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21 ../bin/rpmrb:30
+#: ../bin/rpmU:8 ../bin/rpmunmets:56 ../bin/rpmunmets:82 ../bin/rpmunmets:83
+#: ../bin/rpmurl:13 ../bin/rpmurl:50 ../bin/rpmurl:64 ../bin/rpmurl:74
+#: ../bin/rpmurl:76 ../bin/rpmurl:97 ../bin/rpmurl:99 ../bin/rpmurl:115
+#: ../bin/rpmurl:117 ../bin/rpmurl:122 ../bin/rpmurl:127 ../bin/rpmurl:128
+#: ../bin/rpmurl:135 ../bin/rpmurl:140
 msgid "]"
 msgstr ""
 
 #: ../share/common:27 ../share/common:118 ../share/common:127
-#: ../share/common:275 ../share/common:538 ../bin/loginhsh:51 ../bin/myhsh:54
+#: ../share/common:276 ../share/common:539 ../bin/loginhsh:51 ../bin/myhsh:49
 #: ../bin/rpmbb:18 ../bin/rpmbb:58 ../bin/rpmbph:228 ../bin/rpmbs:74
-#: ../bin/rpmbsh:56 ../bin/rpmbugs:43 ../bin/rpmbugs:48 ../bin/rpmbugs:58
+#: ../bin/rpmbsh:56 ../bin/rpmbugs:44 ../bin/rpmbugs:49 ../bin/rpmbugs:59
 #: ../bin/rpmgp:150 ../bin/rpmgp:163 ../bin/rpmgp:168 ../bin/rpmgp:176
 #: ../bin/rpmgp:216 ../bin/rpmgp:229 ../bin/rpmgp:236 ../bin/rpmgs:48
-#: ../bin/rpmqf:20 ../bin/rpmrb:14 ../bin/rpmunmets:63 ../bin/rpmurl:50
+#: ../bin/rpmqf:20 ../bin/rpmrb:14 ../bin/rpmunmets:57 ../bin/rpmurl:51
 msgid "shift"
 msgstr ""
 
@@ -518,33 +515,33 @@ msgid "SUDO=sudo"
 msgstr ""
 
 #: ../share/common:38 ../share/common:63 ../share/common:162
-#: ../share/common:163 ../share/common:164 ../share/common:228
-#: ../share/common:253 ../share/common:256 ../share/common:276
-#: ../share/common:299 ../share/common:335 ../share/common:385
+#: ../share/common:163 ../share/common:165 ../share/common:229
+#: ../share/common:254 ../share/common:257 ../share/common:277
+#: ../share/common:300 ../share/common:336 ../share/common:386
 #: ../tools/upload-to-alt:12 ../tools/upload-to-alt:31 ../bin/loginhsh:72
-#: ../bin/myhsh:124 ../bin/myhsh:130 ../bin/myhsh:175 ../bin/rpmbb:71
+#: ../bin/myhsh:119 ../bin/myhsh:125 ../bin/myhsh:170 ../bin/rpmbb:71
 #: ../bin/rpmbb:72 ../bin/rpmbb:104 ../bin/rpmbph:185 ../bin/rpmbph:238
 #: ../bin/rpmbph:242 ../bin/rpmbs:165 ../bin/rpmbs:176 ../bin/rpmbs:201
 #: ../bin/rpmbs:215 ../bin/rpmbsh:78 ../bin/rpmbsh:79 ../bin/rpmbsh:91
-#: ../bin/rpmbugs:53 ../bin/rpmbugs:83 ../bin/rpmcs:41 ../bin/rpmcs:108
+#: ../bin/rpmbugs:54 ../bin/rpmbugs:84 ../bin/rpmcs:42 ../bin/rpmcs:109
 #: ../bin/rpmgp:179 ../bin/rpmgp:269 ../bin/rpmgp:272 ../bin/rpmgp:282
 #: ../bin/rpmgs:112 ../bin/rpmgs:174 ../bin/rpmgs:185 ../bin/rpmrb:28
-#: ../bin/rpmrb:31 ../bin/rpmurl:125 ../bin/rpmurl:140
+#: ../bin/rpmrb:31 ../bin/rpmurl:126 ../bin/rpmurl:141
 msgid "test"
 msgstr ""
 
-#: ../share/common:38 ../share/common:45 ../share/common:197
-#: ../share/common:211 ../share/common:215 ../share/common:221
-#: ../share/common:253 ../share/common:256 ../share/common:357
-#: ../share/common:385 ../share/common:529 ../share/common:535 ../bin/myhsh:94
+#: ../share/common:38 ../share/common:45 ../share/common:198
+#: ../share/common:212 ../share/common:216 ../share/common:222
+#: ../share/common:254 ../share/common:257 ../share/common:358
+#: ../share/common:386 ../share/common:530 ../share/common:536 ../bin/myhsh:89
 #: ../bin/rpmbb:71 ../bin/rpmbph:29 ../bin/rpmbph:36 ../bin/rpmbph:238
 #: ../bin/rpmbph:242 ../bin/rpmbs:124 ../bin/rpmbs:201 ../bin/rpmbs:209
-#: ../bin/rpmbugs:18 ../bin/rpmbugs:53 ../bin/rpmbugs:68 ../bin/rpmbugs:77
-#: ../bin/rpmbugs:83 ../bin/rpmcs:56 ../bin/rpmgp:102 ../bin/rpmgp:113
+#: ../bin/rpmbugs:19 ../bin/rpmbugs:54 ../bin/rpmbugs:69 ../bin/rpmbugs:78
+#: ../bin/rpmbugs:84 ../bin/rpmcs:57 ../bin/rpmgp:102 ../bin/rpmgp:113
 #: ../bin/rpmgp:179 ../bin/rpmgp:257 ../bin/rpmgp:262 ../bin/rpmgp:269
 #: ../bin/rpmgp:272 ../bin/rpmgp:282 ../bin/rpmgs:174 ../bin/rpmgs:185
-#: ../bin/rpmqf:25 ../bin/rpmunmets:89 ../bin/rpmurl:75 ../bin/rpmurl:98
-#: ../bin/rpmurl:125 ../bin/rpmurl:126 ../bin/rpmurl:134
+#: ../bin/rpmqf:25 ../bin/rpmunmets:83 ../bin/rpmurl:76 ../bin/rpmurl:99
+#: ../bin/rpmurl:126 ../bin/rpmurl:127 ../bin/rpmurl:135
 msgid "-z"
 msgstr ""
 
@@ -558,23 +555,23 @@ msgid "-u"
 msgstr ""
 
 #: ../share/common:39 ../share/common:81 ../share/common:102
-#: ../share/common:103 ../share/common:105 ../share/common:262
-#: ../share/common:313 ../share/common:324 ../share/common:367
-#: ../share/common:396 ../share/common:460 ../share/common:537
+#: ../share/common:103 ../share/common:105 ../share/common:263
+#: ../share/common:314 ../share/common:325 ../share/common:368
+#: ../share/common:397 ../share/common:461 ../share/common:538
 #: ../bin/loginhsh:38 ../bin/loginhsh:50 ../bin/loginhsh:74 ../bin/loginhsh:80
 #: ../bin/mkpatch:42 ../bin/mkpatch:52 ../bin/mkpatch:61 ../bin/mkpatch:70
-#: ../bin/myhsh:42 ../bin/myhsh:53 ../bin/myhsh:77 ../bin/myhsh:162
-#: ../bin/myhsh:174 ../bin/rpmbb:44 ../bin/rpmbb:57 ../bin/rpmbb:88
+#: ../bin/myhsh:37 ../bin/myhsh:48 ../bin/myhsh:72 ../bin/myhsh:157
+#: ../bin/myhsh:169 ../bin/rpmbb:44 ../bin/rpmbb:57 ../bin/rpmbb:88
 #: ../bin/rpmbb:112 ../bin/rpmbb:120 ../bin/rpmbph:217 ../bin/rpmbph:227
 #: ../bin/rpmbs:56 ../bin/rpmbs:73 ../bin/rpmbs:90 ../bin/rpmbs:115
 #: ../bin/rpmbs:151 ../bin/rpmbs:176 ../bin/rpmbs:179 ../bin/rpmbsh:43
-#: ../bin/rpmbsh:55 ../bin/rpmbsh:91 ../bin/rpmbugs:39 ../bin/rpmbugs:70
-#: ../bin/rpmcs:41 ../bin/rpmcs:51 ../bin/rpmgp:94 ../bin/rpmgp:118
+#: ../bin/rpmbsh:55 ../bin/rpmbsh:91 ../bin/rpmbugs:40 ../bin/rpmbugs:71
+#: ../bin/rpmcs:42 ../bin/rpmcs:52 ../bin/rpmgp:94 ../bin/rpmgp:118
 #: ../bin/rpmgp:144 ../bin/rpmgp:157 ../bin/rpmgp:169 ../bin/rpmgp:191
 #: ../bin/rpmgp:203 ../bin/rpmgp:224 ../bin/rpmgp:231 ../bin/rpmgp:252
 #: ../bin/rpmgp:282 ../bin/rpmgs:39 ../bin/rpmgs:208 ../bin/rpmqf:15
-#: ../bin/rpmrb:23 ../bin/rpmU:10 ../bin/rpmunmets:55 ../bin/rpmunmets:62
-#: ../bin/rpmunmets:95 ../bin/rpmurl:37 ../bin/rpmurl:49
+#: ../bin/rpmrb:23 ../bin/rpmU:10 ../bin/rpmunmets:49 ../bin/rpmunmets:56
+#: ../bin/rpmunmets:89 ../bin/rpmurl:38 ../bin/rpmurl:50
 msgid "0"
 msgstr ""
 
@@ -586,8 +583,8 @@ msgstr ""
 #: ../share/common:105 ../share/common:157 ../tools/upload-to-alt:29
 #: Makefile:15 ../bin/loginhsh:83 ../bin/mkpatch:46 ../bin/mkpatch:55
 #: ../bin/rpmbph:47 ../bin/rpmbph:176 ../bin/rpmbph:177 ../bin/rpmbph:180
-#: ../bin/rpmbph:181 ../bin/rpmbs:219 ../bin/rpmunmets:88 ../bin/rpmurl:136
-#: ../bin/rpmurl:138
+#: ../bin/rpmbph:181 ../bin/rpmbs:219 ../bin/rpmunmets:82 ../bin/rpmurl:137
+#: ../bin/rpmurl:139
 msgid "-d"
 msgstr ""
 
@@ -596,82 +593,79 @@ msgid "OURTMPDIR=/tmp"
 msgstr ""
 
 #: ../share/common:48 ../share/common:82 ../share/common:126
-#: ../share/common:178 ../share/common:231 ../share/common:233
-#: ../share/common:236 ../share/common:253 ../share/common:256
-#: ../share/common:276 ../share/common:376 ../share/common:382
-#: ../share/common:385 ../share/common:432 ../share/common:555
+#: ../share/common:179 ../share/common:232 ../share/common:234
+#: ../share/common:237 ../share/common:254 ../share/common:257
+#: ../share/common:277 ../share/common:377 ../share/common:383
+#: ../share/common:386 ../share/common:433 ../share/common:556
 #: ../bin/loginhsh:72 ../bin/loginhsh:79 ../bin/loginhsh:85
-#: ../bin/loginhsh:101 ../bin/myhsh:43 ../bin/myhsh:83 ../bin/myhsh:96
-#: ../bin/myhsh:100 ../bin/rpmbb:71 ../bin/rpmbb:83 ../bin/rpmbb:104
+#: ../bin/loginhsh:101 ../bin/myhsh:38 ../bin/myhsh:78 ../bin/myhsh:91
+#: ../bin/myhsh:95 ../bin/rpmbb:71 ../bin/rpmbb:83 ../bin/rpmbb:104
 #: ../bin/rpmbb:115 ../bin/rpmbph:188 ../bin/rpmbph:238 ../bin/rpmbph:242
 #: ../bin/rpmbph:259 ../bin/rpmbph:260 ../bin/rpmbs:103 ../bin/rpmbs:126
 #: ../bin/rpmbs:134 ../bin/rpmbs:163 ../bin/rpmbs:165 ../bin/rpmbs:190
-#: ../bin/rpmbsh:78 ../bin/rpmbsh:86 ../bin/rpmbugs:83 ../bin/rpmbugs:92
-#: ../bin/rpmcs:57 ../bin/rpmgp:179 ../bin/rpmgp:189 ../bin/rpmgp:269
+#: ../bin/rpmbsh:78 ../bin/rpmbsh:86 ../bin/rpmbugs:84 ../bin/rpmbugs:93
+#: ../bin/rpmcs:58 ../bin/rpmgp:179 ../bin/rpmgp:189 ../bin/rpmgp:269
 #: ../bin/rpmgs:191 ../bin/rpmgs:198 ../bin/rpmgs:200 ../bin/rpmrb:28
-#: ../bin/rpmrb:37 ../bin/rpmrb:38 ../bin/rpmrb:39 ../bin/rpmunmets:85
-#: ../bin/rpmunmets:89 ../bin/rpmurl:125
+#: ../bin/rpmrb:37 ../bin/rpmrb:38 ../bin/rpmrb:39 ../bin/rpmunmets:79
+#: ../bin/rpmunmets:83 ../bin/rpmurl:126
 msgid "fatal"
 msgstr ""
 
-#: ../share/common:51 ../share/common:279 ../share/common:281
-#: ../share/common:371 ../tools/upload-to-alt:17 ../tools/upload-to-alt:22
+#: ../share/common:51 ../share/common:280 ../share/common:282
+#: ../share/common:372 ../tools/upload-to-alt:17 ../tools/upload-to-alt:22
 #: ../bin/loginhsh:38 ../bin/loginhsh:43 ../bin/loginhsh:64 ../bin/loginhsh:74
 #: ../bin/loginhsh:80 ../bin/mkpatch:42 ../bin/mkpatch:52 ../bin/mkpatch:61
-#: ../bin/mkpatch:70 ../bin/myhsh:16 ../bin/myhsh:42 ../bin/myhsh:46
-#: ../bin/myhsh:77 ../bin/myhsh:89 ../bin/myhsh:170 ../bin/myhsh:178
-#: ../bin/rpmbb:20 ../bin/rpmbb:44 ../bin/rpmbb:49 ../bin/rpmbb:79
-#: ../bin/rpmbb:88 ../bin/rpmbb:120 ../bin/rpmbph:217 ../bin/rpmbph:220
-#: ../bin/rpmbs:56 ../bin/rpmbs:66 ../bin/rpmbs:91 ../bin/rpmbs:113
-#: ../bin/rpmbs:115 ../bin/rpmbs:151 ../bin/rpmbs:176 ../bin/rpmbs:231
-#: ../bin/rpmbsh:43 ../bin/rpmbsh:48 ../bin/rpmbsh:101 ../bin/rpmbugs:39
-#: ../bin/rpmbugs:70 ../bin/rpmcs:51 ../bin/rpmgp:104 ../bin/rpmgp:144
-#: ../bin/rpmgp:157 ../bin/rpmgp:169 ../bin/rpmgp:191 ../bin/rpmgp:203
-#: ../bin/rpmgp:224 ../bin/rpmgp:231 ../bin/rpmgp:252 ../bin/rpmgp:282
-#: ../bin/rpmgs:39 ../bin/rpmgs:42 ../bin/rpmgs:43 ../bin/rpmgs:167
-#: ../bin/rpmgs:208 ../bin/rpmqf:15 ../bin/rpmrb:23 ../bin/rpmU:10
-#: ../bin/rpmunmets:15 ../bin/rpmunmets:55 ../bin/rpmunmets:95
-#: ../bin/rpmurl:37 ../bin/rpmurl:42
+#: ../bin/mkpatch:70 ../bin/myhsh:37 ../bin/myhsh:41 ../bin/myhsh:72
+#: ../bin/myhsh:84 ../bin/myhsh:165 ../bin/myhsh:173 ../bin/rpmbb:20
+#: ../bin/rpmbb:44 ../bin/rpmbb:49 ../bin/rpmbb:79 ../bin/rpmbb:88
+#: ../bin/rpmbb:120 ../bin/rpmbph:217 ../bin/rpmbph:220 ../bin/rpmbs:56
+#: ../bin/rpmbs:66 ../bin/rpmbs:91 ../bin/rpmbs:113 ../bin/rpmbs:115
+#: ../bin/rpmbs:151 ../bin/rpmbs:176 ../bin/rpmbs:231 ../bin/rpmbsh:43
+#: ../bin/rpmbsh:48 ../bin/rpmbsh:101 ../bin/rpmbugs:40 ../bin/rpmbugs:71
+#: ../bin/rpmcs:52 ../bin/rpmgp:104 ../bin/rpmgp:144 ../bin/rpmgp:157
+#: ../bin/rpmgp:169 ../bin/rpmgp:191 ../bin/rpmgp:203 ../bin/rpmgp:224
+#: ../bin/rpmgp:231 ../bin/rpmgp:252 ../bin/rpmgp:282 ../bin/rpmgs:39
+#: ../bin/rpmgs:42 ../bin/rpmgs:43 ../bin/rpmgs:167 ../bin/rpmgs:208
+#: ../bin/rpmqf:15 ../bin/rpmrb:23 ../bin/rpmU:10 ../bin/rpmunmets:49
+#: ../bin/rpmunmets:89 ../bin/rpmurl:38 ../bin/rpmurl:43
 msgid "exit"
 msgstr ""
 
-#: ../share/common:51 ../share/common:106 ../share/common:168
-#: ../share/common:212 ../share/common:260 ../share/common:279
-#: ../share/common:281 ../share/common:315 ../share/common:371
-#: ../share/common:399 ../share/common:430 ../share/common:459
-#: ../share/common:531 ../share/common:535 ../share/common:540
+#: ../share/common:51 ../share/common:106 ../share/common:169
+#: ../share/common:213 ../share/common:261 ../share/common:280
+#: ../share/common:282 ../share/common:316 ../share/common:372
+#: ../share/common:400 ../share/common:431 ../share/common:460
+#: ../share/common:532 ../share/common:536 ../share/common:541
 #: ../tools/upload-to-alt:17 ../tools/upload-to-alt:22 ../bin/loginhsh:64
-#: ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/myhsh:16 ../bin/myhsh:69
-#: ../bin/myhsh:74 ../bin/myhsh:89 ../bin/myhsh:123 ../bin/myhsh:130
-#: ../bin/myhsh:138 ../bin/myhsh:170 ../bin/rpmbb:110 ../bin/rpmbs:113
-#: ../bin/rpmbs:231 ../bin/rpmbugs:97 ../bin/rpmcs:43 ../bin/rpmgp:97
-#: ../bin/rpmgp:104 ../bin/rpmgp:107 ../bin/rpmgp:110 ../bin/rpmgp:115
-#: ../bin/rpmgp:243 ../bin/rpmgp:248 ../bin/rpmgs:57 ../bin/rpmgs:167
-#: ../bin/rpmunmets:15
+#: ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/myhsh:64 ../bin/myhsh:69
+#: ../bin/myhsh:84 ../bin/myhsh:118 ../bin/myhsh:125 ../bin/myhsh:133
+#: ../bin/myhsh:165 ../bin/rpmbb:110 ../bin/rpmbs:113 ../bin/rpmbs:231
+#: ../bin/rpmbugs:98 ../bin/rpmcs:44 ../bin/rpmgp:97 ../bin/rpmgp:104
+#: ../bin/rpmgp:107 ../bin/rpmgp:110 ../bin/rpmgp:115 ../bin/rpmgp:243
+#: ../bin/rpmgp:248 ../bin/rpmgs:57 ../bin/rpmgs:167
 msgid "1"
 msgstr ""
 
-#: ../share/common:55 ../share/common:128 ../share/common:259
-#: ../share/common:299 ../share/common:317 ../share/common:321
-#: ../share/common:322 ../bin/mkpatch:14 ../bin/rpmgs:194 ../bin/rpmgs:197
+#: ../share/common:55 ../share/common:128 ../share/common:260
+#: ../share/common:300 ../share/common:318 ../share/common:322
+#: ../share/common:323 ../bin/mkpatch:14 ../bin/rpmgs:194 ../bin/rpmgs:197
 msgid "warning"
 msgstr ""
 
-#: ../share/common:61 ../share/common:177 ../bin/rpmbb:83 ../bin/rpmbb:99
+#: ../share/common:61 ../share/common:178 ../bin/rpmbb:83 ../bin/rpmbb:99
 msgid "is_alt"
 msgstr ""
 
 #: ../share/common:63 ../share/common:126 ../share/common:162
-#: ../share/common:163 ../share/common:164 ../share/common:276
-#: ../share/common:290 ../share/common:330 ../share/common:335
-#: ../share/common:379 ../share/common:445 Makefile:24 ../bin/mkpatch:10
-#: ../bin/mkpatch:36 ../bin/myhsh:13 ../bin/myhsh:116 ../bin/myhsh:125
-#: ../bin/rpmbb:109 ../bin/rpmbb:112 ../bin/rpmbph:167 ../bin/rpmbs:215
-#: ../bin/rpmbugs:75 ../bin/rpmcs:61 ../bin/rpmcs:70 ../bin/rpmcs:84
-#: ../bin/rpmcs:89 ../bin/rpmcs:305 ../bin/rpmgp:79 ../bin/rpmgp:238
-#: ../bin/rpmgs:85 ../bin/rpmgs:89 ../bin/rpmgs:112 ../bin/rpmgs:188
-#: ../bin/rpmunmets:12 ../bin/rpmunmets:25 ../bin/rpmunmets:33
-#: ../bin/rpmurl:73 ../bin/rpmurl:96
+#: ../share/common:163 ../share/common:165 ../share/common:277
+#: ../share/common:291 ../share/common:331 ../share/common:336
+#: ../share/common:380 ../share/common:446 Makefile:24 ../bin/mkpatch:10
+#: ../bin/mkpatch:36 ../bin/myhsh:111 ../bin/myhsh:120 ../bin/rpmbb:109
+#: ../bin/rpmbb:112 ../bin/rpmbph:167 ../bin/rpmbs:215 ../bin/rpmbugs:76
+#: ../bin/rpmcs:62 ../bin/rpmcs:71 ../bin/rpmcs:85 ../bin/rpmcs:90
+#: ../bin/rpmcs:306 ../bin/rpmgp:79 ../bin/rpmgp:238 ../bin/rpmgs:85
+#: ../bin/rpmgs:89 ../bin/rpmgs:112 ../bin/rpmgs:188 ../bin/rpmunmets:19
+#: ../bin/rpmunmets:27 ../bin/rpmurl:74 ../bin/rpmurl:97
 msgid "-f"
 msgstr ""
 
@@ -680,12 +674,12 @@ msgid "/etc/altlinux-release"
 msgstr ""
 
 #: ../share/common:64 ../share/common:102 ../share/common:103
-#: ../share/common:105 ../share/common:106 ../share/common:212
-#: ../share/common:216 ../share/common:260 ../share/common:262
-#: ../share/common:315 ../share/common:324 ../share/common:396
-#: ../share/common:399 ../share/common:459 ../share/common:460
-#: ../share/common:531 ../share/common:535 ../share/common:546 ../bin/myhsh:68
-#: ../bin/rpmbs:129 ../bin/rpmcs:41 ../bin/rpmcs:43 ../bin/rpmgp:94
+#: ../share/common:105 ../share/common:106 ../share/common:213
+#: ../share/common:217 ../share/common:261 ../share/common:263
+#: ../share/common:316 ../share/common:325 ../share/common:397
+#: ../share/common:400 ../share/common:460 ../share/common:461
+#: ../share/common:532 ../share/common:536 ../share/common:547 ../bin/myhsh:63
+#: ../bin/rpmbs:129 ../bin/rpmcs:42 ../bin/rpmcs:44 ../bin/rpmgp:94
 #: ../bin/rpmgp:97 ../bin/rpmgp:110 ../bin/rpmgp:115 ../bin/rpmgp:118
 #: ../bin/rpmgs:65 ../bin/rpmgs:74 ../bin/rpmgs:86 ../bin/rpmgs:90
 #: ../bin/rpmgs:96 ../bin/rpmgs:99 ../bin/rpmgs:105 ../bin/rpmgs:111
@@ -724,18 +718,18 @@ msgstr ""
 msgid "RPMBUILD=rpmbuild"
 msgstr ""
 
-#: ../share/common:99 ../share/common:125 ../bin/rpmbb:98 ../bin/rpmcs:115
+#: ../share/common:99 ../share/common:125 ../bin/rpmbb:98 ../bin/rpmcs:116
 msgid "is_git"
 msgstr ""
 
 #: ../share/common:101 ../share/common:115 ../share/common:117
-#: ../share/common:119 ../share/common:120 ../share/common:196
-#: ../share/common:208 ../share/common:209 ../share/common:272
-#: ../share/common:296 ../share/common:306 ../share/common:347
-#: ../share/common:406 ../share/common:429 ../bin/rpmbph:20 ../bin/rpmbph:128
-#: ../bin/rpmbph:136 ../bin/rpmcs:28 ../bin/rpmgp:54 ../bin/rpmgp:75
+#: ../share/common:119 ../share/common:120 ../share/common:197
+#: ../share/common:209 ../share/common:210 ../share/common:273
+#: ../share/common:297 ../share/common:307 ../share/common:348
+#: ../share/common:407 ../share/common:430 ../bin/rpmbph:20 ../bin/rpmbph:128
+#: ../bin/rpmbph:136 ../bin/rpmcs:29 ../bin/rpmgp:54 ../bin/rpmgp:75
 #: ../bin/rpmgp:76 ../bin/rpmgp:77 ../bin/rpmgp:123 ../bin/rpmgp:124
-#: ../bin/rpmurl:72 ../bin/rpmurl:94 ../bin/rpmurl:95
+#: ../bin/rpmurl:73 ../bin/rpmurl:95 ../bin/rpmurl:96
 msgid "local"
 msgstr ""
 
@@ -747,7 +741,7 @@ msgstr ""
 msgid "../.git"
 msgstr ""
 
-#: ../share/common:113 ../share/common:373 ../share/common:376 ../bin/rpmbb:76
+#: ../share/common:113 ../share/common:374 ../share/common:377 ../bin/rpmbb:76
 #: ../bin/rpmbb:86 ../bin/rpmbb:110
 msgid "uni_rpmbuild"
 msgstr ""
@@ -756,8 +750,8 @@ msgstr ""
 msgid "ONEPARAM=-v"
 msgstr ""
 
-#: ../share/common:120 ../share/common:158 ../bin/rpmbb:97 ../bin/rpmcs:114
-#: ../bin/rpmurl:122
+#: ../share/common:120 ../share/common:158 ../bin/rpmbb:97 ../bin/rpmcs:115
+#: ../bin/rpmurl:123
 msgid "dirname"
 msgstr ""
 
@@ -769,8 +763,8 @@ msgstr ""
 msgid "run uni_rpmbuild with spec as 2nd parameter"
 msgstr ""
 
-#: ../share/common:128 ../share/common:299 ../bin/myhsh:105 ../bin/rpmbb:112
-#: ../bin/rpmurl:127
+#: ../share/common:128 ../share/common:300 ../bin/myhsh:100 ../bin/rpmbb:112
+#: ../bin/rpmurl:128
 msgid "!="
 msgstr ""
 
@@ -791,14 +785,14 @@ msgstr ""
 msgid "--rpmbuild"
 msgstr "-r - удалённая сборка"
 
-#: ../share/common:129 ../share/common:321 ../share/common:322
+#: ../share/common:129 ../share/common:322 ../share/common:323
 #: ../tools/upload-to-alt:10 ../tools/upload-to-alt:17 ../bin/loginhsh:57
-#: ../bin/myhsh:123 ../bin/rpmbs:163 ../bin/rpmcs:35
+#: ../bin/myhsh:118 ../bin/rpmbs:163 ../bin/rpmcs:36
 msgid "--"
 msgstr ""
 
-#: ../share/common:133 ../share/common:283 ../share/common:352
-#: ../share/common:453 Makefile:15
+#: ../share/common:133 ../share/common:284 ../share/common:353
+#: ../share/common:454 Makefile:15
 msgid ":"
 msgstr ""
 
@@ -806,20 +800,20 @@ msgstr ""
 msgid "APTCONF=/etc/apt/apt.conf"
 msgstr ""
 
-#: ../share/common:139 ../share/common:255 ../share/common:295 ../bin/rpmbb:92
-#: ../bin/rpmbb:142 ../bin/rpmbs:159 ../bin/rpmbugs:61 ../bin/rpmbugs:80
-#: ../bin/rpmbugs:86 ../bin/rpmgp:242 ../bin/rpmgp:243 ../bin/rpmgp:264
+#: ../share/common:139 ../share/common:256 ../share/common:296 ../bin/rpmbb:92
+#: ../bin/rpmbb:142 ../bin/rpmbs:159 ../bin/rpmbugs:62 ../bin/rpmbugs:81
+#: ../bin/rpmbugs:87 ../bin/rpmgp:242 ../bin/rpmgp:243 ../bin/rpmgp:264
 #: ../bin/rpmgp:266 ../bin/rpmgp:285 ../bin/rpmqf:43 ../bin/rpmU:14
-#: ../bin/rpmurl:78 ../bin/rpmurl:86 ../bin/rpmurl:87 ../bin/rpmurl:101
-#: ../bin/rpmurl:107
+#: ../bin/rpmurl:79 ../bin/rpmurl:87 ../bin/rpmurl:88 ../bin/rpmurl:102
+#: ../bin/rpmurl:108
 msgid "rpm"
 msgstr ""
 
-#: ../share/common:139 ../share/common:255 ../share/common:295 ../bin/rpmcs:69
+#: ../share/common:139 ../share/common:256 ../share/common:296 ../bin/rpmcs:70
 msgid "--eval"
 msgstr ""
 
-#: ../share/common:139 ../bin/rpmcs:69
+#: ../share/common:139 ../bin/rpmcs:70
 msgid "%packager"
 msgstr ""
 
@@ -851,10 +845,10 @@ msgstr ""
 msgid "PKGREPLBASE=/usr/share/eterbuild/pkgrepl"
 msgstr ""
 
-#: ../share/common:157 ../share/common:529 ../bin/loginhsh:62
-#: ../bin/loginhsh:83 ../bin/myhsh:13 ../bin/myhsh:87 ../bin/myhsh:157
-#: ../bin/rpmbb:99 ../bin/rpmbb:100 ../bin/rpmbph:55 ../bin/rpmcs:68
-#: ../bin/rpmcs:115 ../bin/rpmgp:79 ../bin/rpmunmets:12 ../bin/rpmunmets:88
+#: ../share/common:157 ../share/common:530 ../bin/loginhsh:62
+#: ../bin/loginhsh:83 ../bin/myhsh:82 ../bin/myhsh:152 ../bin/rpmbb:99
+#: ../bin/rpmbb:100 ../bin/rpmbph:55 ../bin/rpmcs:69 ../bin/rpmcs:116
+#: ../bin/rpmgp:79 ../bin/rpmunmets:82
 msgid "!"
 msgstr ""
 
@@ -863,426 +857,426 @@ msgid "/etc/eterbuild/config"
 msgstr ""
 
 #: ../share/common:163
-msgid "~/.ebconfig"
-msgstr ""
-
-#: ../share/common:164
 msgid "~/.eterbuild-config"
 msgstr ""
 
-#: ../share/common:166 ../share/common:186 ../share/common:285
-#: ../share/common:286 ../share/common:287 ../share/common:288
-#: ../bin/rpmbugs:82 ../bin/rpmgs:160 ../bin/rpmurl:81 ../bin/rpmurl:82
-#: ../bin/rpmurl:103
+#: ../share/common:165
+msgid "~/.ebconfig"
+msgstr ""
+
+#: ../share/common:167 ../share/common:187 ../share/common:286
+#: ../share/common:287 ../share/common:288 ../share/common:289
+#: ../bin/rpmbugs:83 ../bin/rpmgs:160 ../bin/rpmurl:82 ../bin/rpmurl:83
+#: ../bin/rpmurl:104
 msgid "get_var"
 msgstr ""
 
-#: ../share/common:168 ../share/common:225 ../share/common:283
-#: ../share/common:311 ../share/common:317 ../share/common:321
-#: ../share/common:322 ../share/common:540 ../bin/mkpatch:11 ../bin/mkpatch:12
-#: ../bin/myhsh:159 ../bin/rpmbph:43 ../bin/rpmbph:55 ../bin/rpmbph:64
-#: ../bin/rpmbugs:101 ../bin/rpmcs:13 ../bin/rpmcs:14 ../bin/rpmcs:15
-#: ../bin/rpmcs:16 ../bin/rpmcs:35 ../bin/rpmcs:37 ../bin/rpmcs:38
-#: ../bin/rpmcs:68 ../bin/rpmcs:74 ../bin/rpmcs:79 ../bin/rpmgp:62
+#: ../share/common:169 ../share/common:226 ../share/common:284
+#: ../share/common:312 ../share/common:318 ../share/common:322
+#: ../share/common:323 ../share/common:541 ../bin/mkpatch:11 ../bin/mkpatch:12
+#: ../bin/myhsh:154 ../bin/rpmbph:43 ../bin/rpmbph:55 ../bin/rpmbph:64
+#: ../bin/rpmbugs:102 ../bin/rpmcs:14 ../bin/rpmcs:15 ../bin/rpmcs:16
+#: ../bin/rpmcs:17 ../bin/rpmcs:36 ../bin/rpmcs:38 ../bin/rpmcs:39
+#: ../bin/rpmcs:69 ../bin/rpmcs:75 ../bin/rpmcs:80 ../bin/rpmgp:62
 #: ../bin/rpmgp:106 ../bin/rpmgp:107 ../bin/rpmgp:242
 msgid "grep"
 msgstr ""
 
-#: ../share/common:168 ../bin/myhsh:170 ../bin/rpmgp:106 ../bin/rpmgp:107
+#: ../share/common:169 ../bin/myhsh:165 ../bin/rpmgp:106 ../bin/rpmgp:107
 #: ../bin/rpmqf:18 ../bin/rpmrb:38
 msgid "-i"
 msgstr ""
 
-#: ../share/common:168 ../share/common:540 ../bin/rpmcs:35
+#: ../share/common:169 ../share/common:541 ../bin/rpmcs:36
 msgid "head"
 msgstr ""
 
-#: ../share/common:168 ../share/common:219 ../share/common:220
-#: ../share/common:225 ../share/common:244 ../share/common:540
+#: ../share/common:169 ../share/common:220 ../share/common:221
+#: ../share/common:226 ../share/common:245 ../share/common:541
 #: ../bin/mkpatch:11 ../bin/mkpatch:12 ../bin/mkpatch:69 ../bin/rpmbph:24
 #: ../bin/rpmbph:64 ../bin/rpmbph:151 ../bin/rpmbph:152 ../bin/rpmbph:153
 #: ../bin/rpmbph:154 ../bin/rpmbph:155 ../bin/rpmbph:156 ../bin/rpmbph:243
-#: ../bin/rpmbsh:73 ../bin/rpmbugs:68 ../bin/rpmbugs:97 ../bin/rpmcs:35
-#: ../bin/rpmcs:304 ../bin/rpmgp:62 ../bin/rpmgp:67 ../bin/rpmunmets:84
+#: ../bin/rpmbsh:73 ../bin/rpmbugs:69 ../bin/rpmbugs:98 ../bin/rpmcs:36
+#: ../bin/rpmcs:305 ../bin/rpmgp:62 ../bin/rpmgp:67 ../bin/rpmunmets:78
 msgid "sed"
 msgstr ""
 
-#: ../share/common:168 ../share/common:219 ../share/common:220
-#: ../share/common:225 ../share/common:244 ../share/common:406
-#: ../share/common:533 ../tools/upload-to-alt:26 ../bin/mkpatch:11
+#: ../share/common:169 ../share/common:220 ../share/common:221
+#: ../share/common:226 ../share/common:245 ../share/common:407
+#: ../share/common:534 ../tools/upload-to-alt:26 ../bin/mkpatch:11
 #: ../bin/mkpatch:12 ../bin/mkpatch:69 ../bin/rpmbb:137 ../bin/rpmbph:24
 #: ../bin/rpmbph:64 ../bin/rpmbph:151 ../bin/rpmbph:152 ../bin/rpmbph:153
 #: ../bin/rpmbph:154 ../bin/rpmbph:155 ../bin/rpmbph:156 ../bin/rpmbph:185
 #: ../bin/rpmbph:186 ../bin/rpmbph:243 ../bin/rpmbs:113 ../bin/rpmbs:149
-#: ../bin/rpmbs:188 ../bin/rpmbsh:73 ../bin/rpmbsh:86 ../bin/rpmbugs:60
-#: ../bin/rpmbugs:68 ../bin/rpmbugs:97 ../bin/rpmcs:35 ../bin/rpmcs:90
-#: ../bin/rpmcs:304 ../bin/rpmgp:56 ../bin/rpmgp:62 ../bin/rpmgp:67
-#: ../bin/rpmrb:28 ../bin/rpmrb:34 ../bin/rpmunmets:84
+#: ../bin/rpmbs:188 ../bin/rpmbsh:73 ../bin/rpmbsh:86 ../bin/rpmbugs:61
+#: ../bin/rpmbugs:69 ../bin/rpmbugs:98 ../bin/rpmcs:36 ../bin/rpmcs:91
+#: ../bin/rpmcs:305 ../bin/rpmgp:56 ../bin/rpmgp:62 ../bin/rpmgp:67
+#: ../bin/rpmrb:28 ../bin/rpmrb:34 ../bin/rpmunmets:78
 msgid "-e"
 msgstr ""
 
-#: ../share/common:168
+#: ../share/common:169
 msgid "s/^[^:]*[ \\t]*:[ \\t]*//"
 msgstr ""
 
-#: ../share/common:173 ../share/common:186 ../share/common:283
-#: ../bin/rpmbph:64 ../bin/rpmbugs:82 ../bin/rpmgs:160 ../bin/rpmurl:81
-#: ../bin/rpmurl:82 ../bin/rpmurl:103
+#: ../share/common:174 ../share/common:187 ../share/common:284
+#: ../bin/rpmbph:64 ../bin/rpmbugs:83 ../bin/rpmgs:160 ../bin/rpmurl:82
+#: ../bin/rpmurl:83 ../bin/rpmurl:104
 msgid "eval_spec"
 msgstr ""
 
-#: ../share/common:178 ../share/common:180
+#: ../share/common:179 ../share/common:181
 msgid "-bE"
 msgstr ""
 
-#: ../share/common:178 ../share/common:180 ../share/common:373
-#: ../share/common:376 ../bin/rpmbb:86 ../bin/rpmbb:110
+#: ../share/common:179 ../share/common:181 ../share/common:374
+#: ../share/common:377 ../bin/rpmbb:86 ../bin/rpmbb:110
 msgid "--target"
 msgstr ""
 
-#: ../share/common:178
+#: ../share/common:179
 msgid "Check spec's fields"
 msgstr ""
 
-#: ../share/common:180 ../bin/rpmbph:43 ../bin/rpmbph:98 ../bin/rpmbph:104
+#: ../share/common:181 ../bin/rpmbph:43 ../bin/rpmbph:98 ../bin/rpmbph:104
 #: ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130
-#: ../bin/rpmbph:138 ../bin/rpmbph:148 ../bin/rpmbph:157 ../bin/rpmcs:17
-#: ../bin/rpmcs:70 ../bin/rpmcs:303 ../bin/rpmgp:106 ../bin/rpmgp:107
-#: ../bin/rpmunmets:83 ../bin/rpmunmets:85
+#: ../bin/rpmbph:138 ../bin/rpmbph:148 ../bin/rpmbph:157 ../bin/rpmcs:18
+#: ../bin/rpmcs:71 ../bin/rpmcs:304 ../bin/rpmgp:106 ../bin/rpmgp:107
+#: ../bin/rpmunmets:77 ../bin/rpmunmets:79
 msgid "cat"
 msgstr ""
 
-#: ../share/common:184 ../bin/rpmbph:24 ../bin/rpmcs:74
+#: ../share/common:185 ../bin/rpmbph:24 ../bin/rpmcs:75
 msgid "get_release"
 msgstr ""
 
-#: ../share/common:186 ../share/common:200 ../share/common:286
+#: ../share/common:187 ../share/common:201 ../share/common:287
 msgid "Release"
 msgstr ""
 
-#: ../share/common:189 ../share/common:200 ../share/common:231
-#: ../share/common:233 ../share/common:236 ../bin/rpmcs:108
+#: ../share/common:190 ../share/common:201 ../share/common:232
+#: ../share/common:234 ../share/common:237 ../bin/rpmcs:109
 msgid "set_var"
 msgstr ""
 
-#: ../share/common:191 ../share/common:228 ../bin/rpmbph:170 ../bin/rpmbph:176
-#: ../bin/rpmbph:180 ../bin/rpmcs:64 ../bin/rpmcs:65 ../bin/rpmcs:83
-#: ../bin/rpmcs:85 ../bin/rpmcs:86 ../bin/rpmcs:98 ../bin/rpmcs:99
-#: ../bin/rpmcs:101 ../bin/rpmcs:111 ../bin/rpmcs:112 ../bin/rpmcs:117
-#: ../bin/rpmcs:118 ../bin/rpmcs:122 ../bin/rpmcs:123 ../bin/rpmcs:125
-#: ../bin/rpmcs:126 ../bin/rpmcs:130 ../bin/rpmcs:133 ../bin/rpmcs:185
-#: ../bin/rpmcs:192 ../bin/rpmcs:198 ../bin/rpmcs:201 ../bin/rpmcs:207
-#: ../bin/rpmcs:208 ../bin/rpmcs:218 ../bin/rpmcs:224 ../bin/rpmcs:227
-#: ../bin/rpmcs:233 ../bin/rpmcs:237 ../bin/rpmcs:245 ../bin/rpmcs:248
-#: ../bin/rpmcs:249 ../bin/rpmcs:250 ../bin/rpmcs:251 ../bin/rpmcs:253
-#: ../bin/rpmcs:254 ../bin/rpmcs:255 ../bin/rpmcs:256 ../bin/rpmcs:257
-#: ../bin/rpmcs:259 ../bin/rpmcs:260 ../bin/rpmcs:262 ../bin/rpmcs:263
-#: ../bin/rpmcs:265 ../bin/rpmcs:273 ../bin/rpmcs:276 ../bin/rpmcs:277
-#: ../bin/rpmcs:278 ../bin/rpmcs:279 ../bin/rpmcs:281 ../bin/rpmcs:283
-#: ../bin/rpmcs:284 ../bin/rpmcs:285 ../bin/rpmcs:286 ../bin/rpmcs:288
+#: ../share/common:192 ../share/common:229 ../bin/rpmbph:170 ../bin/rpmbph:176
+#: ../bin/rpmbph:180 ../bin/rpmcs:65 ../bin/rpmcs:66 ../bin/rpmcs:84
+#: ../bin/rpmcs:86 ../bin/rpmcs:87 ../bin/rpmcs:99 ../bin/rpmcs:100
+#: ../bin/rpmcs:102 ../bin/rpmcs:112 ../bin/rpmcs:113 ../bin/rpmcs:118
+#: ../bin/rpmcs:119 ../bin/rpmcs:123 ../bin/rpmcs:124 ../bin/rpmcs:126
+#: ../bin/rpmcs:127 ../bin/rpmcs:131 ../bin/rpmcs:134 ../bin/rpmcs:186
+#: ../bin/rpmcs:193 ../bin/rpmcs:199 ../bin/rpmcs:202 ../bin/rpmcs:208
+#: ../bin/rpmcs:209 ../bin/rpmcs:219 ../bin/rpmcs:225 ../bin/rpmcs:228
+#: ../bin/rpmcs:234 ../bin/rpmcs:238 ../bin/rpmcs:246 ../bin/rpmcs:249
+#: ../bin/rpmcs:250 ../bin/rpmcs:251 ../bin/rpmcs:252 ../bin/rpmcs:254
+#: ../bin/rpmcs:255 ../bin/rpmcs:256 ../bin/rpmcs:257 ../bin/rpmcs:258
+#: ../bin/rpmcs:260 ../bin/rpmcs:261 ../bin/rpmcs:263 ../bin/rpmcs:264
+#: ../bin/rpmcs:266 ../bin/rpmcs:274 ../bin/rpmcs:277 ../bin/rpmcs:278
+#: ../bin/rpmcs:279 ../bin/rpmcs:280 ../bin/rpmcs:282 ../bin/rpmcs:284
+#: ../bin/rpmcs:285 ../bin/rpmcs:286 ../bin/rpmcs:287 ../bin/rpmcs:289
 msgid "subst"
 msgstr ""
 
-#: ../share/common:194 ../bin/rpmbph:31 ../bin/rpmbph:37 ../bin/rpmcs:75
+#: ../share/common:195 ../bin/rpmbph:31 ../bin/rpmbph:37 ../bin/rpmcs:76
 #: ../bin/rpmrb:33
 msgid "set_release"
 msgstr ""
 
-#: ../share/common:198
+#: ../share/common:199
 msgid "RELEASE=alt1"
 msgstr ""
 
-#: ../share/common:206 ../bin/rpmrb:32
+#: ../share/common:207 ../bin/rpmrb:32
 msgid "set_version"
 msgstr ""
 
-#: ../share/common:216 ../bin/loginhsh:43 ../bin/myhsh:46 ../bin/rpmbb:49
+#: ../share/common:217 ../bin/loginhsh:43 ../bin/myhsh:41 ../bin/rpmbb:49
 #: ../bin/rpmbph:220 ../bin/rpmbs:66 ../bin/rpmbsh:48 ../bin/rpmgs:42
-#: ../bin/rpmgs:43 ../bin/rpmurl:42
+#: ../bin/rpmgs:43 ../bin/rpmurl:43
 msgid "2"
 msgstr ""
 
-#: ../share/common:219
+#: ../share/common:220
 msgid "s|\\([0-9]*\\.[0-9]*\\)\\..*|\\1|"
 msgstr ""
 
-#: ../share/common:220
+#: ../share/common:221
 msgid "s|^[0-9]*\\.[0-9]*||;s|^\\.||"
 msgstr ""
 
-#: ../share/common:222
+#: ../share/common:223
 msgid "VERMAJOR="
 msgstr ""
 
-#: ../share/common:225
+#: ../share/common:226
 msgid "\\%define[[:space:]]\\(\\|ver_\\)major"
 msgstr ""
 
-#: ../share/common:225
+#: ../share/common:226
 msgid "s|.*[[:space:]]\\(.*major\\).*|\\1|"
 msgstr ""
 
-#: ../share/common:231 ../share/common:233 ../share/common:236
-#: ../share/common:287
+#: ../share/common:232 ../share/common:234 ../share/common:237
+#: ../share/common:288
 msgid "Version"
 msgstr ""
 
-#: ../share/common:231
+#: ../share/common:232
 #, fuzzy
 msgid "Error 1 with set version to spec"
 msgstr "Ошибка при получении версии из спека"
 
-#: ../share/common:233
+#: ../share/common:234
 #, fuzzy
 msgid "Error 2 with set version to spec"
 msgstr "Ошибка при получении версии из спека"
 
-#: ../share/common:236
+#: ../share/common:237
 #, fuzzy
 msgid "Error 3 with set version to spec"
 msgstr "Ошибка при получении версии из спека"
 
-#: ../share/common:241 ../share/common:255 ../share/common:295
+#: ../share/common:242 ../share/common:256 ../share/common:296
 msgid "subst_namever"
 msgstr ""
 
-#: ../share/common:251 ../share/common:301 ../bin/rpmbb:100
+#: ../share/common:252 ../share/common:302 ../bin/rpmbb:100
 msgid "build_buildroot"
 msgstr ""
 
-#: ../share/common:253
+#: ../share/common:254
 msgid "Use build_buildroot with BASENAME defined"
 msgstr ""
 
-#: ../share/common:255 ../share/common:257
+#: ../share/common:256 ../share/common:258
 msgid "%buildroot"
 msgstr ""
 
-#: ../share/common:256
+#: ../share/common:257
 msgid "Fix rpm's buildroot"
 msgstr "Исправляем buildroot"
 
-#: ../share/common:270 ../share/common:363 ../bin/rpmbb:98 ../bin/rpmbs:216
-#: ../bin/rpmcs:105 ../bin/rpmgp:239 ../bin/rpmgs:187
+#: ../share/common:271 ../share/common:364 ../bin/rpmbb:98 ../bin/rpmbs:216
+#: ../bin/rpmcs:106 ../bin/rpmgp:239 ../bin/rpmgs:187
 msgid "build_rpms_name"
 msgstr ""
 
-#: ../share/common:272
+#: ../share/common:273
 msgid "tmprpm"
 msgstr ""
 
-#: ../share/common:272
+#: ../share/common:273
 msgid "CATSPEC"
 msgstr ""
 
-#: ../share/common:272
+#: ../share/common:273
 msgid "NAMESPEC"
 msgstr ""
 
-#: ../share/common:278 ../share/common:279 ../share/common:281
+#: ../share/common:279 ../share/common:280 ../share/common:282
 #: ../tools/upload-to-alt:29 ../bin/rpmbph:47
 msgid "mktemp"
 msgstr ""
 
-#: ../share/common:278
+#: ../share/common:279
 msgid "-V"
 msgstr ""
 
-#: ../share/common:285 ../bin/rpmbugs:82 ../bin/rpmcs:108 ../bin/rpmurl:103
+#: ../share/common:286 ../bin/rpmbugs:83 ../bin/rpmcs:109 ../bin/rpmurl:104
 msgid "Name"
 msgstr ""
 
-#: ../share/common:288
+#: ../share/common:289
 msgid "Source.*"
 msgstr ""
 
-#: ../share/common:289 ../share/common:298 ../share/common:437
-#: ../tools/upload-to-alt:29 ../bin/myhsh:114 ../bin/myhsh:131
+#: ../share/common:290 ../share/common:299 ../share/common:438
+#: ../tools/upload-to-alt:29 ../bin/myhsh:109 ../bin/myhsh:126
 #: ../bin/rpmbb:107 ../bin/rpmbph:258 ../bin/rpmbs:193 ../bin/rpmgs:66
 #: ../bin/rpmgs:75 ../bin/rpmgs:97 ../bin/rpmgs:186
 msgid "basename"
 msgstr ""
 
-#: ../share/common:290 Makefile:24 ../bin/myhsh:116 ../bin/rpmbb:105
-#: ../bin/rpmbb:109 ../bin/rpmbph:167 ../bin/rpmbs:220 ../bin/rpmcs:84
-#: ../bin/rpmcs:305 ../bin/rpmgs:148 ../bin/rpmgs:153 ../bin/rpmgs:188
-#: ../bin/rpmunmets:94
+#: ../share/common:291 Makefile:24 ../bin/myhsh:111 ../bin/rpmbb:105
+#: ../bin/rpmbb:109 ../bin/rpmbph:167 ../bin/rpmbs:220 ../bin/rpmcs:85
+#: ../bin/rpmcs:306 ../bin/rpmgs:148 ../bin/rpmgs:153 ../bin/rpmgs:188
+#: ../bin/rpmunmets:88
 msgid "rm"
 msgstr ""
 
-#: ../share/common:295
+#: ../share/common:296
 msgid "%_sourcedir"
 msgstr ""
 
-#: ../share/common:296
+#: ../share/common:297
 msgid "BNS"
 msgstr ""
 
-#: ../share/common:296
+#: ../share/common:297
 msgid "NSS"
 msgstr ""
 
-#: ../share/common:304 ../bin/myhsh:129 ../bin/rpmbb:111
+#: ../share/common:305 ../bin/myhsh:124 ../bin/rpmbb:111
 msgid "check_log"
 msgstr ""
 
-#: ../share/common:306
+#: ../share/common:307
 msgid "LOGFILE"
 msgstr ""
 
-#: ../share/common:306 ../share/common:347 ../share/common:354
-#: ../share/common:429 ../share/common:442 ../bin/loginhsh:40 ../bin/myhsh:44
-#: ../bin/myhsh:109 ../bin/myhsh:145 ../bin/rpmbb:46 ../bin/rpmbb:94
+#: ../share/common:307 ../share/common:348 ../share/common:355
+#: ../share/common:430 ../share/common:443 ../bin/loginhsh:40 ../bin/myhsh:39
+#: ../bin/myhsh:104 ../bin/myhsh:140 ../bin/rpmbb:46 ../bin/rpmbb:94
 #: ../bin/rpmbph:73 ../bin/rpmbph:84 ../bin/rpmbph:257 ../bin/rpmbs:123
 #: ../bin/rpmbs:131 ../bin/rpmbs:145 ../bin/rpmbs:192 ../bin/rpmbs:208
-#: ../bin/rpmbugs:73 ../bin/rpmcs:28 ../bin/rpmcs:33 ../bin/rpmcs:54
+#: ../bin/rpmbugs:74 ../bin/rpmcs:29 ../bin/rpmcs:34 ../bin/rpmcs:55
 #: ../bin/rpmgp:47 ../bin/rpmgp:54 ../bin/rpmgp:55 ../bin/rpmgp:91
 #: ../bin/rpmgp:199 ../bin/rpmgp:246 ../bin/rpmgp:275 ../bin/rpmgs:176
-#: ../bin/rpmurl:112
+#: ../bin/rpmurl:113
 msgid "i"
 msgstr ""
 
-#: ../share/common:306
+#: ../share/common:307
 msgid "RES"
 msgstr ""
 
-#: ../share/common:308
+#: ../share/common:309
 msgid "-------------------------------------------------------"
 msgstr ""
 
-#: ../share/common:309
+#: ../share/common:310
 #, fuzzy
 msgid "Check log for..."
 msgstr "Проверка протокола сборки на ошибки..."
 
-#: ../share/common:311
+#: ../share/common:312
 msgid ""
 "ld: warning: libstdc++\\.so\\.5, needed by [^ ]\\+, may conflict with libstdc"
 "++\\.so\\.6"
 msgstr ""
 
-#: ../share/common:314
+#: ../share/common:315
 msgid "Error: libstdc++.so.5/6 conflicts"
 msgstr ""
 "Ошибка: Попытка скомпоновать вместе библиотеки, использующие libstdc++.so.5/6"
 
-#: ../share/common:317
+#: ../share/common:318
 msgid "python-strict"
 msgstr ""
 
-#: ../share/common:317
+#: ../share/common:318
 #, fuzzy
 msgid "python-strict used!!!"
 msgstr "Внимание: использовался python-strict!!!"
 
-#: ../share/common:318
+#: ../share/common:319
 msgid "NC1=command not found"
 msgstr ""
 
-#: ../share/common:319
+#: ../share/common:320
 msgid "NC2=-march=athlon -mtune=athlon-xp"
-msgstr ""
-
-#: ../share/common:321
-#, sh-format
-msgid "$NC1"
 msgstr ""
 
 #: ../share/common:322
 #, sh-format
+msgid "$NC1"
+msgstr ""
+
+#: ../share/common:323
+#, sh-format
 msgid "$NC2"
 msgstr ""
 
-#: ../share/common:328 ../bin/loginhsh:90 ../bin/myhsh:84
+#: ../share/common:329 ../bin/loginhsh:90 ../bin/myhsh:79
 msgid "check_locking"
 msgstr ""
 
-#: ../share/common:333 ../bin/myhsh:69 ../bin/rpmbb:119 ../bin/rpmbb:146
+#: ../share/common:334 ../bin/myhsh:64 ../bin/rpmbb:119 ../bin/rpmbb:146
 #: ../bin/rpmbs:150 ../bin/rpmbs:195 ../bin/rpmbs:197 ../bin/rpmbsh:89
 #: ../bin/rpmbsh:95
 msgid "date"
 msgstr ""
 
-#: ../share/common:334
+#: ../share/common:335
 msgid "Wait for unlocking"
 msgstr "Ждём своей очереди"
 
-#: ../share/common:335 ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/rpmbb:42
+#: ../share/common:336 ../bin/loginhsh:36 ../bin/myhsh:35 ../bin/rpmbb:42
 #: ../bin/rpmbph:215 ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37
-#: ../bin/rpmunmets:53 ../bin/rpmurl:35
+#: ../bin/rpmunmets:47 ../bin/rpmurl:36
 msgid "while"
 msgstr ""
 
-#: ../share/common:336 ../share/common:355 ../share/common:443
-#: ../share/common:539 ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/myhsh:110
-#: ../bin/myhsh:145 ../bin/rpmbb:42 ../bin/rpmbb:85 ../bin/rpmbb:95
+#: ../share/common:337 ../share/common:356 ../share/common:444
+#: ../share/common:540 ../bin/loginhsh:36 ../bin/myhsh:35 ../bin/myhsh:105
+#: ../bin/myhsh:140 ../bin/rpmbb:42 ../bin/rpmbb:85 ../bin/rpmbb:95
 #: ../bin/rpmbph:73 ../bin/rpmbph:84 ../bin/rpmbph:215 ../bin/rpmbph:257
 #: ../bin/rpmbs:54 ../bin/rpmbs:123 ../bin/rpmbs:131 ../bin/rpmbs:145
-#: ../bin/rpmbs:192 ../bin/rpmbs:208 ../bin/rpmbsh:41 ../bin/rpmbugs:74
-#: ../bin/rpmcs:33 ../bin/rpmcs:55 ../bin/rpmcs:294 ../bin/rpmgp:47
+#: ../bin/rpmbs:192 ../bin/rpmbs:208 ../bin/rpmbsh:41 ../bin/rpmbugs:75
+#: ../bin/rpmcs:34 ../bin/rpmcs:56 ../bin/rpmcs:295 ../bin/rpmgp:47
 #: ../bin/rpmgp:55 ../bin/rpmgp:91 ../bin/rpmgp:199 ../bin/rpmgp:246
 #: ../bin/rpmgp:276 ../bin/rpmgs:37 ../bin/rpmgs:177 ../bin/rpmgs:183
-#: ../bin/rpmunmets:53 ../bin/rpmurl:35 ../bin/rpmurl:113
+#: ../bin/rpmunmets:47 ../bin/rpmurl:36 ../bin/rpmurl:114
 msgid "do"
 msgstr ""
 
-#: ../share/common:338 ../share/common:370 ../bin/rpmbs:230
+#: ../share/common:339 ../share/common:371 ../bin/rpmbs:230
 msgid "sleep"
 msgstr ""
 
-#: ../share/common:339 ../share/common:384 ../share/common:450
-#: ../share/common:544 ../bin/loginhsh:47 ../bin/myhsh:50 ../bin/myhsh:135
-#: ../bin/myhsh:148 ../bin/rpmbb:53 ../bin/rpmbb:87 ../bin/rpmbb:117
+#: ../share/common:340 ../share/common:385 ../share/common:451
+#: ../share/common:545 ../bin/loginhsh:47 ../bin/myhsh:45 ../bin/myhsh:130
+#: ../bin/myhsh:143 ../bin/rpmbb:53 ../bin/rpmbb:87 ../bin/rpmbb:117
 #: ../bin/rpmbph:79 ../bin/rpmbph:90 ../bin/rpmbph:224 ../bin/rpmbph:263
 #: ../bin/rpmbs:70 ../bin/rpmbs:128 ../bin/rpmbs:136 ../bin/rpmbs:147
-#: ../bin/rpmbs:198 ../bin/rpmbs:224 ../bin/rpmbsh:52 ../bin/rpmbugs:104
-#: ../bin/rpmcs:42 ../bin/rpmcs:298 ../bin/rpmcs:307 ../bin/rpmgp:49
+#: ../bin/rpmbs:198 ../bin/rpmbs:224 ../bin/rpmbsh:52 ../bin/rpmbugs:105
+#: ../bin/rpmcs:43 ../bin/rpmcs:299 ../bin/rpmcs:308 ../bin/rpmgp:49
 #: ../bin/rpmgp:57 ../bin/rpmgp:96 ../bin/rpmgp:202 ../bin/rpmgp:249
 #: ../bin/rpmgp:280 ../bin/rpmgs:45 ../bin/rpmgs:205 ../bin/rpmgs:206
-#: ../bin/rpmunmets:59 ../bin/rpmurl:46 ../bin/rpmurl:147
+#: ../bin/rpmunmets:53 ../bin/rpmurl:47 ../bin/rpmurl:148
 msgid "done"
 msgstr ""
 
-#: ../share/common:345 ../bin/rpmbb:132 ../bin/rpmbs:99 ../bin/rpmbsh:73
+#: ../share/common:346 ../bin/rpmbb:132 ../bin/rpmbs:99 ../bin/rpmbsh:73
 #: ../bin/rpmgp:218
 msgid "pack_src_rpm"
 msgstr ""
 
-#: ../share/common:354 ../share/common:442 ../share/common:539
-#: ../bin/myhsh:109 ../bin/myhsh:145 ../bin/rpmbb:84 ../bin/rpmbb:94
+#: ../share/common:355 ../share/common:443 ../share/common:540
+#: ../bin/myhsh:104 ../bin/myhsh:140 ../bin/rpmbb:84 ../bin/rpmbb:94
 #: ../bin/rpmbph:73 ../bin/rpmbph:84 ../bin/rpmbph:257 ../bin/rpmbs:123
 #: ../bin/rpmbs:131 ../bin/rpmbs:145 ../bin/rpmbs:192 ../bin/rpmbs:208
-#: ../bin/rpmbugs:73 ../bin/rpmcs:33 ../bin/rpmcs:54 ../bin/rpmcs:294
+#: ../bin/rpmbugs:74 ../bin/rpmcs:34 ../bin/rpmcs:55 ../bin/rpmcs:295
 #: ../bin/rpmgp:47 ../bin/rpmgp:55 ../bin/rpmgp:91 ../bin/rpmgp:199
 #: ../bin/rpmgp:246 ../bin/rpmgp:275 ../bin/rpmgs:176 ../bin/rpmgs:182
-#: ../bin/rpmurl:112
+#: ../bin/rpmurl:113
 msgid "for"
 msgstr ""
 
-#: ../share/common:354 ../share/common:393 ../share/common:442
-#: ../share/common:466 ../share/common:497 ../share/common:539
-#: ../bin/loginhsh:37 ../bin/myhsh:41 ../bin/myhsh:109 ../bin/myhsh:145
+#: ../share/common:355 ../share/common:394 ../share/common:443
+#: ../share/common:467 ../share/common:498 ../share/common:540
+#: ../bin/loginhsh:37 ../bin/myhsh:36 ../bin/myhsh:104 ../bin/myhsh:140
 #: ../bin/rpmbb:43 ../bin/rpmbb:84 ../bin/rpmbb:94 ../bin/rpmbph:73
 #: ../bin/rpmbph:84 ../bin/rpmbph:216 ../bin/rpmbph:257 ../bin/rpmbs:55
 #: ../bin/rpmbs:123 ../bin/rpmbs:131 ../bin/rpmbs:145 ../bin/rpmbs:192
-#: ../bin/rpmbs:208 ../bin/rpmbsh:42 ../bin/rpmbugs:73 ../bin/rpmcs:33
-#: ../bin/rpmcs:54 ../bin/rpmcs:294 ../bin/rpmgp:55 ../bin/rpmgp:246
+#: ../bin/rpmbs:208 ../bin/rpmbsh:42 ../bin/rpmbugs:74 ../bin/rpmcs:34
+#: ../bin/rpmcs:55 ../bin/rpmcs:295 ../bin/rpmgp:55 ../bin/rpmgp:246
 #: ../bin/rpmgp:275 ../bin/rpmgs:38 ../bin/rpmgs:176 ../bin/rpmgs:182
-#: ../bin/rpmunmets:54 ../bin/rpmurl:36 ../bin/rpmurl:112
+#: ../bin/rpmunmets:48 ../bin/rpmurl:37 ../bin/rpmurl:113
 msgid "in"
 msgstr ""
 
-#: ../share/common:365
+#: ../share/common:366
 #, sh-format
 msgid "Try to packing $NAMESRPMIN package for sign"
 msgstr "Упаковываем $NAMESRPMIN, чтобы сделать подписанный пакет"
 
-#: ../share/common:366 ../share/common:533 ../bin/rpmbph:186 ../bin/rpmcs:90
+#: ../share/common:367 ../share/common:534 ../bin/rpmbph:186 ../bin/rpmcs:91
 #: ../bin/rpmrb:34
 msgid "add_changelog"
 msgstr ""
 
-#: ../share/common:368
+#: ../share/common:369
 #, sh-format
 msgid ""
 "Spec file $i had not ChangeLog entry. It have added now, check it and enter "
@@ -1291,294 +1285,290 @@ msgstr ""
 "Спек-файл $i не содержал записи в ChangeLog. Она была добавлена - исправьте "
 "её при необходимости и запустите сборку заново."
 
-#: ../share/common:369 ../bin/rpmbs:229
+#: ../share/common:370 ../bin/rpmbs:229
 msgid "Wait for ten seconds."
 msgstr "Ждём 10 секунд..."
 
-#: ../share/common:370 ../bin/rpmbs:230
+#: ../share/common:371 ../bin/rpmbs:230
 msgid "10"
 msgstr ""
 
-#: ../share/common:373 ../share/common:376 ../bin/rpmbs:90
+#: ../share/common:374 ../share/common:377 ../bin/rpmbs:90
 msgid "-bs"
 msgstr ""
 
-#: ../share/common:375
+#: ../share/common:376
 #, sh-format
 msgid "Just packing $NAMESRPMIN"
 msgstr "Просто упаковывается $NAMESRPMIN"
 
-#: ../share/common:376
+#: ../share/common:377
 msgid "Error with rpmbuild"
 msgstr "Ошибка при выполнении rpmbuild"
 
-#: ../share/common:385
+#: ../share/common:386
 msgid "Error: List for build is empty. Check if file is exist."
 msgstr "Ошибка: Список файлов для сборки пуст."
 
-#: ../share/common:391 ../share/common:437 ../share/common:448
+#: ../share/common:392 ../share/common:438 ../share/common:449
 msgid "set_target_type"
 msgstr ""
 
-#: ../share/common:393 ../share/common:466 ../share/common:497
-#: ../bin/loginhsh:37 ../bin/myhsh:41 ../bin/rpmbb:43 ../bin/rpmbph:216
-#: ../bin/rpmbs:55 ../bin/rpmbsh:42 ../bin/rpmgs:38 ../bin/rpmunmets:54
-#: ../bin/rpmurl:36
+#: ../share/common:394 ../share/common:467 ../share/common:498
+#: ../bin/loginhsh:37 ../bin/myhsh:36 ../bin/rpmbb:43 ../bin/rpmbph:216
+#: ../bin/rpmbs:55 ../bin/rpmbsh:42 ../bin/rpmgs:38 ../bin/rpmunmets:48
+#: ../bin/rpmurl:37
 msgid "case"
 msgstr ""
 
-#: ../share/common:394 ../share/common:470 ../share/common:501
+#: ../share/common:395 ../share/common:471 ../share/common:502
 #: ../bin/rpmbph:54
 msgid "M23"
 msgstr ""
 
-#: ../share/common:394 ../share/common:467 ../share/common:498
+#: ../share/common:395 ../share/common:468 ../share/common:499
 msgid "M24"
 msgstr ""
 
-#: ../share/common:394 ../share/common:473 ../share/common:504
+#: ../share/common:395 ../share/common:474 ../share/common:505
 msgid "M30"
 msgstr ""
 
-#: ../share/common:394 ../share/common:476 ../share/common:507
+#: ../share/common:395 ../share/common:477 ../share/common:508
 msgid "M40"
 msgstr ""
 
-#: ../share/common:394 ../share/common:479 ../share/common:510
+#: ../share/common:395 ../share/common:480 ../share/common:511
 msgid "M41"
 msgstr ""
 
-#: ../share/common:394 ../share/common:482 ../share/common:513
+#: ../share/common:395 ../share/common:483 ../share/common:514
 msgid "M42"
 msgstr ""
 
-#: ../share/common:394 ../share/common:485 ../share/common:516
-#: ../bin/myhsh:105 ../bin/rpmbs:122
+#: ../share/common:395 ../share/common:486 ../share/common:517
+#: ../bin/myhsh:100 ../bin/rpmbs:122
 msgid "DD"
 msgstr ""
 
-#: ../share/common:394 ../share/common:488 ../share/common:519
-#: ../bin/myhsh:105 ../bin/rpmbs:122
+#: ../share/common:395 ../share/common:489 ../share/common:520
+#: ../bin/myhsh:100 ../bin/rpmbs:122
 msgid "SS"
 msgstr ""
 
-#: ../share/common:394
+#: ../share/common:395
 msgid "EE"
 msgstr ""
 
-#: ../share/common:398 ../share/common:491 ../share/common:522
-#: ../bin/loginhsh:46 ../bin/myhsh:49 ../bin/rpmbb:52 ../bin/rpmbph:223
-#: ../bin/rpmbs:69 ../bin/rpmbsh:51 ../bin/rpmgs:44 ../bin/rpmunmets:58
-#: ../bin/rpmurl:45
+#: ../share/common:399 ../share/common:492 ../share/common:523
+#: ../bin/loginhsh:46 ../bin/myhsh:44 ../bin/rpmbb:52 ../bin/rpmbph:223
+#: ../bin/rpmbs:69 ../bin/rpmbsh:51 ../bin/rpmgs:44 ../bin/rpmunmets:52
+#: ../bin/rpmurl:46
 msgid "esac"
 msgstr ""
 
-#: ../share/common:404 ../share/common:452
+#: ../share/common:405 ../share/common:453
 msgid "detect_target_env"
 msgstr ""
 
-#: ../share/common:406 ../share/common:408 ../share/common:409
+#: ../share/common:407 ../share/common:409 ../share/common:410
 #: ../bin/rpmbph:16 ../bin/rpmbph:176 ../bin/rpmbph:177 ../bin/rpmbph:180
 #: ../bin/rpmbph:181
 msgid "distr_vendor"
 msgstr ""
 
-#: ../share/common:407
+#: ../share/common:408
 msgid "MENVARG="
 msgstr ""
 
-#: ../share/common:408 ../bin/loginhsh:85 ../bin/myhsh:83 ../bin/myhsh:158
+#: ../share/common:409 ../bin/loginhsh:85 ../bin/myhsh:78 ../bin/myhsh:153
 #: ../bin/rpmbb:69 ../bin/rpmbb:70 ../bin/rpmbph:255 ../bin/rpmbs:202
-#: ../bin/rpmgp:272 ../bin/rpmgs:191 ../bin/rpmunmets:22 ../bin/rpmunmets:30
+#: ../bin/rpmgp:272 ../bin/rpmgs:191 ../bin/rpmunmets:16 ../bin/rpmunmets:24
 msgid "-p"
 msgstr ""
 
-#: ../share/common:409 ../share/common:529 ../share/common:555 ../bin/myhsh:69
-#: ../bin/myhsh:124 ../bin/rpmgp:155 ../bin/rpmurl:136 ../bin/rpmurl:138
+#: ../share/common:410 ../share/common:530 ../share/common:556 ../bin/myhsh:64
+#: ../bin/myhsh:119 ../bin/rpmgp:155 ../bin/rpmurl:137 ../bin/rpmurl:139
 msgid "-s"
 msgstr ""
 
-#: ../share/common:411 ../bin/rpmbph:27 ../bin/rpmbph:169 ../bin/rpmbph:240
+#: ../share/common:412 ../bin/rpmbph:27 ../bin/rpmbph:169 ../bin/rpmbph:240
 msgid "alt"
 msgstr ""
 
-#: ../share/common:413
+#: ../share/common:414
 #, fuzzy, sh-format
 msgid "Target ALT Linux system: $MENV, use $APTCONF"
 msgstr "Целевая система: $MENV, используем $APTCONF"
 
-#: ../share/common:416
+#: ../share/common:417
 #, sh-format
 msgid "Distribution: $DISTRNAME ($VENDOR) (target package: $TARGET)"
 msgstr ""
 
-#: ../share/common:427 ../bin/loginhsh:57 ../bin/myhsh:61 ../bin/rpmbb:65
-#: ../bin/rpmbph:235 ../bin/rpmbs:81 ../bin/rpmbsh:64 ../bin/rpmcs:47
-#: ../bin/rpmgp:217 ../bin/rpmgs:170 ../bin/rpmunmets:71 ../bin/rpmurl:57
+#: ../share/common:428 ../bin/loginhsh:57 ../bin/myhsh:56 ../bin/rpmbb:65
+#: ../bin/rpmbph:235 ../bin/rpmbs:81 ../bin/rpmbsh:64 ../bin/rpmcs:48
+#: ../bin/rpmgp:217 ../bin/rpmgs:170 ../bin/rpmunmets:65 ../bin/rpmurl:58
 msgid "parse_cmd_pre"
 msgstr ""
 
-#: ../share/common:430
+#: ../share/common:431
 msgid "-lt"
 msgstr ""
 
-#: ../share/common:432
+#: ../share/common:433
 msgid "Use -h for help."
 msgstr "Укажите -h для вывода справки."
 
-#: ../share/common:436
+#: ../share/common:437
 msgid "MENV=SS"
 msgstr ""
 
-#: ../share/common:437 ../bin/rpmbs:87 ../bin/rpmgp:273
+#: ../share/common:438 ../bin/rpmbs:87 ../bin/rpmgp:273
 msgid "pwd"
 msgstr ""
 
-#: ../share/common:439
+#: ../share/common:440
 msgid "LISTNAMES="
 msgstr ""
 
-#: ../share/common:440
+#: ../share/common:441
 msgid "LISTARGS="
 msgstr ""
 
-#: ../share/common:441
+#: ../share/common:442
 msgid "OPTINDEX=1"
 msgstr ""
 
-#: ../share/common:456 ../bin/loginhsh:71 ../bin/rpmbb:126 ../bin/rpmbs:104
+#: ../share/common:457 ../bin/loginhsh:71 ../bin/rpmbb:126 ../bin/rpmbs:104
 #: ../bin/rpmbs:143 ../bin/rpmbs:183 ../bin/rpmbsh:77
 msgid "check_key"
 msgstr ""
 
-#: ../share/common:458
+#: ../share/common:459
 msgid "Check access to SSH private key..."
 msgstr "Проверка наличия закрытого ключа SSH..."
 
-#: ../share/common:459 ../tools/upload-to-alt:24
+#: ../share/common:460 ../tools/upload-to-alt:24
 msgid "ssh-add"
 msgstr ""
 
-#: ../share/common:459 ../tools/upload-to-alt:24 ../bin/rpmgp:83
+#: ../share/common:460 ../tools/upload-to-alt:24 ../bin/rpmgp:83
 #: ../bin/rpmgp:107 ../bin/rpmgp:228
 msgid "-l"
 msgstr ""
 
-#: ../share/common:463 ../tools/upload-to-alt:13 ../bin/rpmbs:139
+#: ../share/common:464 ../tools/upload-to-alt:13 ../bin/rpmbs:139
 msgid "set_incoming"
 msgstr ""
 
-#: ../share/common:465 ../share/common:489 ../share/common:496
-#: ../share/common:520
+#: ../share/common:466 ../share/common:490 ../share/common:497
+#: ../share/common:521
 msgid "INCOMING=Sisyphus"
 msgstr ""
 
-#: ../share/common:468
+#: ../share/common:469
 msgid "INCOMING=backports/2.4"
 msgstr ""
 
-#: ../share/common:471
+#: ../share/common:472
 msgid "INCOMING=backports/2.3"
 msgstr ""
 
-#: ../share/common:474
+#: ../share/common:475
 msgid "INCOMING=backports/3.0"
 msgstr ""
 
-#: ../share/common:477
+#: ../share/common:478
 msgid "INCOMING=backports/4.0"
 msgstr ""
 
-#: ../share/common:480
+#: ../share/common:481
 msgid "INCOMING=backports/4.1"
 msgstr ""
 
-#: ../share/common:483
+#: ../share/common:484
 msgid "INCOMING=backports/4.2"
 msgstr ""
 
-#: ../share/common:486 ../share/common:517
+#: ../share/common:487 ../share/common:518
 msgid "INCOMING=Daedalus"
 msgstr ""
 
-#: ../share/common:494 ../bin/rpmbs:139
+#: ../share/common:495 ../bin/rpmbs:139
 msgid "set_incoming_updates"
 msgstr ""
 
-#: ../share/common:499
+#: ../share/common:500
 msgid "INCOMING=updates/2.4"
 msgstr ""
 
-#: ../share/common:502
+#: ../share/common:503
 msgid "INCOMING=updates/2.3"
 msgstr ""
 
-#: ../share/common:505
+#: ../share/common:506
 msgid "INCOMING=updates/3.0"
 msgstr ""
 
-#: ../share/common:508
+#: ../share/common:509
 msgid "INCOMING=updates/4.0"
 msgstr ""
 
-#: ../share/common:511
+#: ../share/common:512
 msgid "INCOMING=updates/4.1"
 msgstr ""
 
-#: ../share/common:514
+#: ../share/common:515
 msgid "INCOMING=updates/4.2"
 msgstr ""
 
-#: ../share/common:526 ../bin/rpmbsh:68 ../bin/rpmgs:204
+#: ../share/common:527 ../bin/rpmbsh:68 ../bin/rpmgs:204
 msgid "add_changelog_helper"
 msgstr ""
 
-#: ../share/common:529
+#: ../share/common:530
 msgid "tty"
 msgstr ""
 
-#: ../share/common:530
+#: ../share/common:531
 msgid "skip changelog fixing without tty"
 msgstr ""
 
-#: ../share/common:535
+#: ../share/common:536
 msgid "skip changelog editing without EDITOR var"
 msgstr ""
 
-#: ../share/common:539
+#: ../share/common:540
 msgid "SPEC"
 msgstr ""
 
-#: ../share/common:540
+#: ../share/common:541
 msgid "^%changelog"
 msgstr ""
 
-#: ../share/common:540
+#: ../share/common:541
 msgid "s!:.*!!g"
 msgstr ""
 
-#: ../share/common:551
+#: ../share/common:552
 msgid "publish_srpm"
 msgstr ""
 
-#: ../share/common:554
+#: ../share/common:555
 msgid "ETERDESTSRPM"
 msgstr ""
 
-#: ../share/common:555 ../bin/myhsh:175 ../bin/rpmbs:114 ../bin/rpmrb:39
+#: ../share/common:556 ../bin/myhsh:170 ../bin/rpmbs:114 ../bin/rpmrb:39
 msgid "rpmbs"
 msgstr ""
 
-#: ../share/common:555
+#: ../share/common:556
 msgid "Can't build SRPMS"
 msgstr "Невозможно собрать SRPMS"
 
-#: ../tools/upload-to-alt:8 ../bin/loginhsh:13 ../bin/mkpatch:8
-#: ../bin/myhsh:13 ../bin/myhsh:18 ../bin/rpmbb:14 ../bin/rpmbph:13
-#: ../bin/rpmbs:21 ../bin/rpmbsh:16 ../bin/rpmbugs:11 ../bin/rpmcs:9
-#: ../bin/rpmgp:12 ../bin/rpmgs:15 ../bin/rpmrb:26 ../bin/rpmU:6
-#: ../bin/rpmunmets:12 ../bin/rpmunmets:18 ../bin/rpmurl:10
-msgid "/etc/rpm/etersoft-build-functions"
+#: ../tools/upload-to-alt:8
+msgid "/etc/eterbuild/common"
 msgstr ""
 
 #: ../tools/upload-to-alt:10
@@ -1606,7 +1596,7 @@ msgstr "Проверка пакета через sisyphus_check..."
 msgid "CHECKSUM=--checksum"
 msgstr ""
 
-#: ../tools/upload-to-alt:22 ../bin/myhsh:100 ../bin/rpmbs:165
+#: ../tools/upload-to-alt:22 ../bin/myhsh:95 ../bin/rpmbs:165
 msgid "sisyphus_check"
 msgstr ""
 
@@ -1650,15 +1640,15 @@ msgstr ""
 msgid "rmdir"
 msgstr ""
 
-#: ../tools/upload-to-alt:31 Makefile:12 ../bin/rpmbph:147 ../bin/rpmcs:70
-#: ../bin/rpmcs:89 ../bin/rpmcs:303 ../bin/rpmcs:304 ../bin/rpmgs:138
+#: ../tools/upload-to-alt:31 Makefile:12 ../bin/rpmbph:147 ../bin/rpmcs:71
+#: ../bin/rpmcs:90 ../bin/rpmcs:304 ../bin/rpmcs:305 ../bin/rpmgs:138
 msgid "mv"
 msgstr ""
 
-#: ../tools/upload-to-alt:32 ../bin/loginhsh:85 ../bin/myhsh:83
+#: ../tools/upload-to-alt:32 ../bin/loginhsh:85 ../bin/myhsh:78
 #: ../bin/rpmbb:69 ../bin/rpmbb:70 ../bin/rpmbph:255 ../bin/rpmbs:202
-#: ../bin/rpmgp:272 ../bin/rpmgs:144 ../bin/rpmgs:191 ../bin/rpmunmets:22
-#: ../bin/rpmunmets:30
+#: ../bin/rpmgp:272 ../bin/rpmgs:144 ../bin/rpmgs:191 ../bin/rpmunmets:16
+#: ../bin/rpmunmets:24
 msgid "mkdir"
 msgstr ""
 
@@ -1670,7 +1660,7 @@ msgstr ""
 msgid "msgfmt"
 msgstr ""
 
-#: Makefile:1 ../bin/rpmbph:16 ../bin/rpmcs:35 ../bin/rpmcs:74
+#: Makefile:1 ../bin/rpmbph:16 ../bin/rpmcs:36 ../bin/rpmcs:75
 msgid "-v"
 msgstr ""
 
@@ -1766,7 +1756,7 @@ msgstr ""
 msgid "../bin/*"
 msgstr ""
 
-#: Makefile:15 ../bin/myhsh:159 ../bin/rpmbph:63 ../bin/rpmbph:64
+#: Makefile:15 ../bin/myhsh:154 ../bin/rpmbph:63 ../bin/rpmbph:64
 msgid "xargs"
 msgstr ""
 
@@ -1774,12 +1764,12 @@ msgstr ""
 msgid "xgettext"
 msgstr ""
 
-#: Makefile:15 ../bin/mkpatch:46 ../bin/mkpatch:55 ../bin/myhsh:123
-#: ../bin/myhsh:162 ../bin/rpmbb:110 ../bin/rpmgp:174
+#: Makefile:15 ../bin/mkpatch:46 ../bin/mkpatch:55 ../bin/myhsh:118
+#: ../bin/myhsh:157 ../bin/rpmbb:110 ../bin/rpmgp:174
 msgid "-a"
 msgstr ""
 
-#: Makefile:15 ../bin/myhsh:124 ../bin/rpmqf:31 ../bin/rpmqf:33
+#: Makefile:15 ../bin/myhsh:119 ../bin/rpmqf:31 ../bin/rpmqf:33
 msgid "-L"
 msgstr ""
 
@@ -1824,35 +1814,42 @@ msgstr ""
 msgid "clean:"
 msgstr ""
 
-#: ../bin/loginhsh:20 ../bin/myhsh:23 ../bin/myhsh:65 ../bin/myhsh:153
+#: ../bin/loginhsh:13 ../bin/mkpatch:8 ../bin/myhsh:13 ../bin/rpmbb:14
+#: ../bin/rpmbph:13 ../bin/rpmbs:21 ../bin/rpmbsh:16 ../bin/rpmbugs:12
+#: ../bin/rpmcs:10 ../bin/rpmgp:12 ../bin/rpmgs:15 ../bin/rpmrb:26
+#: ../bin/rpmU:6 ../bin/rpmunmets:12 ../bin/rpmurl:11
+msgid "/usr/share/eterbuild/common"
+msgstr ""
+
+#: ../bin/loginhsh:20 ../bin/myhsh:18 ../bin/myhsh:60 ../bin/myhsh:148
 #: ../bin/rpmbb:26 ../bin/rpmbph:96 ../bin/rpmbph:102 ../bin/rpmbph:108
 #: ../bin/rpmbph:114 ../bin/rpmbph:120 ../bin/rpmbph:196 ../bin/rpmbs:34
 #: ../bin/rpmbs:120 ../bin/rpmbsh:23 ../bin/rpmgs:23 ../bin/rpmgs:103
 #: ../bin/rpmgs:109 ../bin/rpmgs:116 ../bin/rpmgs:123 ../bin/rpmgs:129
 #: ../bin/rpmgs:135 ../bin/rpmgs:141 ../bin/rpmgs:151 ../bin/rpmgs:158
-#: ../bin/rpmgs:163 ../bin/rpmunmets:38 ../bin/rpmurl:19
+#: ../bin/rpmgs:163 ../bin/rpmunmets:32 ../bin/rpmurl:20
 msgid "function"
 msgstr ""
 
-#: ../bin/loginhsh:20 ../bin/loginhsh:68 ../bin/myhsh:23 ../bin/myhsh:62
+#: ../bin/loginhsh:20 ../bin/loginhsh:68 ../bin/myhsh:18 ../bin/myhsh:57
 #: ../bin/rpmbb:26 ../bin/rpmbb:66 ../bin/rpmbph:196 ../bin/rpmbph:236
 #: ../bin/rpmbs:34 ../bin/rpmbs:83 ../bin/rpmbsh:23 ../bin/rpmbsh:65
-#: ../bin/rpmgs:23 ../bin/rpmgs:171 ../bin/rpmunmets:38 ../bin/rpmunmets:73
-#: ../bin/rpmurl:19 ../bin/rpmurl:59
+#: ../bin/rpmgs:23 ../bin/rpmgs:171 ../bin/rpmunmets:32 ../bin/rpmunmets:67
+#: ../bin/rpmurl:20 ../bin/rpmurl:60
 msgid "mygetopts"
 msgstr ""
 
-#: ../bin/loginhsh:25 ../bin/loginhsh:38 ../bin/myhsh:28 ../bin/myhsh:42
+#: ../bin/loginhsh:25 ../bin/loginhsh:38 ../bin/myhsh:23 ../bin/myhsh:37
 #: ../bin/rpmbb:31 ../bin/rpmbb:44 ../bin/rpmbph:201 ../bin/rpmbph:217
 #: ../bin/rpmbs:39 ../bin/rpmbs:56 ../bin/rpmbsh:28 ../bin/rpmbsh:43
-#: ../bin/rpmgs:28 ../bin/rpmgs:39 ../bin/rpmunmets:43 ../bin/rpmunmets:55
-#: ../bin/rpmurl:24 ../bin/rpmurl:37
+#: ../bin/rpmgs:28 ../bin/rpmgs:39 ../bin/rpmunmets:37 ../bin/rpmunmets:49
+#: ../bin/rpmurl:25 ../bin/rpmurl:38
 msgid "phelp"
 msgstr ""
 
-#: ../bin/loginhsh:29 ../bin/myhsh:32 ../bin/rpmbb:35 ../bin/rpmbph:205
-#: ../bin/rpmbs:43 ../bin/rpmbsh:32 ../bin/rpmgs:32 ../bin/rpmunmets:47
-#: ../bin/rpmurl:28
+#: ../bin/loginhsh:29 ../bin/myhsh:27 ../bin/rpmbb:35 ../bin/rpmbph:205
+#: ../bin/rpmbs:43 ../bin/rpmbsh:32 ../bin/rpmgs:32 ../bin/rpmunmets:41
+#: ../bin/rpmurl:29
 msgid "Options:"
 msgstr "Параметры:"
 
@@ -1873,9 +1870,9 @@ msgstr " -t - использовать каталог hasher, предназна
 msgid " -r - remote login to hasher"
 msgstr " -r - вход в hasher на удалённой машине"
 
-#: ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/rpmbb:42 ../bin/rpmbph:215
-#: ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37 ../bin/rpmunmets:53
-#: ../bin/rpmurl:35
+#: ../bin/loginhsh:36 ../bin/myhsh:35 ../bin/rpmbb:42 ../bin/rpmbph:215
+#: ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37 ../bin/rpmunmets:47
+#: ../bin/rpmurl:36
 msgid "getopts"
 msgstr ""
 
@@ -1883,15 +1880,15 @@ msgstr ""
 msgid ":chitr"
 msgstr ""
 
-#: ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/rpmbb:42 ../bin/rpmbph:215
-#: ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37 ../bin/rpmunmets:53
-#: ../bin/rpmurl:35
+#: ../bin/loginhsh:36 ../bin/myhsh:35 ../bin/rpmbb:42 ../bin/rpmbph:215
+#: ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37 ../bin/rpmunmets:47
+#: ../bin/rpmurl:36
 msgid "opt"
 msgstr ""
 
-#: ../bin/loginhsh:38 ../bin/myhsh:42 ../bin/rpmbb:44 ../bin/rpmbph:217
-#: ../bin/rpmbs:56 ../bin/rpmbsh:43 ../bin/rpmgs:39 ../bin/rpmunmets:55
-#: ../bin/rpmurl:37
+#: ../bin/loginhsh:38 ../bin/myhsh:37 ../bin/rpmbb:44 ../bin/rpmbph:217
+#: ../bin/rpmbs:56 ../bin/rpmbsh:43 ../bin/rpmgs:39 ../bin/rpmunmets:49
+#: ../bin/rpmurl:38
 msgid "h"
 msgstr ""
 
@@ -1907,8 +1904,8 @@ msgstr ""
 msgid "INITIALIZE=1"
 msgstr ""
 
-#: ../bin/loginhsh:41 ../bin/myhsh:45 ../bin/rpmbb:45 ../bin/rpmbs:58
-#: ../bin/rpmurl:38
+#: ../bin/loginhsh:41 ../bin/myhsh:40 ../bin/rpmbb:45 ../bin/rpmbs:58
+#: ../bin/rpmurl:39
 msgid "c"
 msgstr ""
 
@@ -1924,38 +1921,38 @@ msgstr ""
 msgid "REMOTE=1"
 msgstr ""
 
-#: ../bin/loginhsh:43 ../bin/myhsh:46 ../bin/rpmbb:49 ../bin/rpmbph:220
-#: ../bin/rpmbs:66 ../bin/rpmbsh:48 ../bin/rpmgs:42 ../bin/rpmurl:42
+#: ../bin/loginhsh:43 ../bin/myhsh:41 ../bin/rpmbb:49 ../bin/rpmbph:220
+#: ../bin/rpmbs:66 ../bin/rpmbsh:48 ../bin/rpmgs:42 ../bin/rpmurl:43
 msgid "+?"
 msgstr ""
 
-#: ../bin/loginhsh:45 ../bin/myhsh:48 ../bin/rpmbb:51 ../bin/rpmbph:222
-#: ../bin/rpmbs:68 ../bin/rpmbsh:50 ../bin/rpmgs:43 ../bin/rpmunmets:57
-#: ../bin/rpmurl:44
+#: ../bin/loginhsh:45 ../bin/myhsh:43 ../bin/rpmbb:51 ../bin/rpmbph:222
+#: ../bin/rpmbs:68 ../bin/rpmbsh:50 ../bin/rpmgs:43 ../bin/rpmunmets:51
+#: ../bin/rpmurl:45
 msgid "?"
 msgstr ""
 
-#: ../bin/loginhsh:45 ../bin/myhsh:48 ../bin/myhsh:127 ../bin/myhsh:130
+#: ../bin/loginhsh:45 ../bin/myhsh:43 ../bin/myhsh:122 ../bin/myhsh:125
 #: ../bin/rpmbb:51 ../bin/rpmbph:222 ../bin/rpmbs:68 ../bin/rpmbsh:50
-#: ../bin/rpmgp:248 ../bin/rpmgp:279 ../bin/rpmunmets:57 ../bin/rpmurl:44
+#: ../bin/rpmgp:248 ../bin/rpmgp:279 ../bin/rpmunmets:51 ../bin/rpmurl:45
 msgid "break"
 msgstr ""
 
-#: ../bin/loginhsh:50 ../bin/myhsh:53 ../bin/rpmbb:57 ../bin/rpmbph:227
-#: ../bin/rpmbs:73 ../bin/rpmbsh:55 ../bin/rpmgp:107 ../bin/rpmunmets:62
-#: ../bin/rpmurl:49
+#: ../bin/loginhsh:50 ../bin/myhsh:48 ../bin/rpmbb:57 ../bin/rpmbph:227
+#: ../bin/rpmbs:73 ../bin/rpmbsh:55 ../bin/rpmgp:107 ../bin/rpmunmets:56
+#: ../bin/rpmurl:50
 msgid "-gt"
 msgstr ""
 
-#: ../bin/loginhsh:61 ../bin/myhsh:86
+#: ../bin/loginhsh:61 ../bin/myhsh:81
 msgid "HSH=/usr/bin/hsh"
 msgstr ""
 
-#: ../bin/loginhsh:62 ../bin/myhsh:87
+#: ../bin/loginhsh:62 ../bin/myhsh:82
 msgid "-x"
 msgstr ""
 
-#: ../bin/loginhsh:63 ../bin/myhsh:88
+#: ../bin/loginhsh:63 ../bin/myhsh:83
 msgid "Please install hasher package before use it"
 msgstr ""
 
@@ -1964,12 +1961,12 @@ msgstr ""
 msgid "Please set BUILDSERVER in config file"
 msgstr "Пожалуйста, укажите BUILDROOT в ~/.ebconfig"
 
-#: ../bin/loginhsh:73 ../bin/myhsh:170 ../bin/rpmbb:143 ../bin/rpmbsh:87
-#: ../bin/rpmbugs:47 ../bin/rpmgs:57 ../bin/rpmgs:98 ../bin/rpmgs:190
+#: ../bin/loginhsh:73 ../bin/myhsh:165 ../bin/rpmbb:143 ../bin/rpmbsh:87
+#: ../bin/rpmbugs:48 ../bin/rpmgs:57 ../bin/rpmgs:98 ../bin/rpmgs:190
 msgid "-t"
 msgstr ""
 
-#: ../bin/loginhsh:73 ../bin/myhsh:170
+#: ../bin/loginhsh:73 ../bin/myhsh:165
 msgid "loginhsh"
 msgstr ""
 
@@ -2079,7 +2076,7 @@ msgid "cd"
 msgstr ""
 
 #: ../bin/mkpatch:41 ../bin/mkpatch:51 ../bin/mkpatch:60 ../bin/mkpatch:69
-#: ../bin/rpmunmets:109
+#: ../bin/rpmunmets:103
 msgid "diff"
 msgstr ""
 
@@ -2103,194 +2100,190 @@ msgstr ""
 msgid "s|^\\+\\+\\+ b/|\\+\\+\\+ |g"
 msgstr ""
 
-#: ../bin/myhsh:14 ../bin/rpmunmets:13
-msgid "NOTE: /etc/rpm/etersoft-build-functions does not exist"
-msgstr "Предупреждение: /etc/rpm/etersoft-build-functions не существует"
-
-#: ../bin/myhsh:33
+#: ../bin/myhsh:28
 msgid " -m - mail result log"
 msgstr " -m - отправить протокол сборки по почте"
 
-#: ../bin/myhsh:34
+#: ../bin/myhsh:29
 msgid " -s - sign package(s)"
 msgstr " -s - подписать пакет(ы)"
 
-#: ../bin/myhsh:35
+#: ../bin/myhsh:30
 msgid " -u - sign and upload package(s) to Incoming"
 msgstr " -u - подписать пакет(ы) и отправить в Инкоминг"
 
-#: ../bin/myhsh:36 ../bin/rpmbph:210 ../bin/rpmbsh:37
+#: ../bin/myhsh:31 ../bin/rpmbph:210 ../bin/rpmbsh:37
 #, fuzzy
 msgid " -i - install built packages in test hasher"
 msgstr " -i - установить файлы и упаковать"
 
-#: ../bin/myhsh:37 ../bin/rpmbsh:38
+#: ../bin/myhsh:32 ../bin/rpmbsh:38
 msgid " -c - build without stuff (previous built packages)"
 msgstr ""
 
-#: ../bin/myhsh:40
+#: ../bin/myhsh:35
 msgid ":hmic"
 msgstr ""
 
-#: ../bin/myhsh:43
+#: ../bin/myhsh:38
 msgid "m"
 msgstr ""
 
-#: ../bin/myhsh:43
+#: ../bin/myhsh:38
 msgid "Mail is disabled for this version"
 msgstr ""
 
-#: ../bin/myhsh:43
+#: ../bin/myhsh:38
 msgid "TOMAIL=1"
 msgstr ""
 
-#: ../bin/myhsh:44
+#: ../bin/myhsh:39
 msgid "TESTINSTALL=1"
 msgstr ""
 
-#: ../bin/myhsh:65 ../bin/myhsh:74
+#: ../bin/myhsh:60 ../bin/myhsh:69
 msgid "mail_build"
 msgstr ""
 
-#: ../bin/myhsh:67
+#: ../bin/myhsh:62
 msgid "MUTT=mutt"
 msgstr ""
 
-#: ../bin/myhsh:73
+#: ../bin/myhsh:68
 msgid "Build via email"
 msgstr "Собираем с отправкой протокола по почте"
 
-#: ../bin/myhsh:80 ../bin/rpmbb:125 ../bin/rpmbsh:18
+#: ../bin/myhsh:75 ../bin/rpmbb:125 ../bin/rpmbsh:18
 msgid "RESULT=0"
 msgstr ""
 
-#: ../bin/myhsh:83
+#: ../bin/myhsh:78
 msgid "cannot mkdir"
 msgstr ""
 
-#: ../bin/myhsh:92
+#: ../bin/myhsh:87
 #, sh-format
 msgid "List of packages: $LISTNAMES"
 msgstr "Список пакетов на пересборку: $LISTNAMES"
 
-#: ../bin/myhsh:95
+#: ../bin/myhsh:90
 msgid "!!!!!!!!"
 msgstr ""
 
-#: ../bin/myhsh:96
+#: ../bin/myhsh:91
 msgid "Please use src.rpm as argument, not spec"
 msgstr "Пожалуйста, указывайте src.rpm, а не спек в качестве параметра"
 
-#: ../bin/myhsh:99 ../bin/rpmbs:164
+#: ../bin/myhsh:94 ../bin/rpmbs:164
 msgid "Checking with sisyphus_check..."
 msgstr "Проверка пакета через sisyphus_check..."
 
-#: ../bin/myhsh:100 ../bin/rpmbs:165
+#: ../bin/myhsh:95 ../bin/rpmbs:165
 msgid "--files"
 msgstr ""
 
-#: ../bin/myhsh:100
+#: ../bin/myhsh:95
 #, fuzzy
 msgid "check for sisyphus failed"
 msgstr "Проверка пакета через sisyphus_check..."
 
-#: ../bin/myhsh:101 ../bin/rpmbs:166
+#: ../bin/myhsh:96 ../bin/rpmbs:166
 msgid "OK"
 msgstr ""
 
-#: ../bin/myhsh:108
+#: ../bin/myhsh:103
 msgid "LISTBUILTSH="
 msgstr ""
 
-#: ../bin/myhsh:114 ../bin/rpmbb:107 ../bin/rpmbs:193
+#: ../bin/myhsh:109 ../bin/rpmbb:107 ../bin/rpmbs:193
 msgid ".src.rpm"
 msgstr ""
 
-#: ../bin/myhsh:123
+#: ../bin/myhsh:118
 msgid "--build-args"
 msgstr ""
 
-#: ../bin/myhsh:123 ../bin/rpmbb:110
+#: ../bin/myhsh:118 ../bin/rpmbb:110
 msgid "touch"
 msgstr ""
 
-#: ../bin/myhsh:123 ../bin/rpmbb:110
+#: ../bin/myhsh:118 ../bin/rpmbb:110
 msgid "tee"
 msgstr ""
 
-#: ../bin/myhsh:124
+#: ../bin/myhsh:119
 msgid "ln"
 msgstr ""
 
-#: ../bin/myhsh:124
+#: ../bin/myhsh:119
 msgid "chroot/usr/src/RPM/BUILD"
 msgstr ""
 
-#: ../bin/myhsh:126
+#: ../bin/myhsh:121
 msgid "RESULT=1"
 msgstr ""
 
-#: ../bin/myhsh:139
+#: ../bin/myhsh:134
 msgid "!!!!!!! Hasher: FAILED FAILED FAILED !!!!!!!!!"
 msgstr "!!!!!!! Hasher! ПЕРЕСБОРКА НЕ УДАЛАСЬ !!!!!!!!"
 
-#: ../bin/myhsh:142
+#: ../bin/myhsh:137
 msgid "Full list of the hashered packages:"
 msgstr "Полный список собранных в hasher пакетов:"
 
-#: ../bin/myhsh:153 ../bin/myhsh:167
+#: ../bin/myhsh:148 ../bin/myhsh:162
 msgid "get_binpkg_list"
 msgstr ""
 
-#: ../bin/myhsh:157
+#: ../bin/myhsh:152
 msgid "find"
 msgstr ""
 
-#: ../bin/myhsh:157
+#: ../bin/myhsh:152
 msgid "-name"
 msgstr ""
 
-#: ../bin/myhsh:157
+#: ../bin/myhsh:152
 msgid "*\\.src\\.rpm"
 msgstr ""
 
-#: ../bin/myhsh:157
+#: ../bin/myhsh:152
 msgid "*\\.rpm"
 msgstr ""
 
-#: ../bin/myhsh:157
+#: ../bin/myhsh:152
 msgid "-execdir"
 msgstr ""
 
-#: ../bin/myhsh:158
+#: ../bin/myhsh:153
 msgid "rpmquery"
 msgstr ""
 
-#: ../bin/myhsh:158
+#: ../bin/myhsh:153
 msgid "--qf=%{sourcerpm}\\t%{name}-%{version}-%{release}.%{arch}.rpm\\n"
 msgstr ""
 
-#: ../bin/myhsh:158 ../bin/myhsh:159
+#: ../bin/myhsh:153 ../bin/myhsh:154
 msgid "{}"
 msgstr ""
 
-#: ../bin/myhsh:158
+#: ../bin/myhsh:153
 msgid ";"
 msgstr ""
 
-#: ../bin/myhsh:159 ../bin/rpmcs:39 ../bin/rpmcs:40
+#: ../bin/myhsh:154 ../bin/rpmcs:40 ../bin/rpmcs:41
 msgid "cut"
 msgstr ""
 
-#: ../bin/myhsh:159 ../bin/rpmcs:40
+#: ../bin/myhsh:154 ../bin/rpmcs:41
 msgid "-f2"
 msgstr ""
 
-#: ../bin/myhsh:159 ../bin/rpmbph:63 ../bin/rpmbph:64 ../bin/rpmcs:35
+#: ../bin/myhsh:154 ../bin/rpmbph:63 ../bin/rpmbph:64 ../bin/rpmcs:36
 msgid "-n1"
 msgstr ""
 
-#: ../bin/myhsh:159
+#: ../bin/myhsh:154
 msgid "-I"
 msgstr ""
 
@@ -2332,7 +2325,7 @@ msgstr ""
 msgid "BUILDOPT=i b"
 msgstr ""
 
-#: ../bin/rpmbb:47 ../bin/rpmurl:40
+#: ../bin/rpmbb:47 ../bin/rpmurl:41
 msgid "p"
 msgstr ""
 
@@ -2388,7 +2381,7 @@ msgstr ""
 msgid "BUILDROOT var is empty"
 msgstr "Переменная BUILDROOT пуста"
 
-#: ../bin/rpmbb:105 ../bin/rpmbs:220 ../bin/rpmgs:148 ../bin/rpmunmets:94
+#: ../bin/rpmbb:105 ../bin/rpmbs:220 ../bin/rpmgs:148 ../bin/rpmunmets:88
 msgid "-rf"
 msgstr ""
 
@@ -2563,7 +2556,7 @@ msgid ""
 "(by script)"
 msgstr ""
 
-#: ../bin/rpmbph:61 ../bin/rpmcs:294
+#: ../bin/rpmbph:61 ../bin/rpmcs:295
 msgid "print_buildreq"
 msgstr ""
 
@@ -2583,7 +2576,7 @@ msgstr ""
 msgid "s|^.*:||g"
 msgstr ""
 
-#: ../bin/rpmbph:68 ../bin/rpmcs:293
+#: ../bin/rpmbph:68 ../bin/rpmcs:294
 msgid "ALLREPLRULES="
 msgstr ""
 
@@ -2617,7 +2610,7 @@ msgid "awk_e1"
 msgstr ""
 
 #: ../bin/rpmbph:98 ../bin/rpmbph:104 ../bin/rpmbph:110 ../bin/rpmbph:116
-#: ../bin/rpmbph:122 ../bin/rpmcs:70 ../bin/rpmcs:89
+#: ../bin/rpmbph:122 ../bin/rpmcs:71 ../bin/rpmcs:90
 msgid "awk"
 msgstr ""
 
@@ -2735,7 +2728,7 @@ msgstr ""
 msgid ":hniv"
 msgstr ""
 
-#: ../bin/rpmbph:218 ../bin/rpmbs:61 ../bin/rpmcs:294
+#: ../bin/rpmbph:218 ../bin/rpmbs:61 ../bin/rpmcs:295
 msgid "n"
 msgstr ""
 
@@ -2783,7 +2776,7 @@ msgstr ""
 msgid "MENVARG"
 msgstr ""
 
-#: ../bin/rpmbph:259 ../bin/rpmbs:204 ../bin/rpmcs:61
+#: ../bin/rpmbph:259 ../bin/rpmbs:204 ../bin/rpmcs:62
 msgid "cp"
 msgstr ""
 
@@ -2866,7 +2859,7 @@ msgstr ""
 msgid ":hscuUdnoz"
 msgstr ""
 
-#: ../bin/rpmbs:57 ../bin/rpmunmets:56 ../bin/rpmurl:39
+#: ../bin/rpmbs:57 ../bin/rpmunmets:50 ../bin/rpmurl:40
 msgid "s"
 msgstr ""
 
@@ -2874,7 +2867,7 @@ msgstr ""
 msgid "SIGN=1"
 msgstr ""
 
-#: ../bin/rpmbs:58 ../bin/rpmurl:38 ../bin/rpmurl:41
+#: ../bin/rpmbs:58 ../bin/rpmurl:39 ../bin/rpmurl:42
 msgid "CHECKONLY=1"
 msgstr ""
 
@@ -3001,7 +2994,7 @@ msgstr "Ошибка при копировании"
 msgid "Removing buildroot after upload..."
 msgstr "Удаляем временный каталог установки (buildroot) после выгрузки..."
 
-#: ../bin/rpmbs:220 ../bin/rpmcs:289 ../bin/rpmcs:306 ../bin/rpmgs:202
+#: ../bin/rpmbs:220 ../bin/rpmcs:290 ../bin/rpmcs:307 ../bin/rpmgs:202
 msgid "DONE"
 msgstr ""
 
@@ -3061,193 +3054,193 @@ msgstr ""
 msgid "myhsh"
 msgstr ""
 
-#: ../bin/rpmbugs:13 ../bin/rpmurl:12
+#: ../bin/rpmbugs:14 ../bin/rpmurl:13
 msgid "BROWSER=url_handler.sh"
 msgstr ""
 
-#: ../bin/rpmbugs:15 ../bin/rpmbugs:31 ../bin/rpmbugs:101
+#: ../bin/rpmbugs:16 ../bin/rpmbugs:32 ../bin/rpmbugs:102
 msgid "show_bugs"
 msgstr ""
 
-#: ../bin/rpmbugs:23
+#: ../bin/rpmbugs:24
 msgid "-dump"
 msgstr ""
 
-#: ../bin/rpmbugs:23
+#: ../bin/rpmbugs:24
 msgid "-no-numbering"
 msgstr ""
 
-#: ../bin/rpmbugs:23
+#: ../bin/rpmbugs:24
 msgid "-no-references"
 msgstr ""
 
-#: ../bin/rpmbugs:23
+#: ../bin/rpmbugs:24
 msgid "-dump-width"
 msgstr ""
 
-#: ../bin/rpmbugs:27 ../bin/rpmbugs:69 ../bin/rpmbugs:99
+#: ../bin/rpmbugs:28 ../bin/rpmbugs:70 ../bin/rpmbugs:100
 msgid "show_bugbyid"
 msgstr ""
 
-#: ../bin/rpmbugs:37 ../bin/rpmcs:49 ../bin/rpmgp:132 ../bin/rpmqf:13
+#: ../bin/rpmbugs:38 ../bin/rpmcs:50 ../bin/rpmgp:132 ../bin/rpmqf:13
 #: ../bin/rpmrb:21 ../bin/rpmU:8
 msgid "-h"
 msgstr ""
 
-#: ../bin/rpmbugs:38
+#: ../bin/rpmbugs:39
 msgid ""
 "rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file "
 "- open bugs in BROWSER"
 msgstr ""
 
-#: ../bin/rpmbugs:44
+#: ../bin/rpmbugs:45
 msgid "NEWBUG=1"
 msgstr ""
 
-#: ../bin/rpmbugs:49 ../bin/rpmbugs:53
+#: ../bin/rpmbugs:50 ../bin/rpmbugs:54
 msgid "TEXT=1"
 msgstr ""
 
-#: ../bin/rpmbugs:50
+#: ../bin/rpmbugs:51
 msgid "links"
 msgstr ""
 
-#: ../bin/rpmbugs:50
+#: ../bin/rpmbugs:51
 msgid "BROWSER=links"
 msgstr ""
 
-#: ../bin/rpmbugs:56 ../bin/rpmbugs:61 ../bin/rpmqf:43
+#: ../bin/rpmbugs:57 ../bin/rpmbugs:62 ../bin/rpmqf:43
 msgid "-qf"
 msgstr ""
 
-#: ../bin/rpmbugs:61 ../bin/rpmbugs:80 ../bin/rpmbugs:86 ../bin/rpmgp:243
-#: ../bin/rpmgp:264 ../bin/rpmgp:266 ../bin/rpmurl:78 ../bin/rpmurl:86
-#: ../bin/rpmurl:87 ../bin/rpmurl:101 ../bin/rpmurl:107
+#: ../bin/rpmbugs:62 ../bin/rpmbugs:81 ../bin/rpmbugs:87 ../bin/rpmgp:243
+#: ../bin/rpmgp:264 ../bin/rpmgp:266 ../bin/rpmurl:79 ../bin/rpmurl:87
+#: ../bin/rpmurl:88 ../bin/rpmurl:102 ../bin/rpmurl:108
 msgid "--queryformat"
 msgstr ""
 
-#: ../bin/rpmbugs:61
+#: ../bin/rpmbugs:62
 msgid "%{NAME} "
 msgstr ""
 
-#: ../bin/rpmbugs:63
+#: ../bin/rpmbugs:64
 msgid "rpmqf"
 msgstr ""
 
-#: ../bin/rpmbugs:68
+#: ../bin/rpmbugs:69
 msgid "s/[0-9]*//"
 msgstr ""
 
-#: ../bin/rpmbugs:80 ../bin/rpmgp:264 ../bin/rpmurl:78 ../bin/rpmurl:101
+#: ../bin/rpmbugs:81 ../bin/rpmgp:264 ../bin/rpmurl:79 ../bin/rpmurl:102
 msgid "-qp"
 msgstr ""
 
-#: ../bin/rpmbugs:80 ../bin/rpmbugs:86
+#: ../bin/rpmbugs:81 ../bin/rpmbugs:87
 msgid "%{NAME}"
 msgstr ""
 
-#: ../bin/rpmbugs:83
+#: ../bin/rpmbugs:84
 msgid "Cannot get package name"
 msgstr "Невозможно получить название пакета"
 
-#: ../bin/rpmbugs:86 ../bin/rpmgp:243 ../bin/rpmgp:266 ../bin/rpmgs:146
-#: ../bin/rpmurl:86 ../bin/rpmurl:87 ../bin/rpmurl:107
+#: ../bin/rpmbugs:87 ../bin/rpmgp:243 ../bin/rpmgp:266 ../bin/rpmgs:146
+#: ../bin/rpmurl:87 ../bin/rpmurl:88 ../bin/rpmurl:108
 msgid "-q"
 msgstr ""
 
-#: ../bin/rpmbugs:88
+#: ../bin/rpmbugs:89
 msgid "PRODUCT=Sisyphus"
 msgstr ""
 
-#: ../bin/rpmbugs:92
+#: ../bin/rpmbugs:93
 msgid "Do not realized yet. Welcome to developing!"
 msgstr "Ещё не реализовано!"
 
-#: ../bin/rpmbugs:95
+#: ../bin/rpmbugs:96
 msgid "read"
 msgstr ""
 
-#: ../bin/rpmbugs:95
+#: ../bin/rpmbugs:96
 msgid "SUMMARY"
 msgstr ""
 
-#: ../bin/rpmbugs:96
+#: ../bin/rpmbugs:97
 msgid "Enter description (finish with Ctrl-D):"
 msgstr "Введите описание (нажмите Ctrl-D в конце):"
 
-#: ../bin/rpmbugs:97
+#: ../bin/rpmbugs:98
 msgid "altbug"
 msgstr ""
 
-#: ../bin/rpmbugs:97
+#: ../bin/rpmbugs:98
 msgid "--pkg"
 msgstr ""
 
-#: ../bin/rpmbugs:97
+#: ../bin/rpmbugs:98
 msgid "--subj"
 msgstr ""
 
-#: ../bin/rpmbugs:97 ../bin/rpmgp:243
+#: ../bin/rpmbugs:98 ../bin/rpmgp:243
 msgid "tail"
 msgstr ""
 
-#: ../bin/rpmbugs:97
+#: ../bin/rpmbugs:98
 msgid "s|^.*#||"
 msgstr ""
 
-#: ../bin/rpmbugs:101
+#: ../bin/rpmbugs:102
 msgid "@"
 msgstr ""
 
-#: ../bin/rpmcs:11 ../bin/rpmcs:82
+#: ../bin/rpmcs:12 ../bin/rpmcs:83
 msgid "dummy_spec"
 msgstr ""
 
-#: ../bin/rpmcs:13
+#: ../bin/rpmcs:14
 msgid "^Name"
 msgstr ""
 
-#: ../bin/rpmcs:14
+#: ../bin/rpmcs:15
 msgid "^Version"
 msgstr ""
 
-#: ../bin/rpmcs:15
+#: ../bin/rpmcs:16
 msgid "^Release"
 msgstr ""
 
-#: ../bin/rpmcs:16 ../bin/rpmcs:68
+#: ../bin/rpmcs:17 ../bin/rpmcs:69
 msgid "^Packager"
 msgstr ""
 
-#: ../bin/rpmcs:17 ../bin/rpmcs:22
+#: ../bin/rpmcs:18 ../bin/rpmcs:23
 msgid "EOF"
 msgstr ""
 
-#: ../bin/rpmcs:18
+#: ../bin/rpmcs:19
 msgid "Summary:"
 msgstr ""
 
-#: ../bin/rpmcs:18 ../bin/rpmcs:19 ../bin/rpmcs:20
+#: ../bin/rpmcs:19 ../bin/rpmcs:20 ../bin/rpmcs:21
 msgid "dummy"
 msgstr ""
 
-#: ../bin/rpmcs:19
+#: ../bin/rpmcs:20
 msgid "License:"
 msgstr ""
 
-#: ../bin/rpmcs:20
+#: ../bin/rpmcs:21
 msgid "Group:"
 msgstr ""
 
-#: ../bin/rpmcs:21
+#: ../bin/rpmcs:22
 msgid "%description"
 msgstr ""
 
-#: ../bin/rpmcs:26 ../bin/rpmcs:295
+#: ../bin/rpmcs:27 ../bin/rpmcs:296
 msgid "toalt_pkgrepl"
 msgstr ""
 
-#: ../bin/rpmcs:29
+#: ../bin/rpmcs:30
 msgid ""
 "WARULES=s/^ //g \n"
 "\t\ts/ $//g \n"
@@ -3255,146 +3248,146 @@ msgid ""
 "\t\ts/| /|/g"
 msgstr ""
 
-#: ../bin/rpmcs:35
+#: ../bin/rpmcs:36
 msgid "^#"
 msgstr ""
 
-#: ../bin/rpmcs:37
+#: ../bin/rpmcs:38
 msgid "^|"
 msgstr ""
 
-#: ../bin/rpmcs:37 ../bin/rpmcs:38
+#: ../bin/rpmcs:38 ../bin/rpmcs:39
 msgid "REPLRULE="
 msgstr ""
 
-#: ../bin/rpmcs:38
+#: ../bin/rpmcs:39
 msgid "|$"
 msgstr ""
 
-#: ../bin/rpmcs:39 ../bin/rpmcs:40
+#: ../bin/rpmcs:40 ../bin/rpmcs:41
 msgid "-d|"
 msgstr ""
 
-#: ../bin/rpmcs:39
+#: ../bin/rpmcs:40
 msgid "-f1"
 msgstr ""
 
-#: ../bin/rpmcs:50
+#: ../bin/rpmcs:51
 msgid "rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT"
 msgstr ""
 
-#: ../bin/rpmcs:70
+#: ../bin/rpmcs:71
 msgid ""
 "BEGIN{desk=0}{if(/^Source/&&desk==0){printf(\"%s\\n\\n\", text);desk++};"
 "print}"
 msgstr ""
 
-#: ../bin/rpmcs:74
+#: ../bin/rpmcs:75
 msgid "^alt"
 msgstr ""
 
-#: ../bin/rpmcs:75
+#: ../bin/rpmcs:76
 msgid "alt1"
 msgstr ""
 
-#: ../bin/rpmcs:79
+#: ../bin/rpmcs:80
 msgid "^%define date"
 msgstr ""
 
-#: ../bin/rpmcs:81
+#: ../bin/rpmcs:82
 msgid "false"
 msgstr ""
 
-#: ../bin/rpmcs:83
+#: ../bin/rpmcs:84
 msgid "stamp_spec"
 msgstr ""
 
-#: ../bin/rpmcs:85
+#: ../bin/rpmcs:86
 msgid "s|^%define date.*|%changelog|"
 msgstr ""
 
-#: ../bin/rpmcs:86
+#: ../bin/rpmcs:87
 msgid ""
 "s|* %{date} PLD Team\\(.*\\)|- initial build for ALT Linux Sisyphus (spec "
 "from PLD Team)|"
 msgstr ""
 
-#: ../bin/rpmcs:88
+#: ../bin/rpmcs:89
 msgid "PLD spec..."
 msgstr ""
 
-#: ../bin/rpmcs:89
+#: ../bin/rpmcs:90
 msgid "{if ( ! /^%define date/){print}else{exit}}"
 msgstr ""
 
-#: ../bin/rpmcs:90
+#: ../bin/rpmcs:91
 msgid "- initial build for ALT Linux Sisyphus (spec from PLD)"
 msgstr ""
 
-#: ../bin/rpmcs:95
+#: ../bin/rpmcs:96
 msgid "cleanup_spec"
 msgstr ""
 
-#: ../bin/rpmcs:98
+#: ../bin/rpmcs:99
 msgid "s|%if %{with \\(.*\\)}|%if_with \\1|g"
 msgstr ""
 
-#: ../bin/rpmcs:99
+#: ../bin/rpmcs:100
 msgid "s|%if %{without \\(.*\\)}|%if_without \\1|g"
 msgstr ""
 
-#: ../bin/rpmcs:101
+#: ../bin/rpmcs:102
 msgid "s|^%bcond_with|%def_with|g"
 msgstr ""
 
-#: ../bin/rpmcs:104
+#: ../bin/rpmcs:105
 msgid "fix name and release..."
 msgstr "исправляем название и релиз..."
 
-#: ../bin/rpmcs:110
+#: ../bin/rpmcs:111
 #, fuzzy
 msgid "fix obsoleted constructions..."
 msgstr "исправляем не принятые в ALT конструкции..."
 
-#: ../bin/rpmcs:111
+#: ../bin/rpmcs:112
 msgid "s|Source0:|Source:|"
 msgstr ""
 
-#: ../bin/rpmcs:112
+#: ../bin/rpmcs:113
 msgid "s|Patch0:|Patch:|"
 msgstr ""
 
-#: ../bin/rpmcs:117
+#: ../bin/rpmcs:118
 msgid "s|\\(Source:.*\\).tar.gz|\\1.tar.bz2|"
 msgstr ""
 
-#: ../bin/rpmcs:118
+#: ../bin/rpmcs:119
 msgid "s|\\(Source:.*\\).tgz|\\1.tar.bz2|"
 msgstr ""
 
-#: ../bin/rpmcs:122
+#: ../bin/rpmcs:123
 msgid "s|\\(%post.*-p *\\)/sbin/ldconfig|\\1%post_ldconfig|g"
 msgstr ""
 
-#: ../bin/rpmcs:123
+#: ../bin/rpmcs:124
 msgid "s|\\(%postun.*-p *\\)/sbin/ldconfig|\\1%postun_ldconfig|g"
-msgstr ""
-
-#: ../bin/rpmcs:125
-#, sh-format
-msgid "s|$RPM_BUILD_ROOT/%|%buildroot%|g"
 msgstr ""
 
 #: ../bin/rpmcs:126
 #, sh-format
+msgid "s|$RPM_BUILD_ROOT/%|%buildroot%|g"
+msgstr ""
+
+#: ../bin/rpmcs:127
+#, sh-format
 msgid "s|$RPM_BUILD_ROOT|%buildroot|g"
 msgstr ""
 
-#: ../bin/rpmcs:130
+#: ../bin/rpmcs:131
 msgid "s|Group: *Libraries|Group: System/Libraries|g"
 msgstr ""
 
-#: ../bin/rpmcs:133
+#: ../bin/rpmcs:134
 msgid ""
 "s|%__install |install |g \n"
 "\t\ts|%__cp |cp |g \n"
@@ -3448,7 +3441,7 @@ msgid ""
 "\t\ts|%__tar |tar |g"
 msgstr ""
 
-#: ../bin/rpmcs:185
+#: ../bin/rpmcs:186
 msgid ""
 "s|%__make *install|%make_install install|g\n"
 "\t\ts|^make *install|%make_install install|g\n"
@@ -3458,7 +3451,7 @@ msgid ""
 "\t\ts|^make *DESTDIR=%buildroot *install|%makeinstall_std|g"
 msgstr ""
 
-#: ../bin/rpmcs:192
+#: ../bin/rpmcs:193
 msgid ""
 "s|/etc/|%_sysconfdir/|g\n"
 "\t\ts|%_sysconfdir/rc.d/init.d|%_initdir/|g\n"
@@ -3467,13 +3460,13 @@ msgid ""
 "\t\ts|%_sysconfdir/X11/fontpath.d|%_fontpathdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:198
+#: ../bin/rpmcs:199
 msgid ""
 "s|%_libdir/mono/gac|%_monogacdir|g\n"
 "\t\ts|%_libdir/mono|%_monodir|g"
 msgstr ""
 
-#: ../bin/rpmcs:201
+#: ../bin/rpmcs:202
 msgid ""
 "s|%prefix/lib|%_libdir|g\n"
 "\t\ts|%prefix/include|%_includedir|g\n"
@@ -3482,16 +3475,16 @@ msgid ""
 "\t\ts|%prefix/share|%_datadir|g"
 msgstr ""
 
-#: ../bin/rpmcs:207
+#: ../bin/rpmcs:208
 msgid "s|Requires(post): /sbin/install-info|Requires(post): %install_info|g"
 msgstr ""
 
-#: ../bin/rpmcs:208
+#: ../bin/rpmcs:209
 msgid ""
 "s|Requires(preun): /sbin/install-info|Requires(preun): %uninstall_info|g"
 msgstr ""
 
-#: ../bin/rpmcs:218
+#: ../bin/rpmcs:219
 msgid ""
 "s|/usr/sbin/|%_sbindir/|g\n"
 "\t\ts|/usr/bin/|%_bindir/|g\n"
@@ -3500,11 +3493,11 @@ msgid ""
 "\t\ts|%_datadir/games|%_gamesdatadir|g"
 msgstr ""
 
-#: ../bin/rpmcs:224
+#: ../bin/rpmcs:225
 msgid "s|%pear_phpdir|%pear_dir|g"
 msgstr ""
 
-#: ../bin/rpmcs:227
+#: ../bin/rpmcs:228
 msgid ""
 "s|%pear_install$|%register_pear_module|g\n"
 "\t\ts|%pear_uninstall|%unregister_pear_module|g\n"
@@ -3512,14 +3505,14 @@ msgid ""
 "\t\ts|%pear_install_module|%pear_install_std|g"
 msgstr ""
 
-#: ../bin/rpmcs:233
+#: ../bin/rpmcs:234
 msgid ""
 "s|^sed -i -e |%__subst |g\n"
 "\t\ts|^subst |%__subst |g\n"
 "\t\ts|perl -pi -e *|%__subst |g"
 msgstr ""
 
-#: ../bin/rpmcs:237
+#: ../bin/rpmcs:238
 msgid ""
 "s|^python |%__python |g\n"
 "\t\ts|%py_sitescriptdir|%python_sitelibdir|g\n"
@@ -3530,66 +3523,66 @@ msgid ""
 "\t\ts|\\(%pyrequires_eq.*\\)|#\\1|g"
 msgstr ""
 
-#: ../bin/rpmcs:245
+#: ../bin/rpmcs:246
 msgid ""
 "s|ruby setup.rb config|%ruby_config|g\n"
 "\t\t   s|ruby setup.rb setup|%ruby_setup|g"
 msgstr ""
 
-#: ../bin/rpmcs:248
+#: ../bin/rpmcs:249
 msgid "s|^%__python setup.py build|%python_build|g"
 msgstr ""
 
-#: ../bin/rpmcs:249
+#: ../bin/rpmcs:250
 msgid "s|^%__python setup.py install --root %buildroot|%python_install|g"
 msgstr ""
 
-#: ../bin/rpmcs:250
+#: ../bin/rpmcs:251
 msgid "s|^%__python setup.py install -O2 --root %buildroot|%python_install|g"
 msgstr ""
 
-#: ../bin/rpmcs:251
+#: ../bin/rpmcs:252
 msgid ""
 "s|^%__python setup.py install --optimize --root %buildroot|%python_install|g"
 msgstr ""
 
-#: ../bin/rpmcs:253
+#: ../bin/rpmcs:254
 msgid "s|%_datadir/man/|%_mandir/|g"
 msgstr ""
 
-#: ../bin/rpmcs:254
+#: ../bin/rpmcs:255
 msgid "s|%_mandir/man\\([0-9]\\)|%_man\\1dir|g"
 msgstr ""
 
-#: ../bin/rpmcs:255
+#: ../bin/rpmcs:256
 msgid "s|%_libdir/pkgconfig|%_pkgconfigdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:256
+#: ../bin/rpmcs:257
 msgid "s|%_datadir/pixmaps|%_pixmapsdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:257
+#: ../bin/rpmcs:258
 msgid "s|%_datadir/applications|%_desktopdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:259
+#: ../bin/rpmcs:260
 msgid "s|%update_desktop_database|%update_desktopdb|g"
 msgstr ""
 
-#: ../bin/rpmcs:260
+#: ../bin/rpmcs:261
 msgid "s|%clean_desktop_database|%clean_desktopdb|g"
 msgstr ""
 
-#: ../bin/rpmcs:262
+#: ../bin/rpmcs:263
 msgid "s|%gconf_schema_install \\(.*\\)\\.schemas|%gconf2_install \\1|g"
 msgstr ""
 
-#: ../bin/rpmcs:263
+#: ../bin/rpmcs:264
 msgid "s|%_browserpluginsdir|%browser_plugins_path|g"
 msgstr ""
 
-#: ../bin/rpmcs:265
+#: ../bin/rpmcs:266
 msgid ""
 "s|%_iconsdir/hicolor/48x48/apps|%_icons48dir|g\n"
 "\t\ts|%_iconsdir/hicolor/32x32/apps|%_niconsdir|g\n"
@@ -3599,49 +3592,49 @@ msgid ""
 "\t\ts|%_datadir/icons|%_iconsdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:273
+#: ../bin/rpmcs:274
 msgid ""
 "s|%perl_vendorlib|%perl_vendor_privlib|g\n"
 "\t\t   s|%perl_vendorarch|%perl_vendor_archlib|g"
 msgstr ""
 
-#: ../bin/rpmcs:276
+#: ../bin/rpmcs:277
 msgid "s|%_datadir/doc|%_docdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:277
+#: ../bin/rpmcs:278
 msgid "s|%_datadir/omf|%_omfdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:278
+#: ../bin/rpmcs:279
 msgid "s|%_defaultdocdir|%_docdir|g"
 msgstr ""
 
-#: ../bin/rpmcs:279
+#: ../bin/rpmcs:280
 msgid "s|%__autoreconf|%autoreconf|g"
 msgstr ""
 
-#: ../bin/rpmcs:281
+#: ../bin/rpmcs:282
 msgid "s|%rpmcflags|%optflags|g"
 msgstr ""
 
-#: ../bin/rpmcs:285
+#: ../bin/rpmcs:286
 msgid "s|^%defattr(-,root,root)||g"
 msgstr ""
 
-#: ../bin/rpmcs:286
+#: ../bin/rpmcs:287
 msgid "s|^%defattr(644,root,root,755)||g"
 msgstr ""
 
-#: ../bin/rpmcs:288
+#: ../bin/rpmcs:289
 msgid "s|^ *%|%|g"
 msgstr ""
 
-#: ../bin/rpmcs:292
+#: ../bin/rpmcs:293
 msgid "fix requires..."
 msgstr ""
 
-#: ../bin/rpmcs:304 ../bin/rpmgp:161 ../bin/rpmrb:12
+#: ../bin/rpmcs:305 ../bin/rpmgp:161 ../bin/rpmrb:12
 msgid "-r"
 msgstr ""
 
@@ -3769,7 +3762,7 @@ msgstr ""
 msgid "i++"
 msgstr ""
 
-#: ../bin/rpmgp:48 ../bin/rpmgp:251 ../bin/rpmurl:140
+#: ../bin/rpmgp:48 ../bin/rpmgp:251 ../bin/rpmurl:141
 msgid "printf"
 msgstr ""
 
@@ -4001,7 +3994,7 @@ msgstr ""
 msgid "LOADLIST= 0 1 2 3 4 5 6 7 8"
 msgstr ""
 
-#: ../bin/rpmgs:41 ../bin/rpmurl:41
+#: ../bin/rpmgs:41 ../bin/rpmurl:42
 msgid "f"
 msgstr ""
 
@@ -4255,154 +4248,157 @@ msgstr ""
 msgid "-Uvh"
 msgstr ""
 
-#: ../bin/rpmunmets:20 ../bin/rpmunmets:90 ../bin/rpmunmets:100
+#: ../bin/rpmunmets:14 ../bin/rpmunmets:84 ../bin/rpmunmets:94
 msgid "make_ordinalbox"
 msgstr ""
 
-#: ../bin/rpmunmets:25 ../bin/rpmunmets:33
+#: ../bin/rpmunmets:19 ../bin/rpmunmets:27
 msgid "mkaptbox"
 msgstr ""
 
-#: ../bin/rpmunmets:28 ../bin/rpmunmets:101
+#: ../bin/rpmunmets:22 ../bin/rpmunmets:95
 msgid "make_testingbox"
 msgstr ""
 
-#: ../bin/rpmunmets:48
+#: ../bin/rpmunmets:42
 msgid " -s   - get all unmets"
 msgstr ""
 
-#: ../bin/rpmunmets:49
+#: ../bin/rpmunmets:43
 msgid " -M40 - test for distro ALT Linux 4.0"
 msgstr ""
 
-#: ../bin/rpmunmets:52
+#: ../bin/rpmunmets:46
 msgid "SKIPTST="
 msgstr ""
 
-#: ../bin/rpmunmets:53
+#: ../bin/rpmunmets:47
 msgid ":hs"
 msgstr ""
 
-#: ../bin/rpmunmets:56
+#: ../bin/rpmunmets:50
 msgid "SKIPTST=1"
 msgstr ""
 
-#: ../bin/rpmunmets:93 ../bin/rpmunmets:104 ../bin/rpmunmets:105
+#: ../bin/rpmunmets:87 ../bin/rpmunmets:98 ../bin/rpmunmets:99
 msgid "unmet"
 msgstr ""
 
-#: ../bin/rpmunmets:103
+#: ../bin/rpmunmets:97
 msgid "Calculate unmets..."
 msgstr ""
 
-#: ../bin/rpmunmets:108
+#: ../bin/rpmunmets:102
 msgid "New unmets:"
 msgstr ""
 
-#: ../bin/rpmunmets:109
+#: ../bin/rpmunmets:103
 msgid "-U0"
 msgstr ""
 
-#: ../bin/rpmurl:14
+#: ../bin/rpmurl:15
 msgid "GET"
 msgstr ""
 
-#: ../bin/rpmurl:14
+#: ../bin/rpmurl:15
 msgid "GET=GET"
 msgstr ""
 
-#: ../bin/rpmurl:14
+#: ../bin/rpmurl:15
 msgid "GET=false"
 msgstr ""
 
-#: ../bin/rpmurl:29
+#: ../bin/rpmurl:30
 msgid " -c - check URL"
 msgstr " -c - проверить доступность URL"
 
-#: ../bin/rpmurl:30
+#: ../bin/rpmurl:31
 #, fuzzy
 msgid " -f - print failed URL only"
 msgstr " -f - выводить только недоступные URL"
 
-#: ../bin/rpmurl:31
+#: ../bin/rpmurl:32
 msgid " -p - open package page at sisyphus.ru"
 msgstr ""
 
-#: ../bin/rpmurl:32
+#: ../bin/rpmurl:33
 msgid " -s - open source dir in browser"
 msgstr " -s - открыть в браузере тот каталог, где в Сети лежат исходники"
 
-#: ../bin/rpmurl:35
+#: ../bin/rpmurl:36
 msgid ":hcfsp"
 msgstr ""
 
-#: ../bin/rpmurl:39
+#: ../bin/rpmurl:40
 msgid "ABOUTDIR=1"
 msgstr ""
 
-#: ../bin/rpmurl:40
+#: ../bin/rpmurl:41
 msgid "SISYPHUSRU=1"
 msgstr ""
 
-#: ../bin/rpmurl:41
+#: ../bin/rpmurl:42
 msgid "FAILEDONLY=1"
 msgstr ""
 
-#: ../bin/rpmurl:70 ../bin/rpmurl:120
+#: ../bin/rpmurl:71 ../bin/rpmurl:121
 msgid "get_pkginfo"
 msgstr ""
 
-#: ../bin/rpmurl:78 ../bin/rpmurl:86
+#: ../bin/rpmurl:79 ../bin/rpmurl:87
 msgid "%{URL}"
 msgstr ""
 
-#: ../bin/rpmurl:79
+#: ../bin/rpmurl:80
 msgid "SOURCE="
 msgstr ""
 
-#: ../bin/rpmurl:81
+#: ../bin/rpmurl:82
 msgid "Url"
 msgstr ""
 
-#: ../bin/rpmurl:82
+#: ../bin/rpmurl:83
 msgid "Source"
 msgstr ""
 
-#: ../bin/rpmurl:87
+#: ../bin/rpmurl:88
 msgid "%{SOURCE}"
 msgstr ""
 
-#: ../bin/rpmurl:91
+#: ../bin/rpmurl:92
 msgid "PAGEURL=http://sisyphus.ru/srpm/Sisyphus"
 msgstr ""
 
-#: ../bin/rpmurl:92 ../bin/rpmurl:115
+#: ../bin/rpmurl:93 ../bin/rpmurl:116
 msgid "get_pagepkginfo"
 msgstr ""
 
-#: ../bin/rpmurl:95
+#: ../bin/rpmurl:96
 msgid "PKGNAME"
 msgstr ""
 
-#: ../bin/rpmurl:101 ../bin/rpmurl:107
+#: ../bin/rpmurl:102 ../bin/rpmurl:108
 msgid "%{Name}"
 msgstr ""
 
-#: ../bin/rpmurl:127
+#: ../bin/rpmurl:128
 msgid "(none)"
 msgstr ""
 
-#: ../bin/rpmurl:140
+#: ../bin/rpmurl:141
 msgid "*}"
 msgstr ""
 
-#: ../bin/rpmurl:140
+#: ../bin/rpmurl:141
 msgid "200"
 msgstr ""
 
-#: ../bin/rpmurl:140
+#: ../bin/rpmurl:141
 msgid "%-40s %s   %s\\n"
 msgstr ""
+
+#~ msgid "NOTE: /etc/rpm/etersoft-build-functions does not exist"
+#~ msgstr "Предупреждение: /etc/rpm/etersoft-build-functions не существует"
 
 #~ msgid ""
 #~ "Note: you can install ccache for compiler cache and speedup compilation"

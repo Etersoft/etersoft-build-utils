@@ -9,13 +9,7 @@
 #
 # Tests unmets in built int hasher packages
 
-if [ ! -f /etc/rpm/etersoft-build-functions ] ; then
-	echog "NOTE: /etc/rpm/etersoft-build-functions does not exist"
-	echog "Please fix this path in $0 file if you are using local install"
-	exit 1
-fi
-
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 make_ordinalbox()
 {

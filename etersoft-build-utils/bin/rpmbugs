@@ -8,7 +8,8 @@
 # rpmbugs название спек-файла | название пакета | -qf путь к файлу, который лежит в пакете
 # TODO: окошко вешания баги (использовать перловые возможности?)
 # TODO: нормальную обработку парамеров
-. /etc/rpm/etersoft-build-functions
+
+. /usr/share/eterbuild/common
 
 [ -n "$BROWSER" ] || BROWSER=url_handler.sh
 

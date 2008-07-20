@@ -5,7 +5,7 @@
 # Make patch for file in $1 against CVS/SVN repository or .orig file
 #
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 if [ -f Makefile.in ] ; then
 	DD1=`grep ^TOPOBJDIR Makefile.in | sed -e "s| ||g"`

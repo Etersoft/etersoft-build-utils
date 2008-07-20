@@ -134,7 +134,7 @@ uni_rpmbuild()
 }
 
 RPMDIR="$HOME/RPM"
-[ -n "$APTCONF" ] || APTCONF=/etc/apt/apt.conf
+[ -n "$APTCONF" ] || APTCONF=/etc/eterbuild/apt/apt.conf
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
 OWNERMAIL=`rpm --eval %packager`
 
@@ -160,8 +160,9 @@ if [ ! -d "$PKGREPLBASE" ] ; then
 fi
 
 test -f /etc/eterbuild/config && . /etc/eterbuild/config
-test -f ~/.ebconfig  && . ~/.ebconfig
 test -f ~/.eterbuild-config  && . ~/.eterbuild-config
+# obsoleted
+test -f ~/.ebconfig  && . ~/.ebconfig
 
 get_var()
 {
@@ -185,6 +186,13 @@ get_release()
 {
 	eval_spec $1 | get_var "Release"
 }
+
+# get current release number
+get_release_number()
+{
+	$(get_release $1 | sed -e "s/alt//" | sed -e "s/%{_vendor}//" | sed -e "s/eter//" | sed -e "s/%_vendor//")
+}
+
 
 set_var()
 {

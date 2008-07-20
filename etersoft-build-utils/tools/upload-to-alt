@@ -5,7 +5,7 @@
 # 25.01.2005 после закачки переносит файлы в upload.old.xxx
 # 04.11.2005 use arg for set destination (-M23 and so on)
 
-. /etc/rpm/etersoft-build-functions
+. /etc/eterbuild/common
 
 build_list_and_args -- "$@"
 

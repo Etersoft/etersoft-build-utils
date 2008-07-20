@@ -1,0 +1,142 @@
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+loginhsh - install package in hasher / take shell
+Usage:  [-t -i -h -r] bin.rpm...
+Options:
+ -i - initialize hasher
+ -c - cleanup hasher
+ -t - use test hasher dir
+ -r - remote login to hasher
+
+
+---------------------------
+Warning: Can't get topdir from Makefile.in
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+myhsh - build package via hasher
+Usage:  [-m -s -u -i -c] spec...
+Options:
+ -m - mail result log
+ -s - sign package(s)
+ -u - sign and upload package(s) to Incoming
+ -i - install built packages in test hasher
+ -c - build without stuff (previous built packages)
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmbb - build  binary rpm from spec (with ccache using if found)
+Usage:  [-c -p -i -r] spec...
+Options:
+ -c - start from compile stage
+ -i - install and package
+ -p - packaging installed files into package
+ -r - find build requires
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmbph - backports spec and rebuild it
+Usage:  [-r -u -U -n -i -m -v] spec...
+Options:
+ -r - remote build
+ -u/-U - sign and upload after build
+ -n - do not build in hasher
+ -i - install built packages in test hasher
+ -v - more verbose
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmbs - make src.rpm from spec
+Usage:  [-s -u -c -n --nodeps] spec...
+Options:
+ -s - sign package(s) and move it to upload dir
+ -c - only sign package(s) with checking
+ -u - sign package(s) and upload it to Incoming (backports)
+ -U - sign package(s) and upload it to Incoming (updates)
+ -d - remove package(s) from SRPMS and Incoming
+ -n - do not check with sisyphus_check before upload
+ -o - create nosrc.rpm package
+ -z - create src.rpm with compatible gzip compression
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmbsh - BSH - build source; use hasher
+Usage:  [-r -s -u -m -i -c] spec...
+Options:
+ -r - remote build
+ -m - sent result via email
+ -u/-U - sign and upload after build
+ -s - sign and and copy to upload after build
+ -i - install built packages in test hasher
+ -c - build without stuff (previous built packages)
+
+
+---------------------------
+rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file - open bugs in BROWSER
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT
+
+
+---------------------------
+Using:
+rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it
+ name - installed package name or src.rpm
+ system - name of system (ALT Linux by default if -a missed too)
+ -a  check for pkgname in all known repositories
+ -c  check for exist the package in ALT Linux repository
+ -b  install packages needed for build (installs with sudo apt-get)
+ -l  lists packages needed for build (in local pkg system notation) (experimental)
+ -n  do not install in RPM after download, download in current dir
+ -r  refresh package list (download it again)
+ -s  lists all known systems
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmgs - get sources for spec
+Usage:  [-a -r ] spec...
+Options:
+ -a - get all source (not only 0)
+ -f - force download (remove source before download)
+
+
+---------------------------
+rpmqf - the same as rpm -qf
+
+
+---------------------------
+rpmrb spec [vermajor][.verminor] [rel] - update spec to vermajor.verminor version, build %rel release
+
+
+---------------------------
+rpmU - the same as [sudo] rpm -Uvh - update package
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmunmets - tests unmets in build packages
+Usage:  [-M24 -M40]
+Options:
+ -s   - get all unmets
+ -M40 - test for distro ALT Linux 4.0
+
+
+---------------------------
+Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+rpmurl - open package Url in browser
+Usage:  [-c -f -p -s] spec or package...
+Options:
+ -c - check URL
+ -f - print failed URL only
+ -p - open package page at sisyphus.ru
+ -s - open source dir in browser

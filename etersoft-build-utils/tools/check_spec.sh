@@ -1,6 +1,6 @@
 #!/bin/sh
 # copy specs to separate tree, make rpmcs and printout diff
-. /etc/rpm/etersoft-build-functions
+. /etc/eterbuild/common
 
 cd $RPMDIR
 

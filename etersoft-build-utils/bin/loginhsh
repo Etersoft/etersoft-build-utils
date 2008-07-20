@@ -10,7 +10,7 @@
 # Public domain
 # TODO: -r
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 SAVEOPT=$@
 

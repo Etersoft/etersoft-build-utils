@@ -4,7 +4,7 @@
 # 20.06.04, 15.01.05, 28.02.05, 07.03.05, 07.09.05, 09.04.06
 # 
 # Config file for etersoft-build-utils
-# You can copy this file as ~/.ebconfig for per user settings
+# You can copy this file as ~/.eterbuild-config for per user settings
 # and uncomment any setting line
 
 # Путь к каталогу сборки hasher:

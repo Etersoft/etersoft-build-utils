@@ -10,7 +10,7 @@
 # то здесь будет alt0.M24.4
 # TODO: use RPMBUILDARG
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 #VENDORVERSION=`distr_vendor -e`
 DISTRVERSION=`distr_vendor -v`

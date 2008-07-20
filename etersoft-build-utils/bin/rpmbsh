@@ -13,7 +13,7 @@
 # TODO: Сжимать отправляемый лог
 # TODO: присылать обратно собранные пакеты??
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 RESULT=0
 REMCOM=

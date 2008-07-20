@@ -18,7 +18,7 @@
 # Если указан -n, не проверяем перед отправкой
 # TODO: -r
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 SIGN=
 UPLOADNOW=
@@ -217,9 +217,9 @@ if [ -n "$SIGN" ]; then
 			#build_buildroot
 			echo -n "    $BUILDROOT "
 			if [ -d "$BUILDROOT" ] ; then
-				rm -rf "$BUILDROOT" && echo $"DONE" || echo $"failed"
+				rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"
 			else
-				echo $"missed"
+				echog "missed"
 			fi
 		done
 

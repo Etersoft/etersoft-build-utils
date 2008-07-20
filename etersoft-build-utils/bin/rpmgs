@@ -12,7 +12,7 @@
 # -a - get all source
 # check for the same file with other compression
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 WEXT=""
 GETSOURCE=""

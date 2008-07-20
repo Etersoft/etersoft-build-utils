@@ -6,7 +6,8 @@
 # CS -- cleanup spec (like cleanup_spec command)
 # Параметры:
 # - название спек-файла
-. /etc/rpm/etersoft-build-functions
+
+. /usr/share/eterbuild/common
 
 dummy_spec()
 {

@@ -3,7 +3,7 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 if [ "$1" = "-h" ]; then
 	echo "rpmU - the same as [sudo] rpm -Uvh - update package"

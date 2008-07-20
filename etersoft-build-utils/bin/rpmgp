@@ -9,7 +9,7 @@
 # -c - checkonline
 # -n - do not install
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"

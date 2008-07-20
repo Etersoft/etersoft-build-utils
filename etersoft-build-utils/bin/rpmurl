@@ -7,7 +7,8 @@
 # Параметры:
 # - название спек-файла
 #
-. /etc/rpm/etersoft-build-functions
+
+. /usr/share/eterbuild/common
 
 [ -n "$BROWSER" ] || BROWSER=url_handler.sh
 # (command from perl-libwww)

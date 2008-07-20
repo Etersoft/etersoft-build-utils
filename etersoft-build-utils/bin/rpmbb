@@ -11,7 +11,7 @@
 # TODO -M?
 # TODO: -c
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 # Start as helper
 if [ "$1" = "--helper" ]; then

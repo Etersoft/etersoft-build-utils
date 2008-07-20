@@ -2,7 +2,7 @@
 # Lists incoming dir
 # Use -M23 and so on
 
-. /etc/rpm/etersoft-build-functions
+. /etc/eterbuild/common
 
 parse_cmd_pre -- "$@"
 

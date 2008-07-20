@@ -23,7 +23,7 @@ if [ "$1" = "-h" ]; then
 	exit 0
 fi
 
-. /etc/rpm/etersoft-build-functions
+. /usr/share/eterbuild/common
 
 test -e "$SPEC" || fatal "use with spec"
 
