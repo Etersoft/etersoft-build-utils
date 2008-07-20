@@ -1,0 +1,8 @@
+# Package repository URLs
+#
+# You can add [alt] after rpm for digital signature check
+
+rpm file:/var/ftp/ pub/ALTLinux/Compact/2.3 main contribs
+#rpm file:/var/ftp/ pub/ALTLinux/Updates/Junior/2.3/i586 updates
+rpm file:/var/ftp/ pub/ALTLinux/Updates/Compact/2.3/i586 updates
+rpm file:/var/ftp/ pub/ALTLinux/backports/2.3/i586 backports

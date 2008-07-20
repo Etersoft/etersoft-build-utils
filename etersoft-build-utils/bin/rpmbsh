@@ -1,0 +1,101 @@
+#!/bin/sh
+# 2003-2006 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# BSH - build source; use hasher
+# 06.02.05
+# 15.04.05 add other repository support
+# 05.09.05 major rewrite code
+# Создаёт пакет(ы) по указанным спекам и собирает в hasher
+# Поддерживает удалённую сборку пакета ( ключ -r)
+# Присылка результата сборки по почте (ключ -m)
+# TODO: Сжимать отправляемый лог
+# TODO: присылать обратно собранные пакеты??
+
+. /etc/rpm/etersoft-build-functions
+
+RESULT=0
+REMCOM=
+
+#############################
+Usage="Usage: $name [-r -s -u -m -i -c] spec..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - BSH - build source; use hasher"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -r - remote build"
+	echog " -m - sent result via email"
+	echog " -u/-U - sign and upload after build"
+	echog " -s - sign and and copy to upload after build"
+	echog " -i - install built packages in test hasher"
+	echog " -c - build without stuff (previous built packages)"
+}
+
+while getopts :hrusim opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    r) REMOTEBUILD=1 ;;
+#    i) TESTINSTALL=1 ;;
+#    u) UPLOADNOW="-u" ;;
+#    s) UPLOADNOW="-s" ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+## remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
+fi
+
+LISTRPMARGS=$@
+
+}
+#############################
+
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
+
+# If fail, we already has correct changelog
+add_changelog_helper "- new version" $LISTNAMES
+
+#echo ${LISTRPMARGS/\-m/} @ ${LISTRPMARGS} @${LISTNAMES}
+# We do not not pass args for myhsh here...
+# FIXME: не обрабатывает два пропускаемых вместе параметра
+pack_src_rpm $(echo $LISTRPMARGS | sed -e "s|-[suUic]||g")
+
+
+if  [ -n "$REMOTEBUILD" ] ; then
+	check_key
+	test -n "$BUILDSERVER" || fatal "Please set BUILDSERVER in config file"
+	test -n "$REMOTERPMDIR" || REMOTERPMDIR=`ssh $BUILDSERVER echo $HOME`/RPM
+	echo
+	echog "############ Build at build server '$BUILDSERVER' (with $LISTRPMARGS options) ############"
+	echo
+	echog "==== Copying to build server ====="
+	#echog "It is recommended to rename old version at server for save traffic during rsync"
+	cd $RPMDIR/SRPMS && rsync -vay --partial --progress --checksum \
+	 	-e ssh $LISTBUILT $BUILDSERVER:$REMOTERPMDIR/SRPMS/ || fatal "Error with rsync"
+	ssh -t $BUILDSERVER "cd $REMOTERPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTBUILT"
+	RESULT=$?
+	date
+	echo "-------------------------------"
+	test "$RESULT" = "0" && echog "It was remote build at $BUILDSERVER" || echog "There is error during remote build at $BUILDSERVER"
+else
+	cd $RPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTBUILT
+	RESULT=$?
+	date
+	echo "-------------------------------"
+fi
+
+cd -
+
+exit $RESULT

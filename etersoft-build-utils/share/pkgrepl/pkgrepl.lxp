@@ -1,0 +1,4 @@
+# LinuxXP replacements rules
+gpm-devel|
+libungif-devel|
+perl-devel|perl

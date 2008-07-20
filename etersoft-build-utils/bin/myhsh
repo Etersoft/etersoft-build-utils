@@ -1,0 +1,178 @@
+#!/bin/sh
+# 2003-2006 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# 06.02.05
+# 15.04.05 add other repository support
+# 20.08.05 add /proc support
+# Пересборка указанных SRPM-пакетов в hasher
+# Присылка результата сборки по почте (ключ -m)
+# -i устанавливает в тестовый hasher после пересборки
+
+if [ ! -f /etc/rpm/etersoft-build-functions ] ; then
+	echog "NOTE: /etc/rpm/etersoft-build-functions does not exist"
+	echog "Please fix this path in $0 file if you are using local install"
+	exit 1
+fi
+. /etc/rpm/etersoft-build-functions
+
+
+#############################
+Usage="Usage: $name [-m -s -u -i -c] spec..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - build package via hasher"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -m - mail result log"
+	echog " -s - sign package(s)"
+	echog " -u - sign and upload package(s) to Incoming"
+	echog " -i - install built packages in test hasher"
+	echog " -c - build without stuff (previous built packages)"
+}
+
+while getopts :hmic opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    m) fatal "Mail is disabled for this version" ; TOMAIL=1 ;;
+    i) TESTINSTALL=1;;
+	c) HASHERARG="--without-stuff $HASHERARG";;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+ 
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
+fi
+
+LISTRPMARGS=$@
+}
+
+
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
+
+# Start as mail helper
+function mail_build()
+{
+	MUTT=mutt
+	which $MUTT &>/dev/null || return
+	$0 "$@" 2>&1 | $MUTT "$OWNERMAIL" -s "Result of rebuild at $HOSTNAME at `date`"
+}
+
+if [ -n "$TOMAIL" ]; then
+	echog "Build via email"
+	( mail_build $LISTNAMES $LISTARGS ) >/dev/null 2>&1 &
+	echog "Build request is accepted for: $LISTNAMES" 
+	echog "Report will be sending to: $OWNERMAIL"
+	exit 0
+fi
+
+RESULT=0
+
+HASHERDIR=$HASHERDIR$MENVARG
+mkdir -p $LOGDIR $HASHERDIR || fatal "cannot mkdir"
+check_locking
+
+HSH=/usr/bin/hsh
+if [ ! -x "$HSH" ] ; then
+	echo "Please install hasher package before use it"
+	exit 1
+fi
+
+echog "List of packages: \$LISTNAMES"
+
+if [ -z "${LISTNAMES/^.*spec/}"  ] ; then
+	echo "!!!!!!!!"
+	fatal "Please use src.rpm as argument, not spec"
+fi
+
+echog -n "Checking with sisyphus_check..."
+sisyphus_check --no-check=$HASHER_NOCHECK --files $LISTNAMES || fatal "check for sisyphus failed"
+echog "OK"
+
+# TODO: for add $LISTRPMARGS we need skip function for delete "our" params
+HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$APTCONF --target $DEFAULTARCH $HASHERARG"
+if [ "$MENV" != "SS" ] && [ "$MENV" != "DD" ]; then
+	HASHERARG="--build-args \"--with=build_$MENV\" --build-args \"--with=build_backport\" $HASHERARG"
+fi
+LISTBUILTSH=""
+for i in $LISTNAMES
+do
+	# Внимание! при сборке не проверяются некоторые указанные ниже параметры
+	# --nprocs=2 
+	# Note: hasher is already use renice for low priority
+	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
+	echo "Build in hasher ($MENV)" >$LOGFILE
+	rm -f $LOGFILE.failed
+	# enable /proc support only if require it
+	#rpm --requires -p $i | grep "/proc" && ARG="$HASHERARG --mountpoints=/proc" || ARG="$HASHERARG"
+	# we do not need check cases for mount points, thanks ldv@ 
+	ARG="$HASHERARG --mountpoints=/proc,/dev/pts"
+	echog "Build in hasher: $i (arg: $ARG, distro: $MENV, hasherdir: $HASHERDIR)"
+
+	($HSH $ARG --build-args "--define 'backport_distro ${MENV}'" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
+	if [ -f $LOGFILE.failed ] ;	then
+		RESULT=1
+		break
+	fi
+	check_log $LOGFILE ; RESULT=$?
+	test $RESULT = 1 && break
+	echog "########## Build of `basename $i` is done in hasher $MENV  #############"
+	echo
+	LISTBUILTSH="$LISTBUILTSH$i "
+
+done
+
+echo
+if [ "$RESULT" = "1" ] ; then
+	echog "!!!!!!! Hasher: FAILED FAILED FAILED !!!!!!!!!"
+	echog "Failed with $i, built only"
+else
+	echog "Full list of the hashered packages:"
+fi
+
+for i in $LISTBUILTSH ; do
+	echo "    $i"
+	LASTPACKAGE=$i
+done
+
+echo
+
+# build binary package list
+function get_binpkg_list()
+{
+PKGDIR=$HASHERDIR/repo/i586/RPMS.hasher
+
+find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
+	rpmquery -p --qf='%{sourcerpm}\t%{name}-%{version}-%{release}.%{arch}.rpm\n' "{}" \; \
+	| grep "^$1[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
+}
+
+if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
+	# test install (only for last package in list)
+	# some key for build hasher from scratch
+	MySRPM=$LASTPACKAGE
+	echog "Find binary packages for $MySRPM ..."
+	BINPACKAGES=`get_binpkg_list $MySRPM`
+	echo "List: $BINPACKAGES"
+	echo
+	loginhsh -t -i $MENVARG $BINPACKAGES || exit 1
+fi
+
+# make src.rpm is need
+if [ "$RESULT" = "0" ] ; then
+	test -n "$LISTRPMARGS" && rpmbs $MENVARG $LISTRPMARGS $LISTBUILTSH
+fi
+
+exit $RESULT

@@ -1,0 +1,39 @@
+#!/bin/sh
+# 2006, 2008 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+# 
+# Обновляет версию пакета, получает исходники,
+# собирает, устанавливает на тестирование и выкладывает новую версию пакета:
+# rpmrb спек версия [релиз]
+# версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
+
+REMOTE=
+if [ "$1" = "-r" ] ; then
+	REMOTE=$1
+	shift
+fi
+
+SPEC=$1
+VER=$2
+REL=$3
+
+if [ "$1" = "-h" ]; then
+	echo "rpmrb spec [vermajor][.verminor] [rel] - update spec to vermajor.verminor version, build %rel release"
+	exit 0
+fi
+
+. /etc/rpm/etersoft-build-functions
+
+test -e "$SPEC" || fatal "use with spec"
+
+if [ -n "$VER" ] ; then
+	test -n "$REL" || REL=alt1
+	set_version $SPEC $VER
+	set_release $SPEC $REL
+	add_changelog -e "- new version $VER (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
+fi
+
+rpmgs $SPEC || fatal "Error with get source"
+rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
+rpmbs -u $SPEC || fatal "Error with upload"

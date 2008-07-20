@@ -1,0 +1,558 @@
+#!/bin/bash
+# 2003-2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# 20.06.04, 15.01.05, 28.02.05, 07.03.05, 10.01.08, 20.07.08
+#
+
+### Gettext ###
+if which gettext.sh &>/dev/null ; then
+	. gettext.sh
+else
+	eval_gettext()
+	{
+		echo -n $@
+	}
+fi
+
+TEXTDOMAIN=etersoft-build-utils
+export TEXTDOMAIN
+TEXTDOMAINDIR='/usr/share/locale'
+export TEXTDOMAINDIR
+
+echog()
+{
+	if [ "$1" = "-n" ] ; then
+		shift
+		eval_gettext "$@"
+	else
+		eval_gettext "$@"; echo
+	fi
+}
+### Gettext ###
+
+# Определяем SUDO для использования
+SUDO="sudo"
+# for some shells? not for bash
+test -z "$UID" && UID=`id -u`
+if [ $UID = "0" ]; then
+	SUDO=""
+fi
+
+# Get tmp dir for our using
+OURTMPDIR=$TMPDIR
+[ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
+
+# Выводит указанное сообщение об ошибке и завершает программу
+fatal()
+{
+	echog "Error: $@"
+	exit 1
+}
+
+# Выводит указанное сообщение
+warning()
+{
+	echog "Warning: $@"
+}
+
+# Возвращает результат выяснения того, является ли система ALT-совместимой
+is_alt()
+{
+	test -f /etc/altlinux-release
+	return $?
+}
+# Debian
+#is_debian()
+#{
+#	test -f /etc/debian_version
+#	return $?
+#}
+
+
+
+# Явно укажем компиляторы, чтобы ccache гарантированно вызывался
+#export CC=gcc
+#export CXX=g++
+# С ним какие-то проблемы
+#export CPP=g++
+
+if [ "$UID" = "0" ] ; then
+	fatal "It is strict recommended do not use these scripts as root"
+fi
+
+
+#if which ccache &>/dev/null ; then
+#	# Настройки для сборки
+#	export GCC_USE_CCACHE=1
+#else
+#	echog "Note: you can install ccache for compiler cache and speedup compilation"
+#fi
+
+# It can be overrides in config
+DEFAULTARCH=i586
+[ `uname -m` = "x86_64" ] && DEFAULTARCH=`uname -m`
+NICE="nice"
+RPMBUILD=rpmbuild
+
+is_git()
+{
+	local DIR=$1
+	[ -n "$DIR" ] && [ -d "$DIR/.git" ] && return 0
+	[ -d ".git" ] && return 0
+	# hack for support spec in some subdir
+	[ -d "../.git" ] && return 0
+	return 1
+}
+
+# Universal rpmbuild function
+# 1st: rpmbuild, hsh, buildreq
+# 2nd: spec name(s) (only one if git, we will skip it)
+# other parameters
+uni_rpmbuild()
+{
+	local COMMAND=$1
+	# just for fill by something
+	local ONEPARAM="-v"
+	shift
+	local SPECNAME=$1
+	local SPECDIR=`dirname $SPECNAME`
+	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
+		# FIXME: do not override -v
+		ONEPARAM="--define=_source_payload w9.gzdio"
+	fi
+	if is_git $SPECDIR ; then
+		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
+		shift # skip spec name
+		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
+		$NICE gear --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@
+	else
+		$COMMAND "$ONEPARAM" $@
+	fi
+	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
+}
+
+RPMDIR="$HOME/RPM"
+[ -n "$APTCONF" ] || APTCONF=/etc/apt/apt.conf
+#OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
+OWNERMAIL=`rpm --eval %packager`
+
+UPLOADDIR="$RPMDIR/upload"
+LOGDIR="$RPMDIR/log"
+REMOTERPMDIR=
+HASHERDIR="$HOME/hasher"
+HASHER_NOCHECK=nvr,gpg,packager,buildtime
+HASHERARG="--eager-cleanup"
+[ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
+
+RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
+RSYNCINCOMING=devel:/incoming
+#SSH_KEYFILE=~/.ssh/id_dsa
+
+BUILDSERVER=
+#BUILDSERVERPATH="$HASHERDIR/repo/i586/RPMS.hasher"
+
+PKGREPLBASE=/usr/share/eterbuild/pkgrepl
+if [ ! -d "$PKGREPLBASE" ] ; then
+	PKGREPLBASE=$(dirname $0)/pkgrepl
+	echo "Warning: Use local replacement dir $PKGREPLBASE"
+fi
+
+test -f /etc/eterbuild/config && . /etc/eterbuild/config
+test -f ~/.ebconfig  && . ~/.ebconfig
+test -f ~/.eterbuild-config  && . ~/.eterbuild-config
+
+get_var()
+{
+	grep -i "^$1:" | head -n 1 | sed -e "s/^[^:]*[ \t]*:[ \t]*//"
+
+}
+
+# Раскрывает макросы в спеке и выводит на стандартный вывод
+eval_spec()
+{
+	# Hack: just print spec if -bE failed
+	# TODO: use rpm -showrc instead -bE for get main variables?
+	if is_alt ; then
+		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
+	else
+		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ 2>/dev/null || cat $1
+	fi
+}
+
+get_release()
+{
+	eval_spec $1 | get_var "Release"
+}
+
+set_var()
+{
+	subst "s|\($2:\).*\$|\1 $3|" $1
+}
+
+set_release()
+{
+	local RELEASE=$2
+	if [ -z "$RELEASE" ] ; then
+		RELEASE=alt1
+	fi
+	set_var $1 Release $RELEASE
+}
+
+# Set version for spec (args: spec version), f.i. test.spec 1.2.3)
+# Supports %major and %ver_major macros in spec
+# версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
+set_version()
+{
+	local SPEC=$1
+	local VER=$2
+
+	if [ -z "$SPEC" ] ; then
+		return 1
+	fi
+
+	if [ -z "$VER" ] ; then
+		return 2
+	fi
+
+	VERMAJOR=`echo $VER | sed -e "s|\([0-9]*\.[0-9]*\)\..*|\1|"`
+	VERMINOR=`echo $VER | sed -e "s|^[0-9]*\.[0-9]*||;s|^\.||"`
+	if [ -z ${VER/.*/} ] ; then
+		VERMAJOR=
+	fi
+
+	MAJORMACROS=`grep "\%define[[:space:]]\(\|ver_\)major" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
+	if [ -n "${MAJORMACROS}" ] ; then
+		# Change major define
+		test -n "$VERMAJOR" && subst "s|\(\%define[[:space:]]$MAJORMACROS[[:space:]]\).*|\1$VERMAJOR|" $SPEC
+		# Change version if VERMINOR is defined
+		if [ -n "$VERMINOR" ] ; then
+			set_var $SPEC Version %$MAJORMACROS.$VERMINOR || fatal "Error 1 with set version to spec"
+		else
+			set_var $SPEC Version %$MAJORMACROS || fatal "Error 2 with set version to spec"
+		fi
+	else
+		set_var $SPEC Version $VER || fatal "Error 3 with set version to spec"
+	fi
+}
+
+
+subst_namever()
+{
+
+	sed -e "s|%{name}|$BASENAME|g
+			s|%{version}|$VERSION|g
+			s|%name|$BASENAME/|g
+			s|%version|$VERSION/|g"
+}
+
+# get correct BUILDROOT, run build_rpms_name before!
+build_buildroot()
+{
+	test -z "$BASENAME" && fatal "Use build_buildroot with BASENAME defined"
+	# ALT Only?
+	BUILDROOT=`rpm --eval %buildroot | subst_namever`
+	test -z "$BUILDROOT" && fatal "Fix rpm's buildroot"
+	if [ "$BUILDROOT" = "%buildroot" ] ; then
+		BUILDROOT="$HOME/tmp/$BASENAME-buildroot"
+		warning "Can't get buildroot from RPM, set to $BUILDROOT"
+		return 1
+	fi
+	return 0
+}
+
+# Вынимаем информацию о пакете из спека.
+# Внутренние макроопределения раскрываются!
+# Пробельные символы после Name: могут быть различными
+# TODO: в другом месте не NAMESPEC, а не SPECNAME
+
+build_rpms_name()
+{
+	local tmprpm CATSPEC NAMESPEC
+	#TODO change : to = and execute?
+	NAMESPEC=$1
+	shift
+	test -f "$NAMESPEC" || fatal "Spec $NAMESPEC does not exist"
+	# Check for broken mktemp
+	if mktemp -V &>/dev/null ; then
+		tmprpm=`mktemp || exit 1`
+	else
+		tmprpm=`mktemp /tmp/$NAME.XXXXXX || exit 1`
+	fi
+	eval_spec $NAMESPEC $@ | grep ":"  >$tmprpm
+	CATSPEC="cat $tmprpm"
+	BASENAME=$($CATSPEC | get_var "Name")
+	RELEASE=$($CATSPEC | get_var "Release")
+	VERSION=$($CATSPEC | get_var "Version")
+	TARBALLNAME=$($CATSPEC | get_var "Source.*")
+	[ -n "$TARBALLNAME" ] && TARBALLNAME=$(basename $TARBALLNAME)
+	rm -f $tmprpm
+	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$DEFAULTARCH.rpm
+	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
+
+	#RPMSOURCEDIR=$RPMDIR/SOURCES
+	RPMSOURCEDIR=`rpm --eval %_sourcedir | subst_namever`
+	local BNS NSS
+	BNS="$BASENAME".spec
+	NSS=`basename $NAMESPEC`
+	test "$NSS" != "$BNS" && warning "BASENAME is not the same as NAMESPEC: $BNS against $SS"
+
+	build_buildroot
+}
+
+check_log()
+{
+	local LOGFILE i RES
+	echo
+	echo "-------------------------------------------------------"
+	echog "Check log for..."
+	LOGFILE=$1
+	grep 'ld: warning: libstdc++\.so\.5, needed by [^ ]\+, may conflict with libstdc++\.so\.6' $LOGFILE
+	RES=$?
+	if [ $RES = 0 ] ; then
+		echog "Error: libstdc++.so.5/6 conflicts"
+		return 1
+	fi
+	grep 'python-strict' $LOGFILE && warning "python-strict used!!!"
+	NC1="command not found"
+	NC2="-march=athlon -mtune=athlon-xp"
+	#for i in ${NC1} ; do
+	grep -- '$NC1' $LOGFILE && warning "'$NC1' in build output (some errors in a scripts)"
+	grep -- '$NC2' $LOGFILE && warning "'$NC2' in build output (forbidden) "
+	#done
+	return 0
+}
+
+
+check_locking()
+{
+	if [ -f $HASHERDIR/lockdir/lockfile ]
+	then
+		echo
+		echog "Hasher $HASHERDIR in use at `date`"
+		echo -n "Wait for unlocking"
+		while test -f $HASHERDIR/lockdir/lockfile
+		do
+			echo -n "."
+			sleep $(($RANDOM%5+3))
+		done
+		echo
+	fi
+}
+
+# LISTNAMES, options in arg
+pack_src_rpm()
+{
+local i
+ARGS=$@
+# NOTE: always nodeps
+# enable --nodeps for other ENV
+#test -n "$MENV" && 
+[ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES ARGS=$ARGS" || :
+ARGS="$ARGS --nodeps"
+for i in $LISTNAMES
+do
+	
+	if [ -z ${i/*rpm/} ] ; then
+		# if rpm not spec, guess it is src.rpm
+		NAMESRPMIN=$i
+	else
+		# Получаем названия пакетов по спеку
+		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
+		build_rpms_name "$i" $ARGS
+		if [ -n "${SIGN}" ]; then
+			echog "Try to packing \$NAMESRPMIN package for sign"
+			add_changelog $i
+			if [ $? = "0" ]; then
+				echog "Spec file \$i had not ChangeLog entry. It have added now, check it and enter your command again."
+				echog "Wait for ten seconds."
+				sleep 10
+				exit 1
+			fi
+			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH
+		else
+			echog "Just packing \$NAMESRPMIN"
+			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
+		fi
+	fi
+	if [ -f $RPMDIR/SRPMS/$NAMESRPMIN ] ; then
+		LISTBUILT="$LISTBUILT$NAMESRPMIN "
+	else
+		fatal "Can't find '$NAMESRPMIN' in '$RPMDIR/SRPMS'"
+	fi
+done
+test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
+#LISTRPMARGS=`echo ${LISTRPMARGS} | sed -e "s/--nodeps//g"`
+
+}
+
+# Internal
+set_target_type()
+{
+	case "$1" in
+		("M23" | "M24" | "M30" | "M40" | "M41" | "M42" | "DD" | "SS" | "EE")
+			MENV="$1"
+			return 0;
+			;;
+	esac
+	return 1;
+}
+
+# Internal
+# Определяет, для какой среды собирать: по ключу -M23 -M24 или по каталогу, в котором спек
+detect_target_env()
+{
+local DISTRNAME=`distr_vendor -e`
+MENVARG=""
+TARGET=`distr_vendor -p`
+VENDOR=`distr_vendor -s`
+
+if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
+	APTCONF=$APTCONF.$MENV
+	echog "Target ALT Linux system: \$MENV, use \$APTCONF"
+	MENVARG="-$MENV"
+else
+	echog "Distribution: \$DISTRNAME (\$VENDOR) (target package: \$TARGET)"
+fi
+}
+
+# Отделяет файлы в LISTNAMES
+# Отделяет указание среды в MENV
+# Устанавливает LISTARGS в оставшиеся аргументы
+# использование:
+# - отделяем среду (MENV)
+# - отделяем файлы
+# - оставшееся обрабатываем как параметры программы
+parse_cmd_pre()
+{
+local i
+if [ $# -lt 1 ]; then
+    [ -n "$Usage" ] && echog "$Usage"
+	fatal "Use -h for help."
+fi
+
+# Sisyphus by default
+MENV=SS
+set_target_type $(basename `pwd`)
+
+LISTNAMES=""
+LISTARGS=""
+OPTINDEX=1
+for i in "$@"
+do
+	# Если файл существует, то добавляем, иначе считаем аргумент параметром.
+	if [ -f "$i" ]; then
+		LISTNAMES="$LISTNAMES $i"
+	else
+		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
+	fi
+done
+# parse MENV
+detect_target_env
+[ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :
+}
+
+check_key()
+{
+	echog "Check access to SSH private key..."
+	ssh-add -l || ssh-add $SSH_KEYFILE || return 1
+	return 0
+}
+
+set_incoming()
+{
+	INCOMING="Sisyphus"
+	case "$1" in
+		("M24")
+			INCOMING="backports/2.4"
+			;;
+		("M23")
+			INCOMING="backports/2.3"
+			;;
+		("M30")
+			INCOMING="backports/3.0"
+			;;
+		("M40")
+			INCOMING="backports/4.0"
+			;;
+		("M41")
+			INCOMING="backports/4.1"
+			;;
+		("M42")
+			INCOMING="backports/4.2"
+			;;
+		("DD")
+			INCOMING="Daedalus"
+			;;
+		("SS")
+			INCOMING="Sisyphus"
+			;;
+	esac
+}
+
+set_incoming_updates()
+{
+	INCOMING="Sisyphus"
+	case "$1" in
+		("M24")
+			INCOMING="updates/2.4"
+			;;
+		("M23")
+			INCOMING="updates/2.3"
+			;;
+		("M30")
+			INCOMING="updates/3.0"
+			;;
+		("M40")
+			INCOMING="updates/4.0"
+			;;
+		("M41")
+			INCOMING="updates/4.1"
+			;;
+		("M42")
+			INCOMING="updates/4.2"
+			;;
+		("DD")
+			INCOMING="Daedalus"
+			;;
+		("SS")
+			INCOMING="Sisyphus"
+			;;
+	esac
+}
+
+
+add_changelog_helper()
+{
+	# don't work sometime?
+	if ! tty -s && [ -z "$@" ] ; then 
+		echo "skip changelog fixing without tty"
+		return 1
+	fi
+	add_changelog -e "$@"
+	R=$?
+	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 1 ; }
+	# If changelog sucessfully added
+	if [ "$R" = "0" ]; then
+		shift
+		for SPEC in "$@" ; do
+			N=`grep -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
+			# +1 -- comment with date and packager name
+			# +2 -- place for edit comments
+			${EDITOR} +$(($N + 2)) $SPEC
+		done
+	fi
+	return $R
+}
+
+
+# Publish srpm (need ETERDESTSRPM)
+publish_srpm()
+{
+	echo "Copying $NAMESRPMIN to $ETERDESTSRPM"
+	export ETERDESTSRPM
+	rpmbs -s $* $SPECNAME || fatal "Can't build SRPMS"
+}
+
+

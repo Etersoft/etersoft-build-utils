@@ -1,0 +1,56 @@
+#!/bin/sh
+# 2003-2006 Etersoft www.etersoft.ru
+# Public domain
+# 20.06.04, 15.01.05, 28.02.05, 07.03.05, 07.09.05, 09.04.06
+# 
+# Config file for etersoft-build-utils
+# You can copy this file as ~/.ebconfig for per user settings
+# and uncomment any setting line
+
+# Путь к каталогу сборки hasher:
+#HASHERDIR=~/hasher
+#HASHER_ARG=""
+
+# Удалённый сборочный сервер в нотации ssh
+#BUILDSERVER="builder"
+
+# TODO: Каталог на сборочном сервере с собранными пакетами
+#BUILDSERVERPATH=$HASHERDIR/repo/i586/RPMS.hasher
+
+# Кому отправлять отчёт, на какой адрес
+#OWNERMAIL="Vitaly Lipatov <lav@altlinux.ru>"
+
+# Повышенная говорливость
+#DEBUG="-v"
+
+# Каталог сборки, указываемый в переменной %_tmppath .rpmmacros
+#BUILDROOT=
+
+# You can uncomment it:
+#DEFAULTARCH=i586
+#RPMDIR=$HOME/RPM
+#APTCONF=/etc/apt/apt.conf
+#REMOTERPMDIR="~/RPM"
+
+# Каталог, куда копируются пакеты к отправке
+#UPLOADDIR=$RPMDIR/upload
+
+# Каталог для записи протоколов сборки
+#LOGDIR=$RPMDIR/log
+
+#RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
+
+# Базовый SSH-путь для отправки пакетов
+#RSYNCINCOMING=incoming:/incoming
+
+# Ключ, используемый при отправке
+#SSH_KEYFILE=~/.ssh/id_dsa
+
+# See sisyphus_check --help for other options
+#HASHER_NOCHECK=nvr,gpg,packager,buildtime
+
+# Rename source tarball to tar.bz2 in rpmcs command
+#RENAME_SOURCE_TARBALL=0
+
+# Always pack src.rpm by legacy gzip compression
+#USE_LEGACY_COMPRESSION=0

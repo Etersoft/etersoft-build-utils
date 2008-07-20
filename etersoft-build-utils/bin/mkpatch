@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# Public domain
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Make patch for file in $1 against CVS/SVN repository or .orig file
+#
+
+. /etc/rpm/etersoft-build-functions
+
+if [ -f Makefile.in ] ; then
+	DD1=`grep ^TOPOBJDIR Makefile.in | sed -e "s| ||g"`
+	DD2=`grep ^top_builddir Makefile.in | sed -e "s| ||g"`
+else
+	warning "Can't get topdir from Makefile.in"
+fi
+
+if [ -n "$DD1" ] ; then
+	export $DD1
+	TOPDIR=$TOPOBJDIR
+fi
+
+if [ -n "$DD2" ] ; then
+	export $DD2
+	TOPDIR=$top_builddir
+fi
+
+#test -z "$TOPDIR" && exit 1
+#echo "TOPDIR: $TOPDIR"
+export TOPDIR
+
+which cvs >/dev/null && CVS=cvs
+which svn >/dev/null && SVN=svn
+which git >/dev/null && GIT=git
+
+
+if [ -f $1.orig ] ; then
+	DIFILE=`realpath $1`
+	[ -n "$TOPDIR" ] && cd "$TOPDIR"
+	DIFILE=${DIFILE/`realpath $PWD`\//}
+	#echo 2 $DIFILE $PWD
+	diff -purN $DIFILE.orig $DIFILE > $DIFILE.patch
+	exit 0
+fi
+
+
+if [ -n "$CVS" -a -d CVS ] ; then
+	DIFILE=`realpath $1`
+	[ -n "$TOPDIR" ] && cd "$TOPDIR"
+	DIFILE=${DIFILE/`realpath $PWD`\//}
+	#echo 1 $DIFILE $PWD
+	$CVS diff -u $DIFILE > $DIFILE.patch
+	exit 0
+fi
+
+if [ -n "$SVN" -a -d .svn ] ; then
+	DIFILE=`realpath $1`
+	[ -n "$TOPDIR" ] && cd "$TOPDIR"
+	DIFILE=${DIFILE/`realpath $PWD`\//}
+	#echo 2 $DIFILE $PWD
+	$SVN diff $DIFILE > $DIFILE.patch
+	exit 0
+fi
+
+if [ -n "$GIT" ] ; then
+	DIFILE=`realpath $1`
+	[ -n "$TOPDIR" ] && cd "$TOPDIR"
+	DIFILE=${DIFILE/`realpath $PWD`\//}
+	#echo 2 $DIFILE $PWD
+	$GIT diff $DIFILE | sed -e "s|^--- a/|--- |g" | sed -e "s|^\+\+\+ b/|\+\+\+ |g" > $DIFILE.patch
+	exit 0
+fi
+

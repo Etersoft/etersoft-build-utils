@@ -1,0 +1,233 @@
+#!/bin/bash
+# (c) Etersoft 2003-2006
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# BS - build source
+# 14.12.03, 04.01.04, 14.01.04, 14.03.04, 25.05.04, 30.05.04, 19.12.04, 06.02.05
+# 15.04.05 добавлено копирование в каталог для upload
+# 29.05.05 переводы выполнены с gettext
+# Создаёт пакет с исходниками по спеку
+# Параметры:
+# - названия спек-файлов
+# - или пакетов
+# Если указан ключ -s, подписываем пакет
+# Если указан ключ --nodeps, не учитываем сборочные зависимости
+# Если указан ключ -u, отправляем пакет в incoming
+# Если указан ключ -d, удаляем из incoming
+# Если указан -n, не проверяем перед отправкой
+# TODO: -r
+
+. /etc/rpm/etersoft-build-functions
+
+SIGN=
+UPLOADNOW=
+CHECKONLY=
+NOSOURCE=
+NOCHECK=
+UPDATES=
+DELETENOW=
+
+
+#############################
+Usage="Usage: $name [-s -u -c -n --nodeps] spec..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - make src.rpm from spec"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -s - sign package(s) and move it to upload dir"
+	echog " -c - only sign package(s) with checking"
+	echog " -u - sign package(s) and upload it to Incoming (backports)"
+	echog " -U - sign package(s) and upload it to Incoming (updates)"
+	echog " -d - remove package(s) from SRPMS and Incoming"
+	echog " -n - do not check with sisyphus_check before upload"
+	echog " -o - create nosrc.rpm package"
+	echog " -z - create src.rpm with compatible gzip compression"
+}
+
+while getopts :hscuUdnoz opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    s) SIGN=1 ;;
+    c) CHECKONLY=1 ; SIGN=1 ;;
+    u) UPLOADNOW=1 ; SIGN=1 ;;
+    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
+    n) NOCHECK=1; ;;
+    o) NOSOURCE=1; ;;
+    z) export USE_LEGACY_COMPRESSION=1;
+       ;;
+    d) DELETENOW=1 ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+ 
+## remove args that were options
+if [ $# -gt 0 ]; then
+	shift $((OPTIND - 1))
+fi
+
+LISTRPMARGS=$@
+
+}
+
+parse_cmd_pre "$@"
+# quotes brokes option handling
+mygetopts $LISTARGS
+
+#############################
+LISTBUILT=""
+CURDIR=`pwd`
+
+if [ -n "$NOSOURCE" ] ; then
+	$RPMBUILD -bs --nosource 0 $LISTNAMES
+	exit $?
+fi
+
+# Упаковываем пакеты в src.rpm
+# FIXME: -s can be in name... (but not in option!)
+#LISTRPMARGS=
+#LISTRPMARGS=${LISTRPMARGS/-m/}
+#echo "@@ - $LISTRPMARGS - '$MENV'"
+pack_src_rpm ${LISTRPMARGS}
+
+#LISTARGS=${LISTARGS/-s/}
+if  [ -n "$REMOTEBUILD" ] ; then
+	fatal "Do not realized yet"
+	check_key
+	REMCOM="ssh $BUILDSERVER"
+
+	echo
+	echog "############ Build at build server `$BUILDSERVER` ############"
+	echo
+	echog "==== Copying to build server ====="
+	#echog "It is recommended to rename old version at server for save traffic during rsync"
+	rsync -vay --partial --progress --checksum \
+	 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMDIR/SRPMS/ || exit 1
+	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
+	exit 0
+fi
+
+# TODO: include in sisyphus_check
+# Проверяем, соответствует ли релиз пакетов указанному в MENV
+function release_check()
+{
+	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then
+		for i in $@ ; do
+			if [ -z "${i/*alt0.M[0-9][0-9]*/}" ] ; then
+				# Значит не тот релиз
+				fatal "Incorrect release in $i package: was prepared for Sisyphus"
+			fi
+		done
+		return
+	fi
+	for i in $@ ; do
+		if [ -n "${i/*alt0.$MENV*/}" ] ; then
+			# Значит не тот релиз
+			fatal "Incorrect release in $i package: was prepared for $MENV"
+		fi
+	done
+}
+
+[ -n "$UPDATES" ] && set_incoming_updates $MENV || set_incoming $MENV
+
+if [ -n "${DELETENOW}" ]; then
+	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
+	check_key
+	cd $RPMDIR/SRPMS
+	for i in $LISTBUILT ; do
+		> $i
+	done
+	rsync -vay --partial --progress --delete \
+	 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/
+	echo "$i REMOVED from Incoming/$INCOMING ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	exit 0
+fi
+
+if [ -n "$SIGN" ]; then
+	release_check $LISTBUILT
+	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
+	cd $RPMDIR/SRPMS
+	# 1. only rpm command has --addsign 2. do 3 retries
+	rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT
+	RET=$?
+	############################################
+	echog "Changing permissions..."
+	chmod 644 -- $LISTBUILT || fatal "can't chmod"
+	echog -n "Checking with sisyphus_check..."
+	test -n "$NOCHECK" || sisyphus_check --files $LISTBUILT || fatal "sisyphus check failed"
+	echog "OK"
+	# rpm's find-req do not find rpmlint :)
+	RPMLINT=rpmlint
+	if which $RPMLINT >/dev/null ; then
+		echog -n "Checking with rpmlint..."
+	echo
+		$RPMLINT $LISTBUILT
+	else
+		echog "It is recommended to install rpmlint package for additional checking"
+	fi
+	test -n "$CHECKONLY" && exit 0
+	############################################
+	
+	if [ "$RET" = "0" ]
+	then
+		if [ -n "${UPLOADNOW}" ] ; then
+			echog "Uploading to '$RSYNCINCOMING/$INCOMING/'"
+			check_key
+			#set_incoming $MENV
+			#uploadOLD=$(basename `mktemp -d $UPLOADDIR.old.XXX`)
+			#rmdir $uploadOLD
+			rsync -vay --partial --progress $CHECKSUM \
+			 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/ && \
+			echo "---------------------" && \
+			echog "All files synced" || fatal "Error during rsync"
+			#mv $UPLOADDIR $uploadOLD && mkdir $UPLOADDIR
+			for i in $LISTBUILT ; do
+				LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
+				echo >>$LOGFILE
+				date >>$LOGFILE
+				echo "uploaded">>$LOGFILE
+				echo "$i uploaded to Incoming/$INCOMING ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+			done
+
+		else
+			test -z "$ETERDESTSRPM" && ETERDESTSRPM=$UPLOADDIR${MENVARG/-/.}
+			mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
+			echog "Copying package(s) in \$ETERDESTSRPM"
+			cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		fi
+
+		echog "Removing buildroot after upload..."
+		for i in $LISTNAMES ; do
+			if [ -z ${i/*.src.rpm/} ] ; then
+				echo "  skipping for $i"
+				continue
+			fi
+			#DDIR=$BUILDROOT/${i/.spec/-buildroot}
+			# Hack about paths
+			test -f "$i" && NAME=$i || NAME=$CURDIR/$i
+			build_rpms_name $NAME
+			#build_buildroot
+			echo -n "    $BUILDROOT "
+			if [ -d "$BUILDROOT" ] ; then
+				rm -rf "$BUILDROOT" && echo $"DONE" || echo $"failed"
+			else
+				echo $"missed"
+			fi
+		done
+
+
+	else
+		echog "Impossible to sign package. Check your password and try again."
+		echog "Wait for ten seconds."
+		sleep 10
+		exit 1
+	fi
+fi

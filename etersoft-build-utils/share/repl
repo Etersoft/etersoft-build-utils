@@ -1,0 +1,91 @@
+#!/bin/bash
+# 2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# 20.07.08
+
+# Get replacement rule for ALT package to local in $1 (scan for files in $@)
+# set ALTPKGNAME, TARGETPKGNAME variable
+tolocal_anyrepl()
+{
+	local i REPLRULE WARULES
+	local GREP=$1
+	shift
+	# TODO: fix space removing
+	WARULES="s/^ *//g 
+		s/ *\$//g 
+		s/ *|/|/g 
+		s/| */|/g"
+
+	for i in $@ ; do
+		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "^ *$GREP *|" | sed -e "$WARULES" | head -n1`
+		# For broken rule
+		echo $REPLRULE | grep "|" >/dev/null || REPLRULE=""
+		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
+		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1`
+		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2`
+		# for compatibility
+		REPLRULE1=$ALTPKGNAME
+		REPLRULE2=$TARGETPKGNAME
+		test -n "$REPLRULE" && return 0
+	done
+	return 1
+}
+
+# Clean require names from various stuffs
+clean_pkgreq()
+{
+	local i VAR
+	VAR=`cat`
+	for i in $VAR ; do
+		echo "$i" | grep "[()<=>]" >/dev/null && continue
+		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
+		echo -n "$i "
+	done
+}
+
+# Print list of all build requires in ALT notation
+print_buildreq()
+{
+	eval_spec ${1} | grep "Build.*Req" | sed -e "s|^.*:||g" | clean_pkgreq
+}
+
+# Print list of all pkg requires
+print_pkgreq()
+{
+	eval_spec ${1} | grep "Requires" | sed -e "s|^.*:||g" | clean_pkgreq
+}
+
+print_pkgrepl_list()
+{
+	local REPLBASE=$PKGREPLBASE/pkgrepl.
+
+	# VENDOR, TARGET is defined in detect_target_env() func
+	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
+	# Get list of replacement rules files
+	echo -n "$REPLBASE$VENDOR.$DISTRVERSION $REPLBASE$VENDOR "
+	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE$TARGET"
+}
+
+print_grprepl_list()
+{
+	local REPLBASE=$PKGREPLBASE/../grprepl/grprepl.
+
+	# VENDOR, TARGET is defined in detect_target_env() func
+	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
+	# Get list of replacement rules files
+	echo -n "$REPLBASE$VENDOR.$DISTRVERSION $REPLBASE$VENDOR "
+	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE$TARGET"
+}
+
+# Prints out buildreqs in target notation for SPEC
+print_target_buildreq()
+{
+	# Build list in target ($VENDOR) notation for package's buildreqs
+	for i in `print_buildreq ${1}` ; do
+		# get target name or just print out original one
+		tolocal_anyrepl $i `print_pkgrepl_list` || echo -n "$i "
+		echo -n "$TARGETPKGNAME "
+	done
+}

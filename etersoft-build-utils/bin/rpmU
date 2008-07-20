@@ -1,0 +1,14 @@
+#!/bin/sh
+# 2004-2005 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+. /etc/rpm/etersoft-build-functions
+
+if [ "$1" = "-h" ]; then
+	echo "rpmU - the same as [sudo] rpm -Uvh - update package"
+	exit 0
+fi
+
+#set -x
+$SUDO rpm -Uvh "$@"

@@ -1,0 +1,71 @@
+This package is a set of helper utils for rpm building process.
+
+See info in Russian at
+http://www.freesource.info/wiki/AltLinux/Razrabotchiku/SborkaPaketov
+
+See QuickHelp.txt also.
+
+This package is tested with follow Linux distributions:
+ - ALT Linux 2.3/2.4/3.0/4.0/Sisyphus
+ - ASP Linux 10/11/11.2
+ - Scientific/4.1
+ - Fedora Core 4/5/6/7/8
+ - OpenSuSe 10/10.1
+ - Mandriva 2005/2006/2007/2008
+ - MOPSLinux 3.1/4.0/5.0
+ - Slackware 10.2/11
+ - Debian 3.1 (Sarge) / 4.0
+ - Ubuntu 5.10/6.06/6.10/7.04/7.10
+ - RedHat 9 / MCBC 3.0
+
+
+Replacement rules (for rpmbph):
+alt-package-name|foreign-package-name
+
+pkgrepl.rpm - base rules, use always
+pkgrepl.pclinux - rules only for PC Linux
+pkgrepl.pclinux.2007 - rules only for PC Linux 2007
+
+Examples:
+
+rpmbb [-c] [-i] [-p] name.spec - build package
+	-r do build req
+
+rpmbsh [-r] [-m] [-s] [-u/-U] [-i] name.spec - build package in hasher [and (-s) sign its src.rpm]
+rpmbs [-s] [-r] [-u/-U] name.spec - make src.rpm [and (-s) sign package]
+	-d delete uploaded package from incoming
+rpmbph [-M30] [-r] [-u/-U] name.spec - backport spec and build package for previous/foreign distro
+rpmgs name.spec - download main source file for spec (works with any types)
+	-f force
+rpmgp name  - download src.rpm for package 'name' or download source package 'name'
+	-c name | name.spec | package*rpm - check if the package is published in Sisyphus
+	-b name.spec - install need packages for build (via apt-get)
+	-n download only
+
+rpmurl [-c -f] name.spec - open Url from spec in browser
+rpmbugs [-qf ] name.spec | name - open buglist for package in browser
+	-t console output
+	-n create new bug
+rpmcs name.spec - cleanup spec (foreign specs adoption helper)
+loginhsh [-M30] [-t -i] - log in to shell in hasher
+myhsh [-u -i] package.src.rpm - rebuild package(s) in hasher
+
+rpmrb spec new_version - get source for new version, rebuild it and upload
+rpmrb spec .2 change only minor version
+rpmrb spec 2.6 change only major version
+
+Common options:
+-r - remote build
+-m - send result of remote build by e-mail
+-s - sign package and prepare to publish
+-u/-U - upload signed package to Incoming/Backports(Updates)
+-i - install after build
+
+NOTE:
+you have to prepare correct ~/.rpmmacros file, GPG signature in ~/.gnupg,
+SSH private key in ~/.ssh/id_dsa,
+hostname 'devel' in ~/.ssh/config as alias for cvs.altlinux.ru (typical for joined at ALT Linux)
+
+Please send any questions at lav@etersoft.ru
+
+Vitaly Lipatov, 07 Nov 2007

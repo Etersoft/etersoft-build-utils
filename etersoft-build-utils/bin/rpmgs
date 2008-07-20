@@ -1,0 +1,209 @@
+#!/bin/sh
+# 2005-2006 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# GS - get source
+# 18.08.05, 03.09.05
+# Скачивает исходники, автоматически выправляя ситуацию с gz/bz2/tgz/zip
+# Параметры:
+# - название спек-файла
+# TODO: -h (build in hasher), -s (sign for upload)
+# -a - get all source
+# check for the same file with other compression
+
+. /etc/rpm/etersoft-build-functions
+
+WEXT=""
+GETSOURCE=""
+LOADLIST="0"
+
+#############################
+Usage="Usage: $name [-a -r ] spec..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - get sources for spec"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -a - get all source (not only 0)"
+	echog " -f - force download (remove source before download)"
+}
+
+while getopts :haf opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    a) LOADLIST=" 0 1 2 3 4 5 6 7 8" ;;
+	f) FORCEDOWNLOAD=1 ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+    esac
+done
+ 
+# remove args that were options
+shift $((OPTIND - 1))
+
+LISTRPMARGS=$@
+
+}
+
+get_tarball()
+{
+	# use wget with try=1 and timeout = 30 sec
+	wget -c -t 1 -T 30 "$1"
+}
+
+
+get_archive()
+{
+	#TODO: check for gz
+	URL=${GETSOURCE/.tar.bz2/}
+	get_tarball "$URL.$1" || return
+	WEXT=`basename $URL`
+	echog -n "Converting to $WEXT.tar.bz2..."
+}
+
+get_archive1()
+{
+	#TODO: check for gz
+	URL=${GETSOURCE/.bz2/}
+	get_tarball "$URL$1" || return
+	WEXT=`basename $URL`
+	echog -n "Converting to $WEXT.bz2..."
+}
+
+bzipit()
+{
+	locale PBZIPIT
+	PBZIPIT=`which pbzip2 2>/dev/null`
+	if [ -n "$PBZIPIT" ] ; then
+		echog -n " with pzip2..."
+		$PBZIPIT -9 -f $1
+		return $?
+	else
+		echog -n " with bzip2..."
+		bzip -f --best $1
+		return $?
+	fi
+}
+
+get_bzip()
+{
+	get_tarball "$GETSOURCE" || return $?
+	TARBALL=`basename $GETSOURCE`
+	bzip -t $TARBALL
+	return $?
+}
+
+
+function get_gz()
+{
+	get_archive1 .gz || return
+	gunzip $WEXT.gz && bzipit $WEXT
+}
+
+function get_raw()
+{
+	get_archive1 "" || return
+	test -f $WEXT && bzipit $WEXT
+}
+
+
+function get_targz()
+{
+	get_archive tar.gz || return
+	#gzip -t $WEXT.tar.gz || return
+	gunzip $WEXT.tar.gz && bzipit $WEXT.tar
+}
+
+function get_tar()
+{
+	get_archive tar || return
+	bzipit $WEXT.tar
+}
+
+function get_tgz()
+{
+	get_archive tgz || return
+	gunzip $WEXT.tgz &&	bzipit $WEXT.tar
+}
+
+function get_tbz2()
+{
+	get_archive tbz2 || return
+	mv $WEXT.tbz2 $WEXT.tar.bz2
+}
+
+function get_zip()
+{
+	get_archive zip || return
+	mkdir $WEXT.zip.dir || return
+	cd $WEXT.zip.dir
+	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar
+	cd ..
+	rm -rf $WEXT.zip.dir
+}
+
+function dir_name()
+{
+	rm .listing
+	#wget `dirname $MAINSOURCE` --dont-remove-listing
+	
+}
+
+function get_source()
+{
+	GETSOURCE=$(eval_spec $1 | get_var "$2")
+}
+
+function print_error()
+{
+	echog "You have no spec files as arg"
+	echog "Please use for spec files only. If you wish to download src.rpm, use rpmgp script."
+	exit 1
+}
+
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
+
+#echo $LISTNAMES @ $LISTARGS
+test -z "$LISTNAMES" && print_error
+
+for i in $LISTNAMES
+do
+	if [ -n "${i/*spec/}" ] ; then
+		print_error
+	fi
+
+	for nn in "" $LOADLIST
+	do
+		get_source $i "Source$nn"
+		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $i" ; continue ; }
+		FTB=`basename $GETSOURCE`
+		build_rpms_name $i
+		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
+		# was: test -f
+		bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
+		echog "Try to load $GETSOURCE for $i"
+		if [ -n "${GETSOURCE/*.bz2/}" ] ; then
+			warning "It is recommended to use .bz2 tarballs for sources"
+			get_tarball "$GETSOURCE"
+		elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
+			warning "It is not tarball..."
+			get_bzip || get_gz || get_raw || fatal "Error: Cannot retrieve $GETSOURCE"
+		else
+			get_bzip || get_targz || get_tbz2 || get_tgz || get_zip || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
+		fi
+		echo "DONE"
+		popd
+		add_changelog_helper "- new version ($VERSION)" $i
+	done
+done
+
+exit 0
+

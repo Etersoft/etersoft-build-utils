@@ -1,0 +1,104 @@
+#!/bin/sh
+# 2005-2006 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# Открываем багзиллу на багах пакета
+# Параметры:
+# rpmbugs название спек-файла | название пакета | -qf путь к файлу, который лежит в пакете
+# TODO: окошко вешания баги (использовать перловые возможности?)
+# TODO: нормальную обработку парамеров
+. /etc/rpm/etersoft-build-functions
+
+[ -n "$BROWSER" ] || BROWSER=url_handler.sh
+
+show_bugs()
+{
+	URL=$1
+	if [ -z "$TEXT" ] ; then
+		echog "Opening URL '$URL' in browser $BROWSER"
+		$BROWSER $URL &
+	else
+		echo "@Fetching from '$URL'..."
+		$BROWSER -dump -no-numbering -no-references -dump-width $COLUMNS $URL
+	fi
+}
+
+show_bugbyid()
+{
+	URL="https://bugzilla.altlinux.org/show_bug.cgi?id=$1"
+#	TEXT=1
+	show_bugs $URL
+}
+
+
+#parse_cmd_pre "$@"
+
+if [ "$1" = "-h" ]; then
+	echog "rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file - open bugs in BROWSER"
+	exit 0
+fi
+
+if [ "${1}" = "-n" ] ; then
+	shift
+	NEWBUG=1
+fi
+
+if [ "${1}" = "-t" ] ; then
+	shift
+	TEXT=1
+	which links >/dev/null && BROWSER=links
+fi
+
+test -z "$DISPLAY" && TEXT=1
+
+SPECLIST=$@
+if [ "${1}" = "-qf" ]
+then
+	shift
+	SPECLIST=$1
+	if [ -e $SPECLIST ] ; then
+		SPECLIST=`rpm -qf --queryformat "%{NAME} " $SPECLIST`
+	else
+		SPECLIST=`rpmqf $SPECLIST`
+	fi
+fi
+
+# if param is number
+if [ -z `echo ${1} | sed -e "s/[0-9]*//"` ] ; then
+	show_bugbyid $1
+	exit 0
+fi
+
+for i in $SPECLIST
+do
+	if [ -f $i ]
+	then
+		if [ -z ${i/*rpm/} ]
+		then
+			# it is rpm package
+			PKGNAME=`rpm -qp --queryformat "%{NAME}" $i`
+		else
+			PKGNAME=$(eval_spec $i | get_var "Name")
+			test -z ${PKGNAME} && fatal "Cannot get package name"
+		fi
+	else
+		PKGNAME=`rpm -q --queryformat "%{NAME}" $i` || PKGNAME=$i
+	fi
+	PRODUCT=Sisyphus
+	URL="https://bugzilla.altlinux.org/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
+
+	if [ -n "$NEWBUG" ] ; then
+		fatal "Do not realized yet. Welcome to developing!"
+		#URL=""
+		echog "Enter Summary for package $PKGNAME and press Enter:"
+		read SUMMARY
+		echog "Enter description (finish with Ctrl-D):"
+		ID=`altbug --pkg "$PKGNAME" --subj "$SUMMARY" | tail -n 1 | sed -e "s|^.*#||" -e "s|:.*$||"`
+		#altbug --pkg "$PKGNAME" --subj "$SUMMARY"
+		show_bugbyid $ID
+	else
+		show_bugs $URL | grep "@"
+	fi
+
+done

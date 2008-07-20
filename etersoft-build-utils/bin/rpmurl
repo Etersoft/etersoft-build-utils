@@ -1,0 +1,147 @@
+#!/bin/sh
+# 2005-2006 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# Open package Url in BROWSER
+# Параметры:
+# - название спек-файла
+#
+. /etc/rpm/etersoft-build-functions
+
+[ -n "$BROWSER" ] || BROWSER=url_handler.sh
+# (command from perl-libwww)
+which GET &>/dev/null && GET=GET || GET=false
+
+#############################
+
+Usage="Usage: $name [-c -f -p -s] spec or package..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - open package Url in browser"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -c - check URL"
+	echog " -f - print failed URL only"
+	echog " -p - open package page at sisyphus.ru"
+	echog " -s - open source dir in browser"
+}
+
+while getopts :hcfsp opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    c) CHECKONLY=1 ;;
+	s) ABOUTDIR=1 ;;
+	p) SISYPHUSRU=1 ;;
+	f) FAILEDONLY=1; CHECKONLY=1 ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
+fi
+
+# pass other options to RPM:
+LISTRPMARGS=$@
+}
+
+parse_cmd_pre "$@"
+
+mygetopts $LISTARGS
+
+#TODO: fix
+# $LISTNAMES | wc -w
+if [ -n "$2" ] ; then
+	echo
+	# more than 1 arg
+	#PARALL=1
+	#test `ps a | wc -l` -gt 70 && sleep 3
+fi
+
+get_pkginfo()
+{
+	local i=${1}
+	if [ -f ${i} ]
+	then
+		if [ -z ${i/*rpm/} ]
+		then
+			# it is rpm package
+			RPM_URL=`rpm -qp --queryformat "%{URL}" ${i}`
+			SOURCE=
+		else
+			RPM_URL=$(eval_spec ${i} | get_var "Url")
+			SOURCE=$(eval_spec ${i} | get_var "Source")
+		fi
+	else
+		# will it package name
+		RPM_URL=`rpm -q --queryformat "%{URL}" ${i}`
+		SOURCE=`rpm -q --queryformat "%{SOURCE}" ${i}`
+	fi
+}
+
+PAGEURL="http://sisyphus.ru/srpm/Sisyphus"
+get_pagepkginfo()
+{
+	local i=${1}
+	local PKGNAME
+	if [ -f ${i} ]
+	then
+		if [ -z ${i/*rpm/} ]
+		then
+			# it is rpm package
+			PKGNAME=`rpm -qp --queryformat "%{Name}" ${i}`
+		else
+			PKGNAME=$(eval_spec ${i} | get_var "Name")
+		fi
+	else
+		# will it package name
+		PKGNAME=`rpm -q --queryformat "%{Name}" ${i}`
+	fi
+	RPM_URL=$PAGEURL/$PKGNAME
+}
+
+for i in $LISTNAMES $LISTRPMARGS
+do
+	if [ -n "$SISYPHUSRU" ] ; then
+		get_pagepkginfo $i
+		if [ -n "$ABOUTDIR" ] ; then
+			RPM_URL=$RPM_URL/get
+		fi
+	else
+		get_pkginfo $i
+		if [ -n "$ABOUTDIR" ] ; then
+			RPM_URL=`dirname $SOURCE`
+		fi
+	fi
+	test -z "$ABOUTDIR" && test -z ${RPM_URL} && fatal "Cannot get package Url from spec $i"
+	if [ -z "$CHECKONLY" ] ; then
+		if [ -n "$RPM_URL" ] && [ "$RPM_URL" != "(none)" ] ; then
+			echog "Opening URL '$RPM_URL' with browser '$BROWSER'"
+			$BROWSER $RPM_URL &
+		else
+			echog "The package '$i' has not URL"
+		fi
+	else
+		if [ -z "$PARALL" ] ; then
+			echog -n "Checking URL '$RPM_URL' from package $i ..."
+			$GET $RPM_URL -s -d
+		else
+			( RESULT=`$GET $RPM_URL -s -d` ;
+			if [ -n "$FAILEDONLY" ] ; then
+				test ${RESULT/ *} = "200" || printf "%-40s %s   %s\n" $i $RPM_URL "${RESULT}"
+			else
+				echog "Checking URL '$RPM_URL' from package $i ... $RESULT" ; 
+			fi
+			) &
+		fi
+	fi
+done

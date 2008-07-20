@@ -1,0 +1,307 @@
+#!/bin/sh
+# 2005-2008 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# CS -- cleanup spec (like cleanup_spec command)
+# Параметры:
+# - название спек-файла
+. /etc/rpm/etersoft-build-functions
+
+dummy_spec()
+{
+grep "^Name" $1
+grep "^Version" $1
+grep "^Release" $1
+grep "^Packager" $1
+cat <<EOF
+Summary: dummy
+License: dummy
+Group: dummy
+%description
+EOF
+}
+
+# Get replacement rule for some package in $1 to ALT
+toalt_pkgrepl()
+{
+	local i
+	WARULES="s/^ //g 
+		s/ \$//g 
+		s/ |/|/g 
+		s/| /|/g"
+	for i in $PKGREPLBASE/pkgrepl.fedora $PKGREPLBASE/pkgrepl.* ; do
+		#echo $i - $1
+		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "$1\$" | sed -e "$WARULES" | sed -e "s/^\(.*\)|\(.*\)\$/\2|\1/g" | head -n1`
+		# For broken rule
+		echo $REPLRULE | grep "^|" >/dev/null && REPLRULE=""
+		echo $REPLRULE | grep "|\$" >/dev/null && REPLRULE=""
+		REPLRULE1=`echo $REPLRULE | cut -d"|" -f1`
+		REPLRULE2=`echo $REPLRULE | cut -d"|" -f2`
+		test -n "$REPLRULE" && return 0
+	done
+	return 1
+}
+
+
+parse_cmd_pre "$@"
+
+if [ "$1" = "-h" ]; then
+	echog "rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT"
+	exit 0
+fi
+
+for i in $LISTNAMES
+do
+	if [ -z ${i/*rpm/} ] ; then
+		fatal "'$i' is not not spec file"
+	fi
+
+	# Make backup copy
+	cp -f $i ${i}~
+
+	# Unneeded on ALT
+	subst "s|^Prefix:.*$||" $i
+	subst "s|^BuildRoot:.*$||i" $i
+
+	# Add packager
+	if ! grep "^Packager" $i ; then
+		PACKAGT="Packager: $($RPMBUILD --eval %packager $i)"
+		cat $i | awk 'BEGIN{desk=0}{if(/^Source/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
+	fi
+
+	# If non alt release, set initial alt release
+	if get_release $i | grep -v "^alt" >/dev/null ; then
+		set_release $i "alt1"
+	fi
+
+	# If it was PLD spec
+	if grep "^%define date" $i ; then
+		# with dummy spec we can't have any parsing problems
+		if false ; then
+			dummy_spec $i >$i.dummy
+			subst "s|^%changelog.*|`stamp_spec $i.dummy`|" $i
+			rm -f $i.dummy
+			subst "s|^%define date.*|%changelog|" $i
+			subst "s|* %{date} PLD Team\(.*\)|- initial build for ALT Linux Sisyphus (spec from PLD Team)|" $i
+		else
+			echo "PLD spec..."
+			awk '{if ( ! /^%define date/){print}else{exit}}' $i > $i.tmp && mv -f $i.tmp $i
+			add_changelog $i -e "- initial build for ALT Linux Sisyphus (spec from PLD)"
+		fi
+	fi
+
+	echog "cleanup_spec for $i..."
+	cleanup_spec $i
+
+	# convert from PLD's cases	
+	subst "s|%if %{with \(.*\)}|%if_with \1|g" $i
+	subst "s|%if %{without \(.*\)}|%if_without \1|g" $i
+	# replaces with and without too
+	subst "s|^%bcond_with|%def_with|g" $i
+	#subst "s|%{?with_\(.*\):|%{subst_with
+
+	echog "fix name and release..."
+	build_rpms_name "$i"
+
+	# For case if name was macros
+	test -n "$BASENAME" && set_var $i Name $BASENAME
+	
+	echog -n "fix obsoleted constructions..."
+	subst "s|Source0:|Source:|" $i
+	subst "s|Patch0:|Patch:|" $i
+
+	SPECDIR=`dirname $i`
+	if ! is_git $SPECDIR && [ -n "$RENAME_SOURCE_TARBALL" ] ; then
+		# Use tar.bz2 for tarball if not git case.
+		subst "s|\(Source:.*\).tar.gz|\1.tar.bz2|" $i
+		subst "s|\(Source:.*\).tgz|\1.tar.bz2|" $i
+	fi
+	
+
+	subst "s|\(%post.*-p *\)/sbin/ldconfig|\1%post_ldconfig|g" $i
+	subst "s|\(%postun.*-p *\)/sbin/ldconfig|\1%postun_ldconfig|g" $i
+	
+	subst "s|\$RPM_BUILD_ROOT/%|%buildroot%|g" $i
+	subst "s|\$RPM_BUILD_ROOT|%buildroot|g" $i
+	#subst "s|%buildrootetc|%buildroot/etc|g" $i
+
+	# Fix groups to ALT's
+	subst "s|Group: *Libraries|Group: System/Libraries|g" $i
+
+	# It is not recommended to use macroses for commands (__subst is unique in this)
+	subst  "s|%__install |install |g 
+		s|%__cp |cp |g 
+		s|%__rm -f |rm -f |g 
+		s|%__mv |mv |g 
+		s|%__mkdir_p|mkdir -p|g 
+		s|%__mkdir |mkdir |g 
+		s|%__make|make|g 
+		s|%__awk|gawk|g 
+		s|%__bzip2|bzip2|g 
+		s|%__cat|cat|g 
+		s|%__chgrp|chgrp|g 
+		s|%__chmod|chmod|g 
+		s|%__chown|chown|g 
+		s|%__cpio|cpio|g 
+		s|%__file|file|g 
+		s|%__gpg|gpg|g 
+		s|%__grep|grep|g 
+		s|%__gzip|gzip|g 
+		s|%__id|id|g 
+		s|%__install|install|g 
+		s|%__install_info|install-info|g 
+		s|%__ln_s|ln -s|g 
+		s|%__patch|patch|g 
+		s|%__perl|perl|g 
+		s|%__pgp|pgp|g 
+		s|%__python|python|g 
+		s|%__rm|rm|g 
+		s|%__rsh|rsh|g 
+		s|%__sed|sed|g 
+		s|%__ssh|ssh|g 
+		s|%__subst|sed -i|g 
+		s|%__tar|tar|g 
+		s|%__unzip|unzip|g 
+		s|%__ar|ar|g 
+		s|%__as|as|g 
+		s|%__cc|gcc|g 
+		s|%__cpp|gcc -E|g 
+		s|%__cxx|g++|g 
+		s|%__ld|ld|g 
+		s|%__nm|nm|g 
+		s|%__objcopy|objcopy|g 
+		s|%__objdump|objdump|g 
+		s|%__ranlib|ranlib|g 
+		s|%__strip|strip|g 
+		s|%__libtoolize|libtoolize|g 
+		s|%__aclocal|aclocal|g 
+		s|%__autoheader|autoheader|g 
+		s|%__automake|automake|g 
+		s|%__autoconf|autoconf|g 
+		s|%__tar |tar |g" $i
+
+
+	subst  "s|%__make *install|%make_install install|g
+		s|^make *install|%make_install install|g
+		s|^make %{?_smp_mflags}|%make_build|g
+		s|%make_install *install *DESTDIR=%buildroot|%makeinstall_std|g
+		s|%make_install *DESTDIR=%buildroot *install|%makeinstall_std|g
+		s|^make *DESTDIR=%buildroot *install|%makeinstall_std|g" $i
+
+	subst  "s|/etc/|%_sysconfdir/|g
+		s|%_sysconfdir/rc.d/init.d|%_initdir/|g
+		s|%_sysconfdir/rc.d/init.d/|%_initrddir/|g
+		s|%_sysconfdir/init.d/|%_initrddir/|g
+		s|%_sysconfdir/X11/fontpath.d|%_fontpathdir|g" $i
+
+	subst  "s|%_libdir/mono/gac|%_monogacdir|g
+		s|%_libdir/mono|%_monodir|g" $i
+
+	subst  "s|%prefix/lib|%_libdir|g
+		s|%prefix/include|%_includedir|g
+		s|/usr/include|%_includedir|g
+		s|/usr/src|%_usrsrc|g
+		s|%prefix/share|%_datadir|g" $i
+
+	subst "s|Requires(post): /sbin/install-info|Requires(post): %install_info|g" $i
+	subst "s|Requires(preun): /sbin/install-info|Requires(preun): %uninstall_info|g" $i
+
+	# also clean_scrollkeeper exists
+	#subst "s|^scrollkeeper-update|%update_scrollkeeper|g" $i
+
+	# FIXME: only in rpm-build-compat
+	#subst "s|^%_datadir/aclocal/|%_aclocaldir/|g" $i
+	#subst "s|^%_datadir/gtk-doc/html/|%_gtkdocdir/|g" $i
+
+	# TODO: not in expressions
+	subst  "s|/usr/sbin/|%_sbindir/|g
+		s|/usr/bin/|%_bindir/|g
+		s|/usr/lib/|%_libdir/|g
+		s|/usr/share/|%_datadir/|g
+		s|%_datadir/games|%_gamesdatadir|g" $i
+
+	subst "s|%pear_phpdir|%pear_dir|g" $i
+	# changes for rpm-build-pear 0.3
+	# FIXME: remove pear_install replacing in future
+	subst  "s|%pear_install\$|%register_pear_module|g
+		s|%pear_uninstall|%unregister_pear_module|g
+		s|%pear_prepare_module|%pear_build|g
+		s|%pear_install_module|%pear_install_std|g" $i
+
+	# subst normalize	
+	subst  "s|^sed -i -e |%__subst |g
+		s|^subst |%__subst |g
+		s|perl -pi -e *|%__subst |g" $i
+
+	subst "s|^python |%__python |g
+		s|%py_sitescriptdir|%python_sitelibdir|g
+		s|%python_version|%__python_version|g
+		s|%python_sitelib/|%python_sitelibdir/|g
+		s|%py_sitedir/|%python_sitelibdir/|g
+		s|%python_sitearch|%python_sitelibdir|g
+		s|\(%pyrequires_eq.*\)|#\1|g" $i
+
+	subst "s|ruby setup.rb config|%ruby_config|g
+		   s|ruby setup.rb setup|%ruby_setup|g" $i
+
+	subst "s|^%__python setup.py build|%python_build|g" $i
+	subst "s|^%__python setup.py install --root %buildroot|%python_install|g" $i
+	subst "s|^%__python setup.py install -O2 --root %buildroot|%python_install|g" $i
+	subst "s|^%__python setup.py install --optimize --root %buildroot|%python_install|g" $i
+	
+	subst "s|%_datadir/man/|%_mandir/|g" $i
+	subst "s|%_mandir/man\([0-9]\)|%_man\1dir|g" $i
+	subst "s|%_libdir/pkgconfig|%_pkgconfigdir|g" $i
+	subst "s|%_datadir/pixmaps|%_pixmapsdir|g" $i
+	subst "s|%_datadir/applications|%_desktopdir|g" $i
+
+	subst "s|%update_desktop_database|%update_desktopdb|g" $i
+	subst "s|%clean_desktop_database|%clean_desktopdb|g" $i
+
+	subst "s|%gconf_schema_install \(.*\)\.schemas|%gconf2_install \1|g" $i
+	subst "s|%_browserpluginsdir|%browser_plugins_path|g" $i
+
+	subst  "s|%_iconsdir/hicolor/48x48/apps|%_icons48dir|g
+		s|%_iconsdir/hicolor/32x32/apps|%_niconsdir|g
+		s|%_iconsdir/hicolor/16x16/apps|%_icons16dir|g
+		s|%_iconsdir/mini|%_miconsdir|g
+		s|%_iconsdir/large|%_liconsdir|g
+		s|%_datadir/icons|%_iconsdir|g" $i
+
+	# remove MDK compatibility macroses
+	subst "s|%perl_vendorlib|%perl_vendor_privlib|g
+		   s|%perl_vendorarch|%perl_vendor_archlib|g" $i
+
+	subst "s|%_datadir/doc|%_docdir|g" $i
+	subst "s|%_datadir/omf|%_omfdir|g" $i
+	subst "s|%_defaultdocdir|%_docdir|g" $i
+	subst "s|%__autoreconf|%autoreconf|g" $i
+
+	subst "s|%rpmcflags|%optflags|g" $i
+
+	subst "s|^%clean$||g" $i
+	subst "s|^rm -rf %buildroot$||g" $i
+	subst "s|^%defattr(-,root,root)||g" $i
+	subst "s|^%defattr(644,root,root,755)||g" $i
+	#subst "s|^%attr(.*)\(.*\)$|\1|g" $i
+	subst "s|^ *%|%|g" $i
+	echog "DONE"
+
+	# TODO use perl -pe
+	echog -n "fix requires..."
+	ALLREPLRULES=""
+	for n in `print_buildreq $i` ; do
+		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
+			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+		#echo REPLRULE: $REPLRULE
+	done
+
+	#echo ALL: $ALLREPLRULES
+
+	# Replace package names in source spec
+	mv $i $i.old.cs.txt && cat $i.old.cs.txt | \
+		sed -r -e "$ALLREPLRULES" > $i || mv $i.old.cs.txt $i
+	rm -f $i.old.cs.txt
+	echog "DONE"
+done

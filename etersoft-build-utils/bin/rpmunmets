@@ -1,0 +1,109 @@
+#!/bin/sh
+# 2008 (c) Etersoft www.etersoft.ru
+# Public domain
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Thanks Alexey Gladkov <legion@altlinux.ru> for the instructions
+#
+# See http://www.freesource.info/wiki/ALTLinux/Sisyphus/devel/Unmets
+# $Id: rpmunmets,v 1.6 2008/07/17 13:36:51 lav Exp $
+#
+# Tests unmets in built int hasher packages
+
+if [ ! -f /etc/rpm/etersoft-build-functions ] ; then
+	echog "NOTE: /etc/rpm/etersoft-build-functions does not exist"
+	echog "Please fix this path in $0 file if you are using local install"
+	exit 1
+fi
+
+. /etc/rpm/etersoft-build-functions
+
+make_ordinalbox()
+{
+	mkdir -p $ORDINALWORKDIR
+	echo "Build aptbox in $ORDINALWORKDIR ..."
+	#rm -rf $ORDINALWORKDIR
+	mkaptbox -f --apt-config=$ORDINALAPTCONF $ORDINALWORKDIR
+}
+
+make_testingbox()
+{
+	mkdir -p $TESTINGWORKDIR
+	echo "Build aptbox in $TESTINGWORKDIR ..."
+	#rm -rf $TESTINGWORKDIR
+	mkaptbox -f --apt-config=$TESTINGAPTCONF $TESTINGWORKDIR
+}
+
+
+Usage="Usage: $name [-M24 -M40]"
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - tests unmets in build packages"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -s   - get all unmets"
+	echog " -M40 - test for distro ALT Linux 4.0"
+}
+
+SKIPTST=
+while getopts :hs opt; do
+    case $opt in
+    h) phelp; exit 0;;
+	s) SKIPTST=1 ;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
+fi
+
+# pass other options to RPM:
+LISTRPMARGS=$@
+}
+
+# FIXME: needs no args now
+parse_cmd_pre "" "$@"
+
+mygetopts $LISTARGS
+
+# Prepare our variables
+ORDINALWORKDIR=$OURTMPDIR/WD1
+TESTINGWORKDIR=$OURTMPDIR/WD2
+
+ORDINALAPTCONF=$APTCONF
+TESTINGAPTCONF=$OURTMPDIR/apt.conf
+
+# Hack: subst patch to sources.list
+cat $ORDINALAPTCONF | \
+	sed -e "s|\"/etc/apt/.*\"|\"$OURTMPDIR/sources.list\"|g" >$TESTINGAPTCONF
+cat /etc/apt/sources.list.$MENV >$OURTMPDIR/sources.list || fatal ""
+
+HASHERDIR=$HASHERDIR$MENVARG
+if [ ! -d $HASHERDIR/repo ] || [ -n "$SKIPTST" ] ; then
+	[ -z "$SKIPTST" ] && fatal "Can't find repo in hasher '$HASHERDIR' dir, use -s for overall check"
+	make_ordinalbox
+	echo
+	echo "All unmets in repo $MENV"
+	$ORDINALWORKDIR/aptbox/apt-cache unmet
+	rm -rf $ORDINALWORKDIR
+	exit 0
+fi
+
+echo "rpm file:$HASHERDIR/repo/ $DEFAULTARCH hasher" >>$OURTMPDIR/sources.list
+
+make_ordinalbox
+make_testingbox
+
+echo "Calculate unmets..."
+$ORDINALWORKDIR/aptbox/apt-cache unmet > $OURTMPDIR/unmets.old
+$TESTINGWORKDIR/aptbox/apt-cache unmet > $OURTMPDIR/unmets.new
+
+echo
+echo "New unmets:"
+diff -U0 $OURTMPDIR/unmets.{old,new}

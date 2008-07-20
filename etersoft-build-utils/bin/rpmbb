@@ -1,0 +1,147 @@
+#!/bin/bash
+# 2003-2007 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# BB - binary build (like rpm option -bb)
+# 06.02.05
+# Собирает двоичные rpm-пакеты по указанным спекам
+# Параметры:
+# - название спек-файла
+# TODO -M?
+# TODO: -c
+
+. /etc/rpm/etersoft-build-functions
+
+# Start as helper
+if [ "$1" = "--helper" ]; then
+	shift
+	cd $RPMDIR/SPECS && rpmbb "$@"
+	exit $?
+fi
+
+#############################
+
+Usage="Usage: $name [-c -p -i -r] spec..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - build  binary rpm from spec (with ccache using if found)"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -c - start from compile stage"
+	echog " -i - install and package"
+	echog " -p - packaging installed files into package"
+	echog " -r - find build requires"
+}
+
+while getopts :hcipr opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    c) BUILDOPT="c" ;;
+	i) BUILDOPT="i b" ;;
+    p) BUILDOPT="b" ;;
+    r) BUILDREQ=1 ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+# FIXME: параметры передаются и дальше (например, -i, -b)
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
+fi
+
+# pass other options to RPM:
+LISTRPMARGS=$@
+}
+
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
+
+
+mkdir -p "$LOGDIR"
+mkdir -p "$RPMDIR/RPMS"
+test -z "$LISTNAMES" && fatal "Please run with spec(s) name"
+test -n "$LISTRPMARGS" && echog "Run $RPMBUILD with options: '$LISTRPMARGS'"
+
+# instead cbuild req
+if [ -n "$BUILDREQ" ] ; then
+	uni_rpmbuild buildreq $LISTNAMES
+	RET=$?
+	echog "You can run buildreq with -bi param for search a dependences for install section of the package"
+	exit $RET
+fi
+
+if [ -n "$BUILDOPT" ] ; then
+	is_alt || fatal "Sorry, only ALT Linux systems support --short-circuit correctly"
+	for it in $BUILDOPT
+	do
+		uni_rpmbuild $RPMBUILD $LISTNAMES -b$it $LISTRPMARGS --target $DEFAULTARCH --short-circuit
+	done
+	exit 0
+fi
+
+# Set nodeps if run in non rpm system
+[ "$TARGET" = "rpm" ] && NODEPS="" || NODEPS="--nodeps"
+
+for i in $LISTNAMES
+do
+	# build src.rpm if old way
+	SPECDIR=`dirname $i`
+	is_git $SPECDIR || build_rpms_name "$i"
+	if ! is_alt ; then
+		if ! build_buildroot ; then
+			LISTRPMARGS="--buildroot $BUILDROOT $LISTRPMARGS"
+		fi
+		echo "For non ALT distro clean BuildRoot $BUILDROOT"
+		test -n "$BUILDROOT" || fatal "BUILDROOT var is empty"
+		rm -rf "$BUILDROOT"
+	fi
+	LOGFILE="$LOGDIR/`basename $NAMESRPMIN .src.rpm`$MENVARG.log"
+	echo "Build in native system" >$LOGFILE
+	rm -f $LOGFILE.failed
+	(uni_rpmbuild $RPMBUILD $i -bb $LISTRPMARGS $NODEPS --target $DEFAULTARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	check_log $LOGFILE ; RES=$?
+	if [ -f $LOGFILE.failed ] || [ $RES != 0 ]
+	then
+		echo "!!!!!!!! ERROR !!!!!"
+		fatal "Failed with $i"
+	fi
+done
+echog "Built is done correctly"
+date
+exit 0
+
+
+######################################################
+# rpmbbr ========= 
+RESULT=0
+check_key
+
+echog "Packing without check of build dependencies for packages"
+
+NODEPS="--nodeps"
+LISTBUILT=""
+pack_src_rpm $LISTRPMARGS
+
+echog "==== Copying to build server ====="
+echog "It is recommended to rename old version at server for save traffic during rsync"
+rsync -vay --partial --progress --stats --checksum \
+ 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMDIR/SRPMS/
+
+echo
+echog "############ Build at build server ############"
+echo
+ssh $BUILDSERVER rpm -ivh $LISTBUILT
+ssh -t $BUILDSERVER rpmbb --helper "$@"
+echo "-------------------------------"
+echog "Remote build is done"
+date
+

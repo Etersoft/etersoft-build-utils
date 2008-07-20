@@ -1,0 +1,32 @@
+#!/bin/sh
+# 2003-2005 (c) Etersoft www.etersoft.ru
+# Public domain
+# Upload files from upload dir to alt
+# 25.01.2005 после закачки переносит файлы в upload.old.xxx
+# 04.11.2005 use arg for set destination (-M23 and so on)
+
+. /etc/rpm/etersoft-build-functions
+
+build_list_and_args -- "$@"
+
+test -n "$MENV" && UPLOADDIR=${UPLOADDIR}.$MENV
+set_incoming $MENV
+
+
+echog "Changing permissions..."
+chmod 644 -- $UPLOADDIR/*.rpm || exit 1
+
+echog "Upload to incoming/$INCOMING from $UPLOADDIR"
+echog "Checking for sisyphus compliance..."
+CHECKSUM="--checksum"
+sisyphus_check $UPLOADDIR || exit 1
+echo "Checking for private key..."
+ssh-add -l || ssh-add
+rsync -va --partial --progress $CHECKSUM \
+ 	-e ssh $UPLOADDIR/* $RSYNCINCOMING/$INCOMING/
+RES=$?
+NSD="old"
+uploadOLD=$(basename `mktemp -d $UPLOADDIR.${NSD}.XXX`)
+rmdir $uploadOLD
+test $RES && mv $UPLOADDIR $uploadOLD
+mkdir $UPLOADDIR

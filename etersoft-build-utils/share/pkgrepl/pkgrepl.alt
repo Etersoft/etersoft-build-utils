@@ -1,0 +1,10 @@
+#libstdc++3.4-devel-precompiled|
+pkg-config|pkgconfig
+postgresql8.0|postgresql
+postgresql8.1|postgresql
+libpq4|libpq3
+libSDL_sound-devel|libSDL-devel
+%python-dev|
+%python-base|
+xorg-cf-files|
+linux-libc-headers|glibc-kernheaders

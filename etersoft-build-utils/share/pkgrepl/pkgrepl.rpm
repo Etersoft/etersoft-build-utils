@@ -1,0 +1,80 @@
+# Base replacements rules
+
+# FIXME
+makedepend|
+foomatic-db-engine|
+imake|
+shadow-log|
+w3c-markup-validator-libs|
+xorg-cf-files|
+netcat|nc
+
+login|util-linux
+su|coreutils
+
+groff-base|groff
+libarts-devel|arts-devel
+
+# Uwaga! use first matching rule, write devel package first
+pkg-config|pkgconfig
+rpm-build-compat|rpm-build-altlinux-compat
+libntfs-devel|ntfsprogs-devel
+libntfs|ntfsprogs
+libe2fs-devel|e2fsprogs-devel
+libe2fs|e2fsprogs
+libncurses-devel|ncurses-devel
+libncurses|ncurses
+libncursesw-devel|ncurses-devel
+libncursesw|ncurses
+libtinfo-devel|ncurses-devel
+libtinfo|ncurses
+packages-info-i18n-common|
+# Check on Fedora
+libpam-devel|pam-devel
+libpam0-devel|pam-devel
+libssl|openssl
+libssl-devel|openssl-devel
+libfreetype|freetype
+freetype2-devel|freetype-devel
+freetype2|freetype
+libfreetype-devel|freetype-devel
+libcups-devel|cups-devel
+libcups|cups
+libalsa-devel|alsa-lib-devel
+# TODO: Check for ALL system
+#libicu-devel|
+# for ISDN
+libcapi-devel|
+prelink|
+libldap-devel|openldap-devel
+libldap|openldap
+liblcms-devel|lcms-devel
+liblcms|lcms
+libgphoto2-devel|gphoto2-devel
+libgphoto2|gphoto2
+libsane-devel|sane-backends-devel
+libsane|sane-backends
+jackit-devel|jack-audio-connection-kit-devel
+kernel-build-tools|
+libreadline-devel|readline-devel
+
+# Xorg dependencies
+#xorg-x11-proto-devel|xorg-x11-devel
+# FIXME: xpm-devel is override by libXpm-devel since xorg
+#libXpm-devel|libXpm-devel
+#libGLU-devel|libMesaGLU1-devel
+#libGLU-devel|xorg-x11-devel
+#libXext-devel|xorg-x11-devel
+#libICE-devel|XFree86-devel
+#libXrandr-devel|XFree86-devel
+#libXrender-devel|XFree86-devel
+#libXi-devel|XFree86-devel
+#libSM-devel|XFree86-devel
+
+libpopt-devel|popt
+libpopt|popt
+
+libgtkmm2-devel|gtkmm24-devel
+
+libpng12|libpng
+sysvinit-utils|SysVinit

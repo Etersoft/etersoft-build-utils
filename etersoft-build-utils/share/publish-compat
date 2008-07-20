@@ -1,0 +1,116 @@
+#!/bin/bash
+# 2006-2007 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# 20.07.08
+
+############# Project build & publish section ##############################
+# Use only it this order:
+
+# Update from CVS
+update_from_cvs()
+{
+	local REP ROT
+
+	if [ -d CVS ] ; then
+		REP=`cat CVS/Repository`
+		ROT=`cat CVS/Root`
+		echo "Update from CVS... $ROT/$REP"
+		cvs -z3 update -dPR || fatal $"Fail during update from CVS..."
+	else
+		fatal $"CVS dir not found"
+	fi
+}
+
+
+# Run inside project dir (named as name) (arg: local for noncvs build)
+prepare_tarball()
+{
+	local LOCALBUILD WDPROJECT TMPWDIR REP ROT
+	test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
+	build_rpms_name $SPECNAME
+	test -z "$BASENAME" && fatal "BASENAME is empty"
+	# If someone overrides version
+	test -n "$TARBALLVERSION" && VERSION=$TARBALLVERSION
+	# project name-version
+	NAMEVER=$BASENAME-$VERSION
+	WDPROJECT=$(pwd)
+
+	# If local build or configure no exists in orig work dir
+	if [ "$1" = "local" ] ||  [ ! -f configure ]; then
+		LOCALBUILD=1
+	fi
+
+	[ -f configure ] && ! [ -d CVS ] && fatal "Can't work with configure without CVS"
+	
+	if [ -d CVS ] ; then
+		REP=`cat CVS/Repository`
+		ROT=`cat CVS/Root`
+	fi
+	[ -z "$CVSTAGFLAG" ] &&	CVSTAGFLAG=`cvs status VERSION | grep "Sticky Tag" | sed -e "s|(.*||g" | sed -e "s|^.*:[ 	]*||g"`
+	[ -n "$CVSTAGFLAG" ] && CVSTAGFLAG="-r $CVSTAGFLAG"
+	#echo "Project work dir: $WDPROJECT"
+	pushd ..
+	# Set as name-version if not get from spec
+	[ -z "$TARBALLNAME" ] && TARBALLNAME=$NAMEVER.tar.bz2
+
+	# Prepare temp dir/files for build
+	TMPWDIR=$(TMPDIR= mktemp -d -p $(readlink -f $WDPROJECT/../))
+	test -z "$TMPWDIR" && fatal "TMPWDIR is empty"
+	cd $TMPWDIR || fatal "$TMPWDIR is not accessible"
+
+	# if configure present, do checkout
+	if [ -z "$LOCALBUILD" ] ; then
+		#test -d $TMPWDIR && fatal "$TMPWDIR is already exists"
+		#mkdir -p $TMPWDIR
+		echo "Checkout with cvs $CVSTAGFLAG $ROT/$REP into $TMPWDIR"
+		CVSROOT=$ROT cvs checkout $CVSTAGFLAG $REP || fatal "Error during checkout"
+		mv $REP $NAMEVER || fatal "Can't move to $NAMEVER"
+		cd $NAMEVER
+		if [ -e ./autogen.sh ] ; then
+			 ./autogen.sh
+		else
+			autoreconf -fisv
+		fi
+		# TODO remove CVS dirs
+		#find ./ -type d -name CVS -print 0 | xargs -0 rm
+	else
+		#test -L $NAMEVER && rm -f $NAMEVER
+		#ln -s $WDPROJECT $NAMEVER || fatal "Can't ln"
+		mkdir -p $NAMEVER && cd $NAMEVER || fatal "Can't cd"
+		cp -rl $WDPROJECT/* ./ || fatal "Can't create hard links"
+		test -e ./Makefile && make distclean
+
+	fi
+	# remove unneeded files
+	rm -rf autom4te.cache/
+	cd -
+
+	echo "Make tarball $TARBALLNAME ... from $(pwd)/$NAMEVER"
+	mkdir -p $RPMSOURCEDIR/
+	if [ -z "$SKIPTARBALLINTERNALDIR" ] ; then
+		$NICE tar cfj $RPMSOURCEDIR/$TARBALLNAME $NAMEVER/* $ETERTARPARAM || fatal "Can't create tarball"
+	else
+		echo "Skip internal dir in tarball"
+		cd $NAMEVER >/dev/null
+		$NICE tar cfj $RPMSOURCEDIR/$TARBALLNAME * $ETERTARPARAM || fatal "Can't create tarball"
+		cd - >/dev/null
+	fi
+
+	# Remove temp. dirs/files from tmpdir
+	test -d $NAMEVER && rm -rf $NAMEVER
+	rmdir $TMPWDIR
+	popd
+}
+
+# Publish tarball to Inet (need PUBLICSERVER/PUBLICPATH, TARNAME)
+publish_tarball()
+{
+	echo "Publish $TARNAME to $PUBLICSERVER:$PUBLICPATH "
+	if [ -n "$PUBLICSERVER" ] ; then
+		ssh $PUBLICSERVER mkdir -p $PUBLICPATH/
+		rsync --progress $RPMSOURCEDIR/$TARNAME $PUBLICSERVER:$PUBLICPATH/$TARNAME || fatal "Can't rsync"
+		ssh $PUBLICSERVER ln -sf $TARNAME $PUBLICPATH/$BASENAME-current.tar.bz2
+	fi
+}

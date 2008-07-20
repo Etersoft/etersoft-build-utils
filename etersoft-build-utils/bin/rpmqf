@@ -1,0 +1,43 @@
+#!/bin/sh
+# 2003-2006 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# Выводит, к какому пакету относится указанный файл, находимый через which
+# Параметры:
+# - название файл
+# TODO not -i only, we need any key
+
+#. /etc/rpm/etersoft-build-functions
+
+if [ "$1" = "-h" ]; then
+	echo "rpmqf - the same as rpm -qf"
+	exit 0
+fi
+
+if [ "$1" = "-i" ]; then
+	ARG=$1
+	shift
+fi
+
+TOFILE=`which $1 2>/dev/null`
+
+if [ -z "$TOFILE" ] ; then
+	#echo "$1 is missed in PATH"
+	#exit 1
+	TOFILE=$1
+fi
+
+if [ -L "$TOFILE" ] ; then
+	LINKTO=`readlink "$TOFILE"`
+	if [ -L "$LINKTO" ] ; then
+		LINKTO1=`readlink "$LINKTO"`
+		echo "Note: $TOFILE is link to $LINKTO, that is link to $LINKTO1"
+		TOFILE="$LINKTO1"
+	else
+		echo "Note: $TOFILE is link to $LINKTO"
+		TOFILE="$LINKTO"
+	fi
+fi
+
+rpm -qf $ARG "$TOFILE"

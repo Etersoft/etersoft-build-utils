@@ -1,0 +1,264 @@
+#!/bin/bash
+# 2003-2008 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+# BPH - backport; use hasher
+# 06.09.2005, 12.09.2005, 07.11.2005, 16.02.2006, 02.07.2007, 08.09.2007
+# Makes backport package to any target platfrom (RPM, DEB, TGZ)
+# Релиз строится на основе релиза из Сизифа. Если там был alt4
+# то здесь будет alt0.M24.4
+# TODO: use RPMBUILDARG
+
+. /etc/rpm/etersoft-build-functions
+
+#VENDORVERSION=`distr_vendor -e`
+DISTRVERSION=`distr_vendor -v`
+
+alt_tolocal()
+{
+local SPECNAME
+SPECNAME=$1
+
+# get current release number
+BASERELEASE=$(get_release $SPECNAME | sed -e "s/alt//" | sed -e "s/%{_vendor}//" | sed -e "s/eter//" | sed -e "s/%_vendor//")
+
+# Set buildreq
+if [ "$VENDOR" = "alt" ] ; then
+	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
+	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbsh
+	# Change release according to alt policy
+	set_release $SPECNAME alt0.$MDISTR.$BASERELEASE
+	ADDDEF=""
+	CLEANTEXT=""
+else
+	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95"
+	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbb
+	set_release $SPECNAME eter$BASERELEASE$VENDOR
+	ADDDEF="%defattr(-, root, root)"
+	CLEANTEXT=""
+fi
+
+# Do not add BuildReq if already exist
+cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
+
+# fix mktemp using for MCBC
+if [ "$VENDOR" = "mcbc" ] ; then
+	FIXMKTEMP="%__subst "s|mktemp -dt|mktemp -d|g" configure"
+else
+	FIXMKTEMP=""
+fi
+
+# Too old problem
+TOCHANGELOG=
+if [ "$MDISTR" = "M23" ] ; then
+	if grep "%configure" $SPECNAME >/dev/null && ! grep "^autoreconf" $i >/dev/null && ! grep "^%__autoreconf" $i >/dev/null ; then
+		RECONFT="%__autoreconf"
+		TOCHANGELOG="add __autoreconf macros in build section for fix so name problem (by script)"
+	fi
+fi
+
+LISTBUILDDEP=`print_buildreq $SPECNAME`
+LISTREQDEP=`print_pkgreq $SPECNAME`
+LISTDEP=`echo $LISTBUILDDEP $LISTREQDEP | xargs -n1 echo | sort -u`
+LISTGROUP=`eval_spec $SPECNAME | grep Group | sed -e "s|^.*:||g"  | xargs -n1 echo | sort -u`
+
+
+# Build replacement rules for spec
+ALLREPLRULES=""
+[ -n "$VERBOSE" ] && echo "Checking req names for $LISTDEP"
+
+export DISTRVERSION
+
+for i in $LISTDEP ; do
+	tolocal_anyrepl $i `print_pkgrepl_list` || continue
+	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
+	NRL="s!(.*Req.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
+	[ -n "$VERBOSE" ] && echo "Use req rule $NRL"
+	ALLREPLRULES="$ALLREPLRULES $NRL;"
+done
+
+# Build replacement rules for spec
+[ -n "$VERBOSE" ] && echo "Checking group names for $LISTGROUP"
+ALLGRPREPLRULES=""
+for i in $LISTGROUP ; do
+	tolocal_anyrepl $i `print_grprepl_list` || continue
+	#NRL="s!\(Group.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
+	NRL="s!(Group.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
+	[ -n "$VERBOSE" ] && echo "Use group name rule $NRL"
+	ALLGRPREPLRULES="$ALLGRPREPLRULES $NRL;"
+done
+#echo GRP: $LISTGROUP, ALLGRPREPLRULES: $ALLGRPREPLRULES
+
+# Replace all packages names in source spec and add %defattr to files sections
+# FIXME: добавляет ненужные пустые строки
+
+function awk_e1()
+{
+	[ -n "$ADDDEF" ] &&	awk 'BEGIN{desk=0}{print;if(/^%files/){printf("%s\n", text)}}' text="$ADDDEF" || cat
+}
+
+# add clean before %files
+function awk_e2()
+{
+	[ -n "$CLEANTEXT" ] && awk 'BEGIN{desk=0}{if(/^%files/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$CLEANTEXT" || cat
+}
+
+# add rpm-build-compat buildreq
+function awk_e3()
+{
+	[ -n "$BUILDREQ" ] && awk 'BEGIN{desk=0}{if(/^%description/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$BUILDREQ" || cat
+}
+
+# add reconf for M23 after %build
+function awk_e4()
+{
+	[ -n "$RECONFT" ] && awk 'BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf("%s\n", text);desk++}}' text="$RECONFT" || cat
+}
+
+# fix mktemp param for MCBC after %build
+function awk_e5()
+{
+	[ -n "$FIXMKTEMP" ] && awk 'BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf("%s\n", text);desk++}}' text="$FIXMKTEMP" || cat
+}
+
+# apply replacement rules
+repl_reqs()
+{
+	local PREGE
+	PREGE="perl -p -e"
+	[ -n "$ALLREPLRULES" ] && $PREGE "$ALLREPLRULES" || cat
+}
+
+# apply replacement rules
+repl_groups()
+{
+	local PREGE
+	PREGE="perl -p -e"
+	[ -n "$ALLGRPREPLRULES" ] && $PREGE "$ALLGRPREPLRULES" || cat
+}
+
+if [ -n "$VERBOSE" ] ; then
+	echo "Requires rules: $ALLREPLRULES"
+	echo "Group rules: $ALLGRPREPLRULES"
+fi
+
+# apply all rules, awk excludes, remove empty tag lines
+mv $SPECNAME $SPECNAME.old &&
+	cat $SPECNAME.old | \
+		repl_reqs | repl_groups | \
+		awk_e1 | awk_e2 | awk_e3 | awk_e4 | awk_e5 | \
+		sed -e "s|^BuildRequires: *\$||g" | \
+		sed -e "s|^BuildPreReq: *\$||g" | \
+		sed -e "s|^Requires: *\$||g" | \
+		sed -e "s|^Conflicts: *\$||g" | \
+		sed -e "s|^Provides: *\$||g" | \
+		sed -e "s|^Obsoletes: *\$||g" | \
+		cat > $SPECNAME
+
+#TODO:
+#%if %{undefined buildroot}
+#BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
+#%endif
+
+#TODO:
+#%clean section
+
+rm -f $SPECNAME.old
+
+if [ "$VENDOR" = "alt" ] ; then
+	subst "1i#" $SPECNAME
+	# use old compress method for the src.rpm
+	#subst "1i%define _source_payload w9.gzdio" $SPECNAME
+	# FIXME: only for M40 and older?
+	export USE_LEGACY_COMPRESSION=1
+
+	subst "1i# This spec is backported to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	ENTRY="- backport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
+	DISTRARG="-$MDISTR"
+else
+	subst "1i# This spec is autoported from ALT Linux Sisyphus to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	ENTRY="- autoport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
+	DISTRARG=""
+fi
+
+test -n "$TOCHANGELOG" && ENTRY=`echo -e "$ENTRY\n- $TOCHANGELOG"`
+add_changelog $SPECNAME -e "$ENTRY"
+
+$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
+
+}
+
+
+#############################
+
+Usage="Usage: $name [-r -u -U -n -i -m -v] spec..."
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - backports spec and rebuild it"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -r - remote build"
+#	echog " -m - send result via e-mail"
+	echog " -u/-U - sign and upload after build"
+	echog " -n - do not build in hasher"
+	echog " -i - install built packages in test hasher"
+	echog " -v - more verbose"
+}
+
+
+while getopts :hniv opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    n) BUILDCOMMAND="rpmbs";;
+    v) VERBOSE=1;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
+fi
+
+# pass other options to RPM:
+LISTRPMARGS=$@
+}
+
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
+
+test -z "$LISTNAMES" && fatal "Error: no such file"
+
+if [ "$VENDOR" = "alt" ] ; then
+	MDISTR=$MENV
+	test -z "$MDISTR" && fatal "missed backport version (f.i. run with -M24 param for Master 2.4)"
+	DISTRVERSION=`echo $MDISTR | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g"`
+	# read man bash QUOTING and see /bin/shell-quote (libshell)
+	# due incompatible changes scince rpm-4.0.4-alt94 (15 Jun 2008)
+	#LISTRPMARGS="$LISTRPMARGS --define='_source_payload w9.gzdio'"
+else
+	MDISTR=LOCAL
+fi
+
+[ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
+
+unset MENV MENVARG
+
+mkdir -p $RPMDIR/SPECS/$MDISTR
+
+for i in $LISTNAMES ; do
+	DEST=`basename $i`
+	cp $i $RPMDIR/SPECS/$MDISTR/$DEST || fatal "Can't copy spec"
+	cd $RPMDIR/SPECS/$MDISTR || fatal "Error"
+	alt_tolocal $DEST
+	cd -
+done
+

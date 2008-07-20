@@ -1,0 +1,15 @@
+#!/bin/sh
+# Lists incoming dir
+# Use -M23 and so on
+
+. /etc/rpm/etersoft-build-functions
+
+parse_cmd_pre -- "$@"
+
+echog "Checking for private key..."
+ssh-add -l || ssh-add
+
+set_incoming $MENV
+
+rsync -n -e ssh $RSYNCINCOMING/$INCOMING/
+echog "Ls from $RSYNCINCOMING/$INCOMING"

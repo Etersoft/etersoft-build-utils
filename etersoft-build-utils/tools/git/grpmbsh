@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /etc/rpm/etersoft-build-functions
+
+FILES=
+
+for i in $@ ; do
+#	FILES="$FILES $i/$i.spec"
+#done
+#rpmbsh -u $FILES
+	cd $i || exit 1
+	rpmbsh $i.spec || exit 1
+	cd -
+done

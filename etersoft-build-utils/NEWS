@@ -1,0 +1,347 @@
+etersoft-build-utils-1.5.0:
+- move /etc/rpm/etersoft-build-config to /etc/eterbuild/config
+- move /etc/rpm/etersoft-build-functions to /usr/share/eterbuild/common
+
+etersoft-build-utils-1.4.8: 17 Jul 2008
+- add support for M42
+- bin/rpmgp: add support for get src.rpm from various rpm repos
+- do not override CC/CXX
+- etersoft-build-functions: disable ccache detecting
+- update pkgrepl rules
+
+etersoft-build-utils-1.4.7: 03 Jul 2008
+- bin/rpmbs: add -z support (legacy compression)
+- bin/rpmcs: disable change source tarball name by default
+- bin/rpmbugs: use Sisyphus product for bugzilla
+- bin/rpmbph: create rpms with legacy compression without spec line
+
+etersoft-build-utils-1.4.6: 27 Jun 2008
+- add -y to rsync command for fuzzy comparing names
+- bin/rpmbph: use gzip method for backported src.rpm
+- fix rpmqf to work with files in current dir
+- improve rpmqf to support links and alternatives
+- update pkgrepl rules
+
+etersoft-build-utils-1.4.5: 13 Jun 2008
+- fix M40/M41 issues
+
+etersoft-build-utils-1.4.4: 29 May 2008
+- fix M40 upload to updates
+- fix NAMERPMIN generation in build_rpms_name
+- fix rpmurl (get url by package name)
+- rpmurl: add -p option for open sisyphus.ru page for the package
+
+etersoft-build-utils-1.4.3: 10 May 2008
+- add M41 (backport, update) support
+- bin/rpmgs: run add_changelog separately for each spec (fix altbug #15495)
+- bin/rpmcs: disable attr removing, remove only defattr(-,root,root)
+- bin/rpmbph: fix defattr injecting (add missed |) (thanks to boris@)
+
+etersoft-build-utils-1.4.2: 24 Mar 2008
+- do not replace source ext in git repo case
+- add more rules for removing %_macroses
+- add replacement rules for gtkmm
+- fix group replacement
+
+etersoft-build-utils-1.4.1: 23 Feb 2008
+- fix Group replacement for ALT distros
+- add python macroses support in rpmcs
+- small fixes
+
+etersoft-build-utils-1.4.0: 19 Jan 2008
+- cleanup spec
+- add rpm-build repl for SUSE
+- use perl -pe for replacing, small fixes
+- clean up rpmcs code
+- fix bug #13974
+
+etersoft-build-utils-1.3.5: 11 Jan 2008
+- fix prepare_tarball function
+- fix rpmbph for curret distro detect
+- fix rpmcs hang
+- fix rpmbph on ALT spec changelogs
+- more correctly clean pkgreqs
+- add -l key to rpmgp (lists buildreqs for the spec)
+- big update of pkg replacement files (Xorg, NX, Postgres...)
+- introduce rpmunmets script for unmets detect in fresh packages
+- improve BuildReq handling in rpmbph
+- fix replace package names only in *Req* and *Group* spec lines in rpmcs
+- add -o key to rpmbs for nosrc.rpm generating
+
+etersoft-build-utils-1.3.5: 10 Jan 2008
+- add -l key to rpmgp (lists buildreqs for the spec)
+- big update of pkg replacement files
+- introduce rpmunmets script for unmets detect in fresh packages
+- improve BuildReq handling in rpmbph
+- fix replace package names only in *Req* and *Group* spec lines in rpmcs
+- add -o key to rpmbs for nosrc.rpm generating
+- more correctly clean pkgreqs
+- fix prepare_tarball function
+
+etersoft-build-utils-1.3.4: 07 Dec 2007
+- fix rpmbph to support %%{_vendor}, %%_vendor, eter in release
+- major update replacement list (check by Wine build)
+- add replacements for modularized XOrg packages and Mesa packages
+- rename mandriva tag release to mdv
+- add gconf_schema_install replacement to rpmcs (thanks to Michael Shigorin mike@)
+
+etersoft-build-utils-1.3.3: 07 Nov 2007
+- add support to upload to incoming/Update (-U option)
+- update replacement list (special Mandriva rules)
+- add tbz2 tarball support
+- fix build log greping
+
+etersoft-build-utils-1.3.2: 28 Oct 2007
+- fix rpmbph on ALT, add error handling in rpmcs
+- add some rules for Debian, Mandriva, common rules for rpm, deb
+- add support for Incoming/Updates (-U key instead -u for upload)
+
+etersoft-build-utils-1.3: 08 Sep 2007
+- rpmbph converts alt's spec to local convention (depends on distro)
+- use replacement lists in rpmbph and rpmcs for buildreqs and groups
+- add git support in mkpatch
+
+etersoft-build-utils-1.2: 06 Aug 2007
+- fix rpmbb for use with gear (thanks to php-coder@)
+- fix pack_src_rpm()
+- improve rpmcs
+
+etersoft-build-utils-1.1.9: 10 Jul 2007
+- add all rpm based system initial support in rpmbph
+- add parallel bzip (pbzip2) support
+- add -r (remote) option to rpmrb
+
+etersoft-build-utils-1.1.8: 30 May 2007
+- add support for ALT Linux 4.0 backports
+- remove hasher hard require
+- some build unifiyng for non RPM systems
+- set download timeouts against sf.net mirrors lags
+- enable cleanup chroot after loginhsh using
+
+etersoft-build-utils-1.1.7: 16 Mar 2007
+- rpmrb: remove minor version if only major used
+- detect sticky tag when recheckout from cvs
+- use alt1 release as default for new release
+- myhsh: use --mountpoints=/proc,/dev/pts by default
+
+etersoft-build-utils-1.1.6: 18 Jan 2007
+- small changes, remove hack for glibc-i686 requires
+- fix check url in rpmurl
+
+etersoft-build-utils-1.1.5: 27 Dec 2006
+- add test with bzip -t for tarballs
+- use bash for rpmbb (due dash problem on Ubuntu 6.10)
+- fix some replacements in rpmbph
+- disable ccache warning
+- add some comments
+
+etersoft-build-utils-1.1.4: 19 Nov 2006
+- fix bug with 2005 year in NEWS for current year releases
+- add local mode for prepare_tarball (without cvs using)
+- fix temp dir create during tarball preparing
+- name of project directory is not affecting now on tarball name
+- fix nice using
+- update library replacing to rpmbph
+- add initial support for gear/git
+- fix mkpatch behaviour
+- some hasher args fixes
+
+etersoft-build-utils-1.1.3: 23 May 2006
+ - improve mkpatch
+ - improve HASHERARG using and setting
+ - fix default arch on x86_64
+ - remove old PLD's changelog
+ - disable build time checking (useful on remote build)
+
+etersoft-build-utils-1.1.2: 09 Apr 2006
+ - use vim for post edit changelog entries
+ - remove -v from hsh args by default (bug #9387)
+ - add mkpatch for make patch against one file in (project) source tree
+(supports CVS, SVN repository and .orig file)
+ - small fixes in sources.list(s)
+ - some add_changelog improvement
+ 
+etersoft-build-utils-1.1.1: 08 Mar 2006
+ - bugfix release (see ChangeLog for details)
+ - fix version detecting in rpmrb
+ - fix autoreconf detecting in rpmbph
+ - create SOURCE dir in rpmgs if needs
+
+etersoft-build-utils-1.1: 05 Mar 2006
+ - improve rpmrb for work with major/minor version (to ktirf@)
+ - add 3 arg (release) to rpmrb
+ - use apt.conf.SS by default for Sisyphus
+ - use apt.conf.DD for Daedalus
+ - using APTCONF from env if defined
+ - add check_spec.sh for compare rpmcs results with original specs
+ - add -c key to rpmbsh/myhsh for build without stuff (previous builds)
+ - fixes for remove elinks, perl-libwww from requires
+
+
+etersoft-build-utils-1.0: 21 Feb 2006
+ - welcome to improvement :)
+ - add functions for automatic build release of packaged projects
+   (update_from_cvs, build_tarball, publish_srpms, publish_tarball)
+   see release-helper.sh as example
+ - fix build on Debian system
+ - update russian translation
+ - rewrite BUILDROOT and RPMSOURCEDIR retrieving
+ - add using ETERDESTSRPM as destdir within rpmbs -s
+ - use mktemp in compatibility manner
+ - done stress testing in multiplatform autobuild environment
+ - add nice for hard tasks
+ - improve rpmbph, add autoreconf for M23 (Note! remove -M24 as default)
+
+etersoft-build-utils-0.99.9: 15 Feb 2006
+ - fix work with apt-conf-sisyphus >= 2.0-alt1 (ignore source.list.d)
+ - fix rpmgs to check for correct SOURCES dir
+ - major improvement rpmcs (PLD specs convert, add Packager if missed)
+ - improvements in rpmgs (add support for single compressed files)
+ - thanks php_coder for ideas and help with awk
+ - add some checks to rpmgs, add -r key for force download
+ 
+etersoft-build-utils-0.99.8: 28 Jan 2006
+ - add -t key to rpmbugs (show bug list in console)
+ - add number parameter to rpmbugs (show bug by number, console only)
+ - add logging after signed upload to incoming (see ~/RPM/uploaded.log)
+ - some internal rewrite (warning/fatal functions using)
+ - add support for rpm-build-compact (for backports support)
+ - during build backported package we have now:
+   - backport_distro macros with M? as value
+   - build_M?, build_backport for if_with conditions
+ 
+etersoft-build-utils-0.99.7: 04 Jan 2006
+ - add -d key to rpmbs for delete package from Incoming
+   (replace it with 0 size file)
+ - some fixes (see Changes)
+ - add -r key to rpmbb (instead cbuildreq)
+ - add support for program name in rpmbugs -qf program
+ - add -n key rpmbugs (do not work yet :)
+
+etersoft-build-utils-0.99.6: 26 Dec 2005
+ - add check for correct release in backports
+ - add M31 build support
+ - disable mailing report (it was broken)
+ - remove gcc-c/c++ dependencies from spec
+ - add -b key to rpmgp for install needed packages for build
+ - rename bashbsh to loginhsh
+ - add SSH_KEYFILE to config for set alternate ssh key file
+ - some fixes
+
+etersoft-build-utils-0.99.5: 24 Dec 2005
+ - add -SS support as Sisyphus sign (default behavior)
+ - to be more informative when errors
+ - make hsh --lazy-cleanup by default
+ - add fix permissions before upload in rpmbs and upload-to-alt
+ - change default ssh host from incoming to devel
+ - add ls-incoming to doc
+ - some improvements
+ - add rpmrp for automatic rebuild new version
+
+etersoft-build-utils-0.99.4: 05 Dec 2005
+ - enable backport to M30
+ - fix using more then one parameters for rpmbsh
+ - fix spec, rpmcs (thanks to ldv@)
+ - add check for empty list of packages to rpmbb
+ 
+etersoft-build-utils-0.99.3: 26 Nov 2005
+ - fix package checking in myhsh
+ - add X forwarding to bashbsh by default
+ - add QuickHelp.txt file with summary of all program help output
+
+etersoft-build-utils-0.99.2: 16 Nov 2005
+ - add -n key to rpmbph for disable hasher build
+ - add -i key to rpmbsh (myhsh) for install in test hasher after build
+ - add -t key to bashbsh (test hasher)
+ - add -i key to bashbsh (initialize hasher dir)
+ - use original (Sisyphus) release when backport release formed
+ - some minor fixes
+ - improvement support for non ALT system
+
+etersoft-build-utils-0.99.1: 04 Nov 2005
+ - rewrote all option parsing subsystem
+ - add ls-incoming
+ - upload-to-alt
+ - rename function build_list_and_args to parse_cmd_pre
+ 
+etersoft-build-utils-0.99: 21 Sep 2005
+ - fixed some bugs with -M? parameters
+ - fixed myhsh run
+ - update russian translation
+ - add -s option to rpmurl (open folder with source tarball of package)
+ - add -M? support to rpmbph (to set destination distro)
+
+etersoft-build-utils-0.98: 18 Sep 2005
+ - add -u (upload) key to rpmbs
+ - add support for Daedalus (-DD), 3.0 (-M30)
+ - some fixes, use getopts
+ - add checking with rpmlint
+ - add support to myhsh to local using
+ - add -c option to rpmurl (check URL for accessible)
+ - add -c option to rpmgs (do check only a package in repository)
+ - remove rpmcheckonline, rpmbi, rpmbc, rpmbp (see -i, -c, -p option in rpmbb)
+ - add --help to rpmbb, rpmbsh, myhsh (with getopts using)
+
+etersoft-build-utils-0.97: 11 Sep 2005
+ - introduce rpmbugs utility for open bugs of the package in ALT Linux Bugzilla
+ - rename rpmshb to rpmbh, rpmsgpkg to rpmgp, rpmsg to rpmgs
+ - some internal fixes (fix drop params)
+ - introduce rpmcs for adoptation foreign specs to ALT policy
+ - introduce rpmcheckonline for checking published state of package
+
+etersoft-build-utils-0.96: 10 Sep 2005
+ - introduce rpmurl utility for open Url from spec in user browser
+ - optimize rpmsgpkg (gets in SRPMS and installs after download)
+ - drop -M2? parameters from rpm command
+ - support spec tags in any symbol case
+ - 
+etersoft-build-utils-0.95: 07 Sep 2005
+ - more fixes (thanks to kirill@ <Kirill Maslinsky>)
+ - all params are have default values now
+ - add REMOTERPMDIR to params
+ - do not use full path to src.rpm files where possible
+ - fix rpmsgpkg (use public rsync now)
+
+etersoft-build-utils-0.94: 06 Sep 2005
+ - update russian translation
+ - some fixes in rpmbsh
+ - fix BUILDROOT detecting
+ - add time command to myhsh call
+ - introduce rpmshb command for spec backporting
+ - introduce rpmsgpkg command for download package's source
+
+etersoft-build-utils-0.93: 05 Sep 2005
+ - remove rpmbshr, rpmbsh-helper, rpmbb-helper
+ - add -m and -r options to myhsh
+ - reorganized code
+ - write log with distro NAME
+
+etersoft-build-utils-0.92: 03 Sep 2005
+ - rpmsg process gz/bz2 files automatically
+ - add to myhsh wait for hasher in use
+ - fix `rpmbshr -m` - build via email
+ - support any options for commands
+ - set special hasher dir for each distro
+ - fix bug with set distro type
+ - fix bug with rsync when list is empty
+ - introduce rpmsgpkg script for packages' src.rpm download
+ 
+etersoft-build-utils-0.91: 24 Aug 2005
+ - add rpm options support
+ - introduce rpmsg script for source download
+ - add automated support /proc for hasher
+ 
+etersoft-build-utils-0.9: 05 Jun 2005
+ - add russian translation for script messages
+ - some fixes
+ 
+etersoft-build-utils-0.7: 16 Apr 2005
+ - add other repository support
+ - add upload scripts
+ 
+etersoft-build-utils-0.6: 09 Apr 2005
+ - fix built package listing
+
+etersoft-build-utils-0.5: 09 Mar 2005
+ - Fix write to log
+ - more unified conf file rules

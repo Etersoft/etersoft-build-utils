@@ -1,0 +1,6 @@
+libssl-devel|libopenssl-devel
+libgphoto2-devel|libgphoto-devel
+libxslt-devel|libxslt-devel
+libcups|libcups2
+libcups-devel|libcups2-devel
+python-devel|libpython2.5-devel
