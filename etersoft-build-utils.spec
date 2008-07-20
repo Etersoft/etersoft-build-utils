@@ -51,6 +51,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %_bindir/*
 %_datadir/eterbuild/
 %dir %_sysconfdir/eterbuild/
+%dir %_sysconfdir/eterbuild/apt/
 %config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*
 %config(noreplace) %_sysconfdir/eterbuild/apt/sources.list.*
 %config(noreplace) %_sysconfdir/eterbuild/config
