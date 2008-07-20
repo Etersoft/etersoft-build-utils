@@ -20,8 +20,7 @@ alt_tolocal()
 local SPECNAME
 SPECNAME=$1
 
-# get current release number
-BASERELEASE=$(get_release $SPECNAME | sed -e "s/alt//" | sed -e "s/%{_vendor}//" | sed -e "s/eter//" | sed -e "s/%_vendor//")
+BASERELEASE=$(get_release_number $SPECNAME)
 
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
