@@ -7,7 +7,8 @@
 # Параметры:
 # - название спек-файла
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 dummy_spec()
 {

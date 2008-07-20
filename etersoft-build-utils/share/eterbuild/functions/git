@@ -4,9 +4,6 @@
 # Author: Denis Smirnov <mithraen@altlinux.ru>
 # Public domain
 
-# 20.07.08
-
-
 get_branch_list()
 {
 	git branch | grep '^ ' | sed 's/^..\(.*\)/\1/'

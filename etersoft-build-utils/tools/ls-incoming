@@ -2,7 +2,8 @@
 # Lists incoming dir
 # Use -M23 and so on
 
-. /etc/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 parse_cmd_pre -- "$@"
 

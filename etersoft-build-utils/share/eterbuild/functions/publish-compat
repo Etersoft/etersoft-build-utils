@@ -114,3 +114,14 @@ publish_tarball()
 		ssh $PUBLICSERVER ln -sf $TARNAME $PUBLICPATH/$BASENAME-current.tar.bz2
 	fi
 }
+
+
+# Publish srpm (need ETERDESTSRPM)
+publish_srpm()
+{
+	echo "Copying $NAMESRPMIN to $ETERDESTSRPM"
+	export ETERDESTSRPM
+	rpmbs -s $* $SPECNAME || fatal "Can't build SRPMS"
+}
+
+

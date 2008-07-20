@@ -16,7 +16,9 @@
 # Если указан -n, не проверяем перед отправкой
 # TODO: -r
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+. $ETERBUILDDIR/functions/rpm
 
 SIGN=
 UPLOADNOW=
@@ -209,7 +211,6 @@ if [ -n "$SIGN" ]; then
 			# Hack about paths
 			test -f "$i" && NAME=$i || NAME=$CURDIR/$i
 			build_rpms_name $NAME
-			#build_buildroot
 			echo -n "    $BUILDROOT "
 			if [ -d "$BUILDROOT" ] ; then
 				rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"

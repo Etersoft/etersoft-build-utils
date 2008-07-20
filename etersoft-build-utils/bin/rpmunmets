@@ -8,7 +8,8 @@
 #
 # Tests unmets in built int hasher packages
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 make_ordinalbox()
 {

@@ -8,6 +8,9 @@
 # rpmrb спек версия [релиз]
 # версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
 
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
 REMOTE=
 if [ "$1" = "-r" ] ; then
 	REMOTE=$1
@@ -22,8 +25,6 @@ if [ "$1" = "-h" ]; then
 	echo "rpmrb spec [vermajor][.verminor] [rel] - update spec to vermajor.verminor version, build %rel release"
 	exit 0
 fi
-
-. /usr/share/eterbuild/common
 
 test -e "$SPEC" || fatal "use with spec"
 

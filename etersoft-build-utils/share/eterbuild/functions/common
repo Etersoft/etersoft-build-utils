@@ -1,0 +1,178 @@
+#!/bin/bash
+# 2003-2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+ETERBUILDETC=/etc/eterbuild
+ETERBUILDDIR=/usr/share/eterbuild
+
+# if run from local installation
+if ! dirname $0 | grep /usr/share >/dev/null ; then
+	ETERBUILDDIR=$(realpath `dirname $0`/../share/eterbuild)
+	ETERBUILDETC=$(realpath `dirname $0`/../etc)
+	echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
+fi
+
+# Выводит указанное сообщение об ошибке и завершает программу
+fatal()
+{
+	echog "Error: $@"
+	exit 1
+}
+
+# Выводит указанное сообщение
+warning()
+{
+	echog "Warning: $@"
+}
+
+print_list()
+{
+	local i
+	for i in $@ ; do
+		echo "    $i"
+	done
+}
+
+is_alt()
+{
+	test -f /etc/altlinux-release
+	return $?
+}
+
+if [ "$UID" = "0" ] ; then
+	fatal "It is strict recommended do not use these scripts as root"
+fi
+
+. $ETERBUILDDIR/functions/config
+. $ETERBUILDDIR/functions/gettext
+. $ETERBUILDDIR/functions/spec
+
+
+# Internal
+set_target_type()
+{
+	if echo $1 | grep "^M[0-9][0-9]$" >/dev/null ; then
+		MENV=$1
+		return 0
+	fi
+	case "$1" in
+		("DD" | "SS" | "EE")
+			MENV="$1"
+			return 0;
+			;;
+	esac
+	return 1;
+}
+
+# Internal
+# Определяет, для какой среды собирать: по ключу -M23 -M24 или по каталогу, в котором спек
+detect_target_env()
+{
+local DISTRNAME=`distr_vendor -e`
+MENVARG=""
+TARGET=`distr_vendor -p`
+VENDOR=`distr_vendor -s`
+
+if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
+	APTCONF=$APTCONF.$MENV
+	echog "Target ALT Linux system: \$MENV, use \$APTCONF"
+	MENVARG="-$MENV"
+else
+	echog "Distribution: \$DISTRNAME (\$VENDOR) (target package: \$TARGET)"
+fi
+}
+
+# Отделяет файлы в LISTNAMES
+# Отделяет указание среды в MENV
+# Устанавливает LISTARGS в оставшиеся аргументы
+# использование:
+# - отделяем среду (MENV)
+# - отделяем файлы
+# - оставшееся обрабатываем как параметры программы
+parse_cmd_pre()
+{
+local i
+if [ $# -lt 1 ]; then
+    [ -n "$Usage" ] && echog "$Usage"
+	fatal "Use -h for help."
+fi
+
+# Sisyphus by default
+MENV=SS
+set_target_type $(basename `pwd`)
+
+LISTNAMES=""
+LISTARGS=""
+OPTINDEX=1
+for i in "$@"
+do
+	# Если файл существует, то добавляем, иначе считаем аргумент параметром.
+	if [ -f "$i" ]; then
+		LISTNAMES="$LISTNAMES $i"
+	else
+		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
+	fi
+done
+# parse MENV
+detect_target_env
+[ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :
+}
+
+check_key()
+{
+	echog "Check access to SSH private key..."
+	ssh-add -l || ssh-add $SSH_KEYFILE || return 1
+	return 0
+}
+
+get_distr_version()
+{
+	echo $1 | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g" | sed -e "s|DD|Daedalus|g"
+}
+
+set_incoming()
+{
+	INCOMING="Sisyphus"
+	test -z "$1" && return
+	case "$1" in
+		("DD")
+			INCOMING="Daedalus"
+			;;
+		("SS")
+			INCOMING="Sisyphus"
+			;;
+		*)
+			if [ -n "$UPDATES" ] ; then
+				INCOMING="updates/`get_distr_version $1`"
+			else
+				INCOMING="backports/`get_distr_version $1`"
+			fi
+			;;
+	esac
+}
+
+add_changelog_helper()
+{
+	# don't work sometime?
+	if ! tty -s && [ -z "$@" ] ; then 
+		echo "skip changelog fixing without tty"
+		return 1
+	fi
+	add_changelog -e "$@"
+	R=$?
+	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 1 ; }
+	# If changelog sucessfully added
+	if [ "$R" = "0" ]; then
+		shift
+		for SPEC in "$@" ; do
+			N=`grep -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
+			# +1 -- comment with date and packager name
+			# +2 -- place for edit comments
+			# +N works for mcedit and vi
+			${EDITOR} +$(($N + 2)) $SPEC
+		done
+	fi
+	return $R
+}
+

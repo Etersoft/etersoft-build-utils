@@ -8,7 +8,8 @@
 # - название спек-файла
 #
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 [ -n "$BROWSER" ] || BROWSER=url_handler.sh
 # (command from perl-libwww)

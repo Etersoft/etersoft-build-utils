@@ -5,7 +5,8 @@
 # 25.01.2005 после закачки переносит файлы в upload.old.xxx
 # 04.11.2005 use arg for set destination (-M23 and so on)
 
-. /etc/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 build_list_and_args -- "$@"
 

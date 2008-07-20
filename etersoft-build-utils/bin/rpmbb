@@ -11,7 +11,9 @@
 # TODO -M?
 # TODO: -c
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+. $ETERBUILDDIR/functions/rpm
 
 # Start as helper
 if [ "$1" = "--helper" ]; then
@@ -19,6 +21,21 @@ if [ "$1" = "--helper" ]; then
 	cd $RPMDIR/SPECS && rpmbb "$@"
 	exit $?
 fi
+
+# get correct BUILDROOT, run build_rpms_name before!
+build_buildroot()
+{
+	test -z "$BASENAME" && fatal "Use build_buildroot with BASENAME defined"
+	# ALT Only?
+	BUILDROOT=`rpm --eval %buildroot | subst_namever`
+	test -z "$BUILDROOT" && fatal "Fix rpm's buildroot"
+	if [ "$BUILDROOT" = "%buildroot" ] ; then
+		BUILDROOT="$HOME/tmp/$BASENAME-buildroot"
+		warning "Can't get buildroot from RPM, set to $BUILDROOT"
+		return 1
+	fi
+	return 0
+}
 
 #############################
 
@@ -117,31 +134,3 @@ do
 done
 echog "Built is done correctly"
 date
-exit 0
-
-
-######################################################
-# rpmbbr ========= 
-RESULT=0
-check_key
-
-echog "Packing without check of build dependencies for packages"
-
-NODEPS="--nodeps"
-LISTBUILT=""
-pack_src_rpm $LISTRPMARGS
-
-echog "==== Copying to build server ====="
-echog "It is recommended to rename old version at server for save traffic during rsync"
-rsync -vay --partial --progress --stats --checksum \
- 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMDIR/SRPMS/
-
-echo
-echog "############ Build at build server ############"
-echo
-ssh $BUILDSERVER rpm -ivh $LISTBUILT
-ssh -t $BUILDSERVER rpmbb --helper "$@"
-echo "-------------------------------"
-echog "Remote build is done"
-date
-

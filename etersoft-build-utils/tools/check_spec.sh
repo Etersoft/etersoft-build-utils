@@ -1,6 +1,8 @@
 #!/bin/sh
 # copy specs to separate tree, make rpmcs and printout diff
-. /etc/eterbuild/common
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 cd $RPMDIR
 

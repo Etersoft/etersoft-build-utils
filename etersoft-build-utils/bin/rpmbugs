@@ -9,7 +9,8 @@
 # TODO: окошко вешания баги (использовать перловые возможности?)
 # TODO: нормальную обработку парамеров
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 [ -n "$BROWSER" ] || BROWSER=url_handler.sh
 

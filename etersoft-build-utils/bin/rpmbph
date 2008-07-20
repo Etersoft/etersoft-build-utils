@@ -10,7 +10,9 @@
 # то здесь будет alt0.M24.4
 # TODO: use RPMBUILDARG
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+. $ETERBUILDDIR/functions/repl
 
 #VENDORVERSION=`distr_vendor -e`
 DISTRVERSION=`distr_vendor -v`

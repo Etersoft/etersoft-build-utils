@@ -5,13 +5,16 @@ MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
 
+SCRIPTLIST = ../share/eterbuild/functions/common \
+	../share/eterbuild/functions/rpm ../share/eterbuild/functions/hasher ../share/eterbuild/functions/spec
+
 all: etersoft-build-utils.mo
 	
 
 etersoft-build-utils.mo: etersoft-build-utils.po
 	$(MSGFMT) -c -o t-$@ $< && mv t-$@ $@
 
-etersoft-build-utils.pot: ../share/common ../tools/upload-to-alt Makefile
+etersoft-build-utils.pot: $(SCRIPTLIST) ../tools/upload-to-alt Makefile
 	ls -1 -d ../bin/* | xargs xgettext -a -o $@ -L Shell --from-code=koi8-r $^ || :
 
 etersoft-build-utils.po: etersoft-build-utils.pot

@@ -9,7 +9,9 @@
 # -c - checkonline
 # -n - do not install
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+. $ETERBUILDDIR/functions/rpm
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"

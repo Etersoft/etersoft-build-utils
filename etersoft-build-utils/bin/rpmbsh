@@ -11,7 +11,9 @@
 # TODO: Сжимать отправляемый лог
 # TODO: присылать обратно собранные пакеты??
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+. $ETERBUILDDIR/functions/rpm
 
 RESULT=0
 REMCOM=

@@ -3,8 +3,6 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-# 20.07.08
-
 get_var()
 {
 	grep -i "^$1:" | head -n 1 | sed -e "s/^[^:]*[ \t]*:[ \t]*//"

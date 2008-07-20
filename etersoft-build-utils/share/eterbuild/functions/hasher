@@ -1,0 +1,23 @@
+#!/bin/bash
+# 2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+. $ETERBUILDDIR/functions/rpm
+
+check_locking()
+{
+	if [ -f $HASHERDIR/lockdir/lockfile ]
+	then
+		echo
+		echog "Hasher $HASHERDIR in use at `date`"
+		echo -n "Wait for unlocking"
+		while test -f $HASHERDIR/lockdir/lockfile
+		do
+			echo -n "."
+			sleep $(($RANDOM%5+3))
+		done
+		echo
+	fi
+}
+

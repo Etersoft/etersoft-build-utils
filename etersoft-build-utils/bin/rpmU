@@ -3,7 +3,8 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ]; then
 	echo "rpmU - the same as [sudo] rpm -Uvh - update package"

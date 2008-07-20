@@ -12,7 +12,8 @@
 # -a - get all source
 # check for the same file with other compression
 
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 WEXT=""
 GETSOURCE=""

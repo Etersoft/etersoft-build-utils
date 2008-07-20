@@ -1,0 +1,150 @@
+#!/bin/bash
+# 2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+
+# Universal rpmbuild function
+# 1st: rpmbuild, hsh, buildreq
+# 2nd: spec name(s) (only one if git, we will skip it)
+# other parameters
+uni_rpmbuild()
+{
+	local COMMAND=$1
+	# just for fill by something
+	local ONEPARAM="-v"
+	shift
+	local SPECNAME=$1
+	local SPECDIR=`dirname $SPECNAME`
+	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
+		# FIXME: do not override -v
+		ONEPARAM="--define=_source_payload w9.gzdio"
+	fi
+	if is_git $SPECDIR ; then
+		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
+		shift # skip spec name
+		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
+		$NICE gear --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@
+	else
+		$COMMAND "$ONEPARAM" $@
+	fi
+	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
+}
+
+# Вынимаем информацию о пакете из спека.
+# Внутренние макроопределения раскрываются!
+# Пробельные символы после Name: могут быть различными
+# TODO: в другом месте не NAMESPEC, а не SPECNAME
+
+build_rpms_name()
+{
+	local tmprpm CATSPEC NAMESPEC
+	#TODO change : to = and execute?
+	NAMESPEC=$1
+	shift
+	test -f "$NAMESPEC" || fatal "Spec $NAMESPEC does not exist"
+	# Check for broken mktemp
+	if mktemp -V &>/dev/null ; then
+		tmprpm=`mktemp || exit 1`
+	else
+		tmprpm=`mktemp /tmp/$NAME.XXXXXX || exit 1`
+	fi
+	eval_spec $NAMESPEC $@ | grep ":"  >$tmprpm
+	CATSPEC="cat $tmprpm"
+	BASENAME=$($CATSPEC | get_var "Name")
+	RELEASE=$($CATSPEC | get_var "Release")
+	VERSION=$($CATSPEC | get_var "Version")
+	TARBALLNAME=$($CATSPEC | get_var "Source.*")
+	[ -n "$TARBALLNAME" ] && TARBALLNAME=$(basename $TARBALLNAME)
+	rm -f $tmprpm
+	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$DEFAULTARCH.rpm
+	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
+
+	#RPMSOURCEDIR=$RPMDIR/SOURCES
+	RPMSOURCEDIR=`rpm --eval %_sourcedir | subst_namever`
+	local BNS NSS
+	BNS="$BASENAME".spec
+	NSS=`basename $NAMESPEC`
+	test "$NSS" != "$BNS" && warning "BASENAME is not the same as NAMESPEC: $BNS against $SS"
+
+	build_buildroot
+}
+
+# LISTNAMES, options in arg
+pack_src_rpm()
+{
+local i
+ARGS=$@
+# NOTE: always nodeps
+# enable --nodeps for other ENV
+#test -n "$MENV" && 
+[ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES ARGS=$ARGS" || :
+ARGS="$ARGS --nodeps"
+for i in $LISTNAMES
+do
+	
+	if [ -z ${i/*rpm/} ] ; then
+		# if rpm not spec, guess it is src.rpm
+		NAMESRPMIN=$i
+	else
+		# Получаем названия пакетов по спеку
+		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
+		build_rpms_name "$i" $ARGS
+		if [ -n "${SIGN}" ]; then
+			echog "Try to packing \$NAMESRPMIN package for sign"
+			add_changelog $i
+			if [ $? = "0" ]; then
+				echog "Spec file \$i had not ChangeLog entry. It have added now, check it and enter your command again."
+				echog "Wait for ten seconds."
+				sleep 10
+				exit 1
+			fi
+			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH
+		else
+			echog "Just packing \$NAMESRPMIN"
+			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
+		fi
+	fi
+	if [ -f $RPMDIR/SRPMS/$NAMESRPMIN ] ; then
+		LISTBUILT="$LISTBUILT$NAMESRPMIN "
+	else
+		fatal "Can't find '$NAMESRPMIN' in '$RPMDIR/SRPMS'"
+	fi
+done
+test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
+#LISTRPMARGS=`echo ${LISTRPMARGS} | sed -e "s/--nodeps//g"`
+}
+
+# build binary package list (1st - repo dir, 2st - pkgname
+function get_binpkg_list()
+{
+	local PKGDIR=$1
+	find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
+		rpmquery -p --qf='%{sourcerpm}\t%{name}-%{version}-%{release}.%{arch}.rpm\n' "{}" \; \
+		| grep "^$2[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
+}
+
+
+check_log()
+{
+	local LOGFILE i RES
+	echo
+	echo "-------------------------------------------------------"
+	echog "Check log for..."
+	LOGFILE=$1
+	grep 'ld: warning: libstdc++\.so\.5, needed by [^ ]\+, may conflict with libstdc++\.so\.6' $LOGFILE
+	RES=$?
+	if [ $RES = 0 ] ; then
+		echog "Error: libstdc++.so.5/6 conflicts"
+		return 1
+	fi
+	grep 'python-strict' $LOGFILE && warning "python-strict used!!!"
+	NC1="command not found"
+	NC2="-march=athlon -mtune=athlon-xp"
+	#for i in ${NC1} ; do
+	grep -- '$NC1' $LOGFILE && warning "'$NC1' in build output (some errors in a scripts)"
+	grep -- '$NC2' $LOGFILE && warning "'$NC2' in build output (forbidden) "
+	#done
+	return 0
+}
+

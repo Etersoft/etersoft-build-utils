@@ -6,8 +6,9 @@
 # Пересборка указанных SRPM-пакетов в hasher
 # -i устанавливает в тестовый hasher после пересборки
 
-. /usr/share/eterbuild/common
-
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+. $ETERBUILDDIR/functions/hasher
 
 #############################
 Usage="Usage: $name [-m -s -u -i -c] spec..."

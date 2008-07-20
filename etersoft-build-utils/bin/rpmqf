@@ -8,8 +8,6 @@
 # - название файл
 # TODO not -i only, we need any key
 
-#. /etc/rpm/etersoft-build-functions
-
 if [ "$1" = "-h" ]; then
 	echo "rpmqf - the same as rpm -qf"
 	exit 0

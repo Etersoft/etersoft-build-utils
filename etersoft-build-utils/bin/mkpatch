@@ -5,8 +5,8 @@
 
 # Make patch for file in $1 against CVS/SVN repository or .orig file
 
-
-. /usr/share/eterbuild/common
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
 
 if [ -f Makefile.in ] ; then
 	DD1=`grep ^TOPOBJDIR Makefile.in | sed -e "s| ||g"`
