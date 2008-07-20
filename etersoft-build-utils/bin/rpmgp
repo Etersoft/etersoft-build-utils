@@ -37,14 +37,6 @@ list_systems()
 	done
 }
 
-print_list()
-{
-	local i
-	for i in $@ ; do
-		echo -e "\t$i"
-	done
-}
-
 html_filter()
 {
 	grep "src.rpm" | sed -e "s|.*href=\"||g" | sed -e "s|\".*||g"

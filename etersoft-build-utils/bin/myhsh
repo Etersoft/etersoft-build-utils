@@ -137,10 +137,7 @@ else
 	echog "Full list of the hashered packages:"
 fi
 
-for i in $LISTBUILTSH ; do
-	echo "    $i"
-	LASTPACKAGE=$i
-done
+print_list $LISTBUILTSH
 
 echo
 

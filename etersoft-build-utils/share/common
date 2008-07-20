@@ -59,6 +59,14 @@ warning()
 	echog "Warning: $@"
 }
 
+print_list()
+{
+	local i
+	for i in $@ ; do
+		echo "    $i"
+	done
+}
+
 # Возвращает результат выяснения того, является ли система ALT-совместимой
 is_alt()
 {
