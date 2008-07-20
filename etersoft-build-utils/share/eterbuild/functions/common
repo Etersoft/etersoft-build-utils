@@ -76,7 +76,8 @@ VENDOR=`distr_vendor -s`
 
 if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	APTCONF=$APTCONF.$MENV
-	echog "Target ALT Linux system: \$MENV, use \$APTCONF"
+	
+	echog "Target ALT Linux system: `get_distr_version $MENV`, use \$APTCONF"
 	MENVARG="-$MENV"
 else
 	echog "Distribution: \$DISTRNAME (\$VENDOR) (target package: \$TARGET)"
