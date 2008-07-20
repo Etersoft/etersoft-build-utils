@@ -28,7 +28,7 @@ Usage="Usage: $name [-c -p -i -r] spec..."
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - build  binary rpm from spec (with ccache using if found)"
+Descr="$name - build  binary rpm from spec"
 
 phelp()
 {
