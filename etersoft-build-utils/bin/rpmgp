@@ -24,7 +24,7 @@ load_systems_list()
 		#FTP[$IDX]=${line/.* \+/}
 		SYSURL[$IDX]=$(echo $line | sed -e "s|.* \+||g")
 		IDX=$(($IDX+1))
-	done < $ETERBUILDDIR/repos
+	done < $ETERBUILDETC/repos
 }
 
 list_systems()

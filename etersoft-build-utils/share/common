@@ -21,6 +21,7 @@ export TEXTDOMAIN
 TEXTDOMAINDIR='/usr/share/locale'
 export TEXTDOMAINDIR
 ETERBUILDDIR=/usr/share/eterbuild
+ETERBUILDETC=/etc/eterbuild
 
 echog()
 {
@@ -135,7 +136,7 @@ uni_rpmbuild()
 }
 
 RPMDIR="$HOME/RPM"
-[ -n "$APTCONF" ] || APTCONF=/etc/eterbuild/apt/apt.conf
+[ -n "$APTCONF" ] || APTCONF=$ETERBUILDETC/apt/apt.conf
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
 OWNERMAIL=`rpm --eval %packager`
 
