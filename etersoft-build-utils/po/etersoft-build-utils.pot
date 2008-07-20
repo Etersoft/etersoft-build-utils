@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: bin/rpmgs:162
+#: ../bin/rpmgs:111 ../bin/rpmgs:182 ../bin/rpmunmets:71 ../bin/rpmunmets:85
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-21 00:23+0300\n"
+"POT-Creation-Date: 2008-07-20 15:05+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,2926 +17,4339 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: etersoft-build-functions:12 etersoft-build-functions:28
-#: etersoft-build-functions:39 etersoft-build-functions:77
-#: etersoft-build-functions:82 etersoft-build-functions:168
-#: etersoft-build-functions:192 etersoft-build-functions:230
-#: etersoft-build-functions:255 etersoft-build-functions:262
-#: etersoft-build-functions:265 etersoft-build-functions:277
-#: etersoft-build-functions:306 etersoft-build-functions:309
-#: etersoft-build-functions:310 etersoft-build-functions:331
-#: etersoft-build-functions:345 etersoft-build-functions:395
-#: etersoft-build-functions:420 etersoft-build-functions:440
-#: etersoft-build-functions:453 bin/loginhsh:49 bin/loginhsh:62
-#: bin/loginhsh:70 bin/loginhsh:77 bin/loginhsh:92 bin/myhsh:14 bin/myhsh:51
-#: bin/myhsh:68 bin/myhsh:80 bin/myhsh:92 bin/myhsh:103 bin/myhsh:120
-#: bin/myhsh:132 bin/myhsh:156 bin/myhsh:168 bin/rpmbb:18 bin/rpmbb:57
-#: bin/rpmbb:74 bin/rpmbb:81 bin/rpmbb:95 bin/rpmbb:96 bin/rpmbb:108
-#: bin/rpmbph:75 bin/rpmbph:106 bin/rpmbs:60 bin/rpmbs:82 bin/rpmbs:102
-#: bin/rpmbs:104 bin/rpmbs:112 bin/rpmbs:119 bin/rpmbs:133 bin/rpmbs:146
-#: bin/rpmbs:156 bin/rpmbs:158 bin/rpmbs:191 bin/rpmbsh:55 bin/rpmbsh:74
-#: bin/rpmbugs:19 bin/rpmbugs:38 bin/rpmbugs:43 bin/rpmbugs:48 bin/rpmbugs:57
-#: bin/rpmbugs:61 bin/rpmbugs:69 bin/rpmbugs:76 bin/rpmbugs:78 bin/rpmbugs:92
-#: bin/rpmcs:28 bin/rpmcs:35 bin/rpmcs:43 bin/rpmcs:49 bin/rpmcs:54
-#: bin/rpmgp:17 bin/rpmgp:28 bin/rpmgp:36 bin/rpmgp:48 bin/rpmgp:51
-#: bin/rpmgp:70 bin/rpmgp:75 bin/rpmgs:158 bin/rpmgs:172 bin/rpmqf:14
-#: bin/rpmqf:19 bin/rpmU:9 bin/rpmurl:46 bin/rpmurl:60 bin/rpmurl:69
-#: bin/rpmurl:71 bin/rpmurl:86 bin/rpmurl:87 bin/rpmurl:90 bin/rpmurl:97
-#: bin/rpmurl:102
+#: ../share/common:10 ../share/common:26 ../share/common:39 ../share/common:81
+#: ../share/common:121 ../share/common:125 ../share/common:157
+#: ../share/common:177 ../share/common:197 ../share/common:211
+#: ../share/common:215 ../share/common:221 ../share/common:226
+#: ../share/common:230 ../share/common:257 ../share/common:278
+#: ../share/common:313 ../share/common:330 ../share/common:357
+#: ../share/common:364 ../share/common:367 ../share/common:379
+#: ../share/common:411 ../share/common:430 ../share/common:445
+#: ../share/common:529 ../share/common:537 ../bin/loginhsh:50
+#: ../bin/loginhsh:62 ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83
+#: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
+#: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:46 ../bin/mkpatch:55
+#: ../bin/mkpatch:64 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
+#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
+#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
+#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:99
+#: ../bin/rpmbb:100 ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:46
+#: ../bin/rpmbph:54 ../bin/rpmbph:55 ../bin/rpmbph:141 ../bin/rpmbph:169
+#: ../bin/rpmbph:227 ../bin/rpmbph:240 ../bin/rpmbs:73 ../bin/rpmbs:89
+#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
+#: ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:169 ../bin/rpmbs:179
+#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
+#: ../bin/rpmbsh:76 ../bin/rpmbugs:18 ../bin/rpmbugs:37 ../bin/rpmbugs:42
+#: ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmbugs:60 ../bin/rpmbugs:68
+#: ../bin/rpmbugs:75 ../bin/rpmbugs:77 ../bin/rpmbugs:91 ../bin/rpmcs:49
+#: ../bin/rpmcs:56 ../bin/rpmcs:68 ../bin/rpmcs:74 ../bin/rpmcs:79
+#: ../bin/rpmcs:81 ../bin/rpmcs:115 ../bin/rpmgp:79 ../bin/rpmgp:92
+#: ../bin/rpmgp:102 ../bin/rpmgp:107 ../bin/rpmgp:113 ../bin/rpmgp:132
+#: ../bin/rpmgp:149 ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:166
+#: ../bin/rpmgp:174 ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197
+#: ../bin/rpmgp:215 ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmgp:238
+#: ../bin/rpmgp:257 ../bin/rpmgp:262 ../bin/rpmgs:83 ../bin/rpmgs:178
+#: ../bin/rpmgs:193 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
+#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
+#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12 ../bin/rpmunmets:62
+#: ../bin/rpmunmets:88 ../bin/rpmurl:49 ../bin/rpmurl:63 ../bin/rpmurl:73
+#: ../bin/rpmurl:75 ../bin/rpmurl:96 ../bin/rpmurl:98 ../bin/rpmurl:114
+#: ../bin/rpmurl:116 ../bin/rpmurl:121 ../bin/rpmurl:126 ../bin/rpmurl:127
+#: ../bin/rpmurl:134 ../bin/rpmurl:139
 msgid "if"
 msgstr ""
 
-#: etersoft-build-functions:12 etersoft-build-functions:81 bin/rpmbs:146
-#: bin/rpmbugs:51 bin/rpmqf:24
+#: ../share/common:10 ../bin/mkpatch:31 ../bin/mkpatch:32 ../bin/mkpatch:33
+#: ../bin/myhsh:68 ../bin/rpmbs:169 ../bin/rpmbugs:50 ../bin/rpmgs:82
+#: ../bin/rpmqf:23 ../bin/rpmurl:14
 msgid "which"
 msgstr ""
 
-#: etersoft-build-functions:12 etersoft-build-functions:13
+#: ../share/common:10 ../share/common:11
 msgid "gettext.sh"
 msgstr ""
 
-#: etersoft-build-functions:12 etersoft-build-functions:81
-#: etersoft-build-functions:192 bin/myhsh:70 bin/rpmbph:106 bin/rpmbph:125
-#: bin/rpmbs:146 bin/rpmbugs:51 bin/rpmcs:49 bin/rpmgp:55 bin/rpmgp:61
+#: ../share/common:10 ../share/common:180 ../share/common:278
+#: ../bin/mkpatch:31 ../bin/mkpatch:32 ../bin/mkpatch:33 ../bin/myhsh:68
+#: ../bin/myhsh:74 ../bin/rpmbph:43 ../bin/rpmbph:55 ../bin/rpmbs:169
+#: ../bin/rpmbugs:50 ../bin/rpmcs:35 ../bin/rpmcs:37 ../bin/rpmcs:38
+#: ../bin/rpmcs:74 ../bin/rpmgp:242 ../bin/rpmgp:248 ../bin/rpmgs:82
+#: ../bin/rpmqf:23 ../bin/rpmurl:14
 msgid "/dev/null"
 msgstr ""
 
-#: etersoft-build-functions:12 etersoft-build-functions:28
-#: etersoft-build-functions:39 etersoft-build-functions:77
-#: etersoft-build-functions:83 etersoft-build-functions:168
-#: etersoft-build-functions:192 etersoft-build-functions:230
-#: etersoft-build-functions:255 etersoft-build-functions:262
-#: etersoft-build-functions:265 etersoft-build-functions:277
-#: etersoft-build-functions:306 etersoft-build-functions:309
-#: etersoft-build-functions:310 etersoft-build-functions:331
-#: etersoft-build-functions:345 etersoft-build-functions:395
-#: etersoft-build-functions:420 etersoft-build-functions:440
-#: etersoft-build-functions:453 bin/loginhsh:49 bin/loginhsh:62
-#: bin/loginhsh:70 bin/loginhsh:78 bin/loginhsh:92 bin/myhsh:14 bin/myhsh:51
-#: bin/myhsh:68 bin/myhsh:81 bin/myhsh:92 bin/myhsh:103 bin/myhsh:120
-#: bin/myhsh:132 bin/myhsh:156 bin/myhsh:168 bin/rpmbb:18 bin/rpmbb:57
-#: bin/rpmbb:74 bin/rpmbb:81 bin/rpmbb:95 bin/rpmbb:96 bin/rpmbb:109
-#: bin/rpmbph:75 bin/rpmbph:106 bin/rpmbs:60 bin/rpmbs:82 bin/rpmbs:102
-#: bin/rpmbs:104 bin/rpmbs:112 bin/rpmbs:119 bin/rpmbs:133 bin/rpmbs:146
-#: bin/rpmbs:157 bin/rpmbs:158 bin/rpmbs:191 bin/rpmbsh:55 bin/rpmbsh:74
-#: bin/rpmbugs:19 bin/rpmbugs:38 bin/rpmbugs:43 bin/rpmbugs:48 bin/rpmbugs:58
-#: bin/rpmbugs:61 bin/rpmbugs:69 bin/rpmbugs:77 bin/rpmbugs:79 bin/rpmbugs:92
-#: bin/rpmcs:28 bin/rpmcs:35 bin/rpmcs:43 bin/rpmcs:49 bin/rpmcs:54
-#: bin/rpmgp:17 bin/rpmgp:28 bin/rpmgp:36 bin/rpmgp:48 bin/rpmgp:51
-#: bin/rpmgp:71 bin/rpmgp:75 bin/rpmgs:158 bin/rpmgs:172 bin/rpmgs:175
-#: bin/rpmqf:14 bin/rpmqf:19 bin/rpmU:9 bin/rpmurl:46 bin/rpmurl:60
-#: bin/rpmurl:70 bin/rpmurl:72 bin/rpmurl:86 bin/rpmurl:87 bin/rpmurl:90
-#: bin/rpmurl:97 bin/rpmurl:102
+#: ../share/common:10 ../share/common:26 ../share/common:39 ../share/common:81
+#: ../share/common:121 ../share/common:125 ../share/common:157
+#: ../share/common:177 ../share/common:197 ../share/common:211
+#: ../share/common:215 ../share/common:221 ../share/common:226
+#: ../share/common:230 ../share/common:257 ../share/common:278
+#: ../share/common:313 ../share/common:331 ../share/common:357
+#: ../share/common:364 ../share/common:367 ../share/common:379
+#: ../share/common:411 ../share/common:430 ../share/common:445
+#: ../share/common:529 ../share/common:537 ../bin/loginhsh:50
+#: ../bin/loginhsh:62 ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83
+#: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
+#: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:46 ../bin/mkpatch:55
+#: ../bin/mkpatch:64 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
+#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
+#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
+#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:99
+#: ../bin/rpmbb:100 ../bin/rpmbb:113 ../bin/rpmbph:27 ../bin/rpmbph:46
+#: ../bin/rpmbph:54 ../bin/rpmbph:55 ../bin/rpmbph:141 ../bin/rpmbph:169
+#: ../bin/rpmbph:227 ../bin/rpmbph:240 ../bin/rpmbs:73 ../bin/rpmbs:89
+#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
+#: ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:169 ../bin/rpmbs:180
+#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
+#: ../bin/rpmbsh:76 ../bin/rpmbugs:18 ../bin/rpmbugs:37 ../bin/rpmbugs:42
+#: ../bin/rpmbugs:47 ../bin/rpmbugs:57 ../bin/rpmbugs:60 ../bin/rpmbugs:68
+#: ../bin/rpmbugs:76 ../bin/rpmbugs:78 ../bin/rpmbugs:91 ../bin/rpmcs:49
+#: ../bin/rpmcs:56 ../bin/rpmcs:68 ../bin/rpmcs:74 ../bin/rpmcs:79
+#: ../bin/rpmcs:81 ../bin/rpmcs:115 ../bin/rpmgp:79 ../bin/rpmgp:92
+#: ../bin/rpmgp:102 ../bin/rpmgp:107 ../bin/rpmgp:113 ../bin/rpmgp:132
+#: ../bin/rpmgp:149 ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:166
+#: ../bin/rpmgp:174 ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197
+#: ../bin/rpmgp:215 ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmgp:238
+#: ../bin/rpmgp:258 ../bin/rpmgp:262 ../bin/rpmgs:83 ../bin/rpmgs:178
+#: ../bin/rpmgs:193 ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18
+#: ../bin/rpmqf:25 ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12
+#: ../bin/rpmrb:21 ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12
+#: ../bin/rpmunmets:62 ../bin/rpmunmets:88 ../bin/rpmurl:49 ../bin/rpmurl:63
+#: ../bin/rpmurl:74 ../bin/rpmurl:76 ../bin/rpmurl:97 ../bin/rpmurl:99
+#: ../bin/rpmurl:114 ../bin/rpmurl:116 ../bin/rpmurl:121 ../bin/rpmurl:126
+#: ../bin/rpmurl:127 ../bin/rpmurl:134 ../bin/rpmurl:139
 msgid "then"
 msgstr ""
 
-#: etersoft-build-functions:13 etersoft-build-functions:114
-#: etersoft-build-functions:115 upload-to-alt:8 bin/loginhsh:14
-#: bin/loginhsh:84 bin/myhsh:19 bin/myhsh:85 bin/rpmbb:15 bin/rpmbph:14
-#: bin/rpmbs:21 bin/rpmbsh:17 bin/rpmbugs:12 bin/rpmcs:10 bin/rpmgp:13
-#: bin/rpmgs:16 bin/rpmgs:126 bin/rpmrb:13 bin/rpmU:7 bin/rpmurl:11
+#: ../share/common:11 ../share/common:128 ../share/common:162
+#: ../share/common:163 ../share/common:164 ../share/common:337
+#: ../tools/upload-to-alt:8 ../bin/loginhsh:13 ../bin/mkpatch:8
+#: ../bin/myhsh:18 ../bin/rpmbb:14 ../bin/rpmbph:13 ../bin/rpmbs:21
+#: ../bin/rpmbsh:16 ../bin/rpmbugs:11 ../bin/rpmcs:9 ../bin/rpmgp:12
+#: ../bin/rpmgs:15 ../bin/rpmgs:146 ../bin/rpmrb:26 ../bin/rpmU:6
+#: ../bin/rpmunmets:18 ../bin/rpmurl:10
 msgid "."
 msgstr ""
 
-#: etersoft-build-functions:14 etersoft-build-functions:31
-#: etersoft-build-functions:86 etersoft-build-functions:194
-#: etersoft-build-functions:258 etersoft-build-functions:272
-#: etersoft-build-functions:279 etersoft-build-functions:313
-#: etersoft-build-functions:347 etersoft-build-functions:400
-#: etersoft-build-functions:431 etersoft-build-functions:442 bin/loginhsh:94
-#: bin/myhsh:135 bin/rpmbs:150 bin/rpmbs:177 bin/rpmbs:193 bin/rpmbs:199
-#: bin/rpmbsh:89 bin/rpmbugs:22 bin/rpmbugs:63 bin/rpmbugs:82 bin/rpmbugs:86
-#: bin/rpmbugs:101 bin/rpmgp:54 bin/rpmgp:74 bin/rpmgp:78 bin/rpmgs:178
-#: bin/rpmurl:76 bin/rpmurl:80 bin/rpmurl:93 bin/rpmurl:96 bin/rpmurl:100
-#: bin/rpmurl:104
+#: ../share/common:12 ../share/common:29 ../share/common:130
+#: ../share/common:179 ../share/common:232 ../share/common:235
+#: ../share/common:280 ../share/common:360 ../share/common:374
+#: ../share/common:381 ../share/common:415 ../share/common:447
+#: ../bin/loginhsh:98 ../bin/mkpatch:13 ../bin/myhsh:141 ../bin/rpmbph:34
+#: ../bin/rpmbph:48 ../bin/rpmbph:179 ../bin/rpmbph:247 ../bin/rpmbs:173
+#: ../bin/rpmbs:200 ../bin/rpmbs:221 ../bin/rpmbs:227 ../bin/rpmbsh:92
+#: ../bin/rpmbugs:21 ../bin/rpmbugs:62 ../bin/rpmbugs:81 ../bin/rpmbugs:85
+#: ../bin/rpmbugs:100 ../bin/rpmcs:87 ../bin/rpmgp:84 ../bin/rpmgp:188
+#: ../bin/rpmgp:192 ../bin/rpmgp:241 ../bin/rpmgp:261 ../bin/rpmgp:265
+#: ../bin/rpmgs:87 ../bin/rpmgs:199 ../bin/rpmqf:37 ../bin/rpmurl:80
+#: ../bin/rpmurl:84 ../bin/rpmurl:102 ../bin/rpmurl:105 ../bin/rpmurl:119
+#: ../bin/rpmurl:130 ../bin/rpmurl:133 ../bin/rpmurl:137 ../bin/rpmurl:141
 msgid "else"
 msgstr ""
 
-#: etersoft-build-functions:15 etersoft-build-functions:30
-#: etersoft-build-functions:32
+#: ../share/common:13 ../share/common:28 ../share/common:30
 msgid "eval_gettext"
 msgstr ""
 
-#: etersoft-build-functions:16 etersoft-build-functions:27
-#: etersoft-build-functions:45 etersoft-build-functions:52
-#: etersoft-build-functions:58 etersoft-build-functions:64
-#: etersoft-build-functions:130 etersoft-build-functions:141
-#: etersoft-build-functions:146 etersoft-build-functions:151
-#: etersoft-build-functions:156 etersoft-build-functions:163
-#: etersoft-build-functions:185 etersoft-build-functions:222
-#: etersoft-build-functions:245 etersoft-build-functions:290
-#: etersoft-build-functions:303 etersoft-build-functions:329
-#: etersoft-build-functions:356 etersoft-build-functions:362
-#: etersoft-build-functions:392 etersoft-build-functions:408
-#: etersoft-build-functions:451 etersoft-build-functions:461 bin/loginhsh:22
-#: bin/loginhsh:27 bin/myhsh:25 bin/myhsh:30 bin/myhsh:64 bin/myhsh:148
-#: bin/rpmbb:28 bin/rpmbb:33 bin/rpmbph:22 bin/rpmbph:27 bin/rpmbph:39
-#: bin/rpmbs:31 bin/rpmbs:36 bin/rpmbs:101 bin/rpmbsh:25 bin/rpmbsh:30
-#: bin/rpmbugs:17 bin/rpmbugs:29 bin/rpmcs:13 bin/rpmgp:61 bin/rpmgs:25
-#: bin/rpmgs:30 bin/rpmgs:56 bin/rpmgs:62 bin/rpmgs:71 bin/rpmgs:80
-#: bin/rpmgs:86 bin/rpmgs:95 bin/rpmgs:102 bin/rpmgs:109 bin/rpmgs:115
-#: bin/rpmgs:121 bin/rpmgs:132 bin/rpmgs:139 bin/rpmgs:144 bin/rpmgs:165
-#: bin/rpmgs:169 bin/rpmurl:19 bin/rpmurl:24
+#: ../share/common:14 ../share/common:25 ../share/common:49 ../share/common:56
+#: ../share/common:62 ../share/common:100 ../share/common:114
+#: ../share/common:167 ../share/common:174 ../share/common:185
+#: ../share/common:190 ../share/common:195 ../share/common:207
+#: ../share/common:242 ../share/common:252 ../share/common:271
+#: ../share/common:305 ../share/common:329 ../share/common:346
+#: ../share/common:392 ../share/common:405 ../share/common:428
+#: ../share/common:457 ../share/common:464 ../share/common:495
+#: ../share/common:527 ../share/common:535 ../share/common:552
+#: ../bin/loginhsh:21 ../bin/loginhsh:26 ../bin/myhsh:24 ../bin/myhsh:29
+#: ../bin/myhsh:66 ../bin/myhsh:154 ../bin/rpmbb:27 ../bin/rpmbb:32
+#: ../bin/rpmbph:19 ../bin/rpmbph:97 ../bin/rpmbph:103 ../bin/rpmbph:109
+#: ../bin/rpmbph:115 ../bin/rpmbph:121 ../bin/rpmbph:127 ../bin/rpmbph:135
+#: ../bin/rpmbph:197 ../bin/rpmbph:202 ../bin/rpmbs:35 ../bin/rpmbs:40
+#: ../bin/rpmbs:121 ../bin/rpmbsh:24 ../bin/rpmbsh:29 ../bin/rpmbugs:16
+#: ../bin/rpmbugs:28 ../bin/rpmcs:12 ../bin/rpmcs:27 ../bin/rpmgp:45
+#: ../bin/rpmgp:53 ../bin/rpmgp:61 ../bin/rpmgp:66 ../bin/rpmgp:73
+#: ../bin/rpmgp:90 ../bin/rpmgp:101 ../bin/rpmgp:122 ../bin/rpmgp:248
+#: ../bin/rpmgp:272 ../bin/rpmgs:24 ../bin/rpmgs:29 ../bin/rpmgs:55
+#: ../bin/rpmgs:62 ../bin/rpmgs:71 ../bin/rpmgs:80 ../bin/rpmgs:95
+#: ../bin/rpmgs:104 ../bin/rpmgs:110 ../bin/rpmgs:117 ../bin/rpmgs:124
+#: ../bin/rpmgs:130 ../bin/rpmgs:136 ../bin/rpmgs:142 ../bin/rpmgs:152
+#: ../bin/rpmgs:159 ../bin/rpmgs:164 ../bin/rpmgs:185 ../bin/rpmgs:190
+#: ../bin/rpmunmets:21 ../bin/rpmunmets:29 ../bin/rpmunmets:39
+#: ../bin/rpmunmets:44 ../bin/rpmurl:20 ../bin/rpmurl:25 ../bin/rpmurl:71
+#: ../bin/rpmurl:93
 msgid "{"
 msgstr ""
 
-#: etersoft-build-functions:17 etersoft-build-functions:32
-#: etersoft-build-functions:175 etersoft-build-functions:176
-#: etersoft-build-functions:208 etersoft-build-functions:209
-#: etersoft-build-functions:224 etersoft-build-functions:225
-#: etersoft-build-functions:394 etersoft-build-functions:398
-#: etersoft-build-functions:401 etersoft-build-functions:424
-#: etersoft-build-functions:436 etersoft-build-functions:452
-#: etersoft-build-functions:462 upload-to-alt:23 bin/loginhsh:79
-#: bin/loginhsh:81 bin/loginhsh:84 bin/loginhsh:87 bin/myhsh:83 bin/myhsh:85
-#: bin/myhsh:87 bin/myhsh:93 bin/myhsh:113 bin/myhsh:131 bin/myhsh:140
-#: bin/myhsh:144 bin/myhsh:153 bin/myhsh:162 bin/myhsh:163 bin/rpmbb:99
-#: bin/rpmbb:104 bin/rpmbb:110 bin/rpmbb:134 bin/rpmbb:136 bin/rpmbb:139
-#: bin/rpmbph:125 bin/rpmbph:131 bin/rpmbph:133 bin/rpmbs:87 bin/rpmbs:89
-#: bin/rpmbs:129 bin/rpmbs:148 bin/rpmbs:166 bin/rpmbs:171 bin/rpmbs:173
-#: bin/rpmbs:174 bin/rpmbs:190 bin/rpmbs:192 bin/rpmbs:194 bin/rpmbsh:70
-#: bin/rpmbsh:77 bin/rpmbsh:78 bin/rpmbsh:80 bin/rpmbsh:87 bin/rpmbsh:92
-#: bin/rpmbugs:23 bin/rpmbugs:69 bin/rpmgp:55 bin/rpmgp:68 bin/rpmgp:69
-#: bin/rpmgp:90 bin/rpmgp:96 bin/rpmgs:181 bin/rpmqf:15 bin/rpmU:10
-#: bin/rpmurl:61
+#: ../share/common:15 ../share/common:30 ../share/common:133
+#: ../share/common:159 ../share/common:219 ../share/common:220
+#: ../share/common:307 ../share/common:308 ../share/common:332
+#: ../share/common:334 ../share/common:337 ../share/common:340
+#: ../share/common:352 ../share/common:453 ../share/common:530
+#: ../share/common:535 ../share/common:553 ../tools/upload-to-alt:23
+#: ../bin/loginhsh:63 ../bin/loginhsh:105 ../bin/myhsh:88 ../bin/myhsh:95
+#: ../bin/myhsh:115 ../bin/myhsh:132 ../bin/myhsh:137 ../bin/myhsh:146
+#: ../bin/myhsh:150 ../bin/myhsh:159 ../bin/myhsh:168 ../bin/myhsh:169
+#: ../bin/rpmbb:103 ../bin/rpmbb:108 ../bin/rpmbb:114 ../bin/rpmbb:139
+#: ../bin/rpmbb:141 ../bin/rpmbb:144 ../bin/rpmbph:63 ../bin/rpmbph:64
+#: ../bin/rpmbph:69 ../bin/rpmbph:77 ../bin/rpmbph:82 ../bin/rpmbph:88
+#: ../bin/rpmbph:142 ../bin/rpmbph:143 ../bin/rpmbph:185 ../bin/rpmbph:243
+#: ../bin/rpmbph:251 ../bin/rpmbs:107 ../bin/rpmbs:109 ../bin/rpmbs:150
+#: ../bin/rpmbs:171 ../bin/rpmbs:189 ../bin/rpmbs:194 ../bin/rpmbs:196
+#: ../bin/rpmbs:197 ../bin/rpmbs:210 ../bin/rpmbs:218 ../bin/rpmbs:220
+#: ../bin/rpmbs:222 ../bin/rpmbsh:73 ../bin/rpmbsh:79 ../bin/rpmbsh:80
+#: ../bin/rpmbsh:82 ../bin/rpmbsh:90 ../bin/rpmbsh:96 ../bin/rpmbugs:22
+#: ../bin/rpmbugs:68 ../bin/rpmcs:37 ../bin/rpmcs:38 ../bin/rpmcs:39
+#: ../bin/rpmcs:40 ../bin/rpmcs:88 ../bin/rpmgp:46 ../bin/rpmgp:56
+#: ../bin/rpmgp:74 ../bin/rpmgp:80 ../bin/rpmgp:85 ../bin/rpmgp:93
+#: ../bin/rpmgp:103 ../bin/rpmgp:114 ../bin/rpmgp:200 ../bin/rpmgp:242
+#: ../bin/rpmgp:255 ../bin/rpmgp:256 ../bin/rpmgp:277 ../bin/rpmgp:283
+#: ../bin/rpmgs:202 ../bin/rpmqf:14 ../bin/rpmqf:35 ../bin/rpmqf:38
+#: ../bin/rpmrb:22 ../bin/rpmU:9 ../bin/rpmunmets:23 ../bin/rpmunmets:31
+#: ../bin/rpmunmets:91 ../bin/rpmunmets:92 ../bin/rpmunmets:98
+#: ../bin/rpmunmets:103 ../bin/rpmunmets:107 ../bin/rpmunmets:108
+#: ../bin/rpmurl:64
 msgid "echo"
 msgstr ""
 
-#: etersoft-build-functions:17 etersoft-build-functions:28
-#: etersoft-build-functions:135 etersoft-build-functions:262
-#: etersoft-build-functions:309 etersoft-build-functions:394
-#: etersoft-build-functions:409 etersoft-build-functions:453 upload-to-alt:12
-#: bin/loginhsh:62 bin/loginhsh:64 bin/loginhsh:81 bin/loginhsh:84
-#: bin/loginhsh:92 bin/myhsh:68 bin/myhsh:83 bin/myhsh:85 bin/myhsh:97
-#: bin/myhsh:103 bin/myhsh:156 bin/myhsh:169 bin/rpmbb:71 bin/rpmbb:74
-#: bin/rpmbb:81 bin/rpmbb:100 bin/rpmbph:131 bin/rpmbs:82 bin/rpmbs:112
-#: bin/rpmbs:119 bin/rpmbs:133 bin/rpmbs:141 bin/rpmbs:147 bin/rpmbs:153
-#: bin/rpmbs:158 bin/rpmbs:190 bin/rpmbsh:74 bin/rpmbsh:76 bin/rpmbsh:77
-#: bin/rpmbugs:14 bin/rpmbugs:43 bin/rpmbugs:92 bin/rpmbugs:98 bin/rpmcs:79
-#: bin/rpmgp:28 bin/rpmgp:56 bin/rpmgp:61 bin/rpmgs:67 bin/rpmgs:76
-#: bin/rpmgs:158 bin/rpmgs:168 bin/rpmgs:172 bin/rpmgs:175 bin/rpmurl:13
-#: bin/rpmurl:60 bin/rpmurl:87 bin/rpmurl:90 bin/rpmurl:98 bin/rpmurl:102
+#: ../share/common:15 ../share/common:26 ../share/common:102
+#: ../share/common:121 ../share/common:128 ../share/common:133
+#: ../share/common:137 ../share/common:147 ../share/common:168
+#: ../share/common:226 ../share/common:228 ../share/common:230
+#: ../share/common:289 ../share/common:334 ../share/common:337
+#: ../share/common:352 ../share/common:364 ../share/common:411
+#: ../share/common:431 ../share/common:453 ../share/common:540
+#: ../tools/upload-to-alt:12 ../bin/loginhsh:70 ../bin/loginhsh:72
+#: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:17 ../bin/mkpatch:22
+#: ../bin/mkpatch:38 ../bin/mkpatch:46 ../bin/mkpatch:48 ../bin/mkpatch:55
+#: ../bin/mkpatch:57 ../bin/mkpatch:64 ../bin/mkpatch:66 ../bin/myhsh:72
+#: ../bin/myhsh:99 ../bin/myhsh:162 ../bin/myhsh:175 ../bin/rpmbb:72
+#: ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:104 ../bin/rpmbph:69
+#: ../bin/rpmbph:77 ../bin/rpmbph:82 ../bin/rpmbph:88 ../bin/rpmbph:98
+#: ../bin/rpmbph:104 ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122
+#: ../bin/rpmbph:130 ../bin/rpmbph:138 ../bin/rpmbph:141 ../bin/rpmbph:185
+#: ../bin/rpmbph:251 ../bin/rpmbs:89 ../bin/rpmbs:102 ../bin/rpmbs:132
+#: ../bin/rpmbs:139 ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:164
+#: ../bin/rpmbs:165 ../bin/rpmbs:170 ../bin/rpmbs:176 ../bin/rpmbs:181
+#: ../bin/rpmbs:218 ../bin/rpmbsh:76 ../bin/rpmbsh:78 ../bin/rpmbsh:79
+#: ../bin/rpmbugs:13 ../bin/rpmbugs:42 ../bin/rpmbugs:91 ../bin/rpmbugs:97
+#: ../bin/rpmcs:41 ../bin/rpmcs:108 ../bin/rpmcs:110 ../bin/rpmcs:115
+#: ../bin/rpmcs:292 ../bin/rpmgp:74 ../bin/rpmgp:149 ../bin/rpmgp:166
+#: ../bin/rpmgp:183 ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:243
+#: ../bin/rpmgp:248 ../bin/rpmgs:67 ../bin/rpmgs:76 ../bin/rpmgs:83
+#: ../bin/rpmgs:84 ../bin/rpmgs:88 ../bin/rpmgs:178 ../bin/rpmgs:188
+#: ../bin/rpmgs:193 ../bin/rpmgs:196 ../bin/rpmrb:30 ../bin/rpmrb:31
+#: ../bin/rpmunmets:88 ../bin/rpmurl:12 ../bin/rpmurl:63 ../bin/rpmurl:114
+#: ../bin/rpmurl:116 ../bin/rpmurl:121 ../bin/rpmurl:127 ../bin/rpmurl:135
+#: ../bin/rpmurl:139
 msgid "-n"
 msgstr ""
 
-#: etersoft-build-functions:18 etersoft-build-functions:34
-#: etersoft-build-functions:48 etersoft-build-functions:54
-#: etersoft-build-functions:61 etersoft-build-functions:67
-#: etersoft-build-functions:137 etersoft-build-functions:143
-#: etersoft-build-functions:148 etersoft-build-functions:153
-#: etersoft-build-functions:159 etersoft-build-functions:179
-#: etersoft-build-functions:219 etersoft-build-functions:240
-#: etersoft-build-functions:286 etersoft-build-functions:298
-#: etersoft-build-functions:319 etersoft-build-functions:353
-#: etersoft-build-functions:359 etersoft-build-functions:384
-#: etersoft-build-functions:403 etersoft-build-functions:447
-#: etersoft-build-functions:457 etersoft-build-functions:469 bin/loginhsh:34
-#: bin/loginhsh:54 bin/myhsh:37 bin/myhsh:56 bin/myhsh:66 bin/myhsh:154
-#: bin/rpmbb:41 bin/rpmbb:63 bin/rpmbph:36 bin/rpmbph:62 bin/rpmbph:81
-#: bin/rpmbs:44 bin/rpmbs:66 bin/rpmbs:117 bin/rpmbsh:39 bin/rpmbsh:61
-#: bin/rpmbugs:26 bin/rpmbugs:33 bin/rpmcs:24 bin/rpmgp:61 bin/rpmgs:36
-#: bin/rpmgs:53 bin/rpmgs:58 bin/rpmgs:68 bin/rpmgs:77 bin/rpmgs:83
-#: bin/rpmgs:91 bin/rpmgs:98 bin/rpmgs:106 bin/rpmgs:112 bin/rpmgs:118
-#: bin/rpmgs:129 bin/rpmgs:136 bin/rpmgs:141 bin/rpmgs:148 bin/rpmgs:165
-#: bin/rpmgs:169 bin/rpmurl:31 bin/rpmurl:52
+#: ../share/common:16 ../share/common:32 ../share/common:52 ../share/common:58
+#: ../share/common:65 ../share/common:107 ../share/common:134
+#: ../share/common:170 ../share/common:182 ../share/common:187
+#: ../share/common:192 ../share/common:201 ../share/common:238
+#: ../share/common:248 ../share/common:263 ../share/common:302
+#: ../share/common:325 ../share/common:342 ../share/common:388
+#: ../share/common:400 ../share/common:418 ../share/common:454
+#: ../share/common:461 ../share/common:492 ../share/common:523
+#: ../share/common:535 ../share/common:547 ../share/common:556
+#: ../bin/loginhsh:34 ../bin/loginhsh:55 ../bin/myhsh:38 ../bin/myhsh:58
+#: ../bin/myhsh:70 ../bin/myhsh:160 ../bin/rpmbb:40 ../bin/rpmbb:63
+#: ../bin/rpmbph:99 ../bin/rpmbph:105 ../bin/rpmbph:111 ../bin/rpmbph:117
+#: ../bin/rpmbph:123 ../bin/rpmbph:131 ../bin/rpmbph:139 ../bin/rpmbph:190
+#: ../bin/rpmbph:212 ../bin/rpmbph:233 ../bin/rpmbs:52 ../bin/rpmbs:79
+#: ../bin/rpmbs:137 ../bin/rpmbsh:39 ../bin/rpmbsh:61 ../bin/rpmbugs:25
+#: ../bin/rpmbugs:32 ../bin/rpmcs:23 ../bin/rpmcs:44 ../bin/rpmgp:50
+#: ../bin/rpmgp:58 ../bin/rpmgp:63 ../bin/rpmgp:68 ../bin/rpmgp:87
+#: ../bin/rpmgp:98 ../bin/rpmgp:119 ../bin/rpmgp:129 ../bin/rpmgp:248
+#: ../bin/rpmgp:272 ../bin/rpmgs:35 ../bin/rpmgs:52 ../bin/rpmgs:58
+#: ../bin/rpmgs:68 ../bin/rpmgs:77 ../bin/rpmgs:92 ../bin/rpmgs:100
+#: ../bin/rpmgs:107 ../bin/rpmgs:113 ../bin/rpmgs:121 ../bin/rpmgs:127
+#: ../bin/rpmgs:133 ../bin/rpmgs:139 ../bin/rpmgs:149 ../bin/rpmgs:156
+#: ../bin/rpmgs:161 ../bin/rpmgs:168 ../bin/rpmgs:185 ../bin/rpmgs:190
+#: ../bin/rpmunmets:26 ../bin/rpmunmets:34 ../bin/rpmunmets:50
+#: ../bin/rpmunmets:68 ../bin/rpmurl:33 ../bin/rpmurl:55 ../bin/rpmurl:89
+#: ../bin/rpmurl:110
 msgid "}"
 msgstr ""
 
-#: etersoft-build-functions:19 etersoft-build-functions:33
-#: etersoft-build-functions:41 etersoft-build-functions:79
-#: etersoft-build-functions:88 etersoft-build-functions:172
-#: etersoft-build-functions:196 etersoft-build-functions:233
-#: etersoft-build-functions:270 etersoft-build-functions:275
-#: etersoft-build-functions:276 etersoft-build-functions:281
-#: etersoft-build-functions:308 etersoft-build-functions:317
-#: etersoft-build-functions:318 etersoft-build-functions:334
-#: etersoft-build-functions:349 etersoft-build-functions:402
-#: etersoft-build-functions:434 etersoft-build-functions:444
-#: etersoft-build-functions:456 bin/loginhsh:51 bin/loginhsh:67
-#: bin/loginhsh:73 bin/loginhsh:88 bin/loginhsh:96 bin/myhsh:18 bin/myhsh:53
-#: bin/myhsh:74 bin/myhsh:88 bin/myhsh:95 bin/myhsh:105 bin/myhsh:123
-#: bin/myhsh:137 bin/myhsh:165 bin/myhsh:170 bin/rpmbb:22 bin/rpmbb:59
-#: bin/rpmbb:79 bin/rpmbb:88 bin/rpmbb:98 bin/rpmbb:102 bin/rpmbb:112
-#: bin/rpmbph:77 bin/rpmbph:109 bin/rpmbs:62 bin/rpmbs:96 bin/rpmbs:107
-#: bin/rpmbs:110 bin/rpmbs:115 bin/rpmbs:131 bin/rpmbs:152 bin/rpmbs:182
-#: bin/rpmbs:195 bin/rpmbs:204 bin/rpmbs:205 bin/rpmbsh:57 bin/rpmbsh:93
-#: bin/rpmbugs:25 bin/rpmbugs:41 bin/rpmbugs:46 bin/rpmbugs:52 bin/rpmbugs:65
-#: bin/rpmbugs:66 bin/rpmbugs:72 bin/rpmbugs:85 bin/rpmbugs:88 bin/rpmbugs:103
-#: bin/rpmcs:31 bin/rpmcs:37 bin/rpmcs:46 bin/rpmcs:51 bin/rpmcs:63
-#: bin/rpmgp:24 bin/rpmgp:31 bin/rpmgp:45 bin/rpmgp:57 bin/rpmgp:66
-#: bin/rpmgp:80 bin/rpmgp:81 bin/rpmgs:160 bin/rpmgs:180 bin/rpmqf:17
-#: bin/rpmqf:22 bin/rpmU:12 bin/rpmurl:48 bin/rpmurl:65 bin/rpmurl:79
-#: bin/rpmurl:84 bin/rpmurl:89 bin/rpmurl:95 bin/rpmurl:106 bin/rpmurl:108
-#: bin/rpmurl:109
+#: ../share/common:17 ../share/common:31 ../share/common:41 ../share/common:83
+#: ../share/common:124 ../share/common:132 ../share/common:160
+#: ../share/common:181 ../share/common:199 ../share/common:213
+#: ../share/common:217 ../share/common:223 ../share/common:234
+#: ../share/common:237 ../share/common:261 ../share/common:282
+#: ../share/common:316 ../share/common:341 ../share/common:372
+#: ../share/common:377 ../share/common:378 ../share/common:383
+#: ../share/common:417 ../share/common:433 ../share/common:449
+#: ../share/common:532 ../share/common:545 ../bin/loginhsh:52
+#: ../bin/loginhsh:65 ../bin/loginhsh:75 ../bin/loginhsh:81 ../bin/loginhsh:86
+#: ../bin/loginhsh:100 ../bin/loginhsh:107 ../bin/mkpatch:15 ../bin/mkpatch:20
+#: ../bin/mkpatch:25 ../bin/mkpatch:43 ../bin/mkpatch:53 ../bin/mkpatch:62
+#: ../bin/mkpatch:71 ../bin/myhsh:17 ../bin/myhsh:55 ../bin/myhsh:78
+#: ../bin/myhsh:90 ../bin/myhsh:97 ../bin/myhsh:107 ../bin/myhsh:128
+#: ../bin/myhsh:143 ../bin/myhsh:171 ../bin/myhsh:176 ../bin/rpmbb:21
+#: ../bin/rpmbb:59 ../bin/rpmbb:80 ../bin/rpmbb:89 ../bin/rpmbb:102
+#: ../bin/rpmbb:106 ../bin/rpmbb:116 ../bin/rpmbph:40 ../bin/rpmbph:50
+#: ../bin/rpmbph:58 ../bin/rpmbph:59 ../bin/rpmbph:144 ../bin/rpmbph:183
+#: ../bin/rpmbph:229 ../bin/rpmbph:249 ../bin/rpmbs:75 ../bin/rpmbs:92
+#: ../bin/rpmbs:116 ../bin/rpmbs:127 ../bin/rpmbs:130 ../bin/rpmbs:135
+#: ../bin/rpmbs:152 ../bin/rpmbs:175 ../bin/rpmbs:205 ../bin/rpmbs:212
+#: ../bin/rpmbs:223 ../bin/rpmbs:232 ../bin/rpmbs:233 ../bin/rpmbsh:57
+#: ../bin/rpmbsh:97 ../bin/rpmbugs:24 ../bin/rpmbugs:40 ../bin/rpmbugs:45
+#: ../bin/rpmbugs:51 ../bin/rpmbugs:64 ../bin/rpmbugs:65 ../bin/rpmbugs:71
+#: ../bin/rpmbugs:84 ../bin/rpmbugs:87 ../bin/rpmbugs:102 ../bin/rpmcs:52
+#: ../bin/rpmcs:58 ../bin/rpmcs:71 ../bin/rpmcs:76 ../bin/rpmcs:91
+#: ../bin/rpmcs:92 ../bin/rpmcs:119 ../bin/rpmgp:86 ../bin/rpmgp:95
+#: ../bin/rpmgp:105 ../bin/rpmgp:111 ../bin/rpmgp:116 ../bin/rpmgp:145
+#: ../bin/rpmgp:152 ../bin/rpmgp:158 ../bin/rpmgp:170 ../bin/rpmgp:171
+#: ../bin/rpmgp:177 ../bin/rpmgp:190 ../bin/rpmgp:194 ../bin/rpmgp:204
+#: ../bin/rpmgp:225 ../bin/rpmgp:232 ../bin/rpmgp:244 ../bin/rpmgp:253
+#: ../bin/rpmgp:267 ../bin/rpmgp:268 ../bin/rpmgs:91 ../bin/rpmgs:180
+#: ../bin/rpmgs:201 ../bin/rpmqf:16 ../bin/rpmqf:21 ../bin/rpmqf:29
+#: ../bin/rpmqf:40 ../bin/rpmqf:41 ../bin/rpmrb:15 ../bin/rpmrb:24
+#: ../bin/rpmrb:35 ../bin/rpmU:11 ../bin/rpmunmets:16 ../bin/rpmunmets:64
+#: ../bin/rpmunmets:96 ../bin/rpmurl:51 ../bin/rpmurl:68 ../bin/rpmurl:83
+#: ../bin/rpmurl:88 ../bin/rpmurl:104 ../bin/rpmurl:108 ../bin/rpmurl:118
+#: ../bin/rpmurl:123 ../bin/rpmurl:124 ../bin/rpmurl:132 ../bin/rpmurl:143
+#: ../bin/rpmurl:145 ../bin/rpmurl:146
 msgid "fi"
 msgstr ""
 
-#: etersoft-build-functions:21
+#: ../share/common:19
 msgid "TEXTDOMAIN=etersoft-build-utils"
 msgstr ""
 
-#: etersoft-build-functions:22 etersoft-build-functions:24
-#: etersoft-build-functions:72 etersoft-build-functions:73
-#: etersoft-build-functions:85 etersoft-build-functions:463
+#: ../share/common:20 ../share/common:22 ../share/common:554 ../bin/mkpatch:18
+#: ../bin/mkpatch:23 ../bin/mkpatch:29 ../bin/rpmbph:71 ../bin/rpmbph:174
+#: ../bin/rpmbs:63
 msgid "export"
 msgstr ""
 
-#: etersoft-build-functions:22
+#: ../share/common:20
 msgid "TEXTDOMAIN"
 msgstr ""
 
-#: etersoft-build-functions:23
+#: ../share/common:21
 msgid "TEXTDOMAINDIR=/usr/share/locale"
 msgstr ""
 
-#: etersoft-build-functions:24
+#: ../share/common:22
 msgid "TEXTDOMAINDIR"
 msgstr ""
 
-#: etersoft-build-functions:26 etersoft-build-functions:46
-#: etersoft-build-functions:53 etersoft-build-functions:87
-#: etersoft-build-functions:226 etersoft-build-functions:231
-#: etersoft-build-functions:263 etersoft-build-functions:266
-#: etersoft-build-functions:267 etersoft-build-functions:273
-#: etersoft-build-functions:311 etersoft-build-functions:315
-#: etersoft-build-functions:332 etersoft-build-functions:357 upload-to-alt:16
-#: upload-to-alt:19 upload-to-alt:20 bin/loginhsh:28 bin/loginhsh:29
-#: bin/loginhsh:30 bin/loginhsh:31 bin/loginhsh:32 bin/loginhsh:33
-#: bin/loginhsh:42 bin/loginhsh:71 bin/loginhsh:80 bin/loginhsh:89
-#: bin/loginhsh:98 bin/myhsh:15 bin/myhsh:16 bin/myhsh:31 bin/myhsh:32
-#: bin/myhsh:33 bin/myhsh:34 bin/myhsh:35 bin/myhsh:36 bin/myhsh:44
-#: bin/myhsh:69 bin/myhsh:71 bin/myhsh:72 bin/myhsh:82 bin/myhsh:90
-#: bin/myhsh:97 bin/myhsh:99 bin/myhsh:117 bin/myhsh:126 bin/myhsh:133
-#: bin/myhsh:134 bin/myhsh:136 bin/myhsh:160 bin/rpmbb:34 bin/rpmbb:35
-#: bin/rpmbb:36 bin/rpmbb:37 bin/rpmbb:38 bin/rpmbb:39 bin/rpmbb:40
-#: bin/rpmbb:50 bin/rpmbb:71 bin/rpmbb:77 bin/rpmbb:114 bin/rpmbb:123
-#: bin/rpmbb:129 bin/rpmbb:130 bin/rpmbb:135 bin/rpmbb:140 bin/rpmbph:28
-#: bin/rpmbph:29 bin/rpmbph:30 bin/rpmbph:31 bin/rpmbph:32 bin/rpmbph:33
-#: bin/rpmbph:34 bin/rpmbph:35 bin/rpmbph:68 bin/rpmbs:37 bin/rpmbs:38
-#: bin/rpmbs:39 bin/rpmbs:40 bin/rpmbs:41 bin/rpmbs:42 bin/rpmbs:43
-#: bin/rpmbs:53 bin/rpmbs:88 bin/rpmbs:90 bin/rpmbs:126 bin/rpmbs:135
-#: bin/rpmbs:139 bin/rpmbs:141 bin/rpmbs:143 bin/rpmbs:147 bin/rpmbs:151
-#: bin/rpmbs:163 bin/rpmbs:167 bin/rpmbs:179 bin/rpmbs:180 bin/rpmbs:181
-#: bin/rpmbs:184 bin/rpmbs:200 bin/rpmbs:201 bin/rpmbsh:31 bin/rpmbsh:32
-#: bin/rpmbsh:33 bin/rpmbsh:34 bin/rpmbsh:35 bin/rpmbsh:36 bin/rpmbsh:37
-#: bin/rpmbsh:38 bin/rpmbsh:48 bin/rpmbsh:79 bin/rpmbsh:81 bin/rpmbsh:82
-#: bin/rpmbsh:88 bin/rpmbugs:20 bin/rpmbugs:39 bin/rpmbugs:95 bin/rpmbugs:97
-#: bin/rpmcs:29 bin/rpmcs:66 bin/rpmcs:76 bin/rpmcs:81 bin/rpmcs:129
-#: bin/rpmgp:18 bin/rpmgp:19 bin/rpmgp:20 bin/rpmgp:21 bin/rpmgp:22
-#: bin/rpmgp:40 bin/rpmgp:60 bin/rpmgp:63 bin/rpmgp:83 bin/rpmgp:86
-#: bin/rpmgp:97 bin/rpmgs:31 bin/rpmgs:32 bin/rpmgs:33 bin/rpmgs:34
-#: bin/rpmgs:35 bin/rpmgs:43 bin/rpmgs:44 bin/rpmgs:67 bin/rpmgs:76
-#: bin/rpmgs:145 bin/rpmgs:146 bin/rpmgs:165 bin/rpmgs:169 bin/rpmgs:171
-#: bin/rpmurl:25 bin/rpmurl:26 bin/rpmurl:27 bin/rpmurl:28 bin/rpmurl:29
-#: bin/rpmurl:30 bin/rpmurl:39 bin/rpmurl:91 bin/rpmurl:94 bin/rpmurl:98
-#: bin/rpmurl:105
+#: ../share/common:24 ../share/common:50 ../share/common:57
+#: ../share/common:309 ../share/common:314 ../share/common:333
+#: ../share/common:365 ../share/common:368 ../share/common:369
+#: ../share/common:375 ../share/common:413 ../share/common:416
+#: ../share/common:431 ../share/common:458 ../tools/upload-to-alt:16
+#: ../tools/upload-to-alt:19 ../tools/upload-to-alt:20 ../bin/loginhsh:27
+#: ../bin/loginhsh:28 ../bin/loginhsh:29 ../bin/loginhsh:30 ../bin/loginhsh:31
+#: ../bin/loginhsh:32 ../bin/loginhsh:33 ../bin/loginhsh:43 ../bin/loginhsh:78
+#: ../bin/loginhsh:84 ../bin/loginhsh:92 ../bin/loginhsh:102 ../bin/myhsh:14
+#: ../bin/myhsh:15 ../bin/myhsh:30 ../bin/myhsh:31 ../bin/myhsh:32
+#: ../bin/myhsh:33 ../bin/myhsh:34 ../bin/myhsh:35 ../bin/myhsh:36
+#: ../bin/myhsh:37 ../bin/myhsh:46 ../bin/myhsh:73 ../bin/myhsh:75
+#: ../bin/myhsh:76 ../bin/myhsh:92 ../bin/myhsh:99 ../bin/myhsh:101
+#: ../bin/myhsh:121 ../bin/myhsh:131 ../bin/myhsh:139 ../bin/myhsh:140
+#: ../bin/myhsh:142 ../bin/myhsh:166 ../bin/rpmbb:33 ../bin/rpmbb:34
+#: ../bin/rpmbb:35 ../bin/rpmbb:36 ../bin/rpmbb:37 ../bin/rpmbb:38
+#: ../bin/rpmbb:39 ../bin/rpmbb:49 ../bin/rpmbb:72 ../bin/rpmbb:78
+#: ../bin/rpmbb:118 ../bin/rpmbb:128 ../bin/rpmbb:134 ../bin/rpmbb:135
+#: ../bin/rpmbb:140 ../bin/rpmbb:145 ../bin/rpmbph:203 ../bin/rpmbph:204
+#: ../bin/rpmbph:205 ../bin/rpmbph:206 ../bin/rpmbph:208 ../bin/rpmbph:209
+#: ../bin/rpmbph:210 ../bin/rpmbph:211 ../bin/rpmbph:220 ../bin/rpmbs:41
+#: ../bin/rpmbs:42 ../bin/rpmbs:43 ../bin/rpmbs:44 ../bin/rpmbs:45
+#: ../bin/rpmbs:46 ../bin/rpmbs:47 ../bin/rpmbs:48 ../bin/rpmbs:49
+#: ../bin/rpmbs:50 ../bin/rpmbs:51 ../bin/rpmbs:66 ../bin/rpmbs:108
+#: ../bin/rpmbs:110 ../bin/rpmbs:142 ../bin/rpmbs:156 ../bin/rpmbs:162
+#: ../bin/rpmbs:164 ../bin/rpmbs:166 ../bin/rpmbs:170 ../bin/rpmbs:174
+#: ../bin/rpmbs:182 ../bin/rpmbs:190 ../bin/rpmbs:202 ../bin/rpmbs:203
+#: ../bin/rpmbs:204 ../bin/rpmbs:207 ../bin/rpmbs:228 ../bin/rpmbs:229
+#: ../bin/rpmbsh:30 ../bin/rpmbsh:31 ../bin/rpmbsh:32 ../bin/rpmbsh:33
+#: ../bin/rpmbsh:34 ../bin/rpmbsh:35 ../bin/rpmbsh:36 ../bin/rpmbsh:37
+#: ../bin/rpmbsh:38 ../bin/rpmbsh:48 ../bin/rpmbsh:81 ../bin/rpmbsh:83
+#: ../bin/rpmbsh:91 ../bin/rpmbugs:19 ../bin/rpmbugs:38 ../bin/rpmbugs:94
+#: ../bin/rpmbugs:96 ../bin/rpmcs:50 ../bin/rpmcs:94 ../bin/rpmcs:104
+#: ../bin/rpmcs:110 ../bin/rpmcs:289 ../bin/rpmcs:292 ../bin/rpmcs:306
+#: ../bin/rpmgp:133 ../bin/rpmgp:134 ../bin/rpmgp:135 ../bin/rpmgp:136
+#: ../bin/rpmgp:137 ../bin/rpmgp:138 ../bin/rpmgp:139 ../bin/rpmgp:140
+#: ../bin/rpmgp:141 ../bin/rpmgp:142 ../bin/rpmgp:143 ../bin/rpmgp:219
+#: ../bin/rpmgp:247 ../bin/rpmgp:250 ../bin/rpmgp:270 ../bin/rpmgp:273
+#: ../bin/rpmgp:284 ../bin/rpmgs:30 ../bin/rpmgs:31 ../bin/rpmgs:32
+#: ../bin/rpmgs:33 ../bin/rpmgs:34 ../bin/rpmgs:42 ../bin/rpmgs:43
+#: ../bin/rpmgs:67 ../bin/rpmgs:76 ../bin/rpmgs:84 ../bin/rpmgs:88
+#: ../bin/rpmgs:165 ../bin/rpmgs:166 ../bin/rpmgs:185 ../bin/rpmgs:190
+#: ../bin/rpmgs:192 ../bin/rpmrb:34 ../bin/rpmunmets:13 ../bin/rpmunmets:14
+#: ../bin/rpmunmets:45 ../bin/rpmunmets:46 ../bin/rpmunmets:47
+#: ../bin/rpmunmets:48 ../bin/rpmunmets:49 ../bin/rpmurl:26 ../bin/rpmurl:27
+#: ../bin/rpmurl:28 ../bin/rpmurl:29 ../bin/rpmurl:30 ../bin/rpmurl:31
+#: ../bin/rpmurl:32 ../bin/rpmurl:42 ../bin/rpmurl:128 ../bin/rpmurl:131
+#: ../bin/rpmurl:135 ../bin/rpmurl:142
 msgid "echog"
 msgstr ""
 
-#: etersoft-build-functions:28 etersoft-build-functions:39
-#: etersoft-build-functions:77 etersoft-build-functions:82
-#: etersoft-build-functions:168 etersoft-build-functions:230
-#: etersoft-build-functions:255 etersoft-build-functions:262
-#: etersoft-build-functions:265 etersoft-build-functions:277
-#: etersoft-build-functions:306 etersoft-build-functions:309
-#: etersoft-build-functions:310 etersoft-build-functions:331
-#: etersoft-build-functions:345 etersoft-build-functions:395
-#: etersoft-build-functions:418 etersoft-build-functions:420
-#: etersoft-build-functions:440 etersoft-build-functions:453 bin/loginhsh:49
-#: bin/loginhsh:62 bin/loginhsh:70 bin/loginhsh:77 bin/loginhsh:92
-#: bin/myhsh:14 bin/myhsh:51 bin/myhsh:68 bin/myhsh:80 bin/myhsh:92
-#: bin/myhsh:103 bin/myhsh:120 bin/myhsh:132 bin/myhsh:156 bin/myhsh:168
-#: bin/rpmbb:18 bin/rpmbb:57 bin/rpmbb:74 bin/rpmbb:81 bin/rpmbb:108
-#: bin/rpmbph:75 bin/rpmbs:60 bin/rpmbs:82 bin/rpmbs:102 bin/rpmbs:104
-#: bin/rpmbs:112 bin/rpmbs:119 bin/rpmbs:133 bin/rpmbs:156 bin/rpmbs:158
-#: bin/rpmbs:191 bin/rpmbsh:55 bin/rpmbsh:74 bin/rpmbugs:14 bin/rpmbugs:19
-#: bin/rpmbugs:38 bin/rpmbugs:43 bin/rpmbugs:48 bin/rpmbugs:57 bin/rpmbugs:61
-#: bin/rpmbugs:69 bin/rpmbugs:76 bin/rpmbugs:78 bin/rpmbugs:92 bin/rpmcs:28
-#: bin/rpmcs:35 bin/rpmgp:17 bin/rpmgp:28 bin/rpmgp:36 bin/rpmgp:48
-#: bin/rpmgp:51 bin/rpmgp:70 bin/rpmgp:75 bin/rpmgs:158 bin/rpmgs:168
-#: bin/rpmgs:172 bin/rpmgs:175 bin/rpmqf:14 bin/rpmqf:19 bin/rpmU:9
-#: bin/rpmurl:13 bin/rpmurl:46 bin/rpmurl:60 bin/rpmurl:69 bin/rpmurl:71
-#: bin/rpmurl:86 bin/rpmurl:87 bin/rpmurl:90 bin/rpmurl:97 bin/rpmurl:102
+#: ../share/common:26 ../share/common:39 ../share/common:45 ../share/common:81
+#: ../share/common:95 ../share/common:102 ../share/common:103
+#: ../share/common:105 ../share/common:121 ../share/common:126
+#: ../share/common:128 ../share/common:133 ../share/common:137
+#: ../share/common:147 ../share/common:157 ../share/common:197
+#: ../share/common:211 ../share/common:215 ../share/common:221
+#: ../share/common:226 ../share/common:230 ../share/common:257
+#: ../share/common:289 ../share/common:313 ../share/common:330
+#: ../share/common:352 ../share/common:357 ../share/common:364
+#: ../share/common:367 ../share/common:379 ../share/common:411
+#: ../share/common:430 ../share/common:431 ../share/common:445
+#: ../share/common:453 ../share/common:529 ../share/common:535
+#: ../share/common:537 ../bin/loginhsh:50 ../bin/loginhsh:62
+#: ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/loginhsh:95
+#: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
+#: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:38 ../bin/mkpatch:46
+#: ../bin/mkpatch:48 ../bin/mkpatch:55 ../bin/mkpatch:57 ../bin/mkpatch:64
+#: ../bin/mkpatch:66 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
+#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
+#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
+#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:92
+#: ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:29 ../bin/rpmbph:36
+#: ../bin/rpmbph:46 ../bin/rpmbph:54 ../bin/rpmbph:69 ../bin/rpmbph:77
+#: ../bin/rpmbph:82 ../bin/rpmbph:88 ../bin/rpmbph:98 ../bin/rpmbph:104
+#: ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130
+#: ../bin/rpmbph:138 ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227
+#: ../bin/rpmbph:240 ../bin/rpmbph:251 ../bin/rpmbs:73 ../bin/rpmbs:89
+#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
+#: ../bin/rpmbs:139 ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:179
+#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
+#: ../bin/rpmbsh:76 ../bin/rpmbugs:13 ../bin/rpmbugs:18 ../bin/rpmbugs:37
+#: ../bin/rpmbugs:42 ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmbugs:60
+#: ../bin/rpmbugs:68 ../bin/rpmbugs:75 ../bin/rpmbugs:77 ../bin/rpmbugs:91
+#: ../bin/rpmcs:49 ../bin/rpmcs:56 ../bin/rpmcs:115 ../bin/rpmgp:74
+#: ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:102 ../bin/rpmgp:107
+#: ../bin/rpmgp:113 ../bin/rpmgp:132 ../bin/rpmgp:149 ../bin/rpmgp:155
+#: ../bin/rpmgp:161 ../bin/rpmgp:166 ../bin/rpmgp:174 ../bin/rpmgp:183
+#: ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:215 ../bin/rpmgp:228
+#: ../bin/rpmgp:235 ../bin/rpmgp:238 ../bin/rpmgp:257 ../bin/rpmgp:262
+#: ../bin/rpmgs:83 ../bin/rpmgs:178 ../bin/rpmgs:188 ../bin/rpmgs:193
+#: ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
+#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
+#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12 ../bin/rpmunmets:62
+#: ../bin/rpmunmets:88 ../bin/rpmunmets:89 ../bin/rpmurl:12 ../bin/rpmurl:49
+#: ../bin/rpmurl:63 ../bin/rpmurl:73 ../bin/rpmurl:75 ../bin/rpmurl:96
+#: ../bin/rpmurl:98 ../bin/rpmurl:114 ../bin/rpmurl:116 ../bin/rpmurl:121
+#: ../bin/rpmurl:126 ../bin/rpmurl:127 ../bin/rpmurl:134 ../bin/rpmurl:139
 msgid "["
 msgstr ""
 
-#: etersoft-build-functions:28 etersoft-build-functions:39
-#: etersoft-build-functions:77 etersoft-build-functions:168
-#: etersoft-build-functions:230 etersoft-build-functions:265
-#: etersoft-build-functions:306 etersoft-build-functions:310 bin/loginhsh:70
-#: bin/myhsh:125 bin/myhsh:132 bin/myhsh:156 bin/myhsh:168 bin/rpmbb:18
-#: bin/rpmbb:108 bin/rpmbph:128 bin/rpmbph:129 bin/rpmbs:156 bin/rpmbsh:88
-#: bin/rpmbugs:38 bin/rpmbugs:43 bin/rpmbugs:48 bin/rpmbugs:57 bin/rpmcs:28
-#: bin/rpmgp:17 bin/rpmgp:28 bin/rpmgp:36 bin/rpmgp:48 bin/rpmqf:14
-#: bin/rpmqf:19 bin/rpmU:9 bin/rpmurl:103
+#: ../share/common:26 ../share/common:39 ../share/common:81 ../share/common:95
+#: ../share/common:257 ../share/common:313 ../share/common:367
+#: ../share/common:411 ../share/common:537 Makefile:1 Makefile:2 Makefile:3
+#: Makefile:4 Makefile:5 Makefile:6 ../bin/loginhsh:77 ../bin/loginhsh:83
+#: ../bin/loginhsh:95 ../bin/myhsh:130 ../bin/myhsh:138 ../bin/myhsh:162
+#: ../bin/myhsh:174 ../bin/rpmbb:17 ../bin/rpmbb:92 ../bin/rpmbph:27
+#: ../bin/rpmbph:46 ../bin/rpmbph:54 ../bin/rpmbph:169 ../bin/rpmbph:240
+#: ../bin/rpmbs:122 ../bin/rpmbs:179 ../bin/rpmbsh:91 ../bin/rpmbugs:37
+#: ../bin/rpmbugs:42 ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmcs:49
+#: ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:132 ../bin/rpmgp:149
+#: ../bin/rpmgp:155 ../bin/rpmgp:161 ../bin/rpmgp:174 ../bin/rpmgp:215
+#: ../bin/rpmgp:228 ../bin/rpmgp:235 ../bin/rpmqf:13 ../bin/rpmqf:18
+#: ../bin/rpmrb:12 ../bin/rpmrb:21 ../bin/rpmU:8 ../bin/rpmurl:140
 msgid "="
 msgstr ""
 
-#: etersoft-build-functions:28 etersoft-build-functions:39
-#: etersoft-build-functions:77 etersoft-build-functions:82
-#: etersoft-build-functions:168 etersoft-build-functions:230
-#: etersoft-build-functions:255 etersoft-build-functions:262
-#: etersoft-build-functions:265 etersoft-build-functions:277
-#: etersoft-build-functions:306 etersoft-build-functions:309
-#: etersoft-build-functions:310 etersoft-build-functions:331
-#: etersoft-build-functions:345 etersoft-build-functions:395
-#: etersoft-build-functions:418 etersoft-build-functions:420
-#: etersoft-build-functions:440 etersoft-build-functions:453 bin/loginhsh:49
-#: bin/loginhsh:62 bin/loginhsh:70 bin/loginhsh:77 bin/loginhsh:92
-#: bin/myhsh:14 bin/myhsh:51 bin/myhsh:68 bin/myhsh:80 bin/myhsh:92
-#: bin/myhsh:103 bin/myhsh:120 bin/myhsh:132 bin/myhsh:156 bin/myhsh:168
-#: bin/rpmbb:18 bin/rpmbb:57 bin/rpmbb:74 bin/rpmbb:81 bin/rpmbb:108
-#: bin/rpmbph:75 bin/rpmbs:60 bin/rpmbs:82 bin/rpmbs:102 bin/rpmbs:104
-#: bin/rpmbs:112 bin/rpmbs:119 bin/rpmbs:133 bin/rpmbs:156 bin/rpmbs:158
-#: bin/rpmbs:191 bin/rpmbsh:55 bin/rpmbsh:74 bin/rpmbugs:14 bin/rpmbugs:19
-#: bin/rpmbugs:38 bin/rpmbugs:43 bin/rpmbugs:48 bin/rpmbugs:57 bin/rpmbugs:61
-#: bin/rpmbugs:69 bin/rpmbugs:76 bin/rpmbugs:78 bin/rpmbugs:92 bin/rpmcs:28
-#: bin/rpmcs:35 bin/rpmgp:17 bin/rpmgp:28 bin/rpmgp:36 bin/rpmgp:48
-#: bin/rpmgp:51 bin/rpmgp:70 bin/rpmgp:75 bin/rpmgs:158 bin/rpmgs:168
-#: bin/rpmgs:172 bin/rpmgs:175 bin/rpmqf:14 bin/rpmqf:19 bin/rpmU:9
-#: bin/rpmurl:13 bin/rpmurl:46 bin/rpmurl:60 bin/rpmurl:69 bin/rpmurl:71
-#: bin/rpmurl:86 bin/rpmurl:87 bin/rpmurl:90 bin/rpmurl:97 bin/rpmurl:102
+#: ../share/common:26 ../share/common:39 ../share/common:45 ../share/common:81
+#: ../share/common:95 ../share/common:102 ../share/common:103
+#: ../share/common:105 ../share/common:121 ../share/common:126
+#: ../share/common:128 ../share/common:133 ../share/common:137
+#: ../share/common:147 ../share/common:157 ../share/common:197
+#: ../share/common:211 ../share/common:215 ../share/common:221
+#: ../share/common:226 ../share/common:230 ../share/common:257
+#: ../share/common:289 ../share/common:313 ../share/common:330
+#: ../share/common:352 ../share/common:357 ../share/common:364
+#: ../share/common:367 ../share/common:379 ../share/common:411
+#: ../share/common:430 ../share/common:431 ../share/common:445
+#: ../share/common:453 ../share/common:529 ../share/common:535
+#: ../share/common:537 ../bin/loginhsh:50 ../bin/loginhsh:62
+#: ../bin/loginhsh:70 ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/loginhsh:95
+#: ../bin/loginhsh:96 ../bin/loginhsh:104 ../bin/mkpatch:10 ../bin/mkpatch:17
+#: ../bin/mkpatch:22 ../bin/mkpatch:36 ../bin/mkpatch:38 ../bin/mkpatch:46
+#: ../bin/mkpatch:48 ../bin/mkpatch:55 ../bin/mkpatch:57 ../bin/mkpatch:64
+#: ../bin/mkpatch:66 ../bin/myhsh:13 ../bin/myhsh:53 ../bin/myhsh:72
+#: ../bin/myhsh:87 ../bin/myhsh:94 ../bin/myhsh:105 ../bin/myhsh:125
+#: ../bin/myhsh:138 ../bin/myhsh:162 ../bin/myhsh:174 ../bin/rpmbb:17
+#: ../bin/rpmbb:57 ../bin/rpmbb:75 ../bin/rpmbb:82 ../bin/rpmbb:92
+#: ../bin/rpmbb:112 ../bin/rpmbph:27 ../bin/rpmbph:29 ../bin/rpmbph:36
+#: ../bin/rpmbph:46 ../bin/rpmbph:54 ../bin/rpmbph:69 ../bin/rpmbph:77
+#: ../bin/rpmbph:82 ../bin/rpmbph:88 ../bin/rpmbph:98 ../bin/rpmbph:104
+#: ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130
+#: ../bin/rpmbph:138 ../bin/rpmbph:141 ../bin/rpmbph:169 ../bin/rpmbph:227
+#: ../bin/rpmbph:240 ../bin/rpmbph:251 ../bin/rpmbs:73 ../bin/rpmbs:89
+#: ../bin/rpmbs:102 ../bin/rpmbs:122 ../bin/rpmbs:124 ../bin/rpmbs:132
+#: ../bin/rpmbs:139 ../bin/rpmbs:141 ../bin/rpmbs:154 ../bin/rpmbs:179
+#: ../bin/rpmbs:181 ../bin/rpmbs:209 ../bin/rpmbs:219 ../bin/rpmbsh:55
+#: ../bin/rpmbsh:76 ../bin/rpmbugs:13 ../bin/rpmbugs:18 ../bin/rpmbugs:37
+#: ../bin/rpmbugs:42 ../bin/rpmbugs:47 ../bin/rpmbugs:56 ../bin/rpmbugs:60
+#: ../bin/rpmbugs:68 ../bin/rpmbugs:75 ../bin/rpmbugs:77 ../bin/rpmbugs:91
+#: ../bin/rpmcs:49 ../bin/rpmcs:56 ../bin/rpmcs:115 ../bin/rpmgp:74
+#: ../bin/rpmgp:79 ../bin/rpmgp:92 ../bin/rpmgp:102 ../bin/rpmgp:107
+#: ../bin/rpmgp:113 ../bin/rpmgp:132 ../bin/rpmgp:149 ../bin/rpmgp:155
+#: ../bin/rpmgp:161 ../bin/rpmgp:166 ../bin/rpmgp:174 ../bin/rpmgp:183
+#: ../bin/rpmgp:186 ../bin/rpmgp:197 ../bin/rpmgp:215 ../bin/rpmgp:228
+#: ../bin/rpmgp:235 ../bin/rpmgp:238 ../bin/rpmgp:257 ../bin/rpmgp:262
+#: ../bin/rpmgs:83 ../bin/rpmgs:178 ../bin/rpmgs:188 ../bin/rpmgs:193
+#: ../bin/rpmgs:196 ../bin/rpmqf:13 ../bin/rpmqf:18 ../bin/rpmqf:25
+#: ../bin/rpmqf:31 ../bin/rpmqf:33 ../bin/rpmrb:12 ../bin/rpmrb:21
+#: ../bin/rpmrb:30 ../bin/rpmU:8 ../bin/rpmunmets:12 ../bin/rpmunmets:62
+#: ../bin/rpmunmets:88 ../bin/rpmunmets:89 ../bin/rpmurl:12 ../bin/rpmurl:49
+#: ../bin/rpmurl:63 ../bin/rpmurl:73 ../bin/rpmurl:75 ../bin/rpmurl:96
+#: ../bin/rpmurl:98 ../bin/rpmurl:114 ../bin/rpmurl:116 ../bin/rpmurl:121
+#: ../bin/rpmurl:126 ../bin/rpmurl:127 ../bin/rpmurl:134 ../bin/rpmurl:139
 msgid "]"
 msgstr ""
 
-#: etersoft-build-functions:29 etersoft-build-functions:189 bin/loginhsh:50
-#: bin/myhsh:52 bin/rpmbb:19 bin/rpmbb:58 bin/rpmbph:76 bin/rpmbs:61
-#: bin/rpmbsh:56 bin/rpmbugs:44 bin/rpmbugs:49 bin/rpmbugs:59 bin/rpmgp:29
-#: bin/rpmgp:37 bin/rpmgp:49 bin/rpmgs:49 bin/rpmqf:21 bin/rpmurl:47
+#: ../share/common:27 ../share/common:118 ../share/common:127
+#: ../share/common:275 ../share/common:538 ../bin/loginhsh:51 ../bin/myhsh:54
+#: ../bin/rpmbb:18 ../bin/rpmbb:58 ../bin/rpmbph:228 ../bin/rpmbs:74
+#: ../bin/rpmbsh:56 ../bin/rpmbugs:43 ../bin/rpmbugs:48 ../bin/rpmbugs:58
+#: ../bin/rpmgp:150 ../bin/rpmgp:163 ../bin/rpmgp:168 ../bin/rpmgp:176
+#: ../bin/rpmgp:216 ../bin/rpmgp:229 ../bin/rpmgp:236 ../bin/rpmgs:48
+#: ../bin/rpmqf:20 ../bin/rpmrb:14 ../bin/rpmunmets:63 ../bin/rpmurl:50
 msgid "shift"
 msgstr ""
 
-#: etersoft-build-functions:38
+#: ../share/common:36
 msgid "SUDO=sudo"
 msgstr ""
 
-#: etersoft-build-functions:39 etersoft-build-functions:77
-#: etersoft-build-functions:178 etersoft-build-functions:230
-#: etersoft-build-functions:239 etersoft-build-functions:265
-#: etersoft-build-functions:294 bin/loginhsh:38 bin/loginhsh:49
-#: bin/loginhsh:66 bin/myhsh:41 bin/myhsh:51 bin/myhsh:73 bin/myhsh:156
-#: bin/myhsh:168 bin/rpmbb:45 bin/rpmbb:57 bin/rpmbb:87 bin/rpmbb:108
-#: bin/rpmbb:115 bin/rpmbph:66 bin/rpmbph:75 bin/rpmbs:48 bin/rpmbs:60
-#: bin/rpmbs:95 bin/rpmbs:130 bin/rpmbs:153 bin/rpmbs:156 bin/rpmbsh:43
-#: bin/rpmbsh:55 bin/rpmbsh:88 bin/rpmbugs:40 bin/rpmbugs:71 bin/rpmcs:30
-#: bin/rpmgp:23 bin/rpmgp:44 bin/rpmgp:65 bin/rpmgp:95 bin/rpmgs:40
-#: bin/rpmgs:187 bin/rpmqf:16 bin/rpmrb:22 bin/rpmU:11 bin/rpmurl:35
-#: bin/rpmurl:46
-msgid "0"
-msgstr ""
-
-#: etersoft-build-functions:40
-msgid "SUDO="
-msgstr ""
-
-#: etersoft-build-functions:44 etersoft-build-functions:78
-#: etersoft-build-functions:165 etersoft-build-functions:167
-#: etersoft-build-functions:190 etersoft-build-functions:237
-#: etersoft-build-functions:274 etersoft-build-functions:280
-#: etersoft-build-functions:283 etersoft-build-functions:333
-#: etersoft-build-functions:399 etersoft-build-functions:411
-#: etersoft-build-functions:418 etersoft-build-functions:421
-#: etersoft-build-functions:425 etersoft-build-functions:426
-#: etersoft-build-functions:433 etersoft-build-functions:437
-#: etersoft-build-functions:454 etersoft-build-functions:464 bin/loginhsh:64
-#: bin/loginhsh:72 bin/loginhsh:97 bin/myhsh:42 bin/myhsh:79 bin/myhsh:94
-#: bin/myhsh:98 bin/rpmbb:70 bin/rpmbb:82 bin/rpmbb:100 bin/rpmbb:111
-#: bin/rpmbph:88 bin/rpmbph:93 bin/rpmbph:98 bin/rpmbph:99 bin/rpmbph:126
-#: bin/rpmbph:135 bin/rpmbs:83 bin/rpmbs:106 bin/rpmbs:114 bin/rpmbs:140
-#: bin/rpmbs:142 bin/rpmbs:167 bin/rpmbsh:72 bin/rpmbsh:76 bin/rpmbsh:84
-#: bin/rpmbugs:84 bin/rpmbugs:93 bin/rpmcs:36 bin/rpmgp:33 bin/rpmgp:82
-#: bin/rpmgs:177 bin/rpmgs:179 bin/rpmrb:17 bin/rpmrb:19 bin/rpmrb:20
-#: bin/rpmrb:21 bin/rpmurl:85
-msgid "fatal"
-msgstr ""
-
-#: etersoft-build-functions:47 etersoft-build-functions:193
-#: etersoft-build-functions:195 etersoft-build-functions:269 upload-to-alt:17
-#: upload-to-alt:22 bin/loginhsh:38 bin/loginhsh:42 bin/loginhsh:66
-#: bin/myhsh:17 bin/myhsh:41 bin/myhsh:44 bin/myhsh:73 bin/myhsh:172
-#: bin/rpmbb:21 bin/rpmbb:45 bin/rpmbb:50 bin/rpmbb:78 bin/rpmbb:87
-#: bin/rpmbb:115 bin/rpmbph:66 bin/rpmbph:68 bin/rpmbs:48 bin/rpmbs:53
-#: bin/rpmbs:93 bin/rpmbs:95 bin/rpmbs:130 bin/rpmbs:153 bin/rpmbs:203
-#: bin/rpmbsh:43 bin/rpmbsh:48 bin/rpmbsh:97 bin/rpmbugs:40 bin/rpmbugs:71
-#: bin/rpmcs:30 bin/rpmgp:23 bin/rpmgp:44 bin/rpmgp:65 bin/rpmgp:95
-#: bin/rpmgs:40 bin/rpmgs:43 bin/rpmgs:44 bin/rpmgs:147 bin/rpmgs:187
-#: bin/rpmqf:16 bin/rpmrb:22 bin/rpmU:11 bin/rpmurl:35 bin/rpmurl:39
-msgid "exit"
-msgstr ""
-
-#: etersoft-build-functions:47 etersoft-build-functions:135
-#: etersoft-build-functions:171 etersoft-build-functions:193
-#: etersoft-build-functions:195 etersoft-build-functions:232
-#: etersoft-build-functions:269 etersoft-build-functions:297
-#: etersoft-build-functions:331 upload-to-alt:17 upload-to-alt:22
-#: bin/loginhsh:70 bin/myhsh:17 bin/myhsh:65 bin/myhsh:70 bin/myhsh:125
-#: bin/myhsh:132 bin/rpmbb:106 bin/rpmbs:93 bin/rpmbs:203 bin/rpmbugs:98
-#: bin/rpmgp:56 bin/rpmgp:61 bin/rpmgs:147
-msgid "1"
-msgstr ""
-
-#: etersoft-build-functions:51 etersoft-build-functions:170
-#: etersoft-build-functions:213 etersoft-build-functions:234 bin/rpmgs:173
-#: bin/rpmgs:176
-msgid "warning"
-msgstr ""
-
-#: etersoft-build-functions:57 etersoft-build-functions:197
-#: etersoft-build-functions:198 bin/rpmbb:82 bin/rpmbb:95
-msgid "is_alt"
-msgstr ""
-
-#: etersoft-build-functions:59 etersoft-build-functions:65
-#: etersoft-build-functions:114 etersoft-build-functions:115
-#: etersoft-build-functions:165 etersoft-build-functions:167
-#: etersoft-build-functions:190 etersoft-build-functions:213
-#: etersoft-build-functions:283 etersoft-build-functions:409
-#: etersoft-build-functions:411 etersoft-build-functions:421
-#: etersoft-build-functions:432 etersoft-build-functions:441
-#: etersoft-build-functions:443 upload-to-alt:12 upload-to-alt:31
-#: bin/loginhsh:64 bin/loginhsh:82 bin/myhsh:84 bin/myhsh:125 bin/myhsh:169
-#: bin/rpmbb:70 bin/rpmbb:71 bin/rpmbb:100 bin/rpmbph:88 bin/rpmbph:93
-#: bin/rpmbph:128 bin/rpmbph:129 bin/rpmbph:131 bin/rpmbs:153 bin/rpmbs:178
-#: bin/rpmbs:187 bin/rpmbsh:76 bin/rpmbsh:77 bin/rpmbsh:88 bin/rpmbugs:54
-#: bin/rpmbugs:84 bin/rpmcs:79 bin/rpmgp:33 bin/rpmgp:82 bin/rpmgp:85
-#: bin/rpmgp:95 bin/rpmgs:154 bin/rpmgs:165 bin/rpmgs:169 bin/rpmurl:85
-#: bin/rpmurl:103
+#: ../share/common:38 ../share/common:63 ../share/common:162
+#: ../share/common:163 ../share/common:164 ../share/common:228
+#: ../share/common:253 ../share/common:256 ../share/common:276
+#: ../share/common:299 ../share/common:335 ../share/common:385
+#: ../tools/upload-to-alt:12 ../tools/upload-to-alt:31 ../bin/loginhsh:72
+#: ../bin/myhsh:124 ../bin/myhsh:130 ../bin/myhsh:175 ../bin/rpmbb:71
+#: ../bin/rpmbb:72 ../bin/rpmbb:104 ../bin/rpmbph:185 ../bin/rpmbph:238
+#: ../bin/rpmbph:242 ../bin/rpmbs:165 ../bin/rpmbs:176 ../bin/rpmbs:201
+#: ../bin/rpmbs:215 ../bin/rpmbsh:78 ../bin/rpmbsh:79 ../bin/rpmbsh:91
+#: ../bin/rpmbugs:53 ../bin/rpmbugs:83 ../bin/rpmcs:41 ../bin/rpmcs:108
+#: ../bin/rpmgp:179 ../bin/rpmgp:269 ../bin/rpmgp:272 ../bin/rpmgp:282
+#: ../bin/rpmgs:112 ../bin/rpmgs:174 ../bin/rpmgs:185 ../bin/rpmrb:28
+#: ../bin/rpmrb:31 ../bin/rpmurl:125 ../bin/rpmurl:140
 msgid "test"
 msgstr ""
 
-#: etersoft-build-functions:59 etersoft-build-functions:65
-#: etersoft-build-functions:114 etersoft-build-functions:115
-#: etersoft-build-functions:190 etersoft-build-functions:203
-#: etersoft-build-functions:277 etersoft-build-functions:345
-#: etersoft-build-functions:418 etersoft-build-functions:420
-#: etersoft-build-functions:432 etersoft-build-functions:440
-#: etersoft-build-functions:443 bin/myhsh:14 bin/myhsh:114 bin/myhsh:120
-#: bin/rpmbb:105 bin/rpmbb:108 bin/rpmbs:187 bin/rpmbugs:76 bin/rpmcs:40
-#: bin/rpmcs:58 bin/rpmgp:51 bin/rpmgs:81 bin/rpmgs:168 bin/rpmgs:169
-#: bin/rpmurl:69
-msgid "-f"
-msgstr ""
-
-#: etersoft-build-functions:59
-msgid "/etc/altlinux-release"
-msgstr ""
-
-#: etersoft-build-functions:60 etersoft-build-functions:66
-#: etersoft-build-functions:171 etersoft-build-functions:178
-#: etersoft-build-functions:232 etersoft-build-functions:239
-#: etersoft-build-functions:294 etersoft-build-functions:297 bin/rpmbs:109
-#: bin/rpmgs:65 bin/rpmgs:74 bin/rpmgs:82 bin/rpmgs:87 bin/rpmgs:90
-#: bin/rpmgs:96 bin/rpmgs:103 bin/rpmgs:110 bin/rpmgs:116 bin/rpmgs:122
-#: bin/rpmgs:123
-msgid "return"
-msgstr ""
-
-#: etersoft-build-functions:63 etersoft-build-functions:95
-msgid "is_debian"
-msgstr ""
-
-#: etersoft-build-functions:65
-msgid "/etc/debian_version"
-msgstr ""
-
-#: etersoft-build-functions:72
-msgid "CC=gcc"
-msgstr ""
-
-#: etersoft-build-functions:73
-msgid "CXX=g++"
-msgstr ""
-
-#: etersoft-build-functions:78
-msgid "It is strict recommended do not use these scripts as root"
-msgstr ""
-
-#: etersoft-build-functions:81
-msgid "ccache"
-msgstr ""
-
-#: etersoft-build-functions:85
-msgid "GCC_USE_CCACHE=1"
-msgstr ""
-
-#: etersoft-build-functions:87
-msgid "Note: you can install ccache for compiler cache and speedup compilation"
-msgstr ""
-
-#: etersoft-build-functions:91
-msgid "DEFAULTARCH=i586"
-msgstr ""
-
-#: etersoft-build-functions:92
-msgid "RPMBUILD=rpmbuild"
-msgstr ""
-
-#: etersoft-build-functions:93
-msgid "NICE=nice -n 10"
-msgstr ""
-
-#: etersoft-build-functions:95
-msgid "RPMBUILD=rpm"
-msgstr ""
-
-#: etersoft-build-functions:97
-msgid "APTCONF=/etc/apt/apt.conf"
-msgstr ""
-
-#: etersoft-build-functions:99 etersoft-build-functions:166
-#: etersoft-build-functions:207 bin/myhsh:116 bin/rpmbb:137 bin/rpmbs:136
-#: bin/rpmbugs:62 bin/rpmbugs:81 bin/rpmbugs:87 bin/rpmgp:55 bin/rpmgp:56
-#: bin/rpmgp:77 bin/rpmgp:79 bin/rpmgp:98 bin/rpmqf:24 bin/rpmU:15
-#: bin/rpmurl:74 bin/rpmurl:82 bin/rpmurl:83
-msgid "rpm"
-msgstr ""
-
-#: etersoft-build-functions:99 etersoft-build-functions:166
-#: etersoft-build-functions:207
-msgid "--eval"
-msgstr ""
-
-#: etersoft-build-functions:99
-msgid "%packager"
-msgstr ""
-
-#: etersoft-build-functions:103
-msgid "REMOTERPMDIR="
-msgstr ""
-
-#: etersoft-build-functions:105
-msgid "HASHER_NOCHECK=nvr,gpg,packager"
-msgstr ""
-
-#: etersoft-build-functions:107
-msgid "RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus"
-msgstr ""
-
-#: etersoft-build-functions:108
-msgid "RSYNCINCOMING=devel:/incoming"
-msgstr ""
-
-#: etersoft-build-functions:111
-msgid "BUILDSERVER="
-msgstr ""
-
-#: etersoft-build-functions:114
-msgid "/etc/rpm/etersoft-build-config"
-msgstr ""
-
-#: etersoft-build-functions:115
-msgid "~/.ebconfig"
-msgstr ""
-
-#: etersoft-build-functions:129 etersoft-build-functions:147
-#: etersoft-build-functions:200 etersoft-build-functions:201
-#: etersoft-build-functions:202 bin/rpmbugs:83 bin/rpmgs:140 bin/rpmurl:77
-#: bin/rpmurl:78
-msgid "get_var"
-msgstr ""
-
-#: etersoft-build-functions:135 etersoft-build-functions:197
-#: etersoft-build-functions:228 etersoft-build-functions:234
-#: etersoft-build-functions:237 bin/myhsh:116 bin/myhsh:153 bin/rpmbph:106
-#: bin/rpmbph:125 bin/rpmbugs:102 bin/rpmcs:14 bin/rpmcs:15 bin/rpmcs:16
-#: bin/rpmcs:17 bin/rpmcs:43 bin/rpmcs:49 bin/rpmcs:54 bin/rpmgp:55
-msgid "grep"
-msgstr ""
-
-#: etersoft-build-functions:135 bin/myhsh:164 bin/rpmqf:19 bin/rpmrb:20
-msgid "-i"
-msgstr ""
-
-#: etersoft-build-functions:135
-msgid "head"
-msgstr ""
-
-#: etersoft-build-functions:135 etersoft-build-functions:175
-#: etersoft-build-functions:176 etersoft-build-functions:208
-#: etersoft-build-functions:209 bin/rpmbph:44 bin/rpmbph:100 bin/rpmbsh:70
-#: bin/rpmbugs:69 bin/rpmbugs:98
-msgid "sed"
-msgstr ""
-
-#: etersoft-build-functions:135 etersoft-build-functions:175
-#: etersoft-build-functions:176 etersoft-build-functions:208
-#: etersoft-build-functions:209 upload-to-alt:26 bin/myhsh:140 bin/rpmbb:132
-#: bin/rpmbph:44 bin/rpmbph:100 bin/rpmbph:131 bin/rpmbph:132 bin/rpmbs:93
-#: bin/rpmbs:128 bin/rpmbs:165 bin/rpmbs:190 bin/rpmbsh:70 bin/rpmbsh:72
-#: bin/rpmbsh:84 bin/rpmbugs:61 bin/rpmbugs:69 bin/rpmbugs:98 bin/rpmgs:186
-msgid "-e"
-msgstr ""
-
-#: etersoft-build-functions:135
-msgid "s/^[^:]*[ \\t]*:[ \\t]*//"
-msgstr ""
-
-#: etersoft-build-functions:140 etersoft-build-functions:147
-#: etersoft-build-functions:197 bin/rpmbugs:83 bin/rpmgs:140 bin/rpmurl:77
-#: bin/rpmurl:78
-msgid "eval_spec"
-msgstr ""
-
-#: etersoft-build-functions:142 etersoft-build-functions:271
-#: etersoft-build-functions:274
-msgid "rpmbuild"
-msgstr ""
-
-#: etersoft-build-functions:142
-msgid "-bE"
-msgstr ""
-
-#: etersoft-build-functions:142 etersoft-build-functions:271
-#: etersoft-build-functions:274 bin/rpmbb:85 bin/rpmbb:106
-msgid "--target"
-msgstr ""
-
-#: etersoft-build-functions:145 bin/rpmbph:100 bin/rpmcs:49
-msgid "get_release"
-msgstr ""
-
-#: etersoft-build-functions:147 etersoft-build-functions:158
-#: etersoft-build-functions:201
-msgid "Release"
-msgstr ""
-
-#: etersoft-build-functions:150 etersoft-build-functions:158 bin/rpmcs:79
-#: bin/rpmrb:17
-msgid "set_var"
-msgstr ""
-
-#: etersoft-build-functions:152 bin/rpmbph:128 bin/rpmbph:129 bin/rpmbph:134
-#: bin/rpmcs:57 bin/rpmcs:59 bin/rpmcs:60 bin/rpmcs:70 bin/rpmcs:71
-#: bin/rpmcs:73 bin/rpmcs:82 bin/rpmcs:84 bin/rpmcs:87 bin/rpmcs:88
-#: bin/rpmcs:90 bin/rpmcs:91 bin/rpmcs:93 bin/rpmcs:94 bin/rpmcs:98
-#: bin/rpmcs:99 bin/rpmcs:100 bin/rpmcs:101 bin/rpmcs:104 bin/rpmcs:105
-#: bin/rpmcs:106 bin/rpmcs:107 bin/rpmcs:108 bin/rpmcs:109 bin/rpmcs:111
-#: bin/rpmcs:112 bin/rpmcs:113 bin/rpmcs:114 bin/rpmcs:115 bin/rpmcs:116
-#: bin/rpmcs:117 bin/rpmcs:118 bin/rpmcs:119 bin/rpmcs:120 bin/rpmcs:122
-#: bin/rpmcs:123 bin/rpmcs:124 bin/rpmcs:125 bin/rpmcs:126
-msgid "subst"
-msgstr ""
-
-#: etersoft-build-functions:155 bin/rpmbph:101 bin/rpmcs:50 bin/rpmrb:18
-msgid "set_release"
-msgstr ""
-
-#: etersoft-build-functions:162 etersoft-build-functions:215 bin/rpmbb:96
-msgid "build_buildroot"
-msgstr ""
-
-#: etersoft-build-functions:165 etersoft-build-functions:167
-#: etersoft-build-functions:255 etersoft-build-functions:283
-#: etersoft-build-functions:411 bin/myhsh:92 bin/rpmbb:70 bin/rpmbph:88
-#: bin/rpmbph:93 bin/rpmbs:102 bin/rpmbs:104 bin/rpmbs:178 bin/rpmbugs:19
-#: bin/rpmbugs:54 bin/rpmbugs:69 bin/rpmbugs:78 bin/rpmbugs:84 bin/rpmcs:35
-#: bin/rpmgp:33 bin/rpmgp:70 bin/rpmgp:75 bin/rpmgp:82 bin/rpmgp:85
-#: bin/rpmgp:95 bin/rpmgs:154 bin/rpmgs:165 bin/rpmurl:71 bin/rpmurl:85
-#: bin/rpmurl:86 bin/rpmurl:97
+#: ../share/common:38 ../share/common:45 ../share/common:197
+#: ../share/common:211 ../share/common:215 ../share/common:221
+#: ../share/common:253 ../share/common:256 ../share/common:357
+#: ../share/common:385 ../share/common:529 ../share/common:535 ../bin/myhsh:94
+#: ../bin/rpmbb:71 ../bin/rpmbph:29 ../bin/rpmbph:36 ../bin/rpmbph:238
+#: ../bin/rpmbph:242 ../bin/rpmbs:124 ../bin/rpmbs:201 ../bin/rpmbs:209
+#: ../bin/rpmbugs:18 ../bin/rpmbugs:53 ../bin/rpmbugs:68 ../bin/rpmbugs:77
+#: ../bin/rpmbugs:83 ../bin/rpmcs:56 ../bin/rpmgp:102 ../bin/rpmgp:113
+#: ../bin/rpmgp:179 ../bin/rpmgp:257 ../bin/rpmgp:262 ../bin/rpmgp:269
+#: ../bin/rpmgp:272 ../bin/rpmgp:282 ../bin/rpmgs:174 ../bin/rpmgs:185
+#: ../bin/rpmqf:25 ../bin/rpmunmets:89 ../bin/rpmurl:75 ../bin/rpmurl:98
+#: ../bin/rpmurl:125 ../bin/rpmurl:126 ../bin/rpmurl:134
 msgid "-z"
 msgstr ""
 
-#: etersoft-build-functions:165
-msgid "Use build_buildroot with BASENAME defined"
+#: ../share/common:38
+msgid "id"
 msgstr ""
 
-#: etersoft-build-functions:166 etersoft-build-functions:168
-msgid "%buildroot"
+#: ../share/common:38 ../bin/mkpatch:51 ../bin/rpmbph:63 ../bin/rpmbph:64
+#: ../bin/rpmrb:39
+msgid "-u"
 msgstr ""
 
-#: etersoft-build-functions:167
-msgid "Fix rpm's buildroot"
+#: ../share/common:39 ../share/common:81 ../share/common:102
+#: ../share/common:103 ../share/common:105 ../share/common:262
+#: ../share/common:313 ../share/common:324 ../share/common:367
+#: ../share/common:396 ../share/common:460 ../share/common:537
+#: ../bin/loginhsh:38 ../bin/loginhsh:50 ../bin/loginhsh:74 ../bin/loginhsh:80
+#: ../bin/mkpatch:42 ../bin/mkpatch:52 ../bin/mkpatch:61 ../bin/mkpatch:70
+#: ../bin/myhsh:42 ../bin/myhsh:53 ../bin/myhsh:77 ../bin/myhsh:162
+#: ../bin/myhsh:174 ../bin/rpmbb:44 ../bin/rpmbb:57 ../bin/rpmbb:88
+#: ../bin/rpmbb:112 ../bin/rpmbb:120 ../bin/rpmbph:217 ../bin/rpmbph:227
+#: ../bin/rpmbs:56 ../bin/rpmbs:73 ../bin/rpmbs:90 ../bin/rpmbs:115
+#: ../bin/rpmbs:151 ../bin/rpmbs:176 ../bin/rpmbs:179 ../bin/rpmbsh:43
+#: ../bin/rpmbsh:55 ../bin/rpmbsh:91 ../bin/rpmbugs:39 ../bin/rpmbugs:70
+#: ../bin/rpmcs:41 ../bin/rpmcs:51 ../bin/rpmgp:94 ../bin/rpmgp:118
+#: ../bin/rpmgp:144 ../bin/rpmgp:157 ../bin/rpmgp:169 ../bin/rpmgp:191
+#: ../bin/rpmgp:203 ../bin/rpmgp:224 ../bin/rpmgp:231 ../bin/rpmgp:252
+#: ../bin/rpmgp:282 ../bin/rpmgs:39 ../bin/rpmgs:208 ../bin/rpmqf:15
+#: ../bin/rpmrb:23 ../bin/rpmU:10 ../bin/rpmunmets:55 ../bin/rpmunmets:62
+#: ../bin/rpmunmets:95 ../bin/rpmurl:37 ../bin/rpmurl:49
+msgid "0"
 msgstr ""
 
-#: etersoft-build-functions:184 etersoft-build-functions:261
-#: etersoft-build-functions:410 bin/rpmbb:94 bin/rpmbs:188 bin/rpmcs:77
-#: bin/rpmgp:52 bin/rpmgs:167
-msgid "build_rpms_name"
+#: ../share/common:40
+msgid "SUDO="
 msgstr ""
 
-#: etersoft-build-functions:186 etersoft-build-functions:210
-#: etersoft-build-functions:223 etersoft-build-functions:246
-#: etersoft-build-functions:330
+#: ../share/common:45 ../share/common:102 ../share/common:103
+#: ../share/common:105 ../share/common:157 ../tools/upload-to-alt:29
+#: Makefile:15 ../bin/loginhsh:83 ../bin/mkpatch:46 ../bin/mkpatch:55
+#: ../bin/rpmbph:47 ../bin/rpmbph:176 ../bin/rpmbph:177 ../bin/rpmbph:180
+#: ../bin/rpmbph:181 ../bin/rpmbs:219 ../bin/rpmunmets:88 ../bin/rpmurl:136
+#: ../bin/rpmurl:138
+msgid "-d"
+msgstr ""
+
+#: ../share/common:45
+msgid "OURTMPDIR=/tmp"
+msgstr ""
+
+#: ../share/common:48 ../share/common:82 ../share/common:126
+#: ../share/common:178 ../share/common:231 ../share/common:233
+#: ../share/common:236 ../share/common:253 ../share/common:256
+#: ../share/common:276 ../share/common:376 ../share/common:382
+#: ../share/common:385 ../share/common:432 ../share/common:555
+#: ../bin/loginhsh:72 ../bin/loginhsh:79 ../bin/loginhsh:85
+#: ../bin/loginhsh:101 ../bin/myhsh:43 ../bin/myhsh:83 ../bin/myhsh:96
+#: ../bin/myhsh:100 ../bin/rpmbb:71 ../bin/rpmbb:83 ../bin/rpmbb:104
+#: ../bin/rpmbb:115 ../bin/rpmbph:188 ../bin/rpmbph:238 ../bin/rpmbph:242
+#: ../bin/rpmbph:259 ../bin/rpmbph:260 ../bin/rpmbs:103 ../bin/rpmbs:126
+#: ../bin/rpmbs:134 ../bin/rpmbs:163 ../bin/rpmbs:165 ../bin/rpmbs:190
+#: ../bin/rpmbsh:78 ../bin/rpmbsh:86 ../bin/rpmbugs:83 ../bin/rpmbugs:92
+#: ../bin/rpmcs:57 ../bin/rpmgp:179 ../bin/rpmgp:189 ../bin/rpmgp:269
+#: ../bin/rpmgs:191 ../bin/rpmgs:198 ../bin/rpmgs:200 ../bin/rpmrb:28
+#: ../bin/rpmrb:37 ../bin/rpmrb:38 ../bin/rpmrb:39 ../bin/rpmunmets:85
+#: ../bin/rpmunmets:89 ../bin/rpmurl:125
+msgid "fatal"
+msgstr ""
+
+#: ../share/common:51 ../share/common:279 ../share/common:281
+#: ../share/common:371 ../tools/upload-to-alt:17 ../tools/upload-to-alt:22
+#: ../bin/loginhsh:38 ../bin/loginhsh:43 ../bin/loginhsh:64 ../bin/loginhsh:74
+#: ../bin/loginhsh:80 ../bin/mkpatch:42 ../bin/mkpatch:52 ../bin/mkpatch:61
+#: ../bin/mkpatch:70 ../bin/myhsh:16 ../bin/myhsh:42 ../bin/myhsh:46
+#: ../bin/myhsh:77 ../bin/myhsh:89 ../bin/myhsh:170 ../bin/myhsh:178
+#: ../bin/rpmbb:20 ../bin/rpmbb:44 ../bin/rpmbb:49 ../bin/rpmbb:79
+#: ../bin/rpmbb:88 ../bin/rpmbb:120 ../bin/rpmbph:217 ../bin/rpmbph:220
+#: ../bin/rpmbs:56 ../bin/rpmbs:66 ../bin/rpmbs:91 ../bin/rpmbs:113
+#: ../bin/rpmbs:115 ../bin/rpmbs:151 ../bin/rpmbs:176 ../bin/rpmbs:231
+#: ../bin/rpmbsh:43 ../bin/rpmbsh:48 ../bin/rpmbsh:101 ../bin/rpmbugs:39
+#: ../bin/rpmbugs:70 ../bin/rpmcs:51 ../bin/rpmgp:104 ../bin/rpmgp:144
+#: ../bin/rpmgp:157 ../bin/rpmgp:169 ../bin/rpmgp:191 ../bin/rpmgp:203
+#: ../bin/rpmgp:224 ../bin/rpmgp:231 ../bin/rpmgp:252 ../bin/rpmgp:282
+#: ../bin/rpmgs:39 ../bin/rpmgs:42 ../bin/rpmgs:43 ../bin/rpmgs:167
+#: ../bin/rpmgs:208 ../bin/rpmqf:15 ../bin/rpmrb:23 ../bin/rpmU:10
+#: ../bin/rpmunmets:15 ../bin/rpmunmets:55 ../bin/rpmunmets:95
+#: ../bin/rpmurl:37 ../bin/rpmurl:42
+msgid "exit"
+msgstr ""
+
+#: ../share/common:51 ../share/common:106 ../share/common:168
+#: ../share/common:212 ../share/common:260 ../share/common:279
+#: ../share/common:281 ../share/common:315 ../share/common:371
+#: ../share/common:399 ../share/common:430 ../share/common:459
+#: ../share/common:531 ../share/common:535 ../share/common:540
+#: ../tools/upload-to-alt:17 ../tools/upload-to-alt:22 ../bin/loginhsh:64
+#: ../bin/loginhsh:77 ../bin/loginhsh:83 ../bin/myhsh:16 ../bin/myhsh:69
+#: ../bin/myhsh:74 ../bin/myhsh:89 ../bin/myhsh:123 ../bin/myhsh:130
+#: ../bin/myhsh:138 ../bin/myhsh:170 ../bin/rpmbb:110 ../bin/rpmbs:113
+#: ../bin/rpmbs:231 ../bin/rpmbugs:97 ../bin/rpmcs:43 ../bin/rpmgp:97
+#: ../bin/rpmgp:104 ../bin/rpmgp:107 ../bin/rpmgp:110 ../bin/rpmgp:115
+#: ../bin/rpmgp:243 ../bin/rpmgp:248 ../bin/rpmgs:57 ../bin/rpmgs:167
+#: ../bin/rpmunmets:15
+msgid "1"
+msgstr ""
+
+#: ../share/common:55 ../share/common:128 ../share/common:259
+#: ../share/common:299 ../share/common:317 ../share/common:321
+#: ../share/common:322 ../bin/mkpatch:14 ../bin/rpmgs:194 ../bin/rpmgs:197
+msgid "warning"
+msgstr ""
+
+#: ../share/common:61 ../share/common:177 ../bin/rpmbb:83 ../bin/rpmbb:99
+msgid "is_alt"
+msgstr ""
+
+#: ../share/common:63 ../share/common:126 ../share/common:162
+#: ../share/common:163 ../share/common:164 ../share/common:276
+#: ../share/common:290 ../share/common:330 ../share/common:335
+#: ../share/common:379 ../share/common:445 Makefile:24 ../bin/mkpatch:10
+#: ../bin/mkpatch:36 ../bin/myhsh:13 ../bin/myhsh:116 ../bin/myhsh:125
+#: ../bin/rpmbb:109 ../bin/rpmbb:112 ../bin/rpmbph:167 ../bin/rpmbs:215
+#: ../bin/rpmbugs:75 ../bin/rpmcs:61 ../bin/rpmcs:70 ../bin/rpmcs:84
+#: ../bin/rpmcs:89 ../bin/rpmcs:305 ../bin/rpmgp:79 ../bin/rpmgp:238
+#: ../bin/rpmgs:85 ../bin/rpmgs:89 ../bin/rpmgs:112 ../bin/rpmgs:188
+#: ../bin/rpmunmets:12 ../bin/rpmunmets:25 ../bin/rpmunmets:33
+#: ../bin/rpmurl:73 ../bin/rpmurl:96
+msgid "-f"
+msgstr ""
+
+#: ../share/common:63
+msgid "/etc/altlinux-release"
+msgstr ""
+
+#: ../share/common:64 ../share/common:102 ../share/common:103
+#: ../share/common:105 ../share/common:106 ../share/common:212
+#: ../share/common:216 ../share/common:260 ../share/common:262
+#: ../share/common:315 ../share/common:324 ../share/common:396
+#: ../share/common:399 ../share/common:459 ../share/common:460
+#: ../share/common:531 ../share/common:535 ../share/common:546 ../bin/myhsh:68
+#: ../bin/rpmbs:129 ../bin/rpmcs:41 ../bin/rpmcs:43 ../bin/rpmgp:94
+#: ../bin/rpmgp:97 ../bin/rpmgp:110 ../bin/rpmgp:115 ../bin/rpmgp:118
+#: ../bin/rpmgs:65 ../bin/rpmgs:74 ../bin/rpmgs:86 ../bin/rpmgs:90
+#: ../bin/rpmgs:96 ../bin/rpmgs:99 ../bin/rpmgs:105 ../bin/rpmgs:111
+#: ../bin/rpmgs:118 ../bin/rpmgs:125 ../bin/rpmgs:131 ../bin/rpmgs:137
+#: ../bin/rpmgs:143 ../bin/rpmgs:144
+msgid "return"
+msgstr ""
+
+#: ../share/common:82
+msgid "It is strict recommended do not use these scripts as root"
+msgstr ""
+
+#: ../share/common:94
+msgid "DEFAULTARCH=i586"
+msgstr ""
+
+#: ../share/common:95
+msgid "uname"
+msgstr ""
+
+#: ../share/common:95
+msgid "-m"
+msgstr ""
+
+#: ../share/common:95
+msgid "x86_64"
+msgstr ""
+
+#: ../share/common:96
+msgid "NICE=nice"
+msgstr ""
+
+#: ../share/common:97
+msgid "RPMBUILD=rpmbuild"
+msgstr ""
+
+#: ../share/common:99 ../share/common:125 ../bin/rpmbb:98 ../bin/rpmcs:115
+msgid "is_git"
+msgstr ""
+
+#: ../share/common:101 ../share/common:115 ../share/common:117
+#: ../share/common:119 ../share/common:120 ../share/common:196
+#: ../share/common:208 ../share/common:209 ../share/common:272
+#: ../share/common:296 ../share/common:306 ../share/common:347
+#: ../share/common:406 ../share/common:429 ../bin/rpmbph:20 ../bin/rpmbph:128
+#: ../bin/rpmbph:136 ../bin/rpmcs:28 ../bin/rpmgp:54 ../bin/rpmgp:75
+#: ../bin/rpmgp:76 ../bin/rpmgp:77 ../bin/rpmgp:123 ../bin/rpmgp:124
+#: ../bin/rpmurl:72 ../bin/rpmurl:94 ../bin/rpmurl:95
 msgid "local"
 msgstr ""
 
-#: etersoft-build-functions:186
-msgid "tmprpm"
+#: ../share/common:103
+msgid ".git"
 msgstr ""
 
-#: etersoft-build-functions:186
-msgid "CATSPEC"
+#: ../share/common:105
+msgid "../.git"
 msgstr ""
 
-#: etersoft-build-functions:192 etersoft-build-functions:193
-#: etersoft-build-functions:195 upload-to-alt:29
-msgid "mktemp"
+#: ../share/common:113 ../share/common:373 ../share/common:376 ../bin/rpmbb:76
+#: ../bin/rpmbb:86 ../bin/rpmbb:110
+msgid "uni_rpmbuild"
 msgstr ""
 
-#: etersoft-build-functions:192
-msgid "-V"
+#: ../share/common:117
+msgid "ONEPARAM=-v"
 msgstr ""
 
-#: etersoft-build-functions:197
-msgid ":"
+#: ../share/common:120 ../share/common:158 ../bin/rpmbb:97 ../bin/rpmcs:114
+#: ../bin/rpmurl:122
+msgid "dirname"
 msgstr ""
 
-#: etersoft-build-functions:198 etersoft-build-functions:396
-#: etersoft-build-functions:397 bin/rpmcs:18 bin/rpmcs:45
-msgid "cat"
+#: ../share/common:123
+msgid "ONEPARAM=--define=_source_payload w9.gzdio"
 msgstr ""
 
-#: etersoft-build-functions:200 bin/rpmbugs:83 bin/rpmcs:79
-msgid "Name"
+#: ../share/common:126
+msgid "run uni_rpmbuild with spec as 2nd parameter"
 msgstr ""
 
-#: etersoft-build-functions:202 bin/rpmrb:17
-msgid "Version"
-msgstr ""
-
-#: etersoft-build-functions:203 etersoft-build-functions:429
-#: etersoft-build-functions:432 etersoft-build-functions:441
-#: etersoft-build-functions:443 bin/myhsh:114 bin/rpmbb:101 bin/rpmbb:105
-#: bin/rpmbph:127 bin/rpmbs:192 bin/rpmcs:58 bin/rpmgs:128 bin/rpmgs:133
-#: bin/rpmgs:168
-msgid "rm"
-msgstr ""
-
-#: etersoft-build-functions:207
-msgid "%_sourcedir"
-msgstr ""
-
-#: etersoft-build-functions:210
-msgid "BNS"
-msgstr ""
-
-#: etersoft-build-functions:210
-msgid "NSS"
-msgstr ""
-
-#: etersoft-build-functions:212 etersoft-build-functions:337
-#: etersoft-build-functions:409 upload-to-alt:29 bin/myhsh:112 bin/myhsh:126
-#: bin/rpmbb:103 bin/rpmbph:97 bin/rpmbs:170 bin/rpmgs:66 bin/rpmgs:75
-#: bin/rpmgs:88 bin/rpmgs:166
-msgid "basename"
-msgstr ""
-
-#: etersoft-build-functions:213
+#: ../share/common:128 ../share/common:299 ../bin/myhsh:105 ../bin/rpmbb:112
+#: ../bin/rpmurl:127
 msgid "!="
 msgstr ""
 
-#: etersoft-build-functions:221 bin/myhsh:124 bin/rpmbb:107
+#: ../share/common:128
+msgid "Spec is not in git dir"
+msgstr ""
+
+#: ../share/common:129
+msgid "gear"
+msgstr ""
+
+#: ../share/common:129
+msgid "--commit"
+msgstr ""
+
+#: ../share/common:129
+msgid "--rpmbuild"
+msgstr ""
+
+#: ../share/common:129 ../share/common:321 ../share/common:322
+#: ../tools/upload-to-alt:10 ../tools/upload-to-alt:17 ../bin/loginhsh:57
+#: ../bin/myhsh:123 ../bin/rpmbs:163 ../bin/rpmcs:35
+msgid "--"
+msgstr ""
+
+#: ../share/common:133 ../share/common:283 ../share/common:352
+#: ../share/common:453 Makefile:15
+msgid ":"
+msgstr ""
+
+#: ../share/common:137
+msgid "APTCONF=/etc/apt/apt.conf"
+msgstr ""
+
+#: ../share/common:139 ../share/common:255 ../share/common:295 ../bin/rpmbb:92
+#: ../bin/rpmbb:142 ../bin/rpmbs:159 ../bin/rpmbugs:61 ../bin/rpmbugs:80
+#: ../bin/rpmbugs:86 ../bin/rpmgp:242 ../bin/rpmgp:243 ../bin/rpmgp:264
+#: ../bin/rpmgp:266 ../bin/rpmgp:285 ../bin/rpmqf:43 ../bin/rpmU:14
+#: ../bin/rpmurl:78 ../bin/rpmurl:86 ../bin/rpmurl:87 ../bin/rpmurl:101
+#: ../bin/rpmurl:107
+msgid "rpm"
+msgstr ""
+
+#: ../share/common:139 ../share/common:255 ../share/common:295 ../bin/rpmcs:69
+msgid "--eval"
+msgstr ""
+
+#: ../share/common:139 ../bin/rpmcs:69
+msgid "%packager"
+msgstr ""
+
+#: ../share/common:143
+msgid "REMOTERPMDIR="
+msgstr ""
+
+#: ../share/common:145
+msgid "HASHER_NOCHECK=nvr,gpg,packager,buildtime"
+msgstr ""
+
+#: ../share/common:146
+msgid "HASHERARG=--eager-cleanup"
+msgstr ""
+
+#: ../share/common:149
+msgid "RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus"
+msgstr ""
+
+#: ../share/common:150
+msgid "RSYNCINCOMING=devel:/incoming"
+msgstr ""
+
+#: ../share/common:153
+msgid "BUILDSERVER="
+msgstr ""
+
+#: ../share/common:156
+msgid "PKGREPLBASE=/usr/share/eterbuild/pkgrepl"
+msgstr ""
+
+#: ../share/common:157 ../share/common:529 ../bin/loginhsh:62
+#: ../bin/loginhsh:83 ../bin/myhsh:13 ../bin/myhsh:87 ../bin/myhsh:157
+#: ../bin/rpmbb:99 ../bin/rpmbb:100 ../bin/rpmbph:55 ../bin/rpmcs:68
+#: ../bin/rpmcs:115 ../bin/rpmgp:79 ../bin/rpmunmets:12 ../bin/rpmunmets:88
+msgid "!"
+msgstr ""
+
+#: ../share/common:162
+msgid "/etc/eterbuild/config"
+msgstr ""
+
+#: ../share/common:163
+msgid "~/.ebconfig"
+msgstr ""
+
+#: ../share/common:164
+msgid "~/.eterbuild-config"
+msgstr ""
+
+#: ../share/common:166 ../share/common:186 ../share/common:285
+#: ../share/common:286 ../share/common:287 ../share/common:288
+#: ../bin/rpmbugs:82 ../bin/rpmgs:160 ../bin/rpmurl:81 ../bin/rpmurl:82
+#: ../bin/rpmurl:103
+msgid "get_var"
+msgstr ""
+
+#: ../share/common:168 ../share/common:225 ../share/common:283
+#: ../share/common:311 ../share/common:317 ../share/common:321
+#: ../share/common:322 ../share/common:540 ../bin/mkpatch:11 ../bin/mkpatch:12
+#: ../bin/myhsh:159 ../bin/rpmbph:43 ../bin/rpmbph:55 ../bin/rpmbph:64
+#: ../bin/rpmbugs:101 ../bin/rpmcs:13 ../bin/rpmcs:14 ../bin/rpmcs:15
+#: ../bin/rpmcs:16 ../bin/rpmcs:35 ../bin/rpmcs:37 ../bin/rpmcs:38
+#: ../bin/rpmcs:68 ../bin/rpmcs:74 ../bin/rpmcs:79 ../bin/rpmgp:62
+#: ../bin/rpmgp:106 ../bin/rpmgp:107 ../bin/rpmgp:242
+msgid "grep"
+msgstr ""
+
+#: ../share/common:168 ../bin/myhsh:170 ../bin/rpmgp:106 ../bin/rpmgp:107
+#: ../bin/rpmqf:18 ../bin/rpmrb:38
+msgid "-i"
+msgstr ""
+
+#: ../share/common:168 ../share/common:540 ../bin/rpmcs:35
+msgid "head"
+msgstr ""
+
+#: ../share/common:168 ../share/common:219 ../share/common:220
+#: ../share/common:225 ../share/common:244 ../share/common:540
+#: ../bin/mkpatch:11 ../bin/mkpatch:12 ../bin/mkpatch:69 ../bin/rpmbph:24
+#: ../bin/rpmbph:64 ../bin/rpmbph:151 ../bin/rpmbph:152 ../bin/rpmbph:153
+#: ../bin/rpmbph:154 ../bin/rpmbph:155 ../bin/rpmbph:156 ../bin/rpmbph:243
+#: ../bin/rpmbsh:73 ../bin/rpmbugs:68 ../bin/rpmbugs:97 ../bin/rpmcs:35
+#: ../bin/rpmcs:304 ../bin/rpmgp:62 ../bin/rpmgp:67 ../bin/rpmunmets:84
+msgid "sed"
+msgstr ""
+
+#: ../share/common:168 ../share/common:219 ../share/common:220
+#: ../share/common:225 ../share/common:244 ../share/common:406
+#: ../share/common:533 ../tools/upload-to-alt:26 ../bin/mkpatch:11
+#: ../bin/mkpatch:12 ../bin/mkpatch:69 ../bin/rpmbb:137 ../bin/rpmbph:24
+#: ../bin/rpmbph:64 ../bin/rpmbph:151 ../bin/rpmbph:152 ../bin/rpmbph:153
+#: ../bin/rpmbph:154 ../bin/rpmbph:155 ../bin/rpmbph:156 ../bin/rpmbph:185
+#: ../bin/rpmbph:186 ../bin/rpmbph:243 ../bin/rpmbs:113 ../bin/rpmbs:149
+#: ../bin/rpmbs:188 ../bin/rpmbsh:73 ../bin/rpmbsh:86 ../bin/rpmbugs:60
+#: ../bin/rpmbugs:68 ../bin/rpmbugs:97 ../bin/rpmcs:35 ../bin/rpmcs:90
+#: ../bin/rpmcs:304 ../bin/rpmgp:56 ../bin/rpmgp:62 ../bin/rpmgp:67
+#: ../bin/rpmrb:28 ../bin/rpmrb:34 ../bin/rpmunmets:84
+msgid "-e"
+msgstr ""
+
+#: ../share/common:168
+msgid "s/^[^:]*[ \\t]*:[ \\t]*//"
+msgstr ""
+
+#: ../share/common:173 ../share/common:186 ../share/common:283
+#: ../bin/rpmbph:64 ../bin/rpmbugs:82 ../bin/rpmgs:160 ../bin/rpmurl:81
+#: ../bin/rpmurl:82 ../bin/rpmurl:103
+msgid "eval_spec"
+msgstr ""
+
+#: ../share/common:178 ../share/common:180
+msgid "-bE"
+msgstr ""
+
+#: ../share/common:178 ../share/common:180 ../share/common:373
+#: ../share/common:376 ../bin/rpmbb:86 ../bin/rpmbb:110
+msgid "--target"
+msgstr ""
+
+#: ../share/common:178
+msgid "Check spec's fields"
+msgstr ""
+
+#: ../share/common:180 ../bin/rpmbph:43 ../bin/rpmbph:98 ../bin/rpmbph:104
+#: ../bin/rpmbph:110 ../bin/rpmbph:116 ../bin/rpmbph:122 ../bin/rpmbph:130
+#: ../bin/rpmbph:138 ../bin/rpmbph:148 ../bin/rpmbph:157 ../bin/rpmcs:17
+#: ../bin/rpmcs:70 ../bin/rpmcs:303 ../bin/rpmgp:106 ../bin/rpmgp:107
+#: ../bin/rpmunmets:83 ../bin/rpmunmets:85
+msgid "cat"
+msgstr ""
+
+#: ../share/common:184 ../bin/rpmbph:24 ../bin/rpmcs:74
+msgid "get_release"
+msgstr ""
+
+#: ../share/common:186 ../share/common:200 ../share/common:286
+msgid "Release"
+msgstr ""
+
+#: ../share/common:189 ../share/common:200 ../share/common:231
+#: ../share/common:233 ../share/common:236 ../bin/rpmcs:108
+msgid "set_var"
+msgstr ""
+
+#: ../share/common:191 ../share/common:228 ../bin/rpmbph:170 ../bin/rpmbph:176
+#: ../bin/rpmbph:180 ../bin/rpmcs:64 ../bin/rpmcs:65 ../bin/rpmcs:83
+#: ../bin/rpmcs:85 ../bin/rpmcs:86 ../bin/rpmcs:98 ../bin/rpmcs:99
+#: ../bin/rpmcs:101 ../bin/rpmcs:111 ../bin/rpmcs:112 ../bin/rpmcs:117
+#: ../bin/rpmcs:118 ../bin/rpmcs:122 ../bin/rpmcs:123 ../bin/rpmcs:125
+#: ../bin/rpmcs:126 ../bin/rpmcs:130 ../bin/rpmcs:133 ../bin/rpmcs:185
+#: ../bin/rpmcs:192 ../bin/rpmcs:198 ../bin/rpmcs:201 ../bin/rpmcs:207
+#: ../bin/rpmcs:208 ../bin/rpmcs:218 ../bin/rpmcs:224 ../bin/rpmcs:227
+#: ../bin/rpmcs:233 ../bin/rpmcs:237 ../bin/rpmcs:245 ../bin/rpmcs:248
+#: ../bin/rpmcs:249 ../bin/rpmcs:250 ../bin/rpmcs:251 ../bin/rpmcs:253
+#: ../bin/rpmcs:254 ../bin/rpmcs:255 ../bin/rpmcs:256 ../bin/rpmcs:257
+#: ../bin/rpmcs:259 ../bin/rpmcs:260 ../bin/rpmcs:262 ../bin/rpmcs:263
+#: ../bin/rpmcs:265 ../bin/rpmcs:273 ../bin/rpmcs:276 ../bin/rpmcs:277
+#: ../bin/rpmcs:278 ../bin/rpmcs:279 ../bin/rpmcs:281 ../bin/rpmcs:283
+#: ../bin/rpmcs:284 ../bin/rpmcs:285 ../bin/rpmcs:286 ../bin/rpmcs:288
+msgid "subst"
+msgstr ""
+
+#: ../share/common:194 ../bin/rpmbph:31 ../bin/rpmbph:37 ../bin/rpmcs:75
+#: ../bin/rpmrb:33
+msgid "set_release"
+msgstr ""
+
+#: ../share/common:198
+msgid "RELEASE=alt1"
+msgstr ""
+
+#: ../share/common:206 ../bin/rpmrb:32
+msgid "set_version"
+msgstr ""
+
+#: ../share/common:216 ../bin/loginhsh:43 ../bin/myhsh:46 ../bin/rpmbb:49
+#: ../bin/rpmbph:220 ../bin/rpmbs:66 ../bin/rpmbsh:48 ../bin/rpmgs:42
+#: ../bin/rpmgs:43 ../bin/rpmurl:42
+msgid "2"
+msgstr ""
+
+#: ../share/common:219
+msgid "s|\\([0-9]*\\.[0-9]*\\)\\..*|\\1|"
+msgstr ""
+
+#: ../share/common:220
+msgid "s|^[0-9]*\\.[0-9]*||;s|^\\.||"
+msgstr ""
+
+#: ../share/common:222
+msgid "VERMAJOR="
+msgstr ""
+
+#: ../share/common:225
+msgid "\\%define[[:space:]]\\(\\|ver_\\)major"
+msgstr ""
+
+#: ../share/common:225
+msgid "s|.*[[:space:]]\\(.*major\\).*|\\1|"
+msgstr ""
+
+#: ../share/common:231 ../share/common:233 ../share/common:236
+#: ../share/common:287
+msgid "Version"
+msgstr ""
+
+#: ../share/common:231
+msgid "Error 1 with set version to spec"
+msgstr ""
+
+#: ../share/common:233
+msgid "Error 2 with set version to spec"
+msgstr ""
+
+#: ../share/common:236
+msgid "Error 3 with set version to spec"
+msgstr ""
+
+#: ../share/common:241 ../share/common:255 ../share/common:295
+msgid "subst_namever"
+msgstr ""
+
+#: ../share/common:251 ../share/common:301 ../bin/rpmbb:100
+msgid "build_buildroot"
+msgstr ""
+
+#: ../share/common:253
+msgid "Use build_buildroot with BASENAME defined"
+msgstr ""
+
+#: ../share/common:255 ../share/common:257
+msgid "%buildroot"
+msgstr ""
+
+#: ../share/common:256
+msgid "Fix rpm's buildroot"
+msgstr ""
+
+#: ../share/common:270 ../share/common:363 ../bin/rpmbb:98 ../bin/rpmbs:216
+#: ../bin/rpmcs:105 ../bin/rpmgp:239 ../bin/rpmgs:187
+msgid "build_rpms_name"
+msgstr ""
+
+#: ../share/common:272
+msgid "tmprpm"
+msgstr ""
+
+#: ../share/common:272
+msgid "CATSPEC"
+msgstr ""
+
+#: ../share/common:272
+msgid "NAMESPEC"
+msgstr ""
+
+#: ../share/common:278 ../share/common:279 ../share/common:281
+#: ../tools/upload-to-alt:29 ../bin/rpmbph:47
+msgid "mktemp"
+msgstr ""
+
+#: ../share/common:278
+msgid "-V"
+msgstr ""
+
+#: ../share/common:285 ../bin/rpmbugs:82 ../bin/rpmcs:108 ../bin/rpmurl:103
+msgid "Name"
+msgstr ""
+
+#: ../share/common:288
+msgid "Source.*"
+msgstr ""
+
+#: ../share/common:289 ../share/common:298 ../share/common:437
+#: ../tools/upload-to-alt:29 ../bin/myhsh:114 ../bin/myhsh:131
+#: ../bin/rpmbb:107 ../bin/rpmbph:258 ../bin/rpmbs:193 ../bin/rpmgs:66
+#: ../bin/rpmgs:75 ../bin/rpmgs:97 ../bin/rpmgs:186
+msgid "basename"
+msgstr ""
+
+#: ../share/common:290 Makefile:24 ../bin/myhsh:116 ../bin/rpmbb:105
+#: ../bin/rpmbb:109 ../bin/rpmbph:167 ../bin/rpmbs:220 ../bin/rpmcs:84
+#: ../bin/rpmcs:305 ../bin/rpmgs:148 ../bin/rpmgs:153 ../bin/rpmgs:188
+#: ../bin/rpmunmets:94
+msgid "rm"
+msgstr ""
+
+#: ../share/common:295
+msgid "%_sourcedir"
+msgstr ""
+
+#: ../share/common:296
+msgid "BNS"
+msgstr ""
+
+#: ../share/common:296
+msgid "NSS"
+msgstr ""
+
+#: ../share/common:304 ../bin/myhsh:129 ../bin/rpmbb:111
 msgid "check_log"
 msgstr ""
 
-#: etersoft-build-functions:223
+#: ../share/common:306
 msgid "LOGFILE"
 msgstr ""
 
-#: etersoft-build-functions:223 etersoft-build-functions:246
-#: etersoft-build-functions:252 etersoft-build-functions:330
-#: etersoft-build-functions:342 bin/loginhsh:40 bin/myhsh:43 bin/myhsh:107
-#: bin/myhsh:139 bin/rpmbb:47 bin/rpmbb:83 bin/rpmbb:92 bin/rpmbph:95
-#: bin/rpmbs:103 bin/rpmbs:111 bin/rpmbs:123 bin/rpmbs:169 bin/rpmbs:185
-#: bin/rpmbugs:74 bin/rpmcs:33 bin/rpmgp:59 bin/rpmgp:88 bin/rpmgs:156
-#: bin/rpmurl:67
+#: ../share/common:306 ../share/common:347 ../share/common:354
+#: ../share/common:429 ../share/common:442 ../bin/loginhsh:40 ../bin/myhsh:44
+#: ../bin/myhsh:109 ../bin/myhsh:145 ../bin/rpmbb:46 ../bin/rpmbb:94
+#: ../bin/rpmbph:73 ../bin/rpmbph:84 ../bin/rpmbph:257 ../bin/rpmbs:123
+#: ../bin/rpmbs:131 ../bin/rpmbs:145 ../bin/rpmbs:192 ../bin/rpmbs:208
+#: ../bin/rpmbugs:73 ../bin/rpmcs:28 ../bin/rpmcs:33 ../bin/rpmcs:54
+#: ../bin/rpmgp:47 ../bin/rpmgp:54 ../bin/rpmgp:55 ../bin/rpmgp:91
+#: ../bin/rpmgp:199 ../bin/rpmgp:246 ../bin/rpmgp:275 ../bin/rpmgs:176
+#: ../bin/rpmurl:112
 msgid "i"
 msgstr ""
 
-#: etersoft-build-functions:223
+#: ../share/common:306
 msgid "RES"
 msgstr ""
 
-#: etersoft-build-functions:225
+#: ../share/common:308
 msgid "-------------------------------------------------------"
 msgstr ""
 
-#: etersoft-build-functions:226
+#: ../share/common:309
 msgid "Check log for..."
 msgstr ""
 
-#: etersoft-build-functions:228
+#: ../share/common:311
 msgid ""
 "ld: warning: libstdc++\\.so\\.5, needed by [^ ]\\+, may conflict with libstdc"
 "++\\.so\\.6"
 msgstr ""
 
-#: etersoft-build-functions:231
+#: ../share/common:314
 msgid "Error: libstdc++.so.5/6 conflicts"
 msgstr ""
 
-#: etersoft-build-functions:234
+#: ../share/common:317
 msgid "python-strict"
 msgstr ""
 
-#: etersoft-build-functions:234
-msgid "Warning: python-strict used!!!"
+#: ../share/common:317
+msgid "python-strict used!!!"
 msgstr ""
 
-#: etersoft-build-functions:235
+#: ../share/common:318
 msgid "NC1=command not found"
 msgstr ""
 
-#: etersoft-build-functions:244 bin/rpmbb:127 bin/rpmbs:79 bin/rpmbsh:70
-#: bin/rpmgp:39
-msgid "pack_src_rpm"
+#: ../share/common:319
+msgid "NC2=-march=athlon -mtune=athlon-xp"
 msgstr ""
 
-#: etersoft-build-functions:252 etersoft-build-functions:342 bin/myhsh:107
-#: bin/myhsh:139 bin/rpmbb:83 bin/rpmbb:92 bin/rpmbph:95 bin/rpmbs:103
-#: bin/rpmbs:111 bin/rpmbs:123 bin/rpmbs:169 bin/rpmbs:185 bin/rpmbugs:74
-#: bin/rpmcs:33 bin/rpmgp:59 bin/rpmgp:88 bin/rpmgs:156 bin/rpmgs:162
-#: bin/rpmurl:67
-msgid "for"
+#: ../share/common:321
+#, sh-format
+msgid "$NC1"
 msgstr ""
 
-#: etersoft-build-functions:252 etersoft-build-functions:291
-#: etersoft-build-functions:342 etersoft-build-functions:364 bin/loginhsh:37
-#: bin/myhsh:40 bin/myhsh:107 bin/myhsh:139 bin/rpmbb:44 bin/rpmbb:83
-#: bin/rpmbb:92 bin/rpmbph:65 bin/rpmbph:95 bin/rpmbph:102 bin/rpmbs:47
-#: bin/rpmbs:103 bin/rpmbs:111 bin/rpmbs:123 bin/rpmbs:169 bin/rpmbs:185
-#: bin/rpmbsh:42 bin/rpmbugs:74 bin/rpmcs:33 bin/rpmgp:59 bin/rpmgp:88
-#: bin/rpmgs:39 bin/rpmgs:156 bin/rpmgs:162 bin/rpmurl:34 bin/rpmurl:67
-msgid "in"
+#: ../share/common:322
+#, sh-format
+msgid "$NC2"
 msgstr ""
 
-#: etersoft-build-functions:253 etersoft-build-functions:343 bin/loginhsh:36
-#: bin/loginhsh:83 bin/myhsh:39 bin/myhsh:84 bin/myhsh:108 bin/myhsh:139
-#: bin/rpmbb:43 bin/rpmbb:84 bin/rpmbb:93 bin/rpmbph:64 bin/rpmbph:95
-#: bin/rpmbs:46 bin/rpmbs:103 bin/rpmbs:111 bin/rpmbs:123 bin/rpmbs:169
-#: bin/rpmbs:185 bin/rpmbsh:41 bin/rpmbugs:75 bin/rpmcs:34 bin/rpmgp:59
-#: bin/rpmgp:89 bin/rpmgs:38 bin/rpmgs:157 bin/rpmgs:163 bin/rpmurl:33
-#: bin/rpmurl:68
+#: ../share/common:328 ../bin/loginhsh:90 ../bin/myhsh:84
+msgid "check_locking"
+msgstr ""
+
+#: ../share/common:333 ../bin/myhsh:69 ../bin/rpmbb:119 ../bin/rpmbb:146
+#: ../bin/rpmbs:150 ../bin/rpmbs:195 ../bin/rpmbs:197 ../bin/rpmbsh:89
+#: ../bin/rpmbsh:95
+msgid "date"
+msgstr ""
+
+#: ../share/common:334
+msgid "Wait for unlocking"
+msgstr ""
+
+#: ../share/common:335 ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/rpmbb:42
+#: ../bin/rpmbph:215 ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37
+#: ../bin/rpmunmets:53 ../bin/rpmurl:35
+msgid "while"
+msgstr ""
+
+#: ../share/common:336 ../share/common:355 ../share/common:443
+#: ../share/common:539 ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/myhsh:110
+#: ../bin/myhsh:145 ../bin/rpmbb:42 ../bin/rpmbb:85 ../bin/rpmbb:95
+#: ../bin/rpmbph:73 ../bin/rpmbph:84 ../bin/rpmbph:215 ../bin/rpmbph:257
+#: ../bin/rpmbs:54 ../bin/rpmbs:123 ../bin/rpmbs:131 ../bin/rpmbs:145
+#: ../bin/rpmbs:192 ../bin/rpmbs:208 ../bin/rpmbsh:41 ../bin/rpmbugs:74
+#: ../bin/rpmcs:33 ../bin/rpmcs:55 ../bin/rpmcs:294 ../bin/rpmgp:47
+#: ../bin/rpmgp:55 ../bin/rpmgp:91 ../bin/rpmgp:199 ../bin/rpmgp:246
+#: ../bin/rpmgp:276 ../bin/rpmgs:37 ../bin/rpmgs:177 ../bin/rpmgs:183
+#: ../bin/rpmunmets:53 ../bin/rpmurl:35 ../bin/rpmurl:113
 msgid "do"
 msgstr ""
 
-#: etersoft-build-functions:263
+#: ../share/common:338 ../share/common:370 ../bin/rpmbs:230
+msgid "sleep"
+msgstr ""
+
+#: ../share/common:339 ../share/common:384 ../share/common:450
+#: ../share/common:544 ../bin/loginhsh:47 ../bin/myhsh:50 ../bin/myhsh:135
+#: ../bin/myhsh:148 ../bin/rpmbb:53 ../bin/rpmbb:87 ../bin/rpmbb:117
+#: ../bin/rpmbph:79 ../bin/rpmbph:90 ../bin/rpmbph:224 ../bin/rpmbph:263
+#: ../bin/rpmbs:70 ../bin/rpmbs:128 ../bin/rpmbs:136 ../bin/rpmbs:147
+#: ../bin/rpmbs:198 ../bin/rpmbs:224 ../bin/rpmbsh:52 ../bin/rpmbugs:104
+#: ../bin/rpmcs:42 ../bin/rpmcs:298 ../bin/rpmcs:307 ../bin/rpmgp:49
+#: ../bin/rpmgp:57 ../bin/rpmgp:96 ../bin/rpmgp:202 ../bin/rpmgp:249
+#: ../bin/rpmgp:280 ../bin/rpmgs:45 ../bin/rpmgs:205 ../bin/rpmgs:206
+#: ../bin/rpmunmets:59 ../bin/rpmurl:46 ../bin/rpmurl:147
+msgid "done"
+msgstr ""
+
+#: ../share/common:345 ../bin/rpmbb:132 ../bin/rpmbs:99 ../bin/rpmbsh:73
+#: ../bin/rpmgp:218
+msgid "pack_src_rpm"
+msgstr ""
+
+#: ../share/common:354 ../share/common:442 ../share/common:539
+#: ../bin/myhsh:109 ../bin/myhsh:145 ../bin/rpmbb:84 ../bin/rpmbb:94
+#: ../bin/rpmbph:73 ../bin/rpmbph:84 ../bin/rpmbph:257 ../bin/rpmbs:123
+#: ../bin/rpmbs:131 ../bin/rpmbs:145 ../bin/rpmbs:192 ../bin/rpmbs:208
+#: ../bin/rpmbugs:73 ../bin/rpmcs:33 ../bin/rpmcs:54 ../bin/rpmcs:294
+#: ../bin/rpmgp:47 ../bin/rpmgp:55 ../bin/rpmgp:91 ../bin/rpmgp:199
+#: ../bin/rpmgp:246 ../bin/rpmgp:275 ../bin/rpmgs:176 ../bin/rpmgs:182
+#: ../bin/rpmurl:112
+msgid "for"
+msgstr ""
+
+#: ../share/common:354 ../share/common:393 ../share/common:442
+#: ../share/common:466 ../share/common:497 ../share/common:539
+#: ../bin/loginhsh:37 ../bin/myhsh:41 ../bin/myhsh:109 ../bin/myhsh:145
+#: ../bin/rpmbb:43 ../bin/rpmbb:84 ../bin/rpmbb:94 ../bin/rpmbph:73
+#: ../bin/rpmbph:84 ../bin/rpmbph:216 ../bin/rpmbph:257 ../bin/rpmbs:55
+#: ../bin/rpmbs:123 ../bin/rpmbs:131 ../bin/rpmbs:145 ../bin/rpmbs:192
+#: ../bin/rpmbs:208 ../bin/rpmbsh:42 ../bin/rpmbugs:73 ../bin/rpmcs:33
+#: ../bin/rpmcs:54 ../bin/rpmcs:294 ../bin/rpmgp:55 ../bin/rpmgp:246
+#: ../bin/rpmgp:275 ../bin/rpmgs:38 ../bin/rpmgs:176 ../bin/rpmgs:182
+#: ../bin/rpmunmets:54 ../bin/rpmurl:36 ../bin/rpmurl:112
+msgid "in"
+msgstr ""
+
+#: ../share/common:365
 #, sh-format
 msgid "Try to packing $NAMESRPMIN package for sign"
 msgstr ""
 
-#: etersoft-build-functions:264 bin/rpmbph:132 bin/rpmbsh:72 bin/rpmgs:186
+#: ../share/common:366 ../share/common:533 ../bin/rpmbph:186 ../bin/rpmcs:90
+#: ../bin/rpmrb:34
 msgid "add_changelog"
 msgstr ""
 
-#: etersoft-build-functions:266
+#: ../share/common:368
 #, sh-format
 msgid ""
 "Spec file $i had not ChangeLog entry. It have added now, check it and enter "
 "your command again."
 msgstr ""
 
-#: etersoft-build-functions:267 bin/rpmbs:201
+#: ../share/common:369 ../bin/rpmbs:229
 msgid "Wait for ten seconds."
 msgstr ""
 
-#: etersoft-build-functions:268 bin/loginhsh:85 bin/myhsh:85 bin/rpmbs:202
-msgid "sleep"
-msgstr ""
-
-#: etersoft-build-functions:268 bin/rpmbs:202
+#: ../share/common:370 ../bin/rpmbs:230
 msgid "10"
 msgstr ""
 
-#: etersoft-build-functions:271 etersoft-build-functions:274
+#: ../share/common:373 ../share/common:376 ../bin/rpmbs:90
 msgid "-bs"
 msgstr ""
 
-#: etersoft-build-functions:273
+#: ../share/common:375
 #, sh-format
 msgid "Just packing $NAMESRPMIN"
 msgstr ""
 
-#: etersoft-build-functions:274
+#: ../share/common:376
 msgid "Error with rpmbuild"
 msgstr ""
 
-#: etersoft-build-functions:282 etersoft-build-functions:350 bin/loginhsh:46
-#: bin/loginhsh:86 bin/myhsh:48 bin/myhsh:86 bin/myhsh:129 bin/myhsh:142
-#: bin/rpmbb:54 bin/rpmbb:86 bin/rpmbb:113 bin/rpmbph:72 bin/rpmbph:137
-#: bin/rpmbs:57 bin/rpmbs:108 bin/rpmbs:116 bin/rpmbs:125 bin/rpmbs:175
-#: bin/rpmbs:196 bin/rpmbsh:52 bin/rpmbugs:105 bin/rpmcs:130 bin/rpmgp:62
-#: bin/rpmgp:93 bin/rpmgs:46 bin/rpmgs:183 bin/rpmgs:184 bin/rpmurl:43
-#: bin/rpmurl:110
-msgid "done"
-msgstr ""
-
-#: etersoft-build-functions:283
+#: ../share/common:385
 msgid "Error: List for build is empty. Check if file is exist."
 msgstr ""
 
-#: etersoft-build-functions:289 etersoft-build-functions:337
-#: etersoft-build-functions:348
+#: ../share/common:391 ../share/common:437 ../share/common:448
 msgid "set_target_type"
 msgstr ""
 
-#: etersoft-build-functions:291 etersoft-build-functions:364 bin/loginhsh:37
-#: bin/myhsh:40 bin/rpmbb:44 bin/rpmbph:65 bin/rpmbph:102 bin/rpmbs:47
-#: bin/rpmbsh:42 bin/rpmgs:39 bin/rpmurl:34
+#: ../share/common:393 ../share/common:466 ../share/common:497
+#: ../bin/loginhsh:37 ../bin/myhsh:41 ../bin/rpmbb:43 ../bin/rpmbph:216
+#: ../bin/rpmbs:55 ../bin/rpmbsh:42 ../bin/rpmgs:38 ../bin/rpmunmets:54
+#: ../bin/rpmurl:36
 msgid "case"
 msgstr ""
 
-#: etersoft-build-functions:292 etersoft-build-functions:368 bin/rpmbph:103
-#: bin/rpmbph:128
+#: ../share/common:394 ../share/common:470 ../share/common:501
+#: ../bin/rpmbph:54
 msgid "M23"
 msgstr ""
 
-#: etersoft-build-functions:292 etersoft-build-functions:365 bin/rpmbph:111
-#: bin/rpmbph:129
+#: ../share/common:394 ../share/common:467 ../share/common:498
 msgid "M24"
 msgstr ""
 
-#: etersoft-build-functions:292 etersoft-build-functions:371 bin/rpmbph:115
+#: ../share/common:394 ../share/common:473 ../share/common:504
 msgid "M30"
 msgstr ""
 
-#: etersoft-build-functions:292 etersoft-build-functions:374
-msgid "M31"
+#: ../share/common:394 ../share/common:476 ../share/common:507
+msgid "M40"
 msgstr ""
 
-#: etersoft-build-functions:292 etersoft-build-functions:310
-#: etersoft-build-functions:377
+#: ../share/common:394 ../share/common:479 ../share/common:510
+msgid "M41"
+msgstr ""
+
+#: ../share/common:394 ../share/common:482 ../share/common:513
+msgid "M42"
+msgstr ""
+
+#: ../share/common:394 ../share/common:485 ../share/common:516
+#: ../bin/myhsh:105 ../bin/rpmbs:122
 msgid "DD"
 msgstr ""
 
-#: etersoft-build-functions:292 etersoft-build-functions:306
-#: etersoft-build-functions:380
+#: ../share/common:394 ../share/common:488 ../share/common:519
+#: ../bin/myhsh:105 ../bin/rpmbs:122
 msgid "SS"
 msgstr ""
 
-#: etersoft-build-functions:296 etersoft-build-functions:383 bin/loginhsh:45
-#: bin/myhsh:47 bin/rpmbb:53 bin/rpmbph:71 bin/rpmbph:123 bin/rpmbs:56
-#: bin/rpmbsh:51 bin/rpmgs:45 bin/rpmurl:42
+#: ../share/common:394
+msgid "EE"
+msgstr ""
+
+#: ../share/common:398 ../share/common:491 ../share/common:522
+#: ../bin/loginhsh:46 ../bin/myhsh:49 ../bin/rpmbb:52 ../bin/rpmbph:223
+#: ../bin/rpmbs:69 ../bin/rpmbsh:51 ../bin/rpmgs:44 ../bin/rpmunmets:58
+#: ../bin/rpmurl:45
 msgid "esac"
 msgstr ""
 
-#: etersoft-build-functions:302 etersoft-build-functions:352
+#: ../share/common:404 ../share/common:452
 msgid "detect_target_env"
 msgstr ""
 
-#: etersoft-build-functions:304
+#: ../share/common:406 ../share/common:408 ../share/common:409
+#: ../bin/rpmbph:16 ../bin/rpmbph:176 ../bin/rpmbph:177 ../bin/rpmbph:180
+#: ../bin/rpmbph:181
+msgid "distr_vendor"
+msgstr ""
+
+#: ../share/common:407
 msgid "MENVARG="
 msgstr ""
 
-#: etersoft-build-functions:307 etersoft-build-functions:312
-#: etersoft-build-functions:336
-msgid "MENV="
-msgstr ""
-
-#: etersoft-build-functions:311
-#, sh-format
-msgid "Target system: Daedalus, use usual $APTCONF"
-msgstr ""
-
-#: etersoft-build-functions:315
-#, sh-format
-msgid "Target system: $MENV, use $APTCONF"
-msgstr ""
-
-#: etersoft-build-functions:328 bin/loginhsh:56 bin/myhsh:59 bin/rpmbb:65
-#: bin/rpmbph:83 bin/rpmbs:68 bin/rpmbsh:64 bin/rpmcs:26 bin/rpmgp:38
-#: bin/rpmgs:150 bin/rpmurl:54
-msgid "parse_cmd_pre"
-msgstr ""
-
-#: etersoft-build-functions:331
-msgid "-lt"
-msgstr ""
-
-#: etersoft-build-functions:333
-msgid "Use -h for help."
-msgstr ""
-
-#: etersoft-build-functions:337 etersoft-build-functions:409 bin/rpmbs:73
-msgid "pwd"
-msgstr ""
-
-#: etersoft-build-functions:339
-msgid "LISTNAMES="
-msgstr ""
-
-#: etersoft-build-functions:340
-msgid "LISTARGS="
-msgstr ""
-
-#: etersoft-build-functions:341
-msgid "OPTINDEX=1"
-msgstr ""
-
-#: etersoft-build-functions:355 bin/loginhsh:63 bin/rpmbb:121 bin/rpmbs:84
-#: bin/rpmbs:120 bin/rpmbs:159 bin/rpmbsh:75
-msgid "check_key"
-msgstr ""
-
-#: etersoft-build-functions:357
-msgid "Check access to SSH private key..."
-msgstr ""
-
-#: etersoft-build-functions:358 upload-to-alt:24
-msgid "ssh-add"
-msgstr ""
-
-#: etersoft-build-functions:358 upload-to-alt:24
-msgid "-l"
-msgstr ""
-
-#: etersoft-build-functions:361 upload-to-alt:13 bin/rpmbs:121 bin/rpmbs:160
-msgid "set_incoming"
-msgstr ""
-
-#: etersoft-build-functions:363 etersoft-build-functions:381
-msgid "INCOMING=Sisyphus"
-msgstr ""
-
-#: etersoft-build-functions:366
-msgid "INCOMING=backports/2.4"
-msgstr ""
-
-#: etersoft-build-functions:369
-msgid "INCOMING=backports/2.3"
-msgstr ""
-
-#: etersoft-build-functions:372
-msgid "INCOMING=backports/3.0"
-msgstr ""
-
-#: etersoft-build-functions:375
-msgid "INCOMING=backports/3.1"
-msgstr ""
-
-#: etersoft-build-functions:378
-msgid "INCOMING=Daedalus"
-msgstr ""
-
-#: etersoft-build-functions:391
-msgid "update_from_cvs"
-msgstr ""
-
-#: etersoft-build-functions:394
-msgid "Update from CVS... "
-msgstr ""
-
-#: etersoft-build-functions:395 etersoft-build-functions:418
-#: etersoft-build-functions:421 etersoft-build-functions:441 upload-to-alt:29
-#: bin/loginhsh:70 bin/loginhsh:77 bin/loginhsh:82 bin/myhsh:80 bin/myhsh:84
-#: bin/rpmbs:191 bin/rpmurl:99 bin/rpmurl:101
-msgid "-d"
-msgstr ""
-
-#: etersoft-build-functions:395
-msgid "CVS"
-msgstr ""
-
-#: etersoft-build-functions:396
-msgid "CVS/Repository"
-msgstr ""
-
-#: etersoft-build-functions:397
-msgid "CVS/Root"
-msgstr ""
-
-#: etersoft-build-functions:399 etersoft-build-functions:425
-msgid "cvs"
-msgstr ""
-
-#: etersoft-build-functions:399
-msgid "-z3"
-msgstr ""
-
-#: etersoft-build-functions:399
-msgid "update"
-msgstr ""
-
-#: etersoft-build-functions:399
-msgid "-dPR"
-msgstr ""
-
-#: etersoft-build-functions:399
-msgid "Fail during update from CVS..."
-msgstr ""
-
-#: etersoft-build-functions:401
-msgid "not found"
-msgstr ""
-
-#: etersoft-build-functions:407
-msgid "prepare_tarball"
-msgstr ""
-
-#: etersoft-build-functions:411
-msgid "BASENAME is empty"
-msgstr ""
-
-#: etersoft-build-functions:413 bin/rpmgs:170
-msgid "pushd"
-msgstr ""
-
-#: etersoft-build-functions:413 bin/rpmgs:127
-msgid ".."
-msgstr ""
-
-#: etersoft-build-functions:418 bin/loginhsh:70 bin/myhsh:14 bin/myhsh:151
-#: bin/rpmbb:95 bin/rpmbb:96 bin/rpmbb:108 bin/rpmbph:106 bin/rpmcs:43
-msgid "!"
-msgstr ""
-
-#: etersoft-build-functions:418
-msgid "Can't works with configure without CVS"
-msgstr ""
-
-#: etersoft-build-functions:422 upload-to-alt:32 bin/loginhsh:72 bin/myhsh:79
-#: bin/rpmbb:69 bin/rpmbph:91 bin/rpmbs:179 bin/rpmgs:123
-msgid "mkdir"
-msgstr ""
-
-#: etersoft-build-functions:422 bin/loginhsh:72 bin/myhsh:79 bin/myhsh:116
-#: bin/myhsh:152 bin/rpmbb:69 bin/rpmbph:91 bin/rpmbs:179
+#: ../share/common:408 ../bin/loginhsh:85 ../bin/myhsh:83 ../bin/myhsh:158
+#: ../bin/rpmbb:69 ../bin/rpmbb:70 ../bin/rpmbph:255 ../bin/rpmbs:202
+#: ../bin/rpmgp:272 ../bin/rpmgs:191 ../bin/rpmunmets:22 ../bin/rpmunmets:30
 msgid "-p"
 msgstr ""
 
-#: etersoft-build-functions:423 etersoft-build-functions:430 bin/rpmbb:20
-#: bin/rpmbph:99 bin/rpmbph:136 bin/rpmbs:122 bin/rpmbs:136 bin/rpmbsh:83
-#: bin/rpmbsh:90 bin/rpmbsh:95 bin/rpmgp:41 bin/rpmgp:43 bin/rpmgp:85
-#: bin/rpmgs:124 bin/rpmgs:127
-msgid "cd"
-msgstr ""
-
-#: etersoft-build-functions:425
-msgid "checkout"
-msgstr ""
-
-#: etersoft-build-functions:425
-msgid "Error during checkout"
-msgstr ""
-
-#: etersoft-build-functions:426 upload-to-alt:31 bin/rpmbph:126
-msgid "mv"
-msgstr ""
-
-#: etersoft-build-functions:426
-msgid "Can't move"
-msgstr ""
-
-#: etersoft-build-functions:427 upload-to-alt:30
-msgid "rmdir"
-msgstr ""
-
-#: etersoft-build-functions:428
-msgid "./autogen.sh"
-msgstr ""
-
-#: etersoft-build-functions:429 etersoft-build-functions:441 bin/rpmbb:101
-#: bin/rpmbs:192 bin/rpmgs:128
-msgid "-rf"
-msgstr ""
-
-#: etersoft-build-functions:429
-msgid "autom4te.cache/"
-msgstr ""
-
-#: etersoft-build-functions:430 bin/rpmbph:136 bin/rpmbsh:95 bin/rpmgp:43
-#: bin/rpmgs:126
-msgid "-"
-msgstr ""
-
-#: etersoft-build-functions:432 etersoft-build-functions:443
-msgid "-L"
-msgstr ""
-
-#: etersoft-build-functions:433 etersoft-build-functions:455
-#: etersoft-build-functions:468
-msgid "ln"
-msgstr ""
-
-#: etersoft-build-functions:433 etersoft-build-functions:464 bin/myhsh:65
-#: bin/rpmurl:99 bin/rpmurl:101
+#: ../share/common:409 ../share/common:529 ../share/common:555 ../bin/myhsh:69
+#: ../bin/myhsh:124 ../bin/rpmgp:155 ../bin/rpmurl:136 ../bin/rpmurl:138
 msgid "-s"
 msgstr ""
 
-#: etersoft-build-functions:433
-msgid "Can't ln"
+#: ../share/common:411 ../bin/rpmbph:27 ../bin/rpmbph:169 ../bin/rpmbph:240
+msgid "alt"
 msgstr ""
 
-#: etersoft-build-functions:437 bin/rpmgs:110 bin/rpmgs:126
-msgid "tar"
+#: ../share/common:413
+#, sh-format
+msgid "Target ALT Linux system: $MENV, use $APTCONF"
 msgstr ""
 
-#: etersoft-build-functions:437
-msgid "cfj"
+#: ../share/common:416
+#, sh-format
+msgid "Distribution: $DISTRNAME ($VENDOR) (target package: $TARGET)"
 msgstr ""
 
-#: etersoft-build-functions:437
-msgid "Can't create tarball"
+#: ../share/common:427 ../bin/loginhsh:57 ../bin/myhsh:61 ../bin/rpmbb:65
+#: ../bin/rpmbph:235 ../bin/rpmbs:81 ../bin/rpmbsh:64 ../bin/rpmcs:47
+#: ../bin/rpmgp:217 ../bin/rpmgs:170 ../bin/rpmunmets:71 ../bin/rpmurl:57
+msgid "parse_cmd_pre"
 msgstr ""
 
-#: etersoft-build-functions:445 bin/rpmgs:182
-msgid "popd"
+#: ../share/common:430
+msgid "-lt"
 msgstr ""
 
-#: etersoft-build-functions:450
-msgid "publish_tarball"
+#: ../share/common:432
+msgid "Use -h for help."
 msgstr ""
 
-#: etersoft-build-functions:454 upload-to-alt:25 bin/rpmbb:131 bin/rpmbs:92
-#: bin/rpmbs:127 bin/rpmbs:164 bin/rpmbsh:83 bin/rpmgp:61 bin/rpmgp:91
-msgid "rsync"
+#: ../share/common:436
+msgid "MENV=SS"
 msgstr ""
 
-#: etersoft-build-functions:454 upload-to-alt:25 bin/rpmbb:131 bin/rpmbs:92
-#: bin/rpmbs:127 bin/rpmbs:164 bin/rpmbsh:83 bin/rpmgp:61 bin/rpmgp:92
-msgid "--progress"
+#: ../share/common:437 ../bin/rpmbs:87 ../bin/rpmgp:273
+msgid "pwd"
 msgstr ""
 
-#: etersoft-build-functions:454
-msgid "Can't rsync"
+#: ../share/common:439
+msgid "LISTNAMES="
 msgstr ""
 
-#: etersoft-build-functions:455 upload-to-alt:26 bin/loginhsh:65 bin/rpmbb:132
-#: bin/rpmbb:137 bin/rpmbb:138 bin/rpmbs:93 bin/rpmbs:128 bin/rpmbs:165
-#: bin/rpmbsh:77 bin/rpmbsh:84 bin/rpmbsh:85
-msgid "ssh"
+#: ../share/common:440
+msgid "LISTARGS="
 msgstr ""
 
-#: etersoft-build-functions:455 etersoft-build-functions:468
-msgid "-sf"
+#: ../share/common:441
+msgid "OPTINDEX=1"
 msgstr ""
 
-#: etersoft-build-functions:460
+#: ../share/common:456 ../bin/loginhsh:71 ../bin/rpmbb:126 ../bin/rpmbs:104
+#: ../bin/rpmbs:143 ../bin/rpmbs:183 ../bin/rpmbsh:77
+msgid "check_key"
+msgstr ""
+
+#: ../share/common:458
+msgid "Check access to SSH private key..."
+msgstr ""
+
+#: ../share/common:459 ../tools/upload-to-alt:24
+msgid "ssh-add"
+msgstr ""
+
+#: ../share/common:459 ../tools/upload-to-alt:24 ../bin/rpmgp:83
+#: ../bin/rpmgp:107 ../bin/rpmgp:228
+msgid "-l"
+msgstr ""
+
+#: ../share/common:463 ../tools/upload-to-alt:13 ../bin/rpmbs:139
+msgid "set_incoming"
+msgstr ""
+
+#: ../share/common:465 ../share/common:489 ../share/common:496
+#: ../share/common:520
+msgid "INCOMING=Sisyphus"
+msgstr ""
+
+#: ../share/common:468
+msgid "INCOMING=backports/2.4"
+msgstr ""
+
+#: ../share/common:471
+msgid "INCOMING=backports/2.3"
+msgstr ""
+
+#: ../share/common:474
+msgid "INCOMING=backports/3.0"
+msgstr ""
+
+#: ../share/common:477
+msgid "INCOMING=backports/4.0"
+msgstr ""
+
+#: ../share/common:480
+msgid "INCOMING=backports/4.1"
+msgstr ""
+
+#: ../share/common:483
+msgid "INCOMING=backports/4.2"
+msgstr ""
+
+#: ../share/common:486 ../share/common:517
+msgid "INCOMING=Daedalus"
+msgstr ""
+
+#: ../share/common:494 ../bin/rpmbs:139
+msgid "set_incoming_updates"
+msgstr ""
+
+#: ../share/common:499
+msgid "INCOMING=updates/2.4"
+msgstr ""
+
+#: ../share/common:502
+msgid "INCOMING=updates/2.3"
+msgstr ""
+
+#: ../share/common:505
+msgid "INCOMING=updates/3.0"
+msgstr ""
+
+#: ../share/common:508
+msgid "INCOMING=updates/4.0"
+msgstr ""
+
+#: ../share/common:511
+msgid "INCOMING=updates/4.1"
+msgstr ""
+
+#: ../share/common:514
+msgid "INCOMING=updates/4.2"
+msgstr ""
+
+#: ../share/common:526 ../bin/rpmbsh:68 ../bin/rpmgs:204
+msgid "add_changelog_helper"
+msgstr ""
+
+#: ../share/common:529
+msgid "tty"
+msgstr ""
+
+#: ../share/common:530
+msgid "skip changelog fixing without tty"
+msgstr ""
+
+#: ../share/common:535
+msgid "skip changelog editing without EDITOR var"
+msgstr ""
+
+#: ../share/common:539
+msgid "SPEC"
+msgstr ""
+
+#: ../share/common:540
+msgid "^%changelog"
+msgstr ""
+
+#: ../share/common:540
+msgid "s!:.*!!g"
+msgstr ""
+
+#: ../share/common:551
 msgid "publish_srpm"
 msgstr ""
 
-#: etersoft-build-functions:463
+#: ../share/common:554
 msgid "ETERDESTSRPM"
 msgstr ""
 
-#: etersoft-build-functions:464 bin/myhsh:169 bin/rpmbs:94 bin/rpmrb:21
+#: ../share/common:555 ../bin/myhsh:175 ../bin/rpmbs:114 ../bin/rpmrb:39
 msgid "rpmbs"
 msgstr ""
 
-#: etersoft-build-functions:464
+#: ../share/common:555
 msgid "Can't build SRPMS"
 msgstr ""
 
-#: upload-to-alt:8 bin/loginhsh:14 bin/myhsh:14 bin/myhsh:19 bin/rpmbb:15
-#: bin/rpmbph:14 bin/rpmbs:21 bin/rpmbsh:17 bin/rpmbugs:12 bin/rpmcs:10
-#: bin/rpmgp:13 bin/rpmgs:16 bin/rpmrb:13 bin/rpmU:7 bin/rpmurl:11
+#: ../tools/upload-to-alt:8 ../bin/loginhsh:13 ../bin/mkpatch:8
+#: ../bin/myhsh:13 ../bin/myhsh:18 ../bin/rpmbb:14 ../bin/rpmbph:13
+#: ../bin/rpmbs:21 ../bin/rpmbsh:16 ../bin/rpmbugs:11 ../bin/rpmcs:9
+#: ../bin/rpmgp:12 ../bin/rpmgs:15 ../bin/rpmrb:26 ../bin/rpmU:6
+#: ../bin/rpmunmets:12 ../bin/rpmunmets:18 ../bin/rpmurl:10
 msgid "/etc/rpm/etersoft-build-functions"
 msgstr ""
 
-#: upload-to-alt:10
+#: ../tools/upload-to-alt:10
 msgid "build_list_and_args"
 msgstr ""
 
-#: upload-to-alt:10 upload-to-alt:17 bin/loginhsh:56 bin/myhsh:119
-#: bin/rpmbs:140
-msgid "--"
-msgstr ""
-
-#: upload-to-alt:16 bin/rpmbs:139
+#: ../tools/upload-to-alt:16 ../bin/rpmbs:162
 msgid "Changing permissions..."
 msgstr ""
 
-#: upload-to-alt:17 bin/rpmbs:140
+#: ../tools/upload-to-alt:17 ../bin/rpmbs:163
 msgid "chmod"
 msgstr ""
 
-#: upload-to-alt:17 bin/rpmbs:140
+#: ../tools/upload-to-alt:17 ../bin/rpmbs:163
 msgid "644"
 msgstr ""
 
-#: upload-to-alt:20
+#: ../tools/upload-to-alt:20
 msgid "Checking for sisyphus compliance..."
 msgstr ""
 
-#: upload-to-alt:21
+#: ../tools/upload-to-alt:21
 msgid "CHECKSUM=--checksum"
 msgstr ""
 
-#: upload-to-alt:22 bin/myhsh:98 bin/rpmbs:142
+#: ../tools/upload-to-alt:22 ../bin/myhsh:100 ../bin/rpmbs:165
 msgid "sisyphus_check"
 msgstr ""
 
-#: upload-to-alt:23
+#: ../tools/upload-to-alt:23
 msgid "Checking for private key..."
 msgstr ""
 
-#: upload-to-alt:25 bin/rpmbb:131 bin/rpmbs:92 bin/rpmbs:127 bin/rpmbs:164
-#: bin/rpmbsh:83 bin/rpmgp:91
+#: ../tools/upload-to-alt:25 ../bin/rpmbb:136 ../bin/rpmbs:112
+#: ../bin/rpmbs:148 ../bin/rpmbs:187 ../bin/rpmbsh:85 ../bin/rpmgp:248
+#: ../bin/rpmgp:278
+msgid "rsync"
+msgstr ""
+
+#: ../tools/upload-to-alt:25
 msgid "-va"
 msgstr ""
 
-#: upload-to-alt:25 bin/rpmbb:131 bin/rpmbs:92 bin/rpmbs:127 bin/rpmbs:164
-#: bin/rpmbsh:83 bin/rpmgp:91
+#: ../tools/upload-to-alt:25 ../bin/rpmbb:136 ../bin/rpmbs:112
+#: ../bin/rpmbs:148 ../bin/rpmbs:187 ../bin/rpmbsh:85 ../bin/rpmgp:278
 msgid "--partial"
 msgstr ""
 
-#: upload-to-alt:28
+#: ../tools/upload-to-alt:25 ../bin/rpmbb:136 ../bin/rpmbs:112
+#: ../bin/rpmbs:148 ../bin/rpmbs:187 ../bin/rpmbsh:85 ../bin/rpmgp:248
+#: ../bin/rpmgp:279
+msgid "--progress"
+msgstr ""
+
+#: ../tools/upload-to-alt:26 ../bin/loginhsh:73 ../bin/rpmbb:137
+#: ../bin/rpmbb:142 ../bin/rpmbb:143 ../bin/rpmbs:113 ../bin/rpmbs:149
+#: ../bin/rpmbs:188 ../bin/rpmbsh:79 ../bin/rpmbsh:86 ../bin/rpmbsh:87
+msgid "ssh"
+msgstr ""
+
+#: ../tools/upload-to-alt:28
 msgid "NSD=old"
 msgstr ""
 
-#: bin/loginhsh:21 bin/myhsh:24 bin/myhsh:63 bin/myhsh:147 bin/rpmbb:27
-#: bin/rpmbph:21 bin/rpmbs:30 bin/rpmbs:100 bin/rpmbsh:24 bin/rpmgs:24
-#: bin/rpmgs:94 bin/rpmgs:101 bin/rpmgs:108 bin/rpmgs:114 bin/rpmgs:120
-#: bin/rpmgs:131 bin/rpmgs:138 bin/rpmgs:143 bin/rpmurl:18
-msgid "function"
+#: ../tools/upload-to-alt:30
+msgid "rmdir"
 msgstr ""
 
-#: bin/loginhsh:21 bin/loginhsh:60 bin/myhsh:24 bin/myhsh:60 bin/rpmbb:27
-#: bin/rpmbb:66 bin/rpmbph:21 bin/rpmbph:84 bin/rpmbs:30 bin/rpmbs:69
-#: bin/rpmbsh:24 bin/rpmbsh:65 bin/rpmgs:24 bin/rpmgs:151 bin/rpmurl:18
-#: bin/rpmurl:56
-msgid "mygetopts"
+#: ../tools/upload-to-alt:31 Makefile:12 ../bin/rpmbph:147 ../bin/rpmcs:70
+#: ../bin/rpmcs:89 ../bin/rpmcs:303 ../bin/rpmcs:304 ../bin/rpmgs:138
+msgid "mv"
 msgstr ""
 
-#: bin/loginhsh:26 bin/loginhsh:38 bin/myhsh:29 bin/myhsh:41 bin/rpmbb:32
-#: bin/rpmbb:45 bin/rpmbph:26 bin/rpmbph:66 bin/rpmbs:35 bin/rpmbs:48
-#: bin/rpmbsh:29 bin/rpmbsh:43 bin/rpmgs:29 bin/rpmgs:40 bin/rpmurl:23
-#: bin/rpmurl:35
-msgid "phelp"
+#: ../tools/upload-to-alt:32 ../bin/loginhsh:85 ../bin/myhsh:83
+#: ../bin/rpmbb:69 ../bin/rpmbb:70 ../bin/rpmbph:255 ../bin/rpmbs:202
+#: ../bin/rpmgp:272 ../bin/rpmgs:144 ../bin/rpmgs:191 ../bin/rpmunmets:22
+#: ../bin/rpmunmets:30
+msgid "mkdir"
 msgstr ""
 
-#: bin/loginhsh:30 bin/myhsh:33 bin/rpmbb:36 bin/rpmbph:30 bin/rpmbs:39
-#: bin/rpmbsh:33 bin/rpmgs:33 bin/rpmurl:27
-msgid "Options:"
+#: Makefile:1 Makefile:12
+msgid "MSGFMT"
 msgstr ""
 
-#: bin/loginhsh:31
-msgid " -i - initialize hasher"
+#: Makefile:1
+msgid "msgfmt"
 msgstr ""
 
-#: bin/loginhsh:32
-msgid " -t - use test hasher dir"
+#: Makefile:1 ../bin/rpmbph:16 ../bin/rpmcs:35 ../bin/rpmcs:74
+msgid "-v"
 msgstr ""
 
-#: bin/loginhsh:33
-msgid " -r - remote login to hasher"
+#: Makefile:2
+msgid "MSGMERGE"
 msgstr ""
 
-#: bin/loginhsh:36 bin/loginhsh:82 bin/myhsh:39 bin/myhsh:84 bin/rpmbb:43
-#: bin/rpmbph:64 bin/rpmbs:46 bin/rpmbsh:41 bin/rpmgs:38 bin/rpmurl:33
-msgid "while"
+#: Makefile:2 Makefile:3
+msgid "msgmerge"
 msgstr ""
 
-#: bin/loginhsh:36 bin/myhsh:39 bin/rpmbb:43 bin/rpmbph:64 bin/rpmbs:46
-#: bin/rpmbsh:41 bin/rpmgs:38 bin/rpmurl:33
-msgid "getopts"
+#: Makefile:3 Makefile:18
+msgid "MSGMERGE_UPDATE"
 msgstr ""
 
-#: bin/loginhsh:36
-msgid ":hitr"
+#: Makefile:3
+msgid "--update"
 msgstr ""
 
-#: bin/loginhsh:36 bin/myhsh:39 bin/rpmbb:43 bin/rpmbph:64 bin/rpmbs:46
-#: bin/rpmbsh:41 bin/rpmgs:38 bin/rpmurl:33
-msgid "opt"
+#: Makefile:4
+msgid "MSGINIT"
 msgstr ""
 
-#: bin/loginhsh:38 bin/myhsh:41 bin/rpmbb:45 bin/rpmbph:66 bin/rpmbs:48
-#: bin/rpmbsh:43 bin/rpmgs:40 bin/rpmurl:35
-msgid "h"
+#: Makefile:4
+msgid "msginit"
 msgstr ""
 
-#: bin/loginhsh:39
-msgid "t"
+#: Makefile:5
+msgid "MSGCONV"
 msgstr ""
 
-#: bin/loginhsh:39
-msgid "TESTMODE=1"
+#: Makefile:5
+msgid "msgconv"
 msgstr ""
 
-#: bin/loginhsh:40
-msgid "INITIALIZE=1"
+#: Makefile:6
+msgid "MSGFILTER"
 msgstr ""
 
-#: bin/loginhsh:41 bin/rpmbb:49 bin/rpmbsh:44
-msgid "r"
+#: Makefile:6
+msgid "msgfilter"
 msgstr ""
 
-#: bin/loginhsh:41
-msgid "REMOTE=1"
+#: Makefile:8
+msgid "all:"
 msgstr ""
 
-#: bin/loginhsh:42 bin/myhsh:44 bin/rpmbb:50 bin/rpmbph:68 bin/rpmbs:53
-#: bin/rpmbsh:48 bin/rpmgs:43 bin/rpmurl:39
-msgid "+?"
+#: Makefile:8 Makefile:20 Makefile:24
+msgid "etersoft-build-utils.mo"
 msgstr ""
 
-#: bin/loginhsh:42 bin/myhsh:44 bin/rpmbb:50 bin/rpmbph:68 bin/rpmbs:53
-#: bin/rpmbsh:48 bin/rpmgs:43 bin/rpmgs:44 bin/rpmurl:39
-msgid "2"
+#: Makefile:11
+msgid "etersoft-build-utils.mo:"
 msgstr ""
 
-#: bin/loginhsh:44 bin/myhsh:46 bin/rpmbb:52 bin/rpmbph:70 bin/rpmbs:55
-#: bin/rpmbsh:50 bin/rpmgs:44 bin/rpmurl:41
-msgid "?"
+#: Makefile:11
+msgid "etersoft-build-utils.po"
 msgstr ""
 
-#: bin/loginhsh:44 bin/myhsh:46 bin/myhsh:122 bin/myhsh:125 bin/rpmbb:52
-#: bin/rpmbph:70 bin/rpmbs:55 bin/rpmbsh:50 bin/rpmgp:61 bin/rpmgp:92
-#: bin/rpmurl:41
-msgid "break"
+#: Makefile:12 ../bin/rpmgp:128 ../bin/rpmgp:235 ../bin/rpmgs:57
+msgid "-c"
 msgstr ""
 
-#: bin/loginhsh:49 bin/myhsh:51 bin/rpmbb:57 bin/rpmbph:75 bin/rpmbs:60
-#: bin/rpmbsh:55 bin/rpmurl:46
-msgid "-gt"
-msgstr ""
-
-#: bin/loginhsh:64 bin/rpmbsh:76
-msgid "Please set BUILDSERVER in config file"
-msgstr ""
-
-#: bin/loginhsh:65 bin/myhsh:164 bin/rpmbb:138 bin/rpmbsh:85 bin/rpmbugs:48
-#: bin/rpmgs:89
-msgid "-t"
-msgstr ""
-
-#: bin/loginhsh:65 bin/myhsh:164
-msgid "loginhsh"
-msgstr ""
-
-#: bin/loginhsh:70 bin/rpmbb:108
+#: Makefile:12 Makefile:15 ../bin/loginhsh:83
 msgid "-o"
 msgstr ""
 
-#: bin/loginhsh:72 bin/myhsh:119
-msgid "hsh"
+#: Makefile:14
+msgid "etersoft-build-utils.pot:"
 msgstr ""
 
-#: bin/loginhsh:72
+#: Makefile:14
+msgid "../share/common"
+msgstr ""
+
+#: Makefile:14
+msgid "../tools/upload-to-alt"
+msgstr ""
+
+#: Makefile:14
+msgid "Makefile"
+msgstr ""
+
+#: Makefile:15
+msgid "ls"
+msgstr ""
+
+#: Makefile:15
+msgid "-1"
+msgstr ""
+
+#: Makefile:15
+msgid "../bin/*"
+msgstr ""
+
+#: Makefile:15 ../bin/myhsh:159 ../bin/rpmbph:63 ../bin/rpmbph:64
+msgid "xargs"
+msgstr ""
+
+#: Makefile:15
+msgid "xgettext"
+msgstr ""
+
+#: Makefile:15 ../bin/mkpatch:46 ../bin/mkpatch:55 ../bin/myhsh:123
+#: ../bin/myhsh:162 ../bin/rpmbb:110 ../bin/rpmgp:174
+msgid "-a"
+msgstr ""
+
+#: Makefile:15 ../bin/myhsh:124 ../bin/rpmqf:31 ../bin/rpmqf:33
+msgid "-L"
+msgstr ""
+
+#: Makefile:15
+msgid "Shell"
+msgstr ""
+
+#: Makefile:15
+msgid "--from-code=koi8-r"
+msgstr ""
+
+#: Makefile:17
+msgid "etersoft-build-utils.po:"
+msgstr ""
+
+#: Makefile:17
+msgid "etersoft-build-utils.pot"
+msgstr ""
+
+#: Makefile:20
+msgid "install:"
+msgstr ""
+
+#: Makefile:21
+msgid "install"
+msgstr ""
+
+#: Makefile:21
+msgid "-D"
+msgstr ""
+
+#: Makefile:21
+msgid "DESTDIR"
+msgstr ""
+
+#: Makefile:21
+msgid "datadir"
+msgstr ""
+
+#: Makefile:23
+msgid "clean:"
+msgstr ""
+
+#: ../bin/loginhsh:20 ../bin/myhsh:23 ../bin/myhsh:65 ../bin/myhsh:153
+#: ../bin/rpmbb:26 ../bin/rpmbph:96 ../bin/rpmbph:102 ../bin/rpmbph:108
+#: ../bin/rpmbph:114 ../bin/rpmbph:120 ../bin/rpmbph:196 ../bin/rpmbs:34
+#: ../bin/rpmbs:120 ../bin/rpmbsh:23 ../bin/rpmgs:23 ../bin/rpmgs:103
+#: ../bin/rpmgs:109 ../bin/rpmgs:116 ../bin/rpmgs:123 ../bin/rpmgs:129
+#: ../bin/rpmgs:135 ../bin/rpmgs:141 ../bin/rpmgs:151 ../bin/rpmgs:158
+#: ../bin/rpmgs:163 ../bin/rpmunmets:38 ../bin/rpmurl:19
+msgid "function"
+msgstr ""
+
+#: ../bin/loginhsh:20 ../bin/loginhsh:68 ../bin/myhsh:23 ../bin/myhsh:62
+#: ../bin/rpmbb:26 ../bin/rpmbb:66 ../bin/rpmbph:196 ../bin/rpmbph:236
+#: ../bin/rpmbs:34 ../bin/rpmbs:83 ../bin/rpmbsh:23 ../bin/rpmbsh:65
+#: ../bin/rpmgs:23 ../bin/rpmgs:171 ../bin/rpmunmets:38 ../bin/rpmunmets:73
+#: ../bin/rpmurl:19 ../bin/rpmurl:59
+msgid "mygetopts"
+msgstr ""
+
+#: ../bin/loginhsh:25 ../bin/loginhsh:38 ../bin/myhsh:28 ../bin/myhsh:42
+#: ../bin/rpmbb:31 ../bin/rpmbb:44 ../bin/rpmbph:201 ../bin/rpmbph:217
+#: ../bin/rpmbs:39 ../bin/rpmbs:56 ../bin/rpmbsh:28 ../bin/rpmbsh:43
+#: ../bin/rpmgs:28 ../bin/rpmgs:39 ../bin/rpmunmets:43 ../bin/rpmunmets:55
+#: ../bin/rpmurl:24 ../bin/rpmurl:37
+msgid "phelp"
+msgstr ""
+
+#: ../bin/loginhsh:29 ../bin/myhsh:32 ../bin/rpmbb:35 ../bin/rpmbph:205
+#: ../bin/rpmbs:43 ../bin/rpmbsh:32 ../bin/rpmgs:32 ../bin/rpmunmets:47
+#: ../bin/rpmurl:28
+msgid "Options:"
+msgstr ""
+
+#: ../bin/loginhsh:30
+msgid " -i - initialize hasher"
+msgstr ""
+
+#: ../bin/loginhsh:31
+msgid " -c - cleanup hasher"
+msgstr ""
+
+#: ../bin/loginhsh:32
+msgid " -t - use test hasher dir"
+msgstr ""
+
+#: ../bin/loginhsh:33
+msgid " -r - remote login to hasher"
+msgstr ""
+
+#: ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/rpmbb:42 ../bin/rpmbph:215
+#: ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37 ../bin/rpmunmets:53
+#: ../bin/rpmurl:35
+msgid "getopts"
+msgstr ""
+
+#: ../bin/loginhsh:36
+msgid ":chitr"
+msgstr ""
+
+#: ../bin/loginhsh:36 ../bin/myhsh:40 ../bin/rpmbb:42 ../bin/rpmbph:215
+#: ../bin/rpmbs:54 ../bin/rpmbsh:41 ../bin/rpmgs:37 ../bin/rpmunmets:53
+#: ../bin/rpmurl:35
+msgid "opt"
+msgstr ""
+
+#: ../bin/loginhsh:38 ../bin/myhsh:42 ../bin/rpmbb:44 ../bin/rpmbph:217
+#: ../bin/rpmbs:56 ../bin/rpmbsh:43 ../bin/rpmgs:39 ../bin/rpmunmets:55
+#: ../bin/rpmurl:37
+msgid "h"
+msgstr ""
+
+#: ../bin/loginhsh:39
+msgid "t"
+msgstr ""
+
+#: ../bin/loginhsh:39
+msgid "TESTMODE=1"
+msgstr ""
+
+#: ../bin/loginhsh:40
+msgid "INITIALIZE=1"
+msgstr ""
+
+#: ../bin/loginhsh:41 ../bin/myhsh:45 ../bin/rpmbb:45 ../bin/rpmbs:58
+#: ../bin/rpmurl:38
+msgid "c"
+msgstr ""
+
+#: ../bin/loginhsh:41
+msgid "CLEANUP=1"
+msgstr ""
+
+#: ../bin/loginhsh:42 ../bin/rpmbb:48 ../bin/rpmbsh:44
+msgid "r"
+msgstr ""
+
+#: ../bin/loginhsh:42
+msgid "REMOTE=1"
+msgstr ""
+
+#: ../bin/loginhsh:43 ../bin/myhsh:46 ../bin/rpmbb:49 ../bin/rpmbph:220
+#: ../bin/rpmbs:66 ../bin/rpmbsh:48 ../bin/rpmgs:42 ../bin/rpmurl:42
+msgid "+?"
+msgstr ""
+
+#: ../bin/loginhsh:45 ../bin/myhsh:48 ../bin/rpmbb:51 ../bin/rpmbph:222
+#: ../bin/rpmbs:68 ../bin/rpmbsh:50 ../bin/rpmgs:43 ../bin/rpmunmets:57
+#: ../bin/rpmurl:44
+msgid "?"
+msgstr ""
+
+#: ../bin/loginhsh:45 ../bin/myhsh:48 ../bin/myhsh:127 ../bin/myhsh:130
+#: ../bin/rpmbb:51 ../bin/rpmbph:222 ../bin/rpmbs:68 ../bin/rpmbsh:50
+#: ../bin/rpmgp:248 ../bin/rpmgp:279 ../bin/rpmunmets:57 ../bin/rpmurl:44
+msgid "break"
+msgstr ""
+
+#: ../bin/loginhsh:50 ../bin/myhsh:53 ../bin/rpmbb:57 ../bin/rpmbph:227
+#: ../bin/rpmbs:73 ../bin/rpmbsh:55 ../bin/rpmgp:107 ../bin/rpmunmets:62
+#: ../bin/rpmurl:49
+msgid "-gt"
+msgstr ""
+
+#: ../bin/loginhsh:61 ../bin/myhsh:86
+msgid "HSH=/usr/bin/hsh"
+msgstr ""
+
+#: ../bin/loginhsh:62 ../bin/myhsh:87
+msgid "-x"
+msgstr ""
+
+#: ../bin/loginhsh:63 ../bin/myhsh:88
+msgid "Please install hasher package before use it"
+msgstr ""
+
+#: ../bin/loginhsh:72 ../bin/rpmbsh:78
+msgid "Please set BUILDSERVER in config file"
+msgstr ""
+
+#: ../bin/loginhsh:73 ../bin/myhsh:170 ../bin/rpmbb:143 ../bin/rpmbsh:87
+#: ../bin/rpmbugs:47 ../bin/rpmgs:57 ../bin/rpmgs:98 ../bin/rpmgs:190
+msgid "-t"
+msgstr ""
+
+#: ../bin/loginhsh:73 ../bin/myhsh:170
+msgid "loginhsh"
+msgstr ""
+
+#: ../bin/loginhsh:79 ../bin/loginhsh:106
+msgid "--cleanup-only"
+msgstr ""
+
+#: ../bin/loginhsh:79
+msgid "cleanup"
+msgstr ""
+
+#: ../bin/loginhsh:85
 msgid "--initroot-only"
 msgstr ""
 
-#: bin/loginhsh:80 bin/myhsh:65 bin/myhsh:82 bin/rpmbs:129 bin/rpmbs:172
-#: bin/rpmbs:174
-msgid "date"
-msgstr ""
-
-#: bin/loginhsh:81 bin/myhsh:83
-msgid "Wait for unlocking"
-msgstr ""
-
-#: bin/loginhsh:85 bin/myhsh:85
-msgid "3"
-msgstr ""
-
-#: bin/loginhsh:91
+#: ../bin/loginhsh:94
 msgid "UTILPKG=mc"
 msgstr ""
 
-#: bin/loginhsh:97
-msgid "hsh-install"
+#: ../bin/loginhsh:95
+msgid "lav"
 msgstr ""
 
-#: bin/loginhsh:97
+#: ../bin/loginhsh:95
+msgid "UTILPKG=mc ms-fonts-ttf"
+msgstr ""
+
+#: ../bin/loginhsh:101
 msgid "Error with install"
 msgstr ""
 
-#: bin/loginhsh:98
+#: ../bin/loginhsh:102
 msgid "You are in hasher shell"
 msgstr ""
 
-#: bin/loginhsh:99
-msgid "hsh-shell"
-msgstr ""
-
-#: bin/loginhsh:99
+#: ../bin/loginhsh:103
 msgid "-Y"
 msgstr ""
 
-#: bin/loginhsh:99
+#: ../bin/loginhsh:103
 msgid "--shell"
 msgstr ""
 
-#: bin/myhsh:15
+#: ../bin/loginhsh:105
+msgid "Cleanup hasher..."
+msgstr ""
+
+#: ../bin/mkpatch:10 ../bin/mkpatch:11 ../bin/mkpatch:12
+msgid "Makefile.in"
+msgstr ""
+
+#: ../bin/mkpatch:11
+msgid "^TOPOBJDIR"
+msgstr ""
+
+#: ../bin/mkpatch:11 ../bin/mkpatch:12
+msgid "s| ||g"
+msgstr ""
+
+#: ../bin/mkpatch:12
+msgid "^top_builddir"
+msgstr ""
+
+#: ../bin/mkpatch:14
+msgid "Can't get topdir from Makefile.in"
+msgstr ""
+
+#: ../bin/mkpatch:29
+msgid "TOPDIR"
+msgstr ""
+
+#: ../bin/mkpatch:31
+msgid "cvs"
+msgstr ""
+
+#: ../bin/mkpatch:31
+msgid "CVS=cvs"
+msgstr ""
+
+#: ../bin/mkpatch:32
+msgid "svn"
+msgstr ""
+
+#: ../bin/mkpatch:32
+msgid "SVN=svn"
+msgstr ""
+
+#: ../bin/mkpatch:33
+msgid "git"
+msgstr ""
+
+#: ../bin/mkpatch:33
+msgid "GIT=git"
+msgstr ""
+
+#: ../bin/mkpatch:37 ../bin/mkpatch:39 ../bin/mkpatch:47 ../bin/mkpatch:49
+#: ../bin/mkpatch:56 ../bin/mkpatch:58 ../bin/mkpatch:65 ../bin/mkpatch:67
+msgid "realpath"
+msgstr ""
+
+#: ../bin/mkpatch:38 ../bin/mkpatch:48 ../bin/mkpatch:57 ../bin/mkpatch:66
+#: ../bin/rpmbb:19 ../bin/rpmbph:260 ../bin/rpmbph:262 ../bin/rpmbs:144
+#: ../bin/rpmbs:157 ../bin/rpmbsh:85 ../bin/rpmbsh:93 ../bin/rpmbsh:99
+#: ../bin/rpmgp:220 ../bin/rpmgp:223 ../bin/rpmgp:272 ../bin/rpmgs:145
+#: ../bin/rpmgs:147
+msgid "cd"
+msgstr ""
+
+#: ../bin/mkpatch:41 ../bin/mkpatch:51 ../bin/mkpatch:60 ../bin/mkpatch:69
+#: ../bin/rpmunmets:109
+msgid "diff"
+msgstr ""
+
+#: ../bin/mkpatch:41
+msgid "-purN"
+msgstr ""
+
+#: ../bin/mkpatch:46
+msgid "CVS"
+msgstr ""
+
+#: ../bin/mkpatch:55
+msgid ".svn"
+msgstr ""
+
+#: ../bin/mkpatch:69
+msgid "s|^--- a/|--- |g"
+msgstr ""
+
+#: ../bin/mkpatch:69
+msgid "s|^\\+\\+\\+ b/|\\+\\+\\+ |g"
+msgstr ""
+
+#: ../bin/myhsh:14 ../bin/rpmunmets:13
 msgid "NOTE: /etc/rpm/etersoft-build-functions does not exist"
 msgstr ""
 
-#: bin/myhsh:34
+#: ../bin/myhsh:33
 msgid " -m - mail result log"
 msgstr ""
 
-#: bin/myhsh:35
+#: ../bin/myhsh:34
 msgid " -s - sign package(s)"
 msgstr ""
 
-#: bin/myhsh:36
+#: ../bin/myhsh:35
 msgid " -u - sign and upload package(s) to Incoming"
 msgstr ""
 
-#: bin/myhsh:39
-msgid ":hmi"
+#: ../bin/myhsh:36 ../bin/rpmbph:210 ../bin/rpmbsh:37
+msgid " -i - install built packages in test hasher"
 msgstr ""
 
-#: bin/myhsh:42
+#: ../bin/myhsh:37 ../bin/rpmbsh:38
+msgid " -c - build without stuff (previous built packages)"
+msgstr ""
+
+#: ../bin/myhsh:40
+msgid ":hmic"
+msgstr ""
+
+#: ../bin/myhsh:43
 msgid "m"
 msgstr ""
 
-#: bin/myhsh:42
+#: ../bin/myhsh:43
 msgid "Mail is disabled for this version"
 msgstr ""
 
-#: bin/myhsh:42
+#: ../bin/myhsh:43
 msgid "TOMAIL=1"
 msgstr ""
 
-#: bin/myhsh:43
+#: ../bin/myhsh:44
 msgid "TESTINSTALL=1"
 msgstr ""
 
-#: bin/myhsh:63 bin/myhsh:70
+#: ../bin/myhsh:65 ../bin/myhsh:74
 msgid "mail_build"
 msgstr ""
 
-#: bin/myhsh:65
-msgid "mutt"
+#: ../bin/myhsh:67
+msgid "MUTT=mutt"
 msgstr ""
 
-#: bin/myhsh:69
+#: ../bin/myhsh:73
 msgid "Build via email"
 msgstr ""
 
-#: bin/myhsh:76 bin/rpmbb:120 bin/rpmbsh:19
+#: ../bin/myhsh:80 ../bin/rpmbb:125 ../bin/rpmbsh:18
 msgid "RESULT=0"
 msgstr ""
 
-#: bin/myhsh:79
+#: ../bin/myhsh:83
 msgid "cannot mkdir"
 msgstr ""
 
-#: bin/myhsh:90
+#: ../bin/myhsh:92
 #, sh-format
 msgid "List of packages: $LISTNAMES"
 msgstr ""
 
-#: bin/myhsh:93
+#: ../bin/myhsh:95
 msgid "!!!!!!!!"
 msgstr ""
 
-#: bin/myhsh:94
+#: ../bin/myhsh:96
 msgid "Please use src.rpm as argument, not spec"
 msgstr ""
 
-#: bin/myhsh:97 bin/rpmbs:141
+#: ../bin/myhsh:99 ../bin/rpmbs:164
 msgid "Checking with sisyphus_check..."
 msgstr ""
 
-#: bin/myhsh:98 bin/rpmbs:142
+#: ../bin/myhsh:100 ../bin/rpmbs:165
 msgid "--files"
 msgstr ""
 
-#: bin/myhsh:98
+#: ../bin/myhsh:100
 msgid "check for sisyphus failed"
 msgstr ""
 
-#: bin/myhsh:99 bin/rpmbs:143
+#: ../bin/myhsh:101 ../bin/rpmbs:166
 msgid "OK"
 msgstr ""
 
-#: bin/myhsh:106
+#: ../bin/myhsh:108
 msgid "LISTBUILTSH="
 msgstr ""
 
-#: bin/myhsh:112 bin/rpmbb:103 bin/rpmbs:170
+#: ../bin/myhsh:114 ../bin/rpmbb:107 ../bin/rpmbs:193
 msgid ".src.rpm"
 msgstr ""
 
-#: bin/myhsh:116
-msgid "--requires"
-msgstr ""
-
-#: bin/myhsh:116
-msgid "/proc"
-msgstr ""
-
-#: bin/myhsh:119 bin/rpmcs:49
-msgid "-v"
-msgstr ""
-
-#: bin/myhsh:119
+#: ../bin/myhsh:123
 msgid "--build-args"
 msgstr ""
 
-#: bin/myhsh:119 bin/rpmbb:106
+#: ../bin/myhsh:123 ../bin/rpmbb:110
 msgid "touch"
 msgstr ""
 
-#: bin/myhsh:119 bin/rpmbb:106
+#: ../bin/myhsh:123 ../bin/rpmbb:110
 msgid "tee"
 msgstr ""
 
-#: bin/myhsh:119 bin/myhsh:156 bin/rpmbb:106
-msgid "-a"
+#: ../bin/myhsh:124
+msgid "ln"
 msgstr ""
 
-#: bin/myhsh:121
+#: ../bin/myhsh:124
+msgid "chroot/usr/src/RPM/BUILD"
+msgstr ""
+
+#: ../bin/myhsh:126
 msgid "RESULT=1"
 msgstr ""
 
-#: bin/myhsh:133
+#: ../bin/myhsh:139
 msgid "!!!!!!! Hasher: FAILED FAILED FAILED !!!!!!!!!"
 msgstr ""
 
-#: bin/myhsh:136
+#: ../bin/myhsh:142
 msgid "Full list of the hashered packages:"
 msgstr ""
 
-#: bin/myhsh:147 bin/myhsh:161
+#: ../bin/myhsh:153 ../bin/myhsh:167
 msgid "get_binpkg_list"
 msgstr ""
 
-#: bin/myhsh:151
+#: ../bin/myhsh:157
 msgid "find"
 msgstr ""
 
-#: bin/myhsh:151
+#: ../bin/myhsh:157
 msgid "-name"
 msgstr ""
 
-#: bin/myhsh:151
+#: ../bin/myhsh:157
 msgid "*\\.src\\.rpm"
 msgstr ""
 
-#: bin/myhsh:151
+#: ../bin/myhsh:157
 msgid "*\\.rpm"
 msgstr ""
 
-#: bin/myhsh:151
+#: ../bin/myhsh:157
 msgid "-execdir"
 msgstr ""
 
-#: bin/myhsh:152
+#: ../bin/myhsh:158
 msgid "rpmquery"
 msgstr ""
 
-#: bin/myhsh:152
+#: ../bin/myhsh:158
 msgid "--qf=%{sourcerpm}\\t%{name}-%{version}-%{release}.%{arch}.rpm\\n"
 msgstr ""
 
-#: bin/myhsh:152 bin/myhsh:153
+#: ../bin/myhsh:158 ../bin/myhsh:159
 msgid "{}"
 msgstr ""
 
-#: bin/myhsh:152
+#: ../bin/myhsh:158
 msgid ";"
 msgstr ""
 
-#: bin/myhsh:153
+#: ../bin/myhsh:159 ../bin/rpmcs:39 ../bin/rpmcs:40
 msgid "cut"
 msgstr ""
 
-#: bin/myhsh:153
+#: ../bin/myhsh:159 ../bin/rpmcs:40
 msgid "-f2"
 msgstr ""
 
-#: bin/myhsh:153
-msgid "xargs"
-msgstr ""
-
-#: bin/myhsh:153
+#: ../bin/myhsh:159 ../bin/rpmbph:63 ../bin/rpmbph:64 ../bin/rpmcs:35
 msgid "-n1"
 msgstr ""
 
-#: bin/myhsh:153
+#: ../bin/myhsh:159
 msgid "-I"
 msgstr ""
 
-#: bin/rpmbb:18 bin/rpmbb:138 bin/rpmbs:94
+#: ../bin/rpmbb:17 ../bin/rpmbb:143 ../bin/rpmbs:114
 msgid "--helper"
 msgstr ""
 
-#: bin/rpmbb:20 bin/rpmbb:138
+#: ../bin/rpmbb:19 ../bin/rpmbb:143
 msgid "rpmbb"
 msgstr ""
 
-#: bin/rpmbb:37
+#: ../bin/rpmbb:36
 msgid " -c - start from compile stage"
 msgstr ""
 
-#: bin/rpmbb:38
+#: ../bin/rpmbb:37
 msgid " -i - install and package"
 msgstr ""
 
-#: bin/rpmbb:39
+#: ../bin/rpmbb:38
 msgid " -p - packaging installed files into package"
 msgstr ""
 
-#: bin/rpmbb:40
+#: ../bin/rpmbb:39
 msgid " -r - find build requires"
 msgstr ""
 
-#: bin/rpmbb:43
+#: ../bin/rpmbb:42
 msgid ":hcipr"
 msgstr ""
 
-#: bin/rpmbb:46 bin/rpmbs:50 bin/rpmurl:36
-msgid "c"
-msgstr ""
-
-#: bin/rpmbb:46
+#: ../bin/rpmbb:45
 msgid "BUILDOPT=c"
 msgstr ""
 
-#: bin/rpmbb:47
+#: ../bin/rpmbb:46
 msgid "BUILDOPT=i b"
 msgstr ""
 
-#: bin/rpmbb:48
+#: ../bin/rpmbb:47 ../bin/rpmurl:40
 msgid "p"
 msgstr ""
 
-#: bin/rpmbb:48
+#: ../bin/rpmbb:47
 msgid "BUILDOPT=b"
 msgstr ""
 
-#: bin/rpmbb:49
+#: ../bin/rpmbb:48
 msgid "BUILDREQ=1"
 msgstr ""
 
-#: bin/rpmbb:70
+#: ../bin/rpmbb:71
 msgid "Please run with spec(s) name"
 msgstr ""
 
-#: bin/rpmbb:75
+#: ../bin/rpmbb:76
 msgid "buildreq"
 msgstr ""
 
-#: bin/rpmbb:77
+#: ../bin/rpmbb:78
 msgid ""
 "You can run buildreq with -bi param for search a dependences for install "
 "section of the package"
 msgstr ""
 
-#: bin/rpmbb:82
+#: ../bin/rpmbb:83
 msgid "Sorry, only ALT Linux systems support --short-circuit correctly"
 msgstr ""
 
-#: bin/rpmbb:85
+#: ../bin/rpmbb:84
+msgid "it"
+msgstr ""
+
+#: ../bin/rpmbb:86
 msgid "--short-circuit"
 msgstr ""
 
-#: bin/rpmbb:100
-msgid "BUILDROOT var is empty"
+#: ../bin/rpmbb:92
+msgid "NODEPS="
 msgstr ""
 
-#: bin/rpmbb:104
-msgid "Build in native system"
-msgstr ""
-
-#: bin/rpmbb:106
-msgid "-bb"
-msgstr ""
-
-#: bin/rpmbb:110
-msgid "!!!!!!!! ERROR !!!!!"
-msgstr ""
-
-#: bin/rpmbb:111
-#, sh-format
-msgid "Failed with $i"
-msgstr ""
-
-#: bin/rpmbb:114
-msgid "Built is done correctly"
-msgstr ""
-
-#: bin/rpmbb:123
-msgid "Packing without check of build dependencies for packages"
-msgstr ""
-
-#: bin/rpmbb:125
+#: ../bin/rpmbb:92 ../bin/rpmbb:130
 msgid "NODEPS=--nodeps"
 msgstr ""
 
-#: bin/rpmbb:126 bin/rpmbs:72
+#: ../bin/rpmbb:104
+msgid "BUILDROOT var is empty"
+msgstr ""
+
+#: ../bin/rpmbb:105 ../bin/rpmbs:220 ../bin/rpmgs:148 ../bin/rpmunmets:94
+msgid "-rf"
+msgstr ""
+
+#: ../bin/rpmbb:108
+msgid "Build in native system"
+msgstr ""
+
+#: ../bin/rpmbb:110
+msgid "-bb"
+msgstr ""
+
+#: ../bin/rpmbb:114
+msgid "!!!!!!!! ERROR !!!!!"
+msgstr ""
+
+#: ../bin/rpmbb:118
+msgid "Built is done correctly"
+msgstr ""
+
+#: ../bin/rpmbb:128
+msgid "Packing without check of build dependencies for packages"
+msgstr ""
+
+#: ../bin/rpmbb:131 ../bin/rpmbs:86
 msgid "LISTBUILT="
 msgstr ""
 
-#: bin/rpmbb:129 bin/rpmbs:90 bin/rpmbsh:81
+#: ../bin/rpmbb:134 ../bin/rpmbs:110 ../bin/rpmbsh:83
 msgid "==== Copying to build server ====="
 msgstr ""
 
-#: bin/rpmbb:130 bin/rpmbsh:82
+#: ../bin/rpmbb:135
 msgid ""
 "It is recommended to rename old version at server for save traffic during "
 "rsync"
 msgstr ""
 
-#: bin/rpmbb:131
+#: ../bin/rpmbb:136 ../bin/rpmbs:112 ../bin/rpmbs:148 ../bin/rpmbs:187
+#: ../bin/rpmbsh:85 ../bin/rpmgp:278
+msgid "-vay"
+msgstr ""
+
+#: ../bin/rpmbb:136
 msgid "--stats"
 msgstr ""
 
-#: bin/rpmbb:131 bin/rpmbs:92 bin/rpmbsh:83 bin/rpmgp:91
+#: ../bin/rpmbb:136 ../bin/rpmbs:112 ../bin/rpmbsh:85 ../bin/rpmgp:278
 msgid "--checksum"
 msgstr ""
 
-#: bin/rpmbb:135
+#: ../bin/rpmbb:140
 msgid "############ Build at build server ############"
 msgstr ""
 
-#: bin/rpmbb:137
+#: ../bin/rpmbb:142
 msgid "-ivh"
 msgstr ""
 
-#: bin/rpmbb:139 bin/rpmbsh:87 bin/rpmbsh:92
+#: ../bin/rpmbb:144 ../bin/rpmbsh:90 ../bin/rpmbsh:96
 msgid "-------------------------------"
 msgstr ""
 
-#: bin/rpmbb:140
+#: ../bin/rpmbb:145
 msgid "Remote build is done"
 msgstr ""
 
-#: bin/rpmbph:16
-msgid "BUILDCOMMAND=rpmbsh"
+#: ../bin/rpmbph:18 ../bin/rpmbph:261
+msgid "alt_tolocal"
 msgstr ""
 
-#: bin/rpmbph:31 bin/rpmbsh:34
-msgid " -r - remote build"
+#: ../bin/rpmbph:20
+msgid "SPECNAME"
 msgstr ""
 
-#: bin/rpmbph:32
-msgid " -m - send result via e-mail"
-msgstr ""
-
-#: bin/rpmbph:33 bin/rpmbsh:36
-msgid " -u - sign and upload after build"
-msgstr ""
-
-#: bin/rpmbph:34
-msgid " -n - do not build in hasher"
-msgstr ""
-
-#: bin/rpmbph:35 bin/rpmbsh:38
-msgid " -i - install built packages in test hasher"
-msgstr ""
-
-#: bin/rpmbph:38 bin/rpmbph:126
-msgid "make_substitution"
-msgstr ""
-
-#: bin/rpmbph:57 bin/rpmbph:59 bin/rpmcs:45
-msgid "awk"
-msgstr ""
-
-#: bin/rpmbph:57
-msgid ""
-"BEGIN{desk=0}{if(/^%description/&&desk==0){printf(\"%s\\n\\n\", text);desk+"
-"+};print}"
-msgstr ""
-
-#: bin/rpmbph:59
-msgid ""
-"BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf(\"%s\\n\\n\", text);desk+"
-"+}}"
-msgstr ""
-
-#: bin/rpmbph:64
-msgid ":hni"
-msgstr ""
-
-#: bin/rpmbph:67
-msgid "n"
-msgstr ""
-
-#: bin/rpmbph:67
-msgid "BUILDCOMMAND=rpmbs"
-msgstr ""
-
-#: bin/rpmbph:87
-msgid "unset"
-msgstr ""
-
-#: bin/rpmbph:87
-msgid "MENV"
-msgstr ""
-
-#: bin/rpmbph:87
-msgid "MENVARG"
-msgstr ""
-
-#: bin/rpmbph:89
-msgid "TOCHANGELOG="
-msgstr ""
-
-#: bin/rpmbph:93
-msgid "Error: no such file"
-msgstr ""
-
-#: bin/rpmbph:98 bin/rpmbs:181 bin/rpmcs:40
-msgid "cp"
-msgstr ""
-
-#: bin/rpmbph:98
-msgid "Can't copy spec"
-msgstr ""
-
-#: bin/rpmbph:99
-msgid "Error"
-msgstr ""
-
-#: bin/rpmbph:100
+#: ../bin/rpmbph:24
 msgid "s/alt//"
 msgstr ""
 
-#: bin/rpmbph:104
-msgid "GCC=3.2"
+#: ../bin/rpmbph:24
+msgid "s/%{_vendor}//"
 msgstr ""
 
-#: bin/rpmbph:105 bin/rpmbph:113
-msgid "PYTHON=2.3"
+#: ../bin/rpmbph:24
+msgid "s/eter//"
 msgstr ""
 
-#: bin/rpmbph:106
-msgid "autoreconf"
+#: ../bin/rpmbph:24
+msgid "s/%_vendor//"
 msgstr ""
 
-#: bin/rpmbph:107
+#: ../bin/rpmbph:28
+msgid "BUILDREQ=BuildRequires: rpm-build-compat >= 0.95"
+msgstr ""
+
+#: ../bin/rpmbph:29
+msgid "BUILDCOMMAND=rpmbsh"
+msgstr ""
+
+#: ../bin/rpmbph:32
+msgid "ADDDEF="
+msgstr ""
+
+#: ../bin/rpmbph:33 ../bin/rpmbph:39
+msgid "CLEANTEXT="
+msgstr ""
+
+#: ../bin/rpmbph:35
+msgid "BUILDREQ=BuildRequires: rpm-build-altlinux-compat >= 0.95"
+msgstr ""
+
+#: ../bin/rpmbph:36
+msgid "BUILDCOMMAND=rpmbb"
+msgstr ""
+
+#: ../bin/rpmbph:38
+msgid "ADDDEF=%defattr(-, root, root)"
+msgstr ""
+
+#: ../bin/rpmbph:43
+msgid "rpm-build-compat"
+msgstr ""
+
+#: ../bin/rpmbph:43
+msgid "BUILDREQ="
+msgstr ""
+
+#: ../bin/rpmbph:46
+msgid "mcbc"
+msgstr ""
+
+#: ../bin/rpmbph:47
+msgid "FIXMKTEMP=%__subst s"
+msgstr ""
+
+#: ../bin/rpmbph:47
+msgid "-dt"
+msgstr ""
+
+#: ../bin/rpmbph:47
+msgid "g configure"
+msgstr ""
+
+#: ../bin/rpmbph:49
+msgid "FIXMKTEMP="
+msgstr ""
+
+#: ../bin/rpmbph:53
+msgid "TOCHANGELOG="
+msgstr ""
+
+#: ../bin/rpmbph:55
+msgid "%configure"
+msgstr ""
+
+#: ../bin/rpmbph:55
+msgid "^autoreconf"
+msgstr ""
+
+#: ../bin/rpmbph:55
+msgid "^%__autoreconf"
+msgstr ""
+
+#: ../bin/rpmbph:56
 msgid "RECONFT=%__autoreconf"
 msgstr ""
 
-#: bin/rpmbph:108
+#: ../bin/rpmbph:57
 msgid ""
 "TOCHANGELOG=add __autoreconf macros in build section for fix so name problem "
 "(by script)"
 msgstr ""
 
-#: bin/rpmbph:112
-msgid "GCC=3.3"
+#: ../bin/rpmbph:61 ../bin/rpmcs:294
+msgid "print_buildreq"
 msgstr ""
 
-#: bin/rpmbph:116 bin/rpmbph:120
-msgid "GCC=3.4"
+#: ../bin/rpmbph:62
+msgid "print_pkgreq"
 msgstr ""
 
-#: bin/rpmbph:117 bin/rpmbph:121
-msgid "PYTHON=2.4"
+#: ../bin/rpmbph:63 ../bin/rpmbph:64
+msgid "sort"
 msgstr ""
 
-#: bin/rpmbph:119
-msgid "*"
+#: ../bin/rpmbph:64
+msgid "Group"
 msgstr ""
 
-#: bin/rpmbph:124
-msgid "BUILDREQ=BuildRequires: rpm-build-compat >= 0.4"
+#: ../bin/rpmbph:64
+msgid "s|^.*:||g"
 msgstr ""
 
-#: bin/rpmbph:125
-msgid "rpm-build-altlinux-compat"
+#: ../bin/rpmbph:68 ../bin/rpmcs:293
+msgid "ALLREPLRULES="
 msgstr ""
 
-#: bin/rpmbph:125
-msgid "BUILDREQ="
+#: ../bin/rpmbph:71
+msgid "DISTRVERSION"
 msgstr ""
 
-#: bin/rpmbph:126
-msgid "Can't make substituon"
+#: ../bin/rpmbph:74 ../bin/rpmbph:85
+msgid "tolocal_anyrepl"
 msgstr ""
 
-#: bin/rpmbph:128 bin/rpmbph:129
-msgid "s|xorg-x11-|XFree86-|g"
+#: ../bin/rpmbph:74
+msgid "print_pkgrepl_list"
 msgstr ""
 
-#: bin/rpmbph:135
+#: ../bin/rpmbph:74 ../bin/rpmbph:85 ../bin/rpmbs:211 ../bin/rpmgs:185
+#: ../bin/rpmgs:190
+msgid "continue"
+msgstr ""
+
+#: ../bin/rpmbph:83
+msgid "ALLGRPREPLRULES="
+msgstr ""
+
+#: ../bin/rpmbph:85
+msgid "print_grprepl_list"
+msgstr ""
+
+#: ../bin/rpmbph:96 ../bin/rpmbph:150
+msgid "awk_e1"
+msgstr ""
+
+#: ../bin/rpmbph:98 ../bin/rpmbph:104 ../bin/rpmbph:110 ../bin/rpmbph:116
+#: ../bin/rpmbph:122 ../bin/rpmcs:70 ../bin/rpmcs:89
+msgid "awk"
+msgstr ""
+
+#: ../bin/rpmbph:98
+msgid "BEGIN{desk=0}{print;if(/^%files/){printf(\"%s\\n\", text)}}"
+msgstr ""
+
+#: ../bin/rpmbph:102 ../bin/rpmbph:150
+msgid "awk_e2"
+msgstr ""
+
+#: ../bin/rpmbph:104
+msgid ""
+"BEGIN{desk=0}{if(/^%files/&&desk==0){printf(\"%s\\n\\n\", text);desk++};"
+"print}"
+msgstr ""
+
+#: ../bin/rpmbph:108 ../bin/rpmbph:150
+msgid "awk_e3"
+msgstr ""
+
+#: ../bin/rpmbph:110
+msgid ""
+"BEGIN{desk=0}{if(/^%description/&&desk==0){printf(\"%s\\n\\n\", text);desk+"
+"+};print}"
+msgstr ""
+
+#: ../bin/rpmbph:114 ../bin/rpmbph:150
+msgid "awk_e4"
+msgstr ""
+
+#: ../bin/rpmbph:116 ../bin/rpmbph:122
+msgid ""
+"BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf(\"%s\\n\", text);desk++}}"
+msgstr ""
+
+#: ../bin/rpmbph:120 ../bin/rpmbph:150
+msgid "awk_e5"
+msgstr ""
+
+#: ../bin/rpmbph:126 ../bin/rpmbph:149
+msgid "repl_reqs"
+msgstr ""
+
+#: ../bin/rpmbph:128 ../bin/rpmbph:136
+msgid "PREGE"
+msgstr ""
+
+#: ../bin/rpmbph:129 ../bin/rpmbph:137
+msgid "PREGE=perl -p -e"
+msgstr ""
+
+#: ../bin/rpmbph:134 ../bin/rpmbph:149
+msgid "repl_groups"
+msgstr ""
+
+#: ../bin/rpmbph:151
+msgid "s|^BuildRequires: *$||g"
+msgstr ""
+
+#: ../bin/rpmbph:152
+msgid "s|^BuildPreReq: *$||g"
+msgstr ""
+
+#: ../bin/rpmbph:153
+msgid "s|^Requires: *$||g"
+msgstr ""
+
+#: ../bin/rpmbph:154
+msgid "s|^Conflicts: *$||g"
+msgstr ""
+
+#: ../bin/rpmbph:155
+msgid "s|^Provides: *$||g"
+msgstr ""
+
+#: ../bin/rpmbph:156
+msgid "s|^Obsoletes: *$||g"
+msgstr ""
+
+#: ../bin/rpmbph:170
+msgid "1i#"
+msgstr ""
+
+#: ../bin/rpmbph:174 ../bin/rpmbs:63
+msgid "USE_LEGACY_COMPRESSION=1"
+msgstr ""
+
+#: ../bin/rpmbph:182
+msgid "DISTRARG="
+msgstr ""
+
+#: ../bin/rpmbph:188
 msgid "Can't build"
 msgstr ""
 
-#: bin/rpmbs:23
+#: ../bin/rpmbph:206 ../bin/rpmbsh:33
+msgid " -r - remote build"
+msgstr ""
+
+#: ../bin/rpmbph:208 ../bin/rpmbsh:35
+msgid " -u/-U - sign and upload after build"
+msgstr ""
+
+#: ../bin/rpmbph:209
+msgid " -n - do not build in hasher"
+msgstr ""
+
+#: ../bin/rpmbph:211
+msgid " -v - more verbose"
+msgstr ""
+
+#: ../bin/rpmbph:215
+msgid ":hniv"
+msgstr ""
+
+#: ../bin/rpmbph:218 ../bin/rpmbs:61 ../bin/rpmcs:294
+msgid "n"
+msgstr ""
+
+#: ../bin/rpmbph:218
+msgid "BUILDCOMMAND=rpmbs"
+msgstr ""
+
+#: ../bin/rpmbph:219
+msgid "v"
+msgstr ""
+
+#: ../bin/rpmbph:219
+msgid "VERBOSE=1"
+msgstr ""
+
+#: ../bin/rpmbph:238
+msgid "Error: no such file"
+msgstr ""
+
+#: ../bin/rpmbph:242
+msgid "missed backport version (f.i. run with -M24 param for Master 2.4)"
+msgstr ""
+
+#: ../bin/rpmbph:243
+msgid "s|M\\([0-9]\\)\\([0-9]\\)|\\1\\.\\2|g"
+msgstr ""
+
+#: ../bin/rpmbph:243
+msgid "s|SS|Sisyphus|g"
+msgstr ""
+
+#: ../bin/rpmbph:248
+msgid "MDISTR=LOCAL"
+msgstr ""
+
+#: ../bin/rpmbph:253
+msgid "unset"
+msgstr ""
+
+#: ../bin/rpmbph:253
+msgid "MENV"
+msgstr ""
+
+#: ../bin/rpmbph:253
+msgid "MENVARG"
+msgstr ""
+
+#: ../bin/rpmbph:259 ../bin/rpmbs:204 ../bin/rpmcs:61
+msgid "cp"
+msgstr ""
+
+#: ../bin/rpmbph:259
+msgid "Can't copy spec"
+msgstr ""
+
+#: ../bin/rpmbph:260
+msgid "Error"
+msgstr ""
+
+#: ../bin/rpmbph:262 ../bin/rpmbsh:99 ../bin/rpmgp:223
+msgid "-"
+msgstr ""
+
+#: ../bin/rpmbs:23
 msgid "SIGN="
 msgstr ""
 
-#: bin/rpmbs:24
+#: ../bin/rpmbs:24
 msgid "UPLOADNOW="
 msgstr ""
 
-#: bin/rpmbs:25
+#: ../bin/rpmbs:25
 msgid "CHECKONLY="
 msgstr ""
 
-#: bin/rpmbs:40
+#: ../bin/rpmbs:26
+msgid "NOSOURCE="
+msgstr ""
+
+#: ../bin/rpmbs:27
+msgid "NOCHECK="
+msgstr ""
+
+#: ../bin/rpmbs:28
+msgid "UPDATES="
+msgstr ""
+
+#: ../bin/rpmbs:29
+msgid "DELETENOW="
+msgstr ""
+
+#: ../bin/rpmbs:44
 msgid " -s - sign package(s) and move it to upload dir"
 msgstr ""
 
-#: bin/rpmbs:41
+#: ../bin/rpmbs:45
 msgid " -c - only sign package(s) with checking"
 msgstr ""
 
-#: bin/rpmbs:42
-msgid " -u - sign package(s) and upload it to Incoming"
+#: ../bin/rpmbs:46
+msgid " -u - sign package(s) and upload it to Incoming (backports)"
 msgstr ""
 
-#: bin/rpmbs:43
+#: ../bin/rpmbs:47
+msgid " -U - sign package(s) and upload it to Incoming (updates)"
+msgstr ""
+
+#: ../bin/rpmbs:48
 msgid " -d - remove package(s) from SRPMS and Incoming"
 msgstr ""
 
-#: bin/rpmbs:46
-msgid ":hscud"
+#: ../bin/rpmbs:49
+msgid " -n - do not check with sisyphus_check before upload"
 msgstr ""
 
-#: bin/rpmbs:49 bin/rpmurl:37
+#: ../bin/rpmbs:50
+msgid " -o - create nosrc.rpm package"
+msgstr ""
+
+#: ../bin/rpmbs:51
+msgid " -z - create src.rpm with compatible gzip compression"
+msgstr ""
+
+#: ../bin/rpmbs:54
+msgid ":hscuUdnoz"
+msgstr ""
+
+#: ../bin/rpmbs:57 ../bin/rpmunmets:56 ../bin/rpmurl:39
 msgid "s"
 msgstr ""
 
-#: bin/rpmbs:49 bin/rpmbs:50 bin/rpmbs:51
+#: ../bin/rpmbs:57 ../bin/rpmbs:58 ../bin/rpmbs:59 ../bin/rpmbs:60
 msgid "SIGN=1"
 msgstr ""
 
-#: bin/rpmbs:50 bin/rpmurl:36 bin/rpmurl:38
+#: ../bin/rpmbs:58 ../bin/rpmurl:38 ../bin/rpmurl:41
 msgid "CHECKONLY=1"
 msgstr ""
 
-#: bin/rpmbs:51
+#: ../bin/rpmbs:59
 msgid "u"
 msgstr ""
 
-#: bin/rpmbs:51
+#: ../bin/rpmbs:59 ../bin/rpmbs:60
 msgid "UPLOADNOW=1"
 msgstr ""
 
-#: bin/rpmbs:52
+#: ../bin/rpmbs:60
+msgid "U"
+msgstr ""
+
+#: ../bin/rpmbs:60
+msgid "UPDATES=1"
+msgstr ""
+
+#: ../bin/rpmbs:61
+msgid "NOCHECK=1"
+msgstr ""
+
+#: ../bin/rpmbs:62
+msgid "o"
+msgstr ""
+
+#: ../bin/rpmbs:62
+msgid "NOSOURCE=1"
+msgstr ""
+
+#: ../bin/rpmbs:63
+msgid "z"
+msgstr ""
+
+#: ../bin/rpmbs:65
 msgid "d"
 msgstr ""
 
-#: bin/rpmbs:52
+#: ../bin/rpmbs:65
 msgid "DELETENOW=1"
 msgstr ""
 
-#: bin/rpmbs:83
+#: ../bin/rpmbs:90
+msgid "--nosource"
+msgstr ""
+
+#: ../bin/rpmbs:103
 msgid "Do not realized yet"
 msgstr ""
 
-#: bin/rpmbs:100 bin/rpmbs:134
+#: ../bin/rpmbs:120 ../bin/rpmbs:155
 msgid "release_check"
 msgstr ""
 
-#: bin/rpmbs:127
+#: ../bin/rpmbs:148
 msgid "--delete"
 msgstr ""
 
-#: bin/rpmbs:129 bin/rpmbs:174
+#: ../bin/rpmbs:150 ../bin/rpmbs:197
 msgid "+%c"
 msgstr ""
 
-#: bin/rpmbs:135
+#: ../bin/rpmbs:156
 #, sh-format
 msgid "Will try to sign follow packages with GPG: $LISTBUILT"
 msgstr ""
 
-#: bin/rpmbs:136
+#: ../bin/rpmbs:159
 msgid "--addsign"
 msgstr ""
 
-#: bin/rpmbs:140
+#: ../bin/rpmbs:163
 msgid "can't chmod"
 msgstr ""
 
-#: bin/rpmbs:142
+#: ../bin/rpmbs:165
 msgid "sisyphus check failed"
 msgstr ""
 
-#: bin/rpmbs:145
+#: ../bin/rpmbs:168
 msgid "RPMLINT=rpmlint"
 msgstr ""
 
-#: bin/rpmbs:147
+#: ../bin/rpmbs:170
 msgid "Checking with rpmlint..."
 msgstr ""
 
-#: bin/rpmbs:151
+#: ../bin/rpmbs:174
 msgid "It is recommended to install rpmlint package for additional checking"
 msgstr ""
 
-#: bin/rpmbs:166
+#: ../bin/rpmbs:189
 msgid "---------------------"
 msgstr ""
 
-#: bin/rpmbs:167
+#: ../bin/rpmbs:190
 msgid "All files synced"
 msgstr ""
 
-#: bin/rpmbs:167
+#: ../bin/rpmbs:190
 msgid "Error during rsync"
 msgstr ""
 
-#: bin/rpmbs:173
+#: ../bin/rpmbs:196
 msgid "uploaded"
 msgstr ""
 
-#: bin/rpmbs:180
+#: ../bin/rpmbs:203
 #, sh-format
 msgid "Copying package(s) in $ETERDESTSRPM"
 msgstr ""
 
-#: bin/rpmbs:181
+#: ../bin/rpmbs:204
 msgid "-fv"
 msgstr ""
 
-#: bin/rpmbs:181
+#: ../bin/rpmbs:204
 msgid "Error during copying"
 msgstr ""
 
-#: bin/rpmbs:184
+#: ../bin/rpmbs:207
 msgid "Removing buildroot after upload..."
 msgstr ""
 
-#: bin/rpmbs:192 bin/rpmcs:129 bin/rpmgs:181
+#: ../bin/rpmbs:220 ../bin/rpmcs:289 ../bin/rpmcs:306 ../bin/rpmgs:202
 msgid "DONE"
 msgstr ""
 
-#: bin/rpmbs:192
+#: ../bin/rpmbs:220
 msgid "failed"
 msgstr ""
 
-#: bin/rpmbs:194
+#: ../bin/rpmbs:222
 msgid "missed"
 msgstr ""
 
-#: bin/rpmbs:200
+#: ../bin/rpmbs:228
 msgid "Impossible to sign package. Check your password and try again."
 msgstr ""
 
-#: bin/rpmbsh:20
+#: ../bin/rpmbsh:19
 msgid "REMCOM="
 msgstr ""
 
-#: bin/rpmbsh:35
+#: ../bin/rpmbsh:34
 msgid " -m - sent result via email"
 msgstr ""
 
-#: bin/rpmbsh:37
+#: ../bin/rpmbsh:36
 msgid " -s - sign and and copy to upload after build"
 msgstr ""
 
-#: bin/rpmbsh:41
+#: ../bin/rpmbsh:41
 msgid ":hrusim"
 msgstr ""
 
-#: bin/rpmbsh:44
+#: ../bin/rpmbsh:44
 msgid "REMOTEBUILD=1"
 msgstr ""
 
-#: bin/rpmbsh:70
-msgid "s|-[sui]||g"
-msgstr ""
-
-#: bin/rpmbsh:72
+#: ../bin/rpmbsh:68
 msgid "- new version"
 msgstr ""
 
-#: bin/rpmbsh:72
-msgid "Please check Changelog entry"
+#: ../bin/rpmbsh:73
+msgid "s|-[suUic]||g"
 msgstr ""
 
-#: bin/rpmbsh:84
+#: ../bin/rpmbsh:86
 msgid "Error with rsync"
 msgstr ""
 
-#: bin/rpmbsh:88
-msgid "It was remote build"
-msgstr ""
-
-#: bin/rpmbsh:88
-msgid "There is error during remote build"
-msgstr ""
-
-#: bin/rpmbsh:90
+#: ../bin/rpmbsh:93
 msgid "time"
 msgstr ""
 
-#: bin/rpmbsh:90
+#: ../bin/rpmbsh:93
 msgid "myhsh"
 msgstr ""
 
-#: bin/rpmbugs:14 bin/rpmurl:13
+#: ../bin/rpmbugs:13 ../bin/rpmurl:12
 msgid "BROWSER=url_handler.sh"
 msgstr ""
 
-#: bin/rpmbugs:16 bin/rpmbugs:32 bin/rpmbugs:102
+#: ../bin/rpmbugs:15 ../bin/rpmbugs:31 ../bin/rpmbugs:101
 msgid "show_bugs"
 msgstr ""
 
-#: bin/rpmbugs:24 bin/rpmbugs:51
-msgid "links"
-msgstr ""
-
-#: bin/rpmbugs:24
+#: ../bin/rpmbugs:23
 msgid "-dump"
 msgstr ""
 
-#: bin/rpmbugs:24
+#: ../bin/rpmbugs:23
 msgid "-no-numbering"
 msgstr ""
 
-#: bin/rpmbugs:24
+#: ../bin/rpmbugs:23
 msgid "-no-references"
 msgstr ""
 
-#: bin/rpmbugs:24
+#: ../bin/rpmbugs:23
 msgid "-dump-width"
 msgstr ""
 
-#: bin/rpmbugs:28 bin/rpmbugs:70 bin/rpmbugs:100
+#: ../bin/rpmbugs:27 ../bin/rpmbugs:69 ../bin/rpmbugs:99
 msgid "show_bugbyid"
 msgstr ""
 
-#: bin/rpmbugs:38 bin/rpmcs:28 bin/rpmgp:17 bin/rpmqf:14 bin/rpmU:9
+#: ../bin/rpmbugs:37 ../bin/rpmcs:49 ../bin/rpmgp:132 ../bin/rpmqf:13
+#: ../bin/rpmrb:21 ../bin/rpmU:8
 msgid "-h"
 msgstr ""
 
-#: bin/rpmbugs:39
+#: ../bin/rpmbugs:38
 msgid ""
 "rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file "
 "- open bugs in BROWSER"
 msgstr ""
 
-#: bin/rpmbugs:45
+#: ../bin/rpmbugs:44
 msgid "NEWBUG=1"
 msgstr ""
 
-#: bin/rpmbugs:50 bin/rpmbugs:54
+#: ../bin/rpmbugs:49 ../bin/rpmbugs:53
 msgid "TEXT=1"
 msgstr ""
 
-#: bin/rpmbugs:51
+#: ../bin/rpmbugs:50
+msgid "links"
+msgstr ""
+
+#: ../bin/rpmbugs:50
 msgid "BROWSER=links"
 msgstr ""
 
-#: bin/rpmbugs:57 bin/rpmbugs:62 bin/rpmqf:24
+#: ../bin/rpmbugs:56 ../bin/rpmbugs:61 ../bin/rpmqf:43
 msgid "-qf"
 msgstr ""
 
-#: bin/rpmbugs:62 bin/rpmbugs:81 bin/rpmbugs:87 bin/rpmgp:56 bin/rpmgp:77
-#: bin/rpmgp:79 bin/rpmurl:74 bin/rpmurl:82 bin/rpmurl:83
+#: ../bin/rpmbugs:61 ../bin/rpmbugs:80 ../bin/rpmbugs:86 ../bin/rpmgp:243
+#: ../bin/rpmgp:264 ../bin/rpmgp:266 ../bin/rpmurl:78 ../bin/rpmurl:86
+#: ../bin/rpmurl:87 ../bin/rpmurl:101 ../bin/rpmurl:107
 msgid "--queryformat"
 msgstr ""
 
-#: bin/rpmbugs:62
+#: ../bin/rpmbugs:61
 msgid "%{NAME} "
 msgstr ""
 
-#: bin/rpmbugs:64
+#: ../bin/rpmbugs:63
 msgid "rpmqf"
 msgstr ""
 
-#: bin/rpmbugs:69
+#: ../bin/rpmbugs:68
 msgid "s/[0-9]*//"
 msgstr ""
 
-#: bin/rpmbugs:81 bin/rpmgp:77 bin/rpmurl:74
+#: ../bin/rpmbugs:80 ../bin/rpmgp:264 ../bin/rpmurl:78 ../bin/rpmurl:101
 msgid "-qp"
 msgstr ""
 
-#: bin/rpmbugs:81 bin/rpmbugs:87
+#: ../bin/rpmbugs:80 ../bin/rpmbugs:86
 msgid "%{NAME}"
 msgstr ""
 
-#: bin/rpmbugs:84
+#: ../bin/rpmbugs:83
 msgid "Cannot get package name"
 msgstr ""
 
-#: bin/rpmbugs:87 bin/rpmgp:56 bin/rpmgp:79 bin/rpmgs:125 bin/rpmurl:82
-#: bin/rpmurl:83
+#: ../bin/rpmbugs:86 ../bin/rpmgp:243 ../bin/rpmgp:266 ../bin/rpmgs:146
+#: ../bin/rpmurl:86 ../bin/rpmurl:87 ../bin/rpmurl:107
 msgid "-q"
 msgstr ""
 
-#: bin/rpmbugs:93
+#: ../bin/rpmbugs:88
+msgid "PRODUCT=Sisyphus"
+msgstr ""
+
+#: ../bin/rpmbugs:92
 msgid "Do not realized yet. Welcome to developing!"
 msgstr ""
 
-#: bin/rpmbugs:96
+#: ../bin/rpmbugs:95
 msgid "read"
 msgstr ""
 
-#: bin/rpmbugs:96
+#: ../bin/rpmbugs:95
 msgid "SUMMARY"
 msgstr ""
 
-#: bin/rpmbugs:97
+#: ../bin/rpmbugs:96
 msgid "Enter description (finish with Ctrl-D):"
 msgstr ""
 
-#: bin/rpmbugs:98
+#: ../bin/rpmbugs:97
 msgid "altbug"
 msgstr ""
 
-#: bin/rpmbugs:98
+#: ../bin/rpmbugs:97
 msgid "--pkg"
 msgstr ""
 
-#: bin/rpmbugs:98
+#: ../bin/rpmbugs:97
 msgid "--subj"
 msgstr ""
 
-#: bin/rpmbugs:98 bin/rpmgp:56
+#: ../bin/rpmbugs:97 ../bin/rpmgp:243
 msgid "tail"
 msgstr ""
 
-#: bin/rpmbugs:98
+#: ../bin/rpmbugs:97
 msgid "s|^.*#||"
 msgstr ""
 
-#: bin/rpmbugs:102
+#: ../bin/rpmbugs:101
 msgid "@"
 msgstr ""
 
-#: bin/rpmcs:12 bin/rpmcs:56
+#: ../bin/rpmcs:11 ../bin/rpmcs:82
 msgid "dummy_spec"
 msgstr ""
 
-#: bin/rpmcs:14
+#: ../bin/rpmcs:13
 msgid "^Name"
 msgstr ""
 
-#: bin/rpmcs:15
+#: ../bin/rpmcs:14
 msgid "^Version"
 msgstr ""
 
-#: bin/rpmcs:16
+#: ../bin/rpmcs:15
 msgid "^Release"
 msgstr ""
 
-#: bin/rpmcs:17 bin/rpmcs:43
+#: ../bin/rpmcs:16 ../bin/rpmcs:68
 msgid "^Packager"
 msgstr ""
 
-#: bin/rpmcs:18 bin/rpmcs:23
+#: ../bin/rpmcs:17 ../bin/rpmcs:22
 msgid "EOF"
 msgstr ""
 
-#: bin/rpmcs:19
+#: ../bin/rpmcs:18
 msgid "Summary:"
 msgstr ""
 
-#: bin/rpmcs:19 bin/rpmcs:20 bin/rpmcs:21
+#: ../bin/rpmcs:18 ../bin/rpmcs:19 ../bin/rpmcs:20
 msgid "dummy"
 msgstr ""
 
-#: bin/rpmcs:20
+#: ../bin/rpmcs:19
 msgid "License:"
 msgstr ""
 
-#: bin/rpmcs:21
+#: ../bin/rpmcs:20
 msgid "Group:"
 msgstr ""
 
-#: bin/rpmcs:22
+#: ../bin/rpmcs:21
 msgid "%description"
 msgstr ""
 
-#: bin/rpmcs:29
+#: ../bin/rpmcs:26 ../bin/rpmcs:295
+msgid "toalt_pkgrepl"
+msgstr ""
+
+#: ../bin/rpmcs:29
+msgid ""
+"WARULES=s/^ //g \n"
+"\t\ts/ $//g \n"
+"\t\ts/ |/|/g \n"
+"\t\ts/| /|/g"
+msgstr ""
+
+#: ../bin/rpmcs:35
+msgid "^#"
+msgstr ""
+
+#: ../bin/rpmcs:37
+msgid "^|"
+msgstr ""
+
+#: ../bin/rpmcs:37 ../bin/rpmcs:38
+msgid "REPLRULE="
+msgstr ""
+
+#: ../bin/rpmcs:38
+msgid "|$"
+msgstr ""
+
+#: ../bin/rpmcs:39 ../bin/rpmcs:40
+msgid "-d|"
+msgstr ""
+
+#: ../bin/rpmcs:39
+msgid "-f1"
+msgstr ""
+
+#: ../bin/rpmcs:50
 msgid "rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT"
 msgstr ""
 
-#: bin/rpmcs:45
+#: ../bin/rpmcs:70
 msgid ""
 "BEGIN{desk=0}{if(/^Source/&&desk==0){printf(\"%s\\n\\n\", text);desk++};"
 "print}"
 msgstr ""
 
-#: bin/rpmcs:49
+#: ../bin/rpmcs:74
 msgid "^alt"
 msgstr ""
 
-#: bin/rpmcs:50 bin/rpmrb:18
-msgid "alt0.1"
+#: ../bin/rpmcs:75
+msgid "alt1"
 msgstr ""
 
-#: bin/rpmcs:54
+#: ../bin/rpmcs:79
 msgid "^%define date"
 msgstr ""
 
-#: bin/rpmcs:57
+#: ../bin/rpmcs:81
+msgid "false"
+msgstr ""
+
+#: ../bin/rpmcs:83
 msgid "stamp_spec"
 msgstr ""
 
-#: bin/rpmcs:59
+#: ../bin/rpmcs:85
 msgid "s|^%define date.*|%changelog|"
 msgstr ""
 
-#: bin/rpmcs:60
+#: ../bin/rpmcs:86
 msgid ""
 "s|* %{date} PLD Team\\(.*\\)|- initial build for ALT Linux Sisyphus (spec "
 "from PLD Team)|"
 msgstr ""
 
-#: bin/rpmcs:67
+#: ../bin/rpmcs:88
+msgid "PLD spec..."
+msgstr ""
+
+#: ../bin/rpmcs:89
+msgid "{if ( ! /^%define date/){print}else{exit}}"
+msgstr ""
+
+#: ../bin/rpmcs:90
+msgid "- initial build for ALT Linux Sisyphus (spec from PLD)"
+msgstr ""
+
+#: ../bin/rpmcs:95
 msgid "cleanup_spec"
 msgstr ""
 
-#: bin/rpmcs:70
+#: ../bin/rpmcs:98
 msgid "s|%if %{with \\(.*\\)}|%if_with \\1|g"
 msgstr ""
 
-#: bin/rpmcs:71
+#: ../bin/rpmcs:99
 msgid "s|%if %{without \\(.*\\)}|%if_without \\1|g"
 msgstr ""
 
-#: bin/rpmcs:73
+#: ../bin/rpmcs:101
 msgid "s|^%bcond_with|%def_with|g"
 msgstr ""
 
-#: bin/rpmcs:76
+#: ../bin/rpmcs:104
 msgid "fix name and release..."
 msgstr ""
 
-#: bin/rpmcs:81
-msgid "fix non alt constructions..."
+#: ../bin/rpmcs:110
+msgid "fix obsoleted constructions..."
 msgstr ""
 
-#: bin/rpmcs:82
+#: ../bin/rpmcs:111
 msgid "s|Source0:|Source:|"
 msgstr ""
 
-#: bin/rpmcs:84
+#: ../bin/rpmcs:112
+msgid "s|Patch0:|Patch:|"
+msgstr ""
+
+#: ../bin/rpmcs:117
 msgid "s|\\(Source:.*\\).tar.gz|\\1.tar.bz2|"
 msgstr ""
 
-#: bin/rpmcs:90
+#: ../bin/rpmcs:118
+msgid "s|\\(Source:.*\\).tgz|\\1.tar.bz2|"
+msgstr ""
+
+#: ../bin/rpmcs:122
 msgid "s|\\(%post.*-p *\\)/sbin/ldconfig|\\1%post_ldconfig|g"
 msgstr ""
 
-#: bin/rpmcs:91
+#: ../bin/rpmcs:123
 msgid "s|\\(%postun.*-p *\\)/sbin/ldconfig|\\1%postun_ldconfig|g"
 msgstr ""
 
-#: bin/rpmcs:93
+#: ../bin/rpmcs:125
 #, sh-format
 msgid "s|$RPM_BUILD_ROOT/%|%buildroot%|g"
 msgstr ""
 
-#: bin/rpmcs:94
+#: ../bin/rpmcs:126
 #, sh-format
 msgid "s|$RPM_BUILD_ROOT|%buildroot|g"
 msgstr ""
 
-#: bin/rpmcs:98
-msgid "s|System Environment/Libraries|System/Libraries|g"
-msgstr ""
-
-#: bin/rpmcs:99
-msgid "s|Development/Libraries|Development/Other|g"
-msgstr ""
-
-#: bin/rpmcs:100
-msgid "s|Development/Tools|Development/Other|g"
-msgstr ""
-
-#: bin/rpmcs:101
+#: ../bin/rpmcs:130
 msgid "s|Group: *Libraries|Group: System/Libraries|g"
 msgstr ""
 
-#: bin/rpmcs:104
-msgid "s|%__install |install |g"
+#: ../bin/rpmcs:133
+msgid ""
+"s|%__install |install |g \n"
+"\t\ts|%__cp |cp |g \n"
+"\t\ts|%__rm -f |rm -f |g \n"
+"\t\ts|%__mv |mv |g \n"
+"\t\ts|%__mkdir_p|mkdir -p|g \n"
+"\t\ts|%__mkdir |mkdir |g \n"
+"\t\ts|%__make|make|g \n"
+"\t\ts|%__awk|gawk|g \n"
+"\t\ts|%__bzip2|bzip2|g \n"
+"\t\ts|%__cat|cat|g \n"
+"\t\ts|%__chgrp|chgrp|g \n"
+"\t\ts|%__chmod|chmod|g \n"
+"\t\ts|%__chown|chown|g \n"
+"\t\ts|%__cpio|cpio|g \n"
+"\t\ts|%__file|file|g \n"
+"\t\ts|%__gpg|gpg|g \n"
+"\t\ts|%__grep|grep|g \n"
+"\t\ts|%__gzip|gzip|g \n"
+"\t\ts|%__id|id|g \n"
+"\t\ts|%__install|install|g \n"
+"\t\ts|%__install_info|install-info|g \n"
+"\t\ts|%__ln_s|ln -s|g \n"
+"\t\ts|%__patch|patch|g \n"
+"\t\ts|%__perl|perl|g \n"
+"\t\ts|%__pgp|pgp|g \n"
+"\t\ts|%__python|python|g \n"
+"\t\ts|%__rm|rm|g \n"
+"\t\ts|%__rsh|rsh|g \n"
+"\t\ts|%__sed|sed|g \n"
+"\t\ts|%__ssh|ssh|g \n"
+"\t\ts|%__subst|sed -i|g \n"
+"\t\ts|%__tar|tar|g \n"
+"\t\ts|%__unzip|unzip|g \n"
+"\t\ts|%__ar|ar|g \n"
+"\t\ts|%__as|as|g \n"
+"\t\ts|%__cc|gcc|g \n"
+"\t\ts|%__cpp|gcc -E|g \n"
+"\t\ts|%__cxx|g++|g \n"
+"\t\ts|%__ld|ld|g \n"
+"\t\ts|%__nm|nm|g \n"
+"\t\ts|%__objcopy|objcopy|g \n"
+"\t\ts|%__objdump|objdump|g \n"
+"\t\ts|%__ranlib|ranlib|g \n"
+"\t\ts|%__strip|strip|g \n"
+"\t\ts|%__libtoolize|libtoolize|g \n"
+"\t\ts|%__aclocal|aclocal|g \n"
+"\t\ts|%__autoheader|autoheader|g \n"
+"\t\ts|%__automake|automake|g \n"
+"\t\ts|%__autoconf|autoconf|g \n"
+"\t\ts|%__tar |tar |g"
 msgstr ""
 
-#: bin/rpmcs:105
-msgid "s|%__cp |cp |g"
+#: ../bin/rpmcs:185
+msgid ""
+"s|%__make *install|%make_install install|g\n"
+"\t\ts|^make *install|%make_install install|g\n"
+"\t\ts|^make %{?_smp_mflags}|%make_build|g\n"
+"\t\ts|%make_install *install *DESTDIR=%buildroot|%makeinstall_std|g\n"
+"\t\ts|%make_install *DESTDIR=%buildroot *install|%makeinstall_std|g\n"
+"\t\ts|^make *DESTDIR=%buildroot *install|%makeinstall_std|g"
 msgstr ""
 
-#: bin/rpmcs:106
-msgid "s|%__mv |mv |g"
+#: ../bin/rpmcs:192
+msgid ""
+"s|/etc/|%_sysconfdir/|g\n"
+"\t\ts|%_sysconfdir/rc.d/init.d|%_initdir/|g\n"
+"\t\ts|%_sysconfdir/rc.d/init.d/|%_initrddir/|g\n"
+"\t\ts|%_sysconfdir/init.d/|%_initrddir/|g\n"
+"\t\ts|%_sysconfdir/X11/fontpath.d|%_fontpathdir|g"
 msgstr ""
 
-#: bin/rpmcs:107
-msgid "s|%__mkdir_p |mkdir -p |g"
+#: ../bin/rpmcs:198
+msgid ""
+"s|%_libdir/mono/gac|%_monogacdir|g\n"
+"\t\ts|%_libdir/mono|%_monodir|g"
 msgstr ""
 
-#: bin/rpmcs:108
-msgid "s|%__mkdir |mkdir |g"
+#: ../bin/rpmcs:201
+msgid ""
+"s|%prefix/lib|%_libdir|g\n"
+"\t\ts|%prefix/include|%_includedir|g\n"
+"\t\ts|/usr/include|%_includedir|g\n"
+"\t\ts|/usr/src|%_usrsrc|g\n"
+"\t\ts|%prefix/share|%_datadir|g"
 msgstr ""
 
-#: bin/rpmcs:109
-msgid "s|%__make |make |g"
+#: ../bin/rpmcs:207
+msgid "s|Requires(post): /sbin/install-info|Requires(post): %install_info|g"
 msgstr ""
 
-#: bin/rpmcs:111
-msgid "s|%__make *install|%make_install install|g"
+#: ../bin/rpmcs:208
+msgid ""
+"s|Requires(preun): /sbin/install-info|Requires(preun): %uninstall_info|g"
 msgstr ""
 
-#: bin/rpmcs:112
-msgid "s|^make *install|%make_install install|g"
+#: ../bin/rpmcs:218
+msgid ""
+"s|/usr/sbin/|%_sbindir/|g\n"
+"\t\ts|/usr/bin/|%_bindir/|g\n"
+"\t\ts|/usr/lib/|%_libdir/|g\n"
+"\t\ts|/usr/share/|%_datadir/|g\n"
+"\t\ts|%_datadir/games|%_gamesdatadir|g"
 msgstr ""
 
-#: bin/rpmcs:113
-msgid "s|/etc/|%_sysconfdir/|g"
+#: ../bin/rpmcs:224
+msgid "s|%pear_phpdir|%pear_dir|g"
 msgstr ""
 
-#: bin/rpmcs:114
-msgid "s|%_sysconfdir/rc.d/init.d/|%_initrddir/|g"
+#: ../bin/rpmcs:227
+msgid ""
+"s|%pear_install$|%register_pear_module|g\n"
+"\t\ts|%pear_uninstall|%unregister_pear_module|g\n"
+"\t\ts|%pear_prepare_module|%pear_build|g\n"
+"\t\ts|%pear_install_module|%pear_install_std|g"
 msgstr ""
 
-#: bin/rpmcs:115
-msgid "s|/usr/sbin/|%_sbindir/|g"
+#: ../bin/rpmcs:233
+msgid ""
+"s|^sed -i -e |%__subst |g\n"
+"\t\ts|^subst |%__subst |g\n"
+"\t\ts|perl -pi -e *|%__subst |g"
 msgstr ""
 
-#: bin/rpmcs:116
-msgid "s|/usr/lib|%_libdir|g"
+#: ../bin/rpmcs:237
+msgid ""
+"s|^python |%__python |g\n"
+"\t\ts|%py_sitescriptdir|%python_sitelibdir|g\n"
+"\t\ts|%python_version|%__python_version|g\n"
+"\t\ts|%python_sitelib/|%python_sitelibdir/|g\n"
+"\t\ts|%py_sitedir/|%python_sitelibdir/|g\n"
+"\t\ts|%python_sitearch|%python_sitelibdir|g\n"
+"\t\ts|\\(%pyrequires_eq.*\\)|#\\1|g"
 msgstr ""
 
-#: bin/rpmcs:117
-msgid "s|/usr/share|%_datadir|g"
+#: ../bin/rpmcs:245
+msgid ""
+"s|ruby setup.rb config|%ruby_config|g\n"
+"\t\t   s|ruby setup.rb setup|%ruby_setup|g"
 msgstr ""
 
-#: bin/rpmcs:118
-msgid "s|^sed -i -e |%__subst |g"
+#: ../bin/rpmcs:248
+msgid "s|^%__python setup.py build|%python_build|g"
 msgstr ""
 
-#: bin/rpmcs:119
-msgid "s|perl -pi -e |%__subst |g"
+#: ../bin/rpmcs:249
+msgid "s|^%__python setup.py install --root %buildroot|%python_install|g"
 msgstr ""
 
-#: bin/rpmcs:120
-msgid "s|^python |%__python |g"
+#: ../bin/rpmcs:250
+msgid "s|^%__python setup.py install -O2 --root %buildroot|%python_install|g"
 msgstr ""
 
-#: bin/rpmcs:122
-msgid "s|%py_sitescriptdir|%python_sitelibdir|g"
+#: ../bin/rpmcs:251
+msgid ""
+"s|^%__python setup.py install --optimize --root %buildroot|%python_install|g"
 msgstr ""
 
-#: bin/rpmcs:123
+#: ../bin/rpmcs:253
+msgid "s|%_datadir/man/|%_mandir/|g"
+msgstr ""
+
+#: ../bin/rpmcs:254
 msgid "s|%_mandir/man\\([0-9]\\)|%_man\\1dir|g"
 msgstr ""
 
-#: bin/rpmcs:124
+#: ../bin/rpmcs:255
 msgid "s|%_libdir/pkgconfig|%_pkgconfigdir|g"
 msgstr ""
 
-#: bin/rpmcs:125
+#: ../bin/rpmcs:256
 msgid "s|%_datadir/pixmaps|%_pixmapsdir|g"
 msgstr ""
 
-#: bin/rpmcs:126
+#: ../bin/rpmcs:257
 msgid "s|%_datadir/applications|%_desktopdir|g"
 msgstr ""
 
-#: bin/rpmgp:15
+#: ../bin/rpmcs:259
+msgid "s|%update_desktop_database|%update_desktopdb|g"
+msgstr ""
+
+#: ../bin/rpmcs:260
+msgid "s|%clean_desktop_database|%clean_desktopdb|g"
+msgstr ""
+
+#: ../bin/rpmcs:262
+msgid "s|%gconf_schema_install \\(.*\\)\\.schemas|%gconf2_install \\1|g"
+msgstr ""
+
+#: ../bin/rpmcs:263
+msgid "s|%_browserpluginsdir|%browser_plugins_path|g"
+msgstr ""
+
+#: ../bin/rpmcs:265
+msgid ""
+"s|%_iconsdir/hicolor/48x48/apps|%_icons48dir|g\n"
+"\t\ts|%_iconsdir/hicolor/32x32/apps|%_niconsdir|g\n"
+"\t\ts|%_iconsdir/hicolor/16x16/apps|%_icons16dir|g\n"
+"\t\ts|%_iconsdir/mini|%_miconsdir|g\n"
+"\t\ts|%_iconsdir/large|%_liconsdir|g\n"
+"\t\ts|%_datadir/icons|%_iconsdir|g"
+msgstr ""
+
+#: ../bin/rpmcs:273
+msgid ""
+"s|%perl_vendorlib|%perl_vendor_privlib|g\n"
+"\t\t   s|%perl_vendorarch|%perl_vendor_archlib|g"
+msgstr ""
+
+#: ../bin/rpmcs:276
+msgid "s|%_datadir/doc|%_docdir|g"
+msgstr ""
+
+#: ../bin/rpmcs:277
+msgid "s|%_datadir/omf|%_omfdir|g"
+msgstr ""
+
+#: ../bin/rpmcs:278
+msgid "s|%_defaultdocdir|%_docdir|g"
+msgstr ""
+
+#: ../bin/rpmcs:279
+msgid "s|%__autoreconf|%autoreconf|g"
+msgstr ""
+
+#: ../bin/rpmcs:281
+msgid "s|%rpmcflags|%optflags|g"
+msgstr ""
+
+#: ../bin/rpmcs:285
+msgid "s|^%defattr(-,root,root)||g"
+msgstr ""
+
+#: ../bin/rpmcs:286
+msgid "s|^%defattr(644,root,root,755)||g"
+msgstr ""
+
+#: ../bin/rpmcs:288
+msgid "s|^ *%|%|g"
+msgstr ""
+
+#: ../bin/rpmcs:292
+msgid "fix requires..."
+msgstr ""
+
+#: ../bin/rpmcs:304 ../bin/rpmgp:161 ../bin/rpmrb:12
+msgid "-r"
+msgstr ""
+
+#: ../bin/rpmgp:15
 msgid "REPOSITORY=files/SRPMS obsolete orphaned"
 msgstr ""
 
-#: bin/rpmgp:18
+#: ../bin/rpmgp:19
+msgid "SYSNAME[0]=alt"
+msgstr ""
+
+#: ../bin/rpmgp:20
+msgid "SYSNAME[1]=fedora"
+msgstr ""
+
+#: ../bin/rpmgp:21
+msgid "SYSNAME[2]=fedora-ccrma"
+msgstr ""
+
+#: ../bin/rpmgp:22
+msgid "SYSNAME[3]=mandriva"
+msgstr ""
+
+#: ../bin/rpmgp:23
+msgid "SYSNAME[4]=mandriva-contrib"
+msgstr ""
+
+#: ../bin/rpmgp:24
+msgid "SYSNAME[5]=suse"
+msgstr ""
+
+#: ../bin/rpmgp:25
+msgid "SYSNAME[6]=suse-edu1"
+msgstr ""
+
+#: ../bin/rpmgp:26
+msgid "SYSNAME[7]=suse-edu2"
+msgstr ""
+
+#: ../bin/rpmgp:27
+msgid "SYSNAME[8]=alt-obsolete"
+msgstr ""
+
+#: ../bin/rpmgp:28
+msgid "SYSNAME[9]=alt-orphaned"
+msgstr ""
+
+#: ../bin/rpmgp:29
+msgid "SYSNAME[10]=pld"
+msgstr ""
+
+#: ../bin/rpmgp:32
 msgid ""
-"rpmgp [-c -n] name - download src.rpm from ALT Linux to RPM/SRPMS and "
-"install it"
+"SYSURL[0]=ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/"
+"SRPMS"
 msgstr ""
 
-#: bin/rpmgp:19
-msgid " name - installed package name or src.rpm"
+#: ../bin/rpmgp:33
+msgid ""
+"SYSURL[1]=ftp://mirror.yandex.ru/fedora/linux/releases/9/Everything/source/"
+"SRPMS"
 msgstr ""
 
-#: bin/rpmgp:20
-msgid " -c check for exist the package in ALT Linux repository"
+#: ../bin/rpmgp:34
+msgid ""
+"SYSURL[2]=http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/"
+"planetccrma/9/SRPMS"
 msgstr ""
 
-#: bin/rpmgp:21
-msgid " -b install needed for build packages via apt-get"
+#: ../bin/rpmgp:35
+msgid ""
+"SYSURL[3]=ftp://mirror.yandex.ru/mandriva/official/2008.1/SRPMS/main/release"
 msgstr ""
 
-#: bin/rpmgp:22
-msgid " -n do not install in RPM after download, download in current dir"
+#: ../bin/rpmgp:36
+msgid ""
+"SYSURL[4]=ftp://mirror.yandex.ru/mandriva/official/2008.1/SRPMS/contrib/"
+"release"
 msgstr ""
 
-#: bin/rpmgp:27
-msgid "TRYINST=1"
+#: ../bin/rpmgp:37
+msgid ""
+"SYSURL[5]=ftp://mirror.yandex.ru/opensuse/distribution/11.0/repo/src-oss/"
+"suse/src"
 msgstr ""
 
-#: bin/rpmgp:30
-msgid "TRYINST="
+#: ../bin/rpmgp:38
+msgid ""
+"SYSURL[6]=http://opensuse.unixheads.net/repositories/Education:/desktop/"
+"openSUSE_10.3/src"
 msgstr ""
 
-#: bin/rpmgp:33
-msgid "Please run with spec/package name"
+#: ../bin/rpmgp:39
+msgid ""
+"SYSURL[7]=http://www.opensuse-education.org/download/repos/1.0/11.0/suse/src"
 msgstr ""
 
-#: bin/rpmgp:36
-msgid "-b"
+#: ../bin/rpmgp:40
+msgid ""
+"SYSURL[8]=ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete"
 msgstr ""
 
-#: bin/rpmgp:42
-msgid "apt-get"
+#: ../bin/rpmgp:41
+msgid ""
+"SYSURL[9]=ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned"
 msgstr ""
 
-#: bin/rpmgp:42
-msgid "build-dep"
+#: ../bin/rpmgp:42
+msgid "SYSURL[10]=ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS"
 msgstr ""
 
-#: bin/rpmgp:48 bin/rpmgs:57
-msgid "-c"
+#: ../bin/rpmgp:44 ../bin/rpmgp:156
+msgid "list_systems"
 msgstr ""
 
-#: bin/rpmgp:50
-msgid "CHECKONLINE=1"
+#: ../bin/rpmgp:46
+msgid "Known systems:"
 msgstr ""
 
-#: bin/rpmgp:56 bin/rpmgp:77 bin/rpmgp:79
-msgid "%{SOURCERPM}\\n"
+#: ../bin/rpmgp:47 ../bin/rpmgp:91 ../bin/rpmgp:199
+msgid "i=0"
 msgstr ""
 
-#: bin/rpmgp:58
-msgid "RET=MISSED"
+#: ../bin/rpmgp:47 ../bin/rpmgp:91 ../bin/rpmgp:199
+msgid "i++"
 msgstr ""
 
-#: bin/rpmgp:63
-msgid "Repository     Filename"
-msgstr ""
-
-#: bin/rpmgp:64 bin/rpmurl:103
+#: ../bin/rpmgp:48 ../bin/rpmgp:251 ../bin/rpmurl:140
 msgid "printf"
 msgstr ""
 
-#: bin/rpmgp:64
-msgid "%-12s %30s\\n"
+#: ../bin/rpmgp:48
+msgid "[%-17s] %s\\n"
 msgstr ""
 
-#: bin/rpmgp:69
-msgid "########################################"
+#: ../bin/rpmgp:52 ../bin/rpmgp:109
+msgid "print_list"
 msgstr ""
 
-#: bin/rpmgp:91
-msgid "--copy-links"
+#: ../bin/rpmgp:60 ../bin/rpmgp:83
+msgid "html_filter"
 msgstr ""
 
-#: bin/rpmgp:92
-msgid "--delete-after"
+#: ../bin/rpmgp:62
+msgid "src.rpm"
 msgstr ""
 
-#: bin/rpmgp:97
-msgid "Installing..."
+#: ../bin/rpmgp:62
+msgid "s|.*href=\"||g"
 msgstr ""
 
-#: bin/rpmgp:98
-msgid "-iv"
+#: ../bin/rpmgp:62
+msgid "s|\".*||g"
 msgstr ""
 
-#: bin/rpmgs:18
-msgid "WEXT="
+#: ../bin/rpmgp:65 ../bin/rpmgp:107
+msgid "list_filter"
 msgstr ""
 
-#: bin/rpmgs:19
-msgid "GETSOURCE="
+#: ../bin/rpmgp:72 ../bin/rpmgp:126 ../bin/rpmgp:167
+msgid "get_list"
 msgstr ""
 
-#: bin/rpmgs:20
-msgid "LOADLIST=0"
+#: ../bin/rpmgp:79
+msgid "force"
 msgstr ""
 
-#: bin/rpmgs:34
-msgid " -a - get all source (not only 0)"
+#: ../bin/rpmgp:83
+msgid "curl"
 msgstr ""
 
-#: bin/rpmgs:35
-msgid " -f - force download (remove source before download)"
+#: ../bin/rpmgp:89 ../bin/rpmgp:165 ../bin/rpmgp:185
+msgid "get_system_idx"
 msgstr ""
 
-#: bin/rpmgs:38
-msgid ":haf"
+#: ../bin/rpmgp:100 ../bin/rpmgp:128
+msgid "check_name"
 msgstr ""
 
-#: bin/rpmgs:41
-msgid "a"
+#: ../bin/rpmgp:103
+msgid "Error: missed package param"
 msgstr ""
 
-#: bin/rpmgs:41
-msgid "LOADLIST= 0 1 2 3 4 5"
+#: ../bin/rpmgp:107
+msgid "wc"
 msgstr ""
 
-#: bin/rpmgs:42 bin/rpmurl:38
-msgid "f"
+#: ../bin/rpmgp:121 ../bin/rpmgp:187 ../bin/rpmgp:201
+msgid "check_system"
 msgstr ""
 
-#: bin/rpmgs:42
-msgid "REMOVE=1"
-msgstr ""
-
-#: bin/rpmgs:55 bin/rpmgs:65 bin/rpmgs:74 bin/rpmgs:87 bin/rpmgs:174
-msgid "get_tarball"
-msgstr ""
-
-#: bin/rpmgs:57
+#: ../bin/rpmgp:128 ../bin/rpmgs:57
 msgid "wget"
 msgstr ""
 
-#: bin/rpmgs:61 bin/rpmgs:103 bin/rpmgs:110 bin/rpmgs:116 bin/rpmgs:122
+#: ../bin/rpmgp:133
+msgid "Using:"
+msgstr ""
+
+#: ../bin/rpmgp:134
+msgid ""
+"rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' "
+"repository to RPM/SRPMS and install it"
+msgstr ""
+
+#: ../bin/rpmgp:135
+msgid " name - installed package name or src.rpm"
+msgstr ""
+
+#: ../bin/rpmgp:136
+msgid " system - name of system (ALT Linux by default if -a missed too)"
+msgstr ""
+
+#: ../bin/rpmgp:137
+msgid " -a  check for pkgname in all known repositories"
+msgstr ""
+
+#: ../bin/rpmgp:138
+msgid " -c  check for exist the package in ALT Linux repository"
+msgstr ""
+
+#: ../bin/rpmgp:139
+msgid " -b  install packages needed for build (installs with sudo apt-get)"
+msgstr ""
+
+#: ../bin/rpmgp:140
+msgid ""
+" -l  lists packages needed for build (in local pkg system notation) "
+"(experimental)"
+msgstr ""
+
+#: ../bin/rpmgp:141
+msgid " -n  do not install in RPM after download, download in current dir"
+msgstr ""
+
+#: ../bin/rpmgp:142
+msgid " -r  refresh package list (download it again)"
+msgstr ""
+
+#: ../bin/rpmgp:143
+msgid " -s  lists all known systems"
+msgstr ""
+
+#: ../bin/rpmgp:148
+msgid "TRYINST=1"
+msgstr ""
+
+#: ../bin/rpmgp:151
+msgid "TRYINST="
+msgstr ""
+
+#: ../bin/rpmgp:162
+msgid "FORCEUPDATE=force"
+msgstr ""
+
+#: ../bin/rpmgp:175
+msgid "ALLSYSTEM=1"
+msgstr ""
+
+#: ../bin/rpmgp:179
+msgid "Please run with spec/package name"
+msgstr ""
+
+#: ../bin/rpmgp:215
+msgid "-b"
+msgstr ""
+
+#: ../bin/rpmgp:222
+msgid "apt-get"
+msgstr ""
+
+#: ../bin/rpmgp:222
+msgid "build-dep"
+msgstr ""
+
+#: ../bin/rpmgp:230
+msgid "print_target_buildreq"
+msgstr ""
+
+#: ../bin/rpmgp:237
+msgid "CHECKONLINE=1"
+msgstr ""
+
+#: ../bin/rpmgp:243 ../bin/rpmgp:264 ../bin/rpmgp:266
+msgid "%{SOURCERPM}\\n"
+msgstr ""
+
+#: ../bin/rpmgp:245
+msgid "RET=MISSED"
+msgstr ""
+
+#: ../bin/rpmgp:250
+msgid "Repository     Filename"
+msgstr ""
+
+#: ../bin/rpmgp:251
+msgid "%-12s %30s\\n"
+msgstr ""
+
+#: ../bin/rpmgp:256
+msgid "########################################"
+msgstr ""
+
+#: ../bin/rpmgp:278
+msgid "--copy-links"
+msgstr ""
+
+#: ../bin/rpmgp:279
+msgid "--delete-after"
+msgstr ""
+
+#: ../bin/rpmgp:284
+msgid "Installing..."
+msgstr ""
+
+#: ../bin/rpmgp:285
+msgid "-iv"
+msgstr ""
+
+#: ../bin/rpmgs:17
+msgid "WEXT="
+msgstr ""
+
+#: ../bin/rpmgs:18
+msgid "GETSOURCE="
+msgstr ""
+
+#: ../bin/rpmgs:19
+msgid "LOADLIST=0"
+msgstr ""
+
+#: ../bin/rpmgs:33
+msgid " -a - get all source (not only 0)"
+msgstr ""
+
+#: ../bin/rpmgs:34
+msgid " -f - force download (remove source before download)"
+msgstr ""
+
+#: ../bin/rpmgs:37
+msgid ":haf"
+msgstr ""
+
+#: ../bin/rpmgs:40
+msgid "a"
+msgstr ""
+
+#: ../bin/rpmgs:40
+msgid "LOADLIST= 0 1 2 3 4 5 6 7 8"
+msgstr ""
+
+#: ../bin/rpmgs:41 ../bin/rpmurl:41
+msgid "f"
+msgstr ""
+
+#: ../bin/rpmgs:41
+msgid "FORCEDOWNLOAD=1"
+msgstr ""
+
+#: ../bin/rpmgs:54 ../bin/rpmgs:65 ../bin/rpmgs:74 ../bin/rpmgs:96
+#: ../bin/rpmgs:195
+msgid "get_tarball"
+msgstr ""
+
+#: ../bin/rpmgs:57
+msgid "-T"
+msgstr ""
+
+#: ../bin/rpmgs:57
+msgid "30"
+msgstr ""
+
+#: ../bin/rpmgs:61 ../bin/rpmgs:118 ../bin/rpmgs:125 ../bin/rpmgs:131
+#: ../bin/rpmgs:137 ../bin/rpmgs:143
 msgid "get_archive"
 msgstr ""
 
-#: bin/rpmgs:70 bin/rpmgs:96
+#: ../bin/rpmgs:70 ../bin/rpmgs:105 ../bin/rpmgs:111
 msgid "get_archive1"
 msgstr ""
 
-#: bin/rpmgs:79 bin/rpmgs:97 bin/rpmgs:105 bin/rpmgs:111 bin/rpmgs:117
-#: bin/rpmgs:126
+#: ../bin/rpmgs:79 ../bin/rpmgs:106 ../bin/rpmgs:112 ../bin/rpmgs:120
+#: ../bin/rpmgs:126 ../bin/rpmgs:132 ../bin/rpmgs:146
 msgid "bzipit"
 msgstr ""
 
-#: bin/rpmgs:81 bin/rpmgs:89
+#: ../bin/rpmgs:81
+msgid "locale"
+msgstr ""
+
+#: ../bin/rpmgs:81
+msgid "PBZIPIT"
+msgstr ""
+
+#: ../bin/rpmgs:82
+msgid "pbzip2"
+msgstr ""
+
+#: ../bin/rpmgs:84
+msgid " with pzip2..."
+msgstr ""
+
+#: ../bin/rpmgs:85
+msgid "-9"
+msgstr ""
+
+#: ../bin/rpmgs:88
+msgid " with bzip2..."
+msgstr ""
+
+#: ../bin/rpmgs:89 ../bin/rpmgs:98 ../bin/rpmgs:190
 msgid "bzip"
 msgstr ""
 
-#: bin/rpmgs:81
+#: ../bin/rpmgs:89
 msgid "--best"
 msgstr ""
 
-#: bin/rpmgs:85 bin/rpmgs:177 bin/rpmgs:179
+#: ../bin/rpmgs:94 ../bin/rpmgs:198 ../bin/rpmgs:200
 msgid "get_bzip"
 msgstr ""
 
-#: bin/rpmgs:94 bin/rpmgs:177
+#: ../bin/rpmgs:103 ../bin/rpmgs:198
 msgid "get_gz"
 msgstr ""
 
-#: bin/rpmgs:96
-msgid "gz"
+#: ../bin/rpmgs:105
+msgid ".gz"
 msgstr ""
 
-#: bin/rpmgs:97 bin/rpmgs:105 bin/rpmgs:117
+#: ../bin/rpmgs:106 ../bin/rpmgs:120 ../bin/rpmgs:132
 msgid "gunzip"
 msgstr ""
 
-#: bin/rpmgs:101 bin/rpmgs:179
+#: ../bin/rpmgs:109 ../bin/rpmgs:198
+msgid "get_raw"
+msgstr ""
+
+#: ../bin/rpmgs:116 ../bin/rpmgs:200
 msgid "get_targz"
 msgstr ""
 
-#: bin/rpmgs:103
+#: ../bin/rpmgs:118
 msgid "tar.gz"
 msgstr ""
 
-#: bin/rpmgs:108 bin/rpmgs:179
+#: ../bin/rpmgs:123 ../bin/rpmgs:200
 msgid "get_tar"
 msgstr ""
 
-#: bin/rpmgs:114 bin/rpmgs:179
+#: ../bin/rpmgs:125 ../bin/rpmgs:146
+msgid "tar"
+msgstr ""
+
+#: ../bin/rpmgs:129 ../bin/rpmgs:200
 msgid "get_tgz"
 msgstr ""
 
-#: bin/rpmgs:116
+#: ../bin/rpmgs:131
 msgid "tgz"
 msgstr ""
 
-#: bin/rpmgs:120 bin/rpmgs:179
+#: ../bin/rpmgs:135 ../bin/rpmgs:200
+msgid "get_tbz2"
+msgstr ""
+
+#: ../bin/rpmgs:137
+msgid "tbz2"
+msgstr ""
+
+#: ../bin/rpmgs:141 ../bin/rpmgs:200
 msgid "get_zip"
 msgstr ""
 
-#: bin/rpmgs:122
+#: ../bin/rpmgs:143
 msgid "zip"
 msgstr ""
 
-#: bin/rpmgs:125
+#: ../bin/rpmgs:146
 msgid "unzip"
 msgstr ""
 
-#: bin/rpmgs:126
+#: ../bin/rpmgs:146
 msgid "cf"
 msgstr ""
 
-#: bin/rpmgs:131 bin/rpmgs:179
+#: ../bin/rpmgs:147
+msgid ".."
+msgstr ""
+
+#: ../bin/rpmgs:151 ../bin/rpmgs:200
 msgid "dir_name"
 msgstr ""
 
-#: bin/rpmgs:133
+#: ../bin/rpmgs:153
 msgid ".listing"
 msgstr ""
 
-#: bin/rpmgs:138 bin/rpmgs:164
+#: ../bin/rpmgs:158 ../bin/rpmgs:184
 msgid "get_source"
 msgstr ""
 
-#: bin/rpmgs:143 bin/rpmgs:154 bin/rpmgs:159
+#: ../bin/rpmgs:163 ../bin/rpmgs:174 ../bin/rpmgs:179
 msgid "print_error"
 msgstr ""
 
-#: bin/rpmgs:145
+#: ../bin/rpmgs:165
 msgid "You have no spec files as arg"
 msgstr ""
 
-#: bin/rpmgs:146
+#: ../bin/rpmgs:166
 msgid ""
 "Please use for spec files only. If you wish to download src.rpm, use rpmgp "
 "script."
 msgstr ""
 
-#: bin/rpmgs:162
+#: ../bin/rpmgs:182
 msgid "nn"
 msgstr ""
 
-#: bin/rpmgs:165 bin/rpmgs:169
-msgid "continue"
+#: ../bin/rpmgs:191
+msgid "pushd"
 msgstr ""
 
-#: bin/rpmgs:173
+#: ../bin/rpmgs:191
+msgid "Can't create/chdir..."
+msgstr ""
+
+#: ../bin/rpmgs:194
 msgid "It is recommended to use .bz2 tarballs for sources"
 msgstr ""
 
-#: bin/rpmgs:175
+#: ../bin/rpmgs:196
 msgid "elif"
 msgstr ""
 
-#: bin/rpmgs:176
+#: ../bin/rpmgs:197
 msgid "It is not tarball..."
 msgstr ""
 
-#: bin/rpmqf:15
+#: ../bin/rpmgs:203
+msgid "popd"
+msgstr ""
+
+#: ../bin/rpmqf:14
 msgid "rpmqf - the same as rpm -qf"
 msgstr ""
 
-#: bin/rpmrb:17
-msgid "Error with get version from spec"
+#: ../bin/rpmqf:32 ../bin/rpmqf:34
+msgid "readlink"
 msgstr ""
 
-#: bin/rpmrb:19
+#: ../bin/rpmrb:11
+msgid "REMOTE="
+msgstr ""
+
+#: ../bin/rpmrb:22
+msgid ""
+"rpmrb spec [vermajor][.verminor] [rel] - update spec to vermajor.verminor "
+"version, build %rel release"
+msgstr ""
+
+#: ../bin/rpmrb:28
+msgid "use with spec"
+msgstr ""
+
+#: ../bin/rpmrb:31
+msgid "REL=alt1"
+msgstr ""
+
+#: ../bin/rpmrb:34
+msgid "Changelog entry already exists"
+msgstr ""
+
+#: ../bin/rpmrb:37
 msgid "rpmgs"
 msgstr ""
 
-#: bin/rpmrb:19
+#: ../bin/rpmrb:37
 msgid "Error with get source"
 msgstr ""
 
-#: bin/rpmrb:20
+#: ../bin/rpmrb:38
 msgid "rpmbsh"
 msgstr ""
 
-#: bin/rpmrb:20
+#: ../bin/rpmrb:38
 msgid "Error with build in hasher"
 msgstr ""
 
-#: bin/rpmrb:21
-msgid "-u"
-msgstr ""
-
-#: bin/rpmrb:21
+#: ../bin/rpmrb:39
 msgid "Error with upload"
 msgstr ""
 
-#: bin/rpmU:10
+#: ../bin/rpmU:9
 msgid "rpmU - the same as [sudo] rpm -Uvh - update package"
 msgstr ""
 
-#: bin/rpmU:15
+#: ../bin/rpmU:14
 msgid "-Uvh"
 msgstr ""
 
-#: bin/rpmurl:28
-msgid " -c - check URL"
+#: ../bin/rpmunmets:20 ../bin/rpmunmets:90 ../bin/rpmunmets:100
+msgid "make_ordinalbox"
 msgstr ""
 
-#: bin/rpmurl:29
-msgid " -f - print failed url only"
+#: ../bin/rpmunmets:25 ../bin/rpmunmets:33
+msgid "mkaptbox"
 msgstr ""
 
-#: bin/rpmurl:30
-msgid " -s - open source dir in browser"
+#: ../bin/rpmunmets:28 ../bin/rpmunmets:101
+msgid "make_testingbox"
 msgstr ""
 
-#: bin/rpmurl:33
-msgid ":hcfs"
+#: ../bin/rpmunmets:48
+msgid " -s   - get all unmets"
 msgstr ""
 
-#: bin/rpmurl:37
-msgid "ABOUTDIR=1"
+#: ../bin/rpmunmets:49
+msgid " -M40 - test for distro ALT Linux 4.0"
 msgstr ""
 
-#: bin/rpmurl:38
-msgid "FAILEDONLY=1"
+#: ../bin/rpmunmets:52
+msgid "SKIPTST="
 msgstr ""
 
-#: bin/rpmurl:74 bin/rpmurl:82
-msgid "%{URL}"
+#: ../bin/rpmunmets:53
+msgid ":hs"
 msgstr ""
 
-#: bin/rpmurl:75
-msgid "SOURCE="
+#: ../bin/rpmunmets:56
+msgid "SKIPTST=1"
 msgstr ""
 
-#: bin/rpmurl:77
-msgid "Url"
+#: ../bin/rpmunmets:93 ../bin/rpmunmets:104 ../bin/rpmunmets:105
+msgid "unmet"
 msgstr ""
 
-#: bin/rpmurl:78
-msgid "Source"
+#: ../bin/rpmunmets:103
+msgid "Calculate unmets..."
 msgstr ""
 
-#: bin/rpmurl:83
-msgid "%{SOURCE}"
+#: ../bin/rpmunmets:108
+msgid "New unmets:"
 msgstr ""
 
-#: bin/rpmurl:88
-msgid "dirname"
+#: ../bin/rpmunmets:109
+msgid "-U0"
 msgstr ""
 
-#: bin/rpmurl:94
-msgid "Url not found"
-msgstr ""
-
-#: bin/rpmurl:99 bin/rpmurl:101
+#: ../bin/rpmurl:14
 msgid "GET"
 msgstr ""
 
-#: bin/rpmurl:103
+#: ../bin/rpmurl:14
+msgid "GET=GET"
+msgstr ""
+
+#: ../bin/rpmurl:14
+msgid "GET=false"
+msgstr ""
+
+#: ../bin/rpmurl:29
+msgid " -c - check URL"
+msgstr ""
+
+#: ../bin/rpmurl:30
+msgid " -f - print failed URL only"
+msgstr ""
+
+#: ../bin/rpmurl:31
+msgid " -p - open package page at sisyphus.ru"
+msgstr ""
+
+#: ../bin/rpmurl:32
+msgid " -s - open source dir in browser"
+msgstr ""
+
+#: ../bin/rpmurl:35
+msgid ":hcfsp"
+msgstr ""
+
+#: ../bin/rpmurl:39
+msgid "ABOUTDIR=1"
+msgstr ""
+
+#: ../bin/rpmurl:40
+msgid "SISYPHUSRU=1"
+msgstr ""
+
+#: ../bin/rpmurl:41
+msgid "FAILEDONLY=1"
+msgstr ""
+
+#: ../bin/rpmurl:70 ../bin/rpmurl:120
+msgid "get_pkginfo"
+msgstr ""
+
+#: ../bin/rpmurl:78 ../bin/rpmurl:86
+msgid "%{URL}"
+msgstr ""
+
+#: ../bin/rpmurl:79
+msgid "SOURCE="
+msgstr ""
+
+#: ../bin/rpmurl:81
+msgid "Url"
+msgstr ""
+
+#: ../bin/rpmurl:82
+msgid "Source"
+msgstr ""
+
+#: ../bin/rpmurl:87
+msgid "%{SOURCE}"
+msgstr ""
+
+#: ../bin/rpmurl:91
+msgid "PAGEURL=http://sisyphus.ru/srpm/Sisyphus"
+msgstr ""
+
+#: ../bin/rpmurl:92 ../bin/rpmurl:115
+msgid "get_pagepkginfo"
+msgstr ""
+
+#: ../bin/rpmurl:95
+msgid "PKGNAME"
+msgstr ""
+
+#: ../bin/rpmurl:101 ../bin/rpmurl:107
+msgid "%{Name}"
+msgstr ""
+
+#: ../bin/rpmurl:127
+msgid "(none)"
+msgstr ""
+
+#: ../bin/rpmurl:140
 msgid "*}"
 msgstr ""
 
-#: bin/rpmurl:103
+#: ../bin/rpmurl:140
 msgid "200"
 msgstr ""
 
-#: bin/rpmurl:103
+#: ../bin/rpmurl:140
 msgid "%-40s %s   %s\\n"
 msgstr ""
