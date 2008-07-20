@@ -19,4 +19,4 @@ install:
 	#install -m 644 apt/apt.conf.* apt/sources.list.* %buildroot/%_sysconfdir/apt/
 	install -m 644 share/eterbuild/pkgrepl/pkgrepl.* $(datadir)/eterbuild/pkgrepl/
 	install -m 644 share/eterbuild/grprepl/grprepl.* $(datadir)/eterbuild/grprepl/
-	install -m 644 share/eterbuild/* $(datadir)/eterbuild/ || :
+	install -m 644 share/eterbuild/functions/* $(datadir)/eterbuild/functions
