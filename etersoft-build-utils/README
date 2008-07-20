@@ -7,15 +7,15 @@ See QuickHelp.txt also.
 
 This package is tested with follow Linux distributions:
  - ALT Linux 2.3/2.4/3.0/4.0/Sisyphus
- - ASP Linux 10/11/11.2
+ - ASP Linux 10/11/12
  - Scientific/4.1
- - Fedora Core 4/5/6/7/8
- - OpenSuSe 10/10.1
+ - Fedora Core 5/6/7/8/9
+ - OpenSuSe 10/10.1/11
  - Mandriva 2005/2006/2007/2008
- - MOPSLinux 3.1/4.0/5.0
+ - MOPSLinux 5.0/6.0
  - Slackware 10.2/11
  - Debian 3.1 (Sarge) / 4.0
- - Ubuntu 5.10/6.06/6.10/7.04/7.10
+ - Ubuntu 6.06/7.04/7.10/8.04
  - RedHat 9 / MCBC 3.0
 
 
@@ -32,22 +32,31 @@ rpmbb [-c] [-i] [-p] name.spec - build package
 	-r do build req
 
 rpmbsh [-r] [-m] [-s] [-u/-U] [-i] name.spec - build package in hasher [and (-s) sign its src.rpm]
+
 rpmbs [-s] [-r] [-u/-U] name.spec - make src.rpm [and (-s) sign package]
 	-d delete uploaded package from incoming
+
 rpmbph [-M30] [-r] [-u/-U] name.spec - backport spec and build package for previous/foreign distro
+
 rpmgs name.spec - download main source file for spec (works with any types)
 	-f force
+
 rpmgp name  - download src.rpm for package 'name' or download source package 'name'
 	-c name | name.spec | package*rpm - check if the package is published in Sisyphus
 	-b name.spec - install need packages for build (via apt-get)
 	-n download only
+	-a check in all known rpm based system
 
 rpmurl [-c -f] name.spec - open Url from spec in browser
+
 rpmbugs [-qf ] name.spec | name - open buglist for package in browser
 	-t console output
 	-n create new bug
+
 rpmcs name.spec - cleanup spec (foreign specs adoption helper)
+
 loginhsh [-M30] [-t -i] - log in to shell in hasher
+
 myhsh [-u -i] package.src.rpm - rebuild package(s) in hasher
 
 rpmrb spec new_version - get source for new version, rebuild it and upload
@@ -68,4 +77,4 @@ hostname 'devel' in ~/.ssh/config as alias for cvs.altlinux.ru (typical for join
 
 Please send any questions at lav@etersoft.ru
 
-Vitaly Lipatov, 07 Nov 2007
+Vitaly Lipatov, 20 Jul 2008
