@@ -21,3 +21,11 @@ check_locking()
 	fi
 }
 
+# workaround about hard coded path to source.list in apt.conf
+print_tmp_aptconf()
+{
+	test -r "$1" || fatal "$1 is missed"
+	# Note: /etc/apt and /etc/eterbuild/apt is supported
+	cat "$1" | \
+		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g"
+}

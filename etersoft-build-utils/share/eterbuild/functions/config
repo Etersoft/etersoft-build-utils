@@ -32,7 +32,10 @@ is_git()
 }
 
 RPMDIR="$HOME/RPM"
-[ -n "$APTCONF" ] || APTCONF=$ETERBUILDETC/apt/apt.conf
+
+# apt.conf.SS is exists by default
+[ -n "$APTCONF" ] || APTCONF=$ETERBUILDETC/apt/apt.conf.SS
+
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
 OWNERMAIL=`rpm --eval %packager`
 

@@ -75,7 +75,7 @@ TESTINGAPTCONF=$OURTMPDIR/apt.conf
 
 # Hack: subst patch to sources.list
 cat $ORDINALAPTCONF | \
-	sed -e "s|\"/etc/apt/.*\"|\"$OURTMPDIR/sources.list\"|g" >$TESTINGAPTCONF
+	sed -e "s|\"/etc/.*apt/sources.*\"|\"$OURTMPDIR/sources.list\"|g" >$TESTINGAPTCONF
 cat $ETERBUILDETC/apt/sources.list.$MENV >$OURTMPDIR/sources.list || fatal ""
 
 HASHERDIR=$HASHERDIR$MENVARG
