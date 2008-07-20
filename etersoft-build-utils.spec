@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -58,6 +58,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
+- move functions to share/eterbuild/functions dir
+
 * Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - build from git, move install commands to makefile
 - move /etc/rpm/etersoft-build-config to /etc/eterbuild/config
