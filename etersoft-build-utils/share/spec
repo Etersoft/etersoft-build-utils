@@ -1,0 +1,96 @@
+#!/bin/bash
+# 2006-2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# 20.07.08
+
+get_var()
+{
+	grep -i "^$1:" | head -n 1 | sed -e "s/^[^:]*[ \t]*:[ \t]*//"
+
+}
+
+# Раскрывает макросы в спеке и выводит на стандартный вывод
+eval_spec()
+{
+	# Hack: just print spec if -bE failed
+	# TODO: use rpm -showrc instead -bE for get main variables?
+	if is_alt ; then
+		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
+	else
+		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ 2>/dev/null || cat $1
+	fi
+}
+
+get_release()
+{
+	eval_spec $1 | get_var "Release"
+}
+
+# get current release number
+get_release_number()
+{
+	$(get_release $1 | sed -e "s/alt//" | sed -e "s/%{_vendor}//" | sed -e "s/eter//" | sed -e "s/%_vendor//")
+}
+
+
+set_var()
+{
+	subst "s|\($2:\).*\$|\1 $3|" $1
+}
+
+set_release()
+{
+	local RELEASE=$2
+	if [ -z "$RELEASE" ] ; then
+		RELEASE=alt1
+	fi
+	set_var $1 Release $RELEASE
+}
+
+# Set version for spec (args: spec version), f.i. test.spec 1.2.3)
+# Supports %major and %ver_major macros in spec
+# версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
+set_version()
+{
+	local SPEC=$1
+	local VER=$2
+
+	if [ -z "$SPEC" ] ; then
+		return 1
+	fi
+
+	if [ -z "$VER" ] ; then
+		return 2
+	fi
+
+	VERMAJOR=`echo $VER | sed -e "s|\([0-9]*\.[0-9]*\)\..*|\1|"`
+	VERMINOR=`echo $VER | sed -e "s|^[0-9]*\.[0-9]*||;s|^\.||"`
+	if [ -z ${VER/.*/} ] ; then
+		VERMAJOR=
+	fi
+
+	MAJORMACROS=`grep "\%define[[:space:]]\(\|ver_\)major" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
+	if [ -n "${MAJORMACROS}" ] ; then
+		# Change major define
+		test -n "$VERMAJOR" && subst "s|\(\%define[[:space:]]$MAJORMACROS[[:space:]]\).*|\1$VERMAJOR|" $SPEC
+		# Change version if VERMINOR is defined
+		if [ -n "$VERMINOR" ] ; then
+			set_var $SPEC Version %$MAJORMACROS.$VERMINOR || fatal "Error 1 with set version to spec"
+		else
+			set_var $SPEC Version %$MAJORMACROS || fatal "Error 2 with set version to spec"
+		fi
+	else
+		set_var $SPEC Version $VER || fatal "Error 3 with set version to spec"
+	fi
+}
+
+
+subst_namever()
+{
+	sed -e "s|%{name}|$BASENAME|g
+			s|%{version}|$VERSION|g
+			s|%name|$BASENAME/|g
+			s|%version|$VERSION/|g"
+}

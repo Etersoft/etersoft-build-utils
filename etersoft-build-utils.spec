@@ -49,12 +49,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %doc AUTHORS README TODO NEWS QuickHelp* 
 %doc tools/upload-to-alt tools/ls-incoming tools/check_spec.sh
 %_bindir/*
-%dir %_datadir/eterbuild/
-%_datadir/eterbuild/common
-%_datadir/eterbuild/repl
-%_datadir/eterbuild/publish-compat
-%_datadir/eterbuild/pkgrepl/
-%_datadir/eterbuild/grprepl/
+%_datadir/eterbuild/
 %dir %_sysconfdir/eterbuild/
 %config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*
 %config(noreplace) %_sysconfdir/eterbuild/apt/sources.list.*
