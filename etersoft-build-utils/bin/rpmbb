@@ -22,21 +22,6 @@ if [ "$1" = "--helper" ]; then
 	exit $?
 fi
 
-# get correct BUILDROOT, run build_rpms_name before!
-build_buildroot()
-{
-	test -z "$BASENAME" && fatal "Use build_buildroot with BASENAME defined"
-	# ALT Only?
-	BUILDROOT=`rpm --eval %buildroot | subst_namever`
-	test -z "$BUILDROOT" && fatal "Fix rpm's buildroot"
-	if [ "$BUILDROOT" = "%buildroot" ] ; then
-		BUILDROOT="$HOME/tmp/$BASENAME-buildroot"
-		warning "Can't get buildroot from RPM, set to $BUILDROOT"
-		return 1
-	fi
-	return 0
-}
-
 #############################
 
 Usage="Usage: $name [-c -p -i -r] spec..."

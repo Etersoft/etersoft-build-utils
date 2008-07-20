@@ -31,6 +31,21 @@ uni_rpmbuild()
 	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
 }
 
+# get correct BUILDROOT, run build_rpms_name before!
+build_buildroot()
+{
+	test -z "$BASENAME" && fatal "Use build_buildroot with BASENAME defined"
+	# ALT Only?
+	BUILDROOT=`rpm --eval %buildroot | subst_namever`
+	test -z "$BUILDROOT" && fatal "Fix rpm's buildroot"
+	if [ "$BUILDROOT" = "%buildroot" ] ; then
+		BUILDROOT="$HOME/tmp/$BASENAME-buildroot"
+		warning "Can't get buildroot from RPM, set to $BUILDROOT"
+		return 1
+	fi
+	return 0
+}
+
 # Вынимаем информацию о пакете из спека.
 # Внутренние макроопределения раскрываются!
 # Пробельные символы после Name: могут быть различными
