@@ -174,7 +174,7 @@ test -f ~/.eterbuild-config  && . ~/.eterbuild-config
 # obsoleted
 test -f ~/.ebconfig  && . ~/.ebconfig
 
-. $ETERBUILDDATA/spec
+. $ETERBUILDDIR/spec
 
 
 # get correct BUILDROOT, run build_rpms_name before!
