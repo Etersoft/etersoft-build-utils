@@ -20,6 +20,7 @@ TEXTDOMAIN=etersoft-build-utils
 export TEXTDOMAIN
 TEXTDOMAINDIR='/usr/share/locale'
 export TEXTDOMAINDIR
+ETERBUILDDIR=/usr/share/eterbuild
 
 echog()
 {
@@ -153,7 +154,7 @@ RSYNCINCOMING=devel:/incoming
 BUILDSERVER=
 #BUILDSERVERPATH="$HASHERDIR/repo/i586/RPMS.hasher"
 
-PKGREPLBASE=/usr/share/eterbuild/pkgrepl
+PKGREPLBASE=$ETERBUILDDIR/pkgrepl
 if [ ! -d "$PKGREPLBASE" ] ; then
 	PKGREPLBASE=$(dirname $0)/pkgrepl
 	echo "Warning: Use local replacement dir $PKGREPLBASE"

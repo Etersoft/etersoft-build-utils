@@ -14,32 +14,18 @@
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"
 
-
-# Name of systems
-SYSNAME[0]="alt"
-SYSNAME[1]="fedora"
-SYSNAME[2]="fedora-ccrma"
-SYSNAME[3]="mandriva"
-SYSNAME[4]="mandriva-contrib"
-SYSNAME[5]="suse"
-SYSNAME[6]="suse-edu1"
-SYSNAME[7]="suse-edu2"
-SYSNAME[8]="alt-obsolete"
-SYSNAME[9]="alt-orphaned"
-SYSNAME[10]="pld"
-
-# Urls
-SYSURL[0]="ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS"
-SYSURL[1]="ftp://mirror.yandex.ru/fedora/linux/releases/9/Everything/source/SRPMS"
-SYSURL[2]="http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS"
-SYSURL[3]="ftp://mirror.yandex.ru/mandriva/official/2008.1/SRPMS/main/release"
-SYSURL[4]="ftp://mirror.yandex.ru/mandriva/official/2008.1/SRPMS/contrib/release"
-SYSURL[5]="ftp://mirror.yandex.ru/opensuse/distribution/11.0/repo/src-oss/suse/src"
-SYSURL[6]="http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src"
-SYSURL[7]="http://www.opensuse-education.org/download/repos/1.0/11.0/suse/src"
-SYSURL[8]="ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete"
-SYSURL[9]="ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned"
-SYSURL[10]="ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS"
+# loads repos file and fill SYSNAME and SYSURL arrays
+load_systems_list()
+{
+	local IDX=0
+	local line
+	while read line ; do
+		SYSNAME[$IDX]=${line/ *.*/}
+		#FTP[$IDX]=${line/.* \+/}
+		SYSURL[$IDX]=$(echo $line | sed -e "s|.* \+||g")
+		IDX=$(($IDX+1))
+	done < $ETERBUILDDIR/repos
+}
 
 list_systems()
 {
@@ -153,12 +139,14 @@ fi
 
 # list systems
 if [ "$1" = "-s" ] ; then
+	load_systems_list
 	list_systems
 	exit 0
 fi
 
 # update cache list
 if [ "$1" = "-r" ] ; then
+	load_systems_list
 	FORCEUPDATE=force
 	shift
 	# if followed by system name
@@ -182,6 +170,7 @@ test -z "$1" && fatal "Please run with spec/package name"
 # two params: system, package
 if [ -n "$2" ] ; then
 	NAME=$2
+	load_systems_list
 	IDX=`get_system_idx "$1"`
 	if [ -n "$IDX" ] ; then
 		check_system $IDX
@@ -195,6 +184,7 @@ fi
 
 # Check all systems
 if [ -n "$ALLSYSTEM" ] ; then
+	load_systems_list
 	# search throw all systems
 	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
 		echo

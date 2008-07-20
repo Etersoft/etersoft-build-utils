@@ -15,6 +15,7 @@ install:
 	install -m 755 bin/* $(bindir)
 	install -m 644 etc/apt/* $(sysconfdir)/eterbuild/apt/
 	install -m 644 etc/config $(sysconfdir)/eterbuild/
+	install -m 644 etc/repos $(sysconfdir)/eterbuild/
 	#install -m 644 apt/apt.conf.* apt/sources.list.* %buildroot/%_sysconfdir/apt/
 	install -m 644 share/pkgrepl/pkgrepl.* $(datadir)/eterbuild/pkgrepl/
 	install -m 644 share/grprepl/grprepl.* $(datadir)/eterbuild/grprepl/

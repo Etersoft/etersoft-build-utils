@@ -59,6 +59,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*
 %config(noreplace) %_sysconfdir/eterbuild/apt/sources.list.*
 %config(noreplace) %_sysconfdir/eterbuild/config
+%config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
 * Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
