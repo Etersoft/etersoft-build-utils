@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.4.8
+Version: 1.5.0
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -10,7 +10,8 @@ Url: http://www.freesource.info/wiki/AltLinux/Razrabotchiku/SborkaPaketov
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://etersoft.ru/download/%name/%name-%version.tar.bz2
+# git-clone http://git.altlinux.org/people/lav/packages/etersoft-build-utils.git
+Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
@@ -41,30 +42,28 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %make
 
 %install
-%makeinstall_std
-mkdir -p %buildroot%_bindir/ %buildroot%_sysconfdir/apt/ %buildroot%_sysconfdir/rpm/
-mkdir -p %buildroot%_datadir/%name/pkgrepl %buildroot%_datadir/%name/grprepl
-rm -rf bin/CVS
-install -m 755 bin/* %buildroot/%_bindir/
-install -m 644 etersoft-build-config etersoft-build-functions %buildroot/%_sysconfdir/rpm/
-install -m 644 apt/apt.conf.* apt/sources.list.* %buildroot/%_sysconfdir/apt/
-install -m 644 pkgrepl/pkgrepl.* %buildroot/%_datadir/%name/pkgrepl/
-install -m 644 grprepl/grprepl.* %buildroot/%_datadir/%name/grprepl/
+%makeinstall
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README TODO NEWS upload-to-alt ls-incoming QuickHelp* check_spec.sh
+%doc AUTHORS README TODO NEWS QuickHelp* 
+%doc tools/upload-to-alt tools/ls-incoming tools/check_spec.sh
 %_bindir/*
-%_sysconfdir/rpm/etersoft-build-functions
-%dir %_datadir/%name/
-#%_datadir/%name/functions
-%_datadir/%name/pkgrepl/
-%_datadir/%name/grprepl/
-%config(noreplace) %_sysconfdir/apt/apt.conf.*
-%config(noreplace) %_sysconfdir/apt/sources.list.*
-%config(noreplace) %_sysconfdir/rpm/etersoft-build-config
+%dir %_datadir/eterbuild/
+%_datadir/eterbuild/common
+%_datadir/eterbuild/repl
+%_datadir/eterbuild/publish-compat
+%_datadir/eterbuild/pkgrepl/
+%_datadir/eterbuild/grprepl/
+%dir %_sysconfdir/eterbuild/
+%config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*
+%config(noreplace) %_sysconfdir/eterbuild/apt/sources.list.*
+%config(noreplace) %_sysconfdir/eterbuild/config
 
 %changelog
+* Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- build from git, move install commands to makefile
+
 * Thu Jul 17 2008 Vitaly Lipatov <lav@altlinux.ru> 1.4.8-alt1
 - bin/rpmgp: add support for get src.rpm from various rpm repos
 - do not override CC/CXX, disable ccache detecting

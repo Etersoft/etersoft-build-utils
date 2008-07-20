@@ -1,20 +1,6 @@
-MSGFMT = msgfmt -v
-MSGMERGE = msgmerge
-MSGMERGE_UPDATE = msgmerge --update
-MSGINIT = msginit
-MSGCONV = msgconv
-MSGFILTER = msgfilter
 
-#.po.mo:
-all: QuickHelp.txt QuickHelp.koi8-r.txt etersoft-build-utils.mo
-	
-
-po/etersoft-build-utils.mo: po/etersoft-build-utils.po
-	$(MSGFMT) -c -o t-$@ $< && mv t-$@ $@
-
-po/etersoft-build-utils.pot: Makefile share/common tools/upload-to-alt
-	ls -1 -d bin/* | grep -v "CVS" | xargs xgettext -a -o $@ -L Shell --from-code=koi8-r share/commons tools/upload-to-alt || :
-#	ls -1 -d bin/* etersoft-build-functions upload-to-alt | grep -v "CVS" | xargs grep echo | xgettext -a -o $@ -L Shell --from-code=koi8-r - || :
+all: QuickHelp.txt QuickHelp.koi8-r.txt
+	$(MAKE) -C po
 
 QuickHelp.koi8-r.txt:
 	for i in bin/* ; do echo -e "\n\n---------------------------"; $$i -h ; done >$@
@@ -22,8 +8,14 @@ QuickHelp.koi8-r.txt:
 QuickHelp.txt:
 	for i in bin/* ; do echo -e "\n\n---------------------------"; LANG=C $$i -h ; done >$@
 
-po/etersoft-build-utils.po: po/etersoft-build-utils.pot
-	$(MSGMERGE_UPDATE) $@ $<
-
-install: po/etersoft-build-utils.mo
-	install -D $< $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES/$<
+install: 
+	$(MAKE) -C po install
+	mkdir -p $(bindir) $(sysconfdir)/eterbuild/apt
+	mkdir -p $(datadir)/eterbuild/pkgrepl $(datadir)/eterbuild/grprepl/
+	install -m 755 bin/* $(bindir)
+	install -m 644 etc/apt/* $(sysconfdir)/eterbuild/apt/
+	install -m 644 etc/config $(sysconfdir)/eterbuild/
+	#install -m 644 apt/apt.conf.* apt/sources.list.* %buildroot/%_sysconfdir/apt/
+	install -m 644 share/pkgrepl/pkgrepl.* $(datadir)/eterbuild/pkgrepl/
+	install -m 644 share/grprepl/grprepl.* $(datadir)/eterbuild/grprepl/
+	install -m 644 share/common share/publish-compat share/repl $(datadir)/eterbuild/
