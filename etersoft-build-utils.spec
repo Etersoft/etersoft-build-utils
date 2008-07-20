@@ -59,6 +59,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %changelog
 * Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - build from git, move install commands to makefile
+- move /etc/rpm/etersoft-build-config to /etc/eterbuild/config
+- move /etc/rpm/etersoft-build-functions to /usr/share/eterbuild/common
+- update README, TODO
 
 * Thu Jul 17 2008 Vitaly Lipatov <lav@altlinux.ru> 1.4.8-alt1
 - bin/rpmgp: add support for get src.rpm from various rpm repos
