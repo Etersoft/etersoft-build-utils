@@ -136,7 +136,7 @@ function release_check()
 	done
 }
 
-[ -n "$UPDATES" ] && set_incoming_updates $MENV || set_incoming $MENV
+set_incoming $MENV
 
 if [ -n "${DELETENOW}" ]; then
 	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
@@ -181,14 +181,11 @@ if [ -n "$SIGN" ]; then
 		if [ -n "${UPLOADNOW}" ] ; then
 			echog "Uploading to '$RSYNCINCOMING/$INCOMING/'"
 			check_key
-			#set_incoming $MENV
-			#uploadOLD=$(basename `mktemp -d $UPLOADDIR.old.XXX`)
-			#rmdir $uploadOLD
 			rsync -vay --partial --progress $CHECKSUM \
 			 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/ && \
 			echo "---------------------" && \
 			echog "All files synced" || fatal "Error during rsync"
-			#mv $UPLOADDIR $uploadOLD && mkdir $UPLOADDIR
+
 			for i in $LISTBUILT ; do
 				LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
 				echo >>$LOGFILE

@@ -468,68 +468,31 @@ check_key()
 	return 0
 }
 
+get_distr_version()
+{
+	echo $1 | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g" | sed -e "s|DD|Daedalus|g"
+}
+
 set_incoming()
 {
 	INCOMING="Sisyphus"
+	test -z "$1" && return
 	case "$1" in
-		("M24")
-			INCOMING="backports/2.4"
-			;;
-		("M23")
-			INCOMING="backports/2.3"
-			;;
-		("M30")
-			INCOMING="backports/3.0"
-			;;
-		("M40")
-			INCOMING="backports/4.0"
-			;;
-		("M41")
-			INCOMING="backports/4.1"
-			;;
-		("M42")
-			INCOMING="backports/4.2"
-			;;
 		("DD")
 			INCOMING="Daedalus"
 			;;
 		("SS")
 			INCOMING="Sisyphus"
 			;;
-	esac
-}
-
-set_incoming_updates()
-{
-	INCOMING="Sisyphus"
-	case "$1" in
-		("M24")
-			INCOMING="updates/2.4"
-			;;
-		("M23")
-			INCOMING="updates/2.3"
-			;;
-		("M30")
-			INCOMING="updates/3.0"
-			;;
-		("M40")
-			INCOMING="updates/4.0"
-			;;
-		("M41")
-			INCOMING="updates/4.1"
-			;;
-		("M42")
-			INCOMING="updates/4.2"
-			;;
-		("DD")
-			INCOMING="Daedalus"
-			;;
-		("SS")
-			INCOMING="Sisyphus"
+		*)
+			if [ -n "$UPDATES" ] ; then
+				INCOMING="updates/`get_distr_version $1`"
+			else
+				INCOMING="backports/`get_distr_version $1`"
+			fi
 			;;
 	esac
 }
-
 
 add_changelog_helper()
 {
