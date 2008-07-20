@@ -5,7 +5,6 @@
 # Thanks Alexey Gladkov <legion@altlinux.ru> for the instructions
 #
 # See http://www.freesource.info/wiki/ALTLinux/Sisyphus/devel/Unmets
-# $Id: rpmunmets,v 1.6 2008/07/17 13:36:51 lav Exp $
 #
 # Tests unmets in built int hasher packages
 

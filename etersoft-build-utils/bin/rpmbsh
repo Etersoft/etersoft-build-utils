@@ -4,9 +4,7 @@
 # Public domain
 #
 # BSH - build source; use hasher
-# 06.02.05
-# 15.04.05 add other repository support
-# 05.09.05 major rewrite code
+#
 # Создаёт пакет(ы) по указанным спекам и собирает в hasher
 # Поддерживает удалённую сборку пакета ( ключ -r)
 # Присылка результата сборки по почте (ключ -m)

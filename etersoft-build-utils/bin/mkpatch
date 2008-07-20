@@ -1,9 +1,10 @@
 #!/bin/sh
-
-# Public domain
+# 2003-2006, 2008 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
 # Make patch for file in $1 against CVS/SVN repository or .orig file
-#
+
 
 . /usr/share/eterbuild/common
 
