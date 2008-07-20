@@ -20,6 +20,8 @@ load_systems_list()
 	local IDX=0
 	local line
 	while read line ; do
+		# skip comments
+		echo $line | grep "^#" >/dev/null && continue
 		SYSNAME[$IDX]=${line/ *.*/}
 		#FTP[$IDX]=${line/.* \+/}
 		SYSURL[$IDX]=$(echo $line | sed -e "s|.* \+||g")
