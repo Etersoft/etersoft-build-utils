@@ -137,21 +137,13 @@ print_list $LISTBUILTSH
 
 echo
 
-# build binary package list
-function get_binpkg_list()
-{
-PKGDIR=$HASHERDIR/repo/i586/RPMS.hasher
-
-find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
-	rpmquery -p --qf='%{sourcerpm}\t%{name}-%{version}-%{release}.%{arch}.rpm\n' "{}" \; \
-	| grep "^$1[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
-}
 
 if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	# test install (only for last package in list)
 	# some key for build hasher from scratch
 	echog "Find binary packages for $LASTPACKAGE ..."
 	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher $LASTPACKAGE`
+	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
 	loginhsh -t -i $MENVARG $BINPACKAGES || exit 1
