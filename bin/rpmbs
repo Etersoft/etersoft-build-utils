@@ -153,6 +153,11 @@ fi
 
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
+	# create tag according to package release
+	if is_git $SPECDIR ; then
+		gear-create-tag --force
+		# git push ?
+	fi
 	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
 	cd $RPMDIR/SRPMS
 	# 1. only rpm command has --addsign 2. do 3 retries
