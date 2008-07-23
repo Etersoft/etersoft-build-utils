@@ -11,6 +11,7 @@ QuickHelp.txt:
 install: 
 	$(MAKE) -C po install
 	mkdir -p $(bindir) $(sysconfdir)/eterbuild/apt
+	mkdir -p $(datadir)/eterbuild/functions/
 	mkdir -p $(datadir)/eterbuild/pkgrepl $(datadir)/eterbuild/grprepl/
 	install -m 755 bin/* $(bindir)
 	install -m 644 etc/apt/* $(sysconfdir)/eterbuild/apt/
@@ -19,4 +20,4 @@ install:
 	#install -m 644 apt/apt.conf.* apt/sources.list.* %buildroot/%_sysconfdir/apt/
 	install -m 644 share/eterbuild/pkgrepl/pkgrepl.* $(datadir)/eterbuild/pkgrepl/
 	install -m 644 share/eterbuild/grprepl/grprepl.* $(datadir)/eterbuild/grprepl/
-	install -m 644 share/eterbuild/functions/* $(datadir)/eterbuild/functions
+	install -m 644 share/eterbuild/functions/* $(datadir)/eterbuild/functions/
