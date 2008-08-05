@@ -21,13 +21,14 @@ DEFAULTARCH=i586
 NICE="nice"
 RPMBUILD=rpmbuild
 
+# TODO: check for .gear, not .git?
 is_git()
 {
 	local DIR=$1
 	[ -n "$DIR" ] && [ -d "$DIR/.git" ] && return 0
 	[ -d ".git" ] && return 0
 	# hack for support spec in some subdir
-	[ -d "../.git" ] && return 0
+	[ -d "../.gear" ] && return 0
 	return 1
 }
 
