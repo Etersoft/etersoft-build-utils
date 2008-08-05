@@ -171,7 +171,8 @@ if [ -n "$2" ] ; then
 	if [ -n "$IDX" ] ; then
 		check_system $IDX
 	else
-		fatal "Unknown system '$1', use rpmgp -s for get list"
+		#fatal "Unknown system '$1', use rpmgp -s for get list"
+		NAME=
 	fi
 	exit 0
 else
