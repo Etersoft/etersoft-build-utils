@@ -277,7 +277,8 @@ do
 	subst "s|%perl_vendorlib|%perl_vendor_privlib|g
 		   s|%perl_vendorarch|%perl_vendor_archlib|g" $i
 
-	subst "s|%_datadir/doc|%_docdir|g" $i
+	subst "s|%_datadir/doc$|%_docdir|g" $i
+	subst "s|%_datadir/doc/|%_docdir/|g" $i
 	subst "s|%_datadir/omf|%_omfdir|g" $i
 	subst "s|%_defaultdocdir|%_docdir|g" $i
 	subst "s|%__autoreconf|%autoreconf|g" $i
