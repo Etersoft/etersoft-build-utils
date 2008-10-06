@@ -159,7 +159,7 @@ do
 		s|%__patch|patch|g 
 		s|%__perl|perl|g 
 		s|%__pgp|pgp|g 
-		s|%__python|python|g 
+		s|%__python |python |g 
 		s|%__rm|rm|g 
 		s|%__rsh|rsh|g 
 		s|%__sed|sed|g 
