@@ -94,9 +94,8 @@ check_locking
 echog "Prepare hasher in $HASHERDIR ..."
 # there is package names in LISTRPMARGS
 UTILPKG="mc"
-[ "$USER" = "lav" ] && UTILPKG="mc ms-fonts-ttf"
 if [ -n "$TESTMODE" ] ; then
-	UTILPKG="$UTILPKG XFree86-xauth"
+	UTILPKG="$UTILPKG XFree86-xauth fonts-ttf-liberation"
 else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
