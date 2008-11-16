@@ -151,18 +151,17 @@ do
 		s|%__grep|grep|g 
 		s|%__gzip|gzip|g 
 		s|%__id|id|g 
-		s|%__install|install|g 
+		s|%__install |install |g 
 		s|%__install_info|install-info|g 
 		s|%__ln_s|ln -s|g 
 		s|%__patch|patch|g 
-		s|%__perl|perl|g 
+		s|%__perl |perl |g 
 		s|%__pgp|pgp|g 
-		s|%__python|python|g 
+		s|%__python |python |g 
 		s|%__rm|rm|g 
 		s|%__rsh|rsh|g 
 		s|%__sed|sed|g 
 		s|%__ssh|ssh|g 
-		s|%__subst|sed -i|g 
 		s|%__tar|tar|g 
 		s|%__unzip|unzip|g 
 		s|%__ar|ar|g 
@@ -175,13 +174,15 @@ do
 		s|%__objcopy|objcopy|g 
 		s|%__objdump|objdump|g 
 		s|%__ranlib|ranlib|g 
-		s|%__strip|strip|g 
-		s|%__libtoolize|libtoolize|g 
-		s|%__aclocal|aclocal|g 
-		s|%__autoheader|autoheader|g 
-		s|%__automake|automake|g 
-		s|%__autoconf|autoconf|g 
 		s|%__tar |tar |g" $i
+
+# CHECK ME:
+#		s|%__strip|strip|g 
+#		s|%__libtoolize|libtoolize|g 
+#		s|%__aclocal|aclocal|g 
+#		s|%__autoheader|autoheader|g 
+#		s|%__automake|automake|g 
+#		s|%__autoconf|autoconf|g 
 
 
 	subst  "s|%__make *install|%make_install install|g
