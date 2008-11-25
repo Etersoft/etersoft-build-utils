@@ -1,12 +1,15 @@
 # all known src.rpm repositories (for rpmgp command)
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS
-fedora       ftp://mirror.yandex.ru/fedora/linux/releases/9/Everything/source/SRPMS
+#fedora       ftp://mirror.yandex.ru/fedora/linux/releases/9/Everything/source/SRPMS
+#fedora       ftp://mirror.yandex.ru/fedora/linux/releases/test/10-Beta/Fedora/source/SRPMS
+fedora       ftp://mirror.yandex.ru/fedora/linux/releases/10/Fedora/source/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
-mandriva     ftp://mirror.yandex.ru/mandriva/official/2008.1/SRPMS/main/release
-mandriva-contrib ftp://mirror.yandex.ru/mandriva/official/2008.1/SRPMS/contrib/release
+mandriva     ftp://mirror.yandex.ru/mandriva/official/2009.0/SRPMS/main/release
+mandriva-contrib ftp://mirror.yandex.ru/mandriva/official/2009.0/SRPMS/contrib/release
 suse         ftp://mirror.yandex.ru/opensuse/distribution/11.0/repo/src-oss/suse/src
 suse-edu1    http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2    http://www.opensuse-education.org/download/repos/1.0/11.0/suse/src
 alt-obsolete ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
 alt-orphaned ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned
 pld          ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS
+rpmfusion    http://download1.rpmfusion.org/free/fedora/releases/10/Everything/source/SRPMS/
