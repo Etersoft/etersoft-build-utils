@@ -3,10 +3,10 @@ all: QuickHelp.txt QuickHelp.koi8-r.txt
 	$(MAKE) -C po
 
 QuickHelp.koi8-r.txt:
-	for i in bin/* ; do echo -e "\n\n---------------------------"; $$i -h ; done >$@
+	for i in bin/* ; do echo -e "\n\n---------------------------"; $$i -h ; done | grep -v "^Note:" | grep -v "^Target" >$@
 
 QuickHelp.txt:
-	for i in bin/* ; do echo -e "\n\n---------------------------"; LANG=C $$i -h ; done >$@
+	for i in bin/* ; do echo -e "\n\n---------------------------"; LANG=C $$i -h ; done | grep -v "^Note:" | grep -v "^Target" >$@
 
 install: 
 	$(MAKE) -C po install
