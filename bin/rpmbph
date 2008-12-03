@@ -28,8 +28,9 @@ BASERELEASE=$(get_release_number $SPECNAME)
 if [ "$VENDOR" = "alt" ] ; then
 	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbsh
-	# Change release according to alt policy
-	set_release $SPECNAME alt0.$MDISTR.$BASERELEASE
+	# Change release according to alt policy with extensions
+	# General rule: alwars alt(N-1).MM.(N)
+	set_release $SPECNAME alt$(($BASERELEASE - 1)).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
 else
