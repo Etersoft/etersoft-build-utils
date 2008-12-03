@@ -27,7 +27,8 @@ print_tmp_aptconf()
 	test -r "$1" || fatal "$1 is missed"
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
 	cat "$1" | \
-		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g"
+		sed -e "s|\"/etc/.*apt/sources.list|\"$OURTMPDIR/sources.list|g"
+#		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g"
 }
 
 # workaround about hard coded arch in sources.list
@@ -42,4 +43,12 @@ print_tmp_sourceslist()
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
 	cat "$SLIST" | \
 		sed -e "s|i586|$DEFAULTARCH|g"
+}
+
+prepare_aptconfig()
+{
+	print_tmp_aptconf $APTCONF >$OURTMPDIR/apt.conf.$MENV || fatal "Can't create apt.conf"
+	print_tmp_sourceslist $APTCONF >$OURTMPDIR/sources.list.$MENV || fatal "Can't create sources.list"
+	export OURAPTCONF=$OURTMPDIR/apt.conf.$MENV
+	export OURSOURCES=$OURTMPDIR/sources.list.$MENV
 }
