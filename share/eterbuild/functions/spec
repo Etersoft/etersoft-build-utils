@@ -29,7 +29,7 @@ get_release()
 # get current release number
 get_release_number()
 {
-	$(get_release $1 | sed -e "s/alt//" | sed -e "s/%{_vendor}//" | sed -e "s/eter//" | sed -e "s/%_vendor//")
+	get_release $1 | sed -e "s/alt//" | sed -e "s/%{_vendor}//" | sed -e "s/eter//" | sed -e "s/%_vendor//"
 }
 
 
