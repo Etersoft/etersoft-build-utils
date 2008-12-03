@@ -20,13 +20,24 @@ uni_rpmbuild()
 		# FIXME: do not override -v
 		ONEPARAM="--define=_source_payload w9.gzdio"
 	fi
+	# TODO: add support for git
+	if [ "$COMMAND" = "buildreq" ] ; then
+		$NICE $COMMAND $@
+		return
+	fi
 	if is_git $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
 		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
-		$NICE gear --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@
+		if [ "$MENV" = "SS" ] ; then
+			$NICE gear --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@
+		else
+			# build src.rpm via hasher (on ALT)
+#			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
+			$NICE gear --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@
+		fi
 	else
-		$COMMAND "$ONEPARAM" $@
+		$NICE $COMMAND "$ONEPARAM" $@
 	fi
 	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
 }
