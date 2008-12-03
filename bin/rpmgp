@@ -11,7 +11,8 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/rpm
+load_mod rpm
+load_mod repl
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"
