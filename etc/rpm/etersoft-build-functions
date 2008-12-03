@@ -1,0 +1,5 @@
+# for backward compatibility
+. /usr/share/eterbuild/functions/common
+load_mod rpm
+load_mod publish-compat
+

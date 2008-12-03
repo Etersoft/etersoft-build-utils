@@ -10,11 +10,12 @@ QuickHelp.txt:
 
 install: 
 	$(MAKE) -C po install
-	mkdir -p $(bindir) $(sysconfdir)/eterbuild/apt
+	mkdir -p $(bindir) $(sysconfdir)/eterbuild/apt $(sysconfdir)/rpm
 	mkdir -p $(datadir)/eterbuild/functions/
 	mkdir -p $(datadir)/eterbuild/pkgrepl $(datadir)/eterbuild/grprepl/
 	install -m 755 bin/* $(bindir)
 	install -m 644 etc/apt/* $(sysconfdir)/eterbuild/apt/
+	install -m 644 etc/rpm/* $(sysconfdir)/rpm/
 	install -m 644 etc/config $(sysconfdir)/eterbuild/
 	install -m 644 etc/repos $(sysconfdir)/eterbuild/
 	#install -m 644 apt/apt.conf.* apt/sources.list.* %buildroot/%_sysconfdir/apt/
