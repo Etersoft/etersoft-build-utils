@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+#. `dirname $0`/../share/eterbuild/functions/common
+
+#test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
+
+if [ "$1" = "-h" ] ; then
+	echo "ginit - initialize repo in git.alt for current project"
+	echo "Use: ginit without parameters"
+	exit 1
+fi
+
+PROJECTNAME=$(basename `pwd`)
+
+ssh git.alt git-init-db $PROJECTNAME.git
