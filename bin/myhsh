@@ -95,8 +95,11 @@ if [ -n "${LISTNAMES/*tar/}" ] ; then
 	echog "OK"
 fi
 
+# export OURAPTCONF with temp. file contains correct path to sources.list
+prepare_aptconfig
+
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
-HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$APTCONF --target $DEFAULTARCH $HASHERARG"
+HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target $DEFAULTARCH $HASHERARG"
 if [ "$MENV" != "SS" ] && [ "$MENV" != "DD" ]; then
 	HASHERARG="--build-args \"--with=build_$MENV\" --build-args \"--with=build_backport\" $HASHERARG"
 fi
