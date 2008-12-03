@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 # 2003-2006, 2008 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
@@ -11,7 +11,7 @@
 . $ETERBUILDDIR/functions/hasher
 
 #############################
-Usage="Usage: $name [-m -s -u -i -c] spec..."
+Usage="Usage: $name [-m -s -u -i -c] src.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -83,14 +83,17 @@ fi
 
 echog "List of packages: \$LISTNAMES"
 
-if [ -z "${LISTNAMES/^.*spec/}"  ] ; then
+if [ -z "${LISTNAMES/*spec/}"  ] ; then
 	echo "!!!!!!!!"
 	fatal "Please use src.rpm as argument, not spec"
 fi
 
-echog -n "Checking with sisyphus_check..."
-sisyphus_check --no-check=$HASHER_NOCHECK --files $LISTNAMES || fatal "check for sisyphus failed"
-echog "OK"
+# Skip checking for tar arg
+if [ -n "${LISTNAMES/*tar/}" ] ; then
+	echog -n "Checking with sisyphus_check..."
+	sisyphus_check --no-check=$HASHER_NOCHECK --files $LISTNAMES || fatal "check for sisyphus failed"
+	echog "OK"
+fi
 
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
 HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$APTCONF --target $DEFAULTARCH $HASHERARG"
