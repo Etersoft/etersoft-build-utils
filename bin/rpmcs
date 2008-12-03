@@ -203,6 +203,8 @@ do
 		s|%_libdir/mono|%_monodir|g" $i
 
 	subst  "s|%prefix/lib|%_libdir|g
+		s|%prefix/%_lib|%_libdir|g
+		s|/usr/%_lib|%_libdir|g
 		s|%prefix/include|%_includedir|g
 		s|/usr/include|%_includedir|g
 		s|/usr/src|%_usrsrc|g
@@ -286,6 +288,7 @@ do
 	subst "s|%rpmcflags|%optflags|g" $i
 
 	subst "s|^%clean$||g" $i
+	subst "s|^%debug_package$||g" $i
 	subst "s|^rm -rf %buildroot$||g" $i
 	subst "s|^%defattr(-,root,root)||g" $i
 	subst "s|^%defattr(644,root,root,755)||g" $i
