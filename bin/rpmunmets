@@ -10,6 +10,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod hasher
 
 make_ordinalbox()
 {
@@ -71,12 +72,6 @@ ORDINALWORKDIR=$OURTMPDIR/WD1
 TESTINGWORKDIR=$OURTMPDIR/WD2
 
 ORDINALAPTCONF=$APTCONF
-TESTINGAPTCONF=$OURTMPDIR/apt.conf
-
-# Hack: subst patch to sources.list
-cat $ORDINALAPTCONF | \
-	sed -e "s|\"/etc/.*apt/sources.*\"|\"$OURTMPDIR/sources.list\"|g" >$TESTINGAPTCONF
-cat $ETERBUILDETC/apt/sources.list.$MENV >$OURTMPDIR/sources.list || fatal ""
 
 HASHERDIR=$HASHERDIR$MENVARG
 if [ ! -d $HASHERDIR/repo ] || [ -n "$SKIPTST" ] ; then
@@ -89,7 +84,10 @@ if [ ! -d $HASHERDIR/repo ] || [ -n "$SKIPTST" ] ; then
 	exit 0
 fi
 
-echo "rpm file:$HASHERDIR/repo/ $DEFAULTARCH hasher" >>$OURTMPDIR/sources.list
+# Prepare our confdir
+prepare_aptconfig
+TESTINGAPTCONF=$OURAPTCONF
+echo "rpm file:$HASHERDIR/repo/ $DEFAULTARCH hasher" >>$OURSOURCES
 
 make_ordinalbox
 make_testingbox
