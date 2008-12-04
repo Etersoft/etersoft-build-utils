@@ -78,3 +78,5 @@ libgtkmm2-devel|gtkmm24-devel
 
 libpng12|libpng
 sysvinit-utils|SysVinit
+
+libltdl-devel|libtool-ltdl-devel
