@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/bash
 # 2003-2006, 2008 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
