@@ -1,6 +1,27 @@
-etersoft-build-utils-1.5.0:
+etersoft-build-utils-1.5.1: 06 Dec 2008
+- APTCONF sets used apt.conf if defined
+- add support for x86_64 build with generic i586 sources.list
+- set git tag during rpmbs -s
+- fix release checking in universal manner
+- skip sisyphus_check if build from git
+- update QuickHelp, remove unneeded comments
+- fix __python_ and so on incorrect replacement
+- disable __subst and libtoolize/autoconf and so on replacement
+- fix _datadir/doc replacement (altbug #16604)
+- use fonts-ttf-liberation from loginhsh
+
+etersoft-build-utils-1.4.9: 29 Oct 2008
+- add macroses from rpm-build-fonts
+- support Mandriva 2009
+- update pkgrepl rules
+- bin/rpmrb: fix to use rpmrb without version
+- bin/rpmgp: fix package download
+
+etersoft-build-utils-1.5.0: 20 Jul 2008
+- initial migration to git
 - move /etc/rpm/etersoft-build-config to /etc/eterbuild/config
 - move /etc/rpm/etersoft-build-functions to /usr/share/eterbuild/common
+- update README, TODO
 
 etersoft-build-utils-1.4.8: 17 Jul 2008
 - add support for M42
