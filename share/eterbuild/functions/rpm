@@ -22,7 +22,11 @@ uni_rpmbuild()
 	fi
 	# TODO: add support for git
 	if [ "$COMMAND" = "buildreq" ] ; then
-		$NICE $COMMAND $@
+		if is_git $SPECDIR ; then
+			$NICE gear-buildreq --commit -- $@
+		else
+			$NICE $COMMAND $@
+		fi
 		return
 	fi
 	if is_git $SPECDIR ; then
