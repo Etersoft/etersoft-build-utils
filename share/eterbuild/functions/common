@@ -5,20 +5,22 @@
 
 set_eterbuilddir()
 {
-	# if run from no system installation
-	if dirname $0 | grep $ETERBUILDDIR >/dev/null ; then
+	[ -z "$ETERBUILDDIR" ] || return 0
+
+	if dirname $0 | grep /usr >/dev/null ; then
 		ETERBUILDETC=/etc/eterbuild
 		ETERBUILDDIR=/usr/share/eterbuild
 	else
+		# if run from no system installation
 		ETERBUILDDIR=$(realpath `dirname $0`/../share/eterbuild)
 		ETERBUILDETC=$(realpath `dirname $0`/../etc)
 		echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
 	fi
+	[ -n "$ETERBUILDDIR" ]
 }
 
 # set if empty and check it
-[ -n "$ETERBUILDDIR" ] || set_eterbuilddir
-if [ -z "$ETERBUILDIR" ] ; then
+if ! set_eterbuilddir ; then
 	echo "Can't detect package files location"
 	exit 1
 fi
