@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
-%define altcompat_ver 0.9
+%define altcompat_ver 0.95
 
 # C compiler is required in rpm-build; we do not require C++ here
 Requires: rpm-build rpm-build-compat >= %altcompat_ver
@@ -33,7 +33,7 @@ This package contains a set of helper utils for RPM building process.
 See info in Russian
 on %url.
 
-RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
+RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 
 %prep
 %setup -q
@@ -61,7 +61,23 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 
 %changelog
 * Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
-- move functions to share/eterbuild/functions dir
+- APTCONF sets used apt.conf if defined
+- add support for x86_64 build with generic i586 sources.list
+- set git tag during rpmbs -s
+- fix release checking in universal manner
+- skip sisyphus_check if build from git
+- update QuickHelp, remove unneeded comments
+- fix __python_ and so on incorrect replacement
+- disable __subst and libtoolize/autoconf and so on replacement
+- fix _datadir/doc replacement (altbug #16604)
+- use fonts-ttf-liberation from loginhsh
+
+* Wed Oct 29 2008 Vitaly Lipatov <lav@altlinux.ru> 1.4.9-alt1
+- add macroses from rpm-build-fonts
+- support Mandriva 2009
+- update pkgrepl rules
+- bin/rpmrb: fix to use rpmrb without version
+- bin/rpmgp: fix package download
 
 * Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - build from git, move install commands to makefile
