@@ -58,12 +58,15 @@ get_list()
 	local URL=${SYSURL[$1]}
 	local FORCE=$2
 	local SYS=${SYSNAME[$1]}
+	local CURL=curl
+
+	which $CURL 2>/dev/null >/dev/null || fatal "curl command needed for download"
 	LIST=$OURTMPDIR/tmp-rpmgpall-$SYS
 	if [ ! -f "$LIST" ] || [ "$FORCE" = "force" ] ; then
 		echo "Get list for $SYS from $URL"
 		#curl -l $URL/ >$LIST
 		# suitable for ftp and http lists
-		curl -l $URL/ | html_filter >$LIST
+		$CURL -l $URL/ | html_filter >$LIST
 	else
 		echo "List for $SYS"
 	fi
