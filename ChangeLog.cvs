@@ -1,3 +1,194 @@
+2008-10-29 14:26  yurifil
+
+	* pkgrepl/pkgrepl.deb:
+	  Добавлено правило для rpm-build-fonts
+
+2008-10-27 17:55  yurifil
+
+	* pkgrepl/pkgrepl.rpm:
+	  добавлено правило для rpm-build-fonts
+
+2008-10-27 14:14  boris
+
+	* pkgrepl/: pkgrepl.mdv, pkgrepl.mdv.2005, pkgrepl.mdv.2006,
+	  pkgrepl.mdv.2007, pkgrepl.mdv.2008.1: fix repl with libxslt-devel
+
+2008-10-27 14:09  boris
+
+	* pkgrepl/pkgrepl.mdv.2009: add mandriva 2009 rules
+
+2008-10-08 00:01  lav
+
+	* pkgrepl/pkgrepl.deb: add pam subst
+
+2008-08-26 18:42  yurifil
+
+	* pkgrepl/pkgrepl.ubuntu.8.04:
+	  добавлены правила для ice и libice
+
+2008-08-26 15:56  yurifil
+
+	* pkgrepl/pkgrepl.suse.11:
+	  добавлено правило для menu-devel
+
+2008-08-26 14:43  yurifil
+
+	* pkgrepl/pkgrepl.scientific.4.1:
+	  добавлено правило для menu-devel
+
+2008-08-26 13:47  yurifil
+
+	* pkgrepl/: pkgrepl.asplinux.10, pkgrepl.asplinux.11:
+	  добавлено правило для menu-devel
+
+2008-08-26 13:25  yurifil
+
+	* pkgrepl/pkgrepl.mdv.2008:
+	  добавлено правило для libldap
+
+2008-08-19 16:45  yurifil
+
+	* pkgrepl/pkgrepl.lxp.2006:
+	  добавлено правило для gccmakedep
+
+2008-08-18 15:51  yurifil
+
+	* pkgrepl/pkgrepl.asplinux.11:
+	  добавлено правило для gccmakedep
+
+2008-08-13 12:02  boris
+
+	* pkgrepl/pkgrepl.mdv.2007: mandriva update python to 2.5
+
+2008-08-12 17:22  boris
+
+	* pkgrepl/pkgrepl.suse: add gccmakedep
+
+2008-07-31 17:38  yurifil
+
+	* pkgrepl/pkgrepl.fedora.9:
+	  добавлено правило для libice
+
+2008-07-21 16:56  yurifil
+
+	* pkgrepl/pkgrepl.lxp:
+	  добавлены правила для gtkmm24-devel и menu-devel
+
+2008-07-21 16:37  yurifil
+
+	* pkgrepl/pkgrepl.fedora.9:
+	  добавлено правило для libgtkmm2-devel
+
+2008-07-21 16:01  yurifil
+
+	* pkgrepl/pkgrepl.centos.5:
+	  добавлено правило для menu-devel
+
+2008-07-20 13:46  lav
+
+	* bin/rpmrb: fix to use rpmrb without version
+
+2008-07-20 13:43  lav
+
+	* etersoft-build-functions, bin/rpmrb: create correct set_version
+	  from rpmrb's code
+
+2008-07-20 13:42  lav
+
+	* TODO: update TODO
+
+2008-07-19 17:11  boris
+
+	* pkgrepl/pkgrepl.suse.11: add repl for OpenSUSE/11
+
+2008-07-19 16:03  yurifil
+
+	* pkgrepl/pkgrepl.mdv:
+	  добавлено правило для menu-devel
+
+2008-07-19 15:52  yurifil
+
+	* pkgrepl/: pkgrepl.mdv.2008, pkgrepl.mdv.2008.1:
+	  добавлено правило для menu-devel
+
+2008-07-19 15:46  yurifil
+
+	* pkgrepl/pkgrepl.mdv.2006:
+	  добавлено правило для menu-devel
+
+2008-07-19 15:44  yurifil
+
+	* pkgrepl/pkgrepl.mdv.2006:
+	  добавлено правило для gtkmm
+
+2008-07-19 15:36  yurifil
+
+	* pkgrepl/pkgrepl.mdv.2008.1:
+	  изменено правило для gtkmm
+
+2008-07-19 15:19  yurifil
+
+	* pkgrepl/pkgrepl.mdv.2008.1:
+	  добавлено правило для gtkmm
+
+2008-07-18 17:53  yurifil
+
+	* pkgrepl/pkgrepl.mdv.2008:
+	  добавлено правило для gtkmm
+
+2008-07-18 15:29  yurifil
+
+	* pkgrepl/pkgrepl.mdv:
+	  добавлено правило для libgtkmm24
+
+2008-07-18 12:59  yurifil
+
+	* pkgrepl/pkgrepl.asplinux.12:
+	  first rule changed
+
+2008-07-18 12:55  yurifil
+
+	* pkgrepl/pkgrepl.asplinux.12:
+	  first rule added
+
+2008-07-17 23:19  lav
+
+	* etersoft-build-utils.spec: we have to need our minimal version to
+	  build
+
+2008-07-17 23:09  lav
+
+	* etersoft-build-utils.spec: add curl to recommended
+
+2008-07-17 23:09  lav
+
+	* release-helper.sh: disable tarball publishing
+
+2008-07-17 23:07  lav
+
+	* bin/rpmgp: fix filtering
+
+2008-07-17 23:02  lav
+
+	* bin/rpmgp: download nothing in -a mode fix checking
+
+2008-07-17 22:46  lav
+
+	* bin/rpmbb: more clean case
+
+2008-07-17 22:42  lav
+
+	* etersoft-build-functions: fix return code after checking on
+	  VERBOSE
+
+2008-07-17 22:37  lav
+
+	* bin/rpmgp: fix package download
+
+2008-07-17 22:31  lav
+
+	* ChangeLog, NEWS, etersoft-build-utils.spec: new release
+
 2008-07-17 22:04  lav
 
 	* pkgrepl/: pkgrepl.deb, pkgrepl.fedora.5, pkgrepl.lxp,
