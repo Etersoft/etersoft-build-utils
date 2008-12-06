@@ -22,7 +22,7 @@ alt_tolocal()
 local SPECNAME
 SPECNAME=$1
 
-BASERELEASE=$(get_release_number $SPECNAME)
+BASERELEASE=$(get_numrelease $SPECNAME)
 
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
