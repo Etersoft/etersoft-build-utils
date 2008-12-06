@@ -1,3 +1,10 @@
+todo rebuild:
+#!/bin/sh -le
+${verbose:+set -x}
+export -n target ||:
+exec time rpmbuild --target="\$target" $nodeps -bs "\$@"
+
+
 rpmbph пока не умеет работать с git
 !!
 Изменить порядок поиска замен, чтобы он происходил без базовой версии, а замены от предыдущей версии
