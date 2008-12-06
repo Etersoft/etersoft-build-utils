@@ -46,3 +46,5 @@ libXvMC-devel|xorg-x11-devel
 libXcursor-devel|xorg-x11-devel
 libXevie-devel|xorg-x11-devel
 libXv-devel|xorg-x11-devel
+
+xorg-cf-files|

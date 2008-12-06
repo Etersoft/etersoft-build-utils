@@ -51,7 +51,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher
 %_bindir/*
 %_datadir/eterbuild/
 # for backward compatibility (will removed in 2.0)
-%dir %_sysconfdir/rpm/
+%_sysconfdir/rpm/etersoft-build-functions
 %dir %_sysconfdir/eterbuild/
 %dir %_sysconfdir/eterbuild/apt/
 %config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*

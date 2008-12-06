@@ -6,5 +6,4 @@ libpq4|libpq3
 libSDL_sound-devel|libSDL-devel
 %python-dev|
 %python-base|
-xorg-cf-files|
 linux-libc-headers|glibc-kernheaders

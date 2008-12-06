@@ -78,5 +78,9 @@ libgtkmm2-devel|gtkmm24-devel
 
 libpng12|libpng
 sysvinit-utils|SysVinit
+menu-devel|
+rpm-build-fonts|rpm-build-altlinux-compat
+libexpat|expat
+libexpat-devel|expat-devel
 
 libltdl-devel|libtool-ltdl-devel

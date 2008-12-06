@@ -41,3 +41,10 @@ libgtkmm2-devel|libgtkmm-2.4-dev
 
 libpng12|libpng
 libpng-devel|libpng-dev
+libpam0-devel|libpam0g-dev
+
+rpm-build-fonts|rpm-build-altlinux-compat
+menu-devel|
+
+libexpat|libexpat1
+libexpat-devel|libexpat1-dev

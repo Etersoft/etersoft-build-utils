@@ -1,5 +1,6 @@
 # Mandriva base replacements rules
 python-devel|libpython2.4-devel
+libxslt-devel|libxslt1-devel
 
 # XOrg
 libICE-devel|libxorg-x11-devel
@@ -44,3 +45,5 @@ libmesa-devel|libMesaGLU1-devel
 libGLU-devel|libMesaGLU1-devel
 libmesa|libMesaGLU1
 libGLU|libMesaGLU1
+
+libgtkmm2-devel|libgtkmm2.4_1-devel

@@ -13,8 +13,8 @@ libtinfo|ncurses
 libtinfo-devel|ncurses-devel
 libfreetype|libfreetype6
 libfreetype-devel|libfreetype6-devel
-libxslt-devel|libxslt1-devel
 libcups-devel|libcups2-devel
+libcups|libcups2
 liblcms-devel|liblcms1-devel
 liblcms|liblcms1
 jackit-devel|libjack0-devel
@@ -69,3 +69,6 @@ libmesa-devel|libmesagl1-devel
 libGLU-devel|libmesaglu1-devel
 libmesa|libmesagl1
 libGLU|libmesaglu1
+
+libexpat|libexpat1
+libexpat-devel|libexpat1-devel

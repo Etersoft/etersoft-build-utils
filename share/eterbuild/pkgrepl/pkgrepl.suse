@@ -9,7 +9,6 @@ su|su-wrapper
 
 libfreetype-devel|freetype2-devel
 libfreetype|freetype2
-libusb-devel|libusb
 gpm-devel|
 libungif-devel|
 libalsa-devel|alsa-devel
@@ -68,3 +67,5 @@ libXv-devel|xorg-x11-devel
 
 libmesa-devel|xorg-x11-Mesa-devel
 libGLU-devel|xorg-x11-Mesa-devel
+
+gccmakedep|xorg-x11-util-devel

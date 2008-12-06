@@ -1,6 +1,7 @@
-python-devel|libpython2.4-devel
+python-devel|libpython2.5-devel
 libldap-devel|libldap2.3_0-devel
 libldap|libldap2.3_0
+libxslt-devel|libxslt1-devel
 
 # XOrg
 libICE-devel|libxorg-x11-devel
