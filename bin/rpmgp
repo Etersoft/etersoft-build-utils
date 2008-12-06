@@ -11,7 +11,8 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/rpm
+load_mod rpm
+load_mod repl
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"
@@ -162,33 +163,6 @@ fi
 
 test -z "$1" && fatal "Please run with spec/package name"
 
-# Check concrete system
-# two params: system, package
-if [ -n "$2" ] ; then
-	NAME=$2
-	load_systems_list
-	IDX=`get_system_idx "$1"`
-	if [ -n "$IDX" ] ; then
-		check_system $IDX
-	else
-		fatal "Unknown system '$1', use rpmgp -s for get list"
-	fi
-	exit 0
-else
-	NAME=$1
-fi
-
-# Check all systems
-if [ -n "$ALLSYSTEM" ] ; then
-	load_systems_list
-	# search throw all systems
-	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
-		echo
-		check_system $i
-	done
-	exit 0
-fi
-
 #
 # список названий систем, адресов (с зеркалами?), и режимов фильтрации
 # название кэш-файла строить из названия системы
@@ -237,6 +211,35 @@ if [ "$1" = "-c" ] ; then
 	printf "%-12s %30s\n" $RET $SRCRPM
 	exit 0
 fi
+
+# Check concrete system
+# two params: system, package
+if [ -n "$2" ] ; then
+	NAME=$2
+	load_systems_list
+	IDX=`get_system_idx "$1"`
+	if [ -n "$IDX" ] ; then
+		check_system $IDX
+	else
+		#fatal "Unknown system '$1', use rpmgp -s for get list"
+		NAME=
+	fi
+	exit 0
+else
+	NAME=$1
+fi
+
+# Check all systems
+if [ -n "$ALLSYSTEM" ] ; then
+	load_systems_list
+	# search throw all systems
+	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
+		echo
+		check_system $i
+	done
+	exit 0
+fi
+
 
 echo
 echo "########################################"

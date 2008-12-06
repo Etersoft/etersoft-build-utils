@@ -1,7 +1,16 @@
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
+ginit - initialize repo in git.alt for current project
+Use: ginit without parameters
+
+
+---------------------------
+gpush - publish current project repo to git.alt
+Use: gpush without parameters
+
+
+---------------------------
 loginhsh - install package in hasher / take shell
 Usage:  [-t -i -h -r] bin.rpm...
 Options:
@@ -16,11 +25,9 @@ Warning: Can't get topdir from Makefile.in
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 myhsh - build package via hasher
-Usage:  [-m -s -u -i -c] spec...
+Usage:  [-m -s -u -i -c] src.rpm...
 Options:
- -m - mail result log
  -s - sign package(s)
  -u - sign and upload package(s) to Incoming
  -i - install built packages in test hasher
@@ -28,8 +35,7 @@ Options:
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
-rpmbb - build  binary rpm from spec (with ccache using if found)
+rpmbb - build  binary rpm from spec
 Usage:  [-c -p -i -r] spec...
 Options:
  -c - start from compile stage
@@ -39,7 +45,6 @@ Options:
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmbph - backports spec and rebuild it
 Usage:  [-r -u -U -n -i -m -v] spec...
 Options:
@@ -51,7 +56,6 @@ Options:
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmbs - make src.rpm from spec
 Usage:  [-s -u -c -n --nodeps] spec...
 Options:
@@ -66,7 +70,6 @@ Options:
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmbsh - BSH - build source; use hasher
 Usage:  [-r -s -u -m -i -c] spec...
 Options:
@@ -83,7 +86,6 @@ rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file - op
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT
 
 
@@ -102,7 +104,6 @@ rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmgs - get sources for spec
 Usage:  [-a -r ] spec...
 Options:
@@ -123,7 +124,6 @@ rpmU - the same as [sudo] rpm -Uvh - update package
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmunmets - tests unmets in build packages
 Usage:  [-M24 -M40]
 Options:
@@ -132,7 +132,6 @@ Options:
 
 
 ---------------------------
-Target ALT Linux system: SS, use /etc/apt/apt.conf.SS
 rpmurl - open package Url in browser
 Usage:  [-c -f -p -s] spec or package...
 Options:

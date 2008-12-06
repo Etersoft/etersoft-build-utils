@@ -16,25 +16,25 @@ OURTMPDIR=$TMPDIR
 [ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
 
 # It can be overrides in config
-DEFAULTARCH=i586
+[ -n "$DEFAULTARCH" ] || DEFAULTARCH=i586
 [ `uname -m` = "x86_64" ] && DEFAULTARCH=`uname -m`
 NICE="nice"
 RPMBUILD=rpmbuild
 
+# TODO: check for .gear, not .git?
 is_git()
 {
 	local DIR=$1
 	[ -n "$DIR" ] && [ -d "$DIR/.git" ] && return 0
 	[ -d ".git" ] && return 0
 	# hack for support spec in some subdir
-	[ -d "../.git" ] && return 0
+	[ -d "../.gear" ] && return 0
 	return 1
 }
 
 RPMDIR="$HOME/RPM"
 
-# apt.conf.SS is exists by default
-[ -n "$APTCONF" ] || APTCONF=$ETERBUILDETC/apt/apt.conf.SS
+[ -n "$APTCONFBASE" ] || APTCONFBASE=$ETERBUILDETC/apt/apt.conf
 
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
 OWNERMAIL=`rpm --eval %packager`

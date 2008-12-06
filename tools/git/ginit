@@ -1,9 +1,0 @@
-#!/bin/sh
-
-. ./etersoft-build-functions
-
-#test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
-
-PROJECTNAME=$(basename `pwd`)
-
-ssh git.alt git-init-db $PROJECTNAME.git

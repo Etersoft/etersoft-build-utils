@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+#. `dirname $0`/../share/eterbuild/functions/common
+
+#test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
+
+if [ "$1" = "-h" ] ; then
+	echo "gpush - publish current project repo to git.alt"
+	echo "Use: gpush without parameters"
+	exit 1
+fi
+
+PROJECTNAME=$(basename `pwd`)
+
+git push $@ git.alt:packages/$PROJECTNAME.git
+git push --tags git.alt:packages/$PROJECTNAME.git
+
+#> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
+#>   git tag -s -f -m 'Sisyphus release $A' sisyphus $A

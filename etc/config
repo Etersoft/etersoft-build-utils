@@ -29,7 +29,8 @@
 # You can uncomment it:
 #DEFAULTARCH=i586
 #RPMDIR=$HOME/RPM
-#APTCONF=/etc/apt/apt.conf
+# Use this config
+#APTCONFBASE=/etc/apt/apt.conf
 #REMOTERPMDIR="~/RPM"
 
 # Каталог, куда копируются пакеты к отправке

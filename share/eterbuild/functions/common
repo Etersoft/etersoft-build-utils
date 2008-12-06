@@ -75,7 +75,7 @@ TARGET=`distr_vendor -p`
 VENDOR=`distr_vendor -s`
 
 if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
-	APTCONF=${APTCONF/.SS}.$MENV
+	[ -n "$APTCONF" ] || APTCONF=${APTCONFBASE/.SS}.$MENV
 	
 	echog "Target ALT Linux system: `get_distr_version $MENV`, use \$APTCONF"
 	MENVARG="-$MENV"
@@ -177,3 +177,8 @@ add_changelog_helper()
 	return $R
 }
 
+
+load_mod()
+{
+. $ETERBUILDDIR/functions/$1
+}

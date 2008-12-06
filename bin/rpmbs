@@ -121,7 +121,7 @@ function release_check()
 {
 	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then
 		for i in $@ ; do
-			if [ -z "${i/*alt0.M[0-9][0-9]*/}" ] ; then
+			if [ -z "${i/*alt[0-9].M[0-9][0-9]*/}" ] ; then
 				# Значит не тот релиз
 				fatal "Incorrect release in $i package: was prepared for Sisyphus"
 			fi
@@ -129,7 +129,7 @@ function release_check()
 		return
 	fi
 	for i in $@ ; do
-		if [ -n "${i/*alt0.$MENV*/}" ] ; then
+		if [ -n "${i/*alt[0-9].$MENV*/}" ] ; then
 			# Значит не тот релиз
 			fatal "Incorrect release in $i package: was prepared for $MENV"
 		fi
@@ -153,6 +153,12 @@ fi
 
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
+	# create tag according to package release
+	if is_git $SPECDIR ; then
+	    # needed corrent user.name/user.email for get GPG id
+		gear-create-tag --force
+		# git push ?
+	fi
 	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
 	cd $RPMDIR/SRPMS
 	# 1. only rpm command has --addsign 2. do 3 retries
