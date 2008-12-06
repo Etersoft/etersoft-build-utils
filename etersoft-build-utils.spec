@@ -60,7 +60,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
-* Sun Jul 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
+* Sat Dec 06 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
 - APTCONF sets used apt.conf if defined
 - add support for x86_64 build with generic i586 sources.list
 - set git tag during rpmbs -s
