@@ -1,3 +1,9 @@
+apt-cache list-extras
+
+Нужно убирать BuildArch: noarch при бэкпортировании
+Нужно добавлять устаревшие ныне секции при бэкпортировании
+
+
 todo rebuild:
 #!/bin/sh -le
 ${verbose:+set -x}
