@@ -11,6 +11,7 @@ check()
 
 get_release()
 {
+	#echo "Warning: Error test %test" >&2
 	echo $TESTREL
 }
 
@@ -27,7 +28,13 @@ check get_release alt2 `get_release`
 TESTREL=alt3
 check get_numrelease 3 `get_numrelease`
 
+TESTREL=alt36
+check get_numrelease 36 `get_numrelease`
+
 TESTREL=alt4
+check get_txtrelease alt `get_txtrelease`
+
+TESTREL=alt36
 check get_txtrelease alt `get_txtrelease`
 
 # simple release N
