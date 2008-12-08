@@ -29,13 +29,13 @@ get_release()
 # get 11 from alt11, 12.1 from alt12.1t
 get_numrelease()
 {
-	get_release "$1" | sed -e "s|\([a-Z]*\)\([0-9.]\)[^0-9.]*|\2|"
+	get_release "$1" | sed -e "s|\([a-zA-Z]*\)\([0-9\.]\)[^0-9\.]*|\2|" || echo "0"
 }
 
 # get alt from alt11
 get_txtrelease()
 {
-	get_release "$1" | sed -e "s|\([a-Z]*\)\([0-9.]\).*|\1|"
+	get_release "$1" | sed -e "s|\([a-zA-Z]*\)\([0-9\.]\).*|\1|" || echo "alt"
 }
 
 # Obsoleted: get current release number
