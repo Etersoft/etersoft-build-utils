@@ -41,7 +41,7 @@ get_txtrelease()
 # Obsoleted: get current release number
 get_release_number()
 {
-	echo "Obsoleted get_release_number, use get_numrelease instead" >/dev/stderr
+	warning "Obsoleted get_release_number, use get_numrelease instead"
 	get_numrelease "$1"
 }
 

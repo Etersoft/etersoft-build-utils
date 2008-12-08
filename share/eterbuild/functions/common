@@ -7,7 +7,7 @@ set_eterbuilddir()
 {
 	[ -z "$ETERBUILDDIR" ] || return 0
 
-	if dirname $0 | grep /usr >/dev/null ; then
+	if dirname $0 | grep "^/usr" >/dev/null ; then
 		ETERBUILDETC=/etc/eterbuild
 		ETERBUILDDIR=/usr/share/eterbuild
 	else
@@ -16,26 +16,27 @@ set_eterbuilddir()
 		ETERBUILDETC=$(realpath `dirname $0`/../etc)
 		echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
 	fi
-	[ -n "$ETERBUILDDIR" ]
+	test -n "$ETERBUILDDIR"
+	# returns test result
 }
 
 # set if empty and check it
 if ! set_eterbuilddir ; then
-	echo "Can't detect package files location"
+	echo "Can't detect package files location" >&2
 	exit 1
 fi
 
 # Выводит указанное сообщение об ошибке и завершает программу
 fatal()
 {
-	echog "Error: $@"
+	echog "Error: $@" >&2
 	exit 1
 }
 
 # Выводит указанное сообщение
 warning()
 {
-	echog "Warning: $@"
+	echog "Warning: $@" >&2
 }
 
 print_list()
