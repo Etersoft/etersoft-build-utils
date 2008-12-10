@@ -14,11 +14,11 @@ eval_spec()
 {
 	# Hack: just print spec if -bE failed
 	# TODO: use rpm -showrc instead -bE for get main variables?
-	if is_alt ; then
-		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
-	else
+	#if is_alt ; then
+	#	$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
+	#else
 		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ 2>/dev/null || cat $1
-	fi
+	#fi
 }
 
 get_release()

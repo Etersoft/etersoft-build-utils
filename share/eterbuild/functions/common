@@ -14,7 +14,12 @@ set_eterbuilddir()
 		# if run from no system installation
 		ETERBUILDDIR=$(realpath `dirname $0`/../share/eterbuild)
 		ETERBUILDETC=$(realpath `dirname $0`/../etc)
-		echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
+		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
+			echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
+		else
+			ETERBUILDETC=/etc/eterbuild
+			ETERBUILDDIR=/usr/share/eterbuild
+		fi
 	fi
 	test -n "$ETERBUILDDIR"
 	# returns test result
@@ -169,7 +174,9 @@ set_incoming()
 add_changelog_helper()
 {
 	# don't work sometime?
-	if ! tty -s && [ -z "$@" ] ; then 
+	# TODO: fix with $@, single arg?
+	local DESC SPEC
+	if ! tty -s && [ -z "$DESC" ] ; then 
 		echo "skip changelog fixing without tty"
 		return 1
 	fi
