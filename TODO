@@ -1,3 +1,9 @@
+при отправке через rpmbsh -u не вызывается rpmbs -s (тэг не ставится)
+
+rpmgp -r для git -
+если есть каталог %name -
+скачивание, gear-update 
+
 apt-cache list-extras
 
 Нужно убирать BuildArch: noarch при бэкпортировании
