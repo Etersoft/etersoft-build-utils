@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -60,6 +60,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Thu Dec 11 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt2
+- add get_version, fix inc_release, inc_subrelease
+- clean up code (thanks Slava Semushin for comments)
+- fix rpmbb -r (buildreq) with git
+
 * Sat Dec 06 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
 - APTCONF sets used apt.conf if defined
 - add support for x86_64 build with generic i586 sources.list
