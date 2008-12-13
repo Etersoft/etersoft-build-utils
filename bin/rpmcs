@@ -9,9 +9,9 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/rpm
-. $ETERBUILDDIR/functions/repl
-. $ETERBUILDDIR/functions/spec
+. load_mod rpm
+. load_mod repl
+. load_mod spec
 
 dummy_spec()
 {
