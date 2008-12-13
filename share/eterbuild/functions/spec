@@ -63,18 +63,23 @@ set_release()
 # inc 2 release to 3
 inc_release()
 {
-	BASERELEASE=$(get_numrelease $1)
-	set_release "$i" $(get_txtrelease $1)$(($BASERELEASE + 1 ))
+	local BASERELEASE=$(get_numrelease "$1")
+	set_release "$1" $(get_txtrelease "$1")$(($BASERELEASE + 1 ))
 }
 
 # inc 2.x to 2.(x+1) or 2 to 2.1
 inc_subrelease()
 {
-	BASERELEASE=$(get_numrelease $1)
-	MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
-	MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
+	local BASERELEASE=$(get_numrelease $1)
+	local MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
+	local MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
 	[ "$MINOR" = "$BASERELEASE" ] && MINOR="0"
 	set_release "$1" "$(get_txtrelease $1)${MAJOR}.$(($MINOR + 1 ))"
+}
+
+get_version()
+{
+	eval_spec $1 | get_var "Version"
 }
 
 
