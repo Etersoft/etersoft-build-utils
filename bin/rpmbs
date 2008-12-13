@@ -151,14 +151,24 @@ if [ -n "${DELETENOW}" ]; then
 	exit 0
 fi
 
-if [ -n "$SIGN" ]; then
-	release_check $LISTBUILT
+check_gear()
+{
+	local GEARCTAG=gear-create-tag
 	# create tag according to package release
-	if is_git $SPECDIR ; then
-		local GEARCTAG=gear-create-tag
+	SPECDIR=`dirname $LISTNAMES`
+	if is_gear $SPECDIR ; then
 		# needed corrent user.name/user.email for get GPG id
 		$GEARCTAG --force
 		# git push ?
+	fi
+}
+
+if [ -n "$SIGN" ]; then
+	release_check $LISTBUILT
+	# workaround about spaces in LISTNAMES
+	if [ -r "$(echo $LISTNAMES)" ] ; then
+		# if one spec, check gear
+		check_gear
 	fi
 	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
 	cd $RPMDIR/SRPMS
