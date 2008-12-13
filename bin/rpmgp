@@ -38,6 +38,8 @@ list_systems()
 	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
 			printf "[%-17s] %s\n" ${SYSNAME[$i]} ${SYSURL[$i]}
 	done
+	echo
+	echo "You can add system to /etc/eterbuild/repos"
 }
 
 html_filter()
@@ -74,6 +76,9 @@ get_list()
 
 get_system_idx()
 {
+	if [ -z "$1" ] ; then
+		return 1
+	fi
 	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
 		if [ ${SYSNAME[$i]} = "$1" ] ; then
 			echo $i
@@ -106,77 +111,117 @@ check_name()
 
 check_system()
 {
+	local i
 	local IDX=$1
 	local URL=${SYSURL[$IDX]}
 	#echo "Check for $SYSTEM"
-	get_list $IDX $FORCEUPDATE
+	get_list $IDX
 	#ls -l $LIST
-	check_name $NAME && wget -c $URL/$NLIST
+	check_name $NAME
+	if [ "$DOWNLOADALL" ] ; then
+		for i in $NLIST ; do
+			wget -c $URL/$i
+		done
+	fi
 }
 
+update_cache_list()
+{
+	load_systems_list
+	# if followed by system name
+	IDX=`get_system_idx "$1"`
+	if [ -n "$IDX" ] ; then
+		get_list $IDX force
+		shift
+		exit 0
+	fi
+	# update all systems
+	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
+		get_list $i force
+	done
+}
 
-if [ "$1" = "-h" ]; then
-	echog "Using:"
+Usage="Usage: $name [options] [system] pkgname"
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - various package download operations"
+
+phelp()
+{
+# TODO: improve description
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
 	echog "rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it"
 	echog " name - installed package name or src.rpm"
 	echog " system - name of system (ALT Linux by default if -a missed too)"
 	echog " -a  check for pkgname in all known repositories"
+	echog " -b  install packages needed for build (installs with sudo apt-get) (need spec not package name)"
 	echog " -c  check for exist the package in ALT Linux repository"
-	echog " -b  install packages needed for build (installs with sudo apt-get)"
+	echog " -d  download all matches packages from all repositories"
 	echog " -l  lists packages needed for build (in local pkg system notation) (experimental)"
 	echog " -n  do not install in RPM after download, download in current dir"
 	echog " -r  refresh package list (download it again)"
 	echog " -s  lists all known systems"
 	exit 0
-fi
-
+}
 
 TRYINST="1"
-if [ "$1" = "-n" ] ; then
-	shift
-	TRYINST=""
+while getopts :habcdlnrs opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    a) ALLSYSTEM=1 ;;
+    b) INSTALLBYNARY=1 ;;
+    c) CHECKONLINE=1 ;;
+    d) DOWNLOADALL=1 ;;
+    l) LISTREQS=1 ;;
+    n) TRYINST="" ;;
+    r) UPDATECACHE=1 ;;
+    s) load_systems_list
+       list_systems
+       exit 0
+       ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+# FIXME: параметры передаются и дальше (например, -i, -b)
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
 fi
 
-# list systems
-if [ "$1" = "-s" ] ; then
-	load_systems_list
-	list_systems
-	exit 0
+# pass other options to RPM:
+LISTARGS=$@
+}
+
+mygetopts "$@"
+
+# remove args that were options
+if [ $# -gt 0 ]; then 
+	shift $((OPTIND - 1))
 fi
 
-# update cache list
-if [ "$1" = "-r" ] ; then
-	load_systems_list
-	FORCEUPDATE=force
-	shift
-	# if followed by system name
-	IDX=`get_system_idx "$2"`
-	if [ -n "$IDX" ] ; then
-		get_list $IDX $FORCEUPDATE
-		shift
-		exit 0
-	fi
+# optional arg
+if [ -n "$UPDATECACHE" ] ; then
+    update_cache_list $1
+    exit 0
 fi
 
-# check for all repos
-if [ "$1" = "-a" ] ; then
-	ALLSYSTEM=1
-	shift
-fi
+test -z "$LISTARGS" && fatal "Please run with spec/package name"
 
-test -z "$1" && fatal "Please run with spec/package name"
 
-#
 # список названий систем, адресов (с зеркалами?), и режимов фильтрации
 # название кэш-файла строить из названия системы
 # выводить найденное сразу везде
 #
 # уточнение - [система] пакет
 
-
 # install binary packages
-if [ "$1" = "-b" ] ; then
-	shift
+if [ -n "$INSTALLBYNARY" ] ; then
 	parse_cmd_pre "$@"
 	pack_src_rpm $LISTRPMARGS
 	echog "Running apt-get for install needed packages for $LISTBUILT"
@@ -188,16 +233,13 @@ if [ "$1" = "-b" ] ; then
 fi
 
 # lists packages for build
-if [ "$1" = "-l" ] ; then
-	shift
+if [ -n "$LISTREQS" ] ; then
 	print_target_buildreq $1
 	exit 0
 fi
 
 # Check online
-if [ "$1" = "-c" ] ; then
-	shift
-	CHECKONLINE=1
+if [ -n "$CHECKONLINE" ] ; then
 	if [ -f $1 ] ; then
 		build_rpms_name "$1"
 		SRCRPM=$NAMESRPMIN
