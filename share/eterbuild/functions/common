@@ -58,6 +58,34 @@ is_alt()
 	return $?
 }
 
+# Obsoleted:
+# TODO: check for .gear, not .git?
+is_git()
+{
+	local DIR=$1
+	[ -n "$DIR" ] && [ -d "$DIR/.git" ] && return 0
+	[ -d ".git" ] && return 0
+	# hack for support spec in some subdir
+	[ -d "../.gear" ] && return 0
+	return 1
+}
+
+is_gear()
+{
+	local DIR=$1
+	[ -n "$DIR" ] && [ -d "$DIR/.gear" ] && return 0
+	[ -d ".gear" ] && return 0
+
+	# compat
+	[ -n "$DIR" ] && [ -r "$DIR/.gear-rules" ] && return 0
+	[ -r ".gear-rules" ] && return 0
+
+	# hack for support spec in some subdir
+	[ -d "../.gear" ] && return 0
+	return 1
+}
+
+
 if [ "$UID" = "0" ] ; then
 	fatal "It is strict recommended do not use these scripts as root"
 fi
