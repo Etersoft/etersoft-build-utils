@@ -95,7 +95,7 @@ build_rpms_name()
 	local BNS NSS
 	BNS="$BASENAME".spec
 	NSS=`basename $NAMESPEC`
-	test "$NSS" != "$BNS" && warning "BASENAME is not the same as NAMESPEC: $BNS against $SS"
+	test "$NSS" != "$BNS" && warning "Spec name ($NSS) is not equal to Name of package ($BNS)"
 
 	build_buildroot
 }
