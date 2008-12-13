@@ -9,8 +9,9 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/rpm
-. $ETERBUILDDIR/functions/repl
+. load_mod rpm
+. load_mod repl
+. load_mod spec
 
 dummy_spec()
 {
@@ -98,7 +99,7 @@ do
 	echog "cleanup_spec for $i..."
 	cleanup_spec $i
 
-	# convert from PLD's cases	
+	# convert from PLD's cases
 	subst "s|%if %{with \(.*\)}|%if_with \1|g" $i
 	subst "s|%if %{without \(.*\)}|%if_without \1|g" $i
 	# replaces with and without too
@@ -110,6 +111,10 @@ do
 
 	# For case if name was macros
 	test -n "$BASENAME" && set_var $i Name $BASENAME
+	
+	# For case if version was macros
+	# set_version is major define safe
+	test -n "$VERSION" && set_version $i $VERSION
 	
 	echog -n "fix obsoleted constructions..."
 	subst "s|Source0:|Source:|" $i
