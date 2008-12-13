@@ -8,7 +8,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/hasher
+load_mod hasher
 
 #############################
 Usage="Usage: $name [-m -s -u -i -c] src.rpm..."
@@ -22,7 +22,6 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-#	echog " -m - mail result log"
 	echog " -s - sign package(s)"
 	echog " -u - sign and upload package(s) to Incoming"
 	echog " -i - install built packages in test hasher"
@@ -32,7 +31,6 @@ phelp()
 while getopts :hmic opt; do
     case $opt in
     h) phelp; exit 0;;
-#    m) fatal "Mail is disabled for this version" ; TOMAIL=1 ;;
     i) TESTINSTALL=1;;
 	c) HASHERARG="--without-stuff $HASHERARG";;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -52,22 +50,6 @@ LISTRPMARGS=$@
 
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
-
-# Start as mail helper
-function mail_build()
-{
-	MUTT=mutt
-	which $MUTT &>/dev/null || return
-	$0 "$@" 2>&1 | $MUTT "$OWNERMAIL" -s "Result of rebuild at $HOSTNAME at `date`"
-}
-
-if [ -n "$TOMAIL" ]; then
-	echog "Build via email"
-	( mail_build $LISTNAMES $LISTARGS ) >/dev/null 2>&1 &
-	echog "Build request is accepted for: $LISTNAMES" 
-	echog "Report will be sending to: $OWNERMAIL"
-	exit 0
-fi
 
 RESULT=0
 
