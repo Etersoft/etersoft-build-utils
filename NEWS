@@ -9,11 +9,12 @@ etersoft-build-utils-1.5.2: 13 Dec 2008
 - fix comment about different specs
 - rewrite rpmgp: use getopt, add -d options for download package
 - use gear via vars, do not require it
+- fix set tag in rpmbs
 
 etersoft-build-utils-1.5.1: 06 Dec 2008
 - APTCONF sets used apt.conf if defined
 - add support for x86_64 build with generic i586 sources.list
-- set git tag during rpmbs -s
+- set git tag during rpmbs -s / -u
 - fix release checking in universal manner
 - skip sisyphus_check if build from git
 - update QuickHelp, remove unneeded comments
