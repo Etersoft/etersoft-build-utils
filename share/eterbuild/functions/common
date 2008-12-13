@@ -197,6 +197,15 @@ add_changelog_helper()
 	return $R
 }
 
+make_temp_file()
+{
+	# Workaround about broken mktemp
+	if mktemp -V >/dev/null 2>/dev/null ; then
+		mktemp || exit 1
+	else
+		mktemp /tmp/$1.XXXXXX || exit 1
+	fi
+}
 
 load_mod()
 {
