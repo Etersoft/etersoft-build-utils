@@ -3,10 +3,9 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-# 20.07.08
+# Obsoleted code (use for publish from CVS repositories only)
 
-############# Project build & publish section ##############################
-# Use only it this order:
+# Note: Use only it this order
 
 # Update from CVS
 update_from_cvs()
