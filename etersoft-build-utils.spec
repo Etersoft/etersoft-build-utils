@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.5.1
-Release: alt2
+Version: 1.5.2
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -60,6 +60,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Sat Dec 13 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
+- really 1.5.2, cleanup code
+- rewrite rpmgp: use getopt, add -d options for download package
+- use gear via vars, do not require it
+
 * Thu Dec 11 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt2
 - add get_version, fix inc_release, inc_subrelease
 - clean up code (thanks Slava Semushin for comments)

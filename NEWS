@@ -1,10 +1,14 @@
-etersoft-build-utils-1.5.2: 11 Dec 2008
+etersoft-build-utils-1.5.2: 13 Dec 2008
 - fix using from other projects
 - add get_version, fix inc_release, inc_subrelease
 - disable annoyed Target distro (use VERBOSE=1)
 - clean up code (thanks Slava Semushin for comments)
 - myhsh: disable -x (trace info)
 - fix rpmbb -r (buildreq) with git
+- cleanup code
+- fix comment about different specs
+- rewrite rpmgp: use getopt, add -d options for download package
+- use gear via vars, do not require it
 
 etersoft-build-utils-1.5.1: 06 Dec 2008
 - APTCONF sets used apt.conf if defined
