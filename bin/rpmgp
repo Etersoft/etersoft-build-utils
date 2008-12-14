@@ -95,11 +95,11 @@ check_name()
 		exit 1
 	fi
 	NLIST=`cat $LIST | grep -i $1`
-	if [ `cat $LIST | list_filter | grep -i $1 | wc -l` -gt 1 ] ; then
+#	if [ `cat $LIST | list_filter | grep -i $1 | wc -l` -gt 1 ] ; then
 		#echo "Please type a full name of the package"
-		print_list $NLIST
-		return 1
-	fi
+#		print_list $NLIST
+#		return 1
+#	fi
 
 	if [ -z "$NLIST" ] ; then
 		echo "$1: Not found"
@@ -172,7 +172,7 @@ while getopts :habcdlnrs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
-    b) INSTALLBYNARY=1 ;;
+    b) INSTALLBINARY=1 ;;
     c) CHECKONLINE=1 ;;
     d) DOWNLOADALL=1 ;;
     l) LISTREQS=1 ;;
@@ -221,7 +221,7 @@ test -z "$LISTARGS" && fatal "Please run with spec/package name"
 # уточнение - [система] пакет
 
 # install binary packages
-if [ -n "$INSTALLBYNARY" ] ; then
+if [ -n "$INSTALLBINARY" ] ; then
 	parse_cmd_pre "$@"
 	pack_src_rpm $LISTRPMARGS
 	echog "Running apt-get for install needed packages for $LISTBUILT"
@@ -265,6 +265,7 @@ if [ -n "$2" ] ; then
 	IDX=`get_system_idx "$1"`
 	if [ -n "$IDX" ] ; then
 		check_system $IDX
+		print_list $NLIST
 	else
 		#fatal "Unknown system '$1', use rpmgp -s for get list"
 		NAME=
