@@ -21,7 +21,6 @@ Options:
 
 
 ---------------------------
-Warning: Can't get topdir from Makefile.in
 
 
 ---------------------------
@@ -90,13 +89,16 @@ rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT
 
 
 ---------------------------
-Using:
+rpmgp - various package download operations
+Usage:  [options] [system] pkgname
+Options:
 rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it
  name - installed package name or src.rpm
  system - name of system (ALT Linux by default if -a missed too)
  -a  check for pkgname in all known repositories
+ -b  install packages needed for build (installs with sudo apt-get) (need spec not package name)
  -c  check for exist the package in ALT Linux repository
- -b  install packages needed for build (installs with sudo apt-get)
+ -d  download all matches packages from all repositories
  -l  lists packages needed for build (in local pkg system notation) (experimental)
  -n  do not install in RPM after download, download in current dir
  -r  refresh package list (download it again)
