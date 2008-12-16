@@ -70,7 +70,7 @@ build_buildroot()
 
 build_rpms_name()
 {
-	local tmprpm CATSPEC NAMESPEC
+	local tmprpm CATSPEC NAMESPEC PKGARCH
 	#TODO change : to = and execute?
 	NAMESPEC=$1
 	shift
@@ -89,7 +89,11 @@ build_rpms_name()
 	TARBALLNAME=$($CATSPEC | get_var "Source.*")
 	[ -n "$TARBALLNAME" ] && TARBALLNAME=$(basename $TARBALLNAME)
 	rm -f $tmprpm
-	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$DEFAULTARCH.rpm
+	PKGARCH=$($CATSPEC | get_var "BuildArch")
+	if [ "$PKGARCH" != "noarch" ] ; then
+		PKGARCH=$DEFAULTARCH
+	fi
+	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
 	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
 
 	#RPMSOURCEDIR=$RPMDIR/SOURCES
