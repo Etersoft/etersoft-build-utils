@@ -147,7 +147,7 @@ test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is 
 }
 
 # build binary package list (1st - repo dir, 2st - pkgname
-function get_binpkg_list()
+get_binpkg_list()
 {
 	local PKGDIR=$1
 	find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
@@ -155,6 +155,12 @@ function get_binpkg_list()
 		| grep "^$2[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
 }
 
+drop_pkg_extensions()
+{
+	for i in $@ ; do
+		echo -n "$(basename $i) " | sed -e "s|\.[a-z0-9]*\.rpm||g"
+	done
+}
 
 check_log()
 {
