@@ -1,3 +1,9 @@
+etersoft-build-utils-1.5.3: 04 Jan 2009
+- add IGNOREGEAR env var support
+- build_rpms_name: detect package arch from spec
+- cleanup code, remove obsoleted mailing code
+- rpmgp: use getopt, add -d options for download package (list only by default)
+
 etersoft-build-utils-1.5.2: 11 Dec 2008
 - fix using from other projects
 - add get_version, fix inc_release, inc_subrelease
