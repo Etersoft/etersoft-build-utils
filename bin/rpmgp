@@ -156,14 +156,14 @@ phelp()
 	echog "rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it"
 	echog " name - installed package name or src.rpm"
 	echog " system - name of system (ALT Linux by default if -a missed too)"
-	echog " -a  check for pkgname in all known repositories"
-	echog " -b  install packages needed for build (installs with sudo apt-get) (need spec not package name)"
-	echog " -c  check for exist the package in ALT Linux repository"
-	echog " -d  download all matches packages from all repositories"
-	echog " -l  lists packages needed for build (in local pkg system notation) (experimental)"
-	echog " -n  do not install in RPM after download, download in current dir"
+	echog " -a  search pkgname in all known repositories"
+	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
+	echog " -c  check if this package exists in the ALT Linux repository"
+	echog " -d  download all matched packages"
+	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
+	echog " -n  do not install after download, just download in current dir"
 	echog " -r  refresh package list (download it again)"
-	echog " -s  lists all known systems"
+	echog " -s  list all known remote repositories"
 	exit 0
 }
 
