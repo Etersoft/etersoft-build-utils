@@ -69,3 +69,9 @@ libmesa-devel|xorg-x11-Mesa-devel
 libGLU-devel|xorg-x11-Mesa-devel
 
 gccmakedep|xorg-x11-util-devel
+
+libesd-devel|esound-devel
+sysvinit-utils|sysvinit
+xorg-inputproto-devel|xorg-x11-proto-devel
+xorg-xextproto-devel|xorg-x11-proto-devel
+xorg-sdk|xorg-x11-server
