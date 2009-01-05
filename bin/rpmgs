@@ -14,7 +14,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/rpm
+load_mod rpm
 
 WEXT=""
 GETSOURCE=""

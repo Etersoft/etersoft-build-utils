@@ -14,7 +14,8 @@ set_eterbuilddir()
 		# if run from no system installation
 		ETERBUILDDIR=$(realpath `dirname $0`/../share/eterbuild)
 		ETERBUILDETC=$(realpath `dirname $0`/../etc)
-		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
+		#if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
+		if [ -n "$VERBOSE" ] ; then
 			echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
 		else
 			ETERBUILDETC=/etc/eterbuild
@@ -200,5 +201,8 @@ add_changelog_helper()
 
 load_mod()
 {
-. $ETERBUILDDIR/functions/$1
+	local i
+	for i in $@ ; do
+		. $ETERBUILDDIR/functions/$i
+	done
 }

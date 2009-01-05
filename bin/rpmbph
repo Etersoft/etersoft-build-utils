@@ -12,7 +12,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/repl
+load_mod repl
 
 #VENDORVERSION=`distr_vendor -e`
 DISTRVERSION=`distr_vendor -v`
