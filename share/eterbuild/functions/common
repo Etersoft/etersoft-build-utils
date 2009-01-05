@@ -63,10 +63,16 @@ if [ "$UID" = "0" ] ; then
 	fatal "It is strict recommended do not use these scripts as root"
 fi
 
-. $ETERBUILDDIR/functions/config
-. $ETERBUILDDIR/functions/gettext
-. $ETERBUILDDIR/functions/spec
 
+load_mod()
+{
+	local i
+	for i in $@ ; do
+		. $ETERBUILDDIR/functions/$i
+	done
+}
+
+load_mod config gettext spec
 
 # Internal
 set_target_type()
@@ -198,11 +204,3 @@ add_changelog_helper()
 	return $R
 }
 
-
-load_mod()
-{
-	local i
-	for i in $@ ; do
-		. $ETERBUILDDIR/functions/$i
-	done
-}
