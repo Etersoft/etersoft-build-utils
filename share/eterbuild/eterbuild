@@ -1,0 +1,11 @@
+# Public script for include in your scripts. Example:
+## load common functions, compatible with local and installed script
+#. /usr/share/eterbuild/eterbuild
+# load_mod spec
+
+ETERBUILDETC=/etc/eterbuild
+ETERBUILDDIR=/usr/share/eterbuild
+
+. /usr/share/eterbuild/functions/common
+load_mod rpm
+
