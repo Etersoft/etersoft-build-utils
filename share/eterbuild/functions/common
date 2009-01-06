@@ -14,9 +14,10 @@ set_eterbuilddir()
 		# if run from no system installation
 		ETERBUILDDIR=$(realpath `dirname $0`/../share/eterbuild)
 		ETERBUILDETC=$(realpath `dirname $0`/../etc)
-		#if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
-		if [ -n "$VERBOSE" ] ; then
-			echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
+		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
+			if [ -n "$VERBOSE" ] ; then
+				echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
+			fi
 		else
 			ETERBUILDETC=/etc/eterbuild
 			ETERBUILDDIR=/usr/share/eterbuild
