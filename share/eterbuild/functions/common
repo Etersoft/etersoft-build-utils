@@ -54,12 +54,6 @@ print_list()
 	done
 }
 
-is_alt()
-{
-	test -f /etc/altlinux-release
-	return $?
-}
-
 # Obsoleted:
 # TODO: check for .gear, not .git?
 is_git()
@@ -101,23 +95,8 @@ load_mod()
 	done
 }
 
-load_mod config gettext spec
+load_mod config gettext alt spec
 
-# Internal
-set_target_type()
-{
-	if echo $1 | grep "^M[0-9][0-9]$" >/dev/null ; then
-		MENV=$1
-		return 0
-	fi
-	case "$1" in
-		("DD" | "SS" | "EE")
-			MENV="$1"
-			return 0;
-			;;
-	esac
-	return 1;
-}
 
 # Internal
 # Определяет, для какой среды собирать: по ключу -M23 -M24 или по каталогу, в котором спек
@@ -181,32 +160,6 @@ check_key()
 	return 0
 }
 
-get_distr_version()
-{
-	echo $1 | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g" | sed -e "s|DD|Daedalus|g"
-}
-
-set_incoming()
-{
-	INCOMING="Sisyphus"
-	test -z "$1" && return
-	case "$1" in
-		("DD")
-			INCOMING="Daedalus"
-			;;
-		("SS")
-			INCOMING="Sisyphus"
-			;;
-		*)
-			if [ -n "$UPDATES" ] ; then
-				INCOMING="updates/`get_distr_version $1`"
-			else
-				INCOMING="backports/`get_distr_version $1`"
-			fi
-			;;
-	esac
-}
-
 add_changelog_helper()
 {
 	# don't work sometime?
@@ -243,7 +196,3 @@ make_temp_file()
 	fi
 }
 
-load_mod()
-{
-. $ETERBUILDDIR/functions/$1
-}

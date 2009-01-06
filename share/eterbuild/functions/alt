@@ -1,0 +1,52 @@
+#!/bin/bash
+# 2003-2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+is_alt()
+{
+	test -f /etc/altlinux-release
+	return $?
+}
+
+# Internal
+set_target_type()
+{
+	if echo $1 | grep "^M[0-9][0-9]$" >/dev/null ; then
+		MENV=$1
+		return 0
+	fi
+	case "$1" in
+		("DD" | "SS" | "EE")
+			MENV="$1"
+			return 0;
+			;;
+	esac
+	return 1;
+}
+
+get_distr_version()
+{
+	echo $1 | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g" | sed -e "s|DD|Daedalus|g"
+}
+
+set_incoming()
+{
+	INCOMING="Sisyphus"
+	test -z "$1" && return
+	case "$1" in
+		("DD")
+			INCOMING="Daedalus"
+			;;
+		("SS")
+			INCOMING="Sisyphus"
+			;;
+		*)
+			if [ -n "$UPDATES" ] ; then
+				INCOMING="updates/`get_distr_version $1`"
+			else
+				INCOMING="backports/`get_distr_version $1`"
+			fi
+			;;
+	esac
+}
