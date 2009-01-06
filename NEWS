@@ -4,18 +4,23 @@ etersoft-build-utils-1.5.3: 04 Jan 2009
 - cleanup code, remove obsoleted mailing code
 - rpmgp: use getopt, add -d options for download package (list only by default)
 
-etersoft-build-utils-1.5.2: 11 Dec 2008
+etersoft-build-utils-1.5.2: 13 Dec 2008
 - fix using from other projects
 - add get_version, fix inc_release, inc_subrelease
 - disable annoyed Target distro (use VERBOSE=1)
 - clean up code (thanks Slava Semushin for comments)
 - myhsh: disable -x (trace info)
 - fix rpmbb -r (buildreq) with git
+- cleanup code
+- fix comment about different specs
+- rewrite rpmgp: use getopt, add -d options for download package
+- use gear via vars, do not require it
+- fix set tag in rpmbs
 
 etersoft-build-utils-1.5.1: 06 Dec 2008
 - APTCONF sets used apt.conf if defined
 - add support for x86_64 build with generic i586 sources.list
-- set git tag during rpmbs -s
+- set git tag during rpmbs -s / -u
 - fix release checking in universal manner
 - skip sisyphus_check if build from git
 - update QuickHelp, remove unneeded comments

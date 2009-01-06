@@ -194,7 +194,7 @@ $BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't buil
 
 #############################
 
-Usage="Usage: $name [-r -u -U -n -i -m -v] spec..."
+Usage="Usage: $name [-r -u -U -n -i -m -v] [-M??] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -204,6 +204,7 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
+	echo  "Use rpmbph -M40 for backport to ALT 4.0 and so on"
 	echog "Options:"
 	echog " -r - remote build"
 #	echog " -m - send result via e-mail"

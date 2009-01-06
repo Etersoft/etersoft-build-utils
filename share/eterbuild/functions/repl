@@ -55,31 +55,38 @@ print_pkgreq()
 	eval_spec ${1} | grep "Requires" | sed -e "s|^.*:||g" | clean_pkgreq
 }
 
+# internal
+print_replbased_list()
+{
+	local REPLBASE="$1"
+	# VENDOR, TARGET is already defined in detect_target_env() func
+	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
+
+	# Get list of replacement rules files
+	#[ -r "$REPLBASE$VENDOR.$DISTRVERSION" ] && 
+	echo -n "$REPLBASE$VENDOR.$DISTRVERSION $REPLBASE$VENDOR "
+	#[ -r "$REPLBASE$VENDOR" ] && 
+	echo -n "$REPLBASE$VENDOR "
+	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE$TARGET"
+
+}
+
+# TODO: list in  alph. order and use if <= then our version
 print_pkgrepl_list()
 {
-	local REPLBASE=$PKGREPLBASE/pkgrepl.
-
-	# VENDOR, TARGET is defined in detect_target_env() func
-	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
-	# Get list of replacement rules files
-	echo -n "$REPLBASE$VENDOR.$DISTRVERSION $REPLBASE$VENDOR "
-	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE$TARGET"
+	print_replbased_list $PKGREPLBASE/pkgrepl.
 }
 
 print_grprepl_list()
 {
-	local REPLBASE=$PKGREPLBASE/../grprepl/grprepl.
-
-	# VENDOR, TARGET is defined in detect_target_env() func
-	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
-	# Get list of replacement rules files
-	echo -n "$REPLBASE$VENDOR.$DISTRVERSION $REPLBASE$VENDOR "
-	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE$TARGET"
+	print_replbased_list $PKGREPLBASE/../grprepl/grprepl.
 }
 
-# Prints out buildreqs in target notation for SPEC
+
+# Prints out buildreqs in target notation for SPEC (1st arg)
 print_target_buildreq()
 {
+	local i
 	# Build list in target ($VENDOR) notation for package's buildreqs
 	for i in `print_buildreq ${1}` ; do
 		# get target name or just print out original one

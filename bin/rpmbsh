@@ -72,6 +72,15 @@ add_changelog_helper "- new version" $LISTNAMES
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $(echo $LISTRPMARGS | sed -e "s|-[suUic]||g")
 
+# Hack to pass SPECDIR to rpmbs
+# workaround about spaces in LISTNAMES
+if [ -r "$(echo $LISTNAMES)" ] ; then
+	export SPECDIR=`dirname $LISTNAMES`
+	#echo 0 $SPECDIR
+	if [ "$SPECDIR" = "." ] ; then
+		SPECDIR=$(pwd)
+	fi
+fi
 
 if  [ -n "$REMOTEBUILD" ] ; then
 	check_key

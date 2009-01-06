@@ -75,20 +75,17 @@ build_rpms_name()
 	NAMESPEC=$1
 	shift
 	test -f "$NAMESPEC" || fatal "Spec $NAMESPEC does not exist"
-	# Check for broken mktemp
-	if mktemp -V &>/dev/null ; then
-		tmprpm=`mktemp || exit 1`
-	else
-		tmprpm=`mktemp /tmp/$NAME.XXXXXX || exit 1`
-	fi
+
+	tmprpm=`make_temp_file $NAME`
+	# Optimization
 	eval_spec $NAMESPEC $@ | grep ":"  >$tmprpm
-	CATSPEC="cat $tmprpm"
-	BASENAME=$($CATSPEC | get_var "Name")
-	RELEASE=$($CATSPEC | get_var "Release")
-	VERSION=$($CATSPEC | get_var "Version")
-	TARBALLNAME=$($CATSPEC | get_var "Source.*")
+	BASENAME=$(cat $tmprpm | get_var "Name")
+	RELEASE=$(cat $tmprpm | get_var "Release")
+	VERSION=$(cat $tmprpm | get_var "Version")
+	TARBALLNAME=$(cat $tmprpm | get_var "Source.*")
 	[ -n "$TARBALLNAME" ] && TARBALLNAME=$(basename $TARBALLNAME)
-	PKGARCH=$($CATSPEC | get_var "BuildArch")
+
+	PKGARCH=$(cat $tmprpm | get_var "BuildArch")
 	if [ "$PKGARCH" != "noarch" ] ; then
 		PKGARCH=$DEFAULTARCH
 	fi
@@ -97,6 +94,8 @@ build_rpms_name()
 
 	#RPMSOURCEDIR=$RPMDIR/SOURCES
 	RPMSOURCEDIR=`rpm --eval %_sourcedir | subst_namever`
+	[ -n "$RPMSOURCEDIR" ] || fatal "Can't detect RPM/SOURCES dir"
+
 	local BNS NSS
 	BNS="$BASENAME".spec
 	NSS=`basename $NAMESPEC`
@@ -152,7 +151,7 @@ test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is 
 }
 
 # build binary package list (1st - repo dir, 2st - pkgname
-function get_binpkg_list()
+get_binpkg_list()
 {
 	local PKGDIR=$1
 	find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
@@ -160,6 +159,12 @@ function get_binpkg_list()
 		| grep "^$2[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
 }
 
+drop_pkg_extensions()
+{
+	for i in $@ ; do
+		echo -n "$(basename $i) " | sed -e "s|\.[a-z0-9]*\.rpm||g"
+	done
+}
 
 check_log()
 {

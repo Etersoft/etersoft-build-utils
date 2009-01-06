@@ -21,20 +21,6 @@ OURTMPDIR=$TMPDIR
 NICE="nice"
 RPMBUILD=rpmbuild
 
-# TODO: check for .gear, not .git?
-is_git()
-{
-	local DIR=$1
-	[ -n "$IGNOREGEAR" ] && return 1
-	[ -n "$DIR" ] && [ -d "$DIR/.git" ] && return 0
-	[ -n "$DIR" ] && [ -d "$DIR/.gear" ] && return 0
-	[ -d ".git" ] && return 0
-	[ -d ".gear" ] && return 0
-	# hack for support spec in some subdir
-	[ -d "../.gear" ] && return 0
-	return 1
-}
-
 RPMDIR="$HOME/RPM"
 
 [ -n "$APTCONFBASE" ] || APTCONFBASE=$ETERBUILDETC/apt/apt.conf

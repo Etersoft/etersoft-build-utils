@@ -103,6 +103,8 @@ $HSH-install $HASHERDIR $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with in
 echog "You are in hasher shell"
 $HSH-shell $HASHERDIR -Y --shell
 if [ -n "$TESTMODE" ] ; then
+	echo "Remove package for test preun scripts"
+	$HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)
 	echo "Cleanup hasher..."
 	$HSH --cleanup-only $HASHERDIR
 fi

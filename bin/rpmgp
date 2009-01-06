@@ -94,11 +94,11 @@ check_name()
 		exit 1
 	fi
 	NLIST=`cat $LIST | grep -i $1`
-	if [ `cat $LIST | list_filter | grep -i $1 | wc -l` -gt 1 ] ; then
+#	if [ `cat $LIST | list_filter | grep -i $1 | wc -l` -gt 1 ] ; then
 		#echo "Please type a full name of the package"
-		print_list $NLIST
-		return 1
-	fi
+#		print_list $NLIST
+#		return 1
+#	fi
 
 	if [ -z "$NLIST" ] ; then
 		echo "$1: Not found"
@@ -155,14 +155,14 @@ phelp()
 	echog "rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it"
 	echog " name - installed package name or src.rpm"
 	echog " system - name of system (ALT Linux by default if -a missed too)"
-	echog " -a  check for pkgname in all known repositories"
-	echog " -b  install packages needed for build (installs with sudo apt-get) (need spec not package name)"
-	echog " -c  check for exist the package in ALT Linux repository"
-	echog " -d  download all matches packages from all repositories"
-	echog " -l  lists packages needed for build (in local pkg system notation) (experimental)"
-	echog " -n  do not install in RPM after download, download in current dir"
+	echog " -a  search pkgname in all known repositories"
+	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
+	echog " -c  check if this package exists in the ALT Linux repository"
+	echog " -d  download all matched packages"
+	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
+	echog " -n  do not install after download, just download in current dir"
 	echog " -r  refresh package list (download it again)"
-	echog " -s  lists all known systems"
+	echog " -s  list all known remote repositories"
 	exit 0
 }
 
@@ -171,7 +171,7 @@ while getopts :habcdlnrs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
-    b) INSTALLBYNARY=1 ;;
+    b) INSTALLBINARY=1 ;;
     c) CHECKONLINE=1 ;;
     d) DOWNLOADALL=1 ;;
     l) LISTREQS=1 ;;
@@ -220,7 +220,7 @@ test -z "$LISTARGS" && fatal "Please run with spec/package name"
 # уточнение - [система] пакет
 
 # install binary packages
-if [ -n "$INSTALLBYNARY" ] ; then
+if [ -n "$INSTALLBINARY" ] ; then
 	parse_cmd_pre "$@"
 	pack_src_rpm $LISTRPMARGS
 	echog "Running apt-get for install needed packages for $LISTBUILT"
@@ -256,6 +256,11 @@ if [ -n "$CHECKONLINE" ] ; then
 	exit 0
 fi
 
+if [ -n "$2" ] && [ "$1" = "all" ] ; then
+    shift
+    ALLSYSTEM=1
+fi
+
 # Check concrete system
 # two params: system, package
 if [ -n "$2" ] ; then
@@ -264,6 +269,7 @@ if [ -n "$2" ] ; then
 	IDX=`get_system_idx "$1"`
 	if [ -n "$IDX" ] ; then
 		check_system $IDX
+		print_list $NLIST
 	else
 		#fatal "Unknown system '$1', use rpmgp -s for get list"
 		NAME=
@@ -280,6 +286,7 @@ if [ -n "$ALLSYSTEM" ] ; then
 	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
 		echo
 		check_system $i
+		print_list $NLIST
 	done
 	exit 0
 fi
