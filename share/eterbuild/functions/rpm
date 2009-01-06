@@ -88,7 +88,6 @@ build_rpms_name()
 	VERSION=$($CATSPEC | get_var "Version")
 	TARBALLNAME=$($CATSPEC | get_var "Source.*")
 	[ -n "$TARBALLNAME" ] && TARBALLNAME=$(basename $TARBALLNAME)
-	rm -f $tmprpm
 	PKGARCH=$($CATSPEC | get_var "BuildArch")
 	if [ "$PKGARCH" != "noarch" ] ; then
 		PKGARCH=$DEFAULTARCH
@@ -102,6 +101,7 @@ build_rpms_name()
 	BNS="$BASENAME".spec
 	NSS=`basename $NAMESPEC`
 	test "$NSS" != "$BNS" && warning "Spec name ($NSS) is not equal to Name of package ($BNS)"
+	rm -f $tmprpm
 
 	build_buildroot
 }
