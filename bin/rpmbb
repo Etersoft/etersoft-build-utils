@@ -97,7 +97,7 @@ for i in $LISTNAMES
 do
 	# build src.rpm if old way
 	SPECDIR=`dirname $i`
-	is_git $SPECDIR || build_rpms_name "$i"
+	is_gear $SPECDIR || build_rpms_name "$i"
 	if ! is_alt ; then
 		if ! build_buildroot ; then
 			LISTRPMARGS="--buildroot $BUILDROOT $LISTRPMARGS"
