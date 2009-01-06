@@ -160,32 +160,6 @@ check_key()
 	return 0
 }
 
-add_changelog_helper()
-{
-	# don't work sometime?
-	# TODO: fix with $@, single arg?
-	local DESC SPEC
-	if ! tty -s && [ -z "$DESC" ] ; then 
-		echo "skip changelog fixing without tty"
-		return 1
-	fi
-	add_changelog -e "$@"
-	R=$?
-	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 1 ; }
-	# If changelog sucessfully added
-	if [ "$R" = "0" ]; then
-		shift
-		for SPEC in "$@" ; do
-			N=`grep -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
-			# +1 -- comment with date and packager name
-			# +2 -- place for edit comments
-			# +N works for mcedit and vi
-			${EDITOR} +$(($N + 2)) $SPEC
-		done
-	fi
-	return $R
-}
-
 make_temp_file()
 {
 	# Workaround about broken mktemp
