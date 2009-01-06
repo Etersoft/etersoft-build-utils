@@ -46,7 +46,13 @@ BUILDSERVER=
 PKGREPLBASE=$ETERBUILDDIR/pkgrepl
 
 test -f /etc/eterbuild/config && . /etc/eterbuild/config
-test -f ~/.eterbuild-config  && . ~/.eterbuild-config
-# obsoleted
-test -f ~/.ebconfig  && . ~/.ebconfig
+
+if [ -f ~/.config/eterbuild ] ; then
+	. ~/.config/eterbuild
+elif [ -f ~/.eterbuild-config ] ; then
+	. ~/.eterbuild-config
+else
+	# obsoleted, load if eterbuild-config is missed
+	test -f ~/.ebconfig  && . ~/.ebconfig
+fi
 
