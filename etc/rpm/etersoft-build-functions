@@ -1,9 +1,6 @@
 # for backward compatibility
 
-ETERBUILDETC=/etc/eterbuild
-ETERBUILDDIR=/usr/share/eterbuild
-
-. /usr/share/eterbuild/functions/common
+. /usr/share/eterbuild/eterbuild
 load_mod rpm
 load_mod publish-compat
 
