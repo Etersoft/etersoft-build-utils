@@ -12,7 +12,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod hasher
+load_mod hasher rpm
 
 SAVEOPT=$@
 
@@ -94,6 +94,7 @@ check_locking
 echog "Prepare hasher in $HASHERDIR ..."
 # there is package names in LISTRPMARGS
 UTILPKG="mc"
+# FIXME: gnome program needs dbus-tools-gui
 if [ -n "$TESTMODE" ] ; then
 	UTILPKG="$UTILPKG XFree86-xauth fonts-ttf-liberation"
 else
