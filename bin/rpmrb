@@ -19,7 +19,8 @@ fi
 
 SPEC=$1
 VER=$2
-REL=$3
+# need for rpmgs
+GSSETRELEASE=$3
 
 if [ "$1" = "-h" ]; then
 	echo "rpmrb spec [vermajor][.verminor] [rel] - update spec to vermajor.verminor version, build %rel release"
@@ -28,13 +29,9 @@ fi
 
 test -e "$SPEC" || fatal "use with spec"
 
-if [ -n "$VER" ] ; then
-	test -n "$REL" || REL=alt1
-	set_version $SPEC $VER
-	set_release $SPEC $REL
-	add_changelog -e "- new version $VER (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
-fi
+test -n "$REL" || REL=alt1
+rpmgs $SPEC $VER || fatal "Error with get source"
+add_changelog_helper "- new version $VER (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
 
-rpmgs $SPEC || fatal "Error with get source"
 rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
 rpmbs -u $SPEC || fatal "Error with upload"
