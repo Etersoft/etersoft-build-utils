@@ -21,7 +21,7 @@ GETSOURCE=""
 LOADLIST="0"
 
 #############################
-Usage="Usage: $name [-a -r ] spec..."
+Usage="Usage: $name [-a -r ] spec ... | spec new_version"
 function mygetopts()
 {
 name=${0##*/}
@@ -31,6 +31,7 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
+	echog "You can run rpmgs file.spec new_version for set new version and download it"
 	echog "Options:"
 	echog " -a - get all source (not only 0)"
 	echog " -f - force download (remove source before download)"
@@ -172,13 +173,40 @@ function print_error()
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
 
-#echo $LISTNAMES @ $LISTARGS
+test -z "$VERBOSE" || echo "'$LISTNAMES' @ '$LISTARGS'"
+
+if [ -n "$LISTARGS" ] ; then
+	if [ -z "${LISTARGS/*spec/}" ] ; then
+		fatal "run with incorrect filename $LISTARGS"
+	fi
+	if [ -f "$LISTNAMES" ] ; then
+		fatal "set version permitted only for one file"
+	fi
+	if [ "${LISTARGS/ /}" != "$LISTARGS" ] ; then
+		fatal "you run rpmgs with more than one version"
+	fi
+	GSSETVERSION=$LISTARGS
+fi
+
 test -z "$LISTNAMES" && print_error
 
 for i in $LISTNAMES
 do
 	if [ -n "${i/*spec/}" ] ; then
 		print_error
+	fi
+	
+	# Set version if needed
+	if [ -n "$GSSETVERSION" ] ; then
+		CURVER=$(get_version $i)
+		set_version $i $GSSETVERSION
+		if [ "$CURVER" != "$GSSETVERSION" ] ; then
+			REL=alt1
+			set_release $i $REL
+			echo "Set new $GSSETVERSION-$REL version for $i"
+		else
+			echo "Version $GSSETVERSION already set"
+		fi
 	fi
 
 	for nn in "" $LOADLIST
@@ -203,6 +231,7 @@ do
 		fi
 		echo "DONE"
 		popd
+		# VERSION we get after build_rpms_name
 		add_changelog_helper "- new version ($VERSION)" $i
 	done
 done
