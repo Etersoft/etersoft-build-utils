@@ -206,6 +206,7 @@ do
 			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $i"
 		else
 			echo "Version $GSSETVERSION already set"
+			GSSKIPADDCHANGELOG=1
 		fi
 	fi
 
@@ -214,6 +215,8 @@ do
 		get_source $i "Source$nn"
 		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $i" ; continue ; }
 		FTB=`basename $GETSOURCE`
+		# for get RPMSOURCEDIR
+		build_rpms_name $i
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
 		# was: test -f
 		bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
