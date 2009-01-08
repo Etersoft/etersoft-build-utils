@@ -201,9 +201,9 @@ do
 		CURVER=$(get_version $i)
 		set_version $i $GSSETVERSION
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
-			REL=alt1
-			set_release $i $REL
-			echo "Set new $GSSETVERSION-$REL version for $i"
+			[ -n "$GSSETRELEASE" ] && GSSKIPADDCHANGELOG=1 || GSSETRELEASE=alt1
+			set_release $i $GSSETRELEASE
+			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $i"
 		else
 			echo "Version $GSSETVERSION already set"
 		fi
@@ -234,9 +234,11 @@ do
 
 	done
 
-	# Write changelog if all done
-	CURVER=$(get_version $i)
-	add_changelog_helper "- new version ($CURVER)" $i || echog "Changelog entry for $CURVER already exists"
+	if [ -z "$GSSKIPADDCHANGELOG" ] ; then
+		# Write changelog if all done
+		CURVERREL=$(get_version $i)-$(get_release $i)
+		add_changelog_helper "- new version ($CURVER)" $i || echog "Changelog entry for $CURVERREL already exists"
+	fi
 done
 
 exit 0
