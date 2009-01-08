@@ -179,7 +179,7 @@ if [ -n "$LISTARGS" ] ; then
 	if [ -z "${LISTARGS/*spec/}" ] ; then
 		fatal "run with incorrect filename $LISTARGS"
 	fi
-	if [ -f "$LISTNAMES" ] ; then
+	if [ ! -f "$LISTNAMES" ] ; then
 		fatal "set version permitted only for one file"
 	fi
 	if [ "${LISTARGS/ /}" != "$LISTARGS" ] ; then

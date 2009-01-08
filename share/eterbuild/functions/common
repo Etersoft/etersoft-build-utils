@@ -124,8 +124,8 @@ fi
 MENV=SS
 set_target_type $(basename `pwd`)
 
-LISTNAMES=""
-LISTARGS=""
+LISTNAMES=
+LISTARGS=
 OPTINDEX=1
 for i in "$@"
 do
@@ -136,6 +136,9 @@ do
 		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
 	fi
 done
+# remove extra space before list
+LISTNAMES=$(echo "$LISTNAMES" | sed -e "s|^ ||")
+LISTARGS=$(echo "$LISTARGS" | sed -e "s|^ ||")
 # parse MENV
 detect_target_env
 [ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :
