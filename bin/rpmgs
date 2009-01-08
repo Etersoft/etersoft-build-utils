@@ -214,10 +214,10 @@ do
 		get_source $i "Source$nn"
 		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $i" ; continue ; }
 		FTB=`basename $GETSOURCE`
-		build_rpms_name $i
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
 		# was: test -f
 		bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 		echog "Try to load $GETSOURCE for $i"
 		if [ -n "${GETSOURCE/*.bz2/}" ] ; then
@@ -231,9 +231,12 @@ do
 		fi
 		echo "DONE"
 		popd
-		# VERSION we get after build_rpms_name
-		add_changelog_helper "- new version ($VERSION)" $i
+
 	done
+
+	# Write changelog if all done
+	CURVER=$(get_version $i)
+	add_changelog_helper "- new version ($CURVER)" $i || echog "Changelog entry for $CURVER already exists"
 done
 
 exit 0
