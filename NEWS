@@ -1,3 +1,9 @@
+etersoft-build-utils-1.5.4: 10 Jan 2009
+- introduce eterbuild/eterbuild script for public use
+- cleanup code, remove obsoleted functions
+- add support set version via rpmgs
+- fix build result detecting
+
 etersoft-build-utils-1.5.3: 04 Jan 2009
 - add IGNOREGEAR env var support
 - build_rpms_name: detect package arch from spec

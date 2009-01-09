@@ -63,6 +63,8 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 * Tue Jan 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
 - introduce eterbuild/eterbuild script for public use
 - cleanup code, remove obsoleted functions
+- add support set version via rpmgs
+- fix build result detecting
 
 * Sun Jan 04 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.3-alt1
 - add IGNOREGEAR env var support
