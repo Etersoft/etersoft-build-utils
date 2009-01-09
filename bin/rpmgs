@@ -239,8 +239,9 @@ do
 
 	if [ -z "$GSSKIPADDCHANGELOG" ] ; then
 		# Write changelog if all done
-		CURVERREL=$(get_version $i)-$(get_release $i)
-		add_changelog_helper "- new version ($CURVER)" $i || echog "Changelog entry for $CURVERREL already exists"
+		CURVER=$(get_version $i)
+		CURREL=$(get_release $i)
+		add_changelog_helper "- new version ($CURVER)" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
 done
 
