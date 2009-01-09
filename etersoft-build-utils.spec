@@ -42,7 +42,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %make
 
 %install
-%makeinstall
+%makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
