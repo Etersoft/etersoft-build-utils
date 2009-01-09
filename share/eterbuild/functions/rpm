@@ -10,6 +10,7 @@
 # other parameters
 uni_rpmbuild()
 {
+	local RET=0
 	local COMMAND=$1
 	# just for fill by something
 	local ONEPARAM="-v"
@@ -26,11 +27,11 @@ uni_rpmbuild()
 
 	if [ "$COMMAND" = "buildreq" ] ; then
 		if is_gear $SPECDIR ; then
-			$NICE $GEARBUILDREQ --commit -- $@
+			$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
 		else
-			$NICE $COMMAND $@
+			$NICE $COMMAND $@ || RET=$?
 		fi
-		return
+		return $RET
 	fi
 
 	if is_gear $SPECDIR ; then
@@ -38,16 +39,17 @@ uni_rpmbuild()
 		shift # skip spec name
 		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
 		if [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@
+			$NICE $GEAR --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@ || RET=$?
 		else
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
-			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@
+			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
-		$NICE $COMMAND "$ONEPARAM" $@
+		$NICE $COMMAND "$ONEPARAM" $@ || RET=$?
 	fi
 	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
+	return $RET
 }
 
 # get correct BUILDROOT, run build_rpms_name before!

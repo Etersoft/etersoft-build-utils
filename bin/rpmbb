@@ -110,8 +110,14 @@ do
 	echo "Build in native system" >$LOGFILE
 	rm -f $LOGFILE.failed
 	(uni_rpmbuild $RPMBUILD $i -bb $LISTRPMARGS $NODEPS --target $DEFAULTARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
-	check_log $LOGFILE ; RES=$?
-	if [ -f $LOGFILE.failed ] || [ $RES != 0 ]
+
+	[ -r "$LOGFILE.failed" ] && RET=1 || RET=0
+	if [ "$RET" = "0" ] ; then
+		check_log $LOGFILE
+		RET=$?
+	fi
+
+	if [ "$RET" != "0" ]
 	then
 		echo "!!!!!!!! ERROR !!!!!"
 		fatal "Failed with $i"
