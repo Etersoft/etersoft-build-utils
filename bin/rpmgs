@@ -190,6 +190,8 @@ fi
 
 test -z "$LISTNAMES" && print_error
 
+[ -z "$GSSETRELEASE" ] || GSSKIPADDCHANGELOG=1
+
 for i in $LISTNAMES
 do
 	if [ -n "${i/*spec/}" ] ; then
@@ -201,7 +203,7 @@ do
 		CURVER=$(get_version $i)
 		set_version $i $GSSETVERSION
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
-			[ -n "$GSSETRELEASE" ] && GSSKIPADDCHANGELOG=1 || GSSETRELEASE=alt1
+			[ -n "$GSSETRELEASE" ] || GSSETRELEASE=alt1
 			set_release $i $GSSETRELEASE
 			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $i"
 		else
