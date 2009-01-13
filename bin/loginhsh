@@ -87,7 +87,7 @@ if [ ! -d $HASHERDIR -o "$INITIALIZE" = "1" ]; then
 	mkdir -p $HASHERDIR && $HSH --initroot-only $HASHERDIR || fatal "mkdir"
 fi
 
-HASHERARG="$HASHERARG --mountpoints=/proc"
+SHELLHASHERARG="--mountpoints=/proc"
 
 check_locking
 
@@ -100,13 +100,12 @@ if [ -n "$TESTMODE" ] ; then
 else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
-$HSH-install $HASHERDIR $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+$HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
 echog "You are in hasher shell"
-$HSH-shell $HASHERDIR -Y --shell
+$HSH-shell $HASHERDIR $SHELLHASHERARG -Y --shell
 if [ -n "$TESTMODE" ] ; then
 	echo "Remove package for test preun scripts"
 	$HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)
 	echo "Cleanup hasher..."
 	$HSH --cleanup-only $HASHERDIR
 fi
-# $HASHERARG
