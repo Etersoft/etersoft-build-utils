@@ -27,8 +27,7 @@ print_tmp_aptconf()
 	test -r "$1" || fatal "$1 is missed"
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
 	cat "$1" | \
-		sed -e "s|\"/etc/.*/sources.list|\"$OURTMPDIR/sources.list|g"
-#		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g"
+		sed -e "s|\".*/sources.list|\"$OURTMPDIR/sources.list|g"
 }
 
 # printout sources.list with filtering
@@ -39,13 +38,10 @@ print_tmp_sourceslist()
 	test -r "$1" || fatal "$1 is missed"
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
 	SLIST=`cat "$1" | \
-		sed -e "s|\"/etc/.*/sources.list|\"$ETERBUILDETC/apt/sources.list|g" | \
-		grep "apt/sources.list" "$1" | sed -e 's|.*"\(.*\)".*|\1|g'`
-	#SLIST=`echo "$SLIST" | \
-	#	sed -e "s|/etc/.*/sources.list|\"$OURTMPDIR/sources.list|g"`
-	SLIST="$ETERBUILDETC/apt/`basename $SLIST`"
+		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g" | \
+		grep "/sources.list" "$1" | sed -e 's|.*"\(.*\)".*|\1|g'`
+	#SLIST="$ETERBUILDETC/apt/`basename $SLIST`"
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
-	[ -n "$VERBOSE" ] && cat "$SLIST"
 	cat "$SLIST" | \
 		sed -e "s|i586|$DEFAULTARCH|g"
 }
