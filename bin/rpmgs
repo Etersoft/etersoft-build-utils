@@ -173,19 +173,19 @@ function print_error()
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
 
-test -z "$VERBOSE" || echo "'$LISTNAMES' @ '$LISTARGS'"
+test -z "$VERBOSE" || echo "'$LISTNAMES' @ '$LISTRPMARGS'"
 
-if [ -n "$LISTARGS" ] ; then
-	if [ -z "${LISTARGS/*spec/}" ] ; then
-		fatal "run with incorrect filename $LISTARGS"
+if [ -n "$LISTRPMARGS" ] ; then
+	if [ -z "${LISTRPMARGS/*spec/}" ] ; then
+		fatal "run with incorrect filename $LISTRPMARGS"
 	fi
 	if [ ! -f "$LISTNAMES" ] ; then
 		fatal "set version permitted only for one file"
 	fi
-	if [ "${LISTARGS/ /}" != "$LISTARGS" ] ; then
+	if [ "${LISTRPMARGS/ /}" != "$LISTRPMARGS" ] ; then
 		fatal "you run rpmgs with more than one version"
 	fi
-	GSSETVERSION=$LISTARGS
+	GSSETVERSION=$LISTRPMARGS
 fi
 
 test -z "$LISTNAMES" && print_error
