@@ -151,39 +151,40 @@ if [ -n "${DELETENOW}" ]; then
 	exit 0
 fi
 
-check_gear()
+# create tag according to package release
+check_gear_and_tag()
 {
+	local SPECDIR=$1
 	local GEARCTAG=gear-create-tag
-	# create tag according to package release
-	# workaround about spaces in LISTNAMES
-	if [ -r "$(echo $LISTNAMES)" ] ; then
-		#echo wait SPECDIR from rpmbsh
-		#echo 1 $SPECDIR
+
+	# set SPECDIR from LISTNAMES if empty
+	if [ -r "$LISTNAMES" ] ; then
 		[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
-		#echo 2 $SPECDIR
-		#pwd
 	fi
+
 	if is_gear $SPECDIR ; then
 		# needed corrent user.name/user.email for get GPG id
 		pushd $SPECDIR
 		$GEARCTAG --force
-		popd
+		popd >/dev/null
 		# git push ?
 	fi
 }
 
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
-	# workaround about spaces in LISTBUILT
-	if [ -r "$(echo $LISTBUILT)" ] ; then
-		echo if one spec, check gear
-		check_gear
-	fi
-	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
+
 	cd $RPMDIR/SRPMS
+	if [ -r "$LISTBUILT" ] ; then
+		echo if one spec, check gear
+		check_gear_and_tag $SPECDIR
+	fi
+
+	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
 	# 1. only rpm command has --addsign 2. do 3 retries
 	rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT
 	RET=$?
+
 	############################################
 	echog "Changing permissions..."
 	chmod 644 -- $LISTBUILT || fatal "can't chmod"
