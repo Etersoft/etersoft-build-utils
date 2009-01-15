@@ -134,7 +134,7 @@ for i in "$@"
 do
 	# Если файл существует, то добавляем, иначе считаем аргумент параметром.
 	if [ -f "$i" ]; then
-		LISTNAMES="$LISTNAMES $i"
+		LISTNAMES="$LISTNAMES $(readlink -f $i)"
 	else
 		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
 	fi

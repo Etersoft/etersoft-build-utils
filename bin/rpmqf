@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2003-2006 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2009 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -18,24 +18,31 @@ if [ "$1" = "-i" ]; then
 	shift
 fi
 
-TOFILE=`which $1 2>/dev/null`
-
-if [ -z "$TOFILE" ] ; then
-	#echo "$1 is missed in PATH"
-	#exit 1
-	TOFILE=$1
-fi
-
-if [ -L "$TOFILE" ] ; then
-	LINKTO=`readlink "$TOFILE"`
-	if [ -L "$LINKTO" ] ; then
-		LINKTO1=`readlink "$LINKTO"`
-		echo "Note: $TOFILE is link to $LINKTO, that is link to $LINKTO1"
-		TOFILE="$LINKTO1"
+# use and modify TOFILE recursively
+real_file()
+{
+	local LINKTO1 LINKTO
+	local TOFILE
+	
+	# get canonical path
+	if [ -e "$1" ] ; then
+		TOFILE=$1
 	else
-		echo "Note: $TOFILE is link to $LINKTO"
-		TOFILE="$LINKTO"
+		TOFILE=`which $1 2>/dev/null || echo $1`
+		if [ "$TOFILE" != "$1" ] ; then
+		echo "Note: $1 is placed as $TOFILE"
+		fi
 	fi
-fi
+	
+	# get value of symbolic link
+	if [ -L "$TOFILE" ] ; then
+		LINKTO=`readlink "$TOFILE"`
+		echo "Note: $TOFILE is link to $LINKTO"
+		real_file "$LINKTO"
+	fi
+	FULLFILEPATH=`readlink -f $TOFILE`
+}
 
-rpm -qf $ARG "$TOFILE"
+real_file "$1"
+
+rpm -qf $ARG "$FULLFILEPATH"

@@ -145,11 +145,13 @@ do
 		fi
 	fi
 	if [ -f $RPMDIR/SRPMS/$NAMESRPMIN ] ; then
-		LISTBUILT="$LISTBUILT$NAMESRPMIN "
+		LISTBUILT="$LISTBUILT $NAMESRPMIN"
 	else
 		fatal "Can't find '$NAMESRPMIN' in '$RPMDIR/SRPMS'"
 	fi
 done
+# remove extra space before list
+LISTBUILT=$(echo "$LISTBUILT" | sed -e "s|^ ||")
 test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
 #LISTRPMARGS=`echo ${LISTRPMARGS} | sed -e "s/--nodeps//g"`
 }
