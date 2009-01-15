@@ -1,3 +1,18 @@
+etersoft-build-utils-1.5.5: 15 Jan 2009
+- rpmbph: support non numerical releases
+- loginhsh: enable /proc mount
+- rpmqf: value link recursively
+- rpmgs: add set version support (altbug #14397)
+- update repl rules
+- fix LISTBUILT, LISTNAMES, LISTRPMARGS (remove spaces)
+- add IGNOREGEAR support to disable gear detecting in current dir)
+
+etersoft-build-utils-1.5.4: 10 Jan 2009
+- introduce eterbuild/eterbuild script for public use
+- cleanup code, remove obsoleted functions
+- add support set version via rpmgs
+- fix build result detecting
+
 etersoft-build-utils-1.5.3: 04 Jan 2009
 - add IGNOREGEAR env var support
 - build_rpms_name: detect package arch from spec

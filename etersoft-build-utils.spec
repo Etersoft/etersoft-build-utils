@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -42,6 +42,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %make
 
 %install
+# install to datadir and so on
 %makeinstall
 %find_lang %name
 
@@ -60,9 +61,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Thu Jan 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
+- rpmbph: support non numerical releases
+- loginhsh: enable /proc mount
+- rpmqf: value link recursively
+- rpmgs: add set version support (altbug #14397)
+- update repl rules
+- cleanup code
+
 * Tue Jan 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
 - introduce eterbuild/eterbuild script for public use
 - cleanup code, remove obsoleted functions
+- add support set version via rpmgs
+- fix build result detecting
 
 * Sun Jan 04 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.3-alt1
 - add IGNOREGEAR env var support

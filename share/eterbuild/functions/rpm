@@ -156,7 +156,7 @@ test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is 
 #LISTRPMARGS=`echo ${LISTRPMARGS} | sed -e "s/--nodeps//g"`
 }
 
-# build binary package list (1st - repo dir, 2st - pkgname
+# build binary package list (1st - repo dir, 2st - pkgname)
 get_binpkg_list()
 {
 	local PKGDIR=$1

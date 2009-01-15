@@ -72,3 +72,9 @@ libGLU|libmesaglu1
 
 libexpat|libexpat1
 libexpat-devel|libexpat1-devel
+
+libesd-devel|libesound-devel
+xorg-inputproto-devel|x11-proto-devel
+xorg-xextproto-devel|x11-proto-devel
+xorg-sdk|x11-server-devel
+

@@ -30,7 +30,7 @@ if [ "$VENDOR" = "alt" ] ; then
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbsh
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
-	set_release $SPECNAME alt$(($BASERELEASE - 1)).$MDISTR.$BASERELEASE
+	set_release $SPECNAME alt$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
 else

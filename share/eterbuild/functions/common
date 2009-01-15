@@ -57,6 +57,8 @@ print_list()
 is_gear()
 {
 	local DIR=$1
+	[ -z "$IGNOREGEAR" ] || return 1
+
 	[ -n "$DIR" ] && [ -d "$DIR/.gear" ] && return 0
 	[ -d ".gear" ] && return 0
 
