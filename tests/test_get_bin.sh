@@ -4,4 +4,8 @@
 . $ETERBUILDDIR/functions/rpm
 
 HASHERDIR=$HASHERDIR-SS
-get_binpkg_list $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher asymptote-1.43-alt1.src.rpm
+
+for i in `ls -1 $HASHERDIR/repo/SRPMS.hasher` ; do
+	echo "get for $i:"
+	get_binpkg_list $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher $(basename $i)
+done
