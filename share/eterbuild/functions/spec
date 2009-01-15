@@ -120,6 +120,13 @@ set_version()
 	fi
 }
 
+# decrement release with workaround about non textual release
+decrement_release()
+{
+	local NUMPART=$(echo $1 | sed -e "s|[^0-9].*||g")
+	[ -n "$NUMPART" ] || NUMPART=1
+	echo $(($NUMPART - 1))
+}
 
 subst_namever()
 {
