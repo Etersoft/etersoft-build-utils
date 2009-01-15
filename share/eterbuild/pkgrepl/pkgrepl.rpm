@@ -84,3 +84,5 @@ libexpat|expat
 libexpat-devel|expat-devel
 
 libltdl-devel|libtool-ltdl-devel
+
+libhal-devel|hal-devel
