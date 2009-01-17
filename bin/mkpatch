@@ -8,7 +8,10 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-if [ -f Makefile.in ] ; then
+if [ -f Makefile ] ; then
+	DD1=`grep ^TOPOBJDIR Makefile | sed -e "s| ||g"`
+	DD2=`grep ^top_builddir Makefile | sed -e "s| ||g"`
+elif [ -f Makefile.in ] ; then
 	DD1=`grep ^TOPOBJDIR Makefile.in | sed -e "s| ||g"`
 	DD2=`grep ^top_builddir Makefile.in | sed -e "s| ||g"`
 else
