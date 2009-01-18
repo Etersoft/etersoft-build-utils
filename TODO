@@ -1,3 +1,4 @@
+rpmbph: переписать с --define _specdir --define _sourcedir
 rpmgp -r для git -
 если есть каталог %name -
 скачивание, gear-update 
