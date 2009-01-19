@@ -10,8 +10,7 @@ install_srpm_package()
 
 pack_srpm_package()
 {
-	LISTNAMES=$1
-	pack_src_rpm
+	LISTNAMES=$1 pack_src_rpm
 }
 
 spec_by_srpm()
@@ -22,17 +21,16 @@ spec_by_srpm()
 
 export IGNOREGEAR=1
 
-TMPBPDIR=$RPMDIR/BP
-RPMTOPDIR=$TMPBPDIR
+RPMTOPDIR=$RPMDIR/BP
 
 for i in `ls -1 $RPMDIR/SRPMS` ; do
 	PKGNAME=$RPMDIR/SRPMS/$i
 	echo "get for $i:"
 	install_srpm_package $PKGNAME
-	SPECNAME=$RPMDIR/BP/SPECS/$(spec_by_srpm $PKGNAME)
+	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $PKGNAME)
 	echo "spec: $SPECNAME"
 	pack_srpm_package $SPECNAME
 	echo Compare $PKGNAME $LISTBUILT
-	rpmdiff $PKGNAME $RPMDIR/BP/SRPMS/$LISTBUILT
+	rpmdiff $PKGNAME $RPMTOPDIR/SRPMS/$LISTBUILT
 	exit 1
 done
