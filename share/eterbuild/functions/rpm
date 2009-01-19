@@ -12,8 +12,10 @@ uni_rpmbuild()
 {
 	local RET=0
 	local COMMAND=$1
+	# hack due quotes
 	# just for fill by something
 	local ONEPARAM="-v"
+	local TWOPARAM="-v"
 	shift
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
@@ -23,6 +25,10 @@ uni_rpmbuild()
 	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
 		# FIXME: do not override -v
 		ONEPARAM="--define=_source_payload w9.gzdio"
+	fi
+	
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
 	if [ "$COMMAND" = "buildreq" ] ; then
@@ -39,16 +45,16 @@ uni_rpmbuild()
 		shift # skip spec name
 		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
 		if [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@ || RET=$?
+			$NICE $GEAR --commit --rpmbuild -- $COMMAND "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 		else
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
 			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
-		$NICE $COMMAND "$ONEPARAM" $@ || RET=$?
+		$NICE $COMMAND "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
+	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $TWOPARAM $@" || :
 	return $RET
 }
 
