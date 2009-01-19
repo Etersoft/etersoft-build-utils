@@ -3,38 +3,36 @@
 . `dirname $0`/../share/eterbuild/functions/common
 . $ETERBUILDDIR/functions/rpm
 
-prepare_unpacked_package()
-{
-	local TMPBPDIR=$RPMDIR/BP
-	mkdir -p $TMPBPDIR
-	rpm -iv --define "_srcrpmdir $TMPBPDIR/SRPMS" $1
-
-}
-
 install_srpm_package()
 {
-	local TMPBPDIR=$RPMDIR/BP
-	mkdir -p $TMPBPDIR
-	rpm -iv --define "_topdir $TMPBPDIR" $1
+	uni_rpminstall $1
 }
 
 pack_srpm_package()
 {
-	local TMPBPDIR=$RPMDIR/BP
 	LISTNAMES=$1
-	export RPMTOPDIR=$TMPBPDIR
-	#rm $TMPBPDIR/SOURCES/apache*
 	pack_src_rpm
 }
 
+spec_by_srpm()
+{
+	local PKGNAME=$1
+	echo $(rpm -qp --queryformat "%{NAME}" $PKGNAME).spec
+}
+
 export IGNOREGEAR=1
+
+TMPBPDIR=$RPMDIR/BP
+RPMTOPDIR=$TMPBPDIR
 
 for i in `ls -1 $RPMDIR/SRPMS` ; do
 	PKGNAME=$RPMDIR/SRPMS/$i
 	echo "get for $i:"
 	install_srpm_package $PKGNAME
-	SPECNAME=$RPMDIR/BP/SPECS/$(rpm -qp --queryformat "%{NAME}" $PKGNAME).spec
+	SPECNAME=$RPMDIR/BP/SPECS/$(spec_by_srpm $PKGNAME)
 	echo "spec: $SPECNAME"
 	pack_srpm_package $SPECNAME
+	echo Compare $PKGNAME $LISTBUILT
+	rpmdiff $PKGNAME $RPMDIR/BP/SRPMS/$LISTBUILT
 	exit 1
 done
