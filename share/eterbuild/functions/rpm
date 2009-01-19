@@ -11,12 +11,11 @@
 uni_rpmbuild()
 {
 	local RET=0
-	local COMMAND=$1
 	# hack due quotes
 	# just for fill by something
 	local ONEPARAM="-v"
 	local TWOPARAM="-v"
-	shift
+
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
 	local GEAR=gear
@@ -31,30 +30,21 @@ uni_rpmbuild()
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
-	if [ "$COMMAND" = "buildreq" ] ; then
-		if is_gear $SPECDIR ; then
-			$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
-		else
-			$NICE $COMMAND $@ || RET=$?
-		fi
-		return $RET
-	fi
-
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
 		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
 		if [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR --commit --rpmbuild -- $COMMAND "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
+			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 		else
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
 			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
-		$NICE $COMMAND "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $TWOPARAM $@" || :
+	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $@" || :
 	return $RET
 }
 
@@ -177,10 +167,10 @@ do
 				sleep 10
 				exit 1
 			fi
-			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH
+			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH
 		else
 			echog "Just packing \$NAMESRPMIN"
-			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
+			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
 		fi
 	fi
 	if [ -f $RPMDIR/SRPMS/$NAMESRPMIN ] ; then
