@@ -12,7 +12,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod repl
+load_mod repl rpm
 
 #VENDORVERSION=`distr_vendor -e`
 DISTRVERSION=`distr_vendor -v`
@@ -255,15 +255,17 @@ fi
 
 unset MENV MENVARG
 
-# TODO: use temp dir (_topdir, _specdir, _sourcedir)
-TMPBPDIR=$RPMDIR/BP
-# --define "_srcrpmdir ."
-export SPECSDIR=$TMPBPDIR/SPECS/$MDISTR
-mkdir -p $SPECSDIR
+# handle src.rpm too, LISTBUILT - result src.rpms in SRPMS dir
+pack_src_rpm $LISTNAMES
 
-for i in $LISTNAMES ; do
-	DEST=`basename $i`
-	cp $i $SPECSDIR/$DEST || fatal "Can't copy spec"
-	alt_tolocal $SPECSDIR/$DEST
+export RPMTOPDIR=$RPMDIR/BP
+
+for i in $LISTBUILT ; do
+	SPKG=$RPMDIR/SRPMS/$i
+	uni_rpminstall $SPKG
+	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $SPKG)
+	test -r "$SPECNAME" || fatal "Spec $SPECNAME is not found"
+	rm -f $SPKG
+	alt_tolocal $SPECNAME
 done
 
