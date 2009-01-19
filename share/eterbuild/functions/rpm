@@ -58,6 +58,39 @@ uni_rpmbuild()
 	return $RET
 }
 
+
+uni_buildreq()
+{
+	local RET=0
+	local SPECNAME=$1
+	local SPECDIR=`dirname $SPECNAME`
+	local GEARBUILDREQ=gear-buildreq
+
+	if is_gear $SPECDIR ; then
+		$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
+	else
+		$NICE buildreq $@ || RET=$?
+	fi
+	return $RET
+}
+
+uni_rpminstall()
+{
+	local RET=0
+	local TWOPARAM="-v"
+
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
+	fi
+
+	#if is_gear $SPECDIR ; then
+	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
+	#else
+		rpm -iv "$TWOPARAM" $@ || RET=$?
+	#fi
+	return $RET
+}
+
 # get correct BUILDROOT, run build_rpms_name before!
 build_buildroot()
 {
