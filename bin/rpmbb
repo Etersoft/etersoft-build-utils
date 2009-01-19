@@ -18,7 +18,7 @@ load_mod rpm
 # Start as helper
 if [ "$1" = "--helper" ]; then
 	shift
-	cd $RPMDIR/SPECS && rpmbb "$@"
+	cd $RPMTOPDIR/SPECS && rpmbb "$@"
 	exit $?
 fi
 
@@ -69,7 +69,7 @@ mygetopts $LISTARGS
 
 
 mkdir -p "$LOGDIR"
-mkdir -p "$RPMDIR/RPMS"
+mkdir -p "$RPMTOPDIR/RPMS"
 test -z "$LISTNAMES" && fatal "Please run with spec(s) name"
 test -n "$LISTRPMARGS" && echog "Run $RPMBUILD with options: '$LISTRPMARGS'"
 

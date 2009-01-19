@@ -22,6 +22,8 @@ NICE="nice"
 RPMBUILD=rpmbuild
 
 RPMDIR="$HOME/RPM"
+# Can be overrided in the scripts
+[ -n "$RPMTOPDIR" ] || RPMTOPDIR="$RPMDIR"
 
 [ -n "$APTCONFBASE" ] || APTCONFBASE=$ETERBUILDETC/apt/apt.conf
 

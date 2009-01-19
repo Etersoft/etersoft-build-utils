@@ -37,6 +37,7 @@ uni_rpmbuild()
 		if [ "$MENV" = "SS" ] ; then
 			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 		else
+			fatal "Unsupported now"
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
 			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
@@ -76,6 +77,7 @@ uni_rpminstall()
 	#if is_gear $SPECDIR ; then
 	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
 	#else
+		echo -n "Install package "
 		rpm -iv "$TWOPARAM" $@ || RET=$?
 	#fi
 	return $RET
@@ -125,7 +127,6 @@ build_rpms_name()
 	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
 	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
 
-	#RPMSOURCEDIR=$RPMDIR/SOURCES
 	RPMSOURCEDIR=`rpm --eval %_sourcedir | subst_namever`
 	[ -n "$RPMSOURCEDIR" ] || fatal "Can't detect RPM/SOURCES dir"
 
@@ -173,10 +174,12 @@ do
 			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
 		fi
 	fi
-	if [ -f $RPMDIR/SRPMS/$NAMESRPMIN ] ; then
+	
+	# Check the package really built
+	if [ -f $RPMTOPDIR/SRPMS/$NAMESRPMIN ] ; then
 		LISTBUILT="$LISTBUILT $NAMESRPMIN"
 	else
-		fatal "Can't find '$NAMESRPMIN' in '$RPMDIR/SRPMS'"
+		fatal "Can't find '$NAMESRPMIN' in '$RPMTOPDIR/SRPMS'"
 	fi
 done
 # remove extra space before list
