@@ -13,12 +13,6 @@ pack_srpm_package()
 	LISTNAMES=$1 pack_src_rpm
 }
 
-spec_by_srpm()
-{
-	local PKGNAME=$1
-	echo $(rpm -qp --queryformat "%{NAME}" $PKGNAME).spec
-}
-
 export IGNOREGEAR=1
 
 RPMTOPDIR=$RPMDIR/BP
