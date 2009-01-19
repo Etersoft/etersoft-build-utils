@@ -154,7 +154,7 @@ do
 	
 	if [ -z ${i/*rpm/} ] ; then
 		# if rpm not spec, guess it is src.rpm
-		NAMESRPMIN=$i
+		NAMESRPMIN=$(basename $i)
 	else
 		# Получаем названия пакетов по спеку
 		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
