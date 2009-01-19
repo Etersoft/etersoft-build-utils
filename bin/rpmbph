@@ -255,13 +255,15 @@ fi
 
 unset MENV MENVARG
 
-mkdir -p $RPMDIR/SPECS/$MDISTR
+# TODO: use temp dir (_topdir, _specdir, _sourcedir)
+TMPBPDIR=$RPMDIR/BP
+# --define "_srcrpmdir ."
+export SPECSDIR=$TMPBPDIR/SPECS/$MDISTR
+mkdir -p $SPECSDIR
 
 for i in $LISTNAMES ; do
 	DEST=`basename $i`
-	cp $i $RPMDIR/SPECS/$MDISTR/$DEST || fatal "Can't copy spec"
-	cd $RPMDIR/SPECS/$MDISTR || fatal "Error"
-	alt_tolocal $DEST
-	cd -
+	cp $i $SPECSDIR/$DEST || fatal "Can't copy spec"
+	alt_tolocal $SPECSDIR/$DEST
 done
 
