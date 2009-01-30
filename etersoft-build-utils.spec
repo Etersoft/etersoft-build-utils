@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Jan 30 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt2
+- rpmbph: fix readlink
+
 * Thu Jan 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
 - rpmbph: support non numerical releases
 - loginhsh: enable /proc mount
