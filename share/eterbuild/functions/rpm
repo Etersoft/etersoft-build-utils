@@ -19,7 +19,6 @@ uni_rpmbuild()
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
 	local GEAR=gear
-	local GEARBUILDREQ=gear-buildreq
 
 	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
 		# FIXME: do not override -v
@@ -37,7 +36,7 @@ uni_rpmbuild()
 		if [ "$MENV" = "SS" ] ; then
 			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 		else
-			fatal "Unsupported now"
+			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
 			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
