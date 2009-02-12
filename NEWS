@@ -1,3 +1,11 @@
+etersoft-build-utils-1.5.6: 13 Jan 2009
+- rpm: do not check MENV during src.rpm packing, disable obsoleted SPECDIR checking
+- rpm: NAMESRPMIN have to be without dirname part
+- rpmbph: full rewrote package repacking to other system, add src.rpm and gear support
+- replace RPMDIR using with RPMTOPDIR which can be overrided
+- add RPMTOPDIR support
+- mkpatch: check Makefile before Makefile.in
+
 etersoft-build-utils-1.5.5: 15 Jan 2009
 - rpmbph: support non numerical releases
 - loginhsh: enable /proc mount

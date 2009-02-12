@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.5.5
-Release: alt2
+Version: 1.5.6
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Feb 13 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
+- rpmbph: full rewrote repacking, add src.rpm and gear support
+- mkpatch: check Makefile before Makefile.in
+
 * Fri Jan 30 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt2
 - rpmbph: fix readlink
 
