@@ -8,9 +8,14 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-if [ -f Makefile.in ] ; then
+if [ -f Makefile ] ; then
+	DD1=`grep ^TOPOBJDIR Makefile | sed -e "s| ||g"`
+	DD2=`grep ^top_builddir Makefile | sed -e "s| ||g"`
+	DD3=`grep ^top_srcdir Makefile | sed -e "s| ||g"`
+elif [ -f Makefile.in ] ; then
 	DD1=`grep ^TOPOBJDIR Makefile.in | sed -e "s| ||g"`
 	DD2=`grep ^top_builddir Makefile.in | sed -e "s| ||g"`
+	DD3=`grep ^top_srcdir Makefile.in | sed -e "s| ||g"`
 else
 	warning "Can't get topdir from Makefile.in"
 fi
@@ -23,6 +28,11 @@ fi
 if [ -n "$DD2" ] ; then
 	export $DD2
 	TOPDIR=$top_builddir
+fi
+
+if [ -n "$DD3" ] ; then
+	export $DD3
+	TOPDIR=$top_srcdir
 fi
 
 #test -z "$TOPDIR" && exit 1

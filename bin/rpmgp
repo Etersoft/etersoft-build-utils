@@ -224,7 +224,7 @@ if [ -n "$INSTALLBINARY" ] ; then
 	parse_cmd_pre "$@"
 	pack_src_rpm $LISTRPMARGS
 	echog "Running apt-get for install needed packages for $LISTBUILT"
-	cd $RPMDIR/SRPMS
+	cd $RPMTOPDIR/SRPMS
 	# FIXME: ALT Specific
 	$SUDO apt-get build-dep $LISTBUILT
 	cd -
@@ -309,7 +309,7 @@ fi
 test -z "$SRCRPM" && fatal "Cannon find package for $1"
 echog "Try to download $SRCRPM"
 
-test -z ${TRYINST} || { mkdir -p $RPMDIR/SRPMS && cd $RPMDIR/SRPMS ; }
+test -z ${TRYINST} || { mkdir -p $RPMTOPDIR/SRPMS && cd $RPMTOPDIR/SRPMS ; }
 echog "Downloading in $(pwd)"
 
 for i in $REPOSITORY

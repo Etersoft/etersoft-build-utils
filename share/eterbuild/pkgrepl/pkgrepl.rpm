@@ -86,3 +86,6 @@ libexpat-devel|expat-devel
 libltdl-devel|libtool-ltdl-devel
 
 libhal-devel|hal-devel
+liblua5-devel|lua-devel
+libctemplate-devel|ctemplate-devel
+libuuid-devel|uuid-devel

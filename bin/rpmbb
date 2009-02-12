@@ -18,7 +18,7 @@ load_mod rpm
 # Start as helper
 if [ "$1" = "--helper" ]; then
 	shift
-	cd $RPMDIR/SPECS && rpmbb "$@"
+	cd $RPMTOPDIR/SPECS && rpmbb "$@"
 	exit $?
 fi
 
@@ -69,13 +69,13 @@ mygetopts $LISTARGS
 
 
 mkdir -p "$LOGDIR"
-mkdir -p "$RPMDIR/RPMS"
+mkdir -p "$RPMTOPDIR/RPMS"
 test -z "$LISTNAMES" && fatal "Please run with spec(s) name"
 test -n "$LISTRPMARGS" && echog "Run $RPMBUILD with options: '$LISTRPMARGS'"
 
 # instead cbuild req
 if [ -n "$BUILDREQ" ] ; then
-	uni_rpmbuild buildreq $LISTNAMES
+	uni_buildreq $LISTNAMES
 	RET=$?
 	echog "You can run buildreq with -bi param for search a dependences for install section of the package"
 	exit $RET
@@ -85,7 +85,7 @@ if [ -n "$BUILDOPT" ] ; then
 	is_alt || fatal "Sorry, only ALT Linux systems support --short-circuit correctly"
 	for it in $BUILDOPT
 	do
-		uni_rpmbuild $RPMBUILD $LISTNAMES -b$it $LISTRPMARGS --target $DEFAULTARCH --short-circuit
+		uni_rpmbuild $LISTNAMES -b$it $LISTRPMARGS --target $DEFAULTARCH --short-circuit
 	done
 	exit 0
 fi
@@ -109,7 +109,7 @@ do
 	LOGFILE="$LOGDIR/`basename $NAMESRPMIN .src.rpm`$MENVARG.log"
 	echo "Build in native system" >$LOGFILE
 	rm -f $LOGFILE.failed
-	(uni_rpmbuild $RPMBUILD $i -bb $LISTRPMARGS $NODEPS --target $DEFAULTARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	(uni_rpmbuild $i -bb $LISTRPMARGS $NODEPS --target $DEFAULTARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
 
 	[ -r "$LOGFILE.failed" ] && RET=1 || RET=0
 	if [ "$RET" = "0" ] ; then

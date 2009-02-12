@@ -110,7 +110,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echog "==== Copying to build server ====="
 	#echog "It is recommended to rename old version at server for save traffic during rsync"
 	rsync -vay --partial --progress --checksum \
-	 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMDIR/SRPMS/ || exit 1
+	 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMTOPDIR/SRPMS/ || exit 1
 	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
 	exit 0
 fi
@@ -141,7 +141,7 @@ set_incoming $MENV
 if [ -n "${DELETENOW}" ]; then
 	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
 	check_key
-	cd $RPMDIR/SRPMS
+	cd $RPMTOPDIR/SRPMS
 	for i in $LISTBUILT ; do
 		> $i
 	done
@@ -174,7 +174,7 @@ check_gear_and_tag()
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
 
-	cd $RPMDIR/SRPMS
+	cd $RPMTOPDIR/SRPMS
 	if [ -r "$LISTBUILT" ] ; then
 		echo if one spec, check gear
 		check_gear_and_tag $SPECDIR

@@ -21,11 +21,15 @@ print_usedby()
 	echo "Required by:"
 	print_list $USEDBY
 	echo "Second required by:"
-	print_list `list_wd $USEDBY`
+	for i in `list_wd $USEDBY | sort -u` ; do
+		# skip repeated
+		echo $USEDBY | grep -q $i && continue
+		echo "    $i"
+	done
 }
 
 
-SPECLIST=`find $RPMDIR/SPECS -type f -name "*.spec"`
+[ -n "$SPECLIST" ] || SPECLIST=`find $RPMDIR/SPECS -type f -name "*.spec"`
 for i in $SPECLIST ; do
 	if echo $i | grep -q HELP ; then
 		continue

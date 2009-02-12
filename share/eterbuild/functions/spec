@@ -163,3 +163,10 @@ add_changelog_helper()
 	return $R
 }
 
+spec_by_srpm()
+{
+	local PKG=$1
+	local PKGNAME
+	PKGNAME=$(rpm -qp --queryformat "%{NAME}" $PKG)
+	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
+}

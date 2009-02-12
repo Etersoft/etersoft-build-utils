@@ -11,10 +11,11 @@
 uni_rpmbuild()
 {
 	local RET=0
-	local COMMAND=$1
+	# hack due quotes
 	# just for fill by something
 	local ONEPARAM="-v"
-	shift
+	local TWOPARAM="-v"
+
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
 	local GEAR=gear
@@ -24,14 +25,9 @@ uni_rpmbuild()
 		# FIXME: do not override -v
 		ONEPARAM="--define=_source_payload w9.gzdio"
 	fi
-
-	if [ "$COMMAND" = "buildreq" ] ; then
-		if is_gear $SPECDIR ; then
-			$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
-		else
-			$NICE $COMMAND $@ || RET=$?
-		fi
-		return $RET
+	
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
 	if is_gear $SPECDIR ; then
@@ -39,16 +35,51 @@ uni_rpmbuild()
 		shift # skip spec name
 		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
 		if [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR --commit --rpmbuild -- $COMMAND "$ONEPARAM" $@ || RET=$?
+			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 		else
+			fatal "Unsupported now"
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
 			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
-		$NICE $COMMAND "$ONEPARAM" $@ || RET=$?
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $COMMAND $ONEPARAM $@" || :
+	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $@" || :
+	return $RET
+}
+
+
+uni_buildreq()
+{
+	local RET=0
+	local SPECNAME=$1
+	local SPECDIR=`dirname $SPECNAME`
+	local GEARBUILDREQ=gear-buildreq
+
+	if is_gear $SPECDIR ; then
+		$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
+	else
+		$NICE buildreq $@ || RET=$?
+	fi
+	return $RET
+}
+
+uni_rpminstall()
+{
+	local RET=0
+	local TWOPARAM="-v"
+
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
+	fi
+
+	#if is_gear $SPECDIR ; then
+	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
+	#else
+		echo -n "Install package "
+		rpm -iv "$TWOPARAM" $@ || RET=$?
+	#fi
 	return $RET
 }
 
@@ -96,7 +127,6 @@ build_rpms_name()
 	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
 	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
 
-	#RPMSOURCEDIR=$RPMDIR/SOURCES
 	RPMSOURCEDIR=`rpm --eval %_sourcedir | subst_namever`
 	[ -n "$RPMSOURCEDIR" ] || fatal "Can't detect RPM/SOURCES dir"
 
@@ -124,7 +154,7 @@ do
 	
 	if [ -z ${i/*rpm/} ] ; then
 		# if rpm not spec, guess it is src.rpm
-		NAMESRPMIN=$i
+		NAMESRPMIN=$(basename $i)
 	else
 		# Получаем названия пакетов по спеку
 		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
@@ -138,16 +168,18 @@ do
 				sleep 10
 				exit 1
 			fi
-			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH
+			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH
 		else
 			echog "Just packing \$NAMESRPMIN"
-			uni_rpmbuild $RPMBUILD $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
+			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
 		fi
 	fi
-	if [ -f $RPMDIR/SRPMS/$NAMESRPMIN ] ; then
+	
+	# Check the package really built
+	if [ -f $RPMTOPDIR/SRPMS/$NAMESRPMIN ] ; then
 		LISTBUILT="$LISTBUILT $NAMESRPMIN"
 	else
-		fatal "Can't find '$NAMESRPMIN' in '$RPMDIR/SRPMS'"
+		fatal "Can't find '$NAMESRPMIN' in '$RPMTOPDIR/SRPMS'"
 	fi
 done
 # remove extra space before list
@@ -157,12 +189,14 @@ test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is 
 }
 
 # build binary package list (1st - repo dir, 2st - pkgname)
+# algorithm: list all files in PKGDIR, print packages with our source pkg name
 get_binpkg_list()
 {
 	local PKGDIR=$1
+	local PKGNAME=$(basename $2)
 	find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
 		rpmquery -p --qf='%{sourcerpm}\t%{name}-%{version}-%{release}.%{arch}.rpm\n' "{}" \; \
-		| grep "^$2[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
+		| grep "^$PKGNAME[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
 }
 
 drop_pkg_extensions()
