@@ -261,7 +261,7 @@ pack_src_rpm $LISTNAMES
 export RPMTOPDIR=$RPMDIR/BP
 
 # prevent gear detecting (operate inside our dir)
-IGNOREGEAR=1
+export IGNOREGEAR=1
 # NOTE: we can do cd to some other dir...
 
 for i in $LISTBUILT ; do
