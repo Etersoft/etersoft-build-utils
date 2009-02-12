@@ -33,7 +33,7 @@ uni_rpmbuild()
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
-		[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir"
+		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
 		if [ "$MENV" = "SS" ] ; then
 			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 		else
