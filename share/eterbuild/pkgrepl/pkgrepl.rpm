@@ -89,3 +89,6 @@ libhal-devel|hal-devel
 liblua5-devel|lua-devel
 libctemplate-devel|ctemplate-devel
 libuuid-devel|uuid-devel
+libesd-devel|esound-devel
+xorg-inputproto-devel|xorg-x11-proto-devel
+xorg-xextproto-devel|xorg-x11-proto-devel
