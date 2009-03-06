@@ -43,6 +43,7 @@ uni_rpmbuild()
 			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
+		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
 		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
 	fi
 	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $@" || :
