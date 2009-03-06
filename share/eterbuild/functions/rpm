@@ -78,6 +78,7 @@ uni_rpminstall()
 	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
 	#else
 		echo -n "Install package "
+		mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
 		rpm -iv "$TWOPARAM" $@ || RET=$?
 	#fi
 	return $RET
