@@ -243,7 +243,7 @@ test -z "$LISTNAMES" && fatal "Error: no such file"
 if [ "$VENDOR" = "alt" ] ; then
 	MDISTR=$MENV
 	test -z "$MDISTR" && fatal "missed backport version (f.i. run with -M24 param for Master 2.4)"
-	DISTRVERSION=`echo $MDISTR | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g"`
+	DISTRVERSION=$(get_altdistr_version $MDISTR)
 	# read man bash QUOTING and see /bin/shell-quote (libshell)
 	# due incompatible changes scince rpm-4.0.4-alt94 (15 Jun 2008)
 	#LISTRPMARGS="$LISTRPMARGS --define='_source_payload w9.gzdio'"
