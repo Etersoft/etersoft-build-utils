@@ -66,6 +66,10 @@ if [ ! -x "$HSH" ] ; then
 	exit 1
 fi
 
+# export OURAPTCONF with temp. file contains correct path to sources.list
+prepare_aptconfig
+
+HASHERARG="--apt-config=$OURAPTCONF --target $DEFAULTARCH"
 
 mygetopts $LISTARGS
 
@@ -78,13 +82,13 @@ fi
 
 if [ "$CLEANUP" = "1" ]; then
 	echog "Cleanup $HASHERDIR ..."
-	$HSH --cleanup-only $HASHERDIR || fatal "cleanup"
+	$HSH --cleanup-only $HASHERDIR $HASHERARG || fatal "cleanup"
 	exit 0
 fi
 
 if [ ! -d $HASHERDIR -o "$INITIALIZE" = "1" ]; then
 	echog "Initialize $HASHERDIR ..."
-	mkdir -p $HASHERDIR && $HSH --initroot-only $HASHERDIR || fatal "mkdir"
+	mkdir -p $HASHERDIR && $HSH $HASHERARG --initroot-only $HASHERDIR || fatal "mkdir"
 fi
 
 SHELLHASHERARG="--mountpoints=/proc"
