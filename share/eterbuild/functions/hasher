@@ -39,7 +39,7 @@ print_tmp_sourceslist()
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
 	SLIST=`cat "$1" | \
 		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g" | \
-		grep "/sources.list" "$1" | sed -e 's|.*"\(.*\)".*|\1|g'`
+		grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
 	#SLIST="$ETERBUILDETC/apt/`basename $SLIST`"
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
 	cat "$SLIST" | \
@@ -48,8 +48,8 @@ print_tmp_sourceslist()
 
 prepare_aptconfig()
 {
-	print_tmp_aptconf $APTCONF >$OURTMPDIR/apt.conf.$MENV || fatal "Can't create apt.conf"
 	export OURAPTCONF=$OURTMPDIR/apt.conf.$MENV
-	print_tmp_sourceslist $APTCONF >$OURTMPDIR/sources.list.$MENV || fatal "Can't create sources.list"
+	print_tmp_aptconf $APTCONF >$OURAPTCONF || fatal "Can't create apt.conf"
 	export OURSOURCES=$OURTMPDIR/sources.list.$MENV
+	print_tmp_sourceslist $APTCONF >$OURSOURCES || fatal "Can't create sources.list"
 }
