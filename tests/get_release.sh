@@ -51,12 +51,6 @@ check get_numrelease 3.1 `get_numrelease`
 TESTREL=alt4.2
 check get_txtrelease alt `get_txtrelease`
 
-TESTREL=alt5
-check inc_subrelease "alt5.1" `inc_subrelease ""`
-
-TESTREL=alt6.2
-check inc_subrelease "alt6.3" `inc_subrelease ""`
-
 BASERELEASE=27.5
 MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
 MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
