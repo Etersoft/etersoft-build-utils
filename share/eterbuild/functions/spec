@@ -133,8 +133,8 @@ subst_namever()
 {
 	sed -e "s|%{name}|$BASENAME|g
 			s|%{version}|$VERSION|g
-			s|%name|$BASENAME/|g
-			s|%version|$VERSION/|g"
+			s|%name|$BASENAME|g
+			s|%version|$VERSION|g"
 }
 
 
