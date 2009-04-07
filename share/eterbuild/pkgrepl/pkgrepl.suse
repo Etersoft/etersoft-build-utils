@@ -73,3 +73,6 @@ gccmakedep|xorg-x11-util-devel
 sysvinit-utils|sysvinit
 
 netcat|netcat
+
+xorg-sdk|xorg-x11-server-sdk
+libICE-devel|xorg-x11-libICE-devel
