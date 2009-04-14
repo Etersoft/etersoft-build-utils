@@ -163,7 +163,7 @@ check_gear_and_tag()
 	fi
 
 	if is_gear $SPECDIR ; then
-		# needed corrent user.name/user.email for get GPG id
+		# needed correct user.name/user.email for get GPG id
 		pushd $SPECDIR
 		$GEARCTAG --force
 		popd >/dev/null
@@ -177,7 +177,10 @@ if [ -n "$SIGN" ]; then
 	cd $RPMTOPDIR/SRPMS
 	if [ -r "$LISTBUILT" ] ; then
 		echo if one spec, check gear
+		[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
+		cd - 
 		check_gear_and_tag $SPECDIR
+		cd $RPMTOPDIR/SRPMS
 	fi
 
 	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
