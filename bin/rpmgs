@@ -243,7 +243,14 @@ do
 		# Write changelog if all done
 		CURVER=$(get_version $i)
 		CURREL=$(get_release $i)
-		add_changelog_helper "- new version ($CURVER)" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
+		EGEARME=""
+		is_gear && EGEARME="import in git"
+		add_changelog_helper "- new version ($CURVER) $EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
+	fi
+	if [ -n "$GSSETVERSION" ] && is_gear ; then
+		echo "Commit tarball $RPMSOURCEDIR/$FTB to git..."
+		gear-update $RPMSOURCEDIR/$FTB $BASENAME
+		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB)"
 	fi
 done
 
