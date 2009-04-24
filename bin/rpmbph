@@ -24,6 +24,8 @@ SPECNAME=$1
 
 BASERELEASE=$(get_numrelease $SPECNAME)
 
+FIXPATCHFUZZ="%define _default_patch_fuzz 3"
+
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
 	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
@@ -35,7 +37,7 @@ if [ "$VENDOR" = "alt" ] ; then
 	CLEANTEXT=""
 else
 	# Need our compat package and disable strong patch checking
-	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n%define _default_patch_fuzz 3"
+	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbb
 	set_release $SPECNAME eter$BASERELEASE$VENDOR
 	ADDDEF="%defattr(-, root, root)"
@@ -43,7 +45,7 @@ else
 fi
 
 # Do not add BuildReq if already exist
-cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
+cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ="$FIXPATCHFUZZ"
 
 # fix mktemp using for MCBC
 if [ "$VENDOR" = "mcbc" ] ; then
