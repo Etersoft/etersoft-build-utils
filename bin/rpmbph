@@ -34,7 +34,8 @@ if [ "$VENDOR" = "alt" ] ; then
 	ADDDEF=""
 	CLEANTEXT=""
 else
-	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95"
+	# Need our compat package and disable strong patch checking
+	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n%define _default_patch_fuzz 3"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbb
 	set_release $SPECNAME eter$BASERELEASE$VENDOR
 	ADDDEF="%defattr(-, root, root)"
@@ -269,7 +270,8 @@ for i in $LISTBUILT ; do
 	uni_rpminstall $SPKG
 	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $SPKG)
 	test -r "$SPECNAME" || fatal "Spec $SPECNAME is not found"
-	rm -f $SPKG
+	# FIXME: do not remove if not repacked
+	#rm -f $SPKG
 	alt_tolocal $SPECNAME
 done
 
