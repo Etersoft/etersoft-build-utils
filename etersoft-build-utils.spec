@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.5.6
-Release: alt2
+Release: alt3
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Apr 24 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt3
+- rpmbph: small fixes
+
 * Wed Mar 04 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt2
 - small replacements fix for nx
 - fix build in empty RPM dir
