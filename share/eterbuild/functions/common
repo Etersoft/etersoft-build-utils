@@ -23,6 +23,7 @@ set_eterbuilddir()
 			ETERBUILDDIR=/usr/share/eterbuild
 		fi
 	fi
+	ETERBUILDBIN=$(readlink -f $ETERBUILDDIR/../../bin)
 	test -n "$ETERBUILDDIR"
 	# returns test result
 }

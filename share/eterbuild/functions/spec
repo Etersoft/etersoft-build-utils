@@ -9,6 +9,7 @@ get_var()
 
 }
 
+# FIXME: only ALT handled rpm -bE
 # Раскрывает макросы в спеке и выводит на стандартный вывод
 eval_spec()
 {

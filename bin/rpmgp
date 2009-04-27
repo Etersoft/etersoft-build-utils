@@ -224,10 +224,8 @@ if [ -n "$INSTALLBINARY" ] ; then
 	parse_cmd_pre "$@"
 	pack_src_rpm $LISTRPMARGS
 	echog "Running apt-get for install needed packages for $LISTBUILT"
-	cd $RPMTOPDIR/SRPMS
 	# FIXME: ALT Specific
 	$SUDO apt-get build-dep $LISTBUILT
-	cd -
 	exit 0
 fi
 

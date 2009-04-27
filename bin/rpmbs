@@ -141,7 +141,6 @@ set_incoming $MENV
 if [ -n "${DELETENOW}" ]; then
 	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
 	check_key
-	cd $RPMTOPDIR/SRPMS
 	for i in $LISTBUILT ; do
 		> $i
 	done
@@ -174,7 +173,6 @@ check_gear_and_tag()
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
 
-	cd $RPMTOPDIR/SRPMS
 	if [ -r "$LISTBUILT" ] ; then
 		echo if one spec, check gear
 		check_gear_and_tag $SPECDIR
@@ -253,4 +251,11 @@ if [ -n "$SIGN" ]; then
 		sleep 10
 		exit 1
 	fi
+else
+	if [ -n "$ETERDESTSRPM" ] ; then
+		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
+		echog "Copying package(s) in \$ETERDESTSRPM"
+		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+	fi
+
 fi

@@ -29,7 +29,7 @@ FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
 	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
-	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbsh
+	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbsh
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
 	set_release $SPECNAME alt$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
@@ -38,7 +38,7 @@ if [ "$VENDOR" = "alt" ] ; then
 else
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n$FIXPATCHFUZZ"
-	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=rpmbb
+	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 	set_release $SPECNAME eter$BASERELEASE$VENDOR
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
@@ -161,6 +161,11 @@ mv $SPECNAME $SPECNAME.old &&
 		sed -e "s|^Obsoletes: *\$||g" | \
 		cat > $SPECNAME
 
+# hack for build old eter packages
+if [ -n "$ETERREGNUM" ] ; then
+	subst "s|@ETERREGNUM@|$ETERREGNUM|g" $SPECNAME
+fi
+
 #TODO:
 #%if %{undefined buildroot}
 #BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -221,7 +226,7 @@ phelp()
 while getopts :hniv opt; do
     case $opt in
     h) phelp; exit 0;;
-    n) BUILDCOMMAND="rpmbs";;
+    n) BUILDCOMMAND="$ETERBUILDBIN/rpmbs";;
     v) VERBOSE=1;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -258,7 +263,7 @@ fi
 
 unset MENV MENVARG
 
-# handle src.rpm too, LISTBUILT - result src.rpms in SRPMS dir
+# handle src.rpm too, LISTBUILT - result with full pathes to src.rpms
 pack_src_rpm $LISTNAMES
 
 export RPMTOPDIR=$RPMDIR/BP
@@ -268,10 +273,9 @@ export IGNOREGEAR=1
 # NOTE: we can do cd to some other dir...
 
 for i in $LISTBUILT ; do
-	SPKG=$RPMDIR/SRPMS/$i
-	uni_rpminstall $SPKG
-	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $SPKG)
-	test -r "$SPECNAME" || fatal "Spec $SPECNAME is not found"
+	uni_rpminstall $i
+	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
+	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	# FIXME: do not remove if not repacked
 	#rm -f $SPKG
 	alt_tolocal $SPECNAME
