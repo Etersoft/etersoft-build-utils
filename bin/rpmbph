@@ -166,6 +166,9 @@ if [ -n "$ETERREGNUM" ] ; then
 	subst "s|@ETERREGNUM@|$ETERREGNUM|g" $SPECNAME
 fi
 
+# Fedora 10 does mismatch for Patch: and %patch0
+subst "s|Patch:|Patch0:|g" $SPECNAME
+
 #TODO:
 #%if %{undefined buildroot}
 #BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
