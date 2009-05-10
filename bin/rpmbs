@@ -176,9 +176,7 @@ if [ -n "$SIGN" ]; then
 	if [ -r "$LISTBUILT" ] ; then
 		echo if one spec, check gear
 		[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
-		cd - 
 		check_gear_and_tag $SPECDIR
-		cd $RPMTOPDIR/SRPMS
 	fi
 
 	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
