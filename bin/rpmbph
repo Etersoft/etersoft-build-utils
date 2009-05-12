@@ -35,6 +35,8 @@ if [ "$VENDOR" = "alt" ] ; then
 	set_release $SPECNAME alt$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
+	# due new libtool
+	RECONFT="%undefine __libtoolize"
 else
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n$FIXPATCHFUZZ"
