@@ -55,3 +55,6 @@
 
 # Always pack src.rpm by legacy gzip compression
 #USE_LEGACY_COMPRESSION=0
+
+# Path to Sisyphus repo (where i586/RPMS.classic) for rpmunmets build
+#SISYPHUSPATH=/var/ftp/pub/ALTLinux/Sisyphus/
