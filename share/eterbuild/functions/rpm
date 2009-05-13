@@ -24,6 +24,10 @@ uni_rpmbuild()
 		# FIXME: do not override -v
 		ONEPARAM="--define=_source_payload w9.gzdio"
 	fi
+
+	if [ -n "$USE_VENDOR" ] ; then
+		ONEPARAM="--define=_vendor $USE_VENDOR"
+	fi
 	
 	if [ -n "$RPMTOPDIR" ] ; then
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
