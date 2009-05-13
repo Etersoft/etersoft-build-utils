@@ -84,6 +84,7 @@ if [ ! -d $HASHERDIR/repo ] || [ -n "$SKIPTST" ] ; then
 	exit 0
 fi
 
+echo "Prepare to unmets checking..."
 # Prepare our confdir
 prepare_aptconfig
 TESTINGAPTCONF=$OURAPTCONF
@@ -99,3 +100,24 @@ $TESTINGWORKDIR/aptbox/apt-cache unmet > $OURTMPDIR/unmets.new
 echo
 echo "New unmets:"
 diff -U0 $OURTMPDIR/unmets.{old,new}
+
+if [ ! -d "$SISYPHUSPATH" ] ; then
+	echo "Sisyphus repo is not found in '$SISYPHUSPATH'. Set SISYPHUSPATH to compare requires with new packages"
+	exit 1
+fi
+
+NEWPKGDIR=$HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher/
+
+echo
+echo "Compare requires between new packages and their Sisyphus version"
+export LESS_PROGRAM=/dev/null
+for i in $(echo $NEWPKGDIR/*.rpm) ; do
+	OLDPKGNAME=$(rpm -qp $i | sed -e "s|-[0-9].*||g")
+	OLDPKG=$(echo $SISYPHUSPATH/*/RPMS.*/$OLDPKGNAME-[0-9]*.rpm)
+	if [ ! -r "$OLDPKG" ] ; then
+		echo "Cannot find old package for $(basename $i), skipping"
+		continue
+	fi
+	echo "Compare $OLDPKG with new $i"
+	compare_packages -a -R -- $OLDPKG  -- $i
+done
