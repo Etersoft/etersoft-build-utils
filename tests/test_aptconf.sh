@@ -10,7 +10,7 @@ Dir::Etc::main "/dev/null";
 Dir::Etc::parts "/var/empty";
 Dir::Etc::SourceParts "/var/empty";
 
-Dir::Etc::sourcelist "$(pwd)/sources.list.SS";
+Dir::Etc::sourcelist "/etc/eterbuild/apt/sources.list.SS";
 EOF
 
 cat <<EOF >sources.list.SS

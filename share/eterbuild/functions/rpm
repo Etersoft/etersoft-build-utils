@@ -142,6 +142,7 @@ build_rpms_name()
 }
 
 # LISTNAMES, options in arg
+# build LISTBUILT list with src.rpm full path
 pack_src_rpm()
 {
 local i
@@ -156,7 +157,13 @@ do
 	
 	if [ -z ${i/*rpm/} ] ; then
 		# if rpm not spec, guess it is src.rpm
-		NAMESRPMIN=$(basename $i)
+		#NAMESRPMIN=$(basename $i)
+
+		if [ -f "$i" ] ; then
+			LISTBUILT="$LISTBUILT $i"
+		else
+			fatal "pack_src_rpm: Can't find '$i'"
+		fi
 	else
 		# Получаем названия пакетов по спеку
 		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
@@ -175,14 +182,15 @@ do
 			echog "Just packing \$NAMESRPMIN"
 			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
 		fi
+
+		# Check the package really built
+		if [ -f "$RPMTOPDIR/SRPMS/$NAMESRPMIN" ] ; then
+			LISTBUILT="$LISTBUILT $RPMTOPDIR/SRPMS/$NAMESRPMIN"
+		else
+			fatal "Can't find '$NAMESRPMIN' in '$RPMTOPDIR/SRPMS'"
+		fi
 	fi
-	
-	# Check the package really built
-	if [ -f $RPMTOPDIR/SRPMS/$NAMESRPMIN ] ; then
-		LISTBUILT="$LISTBUILT $NAMESRPMIN"
-	else
-		fatal "Can't find '$NAMESRPMIN' in '$RPMTOPDIR/SRPMS'"
-	fi
+
 done
 # remove extra space before list
 LISTBUILT=$(echo "$LISTBUILT" | sed -e "s|^ ||")

@@ -3,3 +3,4 @@ gpm-devel|
 libungif-devel|
 perl-devel|perl
 libgtkmm2-devel|gtkmm24-devel
+xorg-sdk|xorg-x11-server-sdk

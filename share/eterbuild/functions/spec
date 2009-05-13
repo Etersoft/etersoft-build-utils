@@ -9,6 +9,7 @@ get_var()
 
 }
 
+# FIXME: only ALT handled rpm -bE
 # Раскрывает макросы в спеке и выводит на стандартный вывод
 eval_spec()
 {
@@ -64,7 +65,8 @@ set_release()
 inc_release()
 {
 	local BASERELEASE=$(get_numrelease "$1")
-	set_release "$1" $(get_txtrelease "$1")$(($BASERELEASE + 1 ))
+	local MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
+	set_release "$1" $(get_txtrelease "$1")$(($MAJOR + 1 ))
 }
 
 # inc 2.x to 2.(x+1) or 2 to 2.1
@@ -132,8 +134,8 @@ subst_namever()
 {
 	sed -e "s|%{name}|$BASENAME|g
 			s|%{version}|$VERSION|g
-			s|%name|$BASENAME/|g
-			s|%version|$VERSION/|g"
+			s|%name|$BASENAME|g
+			s|%version|$VERSION|g"
 }
 
 

@@ -11,10 +11,25 @@ if [ "$1" = "-h" ] ; then
 	exit 1
 fi
 
-PROJECTNAME=$(basename `pwd`)
+# use as project name
+if [ -n "$1" ] ; then
+	PROJECTNAME=$1
+else
+	PROJECTNAME=$(basename `pwd`)
+fi
 
-git push $@ git.alt:packages/$PROJECTNAME.git
-git push --tags git.alt:packages/$PROJECTNAME.git
+CURRENTBRANCH=$(git branch | grep "^\*" | cut -d " " -f 2)
+
+if [ -z "$CURRENTBRANCH" ] ; then
+	echo "Can't detect current branch"
+	exit 1
+fi
+
+# more correctly
+CURRENTBRANCH=HEAD
+
+git push $@ git.alt:packages/$PROJECTNAME.git $CURRENTBRANCH:master
+git push --tags git.alt:packages/$PROJECTNAME.git $CURRENTBRANCH:master
 
 #> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
 #>   git tag -s -f -m 'Sisyphus release $A' sisyphus $A
