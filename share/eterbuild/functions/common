@@ -12,6 +12,7 @@ set_eterbuilddir()
 		ETERBUILDDIR=/usr/share/eterbuild
 	else
 		# if run from no system installation
+		# TODO: use real root dir not script dirname
 		ETERBUILDDIR=$(realpath `dirname $0`/../share/eterbuild)
 		ETERBUILDETC=$(realpath `dirname $0`/../etc)
 		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
@@ -19,11 +20,12 @@ set_eterbuilddir()
 				echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
 			fi
 		else
+			warning "Cannot find source tree root in source tree mode"
 			ETERBUILDETC=/etc/eterbuild
 			ETERBUILDDIR=/usr/share/eterbuild
 		fi
 	fi
-	ETERBUILDBIN=$(readlink -f $ETERBUILDDIR/../../bin)
+	ETERBUILDBIN=$(realpath $ETERBUILDDIR/../../bin)
 	test -n "$ETERBUILDDIR"
 	# returns test result
 }

@@ -35,8 +35,6 @@ if [ "$VENDOR" = "alt" ] ; then
 	set_release $SPECNAME alt$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
-	# due new libtool
-	RECONFT="%undefine __libtoolize"
 else
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n$FIXPATCHFUZZ"
@@ -46,9 +44,13 @@ else
 	CLEANTEXT=""
 fi
 
+# due new libtool, affected on ALT Linux and Mandriva 2009.0
+RECONFT="%undefine __libtoolize"
+
 # Do not add BuildReq if already exist
 cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ="$FIXPATCHFUZZ"
 
+# TODO: fix readlink -m, introduced by new libtool and missed in RHEL4
 # fix mktemp using for MCBC
 if [ "$VENDOR" = "mcbc" ] ; then
 	FIXMKTEMP="%__subst "s|mktemp -dt|mktemp -d|g" configure"
@@ -194,6 +196,8 @@ if [ "$VENDOR" = "alt" ] ; then
 else
 	subst "1i# This spec is autoported from ALT Linux Sisyphus to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
 	ENTRY="- autoport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
+	#DISTRARG="--define '_vendor $VENDOR'"
+	export USE_VENDOR=$VENDOR
 	DISTRARG=""
 fi
 
