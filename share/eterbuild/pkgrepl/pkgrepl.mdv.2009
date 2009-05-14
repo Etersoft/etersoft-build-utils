@@ -1,2 +1,4 @@
 libxslt-devel|libxslt-devel
 jackit-devel|libjack-devel
+libreadline-devel|libreadline-devel
+libreadline|libreadline6
