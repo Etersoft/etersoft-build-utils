@@ -15,6 +15,7 @@ uni_rpmbuild()
 	# just for fill by something
 	local ONEPARAM="-v"
 	local TWOPARAM="-v"
+	local THRPARAM="-v"
 
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
@@ -23,6 +24,10 @@ uni_rpmbuild()
 	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
 		# FIXME: do not override -v
 		ONEPARAM="--define=_source_payload w9.gzdio"
+	fi
+
+	if [ -n "$USE_VENDOR" ] ; then
+		THRPARAM="--define=_vendor $USE_VENDOR"
 	fi
 	
 	if [ -n "$RPMTOPDIR" ] ; then
@@ -35,7 +40,7 @@ uni_rpmbuild()
 		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
+			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
@@ -44,9 +49,9 @@ uni_rpmbuild()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" $@ || RET=$?
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $@" || :
+	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $@" || :
 	return $RET
 }
 
