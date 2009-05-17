@@ -25,11 +25,6 @@ set_target_type()
 	return 1;
 }
 
-get_distr_version()
-{
-	echo $1 | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g"  | sed -e "s|SS|Sisyphus|g" | sed -e "s|DD|Daedalus|g"
-}
-
 set_incoming()
 {
 	INCOMING="Sisyphus"
@@ -43,10 +38,44 @@ set_incoming()
 			;;
 		*)
 			if [ -n "$UPDATES" ] ; then
-				INCOMING="updates/`get_distr_version $1`"
+				INCOMING="updates/`get_altdistr_version $1`"
 			else
-				INCOMING="backports/`get_distr_version $1`"
+				INCOMING="backports/`get_altdistr_version $1`"
 			fi
 			;;
 	esac
+}
+
+set_binaryrepo()
+{
+	BINARYREPO="sisyphus"
+	test -z "$1" && return
+	case "$1" in
+		("DD")
+			BINARYREPO="daedalus"
+			;;
+		("SS")
+			BINARYREPO="sisyphus"
+			;;
+		*)
+			# TODO
+			if [ -n "$UPDATES" ] ; then
+				BINARYREPO="`get_altdistr_version $1`"
+			else
+				BINARYREPO="`get_altdistr_version $1`"
+			fi
+			;;
+	esac
+}
+
+# M50 -> 5.0
+get_altdistr_version()
+{
+	echo "$1" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|Sisyphus|g" | sed -e "s|DD|Daedalus|g"
+}
+
+# 5.0 -> M50
+get_altdistr_mod()
+{
+	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|g"
 }

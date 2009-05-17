@@ -15,7 +15,7 @@ load_mod hasher
 make_ordinalbox()
 {
 	mkdir -p $ORDINALWORKDIR
-	echo "Build aptbox in $ORDINALWORKDIR ..."
+	echo "Build aptbox from ordinal repo in $ORDINALWORKDIR ..."
 	#rm -rf $ORDINALWORKDIR
 	mkaptbox -f --apt-config=$ORDINALAPTCONF $ORDINALWORKDIR
 }
@@ -23,7 +23,7 @@ make_ordinalbox()
 make_testingbox()
 {
 	mkdir -p $TESTINGWORKDIR
-	echo "Build aptbox in $TESTINGWORKDIR ..."
+	echo "Build aptbox from testing repo in $TESTINGWORKDIR ..."
 	#rm -rf $TESTINGWORKDIR
 	mkaptbox -f --apt-config=$TESTINGAPTCONF $TESTINGWORKDIR
 }

@@ -98,7 +98,7 @@ VENDOR=`distr_vendor -s`
 if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	[ -n "$APTCONF" ] || APTCONF=${APTCONFBASE/.SS}.$MENV
 	
-	[ -n "$VERBOSE" ] && echog "Target ALT Linux system: `get_distr_version $MENV`, use \$APTCONF"
+	[ -n "$VERBOSE" ] && echog "Target ALT Linux system: `get_altdistr_version $MENV`, use \$APTCONF"
 	MENVARG="-$MENV"
 else
 	# FIXME: echog breakes vars
@@ -163,14 +163,3 @@ make_temp_file()
 	fi
 }
 
-# M50 -> 5.0
-get_altdistr_version()
-{
-	echo "$1" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|Sisyphus|g"
-}
-
-# 5.0 -> M50
-get_altdistr_mod()
-{
-	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|g"
-}
