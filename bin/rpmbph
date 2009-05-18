@@ -189,9 +189,10 @@ rm -f $SPECNAME.old
 
 if [ "$VENDOR" = "alt" ] ; then
 	subst "1i#" $SPECNAME
-	# is not needed since git.alt srpm build
-	# use old compress method for the src.rpm
-	#export USE_LEGACY_COMPRESSION=1
+	# use old compress method for the src.rpm on ALT 4.0 and 4.1
+	if [ "$DISTRVERSION" = "4.0" ] || [ "$DISTRVERSION" = "4.1" ] ; then
+		export USE_LEGACY_COMPRESSION=1
+	fi
 
 	subst "1i# This spec is backported to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
 	ENTRY="- backport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
