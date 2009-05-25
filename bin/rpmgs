@@ -141,6 +141,7 @@ function get_tbz2()
 	mv $WEXT.tbz2 $WEXT.tar.bz2
 }
 
+# TODO: use external converter
 function get_zip()
 {
 	get_archive zip || return
@@ -149,6 +150,17 @@ function get_zip()
 	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar || return
 	cd ..
 	rm -rf $WEXT.zip.dir
+}
+
+# TODO: use external converter
+function get_7z()
+{
+	get_archive 7z || return
+	mkdir $WEXT.7z.dir || return
+	cd $WEXT.7z.dir
+	7z x ../$WEXT.7z && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar || return
+	cd ..
+	rm -rf $WEXT.7z.dir
 }
 
 function dir_name()
@@ -232,7 +244,7 @@ do
 			warning "It is not tarball..."
 			get_bzip || get_gz || get_raw || fatal "Error: Cannot retrieve $GETSOURCE"
 		else
-			get_bzip || get_targz || get_tbz2 || get_tgz || get_zip || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
+			get_bzip || get_targz || get_tbz2 || get_tgz || get_7z || get_zip || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
 		fi
 		echo "DONE"
 		popd
