@@ -146,7 +146,7 @@ function get_zip()
 	get_archive zip || return
 	mkdir $WEXT.zip.dir || return
 	cd $WEXT.zip.dir
-	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar
+	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar || return
 	cd ..
 	rm -rf $WEXT.zip.dir
 }
