@@ -152,9 +152,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	check_gear_and_tag
 	$ETERBUILDBIN/gpush || fatal "Git push failed. Possibly you need to run ginit for create remote repo."
 	TAG=$VERSION-$RELEASE
-	ssh git.alt task new
-	ssh git.alt task add repo $BASENAME $TAG || ssh git.alt task rm
-	ssh git.alt task run
+	ssh $GIRARHOST task new
+	ssh $GIRARHOST task add repo $BASENAME $TAG || ssh $GIRARHOST task rm
+	ssh $GIRARHOST task run
 	exit
 fi
 
