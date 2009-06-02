@@ -7,7 +7,7 @@
 
 if [ "$1" = "-h" ] ; then
 	echo "gpush - publish current project repo to git.alt"
-	echo "Use: gpush without parameters"
+	echo "Use: gpush [project name] [target branch]"
 	exit 1
 fi
 
@@ -27,9 +27,15 @@ fi
 
 # more correctly
 CURRENTBRANCH=HEAD
+# 
+if [ -n "$2" ] ; then
+	TARGETBRANCH=$CURRENTBRANCH:$2
+else
+	TARGETBRANCH=
+fi
 
-git push $@ git.alt:packages/$PROJECTNAME.git $CURRENTBRANCH:master
-git push --tags git.alt:packages/$PROJECTNAME.git $CURRENTBRANCH:master
+git push $@ git.alt:packages/$PROJECTNAME.git $TARGETBRANCH
+git push --tags git.alt:packages/$PROJECTNAME.git $TARGETBRANCH
 
 #> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
 #>   git tag -s -f -m 'Sisyphus release $A' sisyphus $A
