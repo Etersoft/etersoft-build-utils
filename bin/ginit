@@ -12,5 +12,5 @@ if [ "$1" = "-h" ] ; then
 fi
 
 PROJECTNAME=$(basename `pwd`)
-
+echo "Create remote $PROJECTNAME repo"
 ssh git.alt git-init-db $PROJECTNAME.git
