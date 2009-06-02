@@ -6,7 +6,7 @@
 #test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
 
 if [ "$1" = "-h" ] ; then
-	echo "gpush - publish current project repo to git.alt"
+	echo "gpush - publish current project repo to $GIRARHOST"
 	echo "Use: gpush [project name] [target branch]"
 	exit 1
 fi
@@ -34,8 +34,8 @@ else
 	TARGETBRANCH=
 fi
 
-git push $@ git.alt:packages/$PROJECTNAME.git $TARGETBRANCH
-git push --tags git.alt:packages/$PROJECTNAME.git $TARGETBRANCH
+git push $@ $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+git push --tags $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 
 #> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
 #>   git tag -s -f -m 'Sisyphus release $A' sisyphus $A
