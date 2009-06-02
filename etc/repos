@@ -10,5 +10,6 @@ suse-edu2    http://www.opensuse-education.org/download/repos/1.0/11.0/suse/src
 alt-obsolete ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
 alt-orphaned ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned
 pld          ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS
-rpmfusion    http://download1.rpmfusion.org/free/fedora/releases/10/Everything/source/SRPMS/
+fedoraf      http://download1.rpmfusion.org/free/fedora/releases/10/Everything/source/SRPMS/
+rpmfusion    http://download1.rpmfusion.org/free/fedora/development/source/SRPMS/
 asp          http://mirror.yandex.ru/asplinux/sources/SRPMS.14/
