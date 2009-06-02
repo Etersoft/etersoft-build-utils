@@ -155,6 +155,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	ssh $GIRARHOST task new
 	ssh $GIRARHOST task add repo $BASENAME $TAG || ssh $GIRARHOST task rm
 	ssh $GIRARHOST task run
+	echo "run task $BASENAME with tag $TAG at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	exit
 fi
 
@@ -252,7 +253,7 @@ if [ -n "$SIGN" ]; then
 				echo >>$LOGFILE
 				date >>$LOGFILE
 				echo "uploaded">>$LOGFILE
-				echo "$(basename $i) uploaded to $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+				echo "$(basename $i) run build src.rpm at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 			done
 
 		else
