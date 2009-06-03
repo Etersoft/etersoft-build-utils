@@ -13,9 +13,9 @@ uni_rpmbuild()
 	local RET=0
 	# hack due quotes
 	# just for fill by something
-	local ONEPARAM="-v"
-	local TWOPARAM="-v"
-	local THRPARAM="-v"
+	local ONEPARAM="--quiet"
+	local TWOPARAM="--quiet"
+	local THRPARAM="--quiet"
 
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
