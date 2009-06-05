@@ -12,7 +12,7 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-[ -n "$BROWSER" ] || BROWSER=url_handler.sh
+which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
 
 show_bugs()
 {
