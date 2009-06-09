@@ -93,3 +93,9 @@ libesd-devel|esound-devel
 xorg-inputproto-devel|xorg-x11-proto-devel
 xorg-xextproto-devel|xorg-x11-proto-devel
 xorg-sdk|xorg-x11-server-devel
+
+libgtkspell|gtkspell
+libgtkspell-devel|gtkspell-devel
+libGConf-devel|GConf2-devel
+GConf|GConf2
+libxml++2-devel|libxml++-devel
