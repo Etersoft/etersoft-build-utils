@@ -39,9 +39,14 @@ toalt_pkgrepl()
 		# For broken rule
 		echo $REPLRULE | grep "^|" >/dev/null && REPLRULE=""
 		echo $REPLRULE | grep "|\$" >/dev/null && REPLRULE=""
-		REPLRULE1=`echo $REPLRULE | cut -d"|" -f1`
-		REPLRULE2=`echo $REPLRULE | cut -d"|" -f2`
-		test -n "$REPLRULE" && return 0
+		if [ -n "$REPLRULE" ] ; then
+			REPLRULE1=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
+			REPLRULE2=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
+			return 0
+		else
+			REPLRULE1=
+			REPLRULE2=
+		fi
 	done
 	return 1
 }
@@ -305,7 +310,7 @@ do
 	ALLREPLRULES=""
 	for n in `print_buildreq $i` ; do
 		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
 		#echo REPLRULE: $REPLRULE
 	done
 
