@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.5.6
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -61,11 +61,21 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
-* Fri Apr 24 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt3
-- rpmbph: small fixes
-
-* Wed Mar 04 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt2
-- small replacements fix for nx
+* Fri Jun 12 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- rpmbs: switch to use git.alt build srpm command instead rsync to Incoming
+- rpmbs: support git.alt for -u at gear repo
+- rpmbph: use legacy compression for ALT 4.0/4.1 and not alt systems
+- rpmgs: add gear import support
+- support xdg-open instead BROWSER
+- rpmcs: correct handle + (plus sign) in package names
+- gpush: add -f/--force support
+- rpmgs: add 7z archive support
+- rpmbs: add save log entry for task build
+- add undefine libtoolize for alt systems
+- set correct vendor when repack src.rpm with rpmbph
+- rpmunmets: add compare packages requires with their previous versions
+- rpmbph: small fixes, replace Patch with Patch0
+- pkgrepl.rpm: update rules
 - fix build in empty RPM dir
 
 * Fri Feb 13 2009 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
