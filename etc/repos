@@ -1,6 +1,7 @@
 # all known src.rpm repositories (for rpmgp command)
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS
-fedora       ftp://mirror.yandex.ru/fedora/linux/releases/10/Fedora/source/SRPMS/
+fedora       ftp://mirror.yandex.ru/fedora/linux/releases/11/Fedora/source/SRPMS/
+fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/11/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
 mandriva     ftp://mirror.yandex.ru/mandriva/official/2009.0/SRPMS/main/release
 mandriva-contrib ftp://mirror.yandex.ru/mandriva/official/2009.0/SRPMS/contrib/release
