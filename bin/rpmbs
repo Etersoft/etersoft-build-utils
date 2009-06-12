@@ -78,43 +78,6 @@ LISTRPMARGS=$@
 
 }
 
-parse_cmd_pre "$@"
-# quotes brokes option handling
-mygetopts $LISTARGS
-
-#############################
-LISTBUILT=""
-CURDIR=`pwd`
-
-if [ -n "$NOSOURCE" ] ; then
-	$RPMBUILD -bs --nosource 0 $LISTNAMES
-	exit $?
-fi
-
-# Упаковываем пакеты в src.rpm
-# FIXME: -s can be in name... (but not in option!)
-#LISTRPMARGS=
-#LISTRPMARGS=${LISTRPMARGS/-m/}
-#echo "@@ - $LISTRPMARGS - '$MENV'"
-pack_src_rpm ${LISTRPMARGS}
-
-#LISTARGS=${LISTARGS/-s/}
-if  [ -n "$REMOTEBUILD" ] ; then
-	fatal "Do not realized yet"
-	check_key
-	REMCOM="ssh $BUILDSERVER"
-
-	echo
-	echog "############ Build at build server `$BUILDSERVER` ############"
-	echo
-	echog "==== Copying to build server ====="
-	#echog "It is recommended to rename old version at server for save traffic during rsync"
-	rsync -vay --partial --progress --checksum \
-	 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMTOPDIR/SRPMS/ || exit 1
-	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
-	exit 0
-fi
-
 # TODO: include in sisyphus_check
 # Проверяем, соответствует ли релиз пакетов указанному в MENV
 function release_check()
@@ -136,23 +99,10 @@ function release_check()
 	done
 }
 
-set_incoming $MENV
-
-if [ -n "${DELETENOW}" ]; then
-	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
-	check_key
-	for i in $LISTBUILT ; do
-		> $i
-	done
-	rsync -vay --partial --progress --delete \
-	 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/
-	echo "$i REMOVED from Incoming/$INCOMING ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
-	exit 0
-fi
-
 # create tag according to package release
 check_gear_and_tag()
 {
+	local SPECDIR=$1
 	local GEARCTAG=gear-create-tag
 
 	# set SPECDIR from LISTNAMES if empty
@@ -168,6 +118,83 @@ check_gear_and_tag()
 		# git push ?
 	fi
 }
+
+
+parse_cmd_pre "$@"
+# quotes brokes option handling
+mygetopts $LISTARGS
+
+#############################
+LISTBUILT=""
+CURDIR=`pwd`
+
+if [ -n "$NOSOURCE" ] ; then
+	$RPMBUILD -bs --nosource 0 $LISTNAMES
+	exit $?
+fi
+
+# Упаковываем пакеты в src.rpm
+# FIXME: -s can be in name... (but not in option!)
+#LISTRPMARGS=
+#LISTRPMARGS=${LISTRPMARGS/-m/}
+#echo "@@ - $LISTRPMARGS - '$MENV'"
+
+# set SPECDIR from LISTNAMES if empty
+if [ -r "$LISTNAMES" ] ; then
+	[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
+fi
+
+# If we build from gear repo, run task
+if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
+	echo "Run with gear repo..."
+	build_rpms_name "$LISTNAMES"
+	release_check
+	check_gear_and_tag
+	$ETERBUILDBIN/gpush || fatal "Git push failed. Possibly you need to run ginit for create remote repo."
+	TAG=$VERSION-$RELEASE
+	ssh $GIRARHOST task new
+	ssh $GIRARHOST task add repo $BASENAME $TAG || ssh $GIRARHOST task rm
+	ssh $GIRARHOST task run
+	echo "run task $BASENAME with tag $TAG at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	exit
+fi
+
+pack_src_rpm ${LISTRPMARGS}
+
+#LISTARGS=${LISTARGS/-s/}
+if  [ -n "$REMOTEBUILD" ] ; then
+	fatal "Do not realized yet"
+	check_key
+	REMCOM="ssh $BUILDSERVER"
+
+	echo
+	echog "############ Build at build server `$BUILDSERVER` ############"
+	echo
+	echog "==== Copying to build server ====="
+	#echog "It is recommended to rename old version at server for save traffic during rsync"
+	rsync -vay --partial --progress --checksum \
+	 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMTOPDIR/SRPMS/ || exit 1
+	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
+	exit 0
+fi
+
+
+#set_incoming $MENV
+set_binaryrepo $MENV
+
+if [ -n "${DELETENOW}" ]; then
+	echog "Removing did not realized yet"
+	exit 1
+	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
+	check_key
+	for i in $LISTBUILT ; do
+		> $i
+	done
+	rsync -vay --partial --progress --delete \
+	 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/
+	echo "$i REMOVED from Incoming/$INCOMING ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	exit 0
+fi
 
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
@@ -202,19 +229,28 @@ if [ -n "$SIGN" ]; then
 	if [ "$RET" = "0" ]
 	then
 		if [ -n "${UPLOADNOW}" ] ; then
-			echog "Uploading to '$RSYNCINCOMING/$INCOMING/'"
+			echog "Uploading to $GIRARHOST"
 			check_key
+			# TODO:  rsync foo.src.rpm git.alt: && ssh git.alt build srpm foo.src.rpm
+			# git.alt build -b 4.0 srpm foo.src.rpm
 			rsync -vay --partial --progress $CHECKSUM \
-			 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/ && \
+			 	-e ssh $LISTBUILT $GIRARHOST: && \
 			echo "---------------------" && \
 			echog "All files synced" || fatal "Error during rsync"
+
+			TASKLIST=""
+			for i in $LISTBUILT ; do
+				TASKLIST="$TASKLIST srpm $(basename $i)"
+			done
+			echo "Create task for $TASKLIST"
+			ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
 
 			for i in $LISTBUILT ; do
 				LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
 				echo >>$LOGFILE
 				date >>$LOGFILE
 				echo "uploaded">>$LOGFILE
-				echo "$i uploaded to Incoming/$INCOMING ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+				echo "$(basename $i) run build src.rpm at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 			done
 
 		else

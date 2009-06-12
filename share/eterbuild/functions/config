@@ -39,8 +39,10 @@ HASHERARG="--eager-cleanup"
 [ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
 
 RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
+# obsoleted
 RSYNCINCOMING=devel:/incoming
 #SSH_KEYFILE=~/.ssh/id_dsa
+GIRARHOST=git.alt
 
 BUILDSERVER=
 #BUILDSERVERPATH="$HASHERDIR/repo/i586/RPMS.hasher"
