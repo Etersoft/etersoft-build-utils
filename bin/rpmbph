@@ -200,6 +200,7 @@ else
 	subst "1i# This spec is autoported from ALT Linux Sisyphus to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
 	ENTRY="- autoport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
 	export USE_VENDOR=$RPMVENDOR
+	export USE_LEGACY_COMPRESSION=1
 	DISTRARG=""
 fi
 
