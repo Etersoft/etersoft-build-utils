@@ -14,7 +14,6 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod repl rpm
 
-#VENDORVERSION=`distr_vendor -e`
 DISTRVERSION=`distr_vendor -v`
 
 alt_tolocal()
@@ -200,8 +199,7 @@ if [ "$VENDOR" = "alt" ] ; then
 else
 	subst "1i# This spec is autoported from ALT Linux Sisyphus to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
 	ENTRY="- autoport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
-	#DISTRARG="--define '_vendor $VENDOR'"
-	export USE_VENDOR=$VENDOR
+	export USE_VENDOR=$RPMVENDOR
 	DISTRARG=""
 fi
 
@@ -265,9 +263,6 @@ if [ "$VENDOR" = "alt" ] ; then
 	MDISTR=$MENV
 	test -z "$MDISTR" && fatal "missed backport version (f.i. run with -M24 param for Master 2.4)"
 	DISTRVERSION=$(get_altdistr_version $MDISTR)
-	# read man bash QUOTING and see /bin/shell-quote (libshell)
-	# due incompatible changes scince rpm-4.0.4-alt94 (15 Jun 2008)
-	#LISTRPMARGS="$LISTRPMARGS --define='_source_payload w9.gzdio'"
 else
 	MDISTR=LOCAL
 fi

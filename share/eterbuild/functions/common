@@ -96,6 +96,7 @@ local DISTRNAME=`distr_vendor -e`
 MENVARG=""
 TARGET=`distr_vendor -p`
 VENDOR=`distr_vendor -s`
+RPMVENDOR=`distr_vendor -n`
 
 if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	[ -n "$APTCONF" ] || APTCONF=${APTCONFBASE/.SS}.$MENV
