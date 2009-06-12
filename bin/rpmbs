@@ -153,7 +153,6 @@ fi
 # create tag according to package release
 check_gear_and_tag()
 {
-	local SPECDIR=$1
 	local GEARCTAG=gear-create-tag
 
 	# set SPECDIR from LISTNAMES if empty
@@ -174,9 +173,7 @@ if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
 
 	if [ -r "$LISTBUILT" ] ; then
-		echo if one spec, check gear
-		[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
-		check_gear_and_tag $SPECDIR
+		check_gear_and_tag
 	fi
 
 	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
