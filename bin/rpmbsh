@@ -94,7 +94,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echo "-------------------------------"
 	test "$RESULT" = "0" && echog "It was remote build at $BUILDSERVER" || echog "There is error during remote build at $BUILDSERVER"
 else
-	cd $RPMTOPDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTBUILT
+	cd $RPMTOPDIR/SRPMS && time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
 	date
 	echo "-------------------------------"
