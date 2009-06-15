@@ -24,6 +24,16 @@ libreadline-devel|libreadline5-dev
 libreadline|libreadline5
 
 libXext-devel|libxext-dev
+libXrender-devel|libxrender-dev
+libXrender|libxrender1
+libXdamage-devel|libxdamage-dev
+libXdamage|libxdamage1
+libXrandr-devel|libxrandr-dev
+libXrandr|libxrandr1
+libXt-devel|libxt-dev
+libXt|libxt1
+libXtst-devel|libxtst-dev
+libXtst|libxtst1
 #libmesa-devel|libglu1-mesa-dev
 libmesa-devel|mesa-common-dev
 #libGL-devel|libgl1-mesa-dev
@@ -42,9 +52,22 @@ libgtkmm2-devel|libgtkmm-2.4-dev
 libpng12|libpng
 libpng-devel|libpng-dev
 libpam0-devel|libpam0g-dev
+libpam0|libpam0g
+libpam-devel|libpam0g-dev
 
 rpm-build-fonts|rpm-build-altlinux-compat
 menu-devel|
 
 libexpat|libexpat1
 libexpat-devel|libexpat1-dev
+libarts-devel|libarts1-dev
+libarts|libarts1
+libesd|libesd0
+libesd-devel|libesd0-dev
+libssl-devel|libssl-dev
+libstdc++-devel|libstdc++6-dev
+xorg-cf-files|xutils-dev
+imake|xutils-dev
+xorg-inputproto-devel|x11proto-input-dev
+xorg-sdk|
+xorg-xextproto-devel|x11proto-xext-dev
