@@ -47,18 +47,25 @@ fi
 
 if [ "$VENDOR" = "mdv" ] || [ "$VENDOR" = "pclinux" ] ; then
 	# due new libtool, affected on Mandriva 2009.0
+	test -z "$VERBOSE" || echo "Disable libtoolize"
 	RECONFT="%define _disable_libtoolize 1"
 fi
 
 # Do not add BuildReq if already exist
 cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ="$FIXPATCHFUZZ"
 
-# TODO: fix readlink -m, introduced by new libtool and missed in RHEL4 (replace with readlink -e)
+FIXMKTEMP=""
+
+# fix readlink -m, introduced by new libtool and missed in RHEL4 (replace with readlink -e)
+if [ "`distr_vendor -d`/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
+	test -z "$VERBOSE" || echo "Add subst readlink -m"
+	FIXMKTEMP="%__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
+fi
+
 # fix mktemp using for MCBC
 if [ "$VENDOR" = "mcbc" ] ; then
-	FIXMKTEMP="%__subst "s|mktemp -dt|mktemp -d|g" configure"
-else
-	FIXMKTEMP=""
+	test -z "$VERBOSE" || echo "Add subst mktemp -dt"
+	FIXMKTEMP="%__subst 's|mktemp -dt|mktemp -d|g' configure"
 fi
 
 # Too old problem
