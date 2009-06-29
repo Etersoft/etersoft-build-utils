@@ -39,7 +39,8 @@ libmesa-devel|mesa-common-dev
 #libGL-devel|libgl1-mesa-dev
 
 gcc-c++|g++
-libstdc++6-devel|libstdc++6-dev
+libstdc++6-devel|libstdc++-dev
+libstdc++-devel|libstdc++-dev
 tcl-devel|tcl8.4-dev
 perl-devel|libperl-dev
 python-devel|python-dev
@@ -65,7 +66,6 @@ libarts|libarts1
 libesd|libesd0
 libesd-devel|libesd0-dev
 libssl-devel|libssl-dev
-libstdc++-devel|libstdc++6-dev
 xorg-cf-files|xutils-dev
 imake|xutils-dev
 xorg-inputproto-devel|x11proto-input-dev
