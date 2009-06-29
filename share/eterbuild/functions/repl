@@ -21,8 +21,8 @@ tolocal_anyrepl()
 		# For broken rule
 		echo $REPLRULE | grep "|" >/dev/null || REPLRULE=""
 		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
-		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1`
-		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2`
+		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
+		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
 		# for compatibility
 		REPLRULE1=$ALTPKGNAME
 		REPLRULE2=$TARGETPKGNAME
