@@ -43,21 +43,23 @@ phelp()
 	echog "Options:"
 	echog " -s - sign package(s) and move it to upload dir"
 	echog " -c - only sign package(s) with checking"
-	echog " -u - sign package(s) and upload it to Incoming (backports)"
-	echog " -U - sign package(s) and upload it to Incoming (updates)"
-	echog " -d - remove package(s) from SRPMS and Incoming"
+	echog " -u - sign package(s), upload it and run build"
+	echog " -a TASK - sign package(s), update it and add to task TASK"
+#	echog " -U - sign package(s) and upload it to Incoming (updates)"
+#	echog " -d - remove package(s) from SRPMS and Incoming"
 	echog " -n - do not check with sisyphus_check before upload"
 	echog " -o - create nosrc.rpm package"
 	echog " -z - create src.rpm with compatible gzip compression"
 }
 
-while getopts :hscuUdnoz opt; do
+while getopts :hscuUdnoa:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
-    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
+#    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
+    a) UPLOADNOW=1 ; SIGN=1 ; TASKNUMBER=$OPTARG ;;
     n) NOCHECK=1; ;;
     o) NOSOURCE=1; ;;
     z) export USE_LEGACY_COMPRESSION=1;
@@ -151,9 +153,13 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	check_gear_and_tag
 	$ETERBUILDBIN/gpush || fatal "Git push failed. Possibly you need to run ginit for create remote repo."
 	TAG=$VERSION-$RELEASE
-	ssh $GIRARHOST task new
-	ssh $GIRARHOST task add repo $BASENAME $TAG || ssh $GIRARHOST task rm
-	ssh $GIRARHOST task run
+	if [ -n "$TASKNUMBER" ] ; then
+		ssh $GIRARHOST task add $TASKNUMBER repo $BASENAME $TAG
+	else
+		ssh $GIRARHOST task new
+		ssh $GIRARHOST task add repo $BASENAME $TAG || ssh $GIRARHOST task rm
+		ssh $GIRARHOST task run
+	fi
 	echo "run task $BASENAME with tag $TAG at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	exit
 fi
@@ -242,8 +248,13 @@ if [ -n "$SIGN" ]; then
 			for i in $LISTBUILT ; do
 				TASKLIST="$TASKLIST srpm $(basename $i)"
 			done
-			echo "Create task for $TASKLIST"
-			ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
+			if [ -n "$TASKNUMBER" ] ; then
+				echo "Add $TASKLIST to task $TASKNUMBER"
+				ssh $GIRARHOST task add $TASKNUMBER srpm $TASKLIST
+			else
+				echo "Create task for $TASKLIST"
+				ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
+			fi
 
 			for i in $LISTBUILT ; do
 				LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
