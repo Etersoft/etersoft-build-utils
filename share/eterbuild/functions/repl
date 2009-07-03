@@ -62,24 +62,25 @@ print_replbased_list()
 	# VENDOR, TARGET is already defined in detect_target_env() func
 	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
 
-	# Get list of replacement rules files
-	#[ -r "$REPLBASE$VENDOR.$DISTRVERSION" ] && 
-	echo -n "$REPLBASE$VENDOR.$DISTRVERSION $REPLBASE$VENDOR "
-	#[ -r "$REPLBASE$VENDOR" ] && 
-	echo -n "$REPLBASE$VENDOR "
-	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE$TARGET"
+	# separate checking for x86_64
+	[ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.x86_64.$VENDOR.$DISTRVERSION $REPLBASE.x86_64.$VENDOR "
+	[ "$VENDOR" != "alt" ] && [ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.x86_64.$TARGET"
+
+        # general rules listing
+	echo -n "$REPLBASE.$VENDOR.$DISTRVERSION $REPLBASE.$VENDOR "
+	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE.$TARGET"
 
 }
 
 # TODO: list in  alph. order and use if <= then our version
 print_pkgrepl_list()
 {
-	print_replbased_list $PKGREPLBASE/pkgrepl.
+	print_replbased_list $PKGREPLBASE/pkgrepl
 }
 
 print_grprepl_list()
 {
-	print_replbased_list $PKGREPLBASE/../grprepl/grprepl.
+	print_replbased_list $PKGREPLBASE/../grprepl/grprepl
 }
 
 
