@@ -250,9 +250,11 @@ if [ -n "$SIGN" ]; then
 			done
 			if [ -n "$TASKNUMBER" ] ; then
 				echo "Add $TASKLIST to task $TASKNUMBER"
-				ssh $GIRARHOST task add $TASKNUMBER srpm $TASKLIST
+				[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST task add $TASKNUMBER $TASKLIST"
+				ssh $GIRARHOST task add $TASKNUMBER $TASKLIST
 			else
 				echo "Create task for $TASKLIST"
+				[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST build -b $BINARYREPO $TASKLIST"
 				ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
 			fi
 
