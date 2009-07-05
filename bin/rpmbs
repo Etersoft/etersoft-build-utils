@@ -121,6 +121,19 @@ check_gear_and_tag()
 	fi
 }
 
+rpmbs_copying_built()
+{
+	if [ -n "$ETERDESTSRPM" ] ; then
+		echog "Copying package(s) in \$ETERDESTSRPM"
+		if echo "$ETERDESTSRPM" | grep -q ":" ; then
+			# if ssh target
+			scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		else
+			mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
+			cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		fi
+	fi
+}
 
 parse_cmd_pre "$@"
 # quotes brokes option handling
@@ -268,9 +281,7 @@ if [ -n "$SIGN" ]; then
 
 		else
 			test -z "$ETERDESTSRPM" && ETERDESTSRPM=$UPLOADDIR${MENVARG/-/.}
-			mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
-			echog "Copying package(s) in \$ETERDESTSRPM"
-			cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+			rpmbs_copying_built
 		fi
 
 		echog "Removing buildroot after upload..."
@@ -299,10 +310,5 @@ if [ -n "$SIGN" ]; then
 		exit 1
 	fi
 else
-	if [ -n "$ETERDESTSRPM" ] ; then
-		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
-		echog "Copying package(s) in \$ETERDESTSRPM"
-		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
-	fi
-
+	rpmbs_copying_built
 fi
