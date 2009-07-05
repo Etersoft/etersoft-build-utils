@@ -14,3 +14,4 @@ fi
 PROJECTNAME=$(basename `pwd`)
 echo "Create remote $PROJECTNAME repo"
 ssh $GIRARHOST git-init-db $PROJECTNAME.git
+git remote add origin $GIRARHOST:packages/$PROJECTNAME.git
