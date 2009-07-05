@@ -66,7 +66,7 @@ get_archive()
 	#TODO: check for gz
 	URL=${GETSOURCE/.tar.bz2/}
 	get_tarball "$URL.$1" || return
-	WEXT=`basename $URL`
+	WEXT=`basename "$URL"`
 	echog -n "Converting to $WEXT.tar.bz2..."
 }
 
@@ -75,7 +75,7 @@ get_archive1()
 	#TODO: check for gz
 	URL=${GETSOURCE/.bz2/}
 	get_tarball "$URL$1" || return
-	WEXT=`basename $URL`
+	WEXT=`basename "$URL"`
 	echog -n "Converting to $WEXT.bz2..."
 }
 
@@ -97,7 +97,7 @@ bzipit()
 get_bzip()
 {
 	get_tarball "$GETSOURCE" || return $?
-	TARBALL=`basename $GETSOURCE`
+	TARBALL=`basename "$GETSOURCE"`
 	bzip -t $TARBALL
 	return $?
 }
@@ -228,7 +228,7 @@ do
 	do
 		get_source $i "Source$nn"
 		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $i" ; continue ; }
-		FTB=`basename $GETSOURCE`
+		FTB=`basename "$GETSOURCE"`
 		# for get RPMSOURCEDIR
 		build_rpms_name $i
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
@@ -261,8 +261,10 @@ do
 	fi
 	if [ -n "$GSSETVERSION" ] && is_gear ; then
 		echo "Commit tarball $RPMSOURCEDIR/$FTB to git..."
-		gear-update $RPMSOURCEDIR/$FTB $BASENAME
+		gear-update "$RPMSOURCEDIR/$FTB" "$BASENAME"
 		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB)"
+	else
+		echo "Run without version. Skip tarball commiting."
 	fi
 done
 
