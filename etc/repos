@@ -1,10 +1,14 @@
 # all known src.rpm repositories (for rpmgp command)
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS
 fedora       ftp://mirror.yandex.ru/fedora/linux/releases/11/Fedora/source/SRPMS/
+fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/source/SRPMS
 fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/11/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
 mandriva     ftp://mirror.yandex.ru/mandriva/official/2009.0/SRPMS/main/release
 mandriva-contrib ftp://mirror.yandex.ru/mandriva/official/2009.0/SRPMS/contrib/release
+mandriva-cooker-contrib ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/contrib/release
+mandriva-cooker-main ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/main/release
+mandriva-cooker-non-free ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non-free/release
 suse         ftp://mirror.yandex.ru/opensuse/distribution/11.0/repo/src-oss/suse/src
 suse-edu1    http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2    http://www.opensuse-education.org/download/repos/1.0/11.0/suse/src
