@@ -85,7 +85,7 @@ if [ -n "$BUILDOPT" ] ; then
 	is_alt || fatal "Sorry, only ALT Linux systems support --short-circuit correctly"
 	for it in $BUILDOPT
 	do
-		uni_rpmbuild $LISTNAMES -b$it $LISTRPMARGS --target $DEFAULTARCH --short-circuit
+		uni_rpmbuild --commit $LISTNAMES -b$it $LISTRPMARGS --target $DEFAULTARCH --short-circuit
 	done
 	exit 0
 fi
@@ -109,7 +109,7 @@ do
 	LOGFILE="$LOGDIR/`basename $NAMESRPMIN .src.rpm`$MENVARG.log"
 	echo "Build in native system" >$LOGFILE
 	rm -f $LOGFILE.failed
-	(uni_rpmbuild $i -bb $LISTRPMARGS $NODEPS --target $DEFAULTARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	(uni_rpmbuild --commit $i -bb $LISTRPMARGS $NODEPS --target $DEFAULTARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
 
 	[ -r "$LOGFILE.failed" ] && RET=1 || RET=0
 	if [ "$RET" = "0" ] ; then

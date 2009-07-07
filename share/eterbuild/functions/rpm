@@ -16,6 +16,12 @@ uni_rpmbuild()
 	local ONEPARAM="--quiet"
 	local TWOPARAM="--quiet"
 	local THRPARAM="--quiet"
+	local COMMIT=""
+
+	if [ "$1" = "--commit" ] ; then
+		shift
+		COMMIT="--commit"
+	fi
 
 	local SPECNAME=$1
 	local SPECDIR=`dirname $SPECNAME`
@@ -40,7 +46,7 @@ uni_rpmbuild()
 		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR --commit --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+			$NICE $GEAR $COMMIT --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
