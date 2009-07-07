@@ -89,6 +89,12 @@ ALLREPLRULES=""
 
 export DISTRVERSION
 
+if [ -n "$VERBOSE" ] ; then
+	echo -n "Use replacement file: "
+	print_pkgrepl_list
+	echo
+fi
+
 for i in $LISTDEP ; do
 	tolocal_anyrepl $i `print_pkgrepl_list` || continue
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
