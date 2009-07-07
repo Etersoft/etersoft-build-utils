@@ -94,8 +94,4 @@ print_target_buildreq()
 		tolocal_anyrepl $i `print_pkgrepl_list` || echo -n "$i "
 		echo -n "$TARGETPKGNAME "
 	done
-	if [ -n "$VERBOSE" ] ; then
-		echo -n "Use repl file: "
-		print_pkgrepl_list
-	fi
 }
