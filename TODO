@@ -1,3 +1,16 @@
+Исправить:
+если из gear-репозитория отпарвлять через rpmbsh -u,
+то пакет отправляется как src.rpm
+
+Добавить служебный комментарий для перепаковки исходников:
+# etersoft-build-utils repack DIR - упаковать DIR в архив с названием NAME-VERSION
+# etersoft-build-utils remove DIR/FILE [DIR/FILE] - удалить указанные каталоги и файлы и упаковать
+
+Удаление пакета из Сизифа: 
+ssh git.alt task new
+ssh git.alt task del PACKAGE
+ssh git.alt task run
+
 сделать раскрытие версии и имени пакета:
 fonts-ttf-%fname-1.04-alt1.src.rpm
 
