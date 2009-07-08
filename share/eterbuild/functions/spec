@@ -84,6 +84,12 @@ get_version()
 	eval_spec $1 | get_var "Version"
 }
 
+get_tarballname()
+{
+	local SOURCE=$(eval_spec $1 | get_var "Source$2")
+	basename $SOURCE | sed -e "s|-$(get_version $1).*||g"
+}
+
 
 # Set version for spec (args: spec version), f.i. test.spec 1.2.3)
 # Supports %major and %ver_major macros in spec
