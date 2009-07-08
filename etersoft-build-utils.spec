@@ -61,13 +61,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
-* Wed Jul 08 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
+* Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - rpmbs: add ssh target support for ETERDESTSRPM
 - fix backports version (altbug#20431)
 - rpmbs: fix add srpm to task, add verbose
 - repl: add x86_64 support for replacement rules
 - rpmbs: add -a option for add to shared task
 - ginit: add remote alias origin, load config
+- rpmbph: replace pushd/popd with cd
+- build with gear --commit only via rpmbb
 
 * Fri Jun 12 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - rpmbs: switch to use git.alt build srpm command instead rsync to Incoming

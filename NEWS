@@ -1,10 +1,12 @@
-etersoft-build-utils-1.6.1: 08 Jul 2009
+etersoft-build-utils-1.6.1: 09 Jul 2009
 - ginit: add remote alias origin, load config
 - rpmbs: add ssh target support for ETERDESTSRPM
 - rpmbs: fix add srpm to task, add verbose
 - repl: add x86_64 support for replacement rules
 - rpmbs: add -a option for add to shared task
 - repl: add + sign support
+- rpmbph: replace pushd/popd with cd
+- build with gear --commit only via rpmbb
 
 etersoft-build-utils-1.6.0: 12 Jun 2009
 - switch to use git.alt build srpm command instead rsync to Incoming
