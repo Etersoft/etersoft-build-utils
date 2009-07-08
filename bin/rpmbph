@@ -189,6 +189,10 @@ fi
 # Fedora 10 does mismatch for Patch: and %patch0
 subst "s|Patch:|Patch0:|g" $SPECNAME
 
+# for systems with ash as sh
+subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
+subst "s|^popd|cd - >/dev/null|g" $SPECNAME
+
 #TODO:
 #%if %{undefined buildroot}
 #BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
