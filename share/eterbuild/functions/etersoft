@@ -8,7 +8,6 @@ get_etersoft_srpm_path()
 {
 	local SOURCE
 	local ALPHA=$2
-	local FTPBASE=/var/ftp
 	local SOURCEFTP=$(eval_spec $1 | get_var "Source")
 	if [ -z "$SOURCEFTP" ] ; then
 		build_rpms_name $1
@@ -17,7 +16,7 @@ get_etersoft_srpm_path()
 	[ -n "$SOURCEFTP" ] || fatal "Can't get Source from spec"
 	SOURCEFTP=$(dirname "$SOURCEFTP")
 
-	if ! echo $SOURCEFTP | grep -q etersoft.ru ; then
+	if ! echo $SOURCEFTP | grep -q $COMPANYFTP ; then
 		# if source if not known target, just return empty and we will use UPLOADDIR var
 		# TODO: we can use table for URL translating
 		return
@@ -26,7 +25,7 @@ get_etersoft_srpm_path()
 	# remove tarball if exists at the end of line (our struct)
 	echo $SOURCEFTP | grep -q "tarball\$" && SOURCEFTP=$(dirname "$SOURCEFTP")
 	# translate ftp to local path
-	SOURCE=$(echo "$SOURCEFTP" | sed -e "s|ftp://.*etersoft.ru|$FTPBASE|g")
+	SOURCE=$(echo "$SOURCEFTP" | sed -e "s|.*://.*$COMPANYFTP|$TARGETFTPBASE|g")
 	[ -d "$SOURCE" ] || fatal "Can't locate $SOURCE dir, translated from $SOURCEFTP"
 	# rewrite V.E.R./sources with $ALPHA/sources
 	if [ -n "$ALPHA" ] ; then

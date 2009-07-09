@@ -33,8 +33,14 @@
 #APTCONFBASE=/etc/apt/apt.conf
 #REMOTERPMDIR="~/RPM"
 
-# Каталог, куда копируются пакеты к отправке
+# Каталог, куда копируются подписанные src.rpm
 #UPLOADDIR=$RPMDIR/upload
+
+# Адрес ftp-сервера компании
+#COMPANYFTP=etersoft.ru
+
+# Базовый каталог расположения ftp-сервера (поддерживаются локальные и ssh-пути)
+#TARGETFTPBASE=ftp.eter:/var/ftp
 
 # Каталог для записи протоколов сборки
 #LOGDIR=$RPMDIR/log

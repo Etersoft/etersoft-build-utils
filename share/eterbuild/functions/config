@@ -32,7 +32,9 @@ RPMDIR="$HOME/RPM"
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
 OWNERMAIL=`rpm --eval %packager`
 
+COMPANYFTP=etersoft.ru
 UPLOADDIR="$RPMDIR/upload"
+TARGETFTPBASE="/var/ftp"
 LOGDIR="$RPMDIR/log"
 REMOTERPMDIR=
 HASHERDIR="$HOME/hasher"
