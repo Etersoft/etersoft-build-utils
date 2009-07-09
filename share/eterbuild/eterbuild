@@ -6,6 +6,6 @@
 ETERBUILDETC=/etc/eterbuild
 ETERBUILDDIR=/usr/share/eterbuild
 
-. /usr/share/eterbuild/functions/common $@
+. /usr/share/eterbuild/functions/common
 load_mod rpm
 

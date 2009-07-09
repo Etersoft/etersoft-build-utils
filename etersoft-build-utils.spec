@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -11,7 +11,7 @@ Url: http://www.freesource.info/wiki/AltLinux/Razrabotchiku/SborkaPaketov
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # git-clone http://git.altlinux.org/people/lav/packages/etersoft-build-utils.git
-Source: %name-%version.tar
+Source: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
 
@@ -61,6 +61,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
+- add needed version checking (as param like 162 to /eterbuild or /common)
+
 * Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - rpmbs: add ssh target support for ETERDESTSRPM
 - fix backports version (altbug#20431)
