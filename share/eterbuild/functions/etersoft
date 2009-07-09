@@ -16,6 +16,13 @@ get_etersoft_srpm_path()
 	fi
 	[ -n "$SOURCEFTP" ] || fatal "Can't get Source from spec"
 	SOURCEFTP=$(dirname "$SOURCEFTP")
+
+	if ! echo $SOURCEFTP | grep -q etersoft.ru ; then
+		# if source if not known target, just return empty and we will use UPLOADDIR var
+		# TODO: we can use table for URL translating
+		return
+	fi
+
 	# remove tarball if exists at the end of line (our struct)
 	echo $SOURCEFTP | grep -q "tarball\$" && SOURCEFTP=$(dirname "$SOURCEFTP")
 	# translate ftp to local path
