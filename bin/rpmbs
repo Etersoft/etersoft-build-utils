@@ -124,8 +124,7 @@ rpmbs_copying_built()
 {
 	if [ -n "$ETERDESTSRPM" ] ; then
 		echog "Copying package(s) in \$ETERDESTSRPM"
-		if echo "$ETERDESTSRPM" | grep -q ":" ; then
-			# if ssh target
+		if is_ssh_target "$ETERDESTSRPM" ; then
 			scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
 		else
 			mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"

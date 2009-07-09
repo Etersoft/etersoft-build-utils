@@ -176,3 +176,8 @@ make_temp_file()
 	fi
 }
 
+
+is_ssh_target()
+{
+	echo "$1" | grep -q ":"
+}
