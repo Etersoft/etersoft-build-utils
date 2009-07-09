@@ -65,6 +65,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 - add universal make_release script
 - check version if NEEDETERBUILD contains needed version
 - rpmbph: remove -m64 from optflags on Ubuntu/Debian
+- fix rpmbs from gear build after rpmrb/rpmbsh
+- rpmpub: initial version of project publish script
+- introduce COMPANYNAME and TARGETFTPBASE for company independence
 
 * Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - rpmbs: add ssh target support for ETERDESTSRPM

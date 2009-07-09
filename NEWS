@@ -1,7 +1,10 @@
-etersoft-build-utils-1.6.2: 09 Jul 2009
+etersoft-build-utils-1.6.2: 10 Jul 2009
 - add universal make_release script
 - check version if NEEDETERBUILD contains needed version
 - rpmbph: remove -m64 from optflags on Ubuntu/Debian
+- fix rpmbs from gear build after rpmrb/rpmbsh
+- rpmpub: initial version of project publish script
+- introduce COMPANYNAME and TARGETFTPBASE for company independence
 
 etersoft-build-utils-1.6.1: 09 Jul 2009
 - ginit: add remote alias origin, load config
