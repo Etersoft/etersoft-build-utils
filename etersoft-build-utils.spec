@@ -68,6 +68,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 - fix rpmbs from gear build after rpmrb/rpmbsh
 - rpmpub: initial version of project publish script
 - introduce COMPANYNAME and TARGETFTPBASE for company independence
+- gpush: improve: push master by default, add -a|--all support
 
 * Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - rpmbs: add ssh target support for ETERDESTSRPM

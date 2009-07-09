@@ -5,6 +5,7 @@ etersoft-build-utils-1.6.2: 10 Jul 2009
 - fix rpmbs from gear build after rpmrb/rpmbsh
 - rpmpub: initial version of project publish script
 - introduce COMPANYNAME and TARGETFTPBASE for company independence
+- gpush: improve: push master by default, add -a|--all support
 
 etersoft-build-utils-1.6.1: 09 Jul 2009
 - ginit: add remote alias origin, load config
