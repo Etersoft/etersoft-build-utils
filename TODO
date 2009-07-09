@@ -1,7 +1,3 @@
-Исправить:
-если из gear-репозитория отпарвлять через rpmbsh -u,
-то пакет отправляется как src.rpm
-
 Добавить служебный комментарий для перепаковки исходников:
 # etersoft-build-utils repack DIR - упаковать DIR в архив с названием NAME-VERSION
 # etersoft-build-utils remove DIR/FILE [DIR/FILE] - удалить указанные каталоги и файлы и упаковать

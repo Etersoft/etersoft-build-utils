@@ -72,10 +72,7 @@ add_changelog_helper "- new version" $LISTNAMES
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $(echo $LISTRPMARGS | sed -e "s|-[suUic]||g")
 
-# Hack to pass SPECDIR to rpmbs
-if [ -r "$LISTNAMES" ] ; then
-	export SPECDIR=`dirname $LISTNAMES`
-fi
+set_specdir $LISTNAMES
 
 if  [ -n "$REMOTEBUILD" ] ; then
 	check_key
@@ -97,19 +94,20 @@ else
 	cd $RPMTOPDIR/SRPMS && time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
 
-	# make src.rpm if build OK and we have options for rpmbs
-	if [ "$RESULT" = "0" ] && [ -n "$LISTRPMARGS" ]; then
-		if is_gear $SPECDIR ; then
-			$ETERBUILDBIN/rpmbs $MENVARG $LISTRPMARGS $LISTNAMES
-		else
-			$ETERBUILDBIN/rpmbs $MENVARG $LISTRPMARGS $LISTBUILT
-		fi
-	fi
 
 	date
 	echo "-------------------------------"
 fi
 
 cd -
+
+# make src.rpm if build OK and we have options for rpmbs
+if [ "$RESULT" = "0" ] && [ -n "$LISTRPMARGS" ]; then
+	if is_gear $SPECDIR ; then
+		$ETERBUILDBIN/rpmbs $MENVARG $LISTRPMARGS $LISTNAMES
+	else
+		$ETERBUILDBIN/rpmbs $MENVARG $LISTRPMARGS $LISTBUILT
+	fi
+fi
 
 exit $RESULT
