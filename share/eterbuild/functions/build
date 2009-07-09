@@ -1,0 +1,179 @@
+#!/bin/bash
+# 2008 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+
+# Universal rpmbuild function
+# 1st: rpmbuild, hsh, buildreq
+# 2nd: spec name(s) (only one if git, we will skip it)
+# other parameters
+uni_rpmbuild()
+{
+	local RET=0
+	# hack due quotes
+	# just for fill by something
+	local ONEPARAM="--quiet"
+	local TWOPARAM="--quiet"
+	local THRPARAM="--quiet"
+	local COMMIT=""
+
+	if [ "$1" = "--commit" ] ; then
+		shift
+		COMMIT="--commit"
+	fi
+
+	local SPECNAME=$1
+	local SPECDIR=`dirname $SPECNAME`
+	local GEAR=gear
+
+	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
+		# FIXME: do not override -v
+		ONEPARAM="--define=_source_payload w9.gzdio"
+	fi
+
+	if [ -n "$USE_VENDOR" ] ; then
+		THRPARAM="--define=_vendor $USE_VENDOR"
+	fi
+	
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
+	fi
+
+	if is_gear $SPECDIR ; then
+		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
+		shift # skip spec name
+		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
+		# build package without MENV checking
+		if true || [ "$MENV" = "SS" ] ; then
+			$NICE $GEAR $COMMIT --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+		else
+			fatal "Build backported src.rpm from git is unsupported now"
+			# build src.rpm via hasher (on ALT)
+#			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
+			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
+		fi
+	else
+		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+	fi
+	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $@" || :
+	return $RET
+}
+
+
+uni_buildreq()
+{
+	local RET=0
+	local SPECNAME=$1
+	local SPECDIR=`dirname $SPECNAME`
+	local GEARBUILDREQ=gear-buildreq
+
+	if is_gear $SPECDIR ; then
+		$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
+	else
+		$NICE buildreq $@ || RET=$?
+	fi
+	return $RET
+}
+
+uni_rpminstall()
+{
+	local RET=0
+	local TWOPARAM="-v"
+
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
+	fi
+
+	#if is_gear $SPECDIR ; then
+	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
+	#else
+		echo -n "Install package "
+		mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
+		rpm -iv "$TWOPARAM" $@ || RET=$?
+	#fi
+	return $RET
+}
+
+
+# LISTNAMES, options in arg
+# build LISTBUILT list with src.rpm full path
+pack_src_rpm()
+{
+local i
+ARGS=$@
+# NOTE: always nodeps
+# enable --nodeps for other ENV
+#test -n "$MENV" && 
+[ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES ARGS=$ARGS" || :
+ARGS="$ARGS --nodeps"
+for i in $LISTNAMES
+do
+	
+	if [ -z ${i/*rpm/} ] ; then
+		# if rpm not spec, guess it is src.rpm
+		#NAMESRPMIN=$(basename $i)
+
+		if [ -f "$i" ] ; then
+			LISTBUILT="$LISTBUILT $i"
+		else
+			fatal "pack_src_rpm: Can't find '$i'"
+		fi
+	else
+		# Получаем названия пакетов по спеку
+		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
+		build_rpms_name "$i" $ARGS
+		if [ -n "${SIGN}" ]; then
+			echog "Try to packing \$NAMESRPMIN package for sign"
+			add_changelog $i
+			if [ $? = "0" ]; then
+				echog "Spec file \$i had not ChangeLog entry. It have added now, check it and enter your command again."
+				echog "Wait for ten seconds."
+				sleep 10
+				exit 1
+			fi
+			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH
+		else
+			echog "Just packing \$NAMESRPMIN"
+			uni_rpmbuild $i -bs $ARGS $NODEPS --target $DEFAULTARCH || fatal "Error with rpmbuild"
+		fi
+
+		# Check the package really built
+		if [ -f "$RPMTOPDIR/SRPMS/$NAMESRPMIN" ] ; then
+			LISTBUILT="$LISTBUILT $RPMTOPDIR/SRPMS/$NAMESRPMIN"
+		else
+			fatal "Can't find '$NAMESRPMIN' in '$RPMTOPDIR/SRPMS'"
+		fi
+	fi
+
+done
+# remove extra space before list
+LISTBUILT=$(echo "$LISTBUILT" | sed -e "s|^ ||")
+test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
+#LISTRPMARGS=`echo ${LISTRPMARGS} | sed -e "s/--nodeps//g"`
+}
+
+check_log()
+{
+	local LOGFILE i RES
+	echo
+	echo "-------------------------------------------------------"
+	echog "Check log for..."
+	LOGFILE=$1
+	grep 'ld: warning: libstdc++\.so\.5, needed by [^ ]\+, may conflict with libstdc++\.so\.6' $LOGFILE
+	RES=$?
+	if [ $RES = 0 ] ; then
+		echog "Error: libstdc++.so.5/6 conflicts"
+		return 1
+	fi
+	grep 'python-strict' $LOGFILE && warning "python-strict used!!!"
+	NC1="command not found"
+	NC2="-march=athlon -mtune=athlon-xp"
+	#for i in ${NC1} ; do
+	grep -- '$NC1' $LOGFILE && warning "'$NC1' in build output (some errors in a scripts)"
+	grep -- '$NC2' $LOGFILE && warning "'$NC2' in build output (forbidden) "
+	#done
+	return 0
+}
+
