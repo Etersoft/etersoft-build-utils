@@ -96,6 +96,16 @@ if  [ -n "$REMOTEBUILD" ] ; then
 else
 	cd $RPMTOPDIR/SRPMS && time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
+
+	# make src.rpm if build OK and we have options for rpmbs
+	if [ "$RESULT" = "0" ] && [ -n "$LISTRPMARGS" ]; then
+		if is_gear $SPECDIR ; then
+			$ETERBUILDBIN/rpmbs $MENVARG $LISTRPMARGS $LISTNAMES
+		else
+			$ETERBUILDBIN/rpmbs $MENVARG $LISTRPMARGS $LISTBUILT
+		fi
+	fi
+
 	date
 	echo "-------------------------------"
 fi

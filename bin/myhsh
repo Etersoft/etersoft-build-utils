@@ -22,8 +22,6 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog " -s - sign package(s)"
-	echog " -u - sign and upload package(s) to Incoming"
 	echog " -i - install built packages in test hasher"
 	echog " -c - build without stuff (previous built packages)"
 }
@@ -134,12 +132,7 @@ if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
-	loginhsh -t -i $MENVARG $BINPACKAGES || exit 1
-fi
-
-# make src.rpm if need
-if [ "$RESULT" = "0" ] ; then
-	test -n "$LISTRPMARGS" && rpmbs $MENVARG $LISTRPMARGS $LISTBUILTSH
+	$ETERBUILDBIN/loginhsh -t -i $MENVARG $BINPACKAGES || exit 1
 fi
 
 exit $RESULT
