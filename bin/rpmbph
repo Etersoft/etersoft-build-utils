@@ -62,6 +62,11 @@ if [ "`distr_vendor -d`/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 	FIXMKTEMP="%__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
 fi
 
+if [ "`distr_vendor -d`" = "Ubuntu" ] || [ "`distr_vendor -d`" = "Debian" ]; then
+	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
+	FIXMKTEMP="%remove_optflags -m64"
+fi
+
 # fix mktemp using for MCBC
 if [ "$VENDOR" = "mcbc" ] ; then
 	test -z "$VERBOSE" || echo "Add subst mktemp -dt"
