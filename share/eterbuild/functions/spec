@@ -178,3 +178,17 @@ spec_by_srpm()
 	PKGNAME=$(rpm -qp --queryformat "%{NAME}" $PKG)
 	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
 }
+
+# set specdir by spec (run with full path to spec only or in spec dir)
+set_specdir()
+{
+	SPECDIR=.
+	# get dir from the first spec
+	if [ -r "$1" ] ; then
+		SPECDIR=`dirname $1`
+	fi
+	# if spec has no full path, guess from pwd
+	if [ "$SPECDIR" = "." ] ; then
+		SPECDIR=`pwd`
+	fi
+}
