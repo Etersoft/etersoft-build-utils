@@ -7,13 +7,20 @@
 
 if [ "$1" = "-h" ] ; then
 	echo "gpush - publish current project repo to $GIRARHOST"
-	echo "Use: gpush [project name] [target branch]"
+	echo "Use: gpush [-f|--force] [-a|--all] [project name] [target branch]"
 	exit 1
 fi
 
 PUSHFORCE=
 if [ "$1" = "-f" ] || [ "$1" = "--force" ] ; then
 	PUSHFORCE="--force"
+	shift
+fi
+
+PUSHALL=
+if [ "$1" = "-a" ] || [ "$1" = "--all" ] ; then
+	PUSHALL="--all"
+	shift
 fi
 
 # use as project name
@@ -39,9 +46,10 @@ if [ -n "$1" ] ; then
 	shift
 else
 	TARGETBRANCH=
+	[ -n "$PUSHALL" ] || TARGETBRANCH=master
 fi
 
-git push $@ $PUSHFORCE $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+git push $PUSHALL $PUSHFORCE $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 git push --tags $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 
 #> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
