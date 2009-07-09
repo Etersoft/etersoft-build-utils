@@ -9,10 +9,10 @@ get_etersoft_srpm_path()
 	local SOURCE
 	local ALPHA=$2
 	local FTPBASE=/var/ftp
-	local SOURCEFTP=$(eval_spec $1 | get_var "Source$2")
+	local SOURCEFTP=$(eval_spec $1 | get_var "Source")
 	if [ -z "$SOURCEFTP" ] ; then
 		build_rpms_name $1
-		SOURCEFTP=$(cat $1 | get_var "#Source$2" | subst_namever)
+		SOURCEFTP=$(cat $1 | get_var "#Source" | subst_namever)
 	fi
 	[ -n "$SOURCEFTP" ] || fatal "Can't get Source from spec"
 	SOURCEFTP=$(dirname "$SOURCEFTP")
