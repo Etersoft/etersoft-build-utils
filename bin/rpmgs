@@ -65,9 +65,10 @@ get_archive()
 {
 	#TODO: check for gz
 	URL=${GETSOURCE/.tar.bz2/}
+	[ "$URL" = "$GETSOURCE" ] && URL=${GETSOURCE/.tar/}
 	get_tarball "$URL.$1" || return
 	WEXT=`basename "$URL"`
-	echog -n "Converting to $WEXT.tar.bz2..."
+	[ "$1" = "tar.bz2" ] || echog -n "Converting to $WEXT.tar..."
 }
 
 get_archive1()
@@ -94,60 +95,63 @@ bzipit()
 	fi
 }
 
-get_bzip()
+get_tarbz2()
 {
-	get_tarball "$GETSOURCE" || return $?
-	TARBALL=`basename "$GETSOURCE"`
-	bzip -t $TARBALL
+	get_archive tar.bz2
 	return $?
 }
 
+get_bz2()
+{
+	get_archive1 .bz2
+	return $?
+}
 
 function get_gz()
 {
-	get_archive1 .gz || return
-	gunzip $WEXT.gz && bzipit $WEXT
+	get_archive1 .gz || return $?
+	gunzip -f $WEXT.gz
 }
 
 function get_raw()
 {
-	get_archive1 "" || return
-	test -f $WEXT && bzipit $WEXT
+	get_archive1 "" || return $?
+	test -f $WEXT
 }
 
 
 function get_targz()
 {
-	get_archive tar.gz || return
+	get_archive tar.gz || return $?
 	#gzip -t $WEXT.tar.gz || return
-	gunzip $WEXT.tar.gz && bzipit $WEXT.tar
+	gunzip -f $WEXT.tar.gz
 }
 
 function get_tar()
 {
-	get_archive tar || return
-	bzipit $WEXT.tar
+	get_archive tar || return $?
+	test -f $WEXT.tar
 }
 
 function get_tgz()
 {
-	get_archive tgz || return
-	gunzip $WEXT.tgz &&	bzipit $WEXT.tar
+	get_archive tgz || return $?
+	gunzip -f $WEXT.tgz
 }
 
 function get_tbz2()
 {
-	get_archive tbz2 || return
-	mv $WEXT.tbz2 $WEXT.tar.bz2
+	get_archive tbz2 || return $?
+	mv -f $WEXT.tbz2 $WEXT.tar.bz2
 }
 
 # TODO: use external converter
 function get_zip()
 {
-	get_archive zip || return
-	mkdir $WEXT.zip.dir || return
+	get_archive zip || return $?
+	mkdir $WEXT.zip.dir || return $?
 	cd $WEXT.zip.dir
-	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar || return
+	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . || return
 	cd ..
 	rm -rf $WEXT.zip.dir
 }
@@ -155,10 +159,10 @@ function get_zip()
 # TODO: use external converter
 function get_7z()
 {
-	get_archive 7z || return
-	mkdir $WEXT.7z.dir || return
+	get_archive 7z || return $?
+	mkdir $WEXT.7z.dir || return $?
 	cd $WEXT.7z.dir
-	7z x ../$WEXT.7z && tar cf ../$WEXT.tar . && bzipit ../$WEXT.tar || return
+	7z x ../$WEXT.7z && tar cf ../$WEXT.tar . || return
 	cd ..
 	rm -rf $WEXT.7z.dir
 }
@@ -210,6 +214,8 @@ do
 		print_error
 	fi
 	
+	#set_specdir $i
+	SPECDIR=`pwd`
 	# Set version if needed
 	if [ -n "$GSSETVERSION" ] ; then
 		CURVER=$(get_version $i)
@@ -232,20 +238,37 @@ do
 		# for get RPMSOURCEDIR
 		build_rpms_name $i
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
-		# was: test -f
-		bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+
+		if [ -z "${GETSOURCE/*.tar/}" ] && is_gear $SPECDIR; then
+			test -f "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+		else
+			bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+		fi
 
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 		echog "Try to load $GETSOURCE for $i"
-		if [ -n "${GETSOURCE/*.bz2/}" ] ; then
-			warning "It is recommended to use .bz2 tarballs for sources"
+		#if is_gear $SPECDIR && [ -n "${GETSOURCE/*.tar/}" ] ; then
+		#	warning "It is recommended to use .tar tarballs for sources in gear"
+		#	get_tarball "$GETSOURCE"
+		if [ -n "${GETSOURCE/*.bz2/}" ] && ! is_gear $SPECDIR ; then
+			warning "It is recommended to use .bz2 tarballs for sources in rpm"
 			get_tarball "$GETSOURCE"
-		elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
-			warning "It is not tarball..."
-			get_bzip || get_gz || get_raw || fatal "Error: Cannot retrieve $GETSOURCE"
+		elif [ -n "${GETSOURCE/*.tar.bz2/}" ] && ! is_gear $SPECDIR ; then
+			warning "It is not tarball (possible single file)..."
+			get_bz2 || get_gz || get_raw || fatal "Error: Cannot retrieve $GETSOURCE"
 		else
-			get_bzip || get_targz || get_tbz2 || get_tgz || get_7z || get_zip || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
+			if [ -z "${GETSOURCE/*.tar/}" ] && is_gear $SPECDIR; then
+				echo "Get tarball for gear"
+				FORGEAR=1
+			fi
+			get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
 		fi
+
+		if [ -z "$FORGEAR" ] ; then
+			echog -n "Compressing to $WEXT.tar.bz2..."
+			test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Error: Cannot bzip $WEXT.tar"
+		fi
+
 		echo "DONE"
 		popd
 
@@ -255,13 +278,13 @@ do
 		# Write changelog if all done
 		CURVER=$(get_version $i)
 		CURREL=$(get_release $i)
-		CURNAME=$(get_tarballname $i)
 		EGEARME=""
 		is_gear && EGEARME="import in git"
 		add_changelog_helper "- new version ($CURVER) $EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
 	if [ -n "$GSSETVERSION" ] && is_gear ; then
-		echo "Commit tarball $RPMSOURCEDIR/$FTB to git..."
+		CURNAME=$(get_tarballname $i)
+		echo "Commit tarball $RPMSOURCEDIR/$FTB to git subdir '$CURNAME'..."
 		gear-update "$RPMSOURCEDIR/$FTB" "$CURNAME"
 		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB)"
 	else
