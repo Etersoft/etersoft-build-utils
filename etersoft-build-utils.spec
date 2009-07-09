@@ -62,7 +62,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 
 %changelog
 * Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
-- add needed version checking (as param like 162 to /eterbuild or /common)
+- add universal make_release script
+- check version if NEEDETERBUILD contains needed version
+- rpmbph: remove -m64 from optflags on Ubuntu/Debian
 
 * Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - rpmbs: add ssh target support for ETERDESTSRPM
