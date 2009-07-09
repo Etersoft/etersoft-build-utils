@@ -1,7 +1,17 @@
 #!/bin/bash
-# 2003-2008 Etersoft www.etersoft.ru
+# 2003-2009 Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
+
+# $1 - needed VERSION of etersoft-build-utils. f.i. 162
+
+# check for needed version
+if [ -n "$1" ] ; then
+	if [ "$1" -lt $ETERBUILDVERSION ] ; then
+		echo "Obsoleted version of etersoft-build-utils version is used. Please upgrade it to $1 version."
+		exit 1
+	fi
+fi
 
 set_eterbuilddir()
 {

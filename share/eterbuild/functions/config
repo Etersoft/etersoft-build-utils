@@ -3,6 +3,8 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
+ETERBUILDVERSION=162
+
 # Определяем SUDO для использования
 SUDO="sudo"
 # for some shells? not for bash

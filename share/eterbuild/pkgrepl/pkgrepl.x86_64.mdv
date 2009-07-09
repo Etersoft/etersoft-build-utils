@@ -1,0 +1,2 @@
+# Mandriva 64bit base replacements rules
+libXext-devel|lib64xext6-devel
