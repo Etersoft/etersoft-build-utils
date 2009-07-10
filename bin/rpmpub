@@ -15,23 +15,29 @@ load_mod spec rpm etersoft
 
 if [ "$1" = "-h" ]; then
 	echog "rpmpub - Etersoft specific script for publish gear repo to target ftp dir"
-	echog "Usage: rpmpub [-r VERSION ] [TARGET]"
+	echog "Usage: rpmpub [-r PROJECTVERSION ] [SPEC] [TARGETDIR]"
 	echog "You can set default target dir in UPLOADDIR variable in config file"
 	exit 0
 fi
 
 
-SPECNAME=$(basename $(pwd)).spec
-
-if [ ! -r $SPECNAME ] ; then
-	fatal "Spec $SPECNAME does not found in the current dir"
-fi
 
 # publish to unstable by default
 ALPHA=unstable
 if [ "$1" = "-r" ] ; then
 	ALPHA=$2
 	shift 2
+fi
+
+if [ -n "${1/*.spec/}" ] ; then
+	SPECNAME=$(basename $(pwd)).spec
+else
+	SPECNAME=$1
+	shift
+fi
+
+if [ ! -r $SPECNAME ] ; then
+	fatal "Spec $SPECNAME does not found in the current dir"
 fi
 
 #ETERDESTSRPM=/var/ftp/pub/Etersoft/CIFS@Etersoft/$VERSION/sources
