@@ -1,18 +1,16 @@
 #!/bin/sh
 
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod spec
+load_mod spec etersoft
 
 SPEC=get_ver.spec
-
-check_get_version()
+gen_spec()
 {
-RES=$1
 cat <<EOF >$SPEC
 Name: get_version_test
 Release: alt1
 Version: $TESTVER
-Source: %name-%version.tar.bz2
+Source: $SOURCEPATH%name-%version.tar.bz2
 Summary: Test
 Group: Other
 License: Public License
@@ -23,12 +21,38 @@ License: Public License
 %description
 Get version test
 EOF
+}
 
+check_get_version()
+{
+RES=$1
+gen_spec
 RESGET=`get_tarballname $SPEC`
 	[ "$RES" != "$RESGET" ] && echo "FATAL with 'get_tarballname': result '$RES' do not match with '$RESGET'" || echo "OK for 'get_tarballname' with '$RESGET'"
 }
 
 TESTVER=1.0.10
+SOURCEPATH=
 check_get_version get_version_test
+
+SOURCEPATH=ftp://etersoft.ru/pub/Etersoft/TEST/
+echo "Source path $SOURCEPATH: "
+gen_spec
+get_etersoft_srpm_path $SPEC
+
+SOURCEPATH=/var/ftp/pub/Etersoft/TEST/
+echo "Source path $SOURCEPATH: "
+gen_spec
+get_etersoft_srpm_path $SPEC
+
+SOURCEPATH=ftp.eter:/var/ftp/pub/Etersoft/TEST/
+echo "Source path $SOURCEPATH: "
+gen_spec
+get_etersoft_srpm_path $SPEC
+
+SOURCEPATH=ftp://somecompany.ru/Etersoft/TEST/
+echo "Source path $SOURCEPATH: "
+gen_spec
+get_etersoft_srpm_path $SPEC
 
 rm -f $SPEC
