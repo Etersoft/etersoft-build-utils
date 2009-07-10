@@ -18,8 +18,10 @@ get_etersoft_srpm_path()
 	[ -n "$SOURCEFTP" ] || fatal "Can't get Source from spec"
 	SOURCEFTP=$(dirname "$SOURCEFTP")
 
-	if ! echo $SOURCEFTP | grep -q $COMPANYFTP ; then
-		# if source if not known target, just return empty and we will use UPLOADDIR var
+	# FIXME: pass foreign path, needs to handle proto:// separately from ftp.eter:/path
+	if ! echo $SOURCEFTP | grep -q $COMPANYFTP && ! echo $SOURCEFTP | grep -q ":" && ! echo $SOURCEFTP | grep -q "^/"; then
+		# if source if not known target, or not ssh dest, or local local path,
+		# just return empty and we will use UPLOADDIR var
 		# TODO: we can use table for URL translating
 		return
 	fi
