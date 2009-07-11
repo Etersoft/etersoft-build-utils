@@ -68,6 +68,7 @@ get_archive()
 	[ "$URL" = "$GETSOURCE" ] && URL=${GETSOURCE/.tar/}
 	get_tarball "$URL.$1" || return
 	WEXT=`basename "$URL"`
+	test -f "$WEXT.$1" || return
 	[ "$1" = "tar.bz2" ] || echog -n "Converting to $WEXT.tar..."
 }
 
@@ -77,6 +78,7 @@ get_archive1()
 	URL=${GETSOURCE/.bz2/}
 	get_tarball "$URL$1" || return
 	WEXT=`basename "$URL"`
+	test -f "$WEXT" || return
 	echog -n "Converting to $WEXT.bz2..."
 }
 
