@@ -113,7 +113,9 @@ echo "Compare requires between new packages and their Sisyphus version"
 export LESS_PROGRAM=/dev/null
 for i in $(echo $NEWPKGDIR/*.rpm) ; do
 	OLDPKGNAME=$(rpm -qp $i | sed -e "s|-[0-9].*||g")
-	OLDPKG=$(echo $SISYPHUSPATH/*/RPMS.*/$OLDPKGNAME-[0-9]*.rpm)
+	# search in the our arch repo
+	PKGARCH=$(rpm -qp --queryformat "%{ARCH}" $i)
+	OLDPKG=$(echo $SISYPHUSPATH/$PKGARCH/RPMS.*/$OLDPKGNAME-[0-9]*.rpm)
 	if [ ! -r "$OLDPKG" ] ; then
 		echo "Cannot find old package for $(basename $i), skipping"
 		continue
