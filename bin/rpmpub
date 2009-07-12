@@ -52,8 +52,8 @@ export ETERDESTSRPM
 # just for your information: rpmbs supports ssh-like target
 $ETERBUILDBIN/rpmbs -s $SPECNAME || fatal "Can't build SRPMS"
 
-# if known target
-if [ -n "$ETERDESTSRPM" ] ; then
+# if known target and last link already exists
+if [ -L "$ETERDESTSRPM/../last" ] ; then
 	# set last link (assume PROJECT/VERSION/sources dir structure)
 	set_last_link $ETERDESTSRPM/.. $(get_version $SPECNAME)
 fi
