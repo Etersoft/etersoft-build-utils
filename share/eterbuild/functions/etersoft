@@ -47,5 +47,5 @@ set_last_link()
 	# do not change last if unstable publish
 	echo $1 | grep -q /unstable/sources && return
 	rm -f $1/../last
-	ln -s $VERSION $1/../last
+	ln -s $2 $1/../last
 }
