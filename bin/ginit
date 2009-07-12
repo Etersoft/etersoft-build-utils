@@ -6,10 +6,13 @@
 #test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
 
 if [ "$1" = "-h" ] ; then
-	echo "ginit - initialize repo in $GIRARHOST for current project"
+	echo "ginit [GEAR] - initialize repo in $GIRARHOST for current project"
 	echo "Use: ginit without parameters"
+	echo "     ginit git.eter - for init in git.eter gear repo"
 	exit 1
 fi
+
+[ -n "$1" ] && GIRARHOST=$1
 
 PROJECTNAME=$(basename `pwd`)
 echo "Create remote $PROJECTNAME repo"

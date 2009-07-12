@@ -46,7 +46,7 @@ if [ -n "$1" ] ; then
 	shift
 else
 	TARGETBRANCH=
-	[ -n "$PUSHALL" ] || TARGETBRANCH=master
+	#[ -n "$PUSHALL" ] || TARGETBRANCH=master
 fi
 
 git push $PUSHALL $PUSHFORCE $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
