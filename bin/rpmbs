@@ -107,9 +107,7 @@ check_gear_and_tag()
 	local GEARCTAG=gear-create-tag
 
 	# set SPECDIR from LISTNAMES if empty
-	if [ -r "$LISTNAMES" ] ; then
-		[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
-	fi
+	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
 	if is_gear $SPECDIR ; then
 		# needed correct user.name/user.email for get GPG id
@@ -153,9 +151,7 @@ fi
 #echo "@@ - $LISTRPMARGS - '$MENV'"
 
 # set SPECDIR from LISTNAMES if empty
-if [ -r "$LISTNAMES" ] ; then
-	[ -n "$SPECDIR" ] || SPECDIR=`dirname $LISTNAMES`
-fi
+[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
 # If we build from gear repo, run task
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then

@@ -123,7 +123,7 @@ do
 	subst "s|Source0:|Source:|" $i
 	subst "s|Patch0:|Patch:|" $i
 
-	SPECDIR=`dirname $i`
+	set_specdir $i
 	if ! is_gear $SPECDIR && [ -n "$RENAME_SOURCE_TARBALL" ] ; then
 		# Use tar.bz2 for tarball if not git case.
 		subst "s|\(Source:.*\).tar.gz|\1.tar.bz2|" $i

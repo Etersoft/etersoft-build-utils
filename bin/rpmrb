@@ -32,7 +32,7 @@ fi
 
 test -e "$SPEC" || fatal "use with spec"
 
-rpmgs $SPEC $VER || fatal "Error with get source"
+$ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
 add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
 
 # TODO
@@ -41,5 +41,5 @@ if is_gear `pwd` ; then
 	git commit $SPEC -m "update spec to new build" || exit 1
 fi
 
-rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
-rpmbs -u $SPEC || fatal "Error with upload"
+$ETERBUILDBIN/rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
+$ETERBUILDBIN/rpmbs -u $SPEC || fatal "Error with upload"

@@ -96,7 +96,7 @@ fi
 for i in $LISTNAMES
 do
 	# build src.rpm if old way
-	SPECDIR=`dirname $i`
+	set_specdir $i
 	is_gear $SPECDIR || build_rpms_name "$i"
 	if ! is_alt ; then
 		if ! build_buildroot ; then
