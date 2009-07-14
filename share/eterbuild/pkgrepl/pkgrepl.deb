@@ -10,6 +10,7 @@ libldap-devel|libldap2-dev
 libldap|libldap2
 libieee1284-devel|libieee1284-dev
 glibc-devel|libc6-dev
+glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
 libfreetype|libfreetype6
 libxslt-devel|libxslt1-dev
@@ -84,3 +85,15 @@ libxml++2-devel|libxml++2.6-dev
 libxml++2|libxml++2.6
 libxml2-devel|libxml2-dev
 libxml2|libxml2
+# only in Ubuntu
+#omniORB|omniorb4
+libglademm-devel|libglademm-2.4-dev
+libglademm|libglademm-2.4
+libgladeui-devel|libgladeui-1-dev
+libgladeui|libgladeui-1-9
+librsvg-devel|librsvg2-dev
+librsvg|librsvg2
+
+# Etersoft's library
+#libuniset-devel|
+#libuniset|
