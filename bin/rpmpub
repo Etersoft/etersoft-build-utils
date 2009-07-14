@@ -45,7 +45,7 @@ ETERDESTSRPM=$1
 if [ -z "$ETERDESTSRPM" ] ; then
 	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME $ALPHA)
 else
-	fatal "run with exists dir to publish src.rpm project (I checked $ETERDESTSRPM, it is nonexist)"
+	test -d "$ETERDESTSRPM" || fatal "You need run with exists dir to publish src.rpm project (I checked $ETERDESTSRPM, it is nonexist)"
 fi
 export ETERDESTSRPM
 
@@ -53,7 +53,7 @@ export ETERDESTSRPM
 $ETERBUILDBIN/rpmbs -s $SPECNAME || fatal "Can't build SRPMS"
 
 # if known target and last link already exists
-if [ -L "$ETERDESTSRPM/../last" ] ; then
+#if [ -L "$ETERDESTSRPM/../last" ] ; then
 	# set last link (assume PROJECT/VERSION/sources dir structure)
 	set_last_link $ETERDESTSRPM/.. $(get_version $SPECNAME)
-fi
+#fi
