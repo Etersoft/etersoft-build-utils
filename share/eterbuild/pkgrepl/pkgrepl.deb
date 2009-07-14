@@ -71,3 +71,16 @@ imake|xutils-dev
 xorg-inputproto-devel|x11proto-input-dev
 xorg-sdk|
 xorg-xextproto-devel|x11proto-xext-dev
+
+libMySQL-devel|libmysqlclient15-dev
+libcomedi-devel|libcomedi-dev
+libcomedi|libcomedi0
+libcommoncpp2-devel|libcommoncpp2-dev
+libomniORB-devel|libomniorb4-dev
+libomniORB|libomniorb4
+libsigc++2.0-devel|libsigc++-2.0-dev
+libsigc++2.0|libsigc++-2.0
+libxml++2-devel|libxml++2.6-dev
+libxml++2|libxml++2.6
+libxml2-devel|libxml2-dev
+libxml2|libxml2
