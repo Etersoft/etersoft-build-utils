@@ -30,7 +30,8 @@ if [ "$1" = "-r" ] ; then
 fi
 
 if [ -n "${1/*.spec/}" ] ; then
-	SPECNAME=$(basename $(pwd)).spec
+	#SPECNAME=$(basename $(pwd)).spec
+	SPECNAME=$(echo *.spec)
 else
 	SPECNAME=$1
 	shift
