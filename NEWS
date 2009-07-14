@@ -1,3 +1,16 @@
+etersoft-build-utils-1.6.3: 15 Jul 2009
+- rpmpub: replace version only in last or unstable component
+- add gpull command as git pull --rebase
+- fix rpmbb -r (buildreq)
+- open sisyphus.ru with source rpm name
+- update ginit/gpush
+- rpmunmets: search for the same arch in old repo
+- add handle ssh and local target to get_etersoft_srpm_path
+- rpmpub improvements
+- introduce COMPANYNAME and TARGETFTPBASE for company independence
+- fix rpmbs packing after hasher build
+- rpmgs: rewrote code with tar in source support (gear support)
+
 etersoft-build-utils-1.6.2: 10 Jul 2009
 - add universal make_release script
 - check version if NEEDETERBUILD contains needed version

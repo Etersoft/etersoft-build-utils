@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -61,6 +61,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Wed Jul 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt1
+- rpmpub: replace version only in last or unstable component
+- add gpull command as git pull --rebase
+- fix rpmbb -r (buildreq)
+- open sisyphus.ru with source rpm name
+- update ginit/gpush
+- rpmunmets: search for the same arch in old repo
+- add handle ssh and local target to get_etersoft_srpm_path
+- rpmpub improvements
+- introduce COMPANYNAME and TARGETFTPBASE for company independence
+- fix rpmbs packing after hasher build
+- rpmgs: rewrote code with tar in source support (gear support)
+
 * Thu Jul 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - add universal make_release script
 - check version if NEEDETERBUILD contains needed version
