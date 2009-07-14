@@ -38,7 +38,7 @@ get_etersoft_srpm_path()
 		BSOURCE=$(dirname $SOURCE)
 		BNSOURCE=$(basename $BSOURCE)
 		if [ "$BNSOURCE" = "last" ] || [ "$BNSOURCE" = "unstable" ] ; then
-			SOURCE=$(dirname $SOURCE)/$ALPHA/sources
+			SOURCE=$(dirname $BSOURCE)/$ALPHA/sources
 		fi
 	fi
 

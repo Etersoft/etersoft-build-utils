@@ -111,7 +111,7 @@ check_gear_and_tag()
 
 	if is_gear $SPECDIR ; then
 		# needed correct user.name/user.email for get GPG id
-		pushd $SPECDIR
+		pushd $SPECDIR >/dev/null
 		$GEARCTAG --force
 		popd >/dev/null
 		# git push ?
