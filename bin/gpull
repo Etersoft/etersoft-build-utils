@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+if [ "$1" = "-h" ] ; then
+	echo "gpull [args] - do git pull --rebase"
+	echo "Use: ginit without parameters"
+	exit 1
+fi
+
+git pull --rebase $@
