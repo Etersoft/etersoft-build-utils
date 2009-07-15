@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Wed Jul 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt2
+- fix set last link, fix rpmpub / target detecting
+
 * Wed Jul 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt1
 - rpmpub: replace version only in last or unstable component
 - add gpull command as git pull --rebase
