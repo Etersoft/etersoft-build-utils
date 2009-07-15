@@ -33,11 +33,17 @@ get_etersoft_srpm_path()
 	# translate ftp to local path
 	SOURCE=$(echo "$SOURCEFTP" | sed -e "s|.*://.*$COMPANYFTP|$TARGETFTPBASE|g")
 
-	# rewrite V.E.R./sources with $ALPHA/sources
+	# rewrite V.E.R./sources with $ALPHA/sources if $ALPHA exist
 	if [ -n "$ALPHA" ] ; then
 		BSOURCE=$(dirname $SOURCE)
 		BNSOURCE=$(basename $BSOURCE)
-		if [ "$BNSOURCE" = "last" ] || [ "$BNSOURCE" = "unstable" ] ; then
+		SOURCE=$(dirname $BSOURCE)/$ALPHA/sources
+	else
+		# if run with default arg
+		ALPHA=unstable
+		BSOURCE=$(dirname $SOURCE)
+		BNSOURCE=$(basename $BSOURCE)
+		if [ "$BNSOURCE" = "last" ] ; then
 			SOURCE=$(dirname $BSOURCE)/$ALPHA/sources
 		fi
 	fi

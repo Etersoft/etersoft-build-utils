@@ -23,7 +23,7 @@ fi
 
 
 # publish to unstable by default
-ALPHA=unstable
+ALPHA=
 if [ "$1" = "-r" ] ; then
 	ALPHA=$2
 	shift 2
@@ -44,7 +44,8 @@ fi
 #ETERDESTSRPM=/var/ftp/pub/Etersoft/CIFS@Etersoft/$VERSION/sources
 ETERDESTSRPM=$1
 if [ -z "$ETERDESTSRPM" ] ; then
-	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME $ALPHA)
+	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME "$ALPHA")
+	echo "Prepare src.rpm to $ETERDESTSRPM"
 else
 	test -d "$ETERDESTSRPM" || fatal "You need run with exists dir to publish src.rpm project (I checked $ETERDESTSRPM, it is nonexist)"
 fi
