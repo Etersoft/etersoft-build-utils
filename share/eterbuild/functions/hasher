@@ -52,4 +52,10 @@ prepare_aptconfig()
 	print_tmp_aptconf $APTCONF >$OURAPTCONF || fatal "Can't create apt.conf"
 	export OURSOURCES=$OURTMPDIR/sources.list.$MENV
 	print_tmp_sourceslist $APTCONF >$OURSOURCES || fatal "Can't create sources.list"
+	if [ -n "$ETERBUILD_APTREPO" ] ; then
+		cat <<EOF >>$OURSOURCES
+# Apply repo from $ETERBUILD_APTREPO variable
+$ETERBUILD_APTREPO
+EOF
+	fi
 }
