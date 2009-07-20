@@ -44,9 +44,16 @@ uni_rpmbuild()
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
 		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
+		ALTGEARRULESFILE=.gear/rules-${SPECNAME/.spec/}
+		ALTGEARRULES=$(git rev-parse --git-dir)/../$ALTGEARRULESFILE
+		GEARRULES=
+		if [ -r "$ALTGEARRULES" ] ; then
+			echo "Build with alternate rules $ALTGEARRULESFILE"
+			GEARRULES=--rules="$ALTGEARRULESFILE"
+		fi
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR $COMMIT --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
