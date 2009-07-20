@@ -1,3 +1,14 @@
+# hack
+freetype2-devel|perl
+openldap2-devel|
+libgphoto2|
+sane|
+alsa-devel|
+jack-devel|
+libieee1284|
+xorg-x11-Mesa-devel|
+hal-devel|
+
 libusb-devel|
 liblcms-devel|
 libieee1284-devel|
@@ -50,3 +61,4 @@ libXvMC-devel|XFree86-devel
 libXcursor-devel|XFree86-devel
 libXevie-devel|XFree86-devel
 libXv-devel|XFree86-devel
+
