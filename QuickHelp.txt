@@ -1,13 +1,19 @@
 
 
 ---------------------------
-ginit - initialize repo in git.alt for current project
+ginit [GEAR] - initialize repo in git.eter for current project
+Use: ginit without parameters
+     ginit git.eter - for init in git.eter gear repo
+
+
+---------------------------
+gpull [args] - do git pull --rebase
 Use: ginit without parameters
 
 
 ---------------------------
-gpush - publish current project repo to git.alt
-Use: gpush without parameters
+gpush - publish current project repo to git.eter
+Use: gpush [-f|--force] [-a|--all] [project name] [target branch]
 
 
 ---------------------------
@@ -27,8 +33,6 @@ Options:
 myhsh - build package via hasher
 Usage:  [-m -s -u -i -c] src.rpm...
 Options:
- -s - sign package(s)
- -u - sign and upload package(s) to Incoming
  -i - install built packages in test hasher
  -c - build without stuff (previous built packages)
 
@@ -45,7 +49,8 @@ Options:
 
 ---------------------------
 rpmbph - backports spec and rebuild it
-Usage:  [-r -u -U -n -i -m -v] spec...
+Usage:  [-r -u -U -n -i -m -v] [-M??] spec...
+Use rpmbph -M40 for backport to ALT 4.0 and so on
 Options:
  -r - remote build
  -u/-U - sign and upload after build
@@ -60,9 +65,8 @@ Usage:  [-s -u -c -n --nodeps] spec...
 Options:
  -s - sign package(s) and move it to upload dir
  -c - only sign package(s) with checking
- -u - sign package(s) and upload it to Incoming (backports)
- -U - sign package(s) and upload it to Incoming (updates)
- -d - remove package(s) from SRPMS and Incoming
+ -u - sign package(s), upload it and run build
+ -a TASK - sign package(s), update it and add to task TASK
  -n - do not check with sisyphus_check before upload
  -o - create nosrc.rpm package
  -z - create src.rpm with compatible gzip compression
@@ -73,7 +77,7 @@ rpmbsh - BSH - build source; use hasher
 Usage:  [-r -s -u -m -i -c] spec...
 Options:
  -r - remote build
- -m - sent result via email
+ -t - make temporary commit before build (rpmbb like behavior)
  -u/-U - sign and upload after build
  -s - sign and and copy to upload after build
  -i - install built packages in test hasher
@@ -95,22 +99,29 @@ Options:
 rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it
  name - installed package name or src.rpm
  system - name of system (ALT Linux by default if -a missed too)
- -a  check for pkgname in all known repositories
- -b  install packages needed for build (installs with sudo apt-get) (need spec not package name)
- -c  check for exist the package in ALT Linux repository
- -d  download all matches packages from all repositories
- -l  lists packages needed for build (in local pkg system notation) (experimental)
- -n  do not install in RPM after download, download in current dir
+ -a  search pkgname in all known repositories
+ -b  install packages needed for build (use sudo apt-get) (need spec not package name)
+ -c  check if this package exists in the ALT Linux repository
+ -d  download all matched packages
+ -l  list packages needed for build (in local pkg system notation) (experimental)
+ -n  do not install after download, just download in current dir
  -r  refresh package list (download it again)
- -s  lists all known systems
+ -s  list all known remote repositories
 
 
 ---------------------------
 rpmgs - get sources for spec
-Usage:  [-a -r ] spec...
+Usage:  [-a -r ] spec ... | spec new_version
+You can run rpmgs file.spec new_version for set new version and download it
 Options:
  -a - get all source (not only 0)
  -f - force download (remove source before download)
+
+
+---------------------------
+rpmpub - Etersoft specific script for publish gear repo to target ftp dir
+Usage: rpmpub [-r PROJECTVERSION ] [SPEC] [TARGETDIR]
+You can set default target dir in UPLOADDIR variable in config file
 
 
 ---------------------------
