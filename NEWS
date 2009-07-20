@@ -1,3 +1,8 @@
+etersoft-build-utils-1.6.4: 20 Jul 2009
+- add alternative .gear/rules support (if ./gear/rules-NAME exists for NAME.spec)
+- rpmbsh: add support for ETERBUILD_APTREPO conf (add repo from target dir if RPMS.main exists)
+- rpmbsh: make temporary commit before build with -t option (rpmbb like behaviour)
+
 etersoft-build-utils-1.6.3: 15 Jul 2009
 - rpmpub: replace version only in last or unstable component
 - add gpull command as git pull --rebase

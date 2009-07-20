@@ -6,25 +6,25 @@ http://www.freesource.info/wiki/AltLinux/Razrabotchiku/SborkaPaketov
 See QuickHelp.txt also.
 
 This package is tested with follow Linux distributions:
- - ALT Linux 2.3/2.4/3.0/4.0/4.1/Sisyphus
- - ASP Linux 10/11/12
+ - ALT Linux 4.0/4.1/5.0/Sisyphus
+ - ASP Linux 11/12/14
  - Scientific/4.1
- - Fedora Core 5/6/7/8/9/10
+ - Fedora Core 8/9/10/11
  - OpenSuSe 10/10.1/11
- - Mandriva 2005/2006/2007/2008/2009
+ - Mandriva 2008/2009
  - MOPSLinux 5.0/6.0/6.1
  - Slackware 10.2/11
  - Debian 3.1 (Sarge) / 4.0 / 5.0
- - Ubuntu 6.06/7.04/7.10/8.04/8.10
- - RedHat 9 / MCBC 3.0
-
+ - Ubuntu 6.06/7.04/7.10/8.04/8.10/9.04
 
 Replacement rules (for rpmbph):
 alt-package-name|foreign-package-name
 
 pkgrepl.rpm - base rules, use always
+pkgrepl.rpm.x86_64 - base rules, use firstly at x86_64
 pkgrepl.pclinux - rules only for PC Linux
 pkgrepl.pclinux.2007 - rules only for PC Linux 2007
+pkgrepl.pclinux.2007.x86_64 - rules only for PC Linux 2007, use firstly at x86_64
 
 Examples:
 
@@ -77,4 +77,4 @@ hostname 'devel' in ~/.ssh/config as alias for cvs.altlinux.ru (typical for join
 
 Please send any questions at lav@etersoft.ru
 
-Vitaly Lipatov, 04 Dec 2008
+Vitaly Lipatov, 20 Jul 2009

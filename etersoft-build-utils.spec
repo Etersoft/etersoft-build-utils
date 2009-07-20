@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.6.3
-Release: alt2
+Version: 1.6.4
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -61,7 +61,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
-* Wed Jul 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt2
+* Mon Jul 20 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.4-alt1
+- add alternative .gear/rules support
+- add support for ETERBUILD_APTREPO conf
+- rpmbsh: make temporary commit before build with -t option (rpmbb like behaviour)
 - fix set last link, fix rpmpub / target detecting
 
 * Wed Jul 15 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt1
