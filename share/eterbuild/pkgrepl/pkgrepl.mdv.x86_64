@@ -1,2 +1,4 @@
 # Mandriva 64bit base replacements rules
 libXext-devel|lib64xext6-devel
+libreadline-devel|lib64readline5-devel
+libreadline|lib64readline5

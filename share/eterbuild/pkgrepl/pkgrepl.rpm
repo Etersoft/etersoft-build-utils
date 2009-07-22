@@ -99,3 +99,5 @@ libgtkspell-devel|gtkspell-devel
 libGConf-devel|GConf2-devel
 GConf|GConf2
 libxml++2-devel|libxml++-devel
+
+glibc-devel-static|glibc-devel
