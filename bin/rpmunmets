@@ -12,12 +12,14 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod hasher
 
+MKAPTBOX=/usr/bin/mkaptbox
+
 make_ordinalbox()
 {
 	mkdir -p $ORDINALWORKDIR
 	echo "Build aptbox from ordinal repo in $ORDINALWORKDIR ..."
 	#rm -rf $ORDINALWORKDIR
-	mkaptbox -f --apt-config=$ORDINALAPTCONF $ORDINALWORKDIR
+	$MKAPTBOX -f --apt-config=$ORDINALAPTCONF $ORDINALWORKDIR
 }
 
 make_testingbox()
@@ -25,7 +27,7 @@ make_testingbox()
 	mkdir -p $TESTINGWORKDIR
 	echo "Build aptbox from testing repo in $TESTINGWORKDIR ..."
 	#rm -rf $TESTINGWORKDIR
-	mkaptbox -f --apt-config=$TESTINGAPTCONF $TESTINGWORKDIR
+	$MKAPTBOX -f --apt-config=$TESTINGAPTCONF $TESTINGWORKDIR
 }
 
 
