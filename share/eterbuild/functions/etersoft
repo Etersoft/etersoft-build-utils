@@ -53,7 +53,7 @@ get_etersoft_srpm_path()
 
 set_last_link()
 {
-	local LASTNAME=$(readlink -f $1/../last)
+	local LASTNAME="$1/../last"
 	# do not change last if testing publish
 	echo $1 | grep -q /testing/sources && return
 	# do not change last if unstable publish
