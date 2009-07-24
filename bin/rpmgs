@@ -161,10 +161,12 @@ function get_zip()
 # TODO: use external converter
 function get_7z()
 {
+	BIN7ZIP=/usr/bin/7z
+	test -x $BIN7ZIP || return $?
 	get_archive 7z || return $?
 	mkdir $WEXT.7z.dir || return $?
 	cd $WEXT.7z.dir
-	7z x ../$WEXT.7z && tar cf ../$WEXT.tar . || return
+	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar . || return
 	cd ..
 	rm -rf $WEXT.7z.dir
 }
