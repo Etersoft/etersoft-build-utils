@@ -1,3 +1,10 @@
+etersoft-build-utils-1.6.5: 23 Jul 2009
+- rpmunmets: fix direct hasher deps
+- fix set_last_link
+- rpmbb: run build_rpms_name in any way (due broken LOGFILE initializing)
+- rpmbs: set project name to gpush
+- fix replacements
+
 etersoft-build-utils-1.6.4: 20 Jul 2009
 - add alternative .gear/rules support (if ./gear/rules-NAME exists for NAME.spec)
 - rpmbsh: add support for ETERBUILD_APTREPO conf (add repo from target dir if RPMS.main exists)
