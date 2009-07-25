@@ -6,7 +6,6 @@ libreadline-devel|libreadline5-devel
 libreadline|libreadline5
 autoconf|autoconf2.1
 python-devel|libpython2.4-devel
-rpm-build-compat|rpm-build-altlinux-compat
 libntfs|ntfsprogs
 libntfs-devel|ntfsprogs-devel
 libe2fs|libext2fs2
