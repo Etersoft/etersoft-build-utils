@@ -4,8 +4,15 @@
 
 Удаление пакета из Сизифа: 
 ssh git.alt task new
-ssh git.alt task del PACKAGE
+ssh git.alt task add del PACKAGE
 ssh git.alt task run
+
+[lav@lav ~]$ ssh git.alt task add del python-module-pyclamav
+girar-check-perms: access to python-module-pyclamav ALLOWED for lav: approved builder
+task #9430: added #1: delete package python-module-pyclamav from sisyphus
+[lav@lav ~]$ ssh git.alt task run
+task #9430: queued, result will be emailed to lav@altlinux.org
+
 
 сделать раскрытие версии и имени пакета:
 fonts-ttf-%fname-1.04-alt1.src.rpm
