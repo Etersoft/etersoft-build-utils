@@ -76,7 +76,7 @@ fi
 # fix mktemp using for MCBC
 if [ "$VENDOR" = "mcbc" ] ; then
 	test -z "$VERBOSE" || echo "Add subst mktemp -dt"
-	FIXMKTEMP="%__subst 's|mktemp -dt|mktemp -d|g s|readlink -mv|readlink -f|g' configure libtool"
+	FIXMKTEMP="%__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
 fi
 
 # Too old problem
