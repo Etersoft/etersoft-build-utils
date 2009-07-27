@@ -38,7 +38,7 @@ if [ "$VENDOR" = "alt" ] ; then
 	RECONFT="%undefine __libtoolize"
 else
 	# Need our compat package and disable strong patch checking
-	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95\n$FIXPATCHFUZZ"
+	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 	set_release $SPECNAME eter$BASERELEASE$VENDOR
 	ADDDEF="%defattr(-, root, root)"
