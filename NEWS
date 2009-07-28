@@ -1,3 +1,8 @@
+etersoft-build-utils-1.6.6: 23 Jul 2009
+- require make and gcc in any way (as part of build env)
+- fix mcbc build
+- rpmbph: replace readlink with realpath on FreeBSD
+
 etersoft-build-utils-1.6.5: 23 Jul 2009
 - rpmunmets: fix direct hasher deps
 - fix set_last_link
