@@ -292,7 +292,7 @@ do
 		gear-update "$RPMSOURCEDIR/$FTB" "$CURNAME"
 		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB)"
 	else
-		echo "Run without version. Skip tarball commiting."
+		is_gear && echo "Run without version. Skip tarball commiting."
 	fi
 done
 
