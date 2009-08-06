@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.6.6
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Thu Aug 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.6-alt2
+- set script version to 166
+
 * Wed Jul 29 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.6-alt1
 - require make and gcc in any way (as part of build env)
 - fix mcbc build
