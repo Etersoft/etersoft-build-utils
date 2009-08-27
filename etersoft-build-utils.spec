@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.6.6
-Release: alt2
+Version: 1.6.7
+Release: alt0.1
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Thu Aug 27 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt0.1
+- rpmbs: add support for tarball target subdir
+
 * Thu Aug 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.6-alt2
 - set script version to 166
 
