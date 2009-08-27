@@ -118,6 +118,17 @@ check_gear_and_tag()
 	fi
 }
 
+extract_tarball_to_dest()
+{
+	local TDIR=$(mktemp -d || fatal "can't create tmp dir")
+	cd $TDIR
+	cat "$1" | rpm2cpio | cpio -i "*.tar*"
+	cp -fv *.tar* $2
+	cd -
+	rm -f $TDIR/*
+	rmdir $TDIR
+}
+
 rpmbs_copying_built()
 {
 	if [ -n "$ETERDESTSRPM" ] ; then
@@ -127,6 +138,13 @@ rpmbs_copying_built()
 		else
 			mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
 			cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+
+			# Publish tarball if target dir is exist
+			if [ -d "$ETERDESTSRPM/tarball" ] ; then
+				for i in $LISTBUILT ; do
+					extract_tarball_to_dest $i $ETERDESTSRPM/tarball
+				done
+			fi
 		fi
 	fi
 }
