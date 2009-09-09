@@ -4,4 +4,4 @@
 
 rpm file:/var/ftp/ pub/ALTLinux/Sisyphus/i586 classic
 rpm file:/var/ftp/ pub/ALTLinux/Sisyphus/noarch classic
-rpm file:/var/ftp/ pub/ALTLinux/Sisyphus/x86_32 classic
+#rpm file:/var/ftp/ pub/ALTLinux/Sisyphus/x86_32 classic
