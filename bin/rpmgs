@@ -147,6 +147,12 @@ function get_tbz2()
 	mv -f $WEXT.tbz2 $WEXT.tar.bz2
 }
 
+function get_tbz()
+{
+	get_archive tbz || return $?
+	mv -f $WEXT.tbz $WEXT.tar.bz2
+}
+
 # TODO: use external converter
 function get_zip()
 {
@@ -265,7 +271,7 @@ do
 				echo "Get tarball for gear"
 				FORGEAR=1
 			fi
-			get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
+			get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
 		fi
 
 		if [ -z "$FORGEAR" ] ; then
