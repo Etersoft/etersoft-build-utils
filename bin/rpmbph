@@ -266,7 +266,7 @@ phelp()
 while getopts :hniv opt; do
     case $opt in
     h) phelp; exit 0;;
-    n) BUILDCOMMAND="$ETERBUILDBIN/rpmbs";;
+    n) BUILDCOMMAND="$ETERBUILDBIN/rpmbs --rmsource --rmspec";;
     v) VERBOSE=1;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
