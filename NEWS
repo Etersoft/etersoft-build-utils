@@ -1,3 +1,10 @@
+etersoft-build-utils-1.6.7: 19 Sep 2009
+- add ccache support and use it in rpmbb
+- rpmbph: set vendor name part in release inherited from prev. release
+- rpmbph: remove SOURCE and SPEC files after build src.rpm
+- add new command jmake for run parallel make with ccache
+- rpmgs: add tbz support
+
 etersoft-build-utils-1.6.6: 23 Jul 2009
 - require make and gcc in any way (as part of build env)
 - fix mcbc build

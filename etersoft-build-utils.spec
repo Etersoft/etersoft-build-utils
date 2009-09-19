@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.6.7
-Release: alt0.1
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -61,7 +61,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
-* Thu Aug 27 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt0.1
+* Sat Sep 19 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt1
+- add ccache support and use it in rpmbb
+- rpmbph: set vendor name part in release inherited from prev. release
+- rpmbph: remove SOURCE and SPEC files after build src.rpm
+- add new command jmake for run parallel make with ccache
+- rpmgs: add tbz support
 - rpmbs: add support for tarball target subdir
 
 * Thu Aug 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.6-alt2
