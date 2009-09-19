@@ -53,6 +53,12 @@ BUILDSERVER=
 
 PKGREPLBASE=$ETERBUILDDIR/pkgrepl
 
+# TODO: use common ccache dir
+export CCACHE_DIR=$OURTMPDIR/ccache
+
+# enable ccache using
+# CCACHE_ENABLE=yes
+
 test -f /etc/eterbuild/config && . /etc/eterbuild/config
 
 if [ -f ~/.config/eterbuild ] ; then

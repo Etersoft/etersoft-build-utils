@@ -181,3 +181,20 @@ is_ssh_target()
 {
 	echo "$1" | grep -q ":"
 }
+
+enable_ccache()
+{
+	which ccache >/dev/null || fatal "Install ccache package before using"
+
+	# handled in gcc-common
+	export GCC_USE_CCACHE=1
+	# step to gcc-common
+	export CC=gcc CXX=g++
+
+	#export CC="ccache gcc"
+	#export CPP="ccache gcc -E"
+	#export CXX="ccache g++"
+	#export CXXCPP="ccache g++ -E"
+
+}
+
