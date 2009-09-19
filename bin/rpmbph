@@ -31,7 +31,7 @@ if [ "$VENDOR" = "alt" ] ; then
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbsh
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
-	set_release $SPECNAME alt$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
+	set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
 	# due new libtool, affected on ALT Linux
@@ -40,7 +40,7 @@ else
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
-	set_release $SPECNAME eter$BASERELEASE$VENDOR
+	set_release $SPECNAME $(get_txtrelease $SPECNAME)$BASERELEASE$VENDOR
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
 fi
