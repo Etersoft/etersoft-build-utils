@@ -16,6 +16,7 @@ uni_rpmbuild()
 	local ONEPARAM="--quiet"
 	local TWOPARAM="--quiet"
 	local THRPARAM="--quiet"
+	local FOURPARAM="--quiet"
 	local COMMIT=""
 
 	if [ "$1" = "--commit" ] ; then
@@ -40,6 +41,10 @@ uni_rpmbuild()
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
+	if [ -n "$CCACHE_ENABLE" ] && [ -n "$CCACHE_DIR" ] ; then
+		FOURPARAM="--define=__ccache_dir $CCACHE_DIR"
+	fi
+
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
@@ -53,7 +58,7 @@ uni_rpmbuild()
 		fi
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" $@ || RET=$?
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
@@ -62,9 +67,9 @@ uni_rpmbuild()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $@" || :
+	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $@" || :
 	return $RET
 }
 
