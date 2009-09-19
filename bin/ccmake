@@ -3,23 +3,21 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ] ;
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
 	echo "ccmake - make with ccache using and parallel build enabled"
 	exit 0
 fi
 
-# TODO: use common ccache dir
-export CCACHE_DIR=$OURTMPDIR/ccache
+if [ -z "$CCACHE_DISABLE" ] ; then
+	enable_ccache
+fi
 
-which ccache >/dev/null || fatal "Install ccache package before using"
-
-export CC="ccache gcc"
-export CPP="ccache gcc -E"
-export CXX="ccache g++"
-export CXXCPP="ccache g++ -E"
-
+# get number of available processors
 [ -n "$NPROCS" ] || NPROCS=`/usr/bin/getconf _NPROCESSORS_ONLN`
+# get rounded load average
+LOADAVG=`cat /proc/loadavg | cut -f1 -d" " | sed -e "s/\..*//g"`
 MAKEARG=
-[ "$NPROCS" -gt 1 ] && MAKEARG="-j$NPROCS"
+[ "$(( $NPROCS - $LOADAVG ))" -gt 1 ] && MAKEARG="-j$NPROCS"
 
-make $MAKEARG "CC=$CC" "CXX=$CXX" "CPP=$CPP" "CXXCPP=$CXXCPP" $@
+#make $MAKEARG "CC=$CC" "CXX=$CXX" "CPP=$CPP" "CXXCPP=$CXXCPP" $@
+make $MAKEARG $@
