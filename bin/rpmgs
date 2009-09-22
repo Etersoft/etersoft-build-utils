@@ -14,7 +14,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm
+load_mod rpm tarball
 
 WEXT=""
 GETSOURCE=""
@@ -82,21 +82,7 @@ get_archive1()
 	echog -n "Converting to $WEXT.bz2..."
 }
 
-bzipit()
-{
-	locale PBZIPIT
-	PBZIPIT=`which pbzip2 2>/dev/null`
-	if [ -n "$PBZIPIT" ] ; then
-		echog -n " with pzip2..."
-		$PBZIPIT -9 -f $1
-		return $?
-	else
-		echog -n " with bzip2..."
-		bzip -f --best $1
-		return $?
-	fi
-}
-
+TODO: use functions from tarball
 get_tarbz2()
 {
 	get_archive tar.bz2
