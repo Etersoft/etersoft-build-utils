@@ -18,7 +18,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm
+load_mod rpm tarball
 
 SIGN=
 UPLOADNOW=
@@ -118,13 +118,18 @@ check_gear_and_tag()
 	fi
 }
 
+# SRC.RPM DIR
 extract_tarball_to_dest()
 {
 	local TDIR=$(mktemp -d || fatal "can't create tmp dir")
 	cd $TDIR
-	cat "$1" | rpm2cpio | cpio -i "*.tar*"
-	cp -fv *.tar* $2
+		cat "$1" | rpm2cpio | cpio -i "*.tar*"
+		#cp -fv *.tar* $2
+		local TARNAME=$(rpm -q -p --queryformat "%{NAME}-%{VERSION}" $1)
+		local TARGETTARNAME=$(rpm -q -p --queryformat "%{NAME}-%{VERSION}-%{RELEASE}" $1)
+		copy_tarball_to_tar_bz2 $TARNAME*.tar* $2/$TARGETTARNAME.tar.bz2
 	cd -
+	make_md5sum $2 $TARGETTARNAME.tar.bz2
 	rm -f $TDIR/*
 	rmdir $TDIR
 }
@@ -228,6 +233,7 @@ if [ -n "${DELETENOW}" ]; then
 fi
 
 
+# Sign src.rpm and upload it
 if [ -n "$SIGN" ]; then
 	release_check $LISTBUILT
 
