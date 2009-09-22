@@ -126,7 +126,8 @@ extract_tarball_to_dest()
 		cat "$1" | rpm2cpio | cpio -i "*.tar*"
 		#cp -fv *.tar* $2
 		local TARNAME=$(rpm -q -p --queryformat "%{NAME}-%{VERSION}" $1)
-		local TARGETTARNAME=$(rpm -q -p --queryformat "%{NAME}-%{VERSION}-%{RELEASE}" $1)
+		# FIXME: hack to replace alt release to eter
+		local TARGETTARNAME=$(rpm -q -p --queryformat "%{NAME}-%{VERSION}-%{RELEASE}" $1 | sed -e "s/-alt/-eter/g")
 		copy_tarball_to_tar_bz2 $TARNAME*.tar* $2/$TARGETTARNAME.tar.bz2
 	cd -
 	make_md5sum $2 $TARGETTARNAME.tar.bz2
