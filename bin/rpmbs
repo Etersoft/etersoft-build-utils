@@ -146,6 +146,7 @@ rpmbs_copying_built()
 
 			# Publish tarball if target dir is exist
 			if [ -d "$ETERDESTSRPM/tarball" ] ; then
+				echog "There is tarball dir exists. Extract tarball for other build system compatibility."
 				for i in $LISTBUILT ; do
 					extract_tarball_to_dest $i $ETERDESTSRPM/tarball
 				done
@@ -262,7 +263,13 @@ fi
 echog "Changing permissions..."
 chmod 644 -- $LISTBUILT || fatal "can't chmod"
 echog -n "Checking with sisyphus_check..."
-test -n "$NOCHECK" || sisyphus_check --files $LISTBUILT || fatal "sisyphus check failed"
+
+# TODO: check for ALT specific
+# skip some checking for src.rpm if it is local upload
+CHECK_OPTIONS=""
+[ -n "${UPLOADNOW}" ] || CHECK_OPTIONS="--no-check=$HASHER_NOCHECK"
+
+test -n "$NOCHECK" || sisyphus_check $CHECK_OPTIONS --files $LISTBUILT || fatal "sisyphus check failed"
 echog "OK"
 # rpm's find-req do not find rpmlint :)
 RPMLINT=rpmlint
