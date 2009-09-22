@@ -82,7 +82,7 @@ get_archive1()
 	echog -n "Converting to $WEXT.bz2..."
 }
 
-TODO: use functions from tarball
+#TODO: use functions from tarball
 get_tarbz2()
 {
 	get_archive tar.bz2

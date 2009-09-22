@@ -232,102 +232,103 @@ if [ -n "${DELETENOW}" ]; then
 	exit 0
 fi
 
+test -z "$ETERDESTSRPM" && ETERDESTSRPM=$UPLOADDIR${MENVARG/-/.}
+
+# if just packing
+if [ -z "$SIGN" ]; then
+	rpmbs_copying_built
+	exit $?
+fi
 
 # Sign src.rpm and upload it
-if [ -n "$SIGN" ]; then
-	release_check $LISTBUILT
+release_check $LISTBUILT
 
-	if [ -r "$LISTBUILT" ] ; then
-		check_gear_and_tag
-	fi
-
-	echog "Will try to sign follow packages with GPG: \$LISTBUILT"
-	# 1. only rpm command has --addsign 2. do 3 retries
-	rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT
-	RET=$?
-
-	############################################
-	echog "Changing permissions..."
-	chmod 644 -- $LISTBUILT || fatal "can't chmod"
-	echog -n "Checking with sisyphus_check..."
-	test -n "$NOCHECK" || sisyphus_check --files $LISTBUILT || fatal "sisyphus check failed"
-	echog "OK"
-	# rpm's find-req do not find rpmlint :)
-	RPMLINT=rpmlint
-	if which $RPMLINT >/dev/null ; then
-		echog -n "Checking with rpmlint..."
-	echo
-		$RPMLINT $LISTBUILT
-	else
-		echog "It is recommended to install rpmlint package for additional checking"
-	fi
-	test -n "$CHECKONLY" && exit 0
-	############################################
-	
-	if [ "$RET" = "0" ]
-	then
-		if [ -n "${UPLOADNOW}" ] ; then
-			echog "Uploading to $GIRARHOST"
-			check_key
-			# TODO:  rsync foo.src.rpm git.alt: && ssh git.alt build srpm foo.src.rpm
-			# git.alt build -b 4.0 srpm foo.src.rpm
-			rsync -vay --partial --progress $CHECKSUM \
-			 	-e ssh $LISTBUILT $GIRARHOST: && \
-			echo "---------------------" && \
-			echog "All files synced" || fatal "Error during rsync"
-
-			TASKLIST=""
-			for i in $LISTBUILT ; do
-				TASKLIST="$TASKLIST srpm $(basename $i)"
-			done
-			if [ -n "$TASKNUMBER" ] ; then
-				echo "Add $TASKLIST to task $TASKNUMBER"
-				[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST task add $TASKNUMBER $TASKLIST"
-				ssh $GIRARHOST task add $TASKNUMBER $TASKLIST
-			else
-				echo "Create task for $TASKLIST"
-				[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST build -b $BINARYREPO $TASKLIST"
-				ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
-			fi
-
-			for i in $LISTBUILT ; do
-				LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
-				echo >>$LOGFILE
-				date >>$LOGFILE
-				echo "uploaded">>$LOGFILE
-				echo "$(basename $i) run build src.rpm at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
-			done
-
-		else
-			test -z "$ETERDESTSRPM" && ETERDESTSRPM=$UPLOADDIR${MENVARG/-/.}
-			rpmbs_copying_built
-		fi
-
-		echog "Removing buildroot after upload..."
-		for i in $LISTNAMES ; do
-			if [ -z ${i/*.src.rpm/} ] ; then
-				echo "  skipping for $i"
-				continue
-			fi
-			#DDIR=$BUILDROOT/${i/.spec/-buildroot}
-			# Hack about paths
-			test -f "$i" && NAME=$i || NAME=$CURDIR/$i
-			build_rpms_name $NAME
-			echo -n "    $BUILDROOT "
-			if [ -d "$BUILDROOT" ] ; then
-				rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"
-			else
-				echog "missed"
-			fi
-		done
-
-
-	else
-		echog "Impossible to sign package. Check your password and try again."
-		echog "Wait for ten seconds."
-		sleep 10
-		exit 1
-	fi
-else
-	rpmbs_copying_built
+if [ -r "$LISTBUILT" ] ; then
+	check_gear_and_tag
 fi
+
+echog "Will try to sign follow packages with GPG: \$LISTBUILT"
+# 1. only rpm command has --addsign 2. do 3 retries
+rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT
+RET=$?
+if [ ! "$RET" = "0" ] ; then
+	echog "Impossible to sign package. Check your password and try again."
+	echog "Wait for ten seconds."
+	sleep 10
+	exit 1
+fi
+
+############################################
+echog "Changing permissions..."
+chmod 644 -- $LISTBUILT || fatal "can't chmod"
+echog -n "Checking with sisyphus_check..."
+test -n "$NOCHECK" || sisyphus_check --files $LISTBUILT || fatal "sisyphus check failed"
+echog "OK"
+# rpm's find-req do not find rpmlint :)
+RPMLINT=rpmlint
+if which $RPMLINT >/dev/null ; then
+	echog -n "Checking with rpmlint..."
+echo
+	$RPMLINT $LISTBUILT
+else
+	echog "It is recommended to install rpmlint package for additional checking"
+fi
+
+test -n "$CHECKONLY" && exit 0
+############################################
+
+# If upload signed package is not needed
+if [ -z "${UPLOADNOW}" ] ; then
+	rpmbs_copying_built
+	exit $?
+fi
+
+echog "Uploading to $GIRARHOST"
+check_key
+# TODO:  rsync foo.src.rpm git.alt: && ssh git.alt build srpm foo.src.rpm
+# git.alt build -b 4.0 srpm foo.src.rpm
+rsync -vay --partial --progress $CHECKSUM \
+ 	-e ssh $LISTBUILT $GIRARHOST: && \
+echo "---------------------" && \
+echog "All files synced" || fatal "Error during rsync"
+
+TASKLIST=""
+for i in $LISTBUILT ; do
+	TASKLIST="$TASKLIST srpm $(basename $i)"
+done
+if [ -n "$TASKNUMBER" ] ; then
+	echo "Add $TASKLIST to task $TASKNUMBER"
+	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST task add $TASKNUMBER $TASKLIST"
+	ssh $GIRARHOST task add $TASKNUMBER $TASKLIST
+else
+	echo "Create task for $TASKLIST"
+	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST build -b $BINARYREPO $TASKLIST"
+	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
+fi
+
+for i in $LISTBUILT ; do
+	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
+	echo >>$LOGFILE
+	date >>$LOGFILE
+	echo "uploaded">>$LOGFILE
+	echo "$(basename $i) run build src.rpm at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+done
+
+echog "Removing buildroot after upload..."
+for i in $LISTNAMES ; do
+	if [ -z ${i/*.src.rpm/} ] ; then
+		echo "  skipping for $i"
+		continue
+	fi
+	#DDIR=$BUILDROOT/${i/.spec/-buildroot}
+	# Hack about paths
+	test -f "$i" && NAME=$i || NAME=$CURDIR/$i
+	build_rpms_name $NAME
+	echo -n "    $BUILDROOT "
+	if [ -d "$BUILDROOT" ] ; then
+		rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"
+	else
+		echog "missed"
+	fi
+done
+
