@@ -11,6 +11,7 @@ glibc-devel|libc6-dev
 glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
 libfreetype|libfreetype6
+fontconfig-devel|libfontconfig1-dev
 libxslt-devel|libxslt1-dev
 libncurses-devel|libncurses5-dev
 libncursesw-devel|libncursesw5-dev
@@ -21,6 +22,7 @@ libasound-devel|libasound2-dev
 libreadline-devel|libreadline5-dev
 libreadline|libreadline5
 
+libXaw-devel|libxaw7-dev
 libXext-devel|libxext-dev
 libXrender-devel|libxrender-dev
 libXrender|libxrender1
@@ -88,3 +90,5 @@ libgladeui|libgladeui-1-9
 librsvg-devel|librsvg2-dev
 librsvg|librsvg2
 
+# hack due our wine package with -devel
+libwine-devel|libwine-devel
