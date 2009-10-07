@@ -77,15 +77,17 @@ uni_rpmbuild()
 uni_buildreq()
 {
 	local RET=0
+	local BUILDREQPARAM="$1"
+	shift
 	local SPECNAME=$(realpath "$1")
 	shift
 	local SPECDIR=`dirname $SPECNAME`
 	local GEARBUILDREQ=gear-buildreq
 
 	if is_gear $SPECDIR ; then
-		$NICE $GEARBUILDREQ --commit -- "$SPECNAME" $@ || RET=$?
+		$NICE $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" $@ || RET=$?
 	else
-		$NICE buildreq "$SPECNAME" $@ || RET=$?
+		$NICE buildreq $BUILDREQPARAM "$SPECNAME" $@ || RET=$?
 	fi
 	return $RET
 }

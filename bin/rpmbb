@@ -24,7 +24,7 @@ fi
 
 #############################
 
-Usage="Usage: $name [-c -p -i -r] spec..."
+Usage="Usage: $name [-c -p -i -r -R] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -39,15 +39,17 @@ phelp()
 	echog " -i - install and package"
 	echog " -p - packaging installed files into package"
 	echog " -r - find build requires"
+	echog " -R - find build requires with -bi"
 }
 
-while getopts :hcipr opt; do
+while getopts :hciprR opt; do
     case $opt in
     h) phelp; exit 0;;
     c) BUILDOPT="c" ;;
 	i) BUILDOPT="i b" ;;
     p) BUILDOPT="b" ;;
-    r) BUILDREQ=1 ;;
+    r) BUILDREQ="-bc" ;;
+    R) BUILDREQ="-bi" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
@@ -80,9 +82,9 @@ fi
 
 # instead cbuild req
 if [ -n "$BUILDREQ" ] ; then
-	uni_buildreq $LISTNAMES
+	uni_buildreq $BUILDREQ $LISTNAMES
 	RET=$?
-	echog "You can run buildreq with -bi param for search a dependences for install section of the package"
+	echog "You can run with -R param for search a dependences for install section of the package (as with buildreq -bi)"
 	exit $RET
 fi
 
