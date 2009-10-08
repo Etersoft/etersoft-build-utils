@@ -285,11 +285,14 @@ if [ -n "$SIGN" ]; then
 			fi
 
 			for i in $LISTBUILT ; do
+				# FIXME: more general way
 				LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
 				echo >>$LOGFILE
 				date >>$LOGFILE
 				echo "uploaded">>$LOGFILE
-				echo "$(basename $i) run build src.rpm at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+				TEXTADD="run build src.rpm"
+				[ -z "$TASKNUMBER" ] || TEXTADD="add src.rpm to task $TASKNUMBER"
+				echo "$(basename $i) $TEXTADD at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 			done
 
 		else
