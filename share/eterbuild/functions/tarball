@@ -1,0 +1,58 @@
+#!/bin/bash
+# 2009 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# FILE
+# bzip FILE with pzip2 (if exists) or bzip2
+bzipit()
+{
+	locale PBZIPIT
+	PBZIPIT=`which pbzip2 2>/dev/null`
+	if [ -n "$PBZIPIT" ] ; then
+		echog -n " with pzip2..."
+		$PBZIPIT -9 -f $1
+		return $?
+	else
+		echog -n " with bzip2..."
+		bzip -f --best $1
+		return $?
+	fi
+}
+
+# TODO: use bzipit
+copy_tarball_to_tar_bz2()
+{
+	local SNAME=$1
+	local TNAME=$2
+
+	#echo SNAME: $SNAME
+	test -r "$SNAME" || return 1
+	# copying from tar.bz2
+	if [ ! ${SNAME/.tar.bz2/} = "$SNAME" ] ; then
+		#echo O tar.bz2
+		cp -fv "$SNAME" "$TNAME"
+		return
+	fi
+
+	if [ ! ${SNAME/.tar.gz/} = "$SNAME" ] ; then
+		gunzip -c "$SNAME" | bzip -c > "$TNAME"
+		return
+	fi
+
+	# FIXME: matchs with .tarNNN
+	if [ ! ${SNAME/.tar/} = "$SNAME" ] ; then
+		bzip -c "$SNAME" > "$TNAME"
+		return
+	fi
+	return 1
+}
+
+# DIR FILE
+make_md5sum()
+{
+	cd "$1"
+	md5sum -b $2 > $2.md5
+	cd -
+}
+

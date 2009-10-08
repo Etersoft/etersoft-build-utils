@@ -64,3 +64,9 @@
 
 # Path to Sisyphus repo (where i586/RPMS.classic) for rpmunmets build
 #SISYPHUSPATH=/var/ftp/pub/ALTLinux/Sisyphus/
+
+# enable ccache using
+# CCACHE_ENABLE=yes
+
+# set dir for ccache cache
+# export CCACHE_DIR=$OURTMPDIR/ccache

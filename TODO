@@ -1,3 +1,5 @@
+не раобтает указание цкелевого каталога в korinf
+
 Добавить служебный комментарий для перепаковки исходников:
 # etersoft-build-utils repack DIR - упаковать DIR в архив с названием NAME-VERSION
 # etersoft-build-utils remove DIR/FILE [DIR/FILE] - удалить указанные каталоги и файлы и упаковать
