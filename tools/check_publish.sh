@@ -30,21 +30,32 @@ print_usedby()
 
 
 [ -n "$SPECLIST" ] || SPECLIST=`find $RPMDIR/SPECS -type f -name "*.spec"`
+
 for i in $SPECLIST ; do
 	if echo $i | grep -q HELP ; then
 		continue
 	fi
-	LANG=C rpmgp -c $i 2>&1 | grep -v "^Note" | grep -v "^Checking" | grep -v "^Repository"
+	echo $i
+	#LANG=C rpmgp -c $i 2>&1 | grep -v "^Note" | grep -v "^Checking" | grep -v "^Repository"
+
 	USEDBY=$(get_wd `basename $i .spec`)
 	if [ -n "$USEDBY" ] ; then 
 		print_usedby $i $USEDBY >$i.usedby
 		#[ -n "`cat $i.usedby`" ] || 
 	else
-		if [ -r $i.usedby ] ; then
-			echo "$i do not required anymore"
-		else
+#		if [ -r $i.usedby ] ; then
+#			echo "$i do not required anymore"
+#		else
 			rm -f $i.usedby
-		fi
+#		fi
+	fi
+	rpmbugs -t $i | grep -v "CLO.*FIX" | grep "@altlinux" >$i.bugs
+	test -s $i.bugs || rm -f $i.bugs
+
+	if rpmgp -c $i | grep -q MISSED ; then
+		rpmgp -c $i >$i.missed
+	else
+		rm -f $i.$missed
 	fi
 done
 
