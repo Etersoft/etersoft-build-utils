@@ -251,6 +251,9 @@ if [ -n "$CHECKONLINE" ] ; then
 	done
 	echog "Repository     Filename"
 	printf "%-12s %30s\n" $RET $SRCRPM
+	if [ "$RET" = "MISSED" ] ; then
+		exit 1
+	fi
 	exit 0
 fi
 
