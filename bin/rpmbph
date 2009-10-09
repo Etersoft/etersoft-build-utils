@@ -18,6 +18,7 @@ DISTRVERSION=`distr_vendor -v`
 
 alt_tolocal()
 {
+local TXTRELEASE
 local SPECNAME
 SPECNAME=$1
 
@@ -40,7 +41,9 @@ else
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
-	set_release $SPECNAME $(get_txtrelease $SPECNAME)$BASERELEASE$VENDOR
+	TXTRELEASE=$(get_txtrelease $SPECNAME)
+	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
+	set_release $SPECNAME $TXTRELEASE$BASERELEASE$VENDOR
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
 fi
