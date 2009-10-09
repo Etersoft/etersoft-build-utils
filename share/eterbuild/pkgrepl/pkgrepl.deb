@@ -92,3 +92,6 @@ librsvg|librsvg2
 
 # hack due our wine package with -devel
 libwine-devel|libwine-devel
+
+ImageMagick-tools|imagemagick
+wxGTK-devel|wx-common
