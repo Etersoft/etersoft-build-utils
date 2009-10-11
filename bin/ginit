@@ -12,9 +12,12 @@ if [ "$1" = "-h" ] ; then
 	exit 1
 fi
 
-[ -n "$1" ] && GIRARHOST=$1
+if is_girar_name $1 ; then
+	GIRARHOST=$1
+	shift
+fi
 
 PROJECTNAME=$(basename `pwd`)
-echo "Create remote $PROJECTNAME repo"
+echo "Create remote $PROJECTNAME repo in $GIRARHOST:"
 ssh $GIRARHOST git-init-db $PROJECTNAME.git
 git remote add origin $GIRARHOST:packages/$PROJECTNAME.git

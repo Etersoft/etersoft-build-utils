@@ -5,8 +5,14 @@
 
 if [ "$1" = "-h" ] ; then
 	echo "gpull [args] - do git pull --rebase"
-	echo "Use: ginit without parameters"
+	echo "Use: gpull without parameters"
 	exit 1
 fi
 
+if is_girar_name $1 ; then
+	GIRARHOST=$1
+	shift
+fi
+
+echo "Pull repo from $GIRARHOST"
 git pull --rebase $@
