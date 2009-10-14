@@ -6,7 +6,7 @@
 
 get_wd()
 {
-	apt-cache whatdepends $1 | grep "^  [a-zA-Z]" | sed -e "s|^ *||g"
+	apt-cache whatdepends $1 | grep "^  [a-zA-Z]" | sed -e "s|^ *||g" | grep -v $1
 }
 list_wd()
 {
