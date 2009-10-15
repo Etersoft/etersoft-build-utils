@@ -111,6 +111,9 @@ get_pagepkginfo()
 		PKGVERSION=`rpm -q --queryformat "%{VERSION}" ${i}`
 		PKGNAME=`rpm -q --queryformat "%{sourcerpm}" ${i} | sed -e "s|-$VERSION.*||g"`
 	fi
+	if [ -z "$PKGNAME" ] ; then
+		PKGNAME="$i"
+	fi
 	RPM_URL=$PAGEURL/$PKGNAME
 }
 
@@ -127,7 +130,7 @@ do
 			RPM_URL=`dirname $SOURCE`
 		fi
 	fi
-	test -z "$ABOUTDIR" && test -z ${RPM_URL} && fatal "Cannot get package Url from spec $i"
+	test -z "$ABOUTDIR" && test -z "${RPM_URL}" && fatal "Cannot get package Url from spec $i"
 	if [ -z "$CHECKONLY" ] ; then
 		if [ -n "$RPM_URL" ] && [ "$RPM_URL" != "(none)" ] ; then
 			echog "Opening URL '$RPM_URL' with browser '$BROWSER'"
