@@ -42,8 +42,10 @@ else
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
+	# Override release with KORINFTARGETRELEASE if set
 	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
 	set_release $SPECNAME $TXTRELEASE$BASERELEASE$VENDOR
+	test -z "$VERBOSE" || echo "Build package with release $TXTRELEASE"
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
 fi
