@@ -148,42 +148,42 @@ do
 		s|%__mv |mv |g 
 		s|%__mkdir_p|mkdir -p|g 
 		s|%__mkdir |mkdir |g 
-		s|%__make|make|g 
-		s|%__awk|gawk|g 
-		s|%__bzip2|bzip2|g 
-		s|%__cat|cat|g 
-		s|%__chgrp|chgrp|g 
-		s|%__chmod|chmod|g 
-		s|%__chown|chown|g 
-		s|%__cpio|cpio|g 
-		s|%__file|file|g 
-		s|%__gpg|gpg|g 
-		s|%__grep|grep|g 
-		s|%__gzip|gzip|g 
-		s|%__id|id|g 
+		s|%__make |make |g 
+		s|%__awk |gawk |g 
+		s|%__bzip2 |bzip2 |g 
+		s|%__cat |cat |g 
+		s|%__chgrp |chgrp |g 
+		s|%__chmod |chmod |g 
+		s|%__chown |chown |g 
+		s|%__cpio |cpio |g 
+		s|%__file |file |g 
+		s|%__gpg |gpg |g 
+		s|%__grep |grep |g 
+		s|%__gzip |gzip |g 
+		s|%__id |id |g 
 		s|%__install |install |g 
-		s|%__install_info|install-info|g 
-		s|%__ln_s|ln -s|g 
-		s|%__patch|patch|g 
+		s|%__install_info |install-info |g 
+		s|%__ln_s |ln -s |g 
+		s|%__patch |patch |g 
 		s|%__perl |perl |g 
-		s|%__pgp|pgp|g 
+		s|%__pgp |pgp |g 
 		s|%__python |python |g 
-		s|%__rm|rm|g 
-		s|%__rsh|rsh|g 
-		s|%__sed|sed|g 
-		s|%__ssh|ssh|g 
-		s|%__tar|tar|g 
-		s|%__unzip|unzip|g 
-		s|%__ar|ar|g 
-		s|%__as|as|g 
-		s|%__cc|gcc|g 
-		s|%__cpp|gcc -E|g 
-		s|%__cxx|g++|g 
-		s|%__ld|ld|g 
-		s|%__nm|nm|g 
-		s|%__objcopy|objcopy|g 
-		s|%__objdump|objdump|g 
-		s|%__ranlib|ranlib|g 
+		s|%__rm |rm |g 
+		s|%__rsh |rsh |g 
+		s|%__sed |sed |g 
+		s|%__ssh |ssh |g 
+		s|%__tar |tar |g 
+		s|%__unzip |unzip |g 
+		s|%__ar |ar |g 
+		s|%__as |as |g 
+		s|%__cc |gcc |g 
+		s|%__cpp |gcc -E |g 
+		s|%__cxx |g++ |g 
+		s|%__ld |ld |g 
+		s|%__nm |nm |g 
+		s|%__objcopy |objcopy |g 
+		s|%__objdump |objdump |g 
+		s|%__ranlib |ranlib |g 
 		s|%__tar |tar |g" $i
 
 # CHECK ME:
