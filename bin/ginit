@@ -2,6 +2,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod git
 
 #test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
 
