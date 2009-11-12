@@ -104,3 +104,5 @@ glibc-devel-static|glibc-devel
 
 libopensc-devel|opensc-devel
 ImageMagick-tools|ImageMagick
+libopenal-devel|openal-devel
+libmpg123-devel|
