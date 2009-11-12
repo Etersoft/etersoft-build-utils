@@ -95,3 +95,5 @@ libwine-devel|libwine-devel
 
 ImageMagick-tools|imagemagick
 wxGTK-devel|wx-common
+libopenal-devel|libopenal-dev
+libtinfo-devel|libncurses5-dev
