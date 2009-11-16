@@ -79,3 +79,27 @@ get_altdistr_mod()
 {
 	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|g"
 }
+
+# TODO: include in sisyphus_check
+# Проверяем, соответствует ли релиз пакетов указанному в MENV
+function pkg_release_check()
+{
+	local STREL=alt
+	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
+
+	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then
+		for i in $@ ; do
+			if [ -z "${i/*$STREL[0-9].M[0-9][0-9]*/}" ] ; then
+				# Значит не тот релиз
+				fatal "Incorrect release in $i package: was prepared for Sisyphus"
+			fi
+		done
+		return
+	fi
+	for i in $@ ; do
+		if [ -n "${i/*$STREL[0-9].$MENV*/}" ] ; then
+			# Значит не тот релиз
+			fatal "Incorrect release in $i package: was prepared for $MENV"
+		fi
+	done
+}
