@@ -1,12 +1,14 @@
+Что-то пишет пакет в upload.SS при простом rpmbs -u
+
 http://git.altlinux.org/people/kharpost/packages/gitalt-tasker.git?p=gitalt-tasker.git;a=blob;f=gitalt-tasker/git-task;h=81e0261813a9fe2be230fb0c47b4ff4efd9a2675;hb=bfcc80b9af49b8ea0629db80d4c2f29a024d574e
 
 не раобтает указание цкелевого каталога в korinf
 
-Добавить служебный комментарий для перепаковки исходников:
+Добавить поддержку в спеке служебного комментария для автоматической перепаковки исходников:
 # etersoft-build-utils repack DIR - упаковать DIR в архив с названием NAME-VERSION
 # etersoft-build-utils remove DIR/FILE [DIR/FILE] - удалить указанные каталоги и файлы и упаковать
 
-Удаление пакета из Сизифа: 
+Удаление пакета из Сизифа:
 ssh git.alt task new
 ssh git.alt task add del PACKAGE
 ssh git.alt task run
@@ -20,8 +22,6 @@ task #9430: queued, result will be emailed to lav@altlinux.org
 
 сделать раскрытие версии и имени пакета:
 fonts-ttf-%fname-1.04-alt1.src.rpm
-
-rpmbph: переписать с --define _specdir --define _sourcedir
 
 apt-cache list-extras
 
