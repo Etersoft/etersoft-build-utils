@@ -101,3 +101,6 @@ GConf|GConf2
 libxml++2-devel|libxml++-devel
 
 glibc-devel-static|glibc-devel
+
+libopensc-devel|opensc-devel
+ImageMagick-tools|ImageMagick

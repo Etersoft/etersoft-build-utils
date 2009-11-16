@@ -4,3 +4,4 @@ jackit-devel|
 # XOrg
 xorg-x11-devel|
 xorg-sdk|xorg-x11-server-sdk
+libsmbclient-devel|samba-common

@@ -90,7 +90,7 @@ do
 	# --nprocs=2 
 	# Note: hasher is already use renice for low priority
 	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
-	echo "Build in hasher ($MENV)" >$LOGFILE
+	echo "Build in hasher ($MENV) in $HASHERDIR dir" >$LOGFILE
 	rm -f $LOGFILE.failed
 	# enable /proc support only if require it
 	#rpm --requires -p $i | grep "/proc" && ARG="$HASHERARG --mountpoints=/proc" || ARG="$HASHERARG"
