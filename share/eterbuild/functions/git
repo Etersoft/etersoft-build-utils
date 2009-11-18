@@ -20,3 +20,8 @@ get_current_branch()
 	git branch | grep '^\*' | sed 's/^..//' | tr -d "\n"
 }
 
+# Check if $1 like git.alt or git.eter, git.something
+is_girar_name()
+{
+	echo "$1" | grep -q "^git\."
+}

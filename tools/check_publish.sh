@@ -6,7 +6,7 @@
 
 get_wd()
 {
-	apt-cache whatdepends $1 | grep "^  [a-zA-Z]" | sed -e "s|^ *||g"
+	apt-cache whatdepends $1 | grep "^  [a-zA-Z]" | sed -e "s|^ *||g" | grep -v $1
 }
 list_wd()
 {
@@ -38,7 +38,8 @@ for i in $SPECLIST ; do
 	echo $i
 	#LANG=C rpmgp -c $i 2>&1 | grep -v "^Note" | grep -v "^Checking" | grep -v "^Repository"
 
-	USEDBY=$(get_wd `basename $i .spec`)
+	PKGNAME=`basename $i .spec`
+	USEDBY=$(get_wd $PKGNAME)
 	if [ -n "$USEDBY" ] ; then 
 		print_usedby $i $USEDBY >$i.usedby
 		#[ -n "`cat $i.usedby`" ] || 
@@ -57,5 +58,9 @@ for i in $SPECLIST ; do
 	else
 		rm -f $i.$missed
 	fi
+	
+	# TODO:
+	#ssh git.alt acl sisyphus $PKGNAME show > $i.acl
+	#grep " $USER\$" $i.acl
 done
 

@@ -2,11 +2,12 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod git
 
 #test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
 
 if [ "$1" = "-h" ] ; then
-	echo "gpush - publish current project repo to $GIRARHOST"
+	echo "gpush - publish current project repo remote git repo"
 	echo "Use: gpush [-f|--force] [-a|--all] [project name] [target branch]"
 	exit 1
 fi
@@ -20,6 +21,11 @@ fi
 PUSHALL=
 if [ "$1" = "-a" ] || [ "$1" = "--all" ] ; then
 	PUSHALL="--all"
+	shift
+fi
+
+if is_girar_name $1 ; then
+	GIRARHOST=$1
 	shift
 fi
 
@@ -49,6 +55,7 @@ else
 	#[ -n "$PUSHALL" ] || TARGETBRANCH=master
 fi
 
+echo "Push $PROJECTNAME.git to $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH"
 git push $PUSHALL $PUSHFORCE $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 git push --tags $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 
