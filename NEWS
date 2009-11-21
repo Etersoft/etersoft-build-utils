@@ -1,3 +1,19 @@
+etersoft-build-utils-1.6.8: 21 Nov 2009
+- rpmurl: fix get src.rpm name contains -
+- rpmcs: fix %__awker and so on replacement
+- all utils: add support gear server name as first parameter
+- rpmurl -p: fix local missed package situation
+- improve check_publish
+- ginit/gpull/gpush: add support git.somename in the first param
+- spec: make spec parsing more strict
+- git: add is_girar_name for detect girar server name like git.alt or git.eter
+- rpmbph: add KORINFTARGETRELEASE support
+- rpmbb: add -R option for buildreq -bi
+- myhsh: write path to hasher in log
+- add apt conf files for 5.1 repo
+- rpmbs: add hack to replace alt release to eter
+- rpmbs: skip some sisyphus_check for local src.rpm build
+
 etersoft-build-utils-1.6.7: 19 Sep 2009
 - add ccache support and use it in rpmbb
 - rpmbph: set vendor name part in release inherited from prev. release

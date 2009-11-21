@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.6.7
-Release: alt2
+Version: 1.6.8
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -61,6 +61,17 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Sat Nov 21 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
+- rpmcs: fix %%__awker and so on replacement
+- rpmurl -p: fix local missed package situation
+- all utils: add support git.somename in the first param
+- rpmbb: add -R option for buildreq -bi
+- myhsh: write path to hasher in log
+- add apt conf files for 5.1 repo
+- rpmbph: add KORINFTARGETRELEASE support
+- rpmbs: add hack to replace alt release to eter
+- rpmbs: skip some sisyphus_check for local src.rpm build
+
 * Tue Sep 22 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt2
 - rpmbs: imprpove publish tarball function, add md5sum for tarball
 - rpmbs: skip some sisyphus_check for local src.rpm build
