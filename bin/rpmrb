@@ -47,4 +47,4 @@ if is_gear `pwd` ; then
 fi
 
 $ETERBUILDBIN/rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
-$ETERBUILDBIN/rpmbs -u $SPEC || fatal "Error with upload"
+$ETERBUILDBIN/rpmbs $GIRARHOST -u $SPEC || fatal "Error with upload"

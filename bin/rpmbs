@@ -168,7 +168,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	build_rpms_name "$LISTNAMES"
 	pkg_release_check
 	check_gear_and_tag
-	$ETERBUILDBIN/gpush $BASENAME || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
+	$ETERBUILDBIN/gpush $GIRARHOST $BASENAME || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
 	TAG=$VERSION-$RELEASE
 	if [ -n "$TASKNUMBER" ] ; then
 		ssh $GIRARHOST task add $TASKNUMBER repo $BASENAME $TAG

@@ -29,7 +29,7 @@ FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
 	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
-	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbsh
+	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
 	set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
@@ -287,6 +287,11 @@ fi
 # pass other options to RPM:
 LISTRPMARGS=$@
 }
+
+if is_girar_name $1 ; then
+	GIRARHOST=$1
+	shift
+fi
 
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
