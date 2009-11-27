@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.6.8
+Version: 1.6.9
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -18,8 +18,11 @@ BuildArchitectures: noarch
 %define altcompat_ver 0.95
 
 # C compiler is required in rpm-build; we do not require C++ here
-Requires: rpm-build rpm-build-compat >= %altcompat_ver
 BuildRequires: rpm-build-compat >= %altcompat_ver
+
+Requires: rpm-build
+# disable rpm-build-compat in system require
+# rpm-build-compat >= %altcompat_ver
 
 %if %_vendor == "alt"
 Requires: sisyphus_check rsync openssh-clients srpmcmp
@@ -61,6 +64,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Nov 27 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.9-alt1
+- fix GIRARHOST for subcommand
+- drop rpm-build-compat requires
+
 * Sat Nov 21 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
 - rpmcs: fix %%__awker and so on replacement
 - rpmurl -p: fix local missed package situation
