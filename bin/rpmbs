@@ -93,7 +93,6 @@ check_gear_and_tag()
 		pushd $SPECDIR >/dev/null
 		$GEARCTAG --force
 		popd >/dev/null
-		# git push ?
 	fi
 }
 
@@ -226,9 +225,12 @@ if [ -z "$SIGN" ]; then
 	exit $?
 fi
 
-# Sign src.rpm and upload it
+######## Sign src.rpm and upload it
+
+# check package releases according to ALT
 pkg_release_check $LISTBUILT
 
+# if only one file
 if [ -r "$LISTBUILT" ] ; then
 	check_gear_and_tag
 fi
