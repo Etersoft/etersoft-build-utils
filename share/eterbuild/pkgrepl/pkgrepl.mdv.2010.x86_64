@@ -1,0 +1,7 @@
+# Mandriva 64bit base replacements rules
+libXext-devel|lib64xext6-devel
+libreadline-devel|lib64readline-devel
+libreadline|lib64readline6
+
+libfontenc-devel|lib64fontenc-devel
+jackit-devel|lib64jack-devel
