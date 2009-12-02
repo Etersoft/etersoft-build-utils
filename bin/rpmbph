@@ -12,7 +12,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod repl rpm
+load_mod repl rpm git
 
 DISTRVERSION=`distr_vendor -v`
 
