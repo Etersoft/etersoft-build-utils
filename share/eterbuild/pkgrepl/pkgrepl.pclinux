@@ -22,6 +22,7 @@ libsane-devel|libsane1-devel
 libsane|libsane1
 jackit-devel|libjack-devel
 arts-devel|libarts1-devel
+openal-devel|libopenal-devel
 
 # XOrg
 xorg-x11-proto-devel|libxorg-x11-devel
