@@ -4,7 +4,7 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod git
 
-#test -n "$SPECNAME" || SPECNAME=$(basename `pwd`).spec
+test -r "$1" && fatal "Do not need any files in params"
 
 if [ "$1" = "-h" ] ; then
 	echo "ginit [GEAR] - initialize repo in $GIRARHOST for current project"
@@ -21,4 +21,5 @@ fi
 PROJECTNAME=$(basename `pwd`)
 echo "Create remote $PROJECTNAME repo in $GIRARHOST:"
 ssh $GIRARHOST git-init-db $PROJECTNAME.git
-git remote add origin $GIRARHOST:packages/$PROJECTNAME.git
+echo "Create $GIRARHOST remote repo alias"
+git remote add $GIRARHOST $GIRARHOST:packages/$PROJECTNAME.git

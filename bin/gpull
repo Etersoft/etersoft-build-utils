@@ -16,4 +16,4 @@ if is_girar_name $1 ; then
 fi
 
 echo "Pull repo from $GIRARHOST"
-git pull --rebase $@
+git pull --rebase $GIRARHOST $@
