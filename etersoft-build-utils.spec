@@ -6,7 +6,7 @@ Summary: A set of build rpm utilities
 
 License: Public domain
 Group: Development/Other
-Url: http://www.freesource.info/wiki/AltLinux/Razrabotchiku/SborkaPaketov
+Url: http://www.altlinux.org/Etersoft-build-utils
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
