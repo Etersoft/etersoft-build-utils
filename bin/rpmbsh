@@ -70,6 +70,7 @@ fi
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
 
+# TODO: skip for prev. packed src.rpm
 # If fail, we already has correct changelog
 add_changelog_helper "- new version" $LISTNAMES
 
@@ -78,6 +79,7 @@ add_changelog_helper "- new version" $LISTNAMES
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $COMMIT $(echo $LISTRPMARGS | sed -e "s|-[suUic]||g")
 
+# TODO: skip for prev. packed src.rpm
 set_specdir $LISTNAMES
 
 if  [ -n "$REMOTEBUILD" ] ; then
@@ -88,8 +90,9 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echog "############ Build at build server '$BUILDSERVER' (with $LISTRPMARGS options) ############"
 	echo
 	echog "==== Copying to build server ====="
-	#echog "It is recommended to rename old version at server for save traffic during rsync"
-	cd $RPMTOPDIR/SRPMS && rsync -vay --partial --progress --checksum \
+	# FIXME: do not change dir? Why LISTBUILT is not full path?
+	#cd $RPMTOPDIR/SRPMS
+	rsync -vay --partial --progress --checksum \
 	 	-e ssh $LISTBUILT $BUILDSERVER:$REMOTERPMDIR/SRPMS/ || fatal "Error with rsync"
 	ssh -t $BUILDSERVER "cd $REMOTERPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTBUILT"
 	RESULT=$?
@@ -99,13 +102,12 @@ if  [ -n "$REMOTEBUILD" ] ; then
 else
 	cd $RPMTOPDIR/SRPMS && time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
-
+	cd -
 
 	date
 	echo "-------------------------------"
 fi
 
-cd -
 
 # make src.rpm if build OK and we have options for rpmbs
 if [ "$RESULT" = "0" ] && [ -n "$LISTRPMARGS" ]; then
