@@ -151,6 +151,17 @@ function get_zip()
 }
 
 # TODO: use external converter
+function get_rar()
+{
+	get_archive rar || return $?
+	mkdir $WEXT.rar.dir || return $?
+	cd $WEXT.rar.dir
+	unrar x ../$WEXT.rar && tar cf ../$WEXT.tar . || return
+	cd ..
+	rm -rf $WEXT.rar.dir
+}
+
+# TODO: use external converter
 function get_7z()
 {
 	BIN7ZIP=/usr/bin/7z
@@ -257,7 +268,7 @@ do
 				echo "Get tarball for gear"
 				FORGEAR=1
 			fi
-			get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
+			get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
 		fi
 
 		if [ -z "$FORGEAR" ] ; then
