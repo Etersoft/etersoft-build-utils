@@ -2,3 +2,4 @@
 libXext-devel|lib64xext6-devel
 libreadline-devel|lib64readline-devel
 libreadline|lib64readline6
+libgtkmm2-devel|lib64gtkmm2.4-devel
