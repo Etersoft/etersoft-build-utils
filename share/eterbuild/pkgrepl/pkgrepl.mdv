@@ -16,7 +16,7 @@ libcups-devel|libcups2-devel
 libcups|libcups2
 liblcms-devel|liblcms1-devel
 liblcms|liblcms1
-jackit-devel|libjack0-devel
+jackit-devel|libjack-devel
 libsane-devel|libsane1-devel
 libsane|libsane1
 
