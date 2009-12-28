@@ -53,13 +53,13 @@ clean_pkgreq()
 # Print list of all build requires in ALT notation
 print_buildreq()
 {
-	eval_spec ${1} | grep "Build.*Req" | sed -e "s|^.*:||g" | clean_pkgreq
+	eval_spec ${1} | grep "^Build.*Req" | sed -e "s|^.*:||g" | clean_pkgreq
 }
 
 # Print list of all pkg requires
 print_pkgreq()
 {
-	eval_spec ${1} | grep "Requires" | sed -e "s|^.*:||g" | clean_pkgreq
+	eval_spec ${1} | grep "^Requires" | sed -e "s|^.*:||g" | clean_pkgreq
 }
 
 # internal
