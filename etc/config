@@ -70,3 +70,6 @@
 
 # set dir for ccache cache
 # export CCACHE_DIR=$OURTMPDIR/ccache
+
+# username on $GIRARHOST host
+# GIRAR_USER=lav
