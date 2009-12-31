@@ -244,6 +244,15 @@ if [ -n "$CHECKONLINE" ] ; then
 		echo $1 | grep rpm 2>/dev/null && SRCRPM=$1 ||
 		SRCRPM=`rpm -q $1 --queryformat "%{SOURCERPM}\n" | tail -n 1` 
 	fi
+
+	if [ -n "$GIRAR_USER" ] ; then
+	    GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/${SRCRPM/-*/}.git"
+		if GET -d $GITURL ; then
+			echog "Published at $GITURL by $GIRAR_USER"
+		else
+			echog "There is no git repo $GITURL"
+		fi
+	fi
 	RET="MISSED"
 	for i in $REPOSITORY ; do
 		echog "Checking in repository $i ..."
