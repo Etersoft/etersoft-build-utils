@@ -53,11 +53,23 @@ for i in $SPECLIST ; do
 	rpmbugs -t $i | grep -v "CLO.*FIX" | grep "@altlinux" >$i.bugs
 	test -s $i.bugs || rm -f $i.bugs
 
+	# if missed on ftp
 	if rpmgp -c $i | grep -q MISSED ; then
 		rpmgp -c $i >$i.missed
 	else
 		rm -f $i.$missed
 	fi
+	
+	# if present in git
+	if [ -n "$GIRAR_USER" ] ; then
+		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$i.git"
+		if GET -d $GITURL ; then
+			echog "Published at $GITURL" > $i.GIT.PUBLISHED
+			echog "Please check this spec and move work to git" >> $i.GIT.PUBLISHED
+			ssh $GEARHOST find-package $i >> $i.GIT.PUBLISHED
+		fi
+	fi
+
 	
 	# TODO:
 	#ssh git.alt acl sisyphus $PKGNAME show > $i.acl
