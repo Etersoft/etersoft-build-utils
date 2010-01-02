@@ -3,6 +3,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod git
 
 get_wd()
 {
@@ -27,6 +28,20 @@ print_usedby()
 		echo "    $i"
 	done
 }
+
+if_file_empty()
+{
+	NL=$(grep -v "^\$" "$1" | wc -l)
+	test "$NL" -eq "0"
+}
+
+remove_if_empty()
+{
+	if if_file_empty "$1" ; then
+		rm -f "$1"
+	fi
+}
+
 
 
 [ -n "$SPECLIST" ] || SPECLIST=`find $RPMDIR/SPECS -type f -name "*.spec"`
@@ -54,25 +69,26 @@ for i in $SPECLIST ; do
 	test -s $i.bugs || rm -f $i.bugs
 
 	# if missed on ftp
-	if rpmgp -c $i | grep -q MISSED ; then
-		rpmgp -c $i >$i.missed
-	else
-		rm -f $i.$missed
-	fi
+	rpmgp -c $i | grep -q MISSED >$i.missed
+	remove_if_empty $i.missed
 	
+	list_git_package $PKGNAME > $i.GIT.PUBLISHED
 	# if present in git
 	if [ -n "$GIRAR_USER" ] ; then
-		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$i.git"
+		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$PKGNAME.git"
 		if GET -d $GITURL ; then
-			echog "Published at $GITURL" > $i.GIT.PUBLISHED
+			echo
+			echog "Published at $GITURL by $GIRAR_USER" >> $i.GIT.PUBLISHED
 			echog "Please check this spec and move work to git" >> $i.GIT.PUBLISHED
-			ssh $GEARHOST find-package $i >> $i.GIT.PUBLISHED
 		fi
 	fi
 
+	remove_if_empty $i.GIT.PUBLISHED
+
+	if [ -r "$i.GIT.PUBLISHED" ] ; then
+		ssh $GIRARHOST acl sisyphus $PKGNAME show 2>> $i.GIT.PUBLISHED
+	fi
 	
-	# TODO:
-	#ssh git.alt acl sisyphus $PKGNAME show > $i.acl
 	#grep " $USER\$" $i.acl
 done
 
