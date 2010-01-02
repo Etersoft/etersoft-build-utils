@@ -246,12 +246,13 @@ if [ -n "$CHECKONLINE" ] ; then
 	fi
 
 	if [ -n "$GIRAR_USER" ] ; then
-	    GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/${SRCRPM/-*/}.git"
+	    GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$(get_pkgname_from_filename $SRCRPM).git"
 		if GET -d $GITURL ; then
 			echog "Published at $GITURL by $GIRAR_USER"
 		else
 			echog "There is no git repo $GITURL"
 		fi
+		ssh $GIRARHOST find-package $(get_pkgname_from_filename $SRCRPM)
 	fi
 	RET="MISSED"
 	for i in $REPOSITORY ; do

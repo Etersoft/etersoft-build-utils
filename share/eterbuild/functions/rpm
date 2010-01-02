@@ -63,6 +63,12 @@ build_rpms_name()
 	build_buildroot
 }
 
+# pkg-source-1.0.src.rpm -> pkg-source
+get_pkgname_from_filename()
+{
+	echo ${1/-[0-9]*/}
+}
+
 
 # build binary package list (1st - repo dir, 2st - pkgname)
 # algorithm: list all files in PKGDIR, print packages with our source pkg name
