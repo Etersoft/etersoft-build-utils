@@ -25,3 +25,19 @@ is_girar_name()
 {
 	echo "$1" | grep -q "^git\."
 }
+
+_list_git_package()
+{
+	while [ -n "$1" ] ; do
+		printf "%50s  " $GIRARHOST:$1
+		shift
+		date -d@$1
+		shift
+	done
+}
+
+# TODO: make world better, please
+list_git_package()
+{
+	_list_git_package $(ssh $GIRARHOST find-package $1)
+}
