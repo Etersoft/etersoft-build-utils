@@ -11,7 +11,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm repl
+load_mod rpm repl git
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"
@@ -252,8 +252,9 @@ if [ -n "$CHECKONLINE" ] ; then
 		else
 			echog "There is no git repo $GITURL"
 		fi
-		ssh $GIRARHOST find-package $(get_pkgname_from_filename $SRCRPM)
 	fi
+	list_git_package $(get_pkgname_from_filename $SRCRPM)
+	
 	RET="MISSED"
 	for i in $REPOSITORY ; do
 		echog "Checking in repository $i ..."
