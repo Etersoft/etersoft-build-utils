@@ -237,31 +237,42 @@ fi
 
 # Check online
 if [ -n "$CHECKONLINE" ] ; then
+
+	# possible it is spec
 	if [ -f $1 ] ; then
 		build_rpms_name "$1"
 		SRCRPM=$NAMESRPMIN
+		PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 	else
-		echo $1 | grep rpm 2>/dev/null && SRCRPM=$1 ||
-		SRCRPM=`rpm -q $1 --queryformat "%{SOURCERPM}\n" | tail -n 1` 
+		if echo $1 | grep -q rpm ; then
+			SRCRPM=$1
+			PKGNAME=$(get_pkgname_from_filename $SRCRPM)
+		else
+			PKGNAME=$1
+			SRCRPM=`rpm -q $PKGNAME --queryformat "%{SOURCERPM}\n" | tail -n 1`
+		fi
 	fi
 
 	if [ -n "$GIRAR_USER" ] ; then
-	    GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$(get_pkgname_from_filename $SRCRPM).git"
+		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$PKGNAME.git"
 		if GET -d $GITURL ; then
 			echog "Published at $GITURL by $GIRAR_USER"
 		else
 			echog "There is no git repo $GITURL"
 		fi
 	fi
-	list_git_package $(get_pkgname_from_filename $SRCRPM)
+	list_git_package $PKGNAME
 	
 	RET="MISSED"
-	for i in $REPOSITORY ; do
-		echog "Checking in repository $i ..."
-		rsync -n --progress $RSYNCSISYPHUS/$i/$SRCRPM  >/dev/null 2>&1 && { RET=$i; break; }
-	done
-	echog "Repository     Filename"
-	printf "%-12s %30s\n" $RET $SRCRPM
+	if [ -n "$SRCRPM" ] ; then
+		for i in $REPOSITORY ; do
+			echog "Checking '$SRCRPM' in repository $i ..."
+			rsync -n --progress $RSYNCSISYPHUS/$i/$SRCRPM  >/dev/null 2>&1 && { RET=$i; break; }
+		done
+		echog "Repository     Filename"
+		printf "%-12s %30s\n" $RET $SRCRPM
+	fi
+
 	if [ "$RET" = "MISSED" ] ; then
 		exit 1
 	fi
