@@ -5,9 +5,10 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod gettext
 
 if [ "$1" = "-h" ]; then
-	echo "rpmU - the same as [sudo] rpm -Uvh - update package"
+	echog "rpmU - the same as [sudo] rpm -Uvh - update package"
 	exit 0
 fi
 
