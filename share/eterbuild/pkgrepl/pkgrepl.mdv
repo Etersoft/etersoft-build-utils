@@ -78,7 +78,9 @@ xorg-xextproto-devel|x11-proto-devel
 xorg-sdk|x11-server-devel
 
 libICE-devel|libice6-devel
-libarts-devel|libkdemultimedia1-arts-devel
+libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel
 netcat|netcat
+libgtkmm2-devel|libgtkmm2.4-devel
+libopenal-devel|libopenal-devel

@@ -22,3 +22,6 @@ pld          ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS
 fedoraf      http://download1.rpmfusion.org/free/fedora/releases/10/Everything/source/SRPMS/
 rpmfusion    http://download1.rpmfusion.org/free/fedora/development/source/SRPMS/
 asp          http://mirror.yandex.ru/asplinux/sources/SRPMS.14/
+elrepo       http://elrepo.org/linux/elrepo/el5/SRPMS/
+elrepo-testing http://elrepo.org/linux/testing/el5/SRPMS/
+elrepo-fasttrack http://elrepo.org/linux/fasttrack/el5/SRPMS/

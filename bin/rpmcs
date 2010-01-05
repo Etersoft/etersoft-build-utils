@@ -288,14 +288,18 @@ do
 	subst "s|%perl_vendorlib|%perl_vendor_privlib|g
 		   s|%perl_vendorarch|%perl_vendor_archlib|g" $i
 
-	subst "s|%_datadir/doc$|%_docdir|g" $i
-	subst "s|%_datadir/doc/|%_docdir/|g" $i
-	subst "s|%_datadir/omf|%_omfdir|g" $i
-	subst "s|%_defaultdocdir|%_docdir|g" $i
-	subst "s|%__autoreconf|%autoreconf|g" $i
+	# TODO for cleanup_spec:
+	subst "s|%_datadir/doc$|%_docdir|g
+		s|%_datadir/doc/|%_docdir/|g
+		s|%_datadir/omf|%_omfdir|g
+		s|%_defaultdocdir|%_docdir|g
+		s|%_var/log|%_logdir|g
+		s|%_var/lib|%_localstatedir|g
+		s|%__autoreconf|%autoreconf|g" $i
 
 	subst "s|%rpmcflags|%optflags|g" $i
 
+	# drop useless construction
 	subst "s|^%clean$||g" $i
 	subst "s|^%debug_package$||g" $i
 	subst "s|^rm -rf %buildroot$||g" $i

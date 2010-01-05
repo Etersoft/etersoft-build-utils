@@ -1,4 +1,21 @@
 # Mandriva 64bit base replacements rules
 libXext-devel|lib64xext6-devel
-libreadline-devel|lib64readline5-devel
+libreadline-devel|lib64readline-devel
 libreadline|lib64readline5
+libgtkmm2-devel|lib64gtkmm2.4-devel
+libfreetype-devel|lib64freetype6-devel
+libsane-devel|lib64sane1-devel
+libieee1284-devel|lib64ieee1284-devel
+libldap-devel|lib64ldap2.4_2-devel
+libncurses-devel|lib64ncurses-devel
+libncursesw-devel|lib64ncursesw-devel
+libssl-devel|lib64openssl0.9.8-devel
+libxslt-devel|lib64xslt-devel
+xorg-x11-proto-devel|lib64xorg-x11-devel
+libcups-devel|lib64cups2-devel
+jackit-devel|lib64jack-devel
+libGLU-devel|lib64mesaglu1-devel
+libhal-devel|lib64hal-devel
+libXScrnSaver-devel|lib64xscrnsaver1-devel
+libfontenc-devel|lib64fontenc1-devel
+libXv-devel|lib64xv1-devel

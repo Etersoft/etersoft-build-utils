@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.6.9
+Version: 1.7.0
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -64,6 +64,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Sun Jan 03 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
+- check_publish.sh: add check for exist git repo, list acl for package if it in git
+- config: add GEAR_USER
+- rpmgp: add git checking
+- clean_pkgreq: skip gcc/cpp general packages
+- rpmgs: add rar archive support
+- spec: fix url (fix alt bug #22476)
+
 * Fri Nov 27 2009 Vitaly Lipatov <lav@altlinux.ru> 1.6.9-alt1
 - fix GIRARHOST for subcommand
 - drop rpm-build-compat requires

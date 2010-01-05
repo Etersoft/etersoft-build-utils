@@ -1,3 +1,13 @@
+etersoft-build-utils-1.7.0: 03 Jan 2010
+- check_publish.sh: add check for exist git repo, list acl for package if it in git
+- config: add GEAR_USER
+- rpmgp: add git checking
+- print_*req: use only start line field
+- clean_pkgreq: skip gcc/cpp general packages
+- rpmgs: add rar archive support
+- rpmbsh: disable cd to SRPMS dir (will need fix?)
+- spec: fix url (altbug #22476)
+
 etersoft-build-utils-1.6.9: 21 Nov 2009
 - fix GIRARHOST for subcommand
 - drop rpm-build-compat require

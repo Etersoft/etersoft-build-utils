@@ -43,6 +43,7 @@ clean_pkgreq()
 	local i VAR
 	VAR=`cat`
 	for i in $VAR ; do
+		echo "$i" | egrep "gcc|cpp|gcc-c++" >/dev/null && continue
 		echo "$i" | grep "[()<=>]" >/dev/null && continue
 		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
 		echo -n "$i "
@@ -52,13 +53,13 @@ clean_pkgreq()
 # Print list of all build requires in ALT notation
 print_buildreq()
 {
-	eval_spec ${1} | grep "Build.*Req" | sed -e "s|^.*:||g" | clean_pkgreq
+	eval_spec ${1} | grep "^Build.*Req" | sed -e "s|^.*:||g" | clean_pkgreq
 }
 
 # Print list of all pkg requires
 print_pkgreq()
 {
-	eval_spec ${1} | grep "Requires" | sed -e "s|^.*:||g" | clean_pkgreq
+	eval_spec ${1} | grep "^Requires" | sed -e "s|^.*:||g" | clean_pkgreq
 }
 
 # internal
