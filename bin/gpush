@@ -37,16 +37,13 @@ else
 	PROJECTNAME=$(basename `pwd`)
 fi
 
-CURRENTBRANCH=$(git branch | grep "^\*" | cut -d " " -f 2)
+CURRENTBRANCH=$(get_current_branch)
 
 if [ -z "$CURRENTBRANCH" ] ; then
 	echo "Can't detect current branch"
 	exit 1
 fi
 
-# more correctly
-CURRENTBRANCH=HEAD
-# 
 if [ -n "$1" ] ; then
 	TARGETBRANCH=$CURRENTBRANCH:$1
 	shift
