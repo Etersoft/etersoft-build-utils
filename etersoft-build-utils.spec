@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -64,6 +64,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Jan 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
+- myhsh: error if there are unpackaged files in the build
+- rpmgp: improve package checking (support non installed packages)
+- use sources.list from /etc/eterbuild if apt.conf in /etc/eterbuld too
+
 * Sun Jan 03 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - check_publish.sh: add check for exist git repo, list acl for package if it in git
 - config: add GEAR_USER

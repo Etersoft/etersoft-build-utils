@@ -1,3 +1,8 @@
+etersoft-build-utils-1.7.1: 08 Jan 2010
+- myhsh: enable error if there are unpackaged files in the build, add NOSTRICT_UNPACKAGED param in config for disable new behaviour
+- rpmgp: improve package checking (support non installed packages)
+- hasher: fix sources.list placement: use sources.list from /etc/eterbuild if apt.conf in /etc/eterbuld too
+
 etersoft-build-utils-1.7.0: 03 Jan 2010
 - check_publish.sh: add check for exist git repo, list acl for package if it in git
 - config: add GEAR_USER
