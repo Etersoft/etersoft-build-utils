@@ -5,3 +5,5 @@ libslang2-devel|libslang-devel
 libesd-devel|esound-devel
 sysvinit-utils|
 xorg-sdk|xorg-x11-devel
+libgif-devel|libungif-devel
+libgif|libungif
