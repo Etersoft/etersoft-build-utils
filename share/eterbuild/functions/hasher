@@ -30,17 +30,21 @@ print_tmp_aptconf()
 		sed -e "s|\".*/sources.list|\"$OURTMPDIR/sources.list|g"
 }
 
-# printout sources.list with filtering
+# printout sources.list with filtering from apt.conf
 # workaround about hard coded arch in sources.list
 print_tmp_sourceslist()
 {
 	local SLIST
 	test -r "$1" || fatal "$1 is missed"
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
-	SLIST=`cat "$1" | \
-		sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g" | \
-		grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
-	#SLIST="$ETERBUILDETC/apt/`basename $SLIST`"
+	if echo $1 | grep -q "^/etc" ; then
+		SLIST=`cat "$1" | \
+			grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
+	else
+		SLIST=`cat "$1" | \
+			sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g" | \
+			grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
+	fi
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
 	cat "$SLIST" | \
 		sed -e "s|i586|$DEFAULTARCH|g"
@@ -54,7 +58,8 @@ prepare_aptconfig()
 	print_tmp_sourceslist $APTCONF >$OURSOURCES || fatal "Can't create sources.list"
 	if [ -n "$ETERBUILD_APTREPO" ] ; then
 		cat <<EOF >>$OURSOURCES
-# Apply repo from $ETERBUILD_APTREPO variable
+
+# Apply repo(s) from ETERBUILD_APTREPO variable
 $ETERBUILD_APTREPO
 EOF
 	fi
