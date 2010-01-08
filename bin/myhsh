@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2006, 2008-2009 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2008-2010 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -85,11 +85,6 @@ HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target
 HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG"
 
 BUILDARGS=""
-# FIXME: cleanup MENV using
-BUILDARGS="--define 'backport_distro ${MENV}'"
-if [ "$MENV" != "SS" ] && [ "$MENV" != "DD" ]; then
-	BUILDARGS="--with=build_$MENV --with=build_backport $BUILDARGS"
-fi
 
 if [ -z "$NOSTRICT_UNPACKAGED" ] ; then
 	BUILDARGS="$BUILDARGS --define '_unpackaged_files_terminate_build 1'"
