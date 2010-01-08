@@ -18,7 +18,7 @@ SAVEOPT=$@
 
 #############################
 
-Usage="Usage: $name [-t -i -h -r] bin.rpm..."
+Usage="Usage: $name [-t -i -h -r] [-$CURRENTBRANCHNAME] bin.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -33,6 +33,7 @@ phelp()
 	echog " -c - cleanup hasher"
 	echog " -t - use test hasher dir"
 	echog " -r - remote login to hasher"
+	echog " -M?? - branch name"
 }
 
 while getopts :chitr opt; do

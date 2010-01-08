@@ -8,8 +8,6 @@
 # Собирает двоичные rpm-пакеты по указанным спекам
 # Параметры:
 # - название спек-файла
-# TODO -M?
-# TODO: -c
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -46,13 +44,13 @@ while getopts :hciprR opt; do
     case $opt in
     h) phelp; exit 0;;
     c) BUILDOPT="c" ;;
-	i) BUILDOPT="i b" ;;
+    i) BUILDOPT="i b" ;;
     p) BUILDOPT="b" ;;
     r) BUILDREQ="-bc" ;;
     R) BUILDREQ="-bi" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
-	?) OPTIND=$((OPTIND-1)); break;
+    ?) OPTIND=$((OPTIND-1)); break;
     esac
 done
 
