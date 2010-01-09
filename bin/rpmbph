@@ -60,7 +60,7 @@ if [ "$VENDOR" = "mdv" ] || [ "$VENDOR" = "pclinux" ] ; then
 fi
 
 # Do not add BuildReq if already exist
-cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ="$FIXPATCHFUZZ"
+cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
 
 FIXMKTEMP=""
 
