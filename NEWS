@@ -1,3 +1,10 @@
+etersoft-build-utils-1.7.2: 09 Jan 2010
+- rpmbph: realize gear repo backporting (eterbug #4766)
+- myhsh: drop out backport related defines (it will be placed in the spec by rpmbph)
+- gpush: push current branch definitely
+- rpmbs: disable GPG_AGENT_INFO if gpg-agent is not reached
+- rpmbs: fix task build on various repos
+
 etersoft-build-utils-1.7.1: 08 Jan 2010
 - myhsh: enable error if there are unpackaged files in the build, add NOSTRICT_UNPACKAGED param in config for disable new behaviour
 - rpmgp: improve package checking (support non installed packages)

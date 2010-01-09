@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -64,6 +64,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Jan 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- rpmbph: realize gear repo backporting (eterbug #4766)
+- myhsh: drop out backport related defines (it will be placed in the spec by rpmbph)
+- gpush: push current branch definitely
+- rpmbs: fix task build on various repos
+
 * Fri Jan 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
 - myhsh: error if there are unpackaged files in the build
 - rpmgp: improve package checking (support non installed packages)
