@@ -309,8 +309,6 @@ fi
 
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
-unset MENV MENVARG
-
 [ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs --rmsource --rmspec"
 [ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 
@@ -360,6 +358,8 @@ if [ "$VENDOR" = "alt" ] ; then
 		exit $?
 	fi
 fi
+
+unset MENV MENVARG
 
 # handle src.rpm and spec both, LISTBUILT - result with full pathes to src.rpms
 pack_src_rpm $LISTNAMES
