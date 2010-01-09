@@ -85,6 +85,11 @@ check_gear_and_tag()
 {
 	local GEARCTAG=gear-create-tag
 
+	# FIXME: hack against remote session
+	if [ -n "$GPG_AGENT_INFO" ] ; then
+		gpg-agent || unset GPG_AGENT_INFO
+	fi
+
 	# set SPECDIR from LISTNAMES if empty
 	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
