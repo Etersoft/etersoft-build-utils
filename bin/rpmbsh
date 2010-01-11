@@ -85,16 +85,16 @@ set_specdir $LISTNAMES
 if  [ -n "$REMOTEBUILD" ] ; then
 	check_key
 	test -n "$BUILDSERVER" || fatal "Please set BUILDSERVER in config file"
+	# FIXME - get via etersoft-build-utils
 	test -n "$REMOTERPMDIR" || REMOTERPMDIR=`ssh $BUILDSERVER echo $HOME`/RPM
+	LISTSRPM="$(echo $LISTBUILT | xargs -n1 basename)"
 	echo
 	echog "############ Build at build server '$BUILDSERVER' (with $LISTRPMARGS options) ############"
 	echo
 	echog "==== Copying to build server ====="
-	# FIXME: do not change dir? Why LISTBUILT is not full path?
-	#cd $RPMTOPDIR/SRPMS
 	rsync -vay --partial --progress --checksum \
-	 	-e ssh $LISTBUILT $BUILDSERVER:$REMOTERPMDIR/SRPMS/ || fatal "Error with rsync"
-	ssh -t $BUILDSERVER "cd $REMOTERPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTBUILT"
+		-e ssh $LISTBUILT $BUILDSERVER:$REMOTERPMDIR/SRPMS/ || fatal "Error with rsync"
+	ssh -t $BUILDSERVER "cd $REMOTERPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTSRPM"
 	RESULT=$?
 	date
 	echo "-------------------------------"
