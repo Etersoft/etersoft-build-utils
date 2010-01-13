@@ -318,35 +318,46 @@ if [ "$VENDOR" = "alt" ] ; then
 	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 	if is_gear $SPECDIR ; then
 		[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
+		USEBRANCH=$MDISTR
 		SPEC=$LISTNAMES
-		BPSPEC=$SPEC.$MDISTR
+		BPSPEC=$SPEC.$USEBRANCH
+
+		# support for without M names
+		USENUMBRANCH=$(get_altdistr_version $USEBRANCH)
+		if [ "$USENUMBRANCH" != "$USEBRANCH" ] ; then
+			if is_exist_branch $USENUMBRANCH ; then
+				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+				USEBRANCH=$USENUMBRANCH
+			fi
+		fi
+
 		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it"
 
 		CURBRANCH=$(get_current_branch)
 
-		if [ "$CURBRANCH" = "$MDISTR" ] ; then
-			fatal "Run rpmbph in sisyphus branch, not in backport branch $MDISTR"
+		if [ "$CURBRANCH" = "$USEBRANCH" ] ; then
+			fatal "Run rpmbph in sisyphus or master branch, not in backport branch $USEBRANCH"
 		fi
 
-		# Create branch M?? if not exist yet
-		if ! is_exist_branch $MDISTR ; then
-			git branch $MDISTR
+		# Create branch if not exist yet
+		if ! is_exist_branch $USEBRANCH ; then
+			git branch $USEBRANCH
 		fi
 
 		cp -f $LISTNAMES $BPSPEC
 		altspec_to_local $BPSPEC
 
-		git checkout $MDISTR || fatal "Can't checkout branch $MDISTR. Use $BPSPEC manually or remove it."
+		git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
 		git merge $CURBRANCH
 		mv -f $BPSPEC $SPEC
 		# FIXME: Ctrl-\ and q will cancelled less with return error code
-		if ! git diff $MDISTR ; then
+		if ! git diff $USEBRANCH ; then
 			#git checkout $SPEC $MDISTR
 			#git checkout $CURBRANCH
-			fatal "User cancelled. You are still in $MDISTR branch with modified spec"
+			fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
 		fi
 		git add $SPEC
-		if ! git commit -a -m "backported to $MDISTR by rpmbph script as $(get_version $SPEC)-$(get_release $SPEC)" ; then
+		if ! git commit -a -m "backported to $USEBRANCH by rpmbph script as $(get_version $SPEC)-$(get_release $SPEC)" ; then
 			#git checkout $CURBRANCH
 			#fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
 			# FIXME: git commit returns error if no commit needed
