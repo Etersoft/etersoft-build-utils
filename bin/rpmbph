@@ -329,6 +329,12 @@ if [ "$VENDOR" = "alt" ] ; then
 				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
 				USEBRANCH=$USENUMBRANCH
 			fi
+			# hack about p5, M50 -> p5
+			if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
+				USENUMBRANCH=p5
+				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+				USEBRANCH=$USENUMBRANCH
+			fi
 		fi
 
 		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it"
