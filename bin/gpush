@@ -34,7 +34,7 @@ if [ -n "$1" ] ; then
 	PROJECTNAME=$1
 	shift
 else
-	PROJECTNAME=$(basename `pwd`)
+	PROJECTNAME=$(basename `get_root_git_dir`)
 fi
 
 CURRENTBRANCH=$(get_current_branch)
@@ -58,9 +58,17 @@ else
 	TEXTBRANCH="branch $TARGETBRANCH"
 fi
 
-echo "Push $TEXTBRANCH from $PROJECTNAME.git to $GIRARHOST:packages/$PROJECTNAME.git"
-git push $PUSHALL $PUSHFORCE $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
-git push --tags $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+push_to_remote()
+{
+	local GHOST=$1
+	echo "Push $TEXTBRANCH from $PROJECTNAME.git to $GIRARHOST:packages/$PROJECTNAME.git"
+	git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+	git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+}
+
+for i in `( echo $GIRARHOST; get_remote_git_list  ) | uniq` ; do
+	push_to_remote $i
+done
 
 #> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
 #>   git tag -s -f -m 'Sisyphus release $A' sisyphus $A
