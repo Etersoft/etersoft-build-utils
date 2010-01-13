@@ -1,3 +1,9 @@
+etersoft-build-utils-1.7.3: 13 Jan 2010
+- rpmgp: add acl list printing
+- gpush: push without branch if --all
+- rpmbph: do not insert fix for fuzzy patch in any case
+- rpmgp: add -g option for remote and locally repo clone
+
 etersoft-build-utils-1.7.2: 09 Jan 2010
 - rpmbph: realize gear repo backporting (eterbug #4766)
 - myhsh: drop out backport related defines (it will be placed in the spec by rpmbph)
