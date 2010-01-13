@@ -30,6 +30,17 @@ get_root_git_dir()
 	pwd
 }
 
+get_remote_git_list()
+{
+        local i
+        for i in $(git remote | uniq) ; do
+                if is_girar_name $i ; then
+                        echo $i
+                fi
+        done
+}
+
+
 # Check if $1 like git.alt or git.eter, git.something
 is_girar_name()
 {
