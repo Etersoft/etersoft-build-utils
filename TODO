@@ -1,3 +1,5 @@
+gpush: перебирать remote git.* и публиковать туда
+
 Если пакет начинается с lib, добавлять перед %files:
 %post -p %post_ldconfig
 %postun -p %postun_ldconfig
