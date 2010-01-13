@@ -152,13 +152,14 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog "rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it"
+	echog "rpmgp [options] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it"
 	echog " name - installed package name or src.rpm"
 	echog " system - name of system (ALT Linux by default if -a missed too)"
 	echog " -a  search pkgname in all known repositories"
 	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
 	echog " -c  check if this package exists in the ALT Linux repository"
 	echog " -d  download all matched packages"
+	echog " -g  remote clone repo to USER/packages and clone it locally"
 	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
 	echog " -n  do not install after download, just download in current dir"
 	echog " -r  refresh package list (download it again)"
@@ -167,13 +168,14 @@ phelp()
 }
 
 TRYINST="1"
-while getopts :habcdlnrs opt; do
+while getopts :habcdglnrs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
     b) INSTALLBINARY=1 ;;
     c) CHECKONLINE=1 ;;
     d) DOWNLOADALL=1 ;;
+    g) CLONEGIT=1 ;;
     l) LISTREQS=1 ;;
     n) TRYINST="" ;;
     r) UPDATECACHE=1 ;;
@@ -229,9 +231,22 @@ if [ -n "$INSTALLBINARY" ] ; then
 	exit 0
 fi
 
+# clone remote git
+if [ -n "$CLONEGIT" ] ; then
+	PKGNAME=$1
+	INITLETTER=$(echo $PKGNAME | sed "s/^\(.\).*/\1/g")
+	# http://git.altlinux.org/srpms/N/NAME.git
+	echo "Remote clone from /srpms/$INITLETTER/$PKGNAME.git ..."
+	ssh $GIRARHOST clone /srpms/$INITLETTER/$PKGNAME.git packages/$PKGNAME.git || fatal "Can't remote clone."
+	git clone git.alt:packages/$PKGNAME.git
+	echo "See other repos at $GIRARHOST:"
+	list_git_package $PKGNAME
+	exit 0
+fi
+
 # lists packages for build
 if [ -n "$LISTREQS" ] ; then
-	print_target_buildreq $1
+	print_target_buildreq $PKGNAME
 	exit 0
 fi
 
@@ -262,6 +277,9 @@ if [ -n "$CHECKONLINE" ] ; then
 		fi
 	fi
 	list_git_package $PKGNAME
+	# TODO: BINARYREPO
+	echo -n "ACL list for sisyphus: "
+	ssh $GIRARHOST acl sisyphus $PKGNAME show
 	
 	RET="MISSED"
 	if [ -n "$SRCRPM" ] ; then
