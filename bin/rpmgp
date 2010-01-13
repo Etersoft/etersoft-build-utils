@@ -262,6 +262,9 @@ if [ -n "$CHECKONLINE" ] ; then
 		fi
 	fi
 	list_git_package $PKGNAME
+	# TODO: BINARYREPO
+	echo -n "ACL list for sisyphus: "
+	ssh $GIRARHOST acl sisyphus $PKGNAME show
 	
 	RET="MISSED"
 	if [ -n "$SRCRPM" ] ; then
