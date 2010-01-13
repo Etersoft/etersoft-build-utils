@@ -237,8 +237,16 @@ if [ -n "$CLONEGIT" ] ; then
 	INITLETTER=$(echo $PKGNAME | sed "s/^\(.\).*/\1/g")
 	# http://git.altlinux.org/srpms/N/NAME.git
 	echo "Remote clone from /srpms/$INITLETTER/$PKGNAME.git ..."
-	ssh $GIRARHOST clone /srpms/$INITLETTER/$PKGNAME.git packages/$PKGNAME.git || fatal "Can't remote clone."
+	ssh $GIRARHOST clone /srpms/$INITLETTER/$PKGNAME.git packages/$PKGNAME.git || warning "Can't remote clone."
 	git clone git.alt:packages/$PKGNAME.git
+	if cd $PKGNAME ; then
+		CURRENTBRANCH=$(get_current_branch)
+		for i in $(git branch -a | grep "remotes/origin/.*[0-9]\$") ; do
+			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
+		done
+		git checkout $CURRENTBRANCH
+		cd - >/dev/null
+	fi
 	echo "See other repos at $GIRARHOST:"
 	list_git_package $PKGNAME
 	exit 0
