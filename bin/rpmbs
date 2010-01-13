@@ -85,10 +85,13 @@ check_gear_and_tag()
 {
 	local GEARCTAG=gear-create-tag
 
-	# FIXME: hack against remote session
-	if [ -n "$GPG_AGENT_INFO" ] ; then
-		gpg-agent || unset GPG_AGENT_INFO
-	fi
+	# FIXME: uncomment use-agent in ~/.gnupg/gpg.conf, but with ssh access to build server I got
+	#  gpg: problem with the agent - disabling agent use
+	#  gpg: Invalid passphrase; please try again ...
+
+	# gpg tries to use the agent but will fallback to the regular mode
+	# if there is a problem connecting to the agent.
+	# GPG_AGENT_INFO=
 
 	# set SPECDIR from LISTNAMES if empty
 	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
