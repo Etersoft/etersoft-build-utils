@@ -61,7 +61,9 @@ fi
 push_to_remote()
 {
 	local GHOST=$1
-	echo "Push $TEXTBRANCH from $PROJECTNAME.git to $GIRARHOST:packages/$PROJECTNAME.git"
+	echo
+	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git"
+	# FIXME: push with one command
 	git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 	git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 }
