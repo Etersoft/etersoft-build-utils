@@ -51,7 +51,14 @@ else
 	TARGETBRANCH=$CURRENTBRANCH
 fi
 
-echo "Push branch $TARGETBRANCH from $PROJECTNAME.git to $GIRARHOST:packages/$PROJECTNAME.git"
+if [ "$PUSHALL" = "--all" ] ; then
+	TEXTBRANCH="all branches"
+	TARGETBRANCH=
+else
+	TEXTBRANCH="branch $TARGETBRANCH"
+fi
+
+echo "Push $TEXTBRANCH from $PROJECTNAME.git to $GIRARHOST:packages/$PROJECTNAME.git"
 git push $PUSHALL $PUSHFORCE $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 git push --tags $GIRARHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 
