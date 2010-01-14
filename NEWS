@@ -1,3 +1,10 @@
+etersoft-build-utils-1.7.4: 14 Jan 2010
+- rpmbph: support for branches like 5.1 if exists, instead M51
+- rpmgp: clone all branches locally
+- rpmbsh: fix remote src.rpm build from rpmbph
+- gpush: push to all remote repos like git.*
+- loginhsh: add -o option for run as root
+
 etersoft-build-utils-1.7.3: 13 Jan 2010
 - rpmgp: add acl list printing
 - gpush: push without branch if --all
