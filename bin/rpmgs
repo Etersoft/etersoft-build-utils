@@ -292,8 +292,8 @@ do
 	if [ -n "$GSSETVERSION" ] && is_gear ; then
 		CURNAME=$(get_tarballname $i)
 		echo "Commit tarball $RPMSOURCEDIR/$FTB to git subdir '$CURNAME'..."
-		gear-update "$RPMSOURCEDIR/$FTB" "$CURNAME"
-		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB)"
+		gear-update "$RPMSOURCEDIR/$FTB" "$CURNAME" && rm -f "$RPMSOURCEDIR/$FTB"
+		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB) with rpmgs script"
 	else
 		is_gear && echo "Run without version. Skip tarball commiting."
 	fi
