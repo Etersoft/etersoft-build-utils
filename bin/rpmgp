@@ -241,10 +241,10 @@ if [ -n "$CLONEGIT" ] ; then
 	git clone git.alt:packages/$PKGNAME.git
 	if cd $PKGNAME ; then
 		CURRENTBRANCH=$(get_current_branch)
-		for i in $(git branch -a | grep "remotes/origin/.*[0-9]\$") ; do
+		for i in $(git branch -a | grep -v "/HEAD" | grep "remotes/origin/") ; do
 			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
 		done
-		git checkout $CURRENTBRANCH
+		git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
 		cd - >/dev/null
 	fi
 	echo "See other repos at $GIRARHOST:"
