@@ -1,29 +1,35 @@
 
 
 ---------------------------
-ginit [GEAR] - initialize repo in git.eter for current project
+ginit [GEAR] - initialize repo in git.alt for current project
 Use: ginit without parameters
      ginit git.eter - for init in git.eter gear repo
 
 
 ---------------------------
 gpull [args] - do git pull --rebase
-Use: ginit without parameters
+Use: gpull without parameters
 
 
 ---------------------------
-gpush - publish current project repo to git.eter
+gpush - publish current project repo remote git repo
 Use: gpush [-f|--force] [-a|--all] [project name] [target branch]
 
 
 ---------------------------
+jmake - make with ccache using and parallel build enabled
+
+
+---------------------------
 loginhsh - install package in hasher / take shell
-Usage:  [-t -i -h -r] bin.rpm...
+Usage:  [-t -i -h -r -c] [-M51] bin.rpm...
 Options:
  -i - initialize hasher
  -c - cleanup hasher
+ -o - log in as root user
  -t - use test hasher dir
  -r - remote login to hasher
+ -M?? - branch name
 
 
 ---------------------------
@@ -39,22 +45,23 @@ Options:
 
 ---------------------------
 rpmbb - build  binary rpm from spec
-Usage:  [-c -p -i -r] spec...
+Usage:  [-c -p -i -r -R] spec...
 Options:
  -c - start from compile stage
  -i - install and package
  -p - packaging installed files into package
  -r - find build requires
+ -R - find build requires with -bi
 
 
 ---------------------------
 rpmbph - backports spec and rebuild it
-Usage:  [-r -u -U -n -i -m -v] [-M??] spec...
-Use rpmbph -M40 for backport to ALT 4.0 and so on
+Usage:  [-r -u -U -n -i -m -v] [-M51] spec...
+Use rpmbph -M51 for backport to ALT M51 and so on
 Options:
  -r - remote build
  -u/-U - sign and upload after build
- -n - do not build in hasher
+ -n - do not build in hasher (use first in the list)
  -i - install built packages in test hasher
  -v - more verbose
 
@@ -96,13 +103,14 @@ rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT
 rpmgp - various package download operations
 Usage:  [options] [system] pkgname
 Options:
-rpmgp [-a -c -n] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it
+rpmgp [options] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it
  name - installed package name or src.rpm
  system - name of system (ALT Linux by default if -a missed too)
  -a  search pkgname in all known repositories
  -b  install packages needed for build (use sudo apt-get) (need spec not package name)
  -c  check if this package exists in the ALT Linux repository
  -d  download all matched packages
+ -g  remote clone repo to USER/packages and clone it locally
  -l  list packages needed for build (in local pkg system notation) (experimental)
  -n  do not install after download, just download in current dir
  -r  refresh package list (download it again)
