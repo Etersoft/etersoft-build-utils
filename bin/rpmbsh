@@ -74,7 +74,6 @@ mygetopts $LISTARGS
 # If fail, we already has correct changelog
 add_changelog_helper "- new version" $LISTNAMES
 
-#echo ${LISTRPMARGS/\-m/} @ ${LISTRPMARGS} @${LISTNAMES}
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $COMMIT $(echo $LISTRPMARGS | sed -e "s|-[suUic]||g")
@@ -100,9 +99,8 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echo "-------------------------------"
 	test "$RESULT" = "0" && echog "It was remote build at $BUILDSERVER" || echog "There is error during remote build at $BUILDSERVER"
 else
-	cd $RPMTOPDIR/SRPMS && time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
+	time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
-	cd -
 
 	date
 	echo "-------------------------------"
@@ -110,12 +108,11 @@ fi
 
 
 # make src.rpm if build OK and we have options for rpmbs
-if [ "$RESULT" = "0" ] && [ -n "$LISTRPMARGS" ]; then
-	if is_gear $SPECDIR ; then
-		$ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $LISTRPMARGS $LISTNAMES
-	else
-		$ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $LISTRPMARGS $LISTBUILT
-	fi
+if [ ! "$RESULT" = "0" ] || [ -z "$LISTRPMARGS" ]; then
+	exit $RESULT
 fi
 
-exit $RESULT
+is_gear $SPECDIR && TSKLIST=$LISTNAMES || TSKLIST=$LISTBUILT
+
+$ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $LISTRPMARGS $TSKLIST
+
