@@ -18,7 +18,7 @@ SAVEOPT=$@
 
 #############################
 
-Usage="Usage: $name [-t -i -h -r] bin.rpm..."
+Usage="Usage: $name [-t -i -h -r -c] [-$CURRENTBRANCHNAME] bin.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -31,17 +31,20 @@ phelp()
 	echog "Options:"
 	echog " -i - initialize hasher"
 	echog " -c - cleanup hasher"
+	echog " -o - log in as root user"
 	echog " -t - use test hasher dir"
 	echog " -r - remote login to hasher"
+	echog " -M?? - branch name"
 }
 
-while getopts :chitr opt; do
+while getopts :chito opt; do
     case $opt in
     h) phelp; exit 0;;
     t) HASHERDIR=$HASHERDIR-test; TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
 	r) REMOTE=1 ;;
+	o) ROOTER="--rooter" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
@@ -69,7 +72,7 @@ fi
 # export OURAPTCONF with temp. file contains correct path to sources.list
 prepare_aptconfig
 
-HASHERARG="--apt-config=$OURAPTCONF --target $DEFAULTARCH"
+HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $DEFAULTARCH"
 
 mygetopts $LISTARGS
 
@@ -106,7 +109,7 @@ else
 fi
 $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
 echog "You are in hasher shell"
-$HSH-shell $HASHERDIR $SHELLHASHERARG -Y --shell
+$HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER -Y --shell
 if [ -n "$TESTMODE" ] ; then
 	echo "Remove package for test preun scripts"
 	$HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)

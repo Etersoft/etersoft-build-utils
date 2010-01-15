@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.0
+Version: 1.7.4
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -64,6 +64,30 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Thu Jan 14 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
+- rpmbph: support for branches like 5.1 if exists, instead M51
+- rpmgp: clone all branches locally
+- rpmbsh: fix remote src.rpm build from rpmbph
+- gpush: push to all remote repos like git.*
+- loginhsh: add -o option for run as root
+
+* Wed Jan 13 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.3-alt1
+- rpmgp: add acl list printing
+- gpush: push without branch if --all
+- rpmbph: do not insert fix for fuzzy patch in any case
+- rpmgp: add -g option for remote and locally repo clone
+
+* Fri Jan 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- rpmbph: realize gear repo backporting (eterbug #4766)
+- myhsh: drop out backport related defines (it will be placed in the spec by rpmbph)
+- gpush: push current branch definitely
+- rpmbs: fix task build on various repos
+
+* Fri Jan 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
+- myhsh: error if there are unpackaged files in the build
+- rpmgp: improve package checking (support non installed packages)
+- use sources.list from /etc/eterbuild if apt.conf in /etc/eterbuld too
+
 * Sun Jan 03 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - check_publish.sh: add check for exist git repo, list acl for package if it in git
 - config: add GEAR_USER

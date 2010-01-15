@@ -40,6 +40,8 @@ REMOTERPMDIR=
 HASHERDIR="$HOME/hasher"
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
 HASHERARG="--eager-cleanup"
+# for use in help as example branch/distro name
+CURRENTBRANCHNAME="M51"
 [ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
 
 RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus

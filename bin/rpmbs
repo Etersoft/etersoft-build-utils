@@ -85,6 +85,14 @@ check_gear_and_tag()
 {
 	local GEARCTAG=gear-create-tag
 
+	# FIXME: uncomment use-agent in ~/.gnupg/gpg.conf, but with ssh access to build server I got
+	#  gpg: problem with the agent - disabling agent use
+	#  gpg: Invalid passphrase; please try again ...
+
+	# gpg tries to use the agent but will fallback to the regular mode
+	# if there is a problem connecting to the agent.
+	# GPG_AGENT_INFO=
+
 	# set SPECDIR from LISTNAMES if empty
 	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
@@ -161,6 +169,8 @@ fi
 # set SPECDIR from LISTNAMES if empty
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
+set_binaryrepo $MENV
+
 # If we build from gear repo, run task
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo "Run with gear repo..."
@@ -172,11 +182,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	if [ -n "$TASKNUMBER" ] ; then
 		ssh $GIRARHOST task add $TASKNUMBER repo $BASENAME $TAG
 	else
-		ssh $GIRARHOST task new
-		ssh $GIRARHOST task add repo $BASENAME $TAG || ssh $GIRARHOST task rm
-		ssh $GIRARHOST task run
+		ssh $GIRARHOST build -b $BINARYREPO $BASENAME $TAG
 	fi
-	echo "run task $BASENAME with tag $TAG at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	echo "run task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	exit
 fi
 
@@ -198,10 +206,6 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
 	exit 0
 fi
-
-
-#set_incoming $MENV
-set_binaryrepo $MENV
 
 if [ -n "${DELETENOW}" ]; then
 	echog "Removing did not realized yet"

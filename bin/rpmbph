@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2009 (c) Etersoft www.etersoft.ru
+# 2003-2010 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -16,7 +16,7 @@ load_mod repl rpm git
 
 DISTRVERSION=`distr_vendor -v`
 
-alt_tolocal()
+altspec_to_local()
 {
 local TXTRELEASE
 local SPECNAME
@@ -26,17 +26,20 @@ BASERELEASE=$(get_numrelease $SPECNAME)
 
 FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 
+echo "Converting spec $SPECNAME to $MDISTR..."
+
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
 	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
-	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
 	set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
 	# due new libtool, affected on ALT Linux
-	RECONFT="%undefine __libtoolize"
+	if echo "$MDISTR" | egrep -q "M24|M30|M40|M41" ; then
+		RECONFT="%undefine __libtoolize"
+	fi
 else
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
@@ -57,7 +60,7 @@ if [ "$VENDOR" = "mdv" ] || [ "$VENDOR" = "pclinux" ] ; then
 fi
 
 # Do not add BuildReq if already exist
-cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ="$FIXPATCHFUZZ"
+cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
 
 FIXMKTEMP=""
 
@@ -240,14 +243,12 @@ fi
 test -n "$TOCHANGELOG" && ENTRY=`echo -e "$ENTRY\n- $TOCHANGELOG"`
 add_changelog $SPECNAME -e "$ENTRY"
 
-$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
-
 }
 
 
 #############################
 
-Usage="Usage: $name [-r -u -U -n -i -m -v] [-M??] spec..."
+Usage="Usage: $name [-r -u -U -n -i -m -v] [-$CURRENTBRANCHNAME] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -257,21 +258,21 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echo  "Use rpmbph -M40 for backport to ALT 4.0 and so on"
+	echo  "Use rpmbph -$CURRENTBRANCHNAME for backport to ALT $CURRENTBRANCHNAME and so on"
 	echog "Options:"
 	echog " -r - remote build"
 #	echog " -m - send result via e-mail"
 	echog " -u/-U - sign and upload after build"
-	echog " -n - do not build in hasher"
+	echog " -n - do not build in hasher (use first in the list)"
 	echog " -i - install built packages in test hasher"
 	echog " -v - more verbose"
 }
 
 
-while getopts :hniv opt; do
+while getopts :hniuv opt; do
     case $opt in
     h) phelp; exit 0;;
-    n) BUILDCOMMAND="$ETERBUILDBIN/rpmbs --rmsource --rmspec";;
+    n) NOBUILD=1;;
     v) VERBOSE=1;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -308,9 +309,76 @@ fi
 
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
+[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs --rmsource --rmspec"
+[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
+
+if [ "$VENDOR" = "alt" ] ; then
+	# run inside gear repo, just create backported spec
+	# set SPECDIR from LISTNAMES if empty
+	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
+	if is_gear $SPECDIR ; then
+		[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
+		USEBRANCH=$MDISTR
+		SPEC=$LISTNAMES
+		BPSPEC=$SPEC.$USEBRANCH
+
+		# support for without M names
+		USENUMBRANCH=$(get_altdistr_version $USEBRANCH)
+		if [ "$USENUMBRANCH" != "$USEBRANCH" ] ; then
+			if is_exist_branch $USENUMBRANCH ; then
+				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+				USEBRANCH=$USENUMBRANCH
+			fi
+			# hack about p5, M50 -> p5
+			if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
+				USENUMBRANCH=p5
+				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+				USEBRANCH=$USENUMBRANCH
+			fi
+		fi
+
+		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it"
+
+		CURBRANCH=$(get_current_branch)
+
+		if [ "$CURBRANCH" = "$USEBRANCH" ] ; then
+			fatal "Run rpmbph in sisyphus or master branch, not in backport branch $USEBRANCH"
+		fi
+
+		# Create branch if not exist yet
+		if ! is_exist_branch $USEBRANCH ; then
+			git branch $USEBRANCH
+		fi
+
+		cp -f $LISTNAMES $BPSPEC
+		altspec_to_local $BPSPEC
+
+		git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+		git merge $CURBRANCH
+		mv -f $BPSPEC $SPEC
+		# FIXME: Ctrl-\ and q will cancelled less with return error code
+		if ! git diff $USEBRANCH ; then
+			#git checkout $SPEC $MDISTR
+			#git checkout $CURBRANCH
+			fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
+		fi
+		git add $SPEC
+		if ! git commit -a -m "backported to $USEBRANCH by rpmbph script as $(get_version $SPEC)-$(get_release $SPEC)" ; then
+			#git checkout $CURBRANCH
+			#fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
+			# FIXME: git commit returns error if no commit needed
+			echo
+		fi
+		[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs"
+		$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+		git checkout $CURBRANCH
+		exit $?
+	fi
+fi
+
 unset MENV MENVARG
 
-# handle src.rpm too, LISTBUILT - result with full pathes to src.rpms
+# handle src.rpm and spec both, LISTBUILT - result with full pathes to src.rpms
 pack_src_rpm $LISTNAMES
 
 export RPMTOPDIR=$RPMDIR/BP
@@ -325,6 +393,8 @@ for i in $LISTBUILT ; do
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	# FIXME: do not remove if not repacked
 	#rm -f $SPKG
-	alt_tolocal $SPECNAME
+	altspec_to_local $SPECNAME
+	$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
+
 done
 

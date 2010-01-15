@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2006, 2008-2009 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2008-2010 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -78,27 +78,28 @@ fi
 # export OURAPTCONF with temp. file contains correct path to sources.list
 prepare_aptconfig
 
+# FIXME: we override config value here?
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
+# we do not need check cases for mount points, thanks ldv@ 
 HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target $DEFAULTARCH $HASHERARG"
-if [ "$MENV" != "SS" ] && [ "$MENV" != "DD" ]; then
-	HASHERARG="--build-args \"--with=build_$MENV\" --build-args \"--with=build_backport\" $HASHERARG"
+HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG"
+
+BUILDARGS=""
+
+if [ -z "$NOSTRICT_UNPACKAGED" ] ; then
+	BUILDARGS="$BUILDARGS --define '_unpackaged_files_terminate_build 1'"
 fi
+
 LISTBUILTSH=""
 for i in $LISTNAMES
 do
-	# Внимание! при сборке не проверяются некоторые указанные ниже параметры
-	# --nprocs=2 
-	# Note: hasher is already use renice for low priority
 	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
 	echo "Build in hasher ($MENV) in $HASHERDIR dir" >$LOGFILE
 	rm -f $LOGFILE.failed
-	# enable /proc support only if require it
-	#rpm --requires -p $i | grep "/proc" && ARG="$HASHERARG --mountpoints=/proc" || ARG="$HASHERARG"
-	# we do not need check cases for mount points, thanks ldv@ 
-	ARG="$HASHERARG --mountpoints=/proc,/dev/pts"
-	echog "Build in hasher: $i (arg: $ARG, distro: $MENV, hasherdir: $HASHERDIR)"
+	echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
 
-	($HSH $ARG --build-args "--define 'backport_distro ${MENV}'" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	# Note: hasher is already use renice for low priority
+	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
 	if [ -f $LOGFILE.failed ] ;	then
 		RESULT=1

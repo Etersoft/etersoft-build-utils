@@ -73,3 +73,6 @@
 
 # username on $GIRARHOST host
 # GIRAR_USER=lav
+
+# Skip error if there are unpackaged files in the build
+#NOSTRICT_UNPACKAGED=1
