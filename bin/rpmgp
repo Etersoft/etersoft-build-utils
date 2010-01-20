@@ -160,6 +160,7 @@ phelp()
 	echog " -c  check if this package exists in the ALT Linux repository"
 	echog " -d  download all matched packages"
 	echog " -g  remote clone repo to USER/packages and clone it locally"
+	echog " -m  migrate to gear from spec"
 	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
 	echog " -n  do not install after download, just download in current dir"
 	echog " -r  refresh package list (download it again)"
@@ -168,7 +169,7 @@ phelp()
 }
 
 TRYINST="1"
-while getopts :habcdglnrs opt; do
+while getopts :habcdglmnrs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
@@ -177,6 +178,7 @@ while getopts :habcdglnrs opt; do
     d) DOWNLOADALL=1 ;;
     g) CLONEGIT=1 ;;
     l) LISTREQS=1 ;;
+    m) MIGRATEGEAR=1 ;;
     n) TRYINST="" ;;
     r) UPDATECACHE=1 ;;
     s) load_systems_list
@@ -230,6 +232,23 @@ if [ -n "$INSTALLBINARY" ] ; then
 	CMD=$(get_install_package_command $DISTRVENDOR interactive)
 	echog "Running $SUDO $CMD $LISTPKG..."
 	$SUDO $CMD $LISTPKG
+fi
+
+if [ -n "$MIGRATEGEAR" ] ; then
+	parse_cmd_pre "$@"
+	pack_src_rpm $LISTRPMARGS
+	for PKGNAME in $LISTBUILT ; do
+		echo "Create gear repo"
+		GITALT=~/Projects/git-alt
+		GEARDIR=$GITALT/$BASENAME
+		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
+		mkdir -p "$GEARDIR" || fatal "can't create dir $GEARDIR"
+		cd $GEARDIR || fatal "can't cd to $GEARDIR"
+		git init-db || fatal "can't init db"
+		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
+		rm -vf $PKGNAME
+	done
+	exit 0
 fi
 
 # clone remote git
