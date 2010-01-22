@@ -363,11 +363,9 @@ if [ "$VENDOR" = "alt" ] ; then
 			fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
 		fi
 		git add $SPEC
-		if ! git commit -a -m "backported to $USEBRANCH by rpmbph script as $(get_version $SPEC)-$(get_release $SPEC)" ; then
+		if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
 			#git checkout $CURBRANCH
-			#fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
-			# FIXME: git commit returns error if no commit needed
-			echo
+			fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
 		fi
 		[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs"
 		$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
