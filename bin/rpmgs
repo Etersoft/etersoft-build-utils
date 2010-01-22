@@ -290,7 +290,8 @@ do
 		add_changelog_helper "- new version ($CURVER) $EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
 	if [ -n "$GSSETVERSION" ] && is_gear ; then
-		CURNAME=$(get_tarballname $i)
+		CURNAME=$BASENAME
+		test -d "$CURNAME" || CURNAME=$(get_tarballname $i)
 		echo "Commit tarball $RPMSOURCEDIR/$FTB to git subdir '$CURNAME'..."
 		gear-update "$RPMSOURCEDIR/$FTB" "$CURNAME" && rm -f "$RPMSOURCEDIR/$FTB"
 		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB) with rpmgs script"
