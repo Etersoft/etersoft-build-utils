@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -64,6 +64,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Jan 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- rpmbs/rpmbsh: add -l option for lazy-cleanup after build
+- rpmgp: add -m option for migrate spec to gear support
+- rpmgp: fix -b option (install buildreqs packages) to work in distro independent manner
+- rpmgp: fix get remote branches and main branch selecting
+
 * Thu Jan 14 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
 - rpmbph: support for branches like 5.1 if exists, instead M51
 - rpmgp: clone all branches locally
