@@ -33,19 +33,18 @@ phelp()
 	echog "Options:"
 	echog " -r - remote build"
 	echog " -t - make temporary commit before build (rpmbb like behavior)"
-	echog " -u/-U - sign and upload after build"
-	echog " -s - sign and and copy to upload after build"
+	echog " -u - sign and upload after build"
+	echog " -s - sign and and copy to upload dir (ETERDESTSRPM) after build"
 	echog " -i - install built packages in test hasher"
+	echog " -l - lazy cleanup (before build, not after)"
 	echog " -c - build without stuff (previous built packages)"
 }
 
-while getopts :hrusimt opt; do
+while getopts :hrulsimt opt; do
     case $opt in
     h) phelp; exit 0;;
     r) REMOTEBUILD=1 ;;
-    t) COMMIT=--commit ;;
-#    u) UPLOADNOW="-u" ;;
-#    s) UPLOADNOW="-s" ;;
+    t) COMMIT="--commit" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
@@ -70,13 +69,15 @@ fi
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
 
+[ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"
+
 # TODO: skip for prev. packed src.rpm
 # If fail, we already has correct changelog
 add_changelog_helper "- new version" $LISTNAMES
 
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
-pack_src_rpm $COMMIT $(echo $LISTRPMARGS | sed -e "s|-[suUic]||g")
+pack_src_rpm $COMMIT $(echo $LISTRPMARGS | sed -e "s|-[suUicl]||g")
 
 # TODO: skip for prev. packed src.rpm
 set_specdir $LISTNAMES
