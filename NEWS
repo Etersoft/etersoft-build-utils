@@ -1,3 +1,12 @@
+etersoft-build-utils-1.7.5: 22 Jan 2010
+- rpmbs/rpmbsh: add -l option for lazy-cleanup after build
+- rpmgs: check dir with the same as package name firstly
+- version up to 175
+- repl: make required packages list unique
+- rpmgp: add -m option for migrate spec to gear support
+- rpmgp: fix -b option (install buildreqs packages) to work in distro independent manner
+- rpmgp: fix get remote branches and main branch selecting
+
 etersoft-build-utils-1.7.4: 14 Jan 2010
 - rpmbph: support for branches like 5.1 if exists, instead M51
 - rpmgp: clone all branches locally

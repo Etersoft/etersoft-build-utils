@@ -62,3 +62,10 @@ list_git_package()
 {
 	_list_git_package $(ssh $GIRARHOST find-package $1)
 }
+
+git_commit_ignore_nothing()
+{
+        git commit "$@" && return
+        git commit "$@" 2>&1 | grep "nothing to commit" && return 0
+        return 1
+}

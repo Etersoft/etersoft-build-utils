@@ -87,7 +87,7 @@ if [ -n "$BUILDREQ" ] ; then
 fi
 
 if [ -n "$BUILDOPT" ] ; then
-	is_alt || fatal "Sorry, only ALT Linux systems support --short-circuit correctly"
+	is_alt || fatal "Sorry, only ALT Linux rpm supports --short-circuit correctly"
 	for it in $BUILDOPT
 	do
 		uni_rpmbuild --commit $LISTNAMES -b$it $LISTRPMARGS --target $DEFAULTARCH --short-circuit

@@ -11,7 +11,7 @@
 load_mod hasher
 
 #############################
-Usage="Usage: $name [-m -s -u -i -c] src.rpm..."
+Usage="Usage: $name [-m -s -u -i -c -l] src.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -24,13 +24,16 @@ phelp()
 	echog "Options:"
 	echog " -i - install built packages in test hasher"
 	echog " -c - build without stuff (previous built packages)"
+	echog " -l - lazy cleanup (before build, not after)"
+
 }
 
-while getopts :hmic opt; do
+while getopts :hmicl opt; do
     case $opt in
     h) phelp; exit 0;;
     i) TESTINSTALL=1;;
-	c) HASHERARG="--without-stuff $HASHERARG";;
+    l) HASHERARG="$HASHERARG --lazy-cleanup";;
+    c) HASHERARG="$HASHERARG --without-stuff";;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;

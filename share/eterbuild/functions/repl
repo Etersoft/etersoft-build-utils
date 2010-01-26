@@ -41,7 +41,7 @@ tolocal_anyrepl()
 clean_pkgreq()
 {
 	local i VAR
-	VAR=`cat`
+	VAR=`cat | sort -u`
 	for i in $VAR ; do
 		echo "$i" | egrep "gcc|cpp|gcc-c++" >/dev/null && continue
 		echo "$i" | grep "[()<=>]" >/dev/null && continue

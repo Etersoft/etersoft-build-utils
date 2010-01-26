@@ -88,3 +88,31 @@ drop_pkg_extensions()
 	done
 }
 
+# distr_vendor [interactive]
+get_install_package_command()
+{
+	local DISTRVENDOR=$1
+	local INAC=$2
+	local CMD
+	local RET=0
+	case $DISTRVENDOR in
+		"ALTLinux"|"Ubuntu"|"Debian"|"PCLinux")
+			[ -n "$INAC" ] && CMD="apt-get install" || CMD="apt-get -y --force-yes install"
+			;;
+		"LinuxXP"|"Fedora"|"ASPLinux"|"CentOS"|"RHEL"|"Scientific")
+			[ -n "$INAC" ] && CMD="yum install" || CMD="yum -y install"
+			;;
+		"Mandriva")
+			[ -n "$INAC" ] && CMD="urpmi --no-verify-rpm" || CMD="urpmi --auto --no-verify-rpm"
+			;;
+		"SUSE")
+			[ -n "$INAC" ] && CMD="zypper --non-interactive install" || CMD="yes | zypper --non-interactive install"
+			;;
+		*)
+			RET=1
+			CMD="echo \"Do not known install command for DISTRVENDOR $DISTRVENDOR\""
+			;;
+	esac
+	echo $CMD
+	return $RET
+}

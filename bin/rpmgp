@@ -11,7 +11,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm repl git
+load_mod rpm repl git rpm
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"
@@ -160,6 +160,7 @@ phelp()
 	echog " -c  check if this package exists in the ALT Linux repository"
 	echog " -d  download all matched packages"
 	echog " -g  remote clone repo to USER/packages and clone it locally"
+	echog " -m  migrate to gear from spec"
 	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
 	echog " -n  do not install after download, just download in current dir"
 	echog " -r  refresh package list (download it again)"
@@ -168,7 +169,7 @@ phelp()
 }
 
 TRYINST="1"
-while getopts :habcdglnrs opt; do
+while getopts :habcdglmnrs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
@@ -177,6 +178,7 @@ while getopts :habcdglnrs opt; do
     d) DOWNLOADALL=1 ;;
     g) CLONEGIT=1 ;;
     l) LISTREQS=1 ;;
+    m) MIGRATEGEAR=1 ;;
     n) TRYINST="" ;;
     r) UPDATECACHE=1 ;;
     s) load_systems_list
@@ -221,30 +223,48 @@ test -z "$LISTARGS" && fatal "Please run with spec/package name"
 #
 # уточнение - [система] пакет
 
-# install binary packages
+# install required for build binary packages
 if [ -n "$INSTALLBINARY" ] ; then
 	parse_cmd_pre "$@"
 	pack_src_rpm $LISTRPMARGS
-	echog "Running apt-get build-dep for install needed packages for $LISTBUILT"
-	# FIXME: ALT Specific
-	$SUDO apt-get build-dep $LISTBUILT
+	LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
+	DISTRVENDOR=$(distr_vendor -d)
+	CMD=$(get_install_package_command $DISTRVENDOR interactive)
+	echog "Running $SUDO $CMD $LISTPKG..."
+	$SUDO $CMD $LISTPKG
+fi
+
+if [ -n "$MIGRATEGEAR" ] ; then
+	parse_cmd_pre "$@"
+	pack_src_rpm $LISTRPMARGS
+	for PKGNAME in $LISTBUILT ; do
+		echo "Create gear repo"
+		GITALT=~/Projects/git-alt
+		GEARDIR=$GITALT/$BASENAME
+		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
+		mkdir -p "$GEARDIR" || fatal "can't create dir $GEARDIR"
+		cd $GEARDIR || fatal "can't cd to $GEARDIR"
+		git init-db || fatal "can't init db"
+		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
+		rm -vf $PKGNAME
+	done
 	exit 0
 fi
 
 # clone remote git
 if [ -n "$CLONEGIT" ] ; then
 	PKGNAME=$1
-	INITLETTER=$(echo $PKGNAME | sed "s/^\(.\).*/\1/g")
+	INITLETTER=$(echo $PKGNAME | cut -c1)
 	# http://git.altlinux.org/srpms/N/NAME.git
 	echo "Remote clone from /srpms/$INITLETTER/$PKGNAME.git ..."
 	ssh $GIRARHOST clone /srpms/$INITLETTER/$PKGNAME.git packages/$PKGNAME.git || warning "Can't remote clone."
 	git clone git.alt:packages/$PKGNAME.git
 	if cd $PKGNAME ; then
 		CURRENTBRANCH=$(get_current_branch)
-		for i in $(git branch -a | grep "remotes/origin/.*[0-9]\$") ; do
+		for i in $(git branch -a | grep -v "/HEAD" | grep "remotes/origin/") ; do
 			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
 		done
-		git checkout $CURRENTBRANCH
+		git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
 		cd - >/dev/null
 	fi
 	echo "See other repos at $GIRARHOST:"
