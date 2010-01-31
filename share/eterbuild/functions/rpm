@@ -63,6 +63,37 @@ build_rpms_name()
 	build_buildroot
 }
 
+querypackage()
+{
+        rpmquery -p --queryformat "%{$2}" $1
+}
+
+build_rpms_name_by_srpm()
+{
+	local SRPM=$1
+	BASENAME=$(querypackage $SRPM NAME)
+	RELEASE=$(querypackage $SRPM RELEASE)
+	VERSION=$(querypackage $SRPM VERSION)
+	PKGARCH=$(querypackage $SRPM ARCH)
+	# suggest target arch
+	if [ "$PKGARCH" != "noarch" ] ; then
+		PKGARCH=$DEFAULTARCH
+	fi
+	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
+	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
+	if [ "$(basename "$SRPM")" != $NAMESRPMIN ] ; then
+		warning "Generated srpm name $NAMESRPMIN is not equal to real file name $SRPM"
+	fi
+}
+
+spec_by_srpm()
+{
+	local PKG=$1
+	local PKGNAME
+	PKGNAME=$(querypackage $PKG NAME)
+	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
+}
+
 # pkg-source-1.0.src.rpm -> pkg-source
 get_pkgname_from_filename()
 {

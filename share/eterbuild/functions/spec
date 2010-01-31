@@ -173,13 +173,6 @@ add_changelog_helper()
 	return $R
 }
 
-spec_by_srpm()
-{
-	local PKG=$1
-	local PKGNAME
-	PKGNAME=$(rpm -qp --queryformat "%{NAME}" $PKG)
-	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
-}
 
 # set specdir by spec (run with full path to spec only or in spec dir)
 set_specdir()
