@@ -137,7 +137,8 @@ do
 		#NAMESRPMIN=$(basename $i)
 
 		if [ -f "$i" ] ; then
-			LISTBUILT="$LISTBUILT $i"
+			LISTBUILT="$LISTBUILT $(realpath $i)"
+			build_rpms_name_by_srpm "$i" $ARGS
 		else
 			fatal "pack_src_rpm: Can't find '$i'"
 		fi
