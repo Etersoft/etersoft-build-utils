@@ -142,7 +142,7 @@ do
 			fatal "pack_src_rpm: Can't find '$i'"
 		fi
 	else
-		# Получаем названия пакетов по спеку
+		# п÷п╬п╩я┐я┤п╟п╣п╪ п╫п╟п╥п╡п╟п╫п╦я▐ п©п╟п╨п╣я┌п╬п╡ п©п╬ я│п©п╣п╨я┐
 		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
 		build_rpms_name "$i" $ARGS
 		if [ -n "${SIGN}" ]; then

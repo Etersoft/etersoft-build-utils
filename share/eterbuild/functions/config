@@ -5,7 +5,7 @@
 
 ETERBUILDVERSION=175
 
-# Определяем SUDO для использования
+# п·п©я─п╣п╢п╣п╩я▐п╣п╪ SUDO п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐
 SUDO="sudo"
 # for some shells? not for bash
 test -z "$UID" && UID=`id -u`

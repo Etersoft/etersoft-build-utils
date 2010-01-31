@@ -10,7 +10,7 @@ get_var()
 }
 
 # FIXME: only ALT handled rpm -bE
-# Раскрывает макросы в спеке и выводит на стандартный вывод
+# п═п╟я│п╨я─я▀п╡п╟п╣я┌ п╪п╟п╨я─п╬я│я▀ п╡ я│п©п╣п╨п╣ п╦ п╡я▀п╡п╬п╢п╦я┌ п╫п╟ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╡я▀п╡п╬п╢
 eval_spec()
 {
 	# TODO: use rpm -showrc instead -bE for get main variables?
@@ -95,7 +95,7 @@ get_tarballname()
 
 # Set version for spec (args: spec version), f.i. test.spec 1.2.3)
 # Supports %major and %ver_major macros in spec
-# версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
+# п╡п╣я─я│п╦я▐ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ я┐п╨п╟п╥п╟п╫п╟ п╨п╟п╨ 2.6.1 (п©п╬п╩п╫п╟я▐), 2.6 (major) п╦п╩п╦ .1 (minor)
 set_version()
 {
 	local SPEC=$1

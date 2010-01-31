@@ -3,8 +3,8 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
-# Пересборка указанных SRPM-пакетов в hasher
-# -i устанавливает в тестовый hasher после пересборки
+# п÷п╣я─п╣я│п╠п╬я─п╨п╟ я┐п╨п╟п╥п╟п╫п╫я▀я┘ SRPM-п©п╟п╨п╣я┌п╬п╡ п╡ hasher
+# -i я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п╡ я┌п╣я│я┌п╬п╡я▀п╧ hasher п©п╬я│п╩п╣ п©п╣я─п╣я│п╠п╬я─п╨п╦
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common

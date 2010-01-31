@@ -5,9 +5,9 @@
 #
 # BB - binary build (like rpm option -bb)
 #
-# Собирает двоичные rpm-пакеты по указанным спекам
-# Параметры:
-# - название спек-файла
+# п║п╬п╠п╦я─п╟п╣я┌ п╢п╡п╬п╦я┤п╫я▀п╣ rpm-п©п╟п╨п╣я┌я▀ п©п╬ я┐п╨п╟п╥п╟п╫п╫я▀п╪ я│п©п╣п╨п╟п╪
+# п÷п╟я─п╟п╪п╣я┌я─я▀:
+# - п╫п╟п╥п╡п╟п╫п╦п╣ я│п©п╣п╨-я└п╟п╧п╩п╟
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -54,7 +54,7 @@ while getopts :hciprR opt; do
     esac
 done
 
-# FIXME: параметры передаются и дальше (например, -i, -b)
+# FIXME: п©п╟я─п╟п╪п╣я┌я─я▀ п©п╣я─п╣п╢п╟я▌я┌я│я▐ п╦ п╢п╟п╩я▄я┬п╣ (п╫п╟п©я─п╦п╪п╣я─, -i, -b)
 # remove args that were options
 if [ $# -gt 0 ]; then 
 	shift $((OPTIND - 1))
