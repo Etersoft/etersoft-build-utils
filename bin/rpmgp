@@ -236,9 +236,15 @@ fi
 
 if [ -n "$MIGRATEGEAR" ] ; then
 	parse_cmd_pre "$@"
-	pack_src_rpm $LISTRPMARGS
-	for PKGNAME in $LISTBUILT ; do
-		echo "Create gear repo"
+	for INFILE in $LISTNAMES ; do
+		# call for each file due generated BASENAME
+		LISTNAMES=$INFILE pack_src_rpm $INFILE $LISTRPMARGS
+		PKGNAME="$LISTBUILT"
+		if [ -z "$BASENAME" ] ; then
+			echo "Can't get basename for $PKGNAME, skipping"
+			continue
+		fi
+		echo "Create gear repo $BASENAME from $PKGNAME"
 		GITALT=~/Projects/git-alt
 		GEARDIR=$GITALT/$BASENAME
 		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
@@ -246,7 +252,8 @@ if [ -n "$MIGRATEGEAR" ] ; then
 		cd $GEARDIR || fatal "can't cd to $GEARDIR"
 		git init-db || fatal "can't init db"
 		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
-		rm -vf $PKGNAME
+		# remove src.rpm only if it was generated
+		[ -z ${INFILE/*rpm/} ] || rm -vf $PKGNAME
 	done
 	exit 0
 fi
