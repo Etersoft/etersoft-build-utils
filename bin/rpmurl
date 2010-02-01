@@ -10,6 +10,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod 
 
 which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
 
@@ -78,7 +79,7 @@ get_pkginfo()
 		if [ -z ${i/*rpm/} ]
 		then
 			# it is rpm package
-			RPM_URL=`rpm -qp --queryformat "%{URL}" ${i}`
+			RPM_URL=$(querypackage ${i} URL)
 			SOURCE=
 		else
 			RPM_URL=$(eval_spec ${i} | get_var "Url")
@@ -86,8 +87,8 @@ get_pkginfo()
 		fi
 	else
 		# will it package name
-		RPM_URL=`rpm -q --queryformat "%{URL}" ${i}`
-		SOURCE=`rpm -q --queryformat "%{SOURCE}" ${i}`
+		RPM_URL=$(querypackage ${i} URL)
+		SOURCE=$(querypackage ${i} SOURCE)
 	fi
 }
 
@@ -101,15 +102,15 @@ get_pagepkginfo()
 		if [ -z ${i/*rpm/} ]
 		then
 			# it is rpm package
-			PKGVERSION=`rpm -qp --queryformat "%{VERSION}" ${i}`
-			PKGNAME=`rpm -qp --queryformat "%{sourcerpm}" ${i} | sed -e "s|-$PKGVERSION.*||g"`
+			PKGVERSION=$(querypackage ${i} VERSION)
+			PKGNAME=$(querypackage ${i} sourcerpm | sed -e "s|-$PKGVERSION.*||g")
 		else
 			PKGNAME=$(eval_spec ${i} | get_var "Name")
 		fi
 	else
 		# installed package name
-		PKGVERSION=`rpm -q --queryformat "%{VERSION}" ${i}`
-		PKGNAME=`rpm -q --queryformat "%{sourcerpm}" ${i} | sed -e "s|-$PKGVERSION.*||g"`
+		PKGVERSION=$(querypackage ${i} VERSION})
+		PKGNAME=$(querypackage ${i} sourcerpm | sed -e "s|-$PKGVERSION.*||g")
 	fi
 	if [ -z "$PKGNAME" ] ; then
 		PKGNAME="$i"

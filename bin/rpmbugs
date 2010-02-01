@@ -13,6 +13,10 @@
 . `dirname $0`/../share/eterbuild/functions/common
 
 which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
+URLSHOWBUG="https://bugzilla.altlinux.org/show_bug.cgi?id=$1"
+PRODUCT=Sisyphus
+URLBUGLIST="https://bugzilla.altlinux.org/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
+
 
 show_bugs()
 {
@@ -28,9 +32,8 @@ show_bugs()
 
 show_bugbyid()
 {
-	URL="https://bugzilla.altlinux.org/show_bug.cgi?id=$1"
 #	TEXT=1
-	show_bugs $URL
+	show_bugs $URLSHOWBUG
 }
 
 
@@ -58,37 +61,33 @@ SPECLIST=$@
 if [ "${1}" = "-qf" ]
 then
 	shift
-	SPECLIST=$1
-	if [ -e $SPECLIST ] ; then
-		SPECLIST=`rpm -qf --queryformat "%{NAME} " $SPECLIST`
-	else
-		SPECLIST=`rpmqf $SPECLIST`
+	SPECLIST=$(rpmqf "$1")
+	if [ -e "$1" ] ; then
+		SPECLIST=$(querypackage $SPECLIST NAME)
 	fi
 fi
 
 # if param is number
 if [ -z `echo ${1} | sed -e "s/[0-9]*//"` ] ; then
 	show_bugbyid $1
-	exit 0
+	exit
 fi
 
-for i in $SPECLIST
-do
+for i in $SPECLIST ; do
 	if [ -f $i ]
 	then
 		if [ -z ${i/*rpm/} ]
 		then
 			# it is rpm package
-			PKGNAME=`rpm -qp --queryformat "%{NAME}" $i`
+			PKGNAME=$(querypackage $i NAME)
 		else
 			PKGNAME=$(eval_spec $i | get_var "Name")
 			test -z ${PKGNAME} && fatal "Cannot get package name"
 		fi
 	else
-		PKGNAME=`rpm -q --queryformat "%{NAME}" $i` || PKGNAME=$i
+		# yes, DD=$(false) || DD=other works
+		PKGNAME=$(querypackage $i NAME) || PKGNAME=$i
 	fi
-	PRODUCT=Sisyphus
-	URL="https://bugzilla.altlinux.org/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
 
 	if [ -n "$NEWBUG" ] ; then
 		fatal "Do not realized yet. Welcome to developing!"
@@ -100,7 +99,7 @@ do
 		#altbug --pkg "$PKGNAME" --subj "$SUMMARY"
 		show_bugbyid $ID
 	else
-		show_bugs $URL | grep "@"
+		show_bugs $URLBUGLIST | grep "@"
 	fi
 
 done

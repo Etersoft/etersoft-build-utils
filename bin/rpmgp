@@ -299,7 +299,7 @@ if [ -n "$CHECKONLINE" ] ; then
 			PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 		else
 			PKGNAME=$1
-			SRCRPM=`rpm -q $PKGNAME --queryformat "%{SOURCERPM}\n" | tail -n 1`
+			SRCRPM=$(querypackage $PKGNAME "" "%{SOURCERPM}\n" | tail -n 1)
 		fi
 	fi
 
@@ -377,9 +377,9 @@ then
 else
 	if [ -z "${1/*rpm/}" ] ; then
 		# it is rpm package (locale placed?)
-		SRCRPM=`rpm -qp $1 --queryformat "%{SOURCERPM}\n"`
+		SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
 	else
-		SRCRPM=`rpm -q $1 --queryformat "%{SOURCERPM}\n"`
+		SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
 	fi
 fi
 test -z "$SRCRPM" && fatal "Cannon find package for $1"
