@@ -4,8 +4,8 @@
 # Public domain
 #
 # CS -- cleanup spec (like cleanup_spec command)
-# Параметры:
-# - название спек-файла
+# п÷п╟я─п╟п╪п╣я┌я─я▀:
+# - п╫п╟п╥п╡п╟п╫п╦п╣ я│п©п╣п╨-я└п╟п╧п╩п╟
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common

@@ -1,10 +1,10 @@
 
 pkgdatadir=$(datadir)/eterbuild
 
-all: QuickHelp.txt QuickHelp.koi8-r.txt
+all: QuickHelp.txt QuickHelp.utf8.txt
 	$(MAKE) -C po
 
-QuickHelp.koi8-r.txt:
+QuickHelp.utf8.txt:
 	for i in bin/* ; do echo -e "\n\n---------------------------"; $$i -h ; done | grep -v "^Note:" | grep -v "^Target" >$@
 
 QuickHelp.txt:

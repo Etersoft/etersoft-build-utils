@@ -3,9 +3,9 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
-# Скачивает исходный src.rpm-пакет с одного из репозиториев (по умолчанию ALT Linux) для пакета с указанным названием.
-# Также можно сразу указать название пакета с исходниками
-# Функции скрипта похожи на команду apt-get source пакет
+# п║п╨п╟я┤п╦п╡п╟п╣я┌ п╦я│я┘п╬п╢п╫я▀п╧ src.rpm-п©п╟п╨п╣я┌ я│ п╬п╢п╫п╬пЁп╬ п╦п╥ я─п╣п©п╬п╥п╦я┌п╬я─п╦п╣п╡ (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ ALT Linux) п╢п╩я▐ п©п╟п╨п╣я┌п╟ я│ я┐п╨п╟п╥п╟п╫п╫я▀п╪ п╫п╟п╥п╡п╟п╫п╦п╣п╪.
+# п╒п╟п╨п╤п╣ п╪п╬п╤п╫п╬ я│я─п╟п╥я┐ я┐п╨п╟п╥п╟я┌я▄ п╫п╟п╥п╡п╟п╫п╦п╣ п©п╟п╨п╣я┌п╟ я│ п╦я│я┘п╬п╢п╫п╦п╨п╟п╪п╦
+# п╓я┐п╫п╨я├п╦п╦ я│п╨я─п╦п©я┌п╟ п©п╬я┘п╬п╤п╦ п╫п╟ п╨п╬п╪п╟п╫п╢я┐ apt-get source п©п╟п╨п╣я┌
 # -c - checkonline
 # -n - do not install
 
@@ -191,7 +191,7 @@ while getopts :habcdglmnrs opt; do
     esac
 done
 
-# FIXME: параметры передаются и дальше (например, -i, -b)
+# FIXME: п©п╟я─п╟п╪п╣я┌я─я▀ п©п╣я─п╣п╢п╟я▌я┌я│я▐ п╦ п╢п╟п╩я▄я┬п╣ (п╫п╟п©я─п╦п╪п╣я─, -i, -b)
 # remove args that were options
 if [ $# -gt 0 ]; then 
 	shift $((OPTIND - 1))
@@ -217,11 +217,11 @@ fi
 test -z "$LISTARGS" && fatal "Please run with spec/package name"
 
 
-# список названий систем, адресов (с зеркалами?), и режимов фильтрации
-# название кэш-файла строить из названия системы
-# выводить найденное сразу везде
+# я│п©п╦я│п╬п╨ п╫п╟п╥п╡п╟п╫п╦п╧ я│п╦я│я┌п╣п╪, п╟п╢я─п╣я│п╬п╡ (я│ п╥п╣я─п╨п╟п╩п╟п╪п╦?), п╦ я─п╣п╤п╦п╪п╬п╡ я└п╦п╩я▄я┌я─п╟я├п╦п╦
+# п╫п╟п╥п╡п╟п╫п╦п╣ п╨я█я┬-я└п╟п╧п╩п╟ я│я┌я─п╬п╦я┌я▄ п╦п╥ п╫п╟п╥п╡п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀
+# п╡я▀п╡п╬п╢п╦я┌я▄ п╫п╟п╧п╢п╣п╫п╫п╬п╣ я│я─п╟п╥я┐ п╡п╣п╥п╢п╣
 #
-# уточнение - [система] пакет
+# я┐я┌п╬я┤п╫п╣п╫п╦п╣ - [я│п╦я│я┌п╣п╪п╟] п©п╟п╨п╣я┌
 
 # install required for build binary packages
 if [ -n "$INSTALLBINARY" ] ; then
@@ -236,9 +236,15 @@ fi
 
 if [ -n "$MIGRATEGEAR" ] ; then
 	parse_cmd_pre "$@"
-	pack_src_rpm $LISTRPMARGS
-	for PKGNAME in $LISTBUILT ; do
-		echo "Create gear repo"
+	for INFILE in $LISTNAMES ; do
+		# call for each file due generated BASENAME
+		LISTNAMES=$INFILE pack_src_rpm $INFILE $LISTRPMARGS
+		PKGNAME="$LISTBUILT"
+		if [ -z "$BASENAME" ] ; then
+			echo "Can't get basename for $PKGNAME, skipping"
+			continue
+		fi
+		echo "Create gear repo $BASENAME from $PKGNAME"
 		GITALT=~/Projects/git-alt
 		GEARDIR=$GITALT/$BASENAME
 		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
@@ -246,7 +252,8 @@ if [ -n "$MIGRATEGEAR" ] ; then
 		cd $GEARDIR || fatal "can't cd to $GEARDIR"
 		git init-db || fatal "can't init db"
 		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
-		rm -vf $PKGNAME
+		# remove src.rpm only if it was generated
+		[ -z ${INFILE/*rpm/} ] || rm -vf $PKGNAME
 	done
 	exit 0
 fi

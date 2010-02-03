@@ -23,12 +23,12 @@ jmake - make with ccache using and parallel build enabled
 ---------------------------
 loginhsh - install package in hasher / take shell
 Usage:  [-t -i -h -r -c] [-M51] bin.rpm...
-Параметры:
- -i - инициализировать hasher (создать заново каталог)
+п÷п╟я─п╟п╪п╣я┌я─я▀:
+ -i - п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟я┌я▄ hasher (я│п╬п╥п╢п╟я┌я▄ п╥п╟п╫п╬п╡п╬ п╨п╟я┌п╟п╩п╬пЁ)
  -c - cleanup hasher
  -o - log in as root user
- -t - использовать каталог hasher, предназначенный для тестов
- -r - вход в hasher на удалённой машине
+ -t - п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╨п╟я┌п╟п╩п╬пЁ hasher, п©я─п╣п╢п╫п╟п╥п╫п╟я┤п╣п╫п╫я▀п╧ п╢п╩я▐ я┌п╣я│я┌п╬п╡
+ -r - п╡я┘п╬п╢ п╡ hasher п╫п╟ я┐п╢п╟п╩я▒п╫п╫п╬п╧ п╪п╟я┬п╦п╫п╣
  -M?? - branch name
 
 
@@ -37,20 +37,21 @@ Usage:  [-t -i -h -r -c] [-M51] bin.rpm...
 
 ---------------------------
 myhsh - build package via hasher
-Usage:  [-m -s -u -i -c] src.rpm...
-Параметры:
+Usage:  [-m -s -u -i -c -l] src.rpm...
+п÷п╟я─п╟п╪п╣я┌я─я▀:
  -i - install built packages in test hasher
  -c - build without stuff (previous built packages)
+ -l - lazy cleanup (before build, not after)
 
 
 ---------------------------
 rpmbb - build  binary rpm from spec
 Usage:  [-c -p -i -r -R] spec...
-Параметры:
+п÷п╟я─п╟п╪п╣я┌я─я▀:
  -c - start from compile stage
- -i - установить файлы и упаковать
+ -i - я┐я│я┌п╟п╫п╬п╡п╦я┌я▄ я└п╟п╧п╩я▀ п╦ я┐п©п╟п╨п╬п╡п╟я┌я▄
  -p - packaging installed files into package
- -r - искать сборочные зависимости (buildreq)
+ -r - п╦я│п╨п╟я┌я▄ я│п╠п╬я─п╬я┤п╫я▀п╣ п╥п╟п╡п╦я│п╦п╪п╬я│я┌п╦ (buildreq)
  -R - find build requires with -bi
 
 
@@ -58,8 +59,8 @@ Usage:  [-c -p -i -r -R] spec...
 rpmbph - backports spec and rebuild it
 Usage:  [-r -u -U -n -i -m -v] [-M51] spec...
 Use rpmbph -M51 for backport to ALT M51 and so on
-Параметры:
--r - удалённая сборка
+п÷п╟я─п╟п╪п╣я┌я─я▀:
+-r - я┐п╢п╟п╩я▒п╫п╫п╟я▐ я│п╠п╬я─п╨п╟
  -u/-U - sign and upload after build
  -n - do not build in hasher (use first in the list)
  -i - install built packages in test hasher
@@ -69,11 +70,12 @@ Use rpmbph -M51 for backport to ALT M51 and so on
 ---------------------------
 rpmbs - make src.rpm from spec
 Usage:  [-s -u -c -n --nodeps] spec...
-Параметры:
- -s - подписать пакет(ы) и поместить их в каталог для отправки
- -c - только подписать пакет(ы) и выполнить их проверку
+п÷п╟я─п╟п╪п╣я┌я─я▀:
+ -s - sign package(s) and move it to upload dir (ETERDESTSRPM)
+ -c - я┌п╬п╩я▄п╨п╬ п©п╬п╢п©п╦я│п╟я┌я▄ п©п╟п╨п╣я┌(я▀) п╦ п╡я▀п©п╬п╩п╫п╦я┌я▄ п╦я┘ п©я─п╬п╡п╣я─п╨я┐
  -u - sign package(s), upload it and run build
  -a TASK - sign package(s), update it and add to task TASK
+ -l - lazy cleanup (before build, not after)
  -n - do not check with sisyphus_check before upload
  -o - create nosrc.rpm package
  -z - create src.rpm with compatible gzip compression
@@ -82,12 +84,13 @@ Usage:  [-s -u -c -n --nodeps] spec...
 ---------------------------
 rpmbsh - BSH - build source; use hasher
 Usage:  [-r -s -u -m -i -c] spec...
-Параметры:
--r - удалённая сборка
+п÷п╟я─п╟п╪п╣я┌я─я▀:
+-r - я┐п╢п╟п╩я▒п╫п╫п╟я▐ я│п╠п╬я─п╨п╟
  -t - make temporary commit before build (rpmbb like behavior)
- -u/-U - sign and upload after build
- -u - подписать пакет(ы) и отправить в Инкоминг после сборки
+ -u - sign and upload after build
+ -s - sign and and copy to upload dir (ETERDESTSRPM) after build
  -i - install built packages in test hasher
+ -l - lazy cleanup (before build, not after)
  -c - build without stuff (previous built packages)
 
 
@@ -102,15 +105,16 @@ rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT
 ---------------------------
 rpmgp - various package download operations
 Usage:  [options] [system] pkgname
-Параметры:
+п÷п╟я─п╟п╪п╣я┌я─я▀:
 rpmgp [options] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it
- name - название установленного пакета или src.rpm
+ name - п╫п╟п╥п╡п╟п╫п╦п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╫п╬пЁп╬ п©п╟п╨п╣я┌п╟ п╦п╩п╦ src.rpm
  system - name of system (ALT Linux by default if -a missed too)
  -a  search pkgname in all known repositories
  -b  install packages needed for build (use sudo apt-get) (need spec not package name)
  -c  check if this package exists in the ALT Linux repository
  -d  download all matched packages
  -g  remote clone repo to USER/packages and clone it locally
+ -m  migrate to gear from spec
  -l  list packages needed for build (in local pkg system notation) (experimental)
  -n  do not install after download, just download in current dir
  -r  refresh package list (download it again)
@@ -121,9 +125,9 @@ rpmgp [options] [system] pkgname - download src.rpm from 'system' repository to 
 rpmgs - get sources for spec
 Usage:  [-a -r ] spec ... | spec new_version
 You can run rpmgs file.spec new_version for set new version and download it
-Параметры:
- -a - получаем все исходники (не только основной (0))
- -f - начать загрузку в любом случае
+п÷п╟я─п╟п╪п╣я┌я─я▀:
+ -a - п©п╬п╩я┐я┤п╟п╣п╪ п╡я│п╣ п╦я│я┘п╬п╢п╫п╦п╨п╦ (п╫п╣ я┌п╬п╩я▄п╨п╬ п╬я│п╫п╬п╡п╫п╬п╧ (0))
+ -f - п╫п╟я┤п╟я┌я▄ п╥п╟пЁя─я┐п╥п╨я┐ п╡ п╩я▌п╠п╬п╪ я│п╩я┐я┤п╟п╣
 
 
 ---------------------------
@@ -147,7 +151,7 @@ rpmU - the same as [sudo] rpm -Uvh - update package
 ---------------------------
 rpmunmets - tests unmets in build packages
 Usage:  [-M24 -M40]
-Параметры:
+п÷п╟я─п╟п╪п╣я┌я─я▀:
  -s   - get all unmets
  -M40 - test for distro ALT Linux 4.0
 
@@ -155,8 +159,8 @@ Usage:  [-M24 -M40]
 ---------------------------
 rpmurl - open package Url in browser
 Usage:  [-c -f -p -s] spec or package...
-Параметры:
- -c - проверить доступность URL
+п÷п╟я─п╟п╪п╣я┌я─я▀:
+ -c - п©я─п╬п╡п╣я─п╦я┌я▄ п╢п╬я│я┌я┐п©п╫п╬я│я┌я▄ URL
  -f - print failed URL only
  -p - open package page at sisyphus.ru
- -s - открыть в браузере тот каталог, где в Сети лежат исходники
+ -s - п╬я┌п╨я─я▀я┌я▄ п╡ п╠я─п╟я┐п╥п╣я─п╣ я┌п╬я┌ п╨п╟я┌п╟п╩п╬пЁ, пЁп╢п╣ п╡ п║п╣я┌п╦ п╩п╣п╤п╟я┌ п╦я│я┘п╬п╢п╫п╦п╨п╦

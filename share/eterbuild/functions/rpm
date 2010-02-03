@@ -22,10 +22,10 @@ build_buildroot()
 	return 0
 }
 
-# ÷ÙÎÉÍÁÅÍ ÉÎÆÏÒÍÁÃÉÀ Ï ÐÁËÅÔÅ ÉÚ ÓÐÅËÁ.
-# ÷ÎÕÔÒÅÎÎÉÅ ÍÁËÒÏÏÐÒÅÄÅÌÅÎÉÑ ÒÁÓËÒÙ×ÁÀÔÓÑ!
-# ðÒÏÂÅÌØÎÙÅ ÓÉÍ×ÏÌÙ ÐÏÓÌÅ Name: ÍÏÇÕÔ ÂÙÔØ ÒÁÚÌÉÞÎÙÍÉ
-# TODO: × ÄÒÕÇÏÍ ÍÅÓÔÅ ÎÅ NAMESPEC, Á ÎÅ SPECNAME
+# Ð’Ñ‹Ð½Ð¸Ð¼Ð°ÐµÐ¼ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ Ð¿Ð°ÐºÐµÑ‚Ðµ Ð¸Ð· ÑÐ¿ÐµÐºÐ°.
+# Ð’Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½Ð¸Ðµ Ð¼Ð°ÐºÑ€Ð¾Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ñ Ñ€Ð°ÑÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‚ÑÑ!
+# ÐŸÑ€Ð¾Ð±ÐµÐ»ÑŒÐ½Ñ‹Ðµ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ Ð¿Ð¾ÑÐ»Ðµ Name: Ð¼Ð¾Ð³ÑƒÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ñ€Ð°Ð·Ð»Ð¸Ñ‡Ð½Ñ‹Ð¼Ð¸
+# TODO: Ð² Ð´Ñ€ÑƒÐ³Ð¾Ð¼ Ð¼ÐµÑÑ‚Ðµ Ð½Ðµ NAMESPEC, Ð° Ð½Ðµ SPECNAME
 
 build_rpms_name()
 {
@@ -61,6 +61,37 @@ build_rpms_name()
 	rm -f $tmprpm
 
 	build_buildroot
+}
+
+querypackage()
+{
+        rpmquery -p --queryformat "%{$2}" $1
+}
+
+build_rpms_name_by_srpm()
+{
+	local SRPM=$1
+	BASENAME=$(querypackage $SRPM NAME)
+	RELEASE=$(querypackage $SRPM RELEASE)
+	VERSION=$(querypackage $SRPM VERSION)
+	PKGARCH=$(querypackage $SRPM ARCH)
+	# suggest target arch
+	if [ "$PKGARCH" != "noarch" ] ; then
+		PKGARCH=$DEFAULTARCH
+	fi
+	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
+	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
+	if [ "$(basename "$SRPM")" != $NAMESRPMIN ] ; then
+		warning "Generated srpm name $NAMESRPMIN is not equal to real file name $SRPM"
+	fi
+}
+
+spec_by_srpm()
+{
+	local PKG=$1
+	local PKGNAME
+	PKGNAME=$(querypackage $PKG NAME)
+	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
 }
 
 # pkg-source-1.0.src.rpm -> pkg-source

@@ -6,8 +6,8 @@
 # BPH - backport; use hasher
 
 # Makes backport package to any target platfrom (RPM, DEB, TGZ)
-# Релиз строится на основе релиза из Сизифа. Если там был alt4
-# то здесь будет alt0.M24.4
+# п═п╣п╩п╦п╥ я│я┌я─п╬п╦я┌я│я▐ п╫п╟ п╬я│п╫п╬п╡п╣ я─п╣п╩п╦п╥п╟ п╦п╥ п║п╦п╥п╦я└п╟. п∙я│п╩п╦ я┌п╟п╪ п╠я▀п╩ alt4
+# я┌п╬ п╥п╢п╣я│я▄ п╠я┐п╢п╣я┌ alt0.M24.4
 # TODO: use RPMBUILDARG
 
 # load common functions, compatible with local and installed script
@@ -135,7 +135,7 @@ done
 #echo GRP: $LISTGROUP, ALLGRPREPLRULES: $ALLGRPREPLRULES
 
 # Replace all packages names in source spec and add %defattr to files sections
-# FIXME: добавляет ненужные пустые строки
+# FIXME: п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╫п╣п╫я┐п╤п╫я▀п╣ п©я┐я│я┌я▀п╣ я│я┌я─п╬п╨п╦
 
 function awk_e1()
 {
