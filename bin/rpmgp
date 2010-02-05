@@ -11,7 +11,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm repl git rpm
+load_mod rpm repl git rpm web
 
 # path to ALT Linux's repositories
 REPOSITORY="files/SRPMS obsolete orphaned"
@@ -119,7 +119,7 @@ check_system()
 	check_name $NAME
 	if [ "$DOWNLOADALL" ] ; then
 		for i in $NLIST ; do
-			wget -c $URL/$i
+			download_url $URL/$i
 		done
 	fi
 }

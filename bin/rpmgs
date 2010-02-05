@@ -14,7 +14,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm tarball
+load_mod rpm tarball web
 
 WEXT=""
 GETSOURCE=""
@@ -66,7 +66,7 @@ get_archive()
 	#TODO: check for gz
 	URL=${GETSOURCE/.tar.bz2/}
 	[ "$URL" = "$GETSOURCE" ] && URL=${GETSOURCE/.tar/}
-	get_tarball "$URL.$1" || return
+	download_url "$URL.$1" || return
 	WEXT=`basename "$URL"`
 	test -f "$WEXT.$1" || return
 	[ "$1" = "tar.bz2" ] || echog -n "Converting to $WEXT.tar..."
@@ -76,7 +76,7 @@ get_archive1()
 {
 	#TODO: check for gz
 	URL=${GETSOURCE/.bz2/}
-	get_tarball "$URL$1" || return
+	download_url "$URL$1" || return
 	WEXT=`basename "$URL"`
 	test -f "$WEXT" || return
 	echog -n "Converting to $WEXT.bz2..."
