@@ -184,11 +184,13 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo
 	echo "Run build $BASENAME at $GIRARHOST"
 	if [ -n "$TASKNUMBER" ] ; then
-		ssh $GIRARHOST task add $TASKNUMBER repo $BASENAME $TAG
+		ssh $GIRARHOST task add $TASKNUMBER repo $BASENAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	else
-		ssh $GIRARHOST build -b $BINARYREPO $BASENAME $TAG
+		ssh $GIRARHOST build -b $BINARYREPO $BASENAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
-	echo "run task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
+	echo "run $TASKNUMBER task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	rm -f $RPMDIR/uploaded.log.tmp
 	exit
 fi
 
@@ -303,12 +305,14 @@ done
 if [ -n "$TASKNUMBER" ] ; then
 	echo "Add $TASKLIST to task $TASKNUMBER"
 	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST task add $TASKNUMBER $TASKLIST"
-	ssh $GIRARHOST task add $TASKNUMBER $TASKLIST
+	ssh $GIRARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 else
 	echo "Create task for $TASKLIST"
 	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST build -b $BINARYREPO $TASKLIST"
-	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST
+	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST 2&1 | tee $RPMDIR/uploaded.log.tmp
 fi
+
+cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 
 for i in $LISTBUILT ; do
 	# FIXME: more general way
@@ -316,10 +320,12 @@ for i in $LISTBUILT ; do
 	echo >>$LOGFILE
 	date >>$LOGFILE
 	echo "uploaded">>$LOGFILE
-	TEXTADD="run build src.rpm"
+	TEXTADD="run $TASKNUMBER build src.rpm"
 	[ -z "$TASKNUMBER" ] || TEXTADD="add src.rpm to task $TASKNUMBER"
 	echo "$(basename $i) $TEXTADD at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 done
+
+rm -f $RPMDIR/uploaded.log.tmp
 
 echog "Removing buildroot after upload..."
 for i in $LISTNAMES ; do
