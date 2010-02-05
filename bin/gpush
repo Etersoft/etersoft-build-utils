@@ -68,6 +68,11 @@ push_to_remote()
 	git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 }
 
+# if remote list is empty, do ginit
+if [ -z "$(get_remote_git_list)" ] ; then
+	ginit $GIRARHOST
+fi
+
 for i in `( echo $GIRARHOST; get_remote_git_list  ) | uniq` ; do
 	push_to_remote $i
 done
