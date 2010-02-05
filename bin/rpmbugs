@@ -11,11 +11,10 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod rpm web
 
-which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
-URLSHOWBUG="https://bugzilla.altlinux.org/show_bug.cgi?id=$1"
+BUGZILLAURL="https://bugzilla.altlinux.org"
 PRODUCT=Sisyphus
-URLBUGLIST="https://bugzilla.altlinux.org/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
 
 
 show_bugs()
@@ -33,7 +32,8 @@ show_bugs()
 show_bugbyid()
 {
 #	TEXT=1
-	show_bugs $URLSHOWBUG
+	local URLSHOWBUG="$BUGZILLAURL/show_bug.cgi?id=$1"
+	show_bugs "$URLSHOWBUG"
 }
 
 
@@ -72,7 +72,7 @@ fi
 
 # if param is number
 if [ -z `echo ${1} | sed -e "s/[0-9]*//"` ] ; then
-	show_bugbyid $1
+	show_bugbyid "$1"
 	exit
 fi
 
@@ -102,7 +102,8 @@ for i in $SPECLIST ; do
 		#altbug --pkg "$PKGNAME" --subj "$SUMMARY"
 		show_bugbyid $ID
 	else
-		show_bugs $URLBUGLIST | grep "@"
+		local URLBUGLIST="$BUGZILLAURL/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
+		show_bugs "$URLBUGLIST" | grep "@"
 	fi
 
 done
