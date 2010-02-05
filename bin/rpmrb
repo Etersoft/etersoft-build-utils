@@ -31,7 +31,9 @@ test -n "$GSSETRELEASE" || GSSETRELEASE=alt1
 export GSSETRELEASE
 
 if [ "$1" = "-h" ]; then
-	echo "rpmrb spec [vermajor][.verminor] [rel] - update spec to vermajor.verminor version, build %rel release"
+	echog "rpmrb - update spec to vermajor.verminor version, build %rel release"
+	echog "Usage: rpmrb spec [vermajor][.verminor] [rel]"
+	echog "Example: rpmrb name.spec 22.6 alt2"
 	exit 0
 fi
 

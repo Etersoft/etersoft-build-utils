@@ -8,7 +8,7 @@ test -r "$1" && fatal "Do not need any files in params"
 
 if [ "$1" = "-h" ] ; then
 	echo "gpush - publish current project repo remote git repo"
-	echo "Use: gpush [-f|--force] [-a|--all] [project name] [target branch]"
+	echo "Use: gpush [-f|--force] [-a|--all] [GEAR] [project name] [target branch]"
 	exit 1
 fi
 

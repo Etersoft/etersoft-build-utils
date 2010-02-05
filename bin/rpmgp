@@ -375,12 +375,7 @@ then
 	# it is src.rpm package
 	SRCRPM=$1
 else
-	if [ -z "${1/*rpm/}" ] ; then
-		# it is rpm package (locale placed?)
-		SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
-	else
-		SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
-	fi
+	SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
 fi
 test -z "$SRCRPM" && fatal "Cannon find package for $1"
 echog "Try to download $SRCRPM"

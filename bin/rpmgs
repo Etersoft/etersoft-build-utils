@@ -21,19 +21,19 @@ GETSOURCE=""
 LOADLIST="0"
 
 #############################
-Usage="Usage: $name [-a -r ] spec ... | spec new_version"
+Usage="Usage: $name [-a -r ] spec [new_version]"
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - get sources for spec"
+Descr="$name - get sources by spec / repository"
 
 phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echog "You can run rpmgs file.spec new_version for set new version and download it"
+	echog "You can run 'rpmgs file.spec new_version' for set new version and download it"
 	echog "Options:"
-	echog " -a - get all source (not only 0)"
+	echog " -a - get all source (not only Source|Source0)"
 	echog " -f - force download (remove source before download)"
 }
 

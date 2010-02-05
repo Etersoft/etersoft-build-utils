@@ -33,11 +33,12 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog " -c - start from compile stage"
-	echog " -i - install and package"
-	echog " -p - packaging installed files into package"
+	echog " -i - skip build, but do install and package"
 	echog " -r - find build requires"
 	echog " -R - find build requires with -bi"
+	echog "Ext. options:"
+	echog " -c - start from compile stage"
+	echog " -p - packaging installed files into package"
 }
 
 while getopts :hciprR opt; do

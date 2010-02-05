@@ -41,16 +41,17 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog " -s - sign package(s) and move it to upload dir (ETERDESTSRPM)"
+	echog " -u - sign and run gear build task after build"
+	echog " -a TASK - sign package(s), push/upload it and add to task TASK"
+	echog " -l - lazy cleanup (clean before build, not after)"
+	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
-	echog " -u - sign package(s), upload it and run build"
-	echog " -a TASK - sign package(s), update it and add to task TASK"
-#	echog " -U - sign package(s) and upload it to Incoming (updates)"
-#	echog " -d - remove package(s) from SRPMS and Incoming"
-	echog " -l - lazy cleanup (before build, not after)"
+	echog " -s - sign package(s) and move it to upload dir (ETERDESTSRPM)"
 	echog " -n - do not check with sisyphus_check before upload"
 	echog " -o - create nosrc.rpm package"
 	echog " -z - create src.rpm with compatible gzip compression"
+#	echog " -U - sign package(s) and upload it to Incoming (updates)"
+#	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
 while getopts :hscuUdnoa:z opt; do

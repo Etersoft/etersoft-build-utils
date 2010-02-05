@@ -31,7 +31,7 @@ make_testingbox()
 }
 
 
-Usage="Usage: $name [-M24 -M40]"
+Usage="Usage: $name [-M24 -M40] [-s]"
 function mygetopts()
 {
 name=${0##*/}
@@ -43,7 +43,7 @@ phelp()
 	echog "$Usage"
 	echog "Options:"
 	echog " -s   - get all unmets"
-	echog " -M40 - test for distro ALT Linux 4.0"
+	echog " -$CURRENTBRANCHNAME - test for distro ALT Linux $CURRENTBRANCHNAME"
 }
 
 SKIPTST=

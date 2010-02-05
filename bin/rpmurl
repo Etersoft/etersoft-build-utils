@@ -31,9 +31,10 @@ phelp()
 	echog "$Usage"
 	echog "Options:"
 	echog " -c - check URL"
-	echog " -f - print failed URL only"
 	echog " -p - open package page at sisyphus.ru"
 	echog " -s - open source dir in browser"
+	echog "Ext. options:"
+	echog " -f - print failed URL only"
 }
 
 while getopts :hcfsp opt; do

@@ -40,16 +40,19 @@ show_bugbyid()
 #parse_cmd_pre "$@"
 
 if [ "$1" = "-h" ]; then
-	echog "rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file - open bugs in BROWSER"
+	echog "rpmbugs - open bugs in BROWSER"
+	echog "rpmbugs [-t] spec | bug number | package name | -qf command_name | /path/to/file"
+	echog "Options:"
+	echog " -t - list in text console"
 	exit 0
 fi
 
-if [ "${1}" = "-n" ] ; then
+if [ "$1" = "-n" ] ; then
 	shift
 	NEWBUG=1
 fi
 
-if [ "${1}" = "-t" ] ; then
+if [ "$1" = "-t" ] ; then
 	shift
 	TEXT=1
 	which links >/dev/null && BROWSER=links
@@ -58,7 +61,7 @@ fi
 test -z "$DISPLAY" && TEXT=1
 
 SPECLIST=$@
-if [ "${1}" = "-qf" ]
+if [ "$1" = "-qf" ]
 then
 	shift
 	SPECLIST=$(rpmqf "$1")

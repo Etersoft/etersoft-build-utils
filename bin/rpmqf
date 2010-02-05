@@ -9,7 +9,7 @@
 # TODO not -i only, we need any key
 
 if [ "$1" = "-h" ]; then
-	echo "rpmqf - the same as rpm -qf"
+	echo "rpmqf - the same as rpm -qf, but use which for search command place"
 	exit 0
 fi
 
@@ -45,4 +45,4 @@ real_file()
 
 real_file "$1"
 
-rpm -qf $ARG "$FULLFILEPATH"
+rpmquery -f $ARG "$FULLFILEPATH"
