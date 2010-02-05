@@ -30,7 +30,8 @@ echo "Converting spec $SPECNAME to $MDISTR..."
 
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
-	BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
+	#BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
+	BUILDREQ=
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
 	set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
