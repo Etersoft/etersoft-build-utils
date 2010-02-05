@@ -313,66 +313,65 @@ fi
 [ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs --rmsource --rmspec"
 [ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 
-if [ "$VENDOR" = "alt" ] ; then
-	# run inside gear repo, just create backported spec
-	# set SPECDIR from LISTNAMES if empty
-	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
-	if is_gear $SPECDIR ; then
-		[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
-		USEBRANCH=$MDISTR
-		SPEC=$LISTNAMES
-		BPSPEC=$SPEC.$USEBRANCH
+# set SPECDIR from LISTNAMES if empty
+[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
-		# support for without M names
-		USENUMBRANCH=$(get_altdistr_version $USEBRANCH)
-		if [ "$USENUMBRANCH" != "$USEBRANCH" ] ; then
-			if is_exist_branch $USENUMBRANCH ; then
-				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-				USEBRANCH=$USENUMBRANCH
-			fi
-			# hack about p5, M50 -> p5
-			if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
-				USENUMBRANCH=p5
-				echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-				USEBRANCH=$USENUMBRANCH
-			fi
+	# if run for ALT inside gear repo, just create backported spec
+if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
+	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
+	USEBRANCH=$MDISTR
+	SPEC=$LISTNAMES
+	BPSPEC=$SPEC.$USEBRANCH
+
+	# support for without M names
+	USENUMBRANCH=$(get_altdistr_version $USEBRANCH)
+	if [ "$USENUMBRANCH" != "$USEBRANCH" ] ; then
+		if is_exist_branch $USENUMBRANCH ; then
+			echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+			USEBRANCH=$USENUMBRANCH
 		fi
-
-		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it"
-
-		CURBRANCH=$(get_current_branch)
-
-		if [ "$CURBRANCH" = "$USEBRANCH" ] ; then
-			fatal "Run rpmbph in sisyphus or master branch, not in backport branch $USEBRANCH"
+		# hack about p5, M50 -> p5
+		if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
+			USENUMBRANCH=p5
+			echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+			USEBRANCH=$USENUMBRANCH
 		fi
-
-		# Create branch if not exist yet
-		if ! is_exist_branch $USEBRANCH ; then
-			git branch $USEBRANCH
-		fi
-
-		cp -f $LISTNAMES $BPSPEC
-		altspec_to_local $BPSPEC
-
-		git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
-		git merge $CURBRANCH
-		mv -f $BPSPEC $SPEC
-		# FIXME: Ctrl-\ and q will cancelled less with return error code
-		if ! git diff $USEBRANCH ; then
-			#git checkout $SPEC $MDISTR
-			#git checkout $CURBRANCH
-			fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
-		fi
-		git add $SPEC
-		if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
-			#git checkout $CURBRANCH
-			fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
-		fi
-		[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs"
-		$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
-		git checkout $CURBRANCH
-		exit $?
 	fi
+
+	[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it"
+
+	CURBRANCH=$(get_current_branch)
+
+	if [ "$CURBRANCH" = "$USEBRANCH" ] ; then
+		fatal "Run rpmbph in sisyphus or master branch, not in backport branch $USEBRANCH"
+	fi
+
+	# Create branch if not exist yet
+	if ! is_exist_branch $USEBRANCH ; then
+		git branch $USEBRANCH
+	fi
+
+	cp -f $LISTNAMES $BPSPEC
+	altspec_to_local $BPSPEC
+
+	git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+	git merge $CURBRANCH
+	mv -f $BPSPEC $SPEC
+	# FIXME: Ctrl-\ and q will cancelled less with return error code
+	if ! git diff $USEBRANCH ; then
+		#git checkout $SPEC $MDISTR
+		#git checkout $CURBRANCH
+		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
+	fi
+	git add $SPEC
+	if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
+		#git checkout $CURBRANCH
+		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
+	fi
+	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
+	$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+	git checkout $CURBRANCH
+	exit $?
 fi
 
 unset MENV MENVARG
