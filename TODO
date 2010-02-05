@@ -1,4 +1,8 @@
-rpmgp -b не работает из-за apt-get build-dep, делать вручную
+Исправить ситуацию для 27.5.1 (MINOR - 1, MAJOR 27.5 должно быть), почему стирается %revision
+
+# Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
+# Source-md5: 792f3012eae343bc04314b868f6fd1b9
+
 Если пакет начинается с lib, добавлять перед %files:
 %post -p %post_ldconfig
 %postun -p %postun_ldconfig
@@ -8,7 +12,7 @@ rpmgp -b не работает из-за apt-get build-dep, делать вру�
 
 http://git.altlinux.org/people/kharpost/packages/gitalt-tasker.git?p=gitalt-tasker.git;a=blob;f=gitalt-tasker/git-task;h=81e0261813a9fe2be230fb0c47b4ff4efd9a2675;hb=bfcc80b9af49b8ea0629db80d4c2f29a024d574e
 
-не раобтает указание цкелевого каталога в korinf
+не раобтает указание целевого каталога в korinf
 
 Добавить поддержку в спеке служебного комментария для автоматической перепаковки исходников:
 Учитывать gear

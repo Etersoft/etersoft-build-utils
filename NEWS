@@ -1,3 +1,14 @@
+etersoft-build-utils-1.7.6: 05 Feb 2010
+- add bashrc.d aliases apti, apts, aptw, finds
+- rpmgp: fix src.rpm import, allow to use several files
+- set package related variables after pack_srpm, add full filepath to LISTBUILT
+- introduce querypackage and build_rpms_name_by_srpm, use it in all cases
+- convert repo to utf8
+- rpmgs: add real source support (for Source-svn, Source-url commented lines)
+- rpmbph: do not add rpm-build-compat buildreq to backported specs
+- rpmbs: do log task number
+- gpush: do ginit if no remote aliases
+
 etersoft-build-utils-1.7.5: 22 Jan 2010
 - rpmbs/rpmbsh: add -l option for lazy-cleanup after build
 - rpmgs: check dir with the same as package name firstly
