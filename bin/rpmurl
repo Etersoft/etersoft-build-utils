@@ -12,6 +12,8 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod rpm web
 
+PAGEURL="http://sisyphus.ru/srpm/Sisyphus"
+
 #############################
 
 Usage="Usage: $name [-c -f -p -s] spec or package..."
@@ -88,7 +90,6 @@ get_pkginfo()
 	fi
 }
 
-PAGEURL="http://sisyphus.ru/srpm/Sisyphus"
 get_pagepkginfo()
 {
 	local i=${1}
@@ -126,27 +127,31 @@ do
 		if [ -n "$ABOUTDIR" ] ; then
 			RPM_URL=`dirname $SOURCE`
 		fi
+
+		[ "$RPM_URL" = "(none)" ] && RPM_URL=""
+		if [ -z "${RPM_URL}" ] ; then
+			warning "Cannot get package URL, open from $PAGEURL"
+			get_pagepkginfo $i
+		fi
 	fi
-	test -z "$ABOUTDIR" && test -z "${RPM_URL}" && fatal "Cannot get package Url from spec $i"
+
 	if [ -z "$CHECKONLY" ] ; then
-		if [ -n "$RPM_URL" ] && [ "$RPM_URL" != "(none)" ] ; then
-			echog "Opening URL '$RPM_URL' with browser '$BROWSER'"
-			$BROWSER $RPM_URL &
-		else
-			echog "The package '$i' has not URL"
-		fi
+		echog "Opening URL '$RPM_URL' with browser '$BROWSER'"
+		$BROWSER $RPM_URL &
+		continue
+	fi
+
+	# Check package URL
+	if [ -z "$PARALL" ] ; then
+		echog -n "Checking URL '$RPM_URL' from package $i ..."
+		$GET $RPM_URL -s -d
 	else
-		if [ -z "$PARALL" ] ; then
-			echog -n "Checking URL '$RPM_URL' from package $i ..."
-			$GET $RPM_URL -s -d
+		( RESULT=`$GET $RPM_URL -s -d` ;
+		if [ -n "$FAILEDONLY" ] ; then
+			test ${RESULT/ *} = "200" || printf "%-40s %s   %s\n" $i $RPM_URL "${RESULT}"
 		else
-			( RESULT=`$GET $RPM_URL -s -d` ;
-			if [ -n "$FAILEDONLY" ] ; then
-				test ${RESULT/ *} = "200" || printf "%-40s %s   %s\n" $i $RPM_URL "${RESULT}"
-			else
-				echog "Checking URL '$RPM_URL' from package $i ... $RESULT" ; 
-			fi
-			) &
+			echog "Checking URL '$RPM_URL' from package $i ... $RESULT" ; 
 		fi
+		) &
 	fi
 done
