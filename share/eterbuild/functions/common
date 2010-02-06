@@ -63,13 +63,9 @@ is_gear()
 {
 	local DIR=$1
 	[ -z "$IGNOREGEAR" ] || return 1
-	[ -n "$DIR" ] && DIR=$DIR/
-	[ -r "${DIR}.gear/rules" ] && return 0
-
-	[ -r "$DIR/.gear-rules" ] && return 0
-
-	# hack for support spec in some subdir
-	[ -d "../.gear" ] && return 0
+	local GITDIR=$(get_root_git_dir "$DIR")
+	[ -d "$GITDIR/.gear" ] && return 0
+	[ -r "$GITDIR/.gear-rules" ] && return 0
 	return 1
 }
 
