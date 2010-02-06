@@ -33,8 +33,7 @@ if [ "$1" = "-r" ] ; then
 fi
 
 if [ -n "${1/*.spec/}" ] ; then
-	#SPECNAME=$(basename $(pwd)).spec
-	SPECNAME=$(echo *.spec)
+	SPECNAME=$(get_gear_spec)
 else
 	SPECNAME=$1
 	shift
