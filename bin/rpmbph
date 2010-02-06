@@ -295,7 +295,7 @@ if is_girar_name $1 ; then
 	shift
 fi
 
-parse_cmd_pre "$@"
+parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
 test -z "$LISTNAMES" && fatal "Error: no such file"

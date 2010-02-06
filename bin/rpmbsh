@@ -67,7 +67,7 @@ if is_girar_name $1 ; then
 	shift
 fi
 
-parse_cmd_pre "$@"
+parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
 [ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"

@@ -229,7 +229,7 @@ function print_error()
 	exit 1
 }
 
-parse_cmd_pre "$@"
+parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
 test -z "$VERBOSE" || echo "'$LISTNAMES' @ '$LISTRPMARGS'"

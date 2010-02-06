@@ -65,7 +65,7 @@ fi
 LISTRPMARGS=$@
 }
 
-parse_cmd_pre "$@"
+parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
 

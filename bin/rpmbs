@@ -151,7 +151,7 @@ if is_girar_name $1 ; then
 	shift
 fi
 
-parse_cmd_pre "$@"
+parse_cmd_pre_spec "$@"
 # quotes brokes option handling
 mygetopts $LISTARGS
 

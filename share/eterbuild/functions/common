@@ -129,7 +129,7 @@ else
 fi
 }
 
-# Отделяет файлы в LISTNAMES
+# Отделяет файлы в LISTNAMES (с полными путями)
 # Отделяет указание среды в MENV
 # Устанавливает LISTARGS в оставшиеся аргументы
 # использование:
@@ -167,6 +167,18 @@ LISTARGS=$(echo "$LISTARGS" | sed -e "s|^ ||")
 # parse MENV
 detect_target_env
 [ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :
+}
+
+parse_cmd_pre_spec()
+{
+	# hack for check spec presence in command line
+	if echo $@ | grep -q \.spec ; then
+		parse_cmd_pre "$@"
+        else
+		local SPEC=$(get_gear_spec)
+		[ -f "$SPEC" ] && echo "Using autodetected spec $SPEC..."
+		parse_cmd_pre_spec $SPEC "$@"
+	fi
 }
 
 check_key()
