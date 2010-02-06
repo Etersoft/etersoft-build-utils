@@ -1,5 +1,5 @@
 #!/bin/bash
-# (c) Etersoft 2003-2009
+# (c) Etersoft 2003-2010
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -34,7 +34,7 @@ Usage="Usage: $name [-s -u -c -n --nodeps] spec..."
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - make src.rpm from spec"
+Descr="$name - run git repo build or make src.rpm from spec"
 
 phelp()
 {
@@ -129,21 +129,19 @@ extract_tarball_to_dest()
 
 rpmbs_copying_built()
 {
-	if [ -n "$ETERDESTSRPM" ] ; then
-		echog "Copying package(s) in \$ETERDESTSRPM"
-		if is_ssh_target "$ETERDESTSRPM" ; then
-			scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
-		else
-			mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
-			cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
-
+	[ -n "$ETERDESTSRPM" ] || return
+	echog "Copying package(s) in \$ETERDESTSRPM"
+	if is_ssh_target "$ETERDESTSRPM" ; then
+		scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+	else
+		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
+		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
 			# Publish tarball if target dir is exist
-			if [ -d "$ETERDESTSRPM/tarball" ] ; then
-				echog "There is tarball dir exists. Extract tarball for other build system compatibility."
-				for i in $LISTBUILT ; do
-					extract_tarball_to_dest $i $ETERDESTSRPM/tarball
-				done
-			fi
+		if [ -d "$ETERDESTSRPM/tarball" ] ; then
+			echog "There is tarball dir exists. Extract tarball for other build system compatibility."
+			for i in $LISTBUILT ; do
+				extract_tarball_to_dest $i $ETERDESTSRPM/tarball
+			done
 		fi
 	fi
 }
