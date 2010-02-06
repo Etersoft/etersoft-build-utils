@@ -22,12 +22,14 @@ get_current_branch()
 
 get_root_git_dir()
 {
-	# FIXME
-	if [ -d ../.git ] ; then
-		readlink -f $(pwd)/..
+	local DIR="$1"
+	[ -n "$DIR" ] || DIR=$(pwd)
+	[ "$DIR" = "/" ] && return 1
+	if [ -d "$DIR/.git" ] ; then
+		readlink -f "$DIR"
 		return
 	fi
-	pwd
+	get_root_git_dir $(dirname "$DIR") || return 1
 }
 
 get_remote_git_list()
