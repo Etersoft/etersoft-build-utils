@@ -187,3 +187,14 @@ set_specdir()
 		SPECDIR=`pwd`
 	fi
 }
+
+# search for gear spec
+get_gear_spec()
+{
+        local trySpec
+        trySpec=$(echo *.spec)
+        [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir)/*.spec`
+        [ -f "$trySpec" ] || trySpec=""
+        echo $trySpec
+        test -f "$trySpec"
+}
