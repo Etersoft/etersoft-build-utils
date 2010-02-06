@@ -46,6 +46,7 @@ phelp()
 	echog " -l - lazy cleanup (clean before build, not after)"
 	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
+	echog " -f - force operation (overwrite tag)"
 	echog " -s - sign package(s) and move it to upload dir (ETERDESTSRPM)"
 	echog " -n - do not check with sisyphus_check before upload"
 	echog " -o - create nosrc.rpm package"
@@ -54,10 +55,11 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hscuUdnoa:z opt; do
+while getopts :hfscuUdnoa:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
+    f) FORCE="--force" ;;
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
 #    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
@@ -85,6 +87,7 @@ LISTRPMARGS=$@
 # create tag according to package release
 check_gear_and_tag()
 {
+	local RESULT=0
 	local GEARCTAG=gear-create-tag
 
 	# FIXME: uncomment use-agent in ~/.gnupg/gpg.conf, but with ssh access to build server I got
@@ -101,9 +104,10 @@ check_gear_and_tag()
 	if is_gear $SPECDIR ; then
 		# needed correct user.name/user.email for get GPG id
 		pushd $SPECDIR >/dev/null
-		$GEARCTAG --force
+		$GEARCTAG $FORCE || RESULT=1
 		popd >/dev/null
 	fi
+	return $RESULT
 }
 
 # SRC.RPM DIR
@@ -178,9 +182,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo "Run with gear repo..."
 	build_rpms_name "$LISTNAMES"
 	pkg_release_check
-	check_gear_and_tag
-	$ETERBUILDBIN/gpush $GIRARHOST $BASENAME || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
+	check_gear_and_tag # || fatal "Can't make tag"
 	TAG=$VERSION-$RELEASE
+	$ETERBUILDBIN/gpush $GIRARHOST $BASENAME || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
 	echo
 	echo "Run build $BASENAME at $GIRARHOST"
 	if [ -n "$TASKNUMBER" ] ; then
