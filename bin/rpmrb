@@ -37,7 +37,7 @@ if [ "$1" = "-h" ]; then
 	exit 0
 fi
 
-test -e "$SPEC" || fatal "use with spec"
+test -f "$SPEC" || SPEC=$(get_gear_spec)
 
 $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
 add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"

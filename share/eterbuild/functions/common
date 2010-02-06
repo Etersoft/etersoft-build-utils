@@ -65,7 +65,7 @@ get_root_git_dir()
         [ -n "$DIR" ] || DIR=$(pwd)
         [ "$DIR" = "/" ] && return 1
         if [ -d "$DIR/.git" ] ; then
-                readlink -f "$DIR"
+                readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
                 return
         fi
         get_root_git_dir $(dirname "$DIR") || return 1
@@ -156,7 +156,7 @@ do
 	# Если файл существует, то добавляем, иначе считаем аргумент параметром.
 	if [ -f "$i" ]; then
 		# echo is workaround for missed readlink
-		LISTNAMES="$LISTNAMES $(readlink -f $i 2>/dev/null | echo $i)"
+		LISTNAMES="$LISTNAMES $(readlink -f "$i" 2>/dev/null || realpath "$i" || echo "$i")"
 	else
 		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
 	fi
