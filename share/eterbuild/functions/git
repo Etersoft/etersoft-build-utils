@@ -20,18 +20,6 @@ get_current_branch()
 	git branch | grep '^\*' | sed 's/^..//' | tr -d "\n"
 }
 
-get_root_git_dir()
-{
-	local DIR="$1"
-	[ -n "$DIR" ] || DIR=$(pwd)
-	[ "$DIR" = "/" ] && return 1
-	if [ -d "$DIR/.git" ] ; then
-		readlink -f "$DIR"
-		return
-	fi
-	get_root_git_dir $(dirname "$DIR") || return 1
-}
-
 get_remote_git_list()
 {
         local i
