@@ -180,8 +180,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo "Run with gear repo..."
 	build_rpms_name "$LISTNAMES"
 	pkg_release_check
-	check_gear_and_tag # || fatal "Can't make tag"
 	TAG=$VERSION-$RELEASE
+	echo "Create $TAG tag..."
+	check_gear_and_tag # || fatal "Can't make tag"
 	$ETERBUILDBIN/gpush $GIRARHOST $BASENAME || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
 	echo
 	echo "Run build $BASENAME at $GIRARHOST"

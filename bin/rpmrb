@@ -42,7 +42,7 @@ test -f "$SPEC" || SPEC=$(get_gear_spec)
 $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
 add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
 
-if is_gear `pwd` ; then
+if is_gear ; then
 	#git diff $SPEC
 	git_commit_ignore_nothing $SPEC -m "update spec to new build $(get_version $SPEC) (with rpmrb script)" || exit 1
 fi
