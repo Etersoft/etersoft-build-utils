@@ -309,7 +309,7 @@ if [ -n "$TASKNUMBER" ] ; then
 else
 	echo "Create task for $TASKLIST"
 	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST build -b $BINARYREPO $TASKLIST"
-	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST 2&1 | tee $RPMDIR/uploaded.log.tmp
+	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 fi
 
 cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
