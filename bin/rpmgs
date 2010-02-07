@@ -181,6 +181,12 @@ function get_source()
 	GETSOURCE=$(eval_spec $1 | get_var "$2")
 }
 
+# download GETSOURCE url to tar.bz2 or tar (set WEXT as without extension name)
+download_any_tarball()
+{
+	get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
+}
+
 # param: spec name number (f.i., url for Source-url)
 function source_ext()
 {
@@ -257,8 +263,8 @@ do
 		print_error
 	fi
 	
-	#set_specdir $i
-	SPECDIR=`pwd`
+	set_specdir $i
+
 	# Set version if needed
 	if [ -n "$GSSETVERSION" ] ; then
 		CURVER=$(get_version $i)
@@ -290,7 +296,7 @@ do
 
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 
-		get_source_url $SPECDIR/$i $nn || get_source_svn $SPECDIR/$i $nn
+		get_source_url $i $nn || get_source_svn $i $nn
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
@@ -304,15 +310,15 @@ do
 				download_url "$GETSOURCEURL"
 				# FIXME: gear-update can use any tarball
 				copy_tarball_to_tar $(basename "$GETSOURCEURL") $FTB
+			elif [ -z "${GETSOURCE/*.tar/}" ] ; then
+				# tar target: try to load and convert
+				download_any_tarball
+			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
+				# tar.bz2 target: for src.rpm policy compatibility
+				download_any_tarball
+				test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Cannot bzip $WEXT.tar"
 			else
-				if [ -z "${GETSOURCE/*.tar/}" ] ; then
-					# try to load and convert
-					get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
-				else
-					download_url "$GETSOURCE"
-				fi
-				#echo "Get tarball $FTB for gear"
-				#FORGEAR=1
+				download_url "$GETSOURCE"
 			fi
 		else
 			[ -z "${GETSOURCEURL}" ] || fatal "Source git works only with gear repo"
@@ -324,15 +330,19 @@ do
 				# UpUrl for rpm
 				download_url "$GETSOURCEURL"
 				copy_tarball_to_tar_bz2 $(basename "$GETSOURCEURL") $FTB
-			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
+			elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
+				# if not tar.bz2 target, direct download
 				download_url "$GETSOURCE"
-			elif [ -n "${GETSOURCE/*.bz2/}" ] ; then
-				get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
+			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
+				# if tar.bz2 target
+				download_any_tarball
 				#echog -n "Compressing to $WEXT.tar.bz2..."
 				test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Cannot bzip $WEXT.tar"
-			elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
+			elif [ -z "${GETSOURCE/*.bz2/}" ] ; then
 				warning "It is not tarball (possible single file)..."
 				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"
+			else
+				error "rpmgs: Logical error with $GETSOURCE"
 			fi
 		fi
 
