@@ -7,7 +7,7 @@
 # bzip FILE with pzip2 (if exists) or bzip2
 bzipit()
 {
-	locale PBZIPIT
+	local PBZIPIT
 	PBZIPIT=`which pbzip2 2>/dev/null`
 	if [ -n "$PBZIPIT" ] ; then
 		echog -n " with pzip2..."
