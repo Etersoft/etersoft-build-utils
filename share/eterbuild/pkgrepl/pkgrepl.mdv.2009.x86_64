@@ -1,5 +1,7 @@
 # Mandriva 64bit base replacements rules
-libXext-devel|lib64xext6-devel
-libreadline-devel|lib64readline-devel
 libreadline|lib64readline6
-libgtkmm2-devel|lib64gtkmm2.4-devel
+libarts-devel|lib64arts1-devel
+
+libXdamage-devel|lib64xdamage-devel
+libXmu-devel|lib64xmu6-devel
+libXrandr-devel|lib64xrandr2-devel
