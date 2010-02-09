@@ -14,26 +14,26 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm tarball
+load_mod rpm tarball web
 
 WEXT=""
 GETSOURCE=""
 LOADLIST="0"
 
 #############################
-Usage="Usage: $name [-a -r ] spec ... | spec new_version"
+Usage="Usage: $name [-a -r ] spec [new_version]"
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - get sources for spec"
+Descr="$name - get sources by spec / repository"
 
 phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echog "You can run rpmgs file.spec new_version for set new version and download it"
+	echog "You can run 'rpmgs file.spec new_version' for set new version and download it"
 	echog "Options:"
-	echog " -a - get all source (not only 0)"
+	echog " -a - get all source (not only Source|Source0)"
 	echog " -f - force download (remove source before download)"
 }
 
@@ -41,7 +41,7 @@ while getopts :haf opt; do
     case $opt in
     h) phelp; exit 0;;
     a) LOADLIST=" 0 1 2 3 4 5 6 7 8" ;;
-	f) FORCEDOWNLOAD=1 ;;
+    f) FORCEDOWNLOAD=-f ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
     esac
@@ -54,19 +54,12 @@ LISTRPMARGS=$@
 
 }
 
-get_tarball()
-{
-	# use wget with try=1 and timeout = 30 sec
-	wget -c -t 1 -T 30 "$1"
-}
-
-
 get_archive()
 {
 	#TODO: check for gz
 	URL=${GETSOURCE/.tar.bz2/}
 	[ "$URL" = "$GETSOURCE" ] && URL=${GETSOURCE/.tar/}
-	get_tarball "$URL.$1" || return
+	download_url "$URL.$1" || return
 	WEXT=`basename "$URL"`
 	test -f "$WEXT.$1" || return
 	[ "$1" = "tar.bz2" ] || echog -n "Converting to $WEXT.tar..."
@@ -76,7 +69,7 @@ get_archive1()
 {
 	#TODO: check for gz
 	URL=${GETSOURCE/.bz2/}
-	get_tarball "$URL$1" || return
+	download_url "$URL$1" || return
 	WEXT=`basename "$URL"`
 	test -f "$WEXT" || return
 	echog -n "Converting to $WEXT.bz2..."
@@ -86,12 +79,14 @@ get_archive1()
 get_tarbz2()
 {
 	get_archive tar.bz2
+	bunzip -t $WEXT.tar.bz2
 	return $?
 }
 
 get_bz2()
 {
 	get_archive1 .bz2
+	bunzip -t $WEXT.bz2
 	return $?
 }
 
@@ -186,6 +181,47 @@ function get_source()
 	GETSOURCE=$(eval_spec $1 | get_var "$2")
 }
 
+# param: spec name number (f.i., url for Source-url)
+function source_ext()
+{
+	local GETSOURCEEXT=
+	# %define SourceUrl ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
+	#GETSOURCEURL=$(eval_spec $1 | grep -i "^%define ${2}Url${3} " | head -n 1 | sed -e "s/ *\$//g" | sed -e "s/^%define[ \t].*[ \t]//g")
+	if grep -q "# Source$3-$2:" "$1" ; then
+		local TMPSPEC=$1.tmpurl
+		local NEWSOURCE=$(grep "# Source$3-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g")
+		test -n "$NEWSOURCE" || fatal "Can't extract URL from $Source$3-$2"
+		cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|g" > $TMPSPEC
+		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
+		rm -f "$TMPSPEC"
+	fi
+	echo "$GETSOURCEEXT"
+	test -n "$GETSOURCEEXT"
+}
+
+
+# Source-svn: http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/Collection/
+function get_source_svn()
+{
+	GETSOURCESVN=$(source_ext "$1" svn "$2")
+	#if [ -n "$GETSOURCESVN" ] ; then
+	#	warning "Source-svn is not supported yet"
+	#	( cd $SPECDIR ; git svn clone $GETSOURCESVN .)
+	#fi
+	#test -n "$GETSOURCESVN"
+}
+
+
+# Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
+
+
+# Source-url: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
+# Get real Url from comment
+function get_source_url()
+{
+	GETSOURCEURL=$(source_ext "$1" url "$2")
+}
+
 function print_error()
 {
 	echog "You have no spec files as arg"
@@ -253,27 +289,51 @@ do
 		fi
 
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
-		echog "Try to load $GETSOURCE for $i"
-		#if is_gear $SPECDIR && [ -n "${GETSOURCE/*.tar/}" ] ; then
-		#	warning "It is recommended to use .tar tarballs for sources in gear"
-		#	get_tarball "$GETSOURCE"
-		if [ -n "${GETSOURCE/*.bz2/}" ] && ! is_gear $SPECDIR ; then
-			warning "It is recommended to use .bz2 tarballs for sources in rpm"
-			get_tarball "$GETSOURCE"
-		elif [ -n "${GETSOURCE/*.tar.bz2/}" ] && ! is_gear $SPECDIR ; then
-			warning "It is not tarball (possible single file)..."
-			get_bz2 || get_gz || get_raw || fatal "Error: Cannot retrieve $GETSOURCE"
-		else
-			if [ -z "${GETSOURCE/*.tar/}" ] && is_gear $SPECDIR; then
-				echo "Get tarball for gear"
-				FORGEAR=1
-			fi
-			get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Error: Cannot retrieve $GETSOURCE"
-		fi
 
-		if [ -z "$FORGEAR" ] ; then
-			echog -n "Compressing to $WEXT.tar.bz2..."
-			test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Error: Cannot bzip $WEXT.tar"
+		get_source_url $SPECDIR/$i $nn || get_source_svn $SPECDIR/$i $nn
+
+		if [ -n "${GETSOURCESVN}" ] ; then
+			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
+		elif is_gear $SPECDIR; then
+			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $i"
+			if [ -n "${GETSOURCE/*.tar/}" ] ; then
+				warning "It is recommended to use .tar tarballs for sources in gear"
+			fi
+			if [ -n "${GETSOURCEURL}" ] ; then
+				# UpUrl for gear
+				download_url "$GETSOURCEURL"
+				# FIXME: gear-update can use any tarball
+				copy_tarball_to_tar $(basename "$GETSOURCEURL") $FTB
+			else
+				if [ -z "${GETSOURCE/*.tar/}" ] ; then
+					# try to load and convert
+					get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
+				else
+					download_url "$GETSOURCE"
+				fi
+				#echo "Get tarball $FTB for gear"
+				#FORGEAR=1
+			fi
+		else
+			[ -z "${GETSOURCEURL}" ] || fatal "Source git works only with gear repo"
+			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $i"
+			if [ -n "${GETSOURCE/*.bz2/}" ] ; then
+				warning "It is recommended to use .bz2 tarballs for sources in rpm"
+			fi
+			if [ -n "${GETSOURCEURL}" ] ; then
+				# UpUrl for rpm
+				download_url "$GETSOURCEURL"
+				copy_tarball_to_tar_bz2 $(basename "$GETSOURCEURL") $FTB
+			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
+				download_url "$GETSOURCE"
+			elif [ -n "${GETSOURCE/*.bz2/}" ] ; then
+				get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
+				#echog -n "Compressing to $WEXT.tar.bz2..."
+				test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Cannot bzip $WEXT.tar"
+			elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
+				warning "It is not tarball (possible single file)..."
+				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"
+			fi
 		fi
 
 		echo "DONE"
@@ -286,17 +346,32 @@ do
 		CURVER=$(get_version $i)
 		CURREL=$(get_release $i)
 		EGEARME=""
-		is_gear && EGEARME="import in git"
-		add_changelog_helper "- new version ($CURVER) $EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
+		is_gear && EGEARME=" import in git"
+		add_changelog_helper "- new version ($CURVER)$EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
-	if [ -n "$GSSETVERSION" ] && is_gear ; then
-		CURNAME=$BASENAME
-		test -d "$CURNAME" || CURNAME=$(get_tarballname $i)
-		echo "Commit tarball $RPMSOURCEDIR/$FTB to git subdir '$CURNAME'..."
-		gear-update "$RPMSOURCEDIR/$FTB" "$CURNAME" && rm -f "$RPMSOURCEDIR/$FTB"
-		git commit -m "just import $(basename $RPMSOURCEDIR/$FTB) with rpmgs script"
+
+	if [ -n "$GSSETVERSION" ] || [ -n "$FORCEDOWNLOAD" ]; then
+		if [ -n "${GETSOURCESVN}" ] ; then
+			# clone svn repo to current dir
+			# FIXME: need to clone in git root dir
+			GITROOT=.
+			[ $(basename `pwd`) = ".gear" ] && GITROOT=../
+			git svn clone $GETSOURCESVN $GITROOT
+			echo "Run svn rebase from $GETSOURCESVN"
+			git svn rebase
+		elif is_gear ; then
+			CURNAME=$BASENAME
+			test -d "$CURNAME" || CURNAME=$(get_tarballname "$i")
+			[ -d "$CURNAME" ] || CREATEFLAG=-c
+			#	mkdir -p "$CURNAME" && git add "$CURNAME"
+			#fi
+			echo "Commit tarball $RPMSOURCEDIR/$FTB to git subdir '$CURNAME'..."
+			gear-update $FORCEDOWNLOAD $CREATEFLAG "$RPMSOURCEDIR/$FTB" "$CURNAME" || fatal "can't import tarball $CURNAME"
+			rm -f "$RPMSOURCEDIR/$FTB"
+			git commit -m "just import $(basename $RPMSOURCEDIR/$FTB) with rpmgs script"
+		fi
 	else
-		is_gear && echo "Run without version. Skip tarball commiting."
+		is_gear && echo "Skip tarball committing (run with version or with -f)."
 	fi
 done
 

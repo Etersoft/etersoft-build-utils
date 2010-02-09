@@ -31,13 +31,14 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog " -r - remote build"
-	echog " -t - make temporary commit before build (rpmbb like behavior)"
-	echog " -u - sign and upload after build"
-	echog " -s - sign and and copy to upload dir (ETERDESTSRPM) after build"
-	echog " -i - install built packages in test hasher"
-	echog " -l - lazy cleanup (before build, not after)"
+	echog " -r - remote build (on $BUILDSERVER host)"
+	echog " -u - sign and run gear build task after build"
+	echog " -i - install built packages in test hasher (via loginhsh -t)"
+	echog "Ext. options:"
 	echog " -c - build without stuff (previous built packages)"
+	echog " -s - sign and and copy to upload dir (ETERDESTSRPM) after build"
+	echog " -t - make temporary commit before build (rpmbb like behavior)"
+	echog " -l - lazy cleanup (clean before build, not after)"
 }
 
 while getopts :hrulsimt opt; do

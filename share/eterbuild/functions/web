@@ -1,0 +1,15 @@
+#!/bin/bash
+# 2010 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
+
+# (command from perl-libwww)
+which GET &>/dev/null && GET=GET || GET=false
+
+download_url()
+{
+	# use wget with try=1 and timeout = 30 sec
+	wget -c -t 1 -T 30 "$1"
+}

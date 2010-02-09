@@ -16,6 +16,9 @@ load_mod spec rpm etersoft
 if [ "$1" = "-h" ]; then
 	echog "rpmpub - Etersoft specific script for publish gear repo to target ftp dir"
 	echog "Usage: rpmpub [-r PROJECTVERSION ] [SPEC] [TARGETDIR]"
+	echog "Options:"
+	echog " -r PROJECTVERSION - set other project version (PROJECTVERSION/sources)"
+	echog " TARGETDIR - copy signed src.rpm package to TARGETDIR"
 	echog "You can set default target dir in UPLOADDIR variable in config file"
 	exit 0
 fi
@@ -41,7 +44,7 @@ if [ ! -r $SPECNAME ] ; then
 	fatal "Spec $SPECNAME does not found in the current dir"
 fi
 
-#ETERDESTSRPM=/var/ftp/pub/Etersoft/CIFS@Etersoft/$VERSION/sources
+#Example: ETERDESTSRPM=/var/ftp/pub/Etersoft/CIFS@Etersoft/$VERSION/sources
 ETERDESTSRPM=$1
 if [ -z "$ETERDESTSRPM" ] ; then
 	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME "$ALPHA")

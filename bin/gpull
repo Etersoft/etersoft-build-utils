@@ -5,8 +5,10 @@
 load_mod git
 
 if [ "$1" = "-h" ] ; then
-	echo "gpull [args] - do git pull --rebase"
-	echo "Use: gpull without parameters"
+	echo "gpull - do git pull --rebase"
+	echo "Use: gpull [GEAR] [branch]"
+	echo "     gpull without parameters or with branch name"
+	echo "     gpull git.eter - for pull from git.eter gear repo"
 	exit 1
 fi
 

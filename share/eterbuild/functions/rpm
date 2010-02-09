@@ -65,7 +65,13 @@ build_rpms_name()
 
 querypackage()
 {
-        rpmquery -p --queryformat "%{$2}" $1
+	local FORMAT="%{$2}"
+	local INSTALLED="-p"
+	# if name empty, use third param as format string
+	[ -n "$2" ] || FORMAT="$3"
+	# if not file, drop -p for get from rpm base
+	[ -e "$1" ] || INSTALLED=""
+        rpmquery $INSTALLED --queryformat "$FORMAT" $1
 }
 
 build_rpms_name_by_srpm()

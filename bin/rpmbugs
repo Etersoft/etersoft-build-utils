@@ -11,8 +11,11 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
+load_mod rpm web
 
-which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
+BUGZILLAURL="https://bugzilla.altlinux.org"
+PRODUCT=Sisyphus
+
 
 show_bugs()
 {
@@ -28,25 +31,28 @@ show_bugs()
 
 show_bugbyid()
 {
-	URL="https://bugzilla.altlinux.org/show_bug.cgi?id=$1"
 #	TEXT=1
-	show_bugs $URL
+	local URLSHOWBUG="$BUGZILLAURL/show_bug.cgi?id=$1"
+	show_bugs "$URLSHOWBUG"
 }
 
 
 #parse_cmd_pre "$@"
 
 if [ "$1" = "-h" ]; then
-	echog "rpmbugs [-t] spec | bug number | package name | -qf command | /path/to/file - open bugs in BROWSER"
+	echog "rpmbugs - open bugs in BROWSER"
+	echog "rpmbugs [-t] spec | bug number | package name | -qf command_name | /path/to/file"
+	echog "Options:"
+	echog " -t - list in text console"
 	exit 0
 fi
 
-if [ "${1}" = "-n" ] ; then
+if [ "$1" = "-n" ] ; then
 	shift
 	NEWBUG=1
 fi
 
-if [ "${1}" = "-t" ] ; then
+if [ "$1" = "-t" ] ; then
 	shift
 	TEXT=1
 	which links >/dev/null && BROWSER=links
@@ -55,40 +61,36 @@ fi
 test -z "$DISPLAY" && TEXT=1
 
 SPECLIST=$@
-if [ "${1}" = "-qf" ]
+if [ "$1" = "-qf" ]
 then
 	shift
-	SPECLIST=$1
-	if [ -e $SPECLIST ] ; then
-		SPECLIST=`rpm -qf --queryformat "%{NAME} " $SPECLIST`
-	else
-		SPECLIST=`rpmqf $SPECLIST`
+	SPECLIST=$(rpmqf "$1")
+	if [ -e "$1" ] ; then
+		SPECLIST=$(querypackage $SPECLIST NAME)
 	fi
 fi
 
 # if param is number
 if [ -z `echo ${1} | sed -e "s/[0-9]*//"` ] ; then
-	show_bugbyid $1
-	exit 0
+	show_bugbyid "$1"
+	exit
 fi
 
-for i in $SPECLIST
-do
+for i in $SPECLIST ; do
 	if [ -f $i ]
 	then
 		if [ -z ${i/*rpm/} ]
 		then
 			# it is rpm package
-			PKGNAME=`rpm -qp --queryformat "%{NAME}" $i`
+			PKGNAME=$(querypackage $i NAME)
 		else
 			PKGNAME=$(eval_spec $i | get_var "Name")
 			test -z ${PKGNAME} && fatal "Cannot get package name"
 		fi
 	else
-		PKGNAME=`rpm -q --queryformat "%{NAME}" $i` || PKGNAME=$i
+		# yes, DD=$(false) || DD=other works
+		PKGNAME=$(querypackage $i NAME) || PKGNAME=$i
 	fi
-	PRODUCT=Sisyphus
-	URL="https://bugzilla.altlinux.org/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
 
 	if [ -n "$NEWBUG" ] ; then
 		fatal "Do not realized yet. Welcome to developing!"
@@ -100,7 +102,8 @@ do
 		#altbug --pkg "$PKGNAME" --subj "$SUMMARY"
 		show_bugbyid $ID
 	else
-		show_bugs $URL | grep "@"
+		local URLBUGLIST="$BUGZILLAURL/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
+		show_bugs "$URLBUGLIST" | grep "@"
 	fi
 
 done

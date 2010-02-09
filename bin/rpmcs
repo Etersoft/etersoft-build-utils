@@ -99,6 +99,12 @@ do
 		fi
 	fi
 
+	# if there is no altlinux in changelog yet
+	if ! grep -v "Packager" $i | grep "@altlinux" ; then
+			echo "Add changelog with initial build"
+			add_changelog $i -e "- initial build for ALT Linux Sisyphus"
+	fi
+
 	echog "cleanup_spec for $i..."
 	cleanup_spec $i
 

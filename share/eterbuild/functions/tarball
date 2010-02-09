@@ -45,6 +45,34 @@ copy_tarball_to_tar_bz2()
 		bzip -c "$SNAME" > "$TNAME"
 		return
 	fi
+	fatal "Can't repack $SNAME to tar.bz2"
+	return 1
+}
+
+copy_tarball_to_tar()
+{
+	local SNAME=$1
+	local TNAME=$2
+
+	#echo SNAME: $SNAME
+	test -r "$SNAME" || return 1
+	# copying from tar.bz2
+	if [ ! ${SNAME/.tar.bz2/} = "$SNAME" ] ; then
+		bunzip -c "$SNAME" > "$TNAME"
+		return
+	fi
+
+	if [ ! ${SNAME/.tar.gz/} = "$SNAME" ] ; then
+		gunzip -c "$SNAME" > "$TNAME"
+		return
+	fi
+
+	# FIXME: matchs with .tarNNN
+	if [ ! ${SNAME/.tar/} = "$SNAME" ] ; then
+		cp -fv "$SNAME" "$TNAME"
+		return
+	fi
+	fatal "Can't repack $SNAME to tar"
 	return 1
 }
 

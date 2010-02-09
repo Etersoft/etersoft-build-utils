@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -56,6 +56,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %_datadir/eterbuild/
 # for backward compatibility (will removed in 2.0)
 %_sysconfdir/rpm/etersoft-build-functions
+%attr(0755,root,root) %_sysconfdir/bashrc.d/*
 %dir %_sysconfdir/eterbuild/
 %dir %_sysconfdir/eterbuild/apt/
 %config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*
@@ -64,6 +65,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Fri Feb 05 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.6-alt1
+- add bashrc.d aliases apti, apts, aptw, finds
+- rpmgp: fix src.rpm import, allow to use several files
+- rpmgs: add real source support (for Source-svn, Source-url commented lines)
+- rpmbph: do not add rpm-build-compat buildreq to backported specs
+- gpush: do ginit if no remote aliases
+
 * Fri Jan 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
 - rpmbs/rpmbsh: add -l option for lazy-cleanup after build
 - rpmgp: add -m option for migrate spec to gear support

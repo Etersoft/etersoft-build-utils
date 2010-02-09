@@ -31,7 +31,7 @@ make_testingbox()
 }
 
 
-Usage="Usage: $name [-M24 -M40]"
+Usage="Usage: $name [-M24 -M40] [-s]"
 function mygetopts()
 {
 name=${0##*/}
@@ -43,7 +43,7 @@ phelp()
 	echog "$Usage"
 	echog "Options:"
 	echog " -s   - get all unmets"
-	echog " -M40 - test for distro ALT Linux 4.0"
+	echog " -$CURRENTBRANCHNAME - test for distro ALT Linux $CURRENTBRANCHNAME"
 }
 
 SKIPTST=
@@ -116,7 +116,7 @@ export LESS_PROGRAM=/dev/null
 for i in $(echo $NEWPKGDIR/*.rpm) ; do
 	OLDPKGNAME=$(rpm -qp $i | sed -e "s|-[0-9].*||g")
 	# search in the our arch repo
-	PKGARCH=$(rpm -qp --queryformat "%{ARCH}" $i)
+	PKGARCH=$(querypackage $i ARCH)
 	OLDPKG=$(echo $SISYPHUSPATH/$PKGARCH/RPMS.*/$OLDPKGNAME-[0-9]*.rpm)
 	if [ ! -r "$OLDPKG" ] ; then
 		echo "Cannot find old package for $(basename $i), skipping"
