@@ -260,11 +260,13 @@ if [ -n "$CLONEGIT" ] ; then
 	INITLETTER=$(echo $PKGNAME | cut -c1)
 
 	# http://git.altlinux.org/gears/N/NAME.git
-	echo "Remote clone from /gears/$INITLETTER/$PKGNAME.git ..."
-	if ! ssh $GIRARHOST clone /srpms/$INITLETTER/$PKGNAME.git packages/$PKGNAME.git ; then
+	RREPO="/gears/$INITLETTER/$PKGNAME.git"
+	echo "Remote clone from $RREPO ..."
+	if ! ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git ; then
 		# http://git.altlinux.org/srpms/N/NAME.git
-		echo "Remote clone from /srpms/$INITLETTER/$PKGNAME.git ..."
-		ssh $GIRARHOST clone /srpms/$INITLETTER/$PKGNAME.git packages/$PKGNAME.git || warning "Can't remote clone."
+		RREPO="/srpms/$INITLETTER/$PKGNAME.git"
+		echo "Remote clone from $RREPO ..."
+		ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 	fi
 
 	git clone git.alt:packages/$PKGNAME.git
