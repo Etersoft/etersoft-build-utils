@@ -227,8 +227,8 @@ if [ -n "$INSTALLBINARY" ] ; then
 	LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
 	DISTRVENDOR=$(distr_vendor -d)
 	CMD=$(get_install_package_command $DISTRVENDOR interactive)
-	echog "Running $SUDO $CMD $LISTPKG..."
-	$SUDO $CMD $LISTPKG
+	echog "Running $SUDO $CMD $LISTPKG"
+	exec $SUDO $CMD $LISTPKG
 fi
 
 if [ -n "$MIGRATEGEAR" ] ; then
@@ -280,13 +280,13 @@ if [ -n "$CLONEGIT" ] ; then
 	fi
 	echo "See other repos at $GIRARHOST:"
 	list_git_package $PKGNAME
-	exit 0
+	exit $?
 fi
 
 # lists packages for build
 if [ -n "$LISTREQS" ] ; then
 	print_target_buildreq $PKGNAME
-	exit 0
+	exit $?
 fi
 
 # Check online
