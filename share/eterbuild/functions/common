@@ -220,3 +220,9 @@ enable_ccache()
 
 }
 
+
+# If DISPLAY is broken
+check_display()
+{
+	xset -b
+}

@@ -58,7 +58,10 @@ if [ "$1" = "-t" ] ; then
 	which links >/dev/null && BROWSER=links
 fi
 
-test -z "$DISPLAY" && TEXT=1
+if ! check_display ; then
+	TEXT=1
+	which links >/dev/null && BROWSER=links
+fi
 
 SPECLIST=$@
 if [ "$1" = "-qf" ]
