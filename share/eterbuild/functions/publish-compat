@@ -16,7 +16,7 @@ update_from_cvs()
 		REP=`cat CVS/Repository`
 		ROT=`cat CVS/Root`
 		echo "Update from CVS... $ROT/$REP"
-		cvs -z3 update -dPR || fatal $"Fail during update from CVS..."
+		a= cvs -z3 update -dPR || fatal $"Fail during update from CVS..."
 	else
 		fatal $"CVS dir not found"
 	fi

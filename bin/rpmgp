@@ -309,7 +309,7 @@ if [ -n "$CHECKONLINE" ] ; then
 
 	if [ -n "$GIRAR_USER" ] ; then
 		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$PKGNAME.git"
-		if GET -d $GITURL ; then
+		if $GET -d $GITURL ; then
 			echog "Published at $GITURL by $GIRAR_USER"
 		else
 			echog "There is no git repo $GITURL"

@@ -11,5 +11,6 @@ which GET &>/dev/null && GET=GET || GET=false
 download_url()
 {
 	# use wget with try=1 and timeout = 30 sec
-	wget -c -t 1 -T 30 "$1"
+	which wget || fatal "Can't download, wget command is missed"
+	a= wget -c -t 1 -T 30 "$1"
 }
