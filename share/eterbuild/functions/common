@@ -171,8 +171,8 @@ detect_target_env
 
 parse_cmd_pre_spec()
 {
-	# hack for check spec presence in command line
-	if echo $@ | grep -q \.spec ; then
+	# hack for check spec or src.rpm presence in command line: skip spec detecting
+	if echo $@ | grep -q \.spec || echo $@ | grep -q \.src.rpm ; then
 		parse_cmd_pre "$@"
         else
 		local SPEC=$(get_gear_spec)
