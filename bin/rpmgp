@@ -223,7 +223,7 @@ test -z "$LISTARGS" && fatal "Please run with spec/package name"
 # install required for build binary packages
 if [ -n "$INSTALLBINARY" ] ; then
 	parse_cmd_pre "$@"
-	pack_src_rpm $LISTRPMARGS
+	pack_src_rpm --commit $LISTRPMARGS
 	LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
 	DISTRVENDOR=$(distr_vendor -d)
 	CMD=$(get_install_package_command $DISTRVENDOR interactive)
