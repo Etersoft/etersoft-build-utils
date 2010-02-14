@@ -298,11 +298,11 @@ fi
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
-test -z "$LISTNAMES" && fatal "Error: no such file"
+test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
 if [ "$VENDOR" = "alt" ] ; then
 	MDISTR=$MENV
-	test -z "$MDISTR" && fatal "missed backport version (f.i. run with -M24 param for Master 2.4)"
+	test -z "$MDISTR" && fatal "Missed backport version (f.i. run with -M24 param for Master 2.4)"
 	DISTRVERSION=$(get_altdistr_version $MDISTR)
 else
 	MDISTR=LOCAL

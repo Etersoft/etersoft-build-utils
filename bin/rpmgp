@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2004-2009 (c) Etersoft www.etersoft.ru
+# 2004-2010 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -151,17 +151,17 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog "rpmgp [options] [system] pkgname - download src.rpm from 'system' repository to RPM/SRPMS and install it"
+	echog "rpmgp [options] [system] pkgname - download src.rpm from 'system' repository"
 	echog " name - installed package name or src.rpm"
-	echog " system - name of system (ALT Linux by default if -a missed too)"
+	echog " system - name of system (ALT Linux by default if -a missed)"
 	echog " -a  search pkgname in all known repositories"
-	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
 	echog " -c  check if this package exists in the ALT Linux repository"
 	echog " -d  download all matched packages"
 	echog " -g  remote clone repo to USER/packages and clone it locally"
-	echog " -m  migrate to gear from spec"
+	echog " -m  migrate to gear from spec/srpm"
+	echog "Ext. options:"
+	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
 	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
-	echog " -n  do not install after download, just download in current dir"
 	echog " -r  refresh package list (download it again)"
 	echog " -s  list all known remote repositories"
 	exit 0

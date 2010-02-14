@@ -118,8 +118,9 @@ done
 
 echo
 if [ "$RESULT" = "1" ] ; then
+	echo
 	echog "!!!!!!! Hasher: FAILED FAILED FAILED !!!!!!!!!"
-	echog "Failed with $i, built only"
+	echog "Build failed with $i, built only"
 else
 	echog "Full list of the hashered packages:"
 fi

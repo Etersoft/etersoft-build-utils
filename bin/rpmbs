@@ -42,7 +42,7 @@ phelp()
 	echog "$Usage"
 	echog "Options:"
 	echog " -u - sign and run gear build task after build"
-	echog " -a TASK - sign package(s), push/upload it and add to task TASK"
+	echog " -a TASK - sign package(s)/repo, push/upload it and add to (shared) task TASK"
 	echog " -l - lazy cleanup (clean before build, not after)"
 	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
@@ -60,6 +60,7 @@ while getopts :hfscuUdnoa:z opt; do
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     f) FORCE="--force" ;;
+# FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
 #    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
@@ -164,12 +165,6 @@ if [ -n "$NOSOURCE" ] ; then
 	exit $?
 fi
 
-# Упаковываем пакеты в src.rpm
-# FIXME: -s can be in name... (but not in option!)
-#LISTRPMARGS=
-#LISTRPMARGS=${LISTRPMARGS/-m/}
-#echo "@@ - $LISTRPMARGS - '$MENV'"
-
 # set SPECDIR from LISTNAMES if empty
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
@@ -191,6 +186,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	else
 		ssh $GIRARHOST build -b $BINARYREPO $BASENAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
+	# FIXME: incorporate
 	cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 	echo "run $TASKNUMBER task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	rm -f $RPMDIR/uploaded.log.tmp
@@ -294,8 +290,7 @@ fi
 
 echog "Uploading to $GIRARHOST"
 check_key
-# TODO:  rsync foo.src.rpm git.alt: && ssh git.alt build srpm foo.src.rpm
-# git.alt build -b 4.0 srpm foo.src.rpm
+
 rsync -vay --partial --progress $CHECKSUM \
  	-e ssh $LISTBUILT $GIRARHOST: && \
 echo "---------------------" && \
@@ -315,6 +310,7 @@ else
 	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 fi
 
+# FIXME: parse and incorporate
 cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 
 for i in $LISTBUILT ; do
@@ -336,7 +332,6 @@ for i in $LISTNAMES ; do
 		echo "  skipping for $i"
 		continue
 	fi
-	#DDIR=$BUILDROOT/${i/.spec/-buildroot}
 	# Hack about paths
 	test -f "$i" && NAME=$i || NAME=$CURDIR/$i
 	build_rpms_name $NAME

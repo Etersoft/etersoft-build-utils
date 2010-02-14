@@ -59,7 +59,7 @@ prepare_aptconfig()
 	if [ -n "$ETERBUILD_APTREPO" ] ; then
 		cat <<EOF >>$OURSOURCES
 
-# Apply repo(s) from ETERBUILD_APTREPO variable
+# Apply repo(s) from external ETERBUILD_APTREPO variable
 $ETERBUILD_APTREPO
 EOF
 	fi
