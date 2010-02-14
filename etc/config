@@ -87,3 +87,6 @@
 
 # Skip error if there are unpackaged files in the build
 #NOSTRICT_UNPACKAGED=1
+
+# Path to default dir with git repos (used in rpmgp -m).
+#GITREPODIR=.

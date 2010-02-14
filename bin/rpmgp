@@ -241,15 +241,14 @@ if [ -n "$MIGRATEGEAR" ] ; then
 			echo "Can't get basename for $PKGNAME, skipping"
 			continue
 		fi
-		echo "Create gear repo $BASENAME from $PKGNAME"
-		GITALT=~/Projects/git-alt
-		GEARDIR=$GITALT/$BASENAME
+		echo "Create gear repo $BASENAME from $PKGNAME in $GITREPODIR"
+		GEARDIR=$GITREPODIR/$BASENAME
 		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
 		mkdir -p "$GEARDIR" || fatal "can't create dir $GEARDIR"
 		cd $GEARDIR || fatal "can't cd to $GEARDIR"
 		git init-db || fatal "can't init db"
 		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
-		# remove src.rpm only if it was generated
+		# remove src.rpm only if it was generated from spec
 		[ -z ${INFILE/*rpm/} ] || rm -vf $PKGNAME
 	done
 	exit 0
