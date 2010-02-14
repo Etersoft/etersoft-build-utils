@@ -1,22 +1,25 @@
 #!/bin/sh
-# 2003-2006 Etersoft www.etersoft.ru
+# 2003-2010 Etersoft www.etersoft.ru
 # Public domain
 # 20.06.04, 15.01.05, 28.02.05, 07.03.05, 07.09.05, 09.04.06
 # 
 # Config file for etersoft-build-utils
-# You can copy this file as ~/.eterbuild-config for per user settings
+# You can copy this file as ~/.config/eterbuild for per user settings
 # and uncomment any setting line
 
 # Путь к каталогу сборки hasher:
 #HASHERDIR=~/hasher
+# Additional arguments for hasher
 #HASHER_ARG=""
 
-# Удалённый сборочный сервер в нотации ssh
-#BUILDSERVER="builder"
+# Удалённый сборочный сервер в нотации ssh (для сборки при rpmbsh -r)
+#BUILDSERVER="builder64"
 
-# TODO: Каталог на сборочном сервере с собранными пакетами
+# FIXME: используется?
+# TODO: Каталог на сборочном сервере с собранными в hasher пакетами
 #BUILDSERVERPATH=$HASHERDIR/repo/i586/RPMS.hasher
 
+# FIXME: используется?
 # Кому отправлять отчёт, на какой адрес
 #OWNERMAIL="Vitaly Lipatov <lav@altlinux.ru>"
 
@@ -26,14 +29,20 @@
 # Каталог сборки, указываемый в переменной %_tmppath .rpmmacros
 #BUILDROOT=
 
-# You can uncomment it:
+# Default arch for 32-bit packages (x86_64 will used for 64-bit packages)
 #DEFAULTARCH=i586
+
+# Default ~/RPM path
 #RPMDIR=$HOME/RPM
-# Use this config
-#APTCONFBASE=/etc/apt/apt.conf
+
+# Path to apt config
+#APTCONFBASE=/etc/eterbuild/apt/apt.conf
+
+# FIXME: для чего это?
 #REMOTERPMDIR="~/RPM"
 
-# Каталог, куда копируются подписанные src.rpm
+# TODO: убрать поддержку по умолчанию (указывать явно ETERDESTSRPM?)
+# Каталог, куда копируются подписанные src.rpm (командой rpmbs)
 #UPLOADDIR=$RPMDIR/upload
 
 # Адрес ftp-сервера компании
@@ -45,6 +54,7 @@
 # Каталог для записи протоколов сборки
 #LOGDIR=$RPMDIR/log
 
+# Rsync path for get packages from Sisyphus
 #RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
 
 # Базовый SSH-путь для отправки пакетов
@@ -62,7 +72,8 @@
 # Always pack src.rpm by legacy gzip compression
 #USE_LEGACY_COMPRESSION=0
 
-# Path to Sisyphus repo (where i586/RPMS.classic) for rpmunmets build
+# TODO: autodetect from sources.list
+# Path to local Sisyphus repo (where i586/RPMS.classic) for rpmunmets build
 #SISYPHUSPATH=/var/ftp/pub/ALTLinux/Sisyphus/
 
 # enable ccache using
