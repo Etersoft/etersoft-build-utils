@@ -7,7 +7,6 @@
 # Также можно сразу указать название пакета с исходниками
 # Функции скрипта похожи на команду apt-get source пакет
 # -c - checkonline
-# -n - do not install
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -168,8 +167,7 @@ phelp()
 	exit 0
 }
 
-TRYINST="1"
-while getopts :habcdglmnrs opt; do
+while getopts :habcdglmrs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
@@ -179,7 +177,6 @@ while getopts :habcdglmnrs opt; do
     g) CLONEGIT=1 ;;
     l) LISTREQS=1 ;;
     m) MIGRATEGEAR=1 ;;
-    n) TRYINST="" ;;
     r) UPDATECACHE=1 ;;
     s) load_systems_list
        list_systems
@@ -373,9 +370,6 @@ if [ -n "$ALLSYSTEM" ] ; then
 	exit 0
 fi
 
-
-echo
-echo "########################################"
 if [ -z "${1/*src.rpm/}" ]
 then
 	# it is src.rpm package
@@ -384,10 +378,7 @@ else
 	SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
 fi
 test -z "$SRCRPM" && fatal "Cannon find package for $1"
-echog "Try to download $SRCRPM"
-
-test -z ${TRYINST} || { mkdir -p $RPMTOPDIR/SRPMS && cd $RPMTOPDIR/SRPMS ; }
-echog "Downloading in $(pwd)"
+echog "Try to download $SRCRPM to $(pwd)"
 
 for i in $REPOSITORY
 do
@@ -395,9 +386,4 @@ do
 	rsync -vay --partial --checksum --copy-links \
 		--delete-after --progress $RSYNCSISYPHUS/$i/$SRCRPM ./$SRCRPM && break
 done
-
-test -z ${TRYINST} && exit 0
-echo
-echog "Installing..."
-rpm -iv $SRCRPM
 
