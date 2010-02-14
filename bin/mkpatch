@@ -39,11 +39,6 @@ fi
 #echo "TOPDIR: $TOPDIR"
 export TOPDIR
 
-which cvs >/dev/null && CVS=cvs
-which svn >/dev/null && SVN=svn
-which git >/dev/null && GIT=git
-
-
 if [ -f $1.orig ] ; then
 	DIFILE=`realpath $1`
 	[ -n "$TOPDIR" ] && cd "$TOPDIR"
@@ -54,12 +49,13 @@ if [ -f $1.orig ] ; then
 fi
 
 
+# a= - against rpm requires
 if [ -n "$CVS" -a -d CVS ] ; then
 	DIFILE=`realpath $1`
 	[ -n "$TOPDIR" ] && cd "$TOPDIR"
 	DIFILE=${DIFILE/`realpath $PWD`\//}
 	#echo 1 $DIFILE $PWD
-	$CVS diff -u $DIFILE > $DIFILE.patch
+	a= cvs diff -u $DIFILE > $DIFILE.patch
 	exit 0
 fi
 
@@ -68,7 +64,7 @@ if [ -n "$SVN" -a -d .svn ] ; then
 	[ -n "$TOPDIR" ] && cd "$TOPDIR"
 	DIFILE=${DIFILE/`realpath $PWD`\//}
 	#echo 2 $DIFILE $PWD
-	$SVN diff $DIFILE > $DIFILE.patch
+	a= svn diff $DIFILE > $DIFILE.patch
 	exit 0
 fi
 
@@ -77,7 +73,7 @@ if [ -n "$GIT" ] ; then
 	[ -n "$TOPDIR" ] && cd "$TOPDIR"
 	DIFILE=${DIFILE/`realpath $PWD`\//}
 	#echo 2 $DIFILE $PWD
-	$GIT diff $DIFILE | sed -e "s|^--- a/|--- |g" | sed -e "s|^\+\+\+ b/|\+\+\+ |g" > $DIFILE.patch
+	a= git diff $DIFILE | sed -e "s|^--- a/|--- |g" | sed -e "s|^\+\+\+ b/|\+\+\+ |g" > $DIFILE.patch
 	exit 0
 fi
 
