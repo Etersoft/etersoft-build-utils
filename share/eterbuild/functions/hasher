@@ -1,24 +1,30 @@
 #!/bin/bash
-# 2008 Etersoft www.etersoft.ru
+# 2008, 2010 Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-. $ETERBUILDDIR/functions/rpm
+load_mod rpm
 
 check_locking()
 {
-	if [ -f $HASHERDIR/lockdir/lockfile ]
-	then
-		echo
-		echog "Hasher $HASHERDIR in use at `date`"
-		echo -n "Wait for unlocking"
-		while test -f $HASHERDIR/lockdir/lockfile
-		do
-			echo -n "."
-			sleep $(($RANDOM%5+3))
-		done
-		echo
+	test -f "$HASHERDIR/pid" || return
+	local pid="$(cat "$HASHERDIR/pid")"
+	if [ "$pid" -gt 0 ] ; then
+		if kill -0 -- "$pid" 2>/dev/null; then
+			warning "hasher dir $HASHERDIR is already locked by pid $pid"
+			ps hp "$pid" >&2
+		else
+			warning "hasher dir $HASHERDIR is locked by stale pid $pid"
+		fi
 	fi
+
+#	echo -n "Wait for unlocking"
+#	while test -f $HASHERDIR/lockdir/lockfile
+#	do
+#		echo -n "."
+#		sleep $(($RANDOM%5+3))
+#	done
+
 }
 
 # workaround about hard coded path to sources.list in apt.conf
