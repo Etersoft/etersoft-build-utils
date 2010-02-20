@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -11,18 +11,16 @@ Url: http://www.altlinux.org/Etersoft-build-utils
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # git-clone http://git.altlinux.org/people/lav/packages/etersoft-build-utils.git
-Source: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar
+Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
 %define altcompat_ver 0.95
 
-# C compiler is required in rpm-build; we do not require C++ here
+# Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
 Requires: rpm-build
-# disable rpm-build-compat in system require
-# rpm-build-compat >= %altcompat_ver
 
 %if %_vendor == "alt"
 Requires: sisyphus_check rsync openssh-clients srpmcmp
@@ -39,7 +37,7 @@ on %url.
 RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 
 %prep
-%setup -q
+%setup
 
 %build
 %make
@@ -65,6 +63,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Sun Feb 21 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.7-alt1
+- rpmbph: forbid backport to Sisyphus
+- rpmgs: fix spec path using, fix download tarball for src.rpm, improve download
+- rpmbs: fix src.rpm run task
+- enable support for use in gear without specname param
+- rpmbs: disable default force create tag, add -f (force) param
+- more bugfixes
+
 * Fri Feb 05 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.6-alt1
 - add bashrc.d aliases apti, apts, aptw, finds
 - rpmgp: fix src.rpm import, allow to use several files

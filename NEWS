@@ -1,3 +1,16 @@
+etersoft-build-utils-1.7.7: 21 Feb 2010
+- update and cleanup comments and messages
+- rpmbph: forbid backport to Sisyphus
+- rpmgp: drop install src.rpm after download, download to current dir
+- rpmgs: fix spec path using, fix download tarball for src.rpm, improve download
+- rpmgp: first try clone from git.alt/gears
+- rpmcs: add "initial build message" if there is not @altlinux records
+- rpmbs: fix src.rpm run task
+- enable support for use in gear without specname
+- git: fix get_root_git_dir for recursive search
+- rpmbs: disable default force create tag, add -f (force) param
+- more bugfixes
+
 etersoft-build-utils-1.7.6: 05 Feb 2010
 - add bashrc.d aliases apti, apts, aptw, finds
 - rpmgp: fix src.rpm import, allow to use several files
