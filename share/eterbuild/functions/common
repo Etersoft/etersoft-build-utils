@@ -167,9 +167,12 @@ fi
 
 [ "$1" = "--help" ] && mygetopts -h
 
-# Sisyphus by default
+# Build for Sisyphus by default
 MENV=SS
-set_target_type $(basename `pwd`)
+if is_gear ; then
+	# Set target according to current branch
+	set_target_type $(get_type_by_current_branch)
+fi
 
 LISTNAMES=
 LISTARGS=

@@ -3,6 +3,8 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
+load_mod git
+
 is_alt()
 {
 	test -f /etc/altlinux-release
@@ -12,6 +14,7 @@ is_alt()
 # Internal
 set_target_type()
 {
+	# check for M51 and so on
 	if echo $1 | grep "^M[0-9][0-9]$" >/dev/null ; then
 		MENV=$1
 		return 0
@@ -25,25 +28,30 @@ set_target_type()
 	return 1;
 }
 
-set_incoming()
+get_type_by_git_branch_name()
 {
-	INCOMING="Sisyphus"
-	test -z "$1" && return
-	case "$1" in
-		("DD")
-			INCOMING="Daedalus"
-			;;
-		("SS")
-			INCOMING="Sisyphus"
-			;;
-		*)
-			if [ -n "$UPDATES" ] ; then
-				INCOMING="updates/`get_altdistr_version $1`"
-			else
-				INCOMING="backports/`get_altdistr_version $1`"
-			fi
-			;;
-	esac
+        if [ "$1" = "p5" ] ; then
+                echo "M50"
+                return
+        fi
+
+        # like 5.1
+        if echo $1 | grep -q "^[0-9].[0-9]$" ; then
+                get_altdistr_mod $1
+                return
+        fi
+
+        # like M50
+        if echo $1 | grep -q "^M[0-9][0-9]$" ; then
+                get_altdistr_mod ${1/^M/}
+                return
+        fi
+}
+
+get_type_by_current_branch()
+{
+        local BRANCH=$(get_current_branch)
+        get_type_by_git_branch_name $BRANCH
 }
 
 set_binaryrepo()
