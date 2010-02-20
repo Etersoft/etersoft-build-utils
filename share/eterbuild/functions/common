@@ -155,6 +155,8 @@ if [ $# -lt 1 ]; then
 	fatal "Use -h for help."
 fi
 
+[ "$1" = "--help" ] && mygetopts -h
+
 # Sisyphus by default
 MENV=SS
 set_target_type $(basename `pwd`)
@@ -182,6 +184,8 @@ detect_target_env
 
 parse_cmd_pre_spec()
 {
+	[ "$1" = "--help" ] && mygetopts -h
+
 	# hack for check spec or src.rpm presence in command line: skip spec detecting
 	if echo $@ | grep -q \.spec || echo $@ | grep -q \.src.rpm ; then
 		parse_cmd_pre "$@"
