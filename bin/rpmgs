@@ -54,24 +54,26 @@ LISTRPMARGS=$@
 
 }
 
+# supports only .tar.bz2 or .tar files in SOURCE
 get_archive()
 {
-	#TODO: check for gz
-	URL=${GETSOURCE/.tar.bz2/}
-	[ "$URL" = "$GETSOURCE" ] && URL=${GETSOURCE/.tar/}
-	download_url "$URL.$1" || return
+	URL=${GETSOURCE/.bz2/}
+	URL=${GETSOURCE/.tar/}
 	WEXT=`basename "$URL"`
+	[ -n "$FORCEDOWNLOAD" ] && rm -f "$WEXT.$1"
+	test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
+	download_url "$URL.$1" || return
 	test -f "$WEXT.$1" || return
 	[ "$1" = "tar.bz2" ] || echog -n "Converting to $WEXT.tar..."
 }
 
+# supports only bz2
 get_archive1()
 {
-	#TODO: check for gz
 	URL=${GETSOURCE/.bz2/}
-	download_url "$URL$1" || return
 	WEXT=`basename "$URL"`
-	test -f "$WEXT" || return
+	test -f "$WEXT.$1" download_url "$URL.$1" || return
+	test -f "$WEXT.$1" || return
 	echog -n "Converting to $WEXT.bz2..."
 }
 
@@ -80,65 +82,64 @@ get_tarbz2()
 {
 	get_archive tar.bz2
 	bunzip -t $WEXT.tar.bz2
-	return $?
 }
 
 get_bz2()
 {
-	get_archive1 .bz2
+	get_archive1 bz2
 	bunzip -t $WEXT.bz2
-	return $?
 }
 
 function get_gz()
 {
-	get_archive1 .gz || return $?
+	get_archive1 gz || return
 	gunzip -f $WEXT.gz
 }
 
 function get_raw()
 {
-	get_archive1 "" || return $?
-	test -f $WEXT
+	download_url "$GETSOURCE"
+	WEXT=`basename $GETSOURCE`
+	test -f "$WEXT"
 }
 
 
 function get_targz()
 {
-	get_archive tar.gz || return $?
+	get_archive tar.gz || return
 	#gzip -t $WEXT.tar.gz || return
 	gunzip -f $WEXT.tar.gz
 }
 
 function get_tar()
 {
-	get_archive tar || return $?
+	get_archive tar || return
 	test -f $WEXT.tar
 }
 
 function get_tgz()
 {
-	get_archive tgz || return $?
+	get_archive tgz || return
 	gunzip -f $WEXT.tgz
 }
 
 function get_tbz2()
 {
-	get_archive tbz2 || return $?
+	get_archive tbz2 || return
 	mv -f $WEXT.tbz2 $WEXT.tar.bz2
 }
 
 function get_tbz()
 {
-	get_archive tbz || return $?
+	get_archive tbz || return
 	mv -f $WEXT.tbz $WEXT.tar.bz2
 }
 
 # TODO: use external converter
 function get_zip()
 {
-	get_archive zip || return $?
-	mkdir $WEXT.zip.dir || return $?
+	get_archive zip || return
+	mkdir $WEXT.zip.dir || return
 	cd $WEXT.zip.dir
 	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . || return
 	cd ..
@@ -148,8 +149,8 @@ function get_zip()
 # TODO: use external converter
 function get_rar()
 {
-	get_archive rar || return $?
-	mkdir $WEXT.rar.dir || return $?
+	get_archive rar || return
+	mkdir $WEXT.rar.dir || return
 	cd $WEXT.rar.dir
 	unrar x ../$WEXT.rar && tar cf ../$WEXT.tar . || return
 	cd ..
@@ -160,9 +161,9 @@ function get_rar()
 function get_7z()
 {
 	BIN7ZIP=/usr/bin/7z
-	test -x $BIN7ZIP || return $?
-	get_archive 7z || return $?
-	mkdir $WEXT.7z.dir || return $?
+	test -x $BIN7ZIP || return
+	get_archive 7z || return
+	mkdir $WEXT.7z.dir || return
 	cd $WEXT.7z.dir
 	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar . || return
 	cd ..
@@ -288,11 +289,13 @@ do
 		build_rpms_name $i
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
 
-		if [ -z "${GETSOURCE/*.tar/}" ] && is_gear $SPECDIR; then
-			test -f "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
-		else
-			bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
-		fi
+		test -f "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
+
+		#if [ -z "${GETSOURCE/*.tar/}" ] && is_gear $SPECDIR; then
+		#			test -f "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+		#else
+		#	bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
+		#fi
 
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 
