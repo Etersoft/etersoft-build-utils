@@ -107,6 +107,16 @@ if [ -n "$NEEDETERBUILD" ] ; then
 	fi
 fi
 
+filter_strip_spaces()
+{
+	sed -e "s|^ ||" | sed -e "s| \$||"
+}
+
+strip_spaces()
+{
+	echo $@ | filter_strip_spaces
+}
+
 # drop listed options
 # FIXME: do not handle args like -Uh, only -U -h separately
 drop_args()
@@ -171,12 +181,12 @@ do
 		# echo is workaround for missed readlink
 		LISTNAMES="$LISTNAMES $(readlink -f "$i" 2>/dev/null || realpath "$i" || echo "$i")"
 	else
+		# set target type if -M?? in param
 		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
 	fi
 done
-# remove extra space before list
-LISTNAMES=$(echo "$LISTNAMES" | sed -e "s|^ ||")
-LISTARGS=$(echo "$LISTARGS" | sed -e "s|^ ||")
+LISTNAMES=$(strip_spaces "$LISTNAMES")
+LISTARGS=$(strip_spaces "$LISTARGS")
 # parse MENV
 detect_target_env
 [ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :

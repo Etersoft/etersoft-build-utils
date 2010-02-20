@@ -170,8 +170,7 @@ do
 	fi
 
 done
-# remove extra space before list
-LISTBUILT=$(echo "$LISTBUILT" | sed -e "s|^ ||")
+LISTBUILT=$(strip_spaces "$LISTBUILT")
 test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
 #LISTRPMARGS=`echo ${LISTRPMARGS} | sed -e "s/--nodeps//g"`
 }
