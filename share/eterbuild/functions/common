@@ -107,6 +107,18 @@ if [ -n "$NEEDETERBUILD" ] ; then
 	fi
 fi
 
+# drop listed options
+# FIXME: do not handle args like -Uh, only -U -h separately
+drop_args()
+{
+    local ARGS="$1"
+    shift
+    local LISTIGNORE="$@"
+    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | sed -e "s| \+| |g" | filter_strip_spaces
+    #echo "$ARGS" | \
+    #    ( for i in $LISTIGNORE ; do sed -e "s|-$i||g" ;  done ) #| sed -e "s| +| |g"
+}
+
 
 # Internal
 # Определяет, для какой среды собирать: по ключу -M23 -M24 или по каталогу, в котором спек

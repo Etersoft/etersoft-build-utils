@@ -78,7 +78,7 @@ add_changelog_helper "- new version" $LISTNAMES
 
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
-pack_src_rpm $COMMIT $(echo $LISTRPMARGS | sed -e "s|-[suUicl]||g")
+pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u U i c l)
 
 # TODO: skip for prev. packed src.rpm
 set_specdir $LISTNAMES
