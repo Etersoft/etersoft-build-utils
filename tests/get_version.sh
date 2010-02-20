@@ -23,7 +23,7 @@ Version: $TESTVER
 Get version test
 EOF
 RESGET=`get_version $SPEC`
-	[ "$RES" != "$RESGET" ] && echo "FATAL with 'get_version': result '$RES' do not match with '$RESGET'" || echo "OK for 'get_version' with '$RESGET'"
+	[ "$RES" != "$RESGET" ] && echo "FATAL with 'get_version $TESTVER': result '$RES' do not match with '$RESGET'" || echo "OK for 'get_version $TESTVER' with '$RESGET'"
 }
 
 TESTVER=1.0.10
@@ -34,6 +34,9 @@ TESTVER=%major.10
 check_get_version 1.0.10
 
 TESTVER=%maj.%ver
+check_get_version 1.0.10
+
+TESTVER=%maj.r120
 check_get_version 1.0.10
 
 rm -f $SPEC

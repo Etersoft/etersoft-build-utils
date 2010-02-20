@@ -178,7 +178,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	TAG=$VERSION-$RELEASE
 	echo "Create $TAG tag..."
 	check_gear_and_tag # || fatal "Can't make tag"
-	$ETERBUILDBIN/gpush $GIRARHOST $BASENAME || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
+	$ETERBUILDBIN/gpush $GIRARHOST || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
 	echo
 	echo "Run build $BASENAME at $GIRARHOST"
 	if [ -n "$TASKNUMBER" ] ; then

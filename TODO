@@ -1,23 +1,23 @@
+
 Исправить ситуацию для 27.5.1 (MINOR - 1, MAJOR 27.5 должно быть), почему стирается %revision
 
 # Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
 # Source-md5: 792f3012eae343bc04314b868f6fd1b9
 
-Если пакет начинается с lib, добавлять перед %files:
+Если пакет начинается с lib, для backports добавлять перед %files:
 %post -p %post_ldconfig
 %postun -p %postun_ldconfig
-для backports
 
 Что-то пишет пакет в upload.SS при простом rpmbs -u ??
 
 http://git.altlinux.org/people/kharpost/packages/gitalt-tasker.git?p=gitalt-tasker.git;a=blob;f=gitalt-tasker/git-task;h=81e0261813a9fe2be230fb0c47b4ff4efd9a2675;hb=bfcc80b9af49b8ea0629db80d4c2f29a024d574e
 
-не раобтает указание целевого каталога в korinf
+не работает указание целевого каталога в korinf
 
 Добавить поддержку в спеке служебного комментария для автоматической перепаковки исходников:
 Учитывать gear
-# etersoft-build-utils repack DIR - упаковать DIR в архив с названием NAME-VERSION
-# etersoft-build-utils remove DIR/FILE [DIR/FILE] - удалить указанные каталоги и файлы и упаковать
+# Source0 repack DIR - упаковать DIR в архив с названием NAME-VERSION
+# Source1 remove DIR/FILE [DIR/FILE] - удалить указанные каталоги и файлы и упаковать
 
 Удаление пакета из Сизифа:
 ssh git.alt task new
@@ -38,7 +38,6 @@ apt-cache list-extras
 
 Нужно убирать BuildArch: noarch при бэкпортировании
 Нужно добавлять устаревшие ныне секции при бэкпортировании
-
 
 todo rebuild:
 #!/bin/sh -le
@@ -76,14 +75,14 @@ pkgrepl.pclinux.2007 - для конкретной версии системы
 === Версия 1.7 ===
  - Не трогать часть файла после %changelog при rpmcs
  - добавить сборки раскидавшихся зависимостей на Иксы в одну
- - rpmbph для src.rpm (через hasher):
-   --init-root, .in, rpm -i src.rpm, rpmbph (не собирающий в hasher), .out { команды в скобках }
-   чтобы спек исправлял прямо в hasher при сборке??
+# - rpmbph для src.rpm (через hasher):
+#   --init-root, .in, rpm -i src.rpm, rpmbph (не собирающий в hasher), .out { команды в скобках }
+#   чтобы спек исправлял прямо в hasher при сборке??
  - подготовить текст новости, порекламировать
  - обновить/сделать страницу с описанием проекта?
 
 === Версия 1.8 ===
- + how to use --build-args= for hsh? - проброс параметров в myhsh как параметров для rpm
+# + how to use --build-args= for hsh? - проброс параметров в myhsh как параметров для rpm
  - Сделать нормальную документацию?
  - получение спеков из других проектов, с отчётом об обновлении (diff между)
  - исправить формирование .pot
@@ -95,7 +94,7 @@ pkgrepl.pclinux.2007 - для конкретной версии системы
  - TODO: добавить возможность указания запускаемой команды
    (разделяя строку параметров на до -- и после)
  - -i -u требуют именно такого порядка использования
- - перейти на общую обработку всех команд (одним скриптом)?
+# - перейти на общую обработку всех команд (одним скриптом)?
 
 
 Unpackaged:
@@ -124,5 +123,3 @@ line3
 > >Не понял проблемы.
 >
 > Попробуйте написать rpmgs --help :)
-
-#   - short-circuit работает только с -bc и -bi на других платформах :(

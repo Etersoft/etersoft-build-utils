@@ -5,7 +5,7 @@ load_mod spec
 
 check()
 {
-	[ "$2" != "$3" ] && echo "FATAL with '$1': result '$2' do not match with '$3'" || echo "OK for '$1' with '$2'"
+	[ "$2" != "$3" ] && echo "FATAL with '$1': result '$3' do not match with '$2'" || echo "OK for '$1' with '$2'"
 }
 
 
@@ -27,6 +27,10 @@ check inc_subrelease "alt5.1" `inc_subrelease ""`
 
 TESTREL=alt6.2
 check inc_subrelease "alt6.3" `inc_subrelease ""`
+
+# FIXME: strange behaviour
+TESTREL=alt6.r5001
+check inc_subrelease "alt6.r5001" `inc_subrelease ""`
 
 
 TESTREL=alt5
