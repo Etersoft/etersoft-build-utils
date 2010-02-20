@@ -105,7 +105,7 @@ for i in $SPECLIST ; do
 		#altbug --pkg "$PKGNAME" --subj "$SUMMARY"
 		show_bugbyid $ID
 	else
-		local URLBUGLIST="$BUGZILLAURL/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
+		URLBUGLIST="$BUGZILLAURL/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
 		show_bugs "$URLBUGLIST" | grep "@"
 	fi
 
