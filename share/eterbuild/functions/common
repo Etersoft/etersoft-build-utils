@@ -28,7 +28,7 @@ set_eterbuilddir()
 		fi
 	fi
 	ETERBUILDBIN=$(realpath $ETERBUILDDIR/../../bin)
-	test -n "$ETERBUILDDIR"
+	test -n "$ETERBUILDDIR" && PATH=$ETERBUILDDIR/functions/commands:$PATH
 	# returns test result
 }
 
