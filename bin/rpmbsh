@@ -95,6 +95,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echog "==== Copying to build server ====="
 	rsync -vay --partial --progress --checksum \
 		-e ssh $LISTBUILT $BUILDSERVER:$REMOTERPMDIR/SRPMS/ || fatal "Error with rsync"
+	# TODO: remove after build
 	ssh -t $BUILDSERVER "cd $REMOTERPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTSRPM"
 	RESULT=$?
 	date

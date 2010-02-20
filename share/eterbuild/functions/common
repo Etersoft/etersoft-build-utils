@@ -121,7 +121,6 @@ drop_args()
 
 
 # Internal
-# Определяет, для какой среды собирать: по ключу -M23 -M24 или по каталогу, в котором спек
 detect_target_env()
 {
 local DISTRNAME=`distr_vendor -e`
@@ -210,7 +209,7 @@ make_temp_file()
 	fi
 }
 
-
+# check if path is server:/path
 is_ssh_target()
 {
 	echo "$1" | grep -q ":"

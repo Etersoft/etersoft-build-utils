@@ -324,7 +324,7 @@ if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	SPEC=$LISTNAMES
 	BPSPEC=$SPEC.$USEBRANCH
 
-	# support for without M names
+	# support for without M names like 5.1
 	USENUMBRANCH=$(get_altdistr_version $USEBRANCH)
 	if [ "$USENUMBRANCH" != "$USEBRANCH" ] ; then
 		if is_exist_branch $USENUMBRANCH ; then
@@ -359,7 +359,7 @@ if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	git merge $CURBRANCH
 	mv -f $BPSPEC $SPEC
 	# FIXME: Ctrl-\ and q will cancelled less with return error code
-	if ! ( echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
+	if ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 		#git checkout $SPEC $MDISTR
 		#git checkout $CURBRANCH
 		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"

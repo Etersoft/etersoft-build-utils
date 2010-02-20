@@ -47,7 +47,7 @@ phelp()
 	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
 	echog " -f - force operation (overwrite tag)"
-	echog " -s - sign package(s) and move it to upload dir (ETERDESTSRPM)"
+	echog " -s - sign package(s) and copy it to upload dir (ETERDESTSRPM)"
 	echog " -n - do not check with sisyphus_check before upload"
 	echog " -o - create nosrc.rpm package"
 	echog " -z - create src.rpm with compatible gzip compression"
