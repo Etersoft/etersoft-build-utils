@@ -1,0 +1,56 @@
+#!/bin/sh
+# 2010 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod gettext
+
+if [ "$1" = "-h" ]; then
+	echog "aptU [-v] - update package and all it requires"
+	echog "Usage: aptU [package(s)]"
+	echog " -v - verbose"
+	exit 0
+fi
+
+if [ "$1" = "-v" ] ; then
+	shift
+else
+	VERBOSE=">/dev/null"
+fi
+
+get_requires()
+{
+	rpm --requires $@ | grep -v rpmlib | cut -f1 -d" " | sort -u
+}
+
+
+ALREADYHANDLEDAPT="bash sh apt rpm glibc-core glibc-locales glibc-preinstall filesystem alt-gpgkeys"
+ALREADYHANDLEDRPM=
+install_packages()
+{
+	local ERROR=
+	local LIST="$@"
+	test -n "$LIST" || { echog "There is no more packages to install" ; return ; }
+	echo "Install $LIST"
+	$SUDO apt-get install $LIST
+	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
+	REQLIST="$(get_requires $LIST)"
+	REQLIST=$(do_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+
+	$SUDO apt-get install $REQLIST $VERBOSE
+	ALREADYHANDLEDRPM="$ALREADYHANDLEDRPM $REQLIST"
+	ERROR=$?
+
+	echog "Translate rpm requires to package names..."
+	PACKAGES=`$SUDO apt-get install --print-uris $REQLIST | grep "is already the newest version" | cut -f1 -d" " | sort -u`
+	PACKAGES=$(do_exclude_list "$ALREADYHANDLEDAPT" "$PACKAGES")
+	if [ "$ERROR" != "0" ] ; then
+		echog "Install by rpm requires is failed, try to to install converted names"
+		$SUDO apt-get install $PACKAGES
+	fi
+	install_packages $PACKAGES
+}
+
+install_packages $@
