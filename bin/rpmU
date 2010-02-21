@@ -7,8 +7,9 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod gettext
 
-if [ "$1" = "-h" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmU - the same as [sudo] rpm -Uvh - update package"
+	echog "Usage: rpmU [package(s)]"
 	exit 0
 fi
 
