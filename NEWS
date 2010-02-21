@@ -1,3 +1,9 @@
+etersoft-build-utils-1.7.8: 22 Feb 2010
+- rpmgs: small bugfixes and update
+- add aptU - update/install package(s) and update their requires
+- rpmU: add --help support
+- rpmU: enable --fancyprocent by default for ALT
+
 etersoft-build-utils-1.7.7: 21 Feb 2010
 - update and cleanup comments and messages
 - rpmbph: forbid backport to Sisyphus

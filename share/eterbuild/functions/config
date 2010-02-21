@@ -1,9 +1,9 @@
 #!/bin/bash
-# 2008 Etersoft www.etersoft.ru
+# 2008-2010 Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-ETERBUILDVERSION=177
+ETERBUILDVERSION=178
 
 # Определяем SUDO для использования
 SUDO="sudo"

@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.7
+Version: 1.7.8
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -62,6 +62,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos
 
 %changelog
+* Mon Feb 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.8-alt1
+- rpmgs: small bugfixes and update
+- add aptU - update/install package(s) and update their requires
+
 * Sun Feb 21 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.7-alt1
 - rpmbph: forbid backport to Sisyphus
 - rpmgs: fix spec path using, fix download tarball for src.rpm, improve download
