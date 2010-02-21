@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2004-2005 (c) Etersoft www.etersoft.ru
+# 2004-2005,2010 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -12,5 +12,5 @@ if [ "$1" = "-h" ]; then
 	exit 0
 fi
 
-#set -x
-$SUDO rpm -Uvh "$@"
+is_alt && FANCYPERCENT=--fancypercent
+$SUDO rpm -Uvh $FANCYPERCENT "$@"
