@@ -49,7 +49,6 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 
 %files -f %name.lang
 %doc AUTHORS README TODO NEWS QuickHelp* 
-%doc tools/upload-to-alt tools/ls-incoming tools/check_spec.sh
 %_bindir/*
 %_datadir/eterbuild/
 # for backward compatibility (will removed in 2.0)
