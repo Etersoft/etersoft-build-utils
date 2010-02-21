@@ -58,7 +58,7 @@ LISTRPMARGS=$@
 get_archive()
 {
 	URL=${GETSOURCE/.bz2/}
-	URL=${GETSOURCE/.tar/}
+	URL=${URL/.tar/}
 	WEXT=`basename "$URL"`
 	[ -n "$FORCEDOWNLOAD" ] && rm -f "$WEXT.$1"
 	test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
@@ -236,6 +236,19 @@ function print_error()
 	exit 1
 }
 
+# tarball dirname [options]
+gear_update_from_tarball()
+{
+	local CREATEFLAG=
+	local TARBALL="$1"
+	local CURNAME="$2"
+	shift 2
+	[ -d "$CURNAME" ] || CREATEFLAG=-c
+	# TODO: check tarball ext. for unsupported arch and realize it here or in gear-update
+	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."
+	gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" || fatal "can't import tarball '$TARBALL'"
+}
+
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
@@ -283,22 +296,18 @@ do
 	for nn in "" $LOADLIST
 	do
 		get_source $i "Source$nn"
+		[ "$GETSOURCE$nn" = "0" ] && continue
 		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $i" ; continue ; }
 		FTB=`basename "$GETSOURCE"`
 		# for get RPMSOURCEDIR
 		build_rpms_name $i
+
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
-
-		test -f "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
-
-		#if [ -z "${GETSOURCE/*.tar/}" ] && is_gear $SPECDIR; then
-		#			test -f "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
-		#else
-		#	bzip -t "$RPMSOURCEDIR/$FTB" && { echog "Tarball $FTB already exists in SOURCES dir, skipping." ; continue ; }
-		#fi
+		[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 
+		# Test for eterbuild extensions
 		get_source_url $i $nn || get_source_svn $i $nn
 
 		if [ -n "${GETSOURCESVN}" ] ; then
@@ -308,6 +317,7 @@ do
 			if [ -n "${GETSOURCE/*.tar/}" ] ; then
 				warning "It is recommended to use .tar tarballs for sources in gear"
 			fi
+			# TODO: rewrite code to use original file format and temp. download dir
 			if [ -n "${GETSOURCEURL}" ] ; then
 				# UpUrl for gear
 				download_url "$GETSOURCEURL"
@@ -316,6 +326,7 @@ do
 			elif [ -z "${GETSOURCE/*.tar/}" ] ; then
 				# tar target: try to load and convert
 				download_any_tarball
+				test -f $WEXT.tar.bz2 && FTB=$WEXT.tar.bz2
 			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
 				# tar.bz2 target: for src.rpm policy compatibility
 				download_any_tarball
@@ -375,13 +386,9 @@ do
 		elif is_gear ; then
 			CURNAME=$BASENAME
 			test -d "$CURNAME" || CURNAME=$(get_tarballname "$i")
-			[ -d "$CURNAME" ] || CREATEFLAG=-c
-			#	mkdir -p "$CURNAME" && git add "$CURNAME"
-			#fi
-			echo "Commit tarball $RPMSOURCEDIR/$FTB to git subdir '$CURNAME'..."
-			gear-update $FORCEDOWNLOAD $CREATEFLAG "$RPMSOURCEDIR/$FTB" "$CURNAME" || fatal "can't import tarball $CURNAME"
+			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
 			rm -f "$RPMSOURCEDIR/$FTB"
-			git commit -m "just import $(basename $RPMSOURCEDIR/$FTB) with rpmgs script"
+			git commit -m "just import $FTB with rpmgs script"
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f)."
