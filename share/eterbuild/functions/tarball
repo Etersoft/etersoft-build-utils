@@ -46,7 +46,6 @@ copy_tarball_to_tar_bz2()
 		return
 	fi
 	fatal "Can't repack $SNAME to tar.bz2"
-	return 1
 }
 
 copy_tarball_to_tar()
@@ -54,7 +53,6 @@ copy_tarball_to_tar()
 	local SNAME=$1
 	local TNAME=$2
 
-	#echo SNAME: $SNAME
 	test -r "$SNAME" || return 1
 	# copying from tar.bz2
 	if [ ! ${SNAME/.tar.bz2/} = "$SNAME" ] ; then
@@ -73,7 +71,6 @@ copy_tarball_to_tar()
 		return
 	fi
 	fatal "Can't repack $SNAME to tar"
-	return 1
 }
 
 # DIR FILE
