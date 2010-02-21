@@ -1,0 +1,12 @@
+
+# Args: LIST1 LIST2
+# do_exclude_list print LIST2 with field contains in LIST1
+do_exclude_list()
+{
+        local i
+        local RES=
+        for i in $2 ; do
+                echo "$1" | grep -q -w $i || RES="$RES $i"
+        done
+        echo $RES
+}
