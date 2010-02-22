@@ -26,8 +26,27 @@ get_requires()
 }
 
 
+install_by_requires()
+{
+	local RLIST="$@"
+	$SUDO apt-get install --no-remove $RLIST
+	local ERROR=$?
+	REQLIST="$RLIST"
+	if [ "$ERROR" != "0" ] ; then
+		local SKIPPACKAGES=`$SUDO apt-get install --print-uris $RLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u`
+		if [ -z "$SKIPPACKAGES" ] ; then
+			echog "Can't autohandle error"
+			return 1
+		fi
+
+		echog "Autoskip $SKIPPACKAGES, try again..."
+		RLIST=$(do_exclude_list "$SKIPPACKAGES" "$RLIST")
+		install_by_requires "$RLIST"
+	fi
+ }
+
 ALREADYHANDLEDAPT="bash sh apt rpm glibc-core glibc-locales glibc-preinstall filesystem alt-gpgkeys"
-ALREADYHANDLEDRPM=
+ALREADYHANDLEDRPM=""
 install_packages()
 {
 	local ERROR=
@@ -38,18 +57,15 @@ install_packages()
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
 	REQLIST="$(get_requires $LIST)"
 	REQLIST=$(do_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }
 
-	$SUDO apt-get install $REQLIST $VERBOSE
+	install_by_requires $REQLIST
 	ALREADYHANDLEDRPM="$ALREADYHANDLEDRPM $REQLIST"
-	ERROR=$?
 
 	echog "Translate rpm requires to package names..."
 	PACKAGES=`$SUDO apt-get install --print-uris $REQLIST | grep "is already the newest version" | cut -f1 -d" " | sort -u`
 	PACKAGES=$(do_exclude_list "$ALREADYHANDLEDAPT" "$PACKAGES")
-	if [ "$ERROR" != "0" ] ; then
-		echog "Install by rpm requires is failed, try to to install converted names"
-		$SUDO apt-get install $PACKAGES
-	fi
+
 	install_packages $PACKAGES
 }
 
