@@ -3,7 +3,7 @@ libreadline-devel|libreadline-devel
 libreadline|libreadline6
 libgtkmm2-devel|libgtkmm2.4-devel
 glibc-devel-static|glibc-static-devel
-libarts-devel|libarts1-devel
+libarts-devel|arts3-devel
 
 libfontenc-devel|libfontenc-devel
 jackit-devel|libjack-devel

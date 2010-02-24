@@ -19,3 +19,5 @@ libhal-devel|lib64hal-devel
 libXScrnSaver-devel|lib64xscrnsaver1-devel
 libfontenc-devel|lib64fontenc1-devel
 libXv-devel|lib64xv1-devel
+libXdamage-devel|lib64xdamage-devel
+libesd-devel|lib64esound-devel
