@@ -39,7 +39,7 @@ LOGDIR="$RPMDIR/log"
 REMOTERPMDIR=
 HASHERDIR="$HOME/hasher"
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
-HASHERARG="--eager-cleanup"
+HASHERARG=""
 # for use in help as example branch/distro name
 CURRENTBRANCHNAME="M51"
 [ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
