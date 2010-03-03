@@ -18,7 +18,7 @@ if [ "$1" = "-h" ]; then
 	echog "Usage: rpmpub [-r PROJECTVERSION ] [SPEC] [TARGETDIR]"
 	echog "Options:"
 	echog " -r PROJECTVERSION - set other project version (PROJECTVERSION/sources)"
-	echog " TARGETDIR - copy signed src.rpm package to TARGETDIR"
+	echog " TARGETDIR - copy signed src.rpm package to TARGETDIR (f.i., /tmp/some_version/sources)"
 	echog "You can set default target dir in UPLOADDIR variable in config file"
 	exit 0
 fi
@@ -56,9 +56,8 @@ export ETERDESTSRPM
 # just for your information: rpmbs supports ssh-like target
 $ETERBUILDBIN/rpmbs -s $SPECNAME || fatal "Can't build SRPMS"
 
-# broken
 # if known target and last link already exists
-#if [ -L "$ETERDESTSRPM/../../last" ] ; then
+if [ -n "$ALPHA" ] && [ -L "$ETERDESTSRPM/../../last" ] ; then
 	# set last link (assume PROJECT/VERSION/sources dir structure)
-#	set_last_link $ETERDESTSRPM/.. $(get_version $SPECNAME)
-#fi
+	set_last_link $ETERDESTSRPM/.. "$ALPHA"
+fi
