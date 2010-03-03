@@ -139,11 +139,10 @@ update_cache_list()
 	done
 }
 
-Usage="Usage: $name [options] [system] pkgname"
-function mygetopts()
+Usage="Usage: rpmgp [options] [-$CURRENTBRANCHNAME] [system] pkgname"
+mygetopts()
 {
-name=${0##*/}
-Descr="$name - various package download operations"
+Descr="rpmgp - various package download operations"
 
 phelp()
 {
@@ -151,8 +150,7 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog "rpmgp [options] [system] pkgname - download src.rpm from 'system' repository"
-	echog " name - installed package name or src.rpm"
+	echog " pkgname - installed package name or src.rpm"
 	echog " system - name of system (ALT Linux by default if -a missed)"
 	echog " -a  search pkgname in all known repositories"
 	echog " -c  check if this package exists in the ALT Linux repository"
@@ -195,15 +193,11 @@ if [ $# -gt 0 ]; then
 fi
 
 # pass other options to RPM:
-LISTARGS=$@
+LISTRPMARGS=$@
 }
 
-mygetopts "$@"
-
-# remove args that were options
-if [ $# -gt 0 ]; then 
-	shift $((OPTIND - 1))
-fi
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
 
 # optional arg
 if [ -n "$UPDATECACHE" ] ; then
@@ -211,8 +205,8 @@ if [ -n "$UPDATECACHE" ] ; then
     exit 0
 fi
 
-test -z "$LISTARGS" && fatal "Please run with spec/package name"
-
+PKGNAME=$(strip_spaces $LISTRPMARGS $LISTNAMES)
+test -z "$PKGNAME" && fatal "Please run with spec/package name"
 
 # список названий систем, адресов (с зеркалами?), и режимов фильтрации
 # название кэш-файла строить из названия системы
@@ -222,7 +216,7 @@ test -z "$LISTARGS" && fatal "Please run with spec/package name"
 
 # install required for build binary packages
 if [ -n "$INSTALLBINARY" ] ; then
-	parse_cmd_pre "$@"
+	# pack by LISTNAMES list
 	pack_src_rpm --commit $LISTRPMARGS
 	LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
 	DISTRVENDOR=$(distr_vendor -d)
@@ -232,7 +226,6 @@ if [ -n "$INSTALLBINARY" ] ; then
 fi
 
 if [ -n "$MIGRATEGEAR" ] ; then
-	parse_cmd_pre "$@"
 	for INFILE in $LISTNAMES ; do
 		# call for each file due generated BASENAME
 		LISTNAMES=$INFILE pack_src_rpm $INFILE $LISTRPMARGS
@@ -256,7 +249,6 @@ fi
 
 # clone remote git
 if [ -n "$CLONEGIT" ] ; then
-	PKGNAME=$1
 	INITLETTER=$(echo $PKGNAME | cut -c1)
 
 	# http://git.altlinux.org/gears/N/NAME.git
@@ -293,16 +285,15 @@ fi
 if [ -n "$CHECKONLINE" ] ; then
 
 	# possible it is spec
-	if [ -f $1 ] ; then
-		build_rpms_name "$1"
+	if [ -f "$PKGNAME" ] ; then
+		build_rpms_name "$PKGNAME"
 		SRCRPM=$NAMESRPMIN
 		PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 	else
-		if echo $1 | grep -q rpm ; then
-			SRCRPM=$1
+		if echo $PKGNAME | grep -q rpm ; then
+			SRCRPM=$PKGNAME
 			PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 		else
-			PKGNAME=$1
 			SRCRPM=$(querypackage $PKGNAME "" "%{SOURCERPM}\n" | tail -n 1)
 		fi
 	fi
@@ -316,10 +307,9 @@ if [ -n "$CHECKONLINE" ] ; then
 		fi
 	fi
 	list_git_package $PKGNAME
-	# TODO: BINARYREPO
-	echo -n "ACL list for sisyphus: "
-	ssh $GIRARHOST acl sisyphus $PKGNAME show
-	
+	set_binaryrepo $MENV
+	echo -n "ACL list for $BINARYREPO: "
+	ssh $GIRARHOST acl $BINARYREPO $PKGNAME show
 	RET="MISSED"
 	if [ -n "$SRCRPM" ] ; then
 		for i in $REPOSITORY ; do
@@ -335,6 +325,8 @@ if [ -n "$CHECKONLINE" ] ; then
 	fi
 	exit 0
 fi
+
+# FIXME: use mygetopts (LISTRPMARGS and so)
 
 if [ -n "$2" ] && [ "$1" = "all" ] ; then
     shift
