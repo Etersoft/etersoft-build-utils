@@ -14,3 +14,8 @@ download_url()
 	which wget >/dev/null || fatal "Can't download, wget command is missed"
 	a= wget -c -t 1 -T 30 "$1"
 }
+
+check_url()
+{
+	$GET -d "$1"
+}

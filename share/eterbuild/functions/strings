@@ -33,3 +33,8 @@ drop_args()
     #echo "$ARGS" | \
     #    ( for i in $LISTIGNORE ; do sed -e "s|-$i||g" ;  done ) #| sed -e "s| +| |g"
 }
+
+initial_letter()
+{
+    echo $1 | cut -c1
+}

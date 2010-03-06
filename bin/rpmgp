@@ -252,14 +252,14 @@ fi
 
 # clone remote git
 if [ -n "$CLONEGIT" ] ; then
-	INITLETTER=$(echo $PKGNAME | cut -c1)
+	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
 
 	# http://git.altlinux.org/gears/N/NAME.git
-	RREPO="/gears/$INITLETTER/$PKGNAME.git"
+	RREPO="/gears/$REPOPATH"
 	echo "Remote clone from $RREPO ..."
 	if ! ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git ; then
 		# http://git.altlinux.org/srpms/N/NAME.git
-		RREPO="/srpms/$INITLETTER/$PKGNAME.git"
+		RREPO="/srpms/$REPOPATH"
 		echo "Remote clone from $RREPO ..."
 		ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 	fi
@@ -267,6 +267,7 @@ if [ -n "$CLONEGIT" ] ; then
 	git clone git.alt:packages/$PKGNAME.git
 	if cd $PKGNAME ; then
 		CURRENTBRANCH=$(get_current_branch)
+		# create all branches
 		for i in $(git branch -a | grep -v "/HEAD" | grep "remotes/origin/") ; do
 			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
 		done
