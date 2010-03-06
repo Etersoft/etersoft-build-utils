@@ -92,7 +92,7 @@ check_name()
 		echo "Error: missed package param"
 		exit 1
 	fi
-	NLIST=`cat $LIST | grep -i $1`
+	NLIST=`cat $LIST | grep -i "$1"`
 #	if [ `cat $LIST | list_filter | grep -i $1 | wc -l` -gt 1 ] ; then
 		#echo "Please type a full name of the package"
 #		print_list $NLIST
@@ -115,7 +115,7 @@ check_system()
 	#echo "Check for $SYSTEM"
 	get_list $IDX
 	#ls -l $LIST
-	check_name $NAME
+	check_name $PKGNAME
 	if [ "$DOWNLOADALL" ] ; then
 		for i in $NLIST ; do
 			download_url $URL/$i
@@ -188,9 +188,12 @@ done
 
 # FIXME: параметры передаются и дальше (например, -i, -b)
 # remove args that were options
-if [ $# -gt 0 ]; then 
-	shift $((OPTIND - 1))
-fi
+#if [ $# -gt 0 ]; then 
+#	shift $((OPTIND - 1))
+#fi
+# remove args that were options
+shift $((OPTIND - 1))
+
 
 # pass other options to RPM:
 LISTRPMARGS=$@
@@ -328,27 +331,26 @@ fi
 
 # FIXME: use mygetopts (LISTRPMARGS and so)
 
-if [ -n "$2" ] && [ "$1" = "all" ] ; then
-    shift
-    ALLSYSTEM=1
-fi
+#if [ -n "$2" ] && [ "$1" = "all" ] ; then
+#    shift
+#    ALLSYSTEM=1
+#fi
 
+# DISABLED. TODO: REWRITE
 # Check concrete system
 # two params: system, package
-if [ -n "$2" ] ; then
-	NAME=$2
+if [ -n "$2" ] && false ; then
+	PKGNAME=$2
 	load_systems_list
 	IDX=`get_system_idx "$1"`
 	if [ -n "$IDX" ] ; then
 		check_system $IDX
 		print_list $NLIST
 	else
-		#fatal "Unknown system '$1', use rpmgp -s for get list"
-		NAME=
+		fatal "Unknown system '$1', use rpmgp -s for get list"
+		#PKGNAME=
 	fi
 	exit 0
-else
-	NAME=$1
 fi
 
 # Check all systems
