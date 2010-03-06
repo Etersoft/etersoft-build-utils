@@ -41,14 +41,6 @@ get_txtrelease()
 	get_release "$1" | sed -e "s|\([a-zA-Z]*\)\([0-9\.]\).*|\1|" || echo "alt"
 }
 
-# Obsoleted: get current release number
-get_release_number()
-{
-	warning "Obsoleted get_release_number, use get_numrelease instead"
-	get_numrelease "$1"
-}
-
-
 set_var()
 {
 	subst "s|\($2:\).*\$|\1 $3|" $1
