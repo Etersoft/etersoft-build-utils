@@ -149,10 +149,12 @@ function get_zip()
 # TODO: use external converter
 function get_rar()
 {
+	UNRAR=/usr/bin/unrar
+	test -x $UNRAR || return
 	get_archive rar || return
 	mkdir $WEXT.rar.dir || return
 	cd $WEXT.rar.dir
-	unrar x ../$WEXT.rar && tar cf ../$WEXT.tar . || return
+	$UNRAR x ../$WEXT.rar && tar cf ../$WEXT.tar . || return
 	cd ..
 	rm -rf $WEXT.rar.dir
 }
