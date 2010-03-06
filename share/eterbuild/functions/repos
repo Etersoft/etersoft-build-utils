@@ -7,3 +7,8 @@ get_git_url()
 {
 	grep "^$1 " $ETERBUILDETC/repos/git | cut -f2 -d" "
 }
+
+get_rsync_path()
+{
+	grep "^$1 $2" $ETERBUILDETC/repos/rsync | cut -f3 -d" "
+}

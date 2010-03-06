@@ -7,6 +7,7 @@ which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
 
 # (command from perl-libwww)
 which GET &>/dev/null && GET=GET || GET=false
+which rsync &>/dev/null && RSYNC=rsync || GET=false
 
 download_url()
 {
@@ -18,4 +19,10 @@ download_url()
 check_url()
 {
 	$GET -d "$1"
+}
+
+check_rsync()
+{
+	[ -n "$1" ] || return 1
+	$RSYNC -n "$1" >/dev/null 2>&1
 }
