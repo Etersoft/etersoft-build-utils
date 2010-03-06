@@ -13,7 +13,9 @@ QuickHelp.txt:
 install: 
 	$(MAKE) -C po install
 	mkdir -p $(DESTDIR)$(bindir)
-	mkdir -p $(DESTDIR)$(sysconfdir)/eterbuild/apt $(DESTDIR)$(sysconfdir)/rpm
+	mkdir -p $(DESTDIR)$(sysconfdir)/rpm
+	mkdir -p $(DESTDIR)$(sysconfdir)/eterbuild/apt
+	mkdir -p $(DESTDIR)$(sysconfdir)/eterbuild/repos
 	mkdir -p $(DESTDIR)$(sysconfdir)/bashrc.d/
 	mkdir -p $(DESTDIR)$(pkgdatadir)/functions/
 	mkdir -p $(DESTDIR)$(pkgdatadir)/pkgrepl $(DESTDIR)$(pkgdatadir)/grprepl/
@@ -21,7 +23,7 @@ install:
 	install -m 644 etc/apt/* $(DESTDIR)$(sysconfdir)/eterbuild/apt/
 	install -m 644 etc/rpm/* $(DESTDIR)$(sysconfdir)/rpm/
 	install -m 644 etc/config $(DESTDIR)$(sysconfdir)/eterbuild/
-	install -m 644 etc/repos $(DESTDIR)$(sysconfdir)/eterbuild/
+	install -m 644 etc/repos/* $(DESTDIR)$(sysconfdir)/eterbuild/repos/
 	install -m 644 etc/bashrc.d/* $(DESTDIR)$(sysconfdir)/bashrc.d/
 	install -m 644 share/eterbuild/pkgrepl/pkgrepl.* $(DESTDIR)$(pkgdatadir)/pkgrepl/
 	install -m 644 share/eterbuild/grprepl/grprepl.* $(DESTDIR)$(pkgdatadir)/grprepl/

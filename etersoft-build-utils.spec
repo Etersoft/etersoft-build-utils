@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.7.8
-Release: alt1
+Version: 1.7.9
+Release: alt0.1
 
 Summary: A set of build rpm utilities
 
@@ -56,12 +56,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %attr(0755,root,root) %_sysconfdir/bashrc.d/*
 %dir %_sysconfdir/eterbuild/
 %dir %_sysconfdir/eterbuild/apt/
+%dir %_sysconfdir/eterbuild/repos/
 %config(noreplace) %_sysconfdir/eterbuild/apt/apt.conf.*
 %config(noreplace) %_sysconfdir/eterbuild/apt/sources.list.*
 %config(noreplace) %_sysconfdir/eterbuild/config
-%config(noreplace) %_sysconfdir/eterbuild/repos
+%config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Mar 06 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.9-alt0.1
+- internal build
+
+* Wed Feb 24 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.8-alt1.1
+- internal build
+
 * Mon Feb 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.8-alt1
 - rpmgs: small bugfixes and update
 - add aptU - update/install package(s) and update their requires
