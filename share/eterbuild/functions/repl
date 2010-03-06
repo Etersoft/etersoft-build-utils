@@ -3,6 +3,8 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
+PKGREPLBASE=$ETERBUILDDIR/pkgrepl
+
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
 # set ALTPKGNAME, TARGETPKGNAME variable
 tolocal_anyrepl()

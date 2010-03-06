@@ -38,9 +38,6 @@
 # Path to apt config
 #APTCONFBASE=/etc/eterbuild/apt/apt.conf
 
-# FIXME: для чего это?
-#REMOTERPMDIR="~/RPM"
-
 # Адрес ftp-сервера компании
 #COMPANYFTP=etersoft.ru
 
@@ -49,9 +46,6 @@
 
 # Каталог для записи протоколов сборки
 #LOGDIR=$RPMDIR/log
-
-# Базовый SSH-путь для отправки пакетов
-#RSYNCINCOMING=incoming:/incoming
 
 # Ключ, используемый при отправке
 #SSH_KEYFILE=~/.ssh/id_dsa

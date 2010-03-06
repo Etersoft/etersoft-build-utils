@@ -7,6 +7,7 @@ ETERBUILDVERSION=178
 
 # Определяем SUDO для использования
 SUDO="sudo"
+
 # for some shells? not for bash
 test -z "$UID" && UID=`id -u`
 if [ $UID = "0" ]; then
@@ -17,9 +18,10 @@ fi
 OURTMPDIR=$TMPDIR
 [ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
 
-# It can be overrides in config
+# detect our arch
 [ -n "$DEFAULTARCH" ] || DEFAULTARCH=i586
 [ `uname -m` = "x86_64" ] && DEFAULTARCH=`uname -m`
+
 NICE="nice"
 RPMBUILD=rpmbuild
 
@@ -35,24 +37,20 @@ OWNERMAIL=`rpm --eval %packager`
 COMPANYFTP=etersoft.ru
 TARGETFTPBASE="/var/ftp"
 LOGDIR="$RPMDIR/log"
-REMOTERPMDIR=
 HASHERDIR="$HOME/hasher"
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
 HASHERARG=""
+
 # for use in help as example branch/distro name
 CURRENTBRANCHNAME="M51"
+
 [ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
 
-RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
-# obsoleted
-RSYNCINCOMING=devel:/incoming
 #SSH_KEYFILE=~/.ssh/id_dsa
 GIRARHOST=git.alt
 
 BUILDSERVER=
 #BUILDSERVERPATH="$HASHERDIR/repo/i586/RPMS.hasher"
-
-PKGREPLBASE=$ETERBUILDDIR/pkgrepl
 
 # TODO: use common ccache dir
 export CCACHE_DIR=$OURTMPDIR/ccache
@@ -60,14 +58,18 @@ export CCACHE_DIR=$OURTMPDIR/ccache
 # enable ccache using
 # CCACHE_ENABLE=yes
 
+# load system wide config
 test -f /etc/eterbuild/config && . /etc/eterbuild/config
 
+# load user config files
 if [ -f ~/.config/eterbuild ] ; then
 	. ~/.config/eterbuild
 elif [ -f ~/.eterbuild-config ] ; then
 	. ~/.eterbuild-config
 else
-	# obsoleted, load if eterbuild-config is missed
-	test -f ~/.ebconfig  && . ~/.ebconfig
+	if [ -f ~/.ebconfig ] ; then
+		. ~/.ebconfig
+		warning "./ebconfig is obsoleted, use ~/.config/eterbuild instead"
+	fi
 fi
 

@@ -214,17 +214,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 fi
 
 if [ -n "${DELETENOW}" ]; then
-	echog "Removing did not realized yet"
-	exit 1
-	echog "Removing from '$RSYNCINCOMING/$INCOMING/'"
-	check_key
-	for i in $LISTBUILT ; do
-		> $i
-	done
-	rsync -vay --partial --progress --delete \
-	 	-e ssh $LISTBUILT $RSYNCINCOMING/$INCOMING/
-	echo "$i REMOVED from Incoming/$INCOMING ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
-	exit 0
+	fatal "Removing did not realized yet"
 fi
 
 # if just packing
