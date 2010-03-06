@@ -32,6 +32,7 @@ RPMDIR="$HOME/RPM"
 [ -n "$APTCONFBASE" ] || APTCONFBASE=$ETERBUILDETC/apt/apt.conf
 
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
+# works only on ALT?
 OWNERMAIL=`rpm --eval %packager`
 
 COMPANYFTP=etersoft.ru

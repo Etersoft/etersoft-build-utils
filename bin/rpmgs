@@ -361,7 +361,7 @@ do
 				warning "It is not tarball (possible single file)..."
 				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"
 			else
-				error "rpmgs: Logical error with $GETSOURCE"
+				fatal "Logical error with $GETSOURCE"
 			fi
 		fi
 

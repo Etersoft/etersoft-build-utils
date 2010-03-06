@@ -42,9 +42,9 @@ fi
 fatal()
 {
 	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "Error: $@" >&2
+		echo "Error in $0: $@" >&2
 	else
-		echog "Error: $@" >&2
+		echog "Error in $0: $@" >&2
 	fi
 	exit 1
 }
@@ -53,9 +53,9 @@ fatal()
 warning()
 {
 	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "Warning: $@" >&2
+		echo "Warning in $0: $@" >&2
 	else
-		echog "Warning: $@" >&2
+		echog "Warning in $0: $@" >&2
 	fi
 }
 
