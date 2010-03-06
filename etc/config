@@ -41,10 +41,6 @@
 # FIXME: для чего это?
 #REMOTERPMDIR="~/RPM"
 
-# TODO: убрать поддержку по умолчанию (указывать явно ETERDESTSRPM?)
-# Каталог, куда копируются подписанные src.rpm (командой rpmbs)
-#UPLOADDIR=$RPMDIR/upload
-
 # Адрес ftp-сервера компании
 #COMPANYFTP=etersoft.ru
 

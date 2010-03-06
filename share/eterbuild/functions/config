@@ -33,7 +33,6 @@ RPMDIR="$HOME/RPM"
 OWNERMAIL=`rpm --eval %packager`
 
 COMPANYFTP=etersoft.ru
-UPLOADDIR="$RPMDIR/upload"
 TARGETFTPBASE="/var/ftp"
 LOGDIR="$RPMDIR/log"
 REMOTERPMDIR=
