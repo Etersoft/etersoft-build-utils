@@ -41,14 +41,22 @@ fi
 # Выводит указанное сообщение об ошибке и завершает программу
 fatal()
 {
-	echog "Error: $@" >&2
+	if [ -z "$TEXTDOMAIN" ] ; then
+		echo "Error: $@" >&2
+	else
+		echog "Error: $@" >&2
+	fi
 	exit 1
 }
 
 # Выводит указанное сообщение
 warning()
 {
-	echog "Warning: $@" >&2
+	if [ -z "$TEXTDOMAIN" ] ; then
+		echo "Warning: $@" >&2
+	else
+		echog "Warning: $@" >&2
+	fi
 }
 
 print_list()
