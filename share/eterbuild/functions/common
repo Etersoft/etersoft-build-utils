@@ -182,7 +182,7 @@ parse_cmd_pre_spec()
         else
 		local SPEC=$(get_gear_spec)
 		[ -f "$SPEC" ] && echo "Using autodetected spec $SPEC..."
-		parse_cmd_pre_spec $SPEC "$@"
+		parse_cmd_pre $SPEC "$@"
 	fi
 }
 
