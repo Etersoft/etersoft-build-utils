@@ -24,7 +24,7 @@ uni_rpmbuild()
 		COMMIT="--commit"
 	fi
 
-	local SPECNAME=$1
+	local SPECNAME="$1"
 	local SPECDIR=`dirname $SPECNAME`
 	local GEAR=gear
 
@@ -49,7 +49,9 @@ uni_rpmbuild()
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
 		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
-		ALTGEARRULESFILE=.gear/rules-${SPECNAME/.spec/}
+		# FIXME: use spec name as project name
+		BASESPECNAME=$(basename "$SPECNAME")
+		ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
 		ALTGEARRULES=$(git rev-parse --git-dir)/../$ALTGEARRULESFILE
 		GEARRULES=
 		if [ -r "$ALTGEARRULES" ] ; then

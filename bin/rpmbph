@@ -26,7 +26,7 @@ BASERELEASE=$(get_numrelease $SPECNAME)
 
 FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 
-echo "Converting spec $SPECNAME to $MDISTR..."
+echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
 
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
