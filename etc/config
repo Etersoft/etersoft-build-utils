@@ -50,9 +50,6 @@
 # Каталог для записи протоколов сборки
 #LOGDIR=$RPMDIR/log
 
-# Rsync path for get packages from Sisyphus
-#RSYNCSISYPHUS=rsync.altlinux.org::ALTLinux/Sisyphus
-
 # Базовый SSH-путь для отправки пакетов
 #RSYNCINCOMING=incoming:/incoming
 

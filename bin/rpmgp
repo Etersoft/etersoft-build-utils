@@ -10,10 +10,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm repl git rpm web
-
-# path to ALT Linux's repositories
-REPOSITORY="files/SRPMS obsolete orphaned"
+load_mod rpm repl git rpm web repos
 
 # loads repos file and fill SYSNAME and SYSURL arrays
 load_systems_list()
@@ -264,7 +261,7 @@ if [ -n "$CLONEGIT" ] ; then
 		ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 	fi
 
-	git clone git.alt:packages/$PKGNAME.git
+	git clone $GIRARHOST:packages/$PKGNAME.git
 	if cd $PKGNAME ; then
 		CURRENTBRANCH=$(get_current_branch)
 		# create all branches
@@ -294,7 +291,8 @@ if [ -n "$CHECKONLINE" ] ; then
 		SRCRPM=$NAMESRPMIN
 		PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 	else
-		if echo $PKGNAME | grep -q rpm ; then
+		if echo $PKGNAME | grep -q "\.rpm" ; then
+			# possible it is rpm package name
 			SRCRPM=$PKGNAME
 			PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 		else
@@ -310,24 +308,35 @@ if [ -n "$CHECKONLINE" ] ; then
 			echog "There is no git repo $GITURL"
 		fi
 	fi
+	echo "Get repositories at $GIRARHOST:"
 	list_git_package $PKGNAME
+
 	set_binaryrepo $MENV
-	echo -n "ACL list for $BINARYREPO: "
+	echo -n "ACL list for $GIRARHOST $BINARYREPO: "
 	ssh $GIRARHOST acl $BINARYREPO $PKGNAME show
 	RET="MISSED"
 	if [ -n "$SRCRPM" ] ; then
-		for i in $REPOSITORY ; do
-			echog "Checking '$SRCRPM' in repository $i ..."
-			rsync -n --progress $RSYNCSISYPHUS/$i/$SRCRPM  >/dev/null 2>&1 && { RET=$i; break; }
-		done
-		echog "Repository     Filename"
-		printf "%-12s %30s\n" $RET $SRCRPM
+		RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
+		echog "Checking '$PKGNAME' in '$RSYNCPATH' ..."
+		if $RSYNC -n $RSYNCPATH/files/SRPMS/$SRCRPM 2>/dev/null | grep $PKGNAME ; then
+			RET=OK
+			echo "Package $SRCRPM is the latest version from $RSYNCPATH"
+		else
+			# upstream version difference, just printout list
+			RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
+			$RSYNC -n "$RSYNCPATH/files/SRPMS/$PKGNAME-[0-9]*" 2>/dev/null | grep $PKGNAME || echo "Package $PKGNAME is missed"
+			echo "Local package $SRCRPM differs from the latest version from $RSYNCPATH"
+		fi
+	else
+		SRCRPM="$PKGNAME-[0-9]*"
+		RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
+		echog "Checking '$SRCRPM' in '$RSYNCPATH' ..."
+		$RSYNC -n $RSYNCPATH/files/SRPMS/$SRCRPM 2>/dev/null | grep $PKGNAME
+		echo "Package '$PKGNAME' is not installed locally"
 	fi
 
-	if [ "$RET" = "MISSED" ] ; then
-		exit 1
-	fi
-	exit 0
+	[ "$RET" = "OK" ]
+	exit
 fi
 
 # FIXME: use mygetopts (LISTRPMARGS and so)
@@ -366,20 +375,4 @@ if [ -n "$ALLSYSTEM" ] ; then
 	exit 0
 fi
 
-if [ -z "${1/*src.rpm/}" ]
-then
-	# it is src.rpm package
-	SRCRPM=$1
-else
-	SRCRPM=$(querypackage $1 "" "%{SOURCERPM}\n")
-fi
-test -z "$SRCRPM" && fatal "Cannon find package for $1"
-echog "Try to download $SRCRPM to $(pwd)"
-
-for i in $REPOSITORY
-do
-	echo "--------Check in $i-----------"
-	rsync -vay --partial --checksum --copy-links \
-		--delete-after --progress $RSYNCSISYPHUS/$i/$SRCRPM ./$SRCRPM && break
-done
-
+fatal "Support for get src.rpm from ALT rsync removed. Use rpmgp with -g option"
