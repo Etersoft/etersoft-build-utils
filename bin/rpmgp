@@ -27,7 +27,7 @@ load_systems_list()
 		#FTP[$IDX]=${line/.* \+/}
 		SYSURL[$IDX]=$(echo $line | sed -e "s|.* \+||g")
 		IDX=$(($IDX+1))
-	done < $ETERBUILDETC/repos
+	done < $ETERBUILDETC/repos/srpms
 }
 
 list_systems()
@@ -37,7 +37,7 @@ list_systems()
 			printf "[%-17s] %s\n" ${SYSNAME[$i]} ${SYSURL[$i]}
 	done
 	echo
-	echo "You can add system to /etc/eterbuild/repos"
+	echo "You can add system to /etc/eterbuild/repos/srpms"
 }
 
 html_filter()
