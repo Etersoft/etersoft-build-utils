@@ -3,6 +3,7 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
+ALLOW_ROOT_USER=1
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod gettext

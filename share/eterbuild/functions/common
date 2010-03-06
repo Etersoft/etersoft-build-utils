@@ -91,11 +91,9 @@ is_gear()
 	return 1
 }
 
-
-if [ "$UID" = "0" ] ; then
+if [ "$UID" = "0" ] && [ -z "$ALLOW_ROOT_USER" ] ; then
 	fatal "It is strict recommended do not use these scripts as root"
 fi
-
 
 load_mod()
 {
@@ -106,6 +104,7 @@ load_mod()
 }
 
 load_mod config gettext alt spec strings
+
 
 # check for needed version
 if [ -n "$NEEDETERBUILD" ] ; then
