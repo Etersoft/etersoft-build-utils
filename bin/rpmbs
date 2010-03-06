@@ -281,7 +281,7 @@ fi
 echog "Uploading to $GIRARHOST"
 check_key
 
-rsync -vay --partial --progress $CHECKSUM \
+$RSYNC -vay --partial --progress --checksum \
  	-e ssh $LISTBUILT $GIRARHOST: && \
 echo "---------------------" && \
 echog "All files synced" || fatal "Error during rsync"
