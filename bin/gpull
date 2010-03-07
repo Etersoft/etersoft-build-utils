@@ -6,16 +6,48 @@ load_mod git
 
 if [ "$1" = "-h" ] ; then
 	echo "gpull - do git pull --rebase"
-	echo "Use: gpull [GEAR] [branch]"
+	echo "Use: gpull [-a] [-n] [repo] [branch]"
 	echo "     gpull without parameters or with branch name"
-	echo "     gpull git.eter - for pull from git.eter gear repo"
+	echo "     gpull myrepo - for pull from remote myrepo gear repo"
+	echo "           -a - pull all branches"
+	echo "           -n - do not rebase during pull"
 	exit 1
 fi
 
-if is_girar_name $1 ; then
-	GIRARHOST=$1
+REPO=origin
+
+if [ "$1" = "-a" ] ; then
+	ALLBRANCHES=1
 	shift
 fi
 
-echo "Pull repo from $GIRARHOST"
-git pull --rebase $GIRARHOST $@
+if [ "$1" = "-n" ] ; then
+	REBASE=""
+	shift
+else
+	REBASE="--rebase"
+fi
+
+if is_exist_remote_repo "$1" ; then
+	REPO=$1
+	shift
+fi
+
+pull_all_branches()
+{
+        local CURRENTBRANCH=$(get_current_branch)
+        # pull all branches
+        for i in $(get_branch_list) ; do
+            git checkout $i || fatal "can't checkout $i"
+            git pull $REPO $i
+        done
+        git checkout $CURRENTBRANCH
+}
+
+if [ -n "$ALLBRANCHES" ] ; then
+	pull_all_branches
+	exit
+fi
+
+echo "Pull repo from $REPO"
+git pull $REBASE $REPO $@
