@@ -23,6 +23,7 @@ local SPECNAME
 SPECNAME=$1
 
 BASERELEASE=$(get_numrelease $SPECNAME)
+RELEASE=$(get_release $SPECNAME)
 
 FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 
@@ -208,6 +209,9 @@ fi
 
 # Fedora 10 does mismatch for Patch: and %patch0
 subst "s|Patch:|Patch0:|g" $SPECNAME
+
+# Due using %release in Source: and Patch: names
+subst "s|%release|$RELEASE|g" $SPECNAME
 
 # for systems with ash as sh
 subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
