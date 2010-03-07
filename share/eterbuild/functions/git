@@ -9,10 +9,21 @@ get_branch_list()
 	git branch | grep '^ ' | sed 's/^..\(.*\)/\1/'
 }
 
+get_remote_repo_list()
+{
+	git remote -v | cut -d" " -f1 | sort -u
+}
+
 is_exist_branch()
 {
 	test -n "$1" || return 1
-	get_branch_list | grep $1 >/dev/null
+	get_branch_list | grep -q $1
+}
+
+is_exist_remote_repo()
+{
+	test -n "$1" || return 1
+	get_remote_repo_list | grep -q $1
 }
 
 get_current_branch()
