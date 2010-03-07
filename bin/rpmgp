@@ -152,7 +152,8 @@ phelp()
 	echog " -a  search pkgname in all known repositories"
 	echog " -c  check if this package exists in the ALT Linux repository"
 	echog " -d  download all matched packages"
-	echog " -g  remote clone repo to USER/packages and clone it locally"
+	echog " -g  clone last built package repo"
+	echog " -gm remote clone repo to USER/packages and clone it locally"
 	echog " -m  migrate to gear from spec/srpm"
 	echog "Ext. options:"
 	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
@@ -225,6 +226,61 @@ if [ -n "$INSTALLBINARY" ] ; then
 	exec $SUDO $CMD $LISTPKG
 fi
 
+# TODO: do gpull -a for get all branches?
+get_all_remote_branches()
+{
+	local CURRENTBRANCH=$(get_current_branch)
+	# create all branches
+	for i in $(git branch -a | grep -v "/HEAD" | grep "remotes/origin/") ; do
+		local BRANCHNAME=$(echo $i | sed -e "s|remotes.*/||g")
+		if is_exist_branch $BRANCHNAME ; then
+			git checkout $BRANCHNAME || fatal "can't checkout $BRANCHNAME"
+			git pull origin $BRANCHNAME
+		else
+			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
+		fi
+	done
+	git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
+}
+
+# clone remote git
+if [ -n "$CLONEGIT" ] ; then
+	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
+
+	# http://git.altlinux.org/gears/N/NAME.git
+	RREPO="/gears/$REPOPATH"
+
+	if [ -z "$MIGRATEGEAR" ] ; then
+		echo "Clone from $GIRARHOST:$RREPO ..."
+		if ! git clone $GIRARHOST:$RREPO ; then
+			# http://git.altlinux.org/srpms/N/NAME.git
+			RREPO="/srpms/$REPOPATH"
+			echo "Try clone from $RREPO ..."
+			git clone $GIRARHOST:$RREPO || fatal "Can't clone."
+		fi
+	else
+		echo "Remote clone from $RREPO ..."
+		if ! ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git ; then
+			# http://git.altlinux.org/srpms/N/NAME.git
+			RREPO="/srpms/$REPOPATH"
+			echo "Remote clone from $RREPO ..."
+			ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
+		fi
+
+		git clone $GIRARHOST:packages/$PKGNAME.git
+	fi
+
+	# get or update all branches
+	if cd $PKGNAME ; then
+		get_all_remote_branches
+		cd - >/dev/null
+	fi
+
+	echo "See other repos at $GIRARHOST:"
+	list_git_package $PKGNAME
+	exit $?
+fi
+
 if [ -n "$MIGRATEGEAR" ] ; then
 	for INFILE in $LISTNAMES ; do
 		# call for each file due generated BASENAME
@@ -245,35 +301,6 @@ if [ -n "$MIGRATEGEAR" ] ; then
 		[ -z ${INFILE/*rpm/} ] || rm -vf $PKGNAME
 	done
 	exit 0
-fi
-
-# clone remote git
-if [ -n "$CLONEGIT" ] ; then
-	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
-
-	# http://git.altlinux.org/gears/N/NAME.git
-	RREPO="/gears/$REPOPATH"
-	echo "Remote clone from $RREPO ..."
-	if ! ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git ; then
-		# http://git.altlinux.org/srpms/N/NAME.git
-		RREPO="/srpms/$REPOPATH"
-		echo "Remote clone from $RREPO ..."
-		ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
-	fi
-
-	git clone $GIRARHOST:packages/$PKGNAME.git
-	if cd $PKGNAME ; then
-		CURRENTBRANCH=$(get_current_branch)
-		# create all branches
-		for i in $(git branch -a | grep -v "/HEAD" | grep "remotes/origin/") ; do
-			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
-		done
-		git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
-		cd - >/dev/null
-	fi
-	echo "See other repos at $GIRARHOST:"
-	list_git_package $PKGNAME
-	exit $?
 fi
 
 # lists packages for build
