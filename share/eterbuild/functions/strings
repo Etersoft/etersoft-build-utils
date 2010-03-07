@@ -1,3 +1,7 @@
+#!/bin/bash
+# 2009-2010 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
 
 filter_strip_spaces()
 {
@@ -37,4 +41,10 @@ drop_args()
 initial_letter()
 {
     echo $1 | cut -c1
+}
+
+is_dirpath()
+{
+    [ "$1" = "." ] && return $?
+    echo "$1" | grep -q "/"
 }
