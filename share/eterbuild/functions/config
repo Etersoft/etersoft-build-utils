@@ -18,8 +18,10 @@ OURTMPDIR=$TMPDIR
 [ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
 
 # detect our arch
-[ -n "$DEFAULTARCH" ] || DEFAULTARCH=i586
-[ `uname -m` = "x86_64" ] && DEFAULTARCH=`uname -m`
+if [ ! -n "$DEFAULTARCH" ] ; then
+	DEFAULTARCH=$(uname -m)
+	[ "$DEFAULTARCH" = "x86_64" ] || DEFAULTARCH=i586
+fi
 
 NICE="nice"
 RPMBUILD=rpmbuild
