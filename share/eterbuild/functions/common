@@ -109,7 +109,7 @@ load_mod config gettext alt spec strings
 # check for needed version
 if [ -n "$NEEDETERBUILD" ] ; then
 	if [ "$NEEDETERBUILD" -gt "$ETERBUILDVERSION" ] ; then
-		echo "Obsoleted version of etersoft-build-utils version is used. Please upgrade it to $NEEDETERBUILD version."
+		echo "Obsoleted version $ETERBUILDVERSION of etersoft-build-utils version is used. Please upgrade it to $NEEDETERBUILD version."
 		exit 1
 	fi
 fi
