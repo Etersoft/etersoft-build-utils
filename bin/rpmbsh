@@ -72,16 +72,19 @@ mygetopts $LISTARGS
 
 [ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"
 
-# TODO: skip for prev. packed src.rpm
-# If fail, we already has correct changelog
-add_changelog_helper "- new version" $LISTNAMES
+# Skip for prev. packed src.rpm
+if echo "$LISTNAMES" | grep -q spec ; then
+	# If fail, we already has correct changelog
+	add_changelog_helper "- new version" $LISTNAMES
+fi
 
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u U i c l)
 
-# TODO: skip for prev. packed src.rpm
-set_specdir $LISTNAMES
+if echo "$LISTNAMES" | grep -q spec ; then
+	set_specdir $LISTNAMES
+fi
 
 if  [ -n "$REMOTEBUILD" ] ; then
 	check_key
