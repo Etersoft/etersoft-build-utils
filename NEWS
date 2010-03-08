@@ -1,3 +1,18 @@
+etersoft-build-utils-1.7.9: 08 Mar 2010
+- rpmbph: do undefine libtoolize for M50 too
+- introduce HASHERBASEDIR and set_hasherdir and use it
+- hasher: initial support for build i586 on x86_64
+- drop out ~/.ebconfig support, enable warning about ~/.eterbuild-config
+- rpmbph: replace %release with the real value due using in Source: and Patch:
+- rpmgp: only clone with -g, add new -gm option for remote clone and clone
+- gpull: full rewrite for support -a (all branches) and various remote repo
+- allow run rpmU under root user
+- rpmgs: remove incorrect tarball
+- remove UPLOADDIR var using and drop out copying after rpmbs by default
+- rpmgs: do not require unrar
+- rpmgp: use parse_cmd_pre, rewrite parsing, update help
+- always clean hasher after build (by default). use rpmbsh -l if needed
+
 etersoft-build-utils-1.7.8: 22 Feb 2010
 - rpmgs: small bugfixes and update
 - add aptU - update/install package(s) and update their requires

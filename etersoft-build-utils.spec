@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.7.9
-Release: alt0.1
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -63,11 +63,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
-* Sat Mar 06 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.9-alt0.1
-- internal build
-
-* Wed Feb 24 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.8-alt1.1
-- internal build
+* Mon Mar 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.9-alt1
+- rpmbph: do undefine libtoolize for M50 too
+- drop out ~/.ebconfig support, enable warning about ~/.eterbuild-config
+- rpmbph: replace %release with the real value due using in Source: and Patch:
+- rpmgp: only clone with -g, add new -gm option for remote clone and clone
+- gpull: full rewrite for support -a (all branches) and various remote repo
+- allow run rpmU under root user
+- remove UPLOADDIR var using and drop out copying after rpmbs by default
+- always clean hasher after build (by default). use rpmbsh -l if needed
 
 * Mon Feb 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.8-alt1
 - rpmgs: small bugfixes and update
