@@ -55,6 +55,10 @@ mygetopts $LISTARGS
 RESULT=0
 
 HASHERDIR=$HASHERDIR$MENVARG
+if [ "$DEFAULTARCH"="x86_64" ] ; then
+	HASHERDIR="$HASHERDIR-64"
+fi
+
 mkdir -p $LOGDIR $HASHERDIR || fatal "cannot mkdir"
 check_locking
 
