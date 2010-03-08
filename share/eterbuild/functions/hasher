@@ -12,7 +12,7 @@ set_hasherdir()
 		HASHERBASEDIR=$HASHERDIR
 	fi
 	HASHERDIR=$HASHERBASEDIR$MENVARG
-	if [ "$DEFAULTARCH"="x86_64" ] ; then
+	if [ "$DEFAULTARCH" = "x86_64" ] ; then
 		HASHERDIR="$HASHERDIR-64"
 	fi
 }
