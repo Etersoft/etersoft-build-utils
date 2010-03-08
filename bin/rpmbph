@@ -31,6 +31,7 @@ echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
 
 # Set buildreq
 if [ "$VENDOR" = "alt" ] ; then
+	# FIXME: needed for some backport level...
 	#BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
 	BUILDREQ=
 	# Change release according to alt policy with extensions
@@ -39,7 +40,7 @@ if [ "$VENDOR" = "alt" ] ; then
 	ADDDEF=""
 	CLEANTEXT=""
 	# due new libtool, affected on ALT Linux
-	if echo "$MDISTR" | egrep -q "M24|M30|M40|M41" ; then
+	if echo "$MDISTR" | egrep -q "M24|M30|M40|M41|M50" ; then
 		RECONFT="%undefine __libtoolize"
 	fi
 else
@@ -72,7 +73,7 @@ if [ "`distr_vendor -d`/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 	FIXMKTEMP="%__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
 fi
 
-# fix readlink -mv, introduced by new libtool and missed in Generic (FreeBSD) (replace with readlink -f)
+# fix readlink -mv, introduced by new libtool and missed in Generic (FreeBSD) (replace with realpath)
 if [ "$VENDOR" = "generic" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -mv"
 	FIXMKTEMP="%__subst 's|readlink -mv|realpath|g' configure ltmain.sh"
