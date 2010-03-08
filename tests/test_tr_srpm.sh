@@ -25,6 +25,7 @@ for i in `ls -1 $RPMDIR/SRPMS` ; do
 	echo "spec: $SPECNAME"
 	pack_srpm_package $SPECNAME
 	echo Compare $PKGNAME $LISTBUILT
+	# what the package with rpmdiff?
 	rpmdiff $PKGNAME $RPMTOPDIR/SRPMS/$LISTBUILT
 	exit 1
 done

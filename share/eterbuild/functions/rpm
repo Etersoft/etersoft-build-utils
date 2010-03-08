@@ -63,6 +63,7 @@ build_rpms_name()
 	build_buildroot
 }
 
+# Query variables from rpm package
 querypackage()
 {
 	local FORMAT="%{$2}"
@@ -125,7 +126,7 @@ drop_pkg_extensions()
 	done
 }
 
-# distr_vendor [interactive]
+# args: distr_vendor [interactive]
 get_install_package_command()
 {
 	local DISTRVENDOR=$1
