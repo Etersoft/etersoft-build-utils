@@ -66,10 +66,10 @@ if [ -f ~/.config/eterbuild ] ; then
 	. ~/.config/eterbuild
 elif [ -f ~/.eterbuild-config ] ; then
 	. ~/.eterbuild-config
+	warning "./eterbuild-config is obsoleted, use ~/.config/eterbuild instead"
 else
 	if [ -f ~/.ebconfig ] ; then
-		. ~/.ebconfig
-		warning "./ebconfig is obsoleted, use ~/.config/eterbuild instead"
+		fatal "./ebconfig is obsoleted, use ~/.config/eterbuild instead"
 	fi
 fi
 
