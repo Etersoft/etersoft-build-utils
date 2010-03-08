@@ -1,9 +1,10 @@
 #!/bin/sh
 
 . `dirname $0`/../share/eterbuild/functions/common
-. $ETERBUILDDIR/functions/rpm
+load_mod rpm hasher
 
-HASHERDIR=$HASHERDIR-SS
+MENV=SS
+set_hasherdir
 
 for i in `ls -1 $HASHERDIR/repo/SRPMS.hasher` ; do
 	echo "get for $i:"

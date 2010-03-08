@@ -8,7 +8,7 @@
 # and uncomment any setting line
 
 # Путь к каталогу сборки hasher:
-#HASHERDIR=~/hasher
+#HASHERBASEDIR=~/hasher
 # Additional arguments for hasher
 #HASHER_ARG=""
 

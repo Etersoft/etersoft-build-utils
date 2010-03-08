@@ -39,8 +39,8 @@ phelp()
 
 while getopts :chito opt; do
     case $opt in
-    h) phelp; exit 0;;
-    t) HASHERDIR=$HASHERDIR-test; TESTMODE=1 ;;
+	h) phelp; exit 0;;
+	t) TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
 	r) REMOTE=1 ;;
@@ -61,7 +61,8 @@ LISTRPMARGS=$@
 
 parse_cmd_pre "$@" --
 
-HASHERDIR=$HASHERDIR$MENVARG
+set_hasherdir
+[ -n "$TESTMODE" ] && HASHERDIR=$HASHERDIR-test
 
 HSH=/usr/bin/hsh
 if [ ! -x "$HSH" ] ; then

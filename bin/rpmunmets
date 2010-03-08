@@ -75,7 +75,8 @@ TESTINGWORKDIR=$OURTMPDIR/WD2
 
 ORDINALAPTCONF=$APTCONF
 
-HASHERDIR=$HASHERDIR$MENVARG
+set_hasherdir
+
 if [ ! -d $HASHERDIR/repo ] || [ -n "$SKIPTST" ] ; then
 	[ -z "$SKIPTST" ] && fatal "Can't find repo in hasher '$HASHERDIR' dir, use -s for overall check"
 	make_ordinalbox

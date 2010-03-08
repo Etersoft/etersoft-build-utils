@@ -5,6 +5,18 @@
 
 load_mod rpm
 
+set_hasherdir()
+{
+	if [ -z "$HASHERBASEDIR" ] ; then
+		warning "HASHERBASEDIR is not set. I will try with HASHERDIR, but you have to set HASHERBASEDIR in the config file"
+		HASHERBASEDIR=$HASHERDIR
+	fi
+	HASHERDIR=$HASHERBASEDIR$MENVARG
+	if [ "$DEFAULTARCH"="x86_64" ] ; then
+		HASHERDIR="$HASHERDIR-64"
+	fi
+}
+
 check_locking()
 {
 	test -f "$HASHERDIR/pid" || return

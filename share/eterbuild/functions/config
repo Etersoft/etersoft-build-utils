@@ -39,7 +39,7 @@ OWNERMAIL=`rpm --eval %packager`
 COMPANYFTP=etersoft.ru
 TARGETFTPBASE="/var/ftp"
 LOGDIR="$RPMDIR/log"
-HASHERDIR="$HOME/hasher"
+HASHERBASEDIR="$HOME/hasher"
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
 HASHERARG=""
 
@@ -52,7 +52,6 @@ CURRENTBRANCHNAME="M51"
 GIRARHOST=git.alt
 
 BUILDSERVER=
-#BUILDSERVERPATH="$HASHERDIR/repo/i586/RPMS.hasher"
 
 # TODO: use common ccache dir
 export CCACHE_DIR=$OURTMPDIR/ccache
