@@ -122,8 +122,8 @@ get_binpkg_list()
 drop_pkg_extensions()
 {
 	for i in $@ ; do
-		echo -n "$(basename $i) " | sed -e "s|\.[a-z0-9]*\.rpm||g"
-	done
+		echo -n "$(basename $i) " | sed -e "s|\.[a-z_0-9]*\.rpm||g"
+	done | filter_strip_spaces
 }
 
 # TODO: add get_update_repo_command
