@@ -79,20 +79,20 @@ get_archive1()
 #TODO: use functions from tarball
 get_tarbz2()
 {
-	get_archive tar.bz2
-	bunzip -t $WEXT.tar.bz2 || rm -fv $WEXT.tar.bz2
+	get_archive tar.bz2 || return
+	bunzip -t $WEXT.tar.bz2 && return || rm -fv $WEXT.tar.bz2
 }
 
 get_bz2()
 {
-	get_archive1 bz2
-	bunzip -t $WEXT.bz2 || rm -fv $WEXT.bz2
+	get_archive1 bz2 || return
+	bunzip -t $WEXT.bz2 && return || rm -fv $WEXT.bz2
 }
 
 function get_gz()
 {
 	get_archive1 gz || return
-	gunzip -f $WEXT.gz || rm -fv $WEXT.gz
+	gunzip -f $WEXT.gz && return || rm -fv $WEXT.gz
 }
 
 function get_raw()
@@ -106,7 +106,7 @@ function get_raw()
 function get_targz()
 {
 	get_archive tar.gz || return
-	gunzip -f $WEXT.tar.gz || rm -fv $WEXT.tar.gz
+	gunzip -f $WEXT.tar.gz && return || rm -fv $WEXT.tar.gz
 }
 
 function get_tar()
@@ -118,21 +118,21 @@ function get_tar()
 function get_tgz()
 {
 	get_archive tgz || return
-	gunzip -f $WEXT.tgz || rm -fv $WEXT.tgz
+	gunzip -f $WEXT.tgz && return || rm -fv $WEXT.tgz
 }
 
 function get_tbz2()
 {
 	get_archive tbz2 || return
 	mv -f $WEXT.tbz2 $WEXT.tar.bz2
-	bunzip -t $WEXT.tar.bz2 || rm -fv $WEXT.tar.bz2
+	bunzip -t $WEXT.tar.bz2 && return || rm -fv $WEXT.tar.bz2
 }
 
 function get_tbz()
 {
 	get_archive tbz || return
 	mv -f $WEXT.tbz $WEXT.tar.bz2
-	bunzip -t $WEXT.tar.bz2 || rm -fv $WEXT.tar.bz2
+	bunzip -t $WEXT.tar.bz2 && return || rm -fv $WEXT.tar.bz2
 }
 
 # TODO: use external converter
@@ -141,7 +141,7 @@ function get_zip()
 	get_archive zip || return
 	mkdir $WEXT.zip.dir || return
 	cd $WEXT.zip.dir
-	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . || { rm -fv $WEXT.zip ; return ; }
+	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . || { rm -fv $WEXT.zip ; return 1; }
 	cd ..
 	rm -rf $WEXT.zip.dir
 }
@@ -154,7 +154,7 @@ function get_rar()
 	get_archive rar || return
 	mkdir $WEXT.rar.dir || return
 	cd $WEXT.rar.dir
-	$UNRAR x ../$WEXT.rar && tar cf ../$WEXT.tar . || { rm -fv $WEXT.rar ; return ; }
+	$UNRAR x ../$WEXT.rar && tar cf ../$WEXT.tar . || { rm -fv $WEXT.rar ; return 1; }
 	cd ..
 	rm -rf $WEXT.rar.dir
 }
@@ -167,7 +167,7 @@ function get_7z()
 	get_archive 7z || return
 	mkdir $WEXT.7z.dir || return
 	cd $WEXT.7z.dir
-	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar . || { rm -fv $WEXT.7z ; return ; }
+	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar . || { rm -fv $WEXT.7z ; return 1; }
 	cd ..
 	rm -rf $WEXT.7z.dir
 }
@@ -222,7 +222,7 @@ function get_source_svn()
 
 
 # Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
-function get_source_svn()
+function get_source_git()
 {
 	fatal "realize me"
 }
@@ -334,7 +334,7 @@ do
 				test -f $WEXT.tar.bz2 && FTB=$WEXT.tar.bz2
 			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
 				# tar.bz2 target: for src.rpm policy compatibility
-				download_any_tarball
+				download_any_tarball 
 				test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Cannot bzip $WEXT.tar"
 			else
 				download_url "$GETSOURCE"
