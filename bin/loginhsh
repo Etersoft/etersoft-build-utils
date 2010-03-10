@@ -64,10 +64,8 @@ parse_cmd_pre "$@" --
 set_hasherdir
 [ -n "$TESTMODE" ] && HASHERDIR=$HASHERDIR-test
 
-HSH=/usr/bin/hsh
-if [ ! -x "$HSH" ] ; then
-	echo "Please install hasher package before use it"
-	exit 1
+if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
+	HASHERDIR=$HASHERDIR-test
 fi
 
 # export OURAPTCONF with temp. file contains correct path to sources.list

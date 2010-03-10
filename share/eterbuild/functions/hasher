@@ -7,6 +7,11 @@ load_mod rpm
 
 set_hasherdir()
 {
+	HSH=/usr/bin/hsh
+	if [ ! -x "$HSH" ] ; then
+		fatal "Please install hasher package before use it"
+	fi
+
 	if [ -z "$HASHERBASEDIR" ] ; then
 		warning "HASHERBASEDIR is not set. I will try with HASHERDIR, but you have to set HASHERBASEDIR in the config file"
 		HASHERBASEDIR=$HASHERDIR

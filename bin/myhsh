@@ -59,13 +59,7 @@ set_hasherdir
 mkdir -p $LOGDIR $HASHERDIR || fatal "cannot mkdir"
 check_locking
 
-HSH=/usr/bin/hsh
-if [ ! -x "$HSH" ] ; then
-	echo "Please install hasher package before use it"
-	exit 1
-fi
-
-echog "List of packages: \$LISTNAMES"
+echog "List of packages for build: \$LISTNAMES"
 
 if [ -z "${LISTNAMES/*spec/}"  ] ; then
 	echo "!!!!!!!!"
