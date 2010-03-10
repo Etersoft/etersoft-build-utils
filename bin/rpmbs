@@ -188,8 +188,8 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		ssh $GIRARHOST build -b $BINARYREPO $BASENAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
 	# FIXME: incorporate
-	cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
-	echo "run $TASKNUMBER task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
+	echo "     run $TASKNUMBER task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	rm -f $RPMDIR/uploaded.log.tmp
 	exit
 fi
@@ -301,7 +301,7 @@ else
 fi
 
 # FIXME: parse and incorporate
-cat $RPMDIR/uploaded.log.tmp | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
+cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 
 for i in $LISTBUILT ; do
 	# FIXME: more general way
@@ -309,8 +309,8 @@ for i in $LISTBUILT ; do
 	echo >>$LOGFILE
 	date >>$LOGFILE
 	echo "uploaded">>$LOGFILE
-	TEXTADD="run $TASKNUMBER build src.rpm"
-	[ -z "$TASKNUMBER" ] || TEXTADD="add src.rpm to task $TASKNUMBER"
+	TEXTADD="     run $TASKNUMBER build src.rpm"
+	[ -z "$TASKNUMBER" ] || TEXTADD="     add src.rpm to task $TASKNUMBER"
 	echo "$(basename $i) $TEXTADD at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
 done
 
