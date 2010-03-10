@@ -32,17 +32,20 @@ phelp()
 	echog " -i - initialize hasher"
 	echog " -c - cleanup hasher"
 	echog " -o - log in as root user"
-	echog " -t - use test hasher dir"
-	echog " -r - remote login to hasher"
+	echog " -t - use test hasher dir (different to build hasher)"
 	echog " -M?? - branch name"
+	echog "Extra options:"
+	echog " -a - auto test mode for post myhsh build checking"
+	echog " -r - remote login to hasher"
 }
 
-while getopts :chito opt; do
+while getopts :chitoa opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
+	a) AUTOMODE=1 ;;
 	r) REMOTE=1 ;;
 	o) ROOTER="--rooter" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -52,7 +55,7 @@ while getopts :chito opt; do
 done
 
 # remove args that were options
-if [ $# -gt 0 ]; then 
+if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
 fi
 
@@ -61,34 +64,33 @@ LISTRPMARGS=$@
 
 parse_cmd_pre "$@" --
 
-set_hasherdir
-[ -n "$TESTMODE" ] && HASHERDIR=$HASHERDIR-test
-
-if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
-	HASHERDIR=$HASHERDIR-test
-fi
+mygetopts $LISTARGS
 
 # export OURAPTCONF with temp. file contains correct path to sources.list
 prepare_aptconfig
 
 HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $DEFAULTARCH"
 
-mygetopts $LISTARGS
+set_hasherdir
+if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
+	HASHERDIR=$HASHERDIR-test
+fi
+
 
 if [ -n "$REMOTE" ] ; then
 	check_key
 	test -n "$BUILDSERVER" || fatal "Please set BUILDSERVER in config file"
 	ssh -t $BUILDSERVER loginhsh ${SAVEOPT/-r/}
-	exit 0
+	exit
 fi
 
-if [ "$CLEANUP" = "1" ]; then
-	echog "Cleanup $HASHERDIR ..."
+if [ "$CLEANUP" = "1" ] ; then
+	echog "Cleanup hasher in $HASHERDIR..."
 	$HSH --cleanup-only $HASHERDIR $HASHERARG || fatal "cleanup"
-	exit 0
+	exit
 fi
 
-if [ ! -d $HASHERDIR -o "$INITIALIZE" = "1" ]; then
+if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] || [ -n "$AUTOMODE" ]; then
 	echog "Initialize $HASHERDIR ..."
 	mkdir -p $HASHERDIR && $HSH $HASHERARG --initroot-only $HASHERDIR || fatal "mkdir"
 fi
@@ -107,11 +109,14 @@ else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
 $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+
 echog "You are in hasher shell"
 $HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER -Y --shell
-if [ -n "$TESTMODE" ] ; then
+
+if [ -n "$AUTOMODE" ] ; then
+	# FIXME: do not remove on x86_64
 	echo "Remove package for test preun scripts"
 	$HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)
-	echo "Cleanup hasher..."
+	echo "Cleanup hasher in $HASHERDIR..."
 	$HSH --cleanup-only $HASHERDIR
 fi

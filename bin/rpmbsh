@@ -112,14 +112,14 @@ else
 	echo "-------------------------------"
 fi
 
+# make src.rpm if build OK and we have options for rpmbs
+
 RPMBSARGS=$(drop_args "$LISTRPMARGS" i c l)
 if [ ! "$RESULT" = "0" ] || [ -z "$RPMBSARGS" ]; then
 	exit $RESULT
 fi
 
-# make src.rpm if build OK and we have options for rpmbs
-
 is_gear $SPECDIR && TSKLIST=$LISTNAMES || TSKLIST=$LISTBUILT
 
-$ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
+exec $ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
 

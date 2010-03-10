@@ -99,7 +99,7 @@ do
 	# Note: hasher is already use renice for low priority
 	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
-	if [ -f $LOGFILE.failed ] ;	then
+	if [ -f $LOGFILE.failed ] ; then
 		RESULT=1
 		break
 	fi
@@ -122,8 +122,6 @@ fi
 print_list $LISTBUILTSH
 
 echo
-
-
 if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	# test install (only for last package in list)
 	# some key for build hasher from scratch
@@ -132,7 +130,7 @@ if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
-	$ETERBUILDBIN/loginhsh -t -i $MENVARG $BINPACKAGES || exit 1
+	exec $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
 fi
 
 exit $RESULT
