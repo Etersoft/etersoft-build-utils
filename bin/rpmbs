@@ -259,14 +259,14 @@ CHECK_OPTIONS=""
 test -n "$NOCHECK" || sisyphus_check $CHECK_OPTIONS --files $LISTBUILT || fatal "sisyphus check failed"
 echog "OK"
 
-# rpm's find-req do not find rpmlint :)
+# due rpm's find-req
 RPMLINT=rpmlint
-if which $RPMLINT >/dev/null ; then
+if which $RPMLINT &>/dev/null ; then
 	echog -n "Checking with rpmlint..."
 	echo
 	$RPMLINT $LISTBUILT
-else
-	echog "It is recommended to install rpmlint package for additional checking"
+#else
+#	echog "It is recommended to install rpmlint package for additional checking"
 fi
 
 test -n "$CHECKONLY" && exit 0
