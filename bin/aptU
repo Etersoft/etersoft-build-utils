@@ -8,9 +8,10 @@
 load_mod gettext
 
 if [ "$1" = "-h" ]; then
-	echog "aptU [-v] - update package and all it requires"
+	echog "aptU [-v] [-l] - update package and all it requires"
 	echog "Usage: aptU [package(s)]"
 	echog " -v - verbose"
+	echog " -l - print list of required packages"
 	exit 0
 fi
 
@@ -19,6 +20,13 @@ if [ "$1" = "-v" ] ; then
 else
 	VERBOSE=">/dev/null"
 fi
+
+if [ "$1" = "-l" ] ; then
+	LISTFLAG=1
+	shift
+fi
+
+export LC_ALL=C
 
 get_requires()
 {
@@ -70,3 +78,5 @@ install_packages()
 }
 
 install_packages $@
+
+[ -n "$LISTFLAG" ] && echo "Possible requires packages for '$@': $ALREADYHANDLEDAPT"
