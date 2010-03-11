@@ -211,8 +211,11 @@ fi
 # Fedora 10 does mismatch for Patch: and %patch0
 subst "s|Patch:|Patch0:|g" $SPECNAME
 
-# Due using %release in Source: and Patch: names
-subst "s|%release|$RELEASE|g" $SPECNAME
+if [ "$VENDOR" != "alt" ] ; then 
+	# Due possible using %release in Source: and Patch: names
+	subst "s|^\(Source.*\)%release|\1$RELEASE|g" $SPECNAME
+	subst "s|^\(Patch.*\)%release|\1$RELEASE|g" $SPECNAME
+fi
 
 # for systems with ash as sh
 subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
