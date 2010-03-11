@@ -1,3 +1,12 @@
+etersoft-build-utils-1.8.0: 12 Mar 2010
+- aptU: initial realize for -l option
+- rpmpub: fix support for spec autodetect
+- rpmbph: replace %release only for Patch: and Source: (not for ALT)
+- fix drop_extensions for x86_64 and improve test for it
+- rpmgs: fix downloading errors handling
+- print only task info to log, do step
+- fix rpmbsh -i mode and loginhsh
+
 etersoft-build-utils-1.7.9: 08 Mar 2010
 - rpmbph: do undefine libtoolize for M50 too
 - introduce HASHERBASEDIR and set_hasherdir and use it

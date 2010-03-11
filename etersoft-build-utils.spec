@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.7.9
+Version: 1.8.0
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Mar 12 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- stable release 1.8.0
+- aptU: initial realize for -l option
+- fix rpmbsh -i mode and loginhsh
+- rpmgs: fix downloading errors handling
+
 * Mon Mar 08 2010 Vitaly Lipatov <lav@altlinux.ru> 1.7.9-alt1
 - rpmbph: do undefine libtoolize for M50 too
 - drop out ~/.ebconfig support, enable warning about ~/.eterbuild-config
