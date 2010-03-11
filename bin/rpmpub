@@ -2,7 +2,7 @@
 
 # Script to publish project as src.rpm on project ftp directory
 
-NEEDETERBUILD=162
+NEEDETERBUILD=179
 
 # You can use this script separately in your project with
 #. /usr/share/eterbuild/eterbuild
@@ -33,19 +33,20 @@ if [ "$1" = "-r" ] ; then
 	shift 2
 fi
 
-if [ -n "${1/*.spec/}" ] ; then
+if [ -n "${1/*.spec/}" ] || [ -z "$1" ] ; then
 	SPECNAME=$(get_gear_spec)
+	echo "Using autodetected spec $SPECNAME..."
 else
 	SPECNAME=$1
 	shift
 fi
 
-if [ ! -r $SPECNAME ] ; then
+if [ ! -r "$SPECNAME" ] ; then
 	fatal "Spec $SPECNAME does not found in the current dir"
 fi
 
 #Example: ETERDESTSRPM=/var/ftp/pub/Etersoft/CIFS@Etersoft/$VERSION/sources
-ETERDESTSRPM=$1
+ETERDESTSRPM="$1"
 if [ -z "$ETERDESTSRPM" ] ; then
 	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME "$ALPHA")
 	echo "Prepare src.rpm to $ETERDESTSRPM"
