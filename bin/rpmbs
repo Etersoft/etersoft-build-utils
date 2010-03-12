@@ -137,7 +137,8 @@ rpmbs_copying_built()
 		scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
 	else
 		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
-		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		chmod ug+rw $LISTBUILT
+		cp -fva $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
 			# Publish tarball if target dir is exist
 		if [ -d "$ETERDESTSRPM/tarball" ] ; then
 			echog "There is tarball dir exists. Extract tarball for other build system compatibility."
