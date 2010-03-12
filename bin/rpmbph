@@ -217,6 +217,14 @@ if [ "$VENDOR" != "alt" ] ; then
 	subst "s|^\(Patch.*\)%release|\1$RELEASE|g" $SPECNAME
 fi
 
+# Auto*=yes,nomingw32 works since ALT 4.1
+if [ "$VENDOR" = "alt" ] ; then
+	if echo "$MDISTR" | egrep -q "M24|M30|M40" ; then
+		subst "s|^\(AutoReq.*\),nomingw32|\1|g" $SPECNAME
+		subst "s|^\(AutoProv.*\),nomingw32|\1|g" $SPECNAME
+	fi
+fi
+
 # for systems with ash as sh
 subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
 subst "s|^popd|cd - >/dev/null|g" $SPECNAME
