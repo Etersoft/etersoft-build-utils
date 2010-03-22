@@ -78,3 +78,6 @@ xorg-sdk|xorg-x11-server-sdk
 libICE-devel|xorg-x11-libICE-devel
 libesd|libesd
 libesd-devel|libesd-devel
+
+# cifs
+samba-client|cifs-mount
