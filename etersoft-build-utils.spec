@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Mar 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
+- fix HASHERBASEDIR detecting
+- rpmbs: chmod generated src.rpm
+- skip AutoReq/AutoProv mingw32 for ALT before 4.1
+
 * Fri Mar 12 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - stable release 1.8.0
 - aptU: initial realize for -l option

@@ -1,3 +1,10 @@
+etersoft-build-utils-1.8.1: 22 Mar 2010
+- fix HASHERBASEDIR detecting
+- add SSHTIMEOUT var and use timeout command for ssh operations in gpush
+- add repl rules for samba-client
+- rpmbs: chmod generated src.rpm
+- skip AutoReq/AutoProv mingw32 for ALT before 4.1
+
 etersoft-build-utils-1.8.0: 12 Mar 2010
 - aptU: initial realize for -l option
 - rpmpub: fix support for spec autodetect
