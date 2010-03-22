@@ -12,8 +12,8 @@ set_hasherdir()
 		fatal "Please install hasher package before use it"
 	fi
 
-	if [ -z "$HASHERBASEDIR" ] ; then
-		warning "HASHERBASEDIR is not set. I will try with HASHERDIR, but you have to set HASHERBASEDIR in the config file"
+	if [ -n "$HASHERDIR" ] ; then
+		warning "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
 		HASHERBASEDIR=$HASHERDIR
 	fi
 	HASHERDIR=$HASHERBASEDIR$MENVARG
