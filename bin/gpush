@@ -64,8 +64,8 @@ push_to_remote()
 	echo
 	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git"
 	# FIXME: push with one command
-	git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
-	git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+	timeout $SSHTIMEOUT git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+	timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 }
 
 # if remote list is empty, do ginit
