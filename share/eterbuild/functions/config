@@ -40,6 +40,8 @@ COMPANYFTP=etersoft.ru
 TARGETFTPBASE="/var/ftp"
 LOGDIR="$RPMDIR/log"
 HASHERBASEDIR="$HOME/hasher"
+# fill it in set_hasher_dir
+HASHERDIR=""
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
 HASHERARG=""
 

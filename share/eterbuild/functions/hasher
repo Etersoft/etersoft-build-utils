@@ -13,8 +13,7 @@ set_hasherdir()
 	fi
 
 	if [ -n "$HASHERDIR" ] ; then
-		warning "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
-		HASHERBASEDIR=$HASHERDIR
+		fatal "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
 	fi
 	HASHERDIR=$HASHERBASEDIR$MENVARG
 	if [ "$DEFAULTARCH" = "x86_64" ] ; then
