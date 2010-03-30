@@ -306,6 +306,7 @@ do
 	subst "s|%rpmcflags|%optflags|g" $i
 
 	# drop useless construction
+	subst "s|%setup -q|%setup|g" $i
 	subst "s|^%clean$||g" $i
 	subst "s|^%debug_package$||g" $i
 	subst "s|^rm -rf %buildroot$||g" $i

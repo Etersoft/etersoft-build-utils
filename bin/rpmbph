@@ -410,6 +410,5 @@ for i in $LISTBUILT ; do
 	#rm -f $SPKG
 	altspec_to_local $SPECNAME
 	$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
-
 done
 
