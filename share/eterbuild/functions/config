@@ -51,7 +51,7 @@ CURRENTBRANCHNAME="M51"
 #SSH_KEYFILE=~/.ssh/id_dsa
 GIRARHOST=git.alt
 # Timeout in sec for ssh commands
-SSHTIMEOUT=30
+SSHTIMEOUT=300
 
 BUILDSERVER=
 
