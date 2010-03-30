@@ -12,9 +12,9 @@ set_hasherdir()
 		fatal "Please install hasher package before use it"
 	fi
 
-	if [ -n "$HASHERDIR" ] ; then
-		fatal "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
-	fi
+	#if [ -n "$HASHERDIR" ] ; then
+	#	fatal "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
+	#fi
 	HASHERDIR=$HASHERBASEDIR$MENVARG
 	if [ "$DEFAULTARCH" = "x86_64" ] ; then
 		HASHERDIR="$HASHERDIR-64"
