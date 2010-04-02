@@ -29,8 +29,9 @@ check_locking()
 		if kill -0 -- "$pid" 2>/dev/null; then
 			warning "hasher dir $HASHERDIR is already locked by pid $pid"
 			ps hp "$pid" >&2
-		else
-			warning "hasher dir $HASHERDIR is locked by stale pid $pid"
+		# disable due always reported
+		#else
+		#	warning "hasher dir $HASHERDIR is locked by stale pid $pid"
 		fi
 	fi
 
