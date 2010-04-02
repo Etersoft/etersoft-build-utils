@@ -91,6 +91,7 @@ check_gear_and_tag()
 	local RESULT=0
 	local GEARCTAG=gear-create-tag
 
+	test -n "$TAG" && echo "Create $TAG tag..."
 	# FIXME: uncomment use-agent in ~/.gnupg/gpg.conf, but with ssh access to build server I got
 	#  gpg: problem with the agent - disabling agent use
 	#  gpg: Invalid passphrase; please try again ...
@@ -105,7 +106,9 @@ check_gear_and_tag()
 	if is_gear $SPECDIR ; then
 		# needed correct user.name/user.email for get GPG id
 		pushd $SPECDIR >/dev/null
+		# default: <VERSION>-<RELEASE>
 		$GEARCTAG $FORCE || RESULT=1
+		test -z "$TAG" || git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
 		popd >/dev/null
 	fi
 	return $RESULT
@@ -178,8 +181,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	build_rpms_name "$LISTNAMES"
 	pkg_release_check
 	TAG=$VERSION-$RELEASE
-	echo "Create $TAG tag..."
-	check_gear_and_tag # || fatal "Can't make tag"
+	check_gear_and_tag "$TAG"  # || fatal "Can't make tag"
 	$ETERBUILDBIN/gpush $GIRARHOST || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
 	echo
 	echo "Run build $BASENAME at $GIRARHOST"
@@ -231,7 +233,7 @@ pkg_release_check $LISTBUILT
 
 # if only one file
 if [ -r "$LISTBUILT" ] ; then
-	check_gear_and_tag
+	check_gear_and_tag ""
 fi
 
 
