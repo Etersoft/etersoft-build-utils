@@ -9,6 +9,6 @@ for i in $@ ; do
 #done
 #rpmbsh -u $FILES
 	cd $i || exit 1
-	rpmbs -u $i.spec || exit 1
+	rpmbs -u || exit 1
 	cd -
 done
