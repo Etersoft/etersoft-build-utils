@@ -102,8 +102,14 @@ check_locking
 echog "Prepare hasher in $HASHERDIR ..."
 # there is package names in LISTRPMARGS
 UTILPKG="mc"
-# FIXME: gnome program needs dbus-tools-gui
-if [ -n "$TESTMODE" ] ; then
+
+# GNOME program needs dbus-tools-gui
+if rpm --requires -p $LISTNAMES 2>/dev/null | grep -q dbus ; then
+	echo "dbus using detecteed, add dbus-tools-gui"
+	UTILPKG="$UTILPKG dbus-tools-gui"
+fi
+
+if [ -n "$TESTMODE$AUTOMODE" ] ; then
 	UTILPKG="$UTILPKG XFree86-xauth fonts-ttf-liberation"
 else
 	UTILPKG="$UTILPKG etersoft-build-utils"
