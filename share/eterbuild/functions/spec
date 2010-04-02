@@ -184,10 +184,11 @@ set_specdir()
 get_gear_spec()
 {
         local trySpec=""
-        # check locally only if in gear repo (useful if spec in ~/.gear)
+        # check locally only if in gear repo
         is_gear && trySpec=$(echo *.spec)
         # if not in local dir, check spec in git root dir
         [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir)/*.spec`
+        [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir)/.gear/*.spec`
         # printout nothing if can't get spec
         [ -f "$trySpec" ] || trySpec=""
         echo $trySpec
