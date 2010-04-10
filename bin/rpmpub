@@ -55,6 +55,12 @@ else
 fi
 export ETERDESTSRPM
 
+PREVPATH=$(readlink -m "$ETERDESTSRPM/../../last")
+if [ -n "$ALPHA" ] && [ ! -d "$ETERDESTSRPM" ] && [ -d "$PREVPATH" ] ; then
+	echo "Copying previous target tree from $PREVPATH"
+	cp -alv $PREVPATH $(readlink -m "$ETERDESTSRPM/..")
+fi
+
 # just for your information: rpmbs supports ssh-like target
 $ETERBUILDBIN/rpmbs -s $SPECNAME || fatal "Can't build SRPMS"
 
