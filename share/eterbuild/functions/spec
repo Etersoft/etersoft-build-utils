@@ -127,6 +127,7 @@ decrement_release()
 {
 	local NUMPART=$(echo $1 | sed -e "s|[^0-9].*||g")
 	[ -n "$NUMPART" ] || NUMPART=1
+	[ "$NUMPART" = "0" ] && NUMPART=1
 	echo $(($NUMPART - 1))
 }
 
