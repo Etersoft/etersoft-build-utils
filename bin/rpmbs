@@ -30,7 +30,7 @@ DELETENOW=
 
 
 #############################
-Usage="Usage: $name [-s -u -c -n --nodeps] spec..."
+Usage="Usage: $name [-s -u -c -n --nodeps] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}

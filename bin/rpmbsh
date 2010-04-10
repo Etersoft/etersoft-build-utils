@@ -20,11 +20,11 @@ REMCOM=
 COMMIT=
 
 #############################
-Usage="Usage: $name [-r -s -u -m -i -c] spec..."
+Usage="Usage: $name [-r -s -u -m -i -c] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - BSH - build source; use hasher"
+Descr="$name - BSH - build [from] source; use hasher"
 
 phelp()
 {
