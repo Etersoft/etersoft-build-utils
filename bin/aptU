@@ -33,6 +33,13 @@ get_requires()
 	rpm --requires $@ | grep -v rpmlib | cut -f1 -d" " | sort -u
 }
 
+# Translate rpm requires to package names
+rpmreqs_to_apt()
+{
+	local REQLIST="$@"
+	local PACKAGES=`$SUDO apt-get install --print-uris $REQLIST | grep "is already the newest version" | cut -f1 -d" " | sort -u`
+	do_exclude_list "$ALREADYHANDLEDAPT" "$PACKAGES"
+}
 
 install_by_requires()
 {
@@ -51,7 +58,7 @@ install_by_requires()
 		RLIST=$(do_exclude_list "$SKIPPACKAGES" "$RLIST")
 		install_by_requires "$RLIST"
 	fi
- }
+}
 
 ALREADYHANDLEDAPT="bash sh apt rpm glibc-core glibc-locales glibc-preinstall filesystem alt-gpgkeys"
 ALREADYHANDLEDRPM=""
@@ -60,21 +67,19 @@ install_packages()
 	local ERROR=
 	local LIST="$@"
 	test -n "$LIST" || { echog "There is no more packages to install" ; return ; }
+
 	echo "Install $LIST"
 	$SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
 	REQLIST="$(get_requires $LIST)"
 	REQLIST=$(do_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
-	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }
 
+	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }
 	install_by_requires $REQLIST
 	ALREADYHANDLEDRPM="$ALREADYHANDLEDRPM $REQLIST"
 
 	echog "Translate rpm requires to package names..."
-	PACKAGES=`$SUDO apt-get install --print-uris $REQLIST | grep "is already the newest version" | cut -f1 -d" " | sort -u`
-	PACKAGES=$(do_exclude_list "$ALREADYHANDLEDAPT" "$PACKAGES")
-
-	install_packages $PACKAGES
+	install_packages $(rpmreqs_to_apt $REQLIST)
 }
 
 install_packages $@
