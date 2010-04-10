@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod git
+
+test -r "$1" && fatal "Do not need any files in params"
+
+if is_girar_name $1 ; then
+	GIRARHOST=$1
+	shift
+fi
+
+mygetopts()
+{
+
+	if [ "$1" = "-h" ] ; then
+		echo "gacl - acl control for gear repo in $GIRARHOST"
+		echo "Use: gacl [GEAR] [-$CURRENTBRANCHNAME] [package] command [params]"
+		echo "Examples:"
+		echo "    gacl [-$CURRENTBRANCHNAME] package add newuser"
+		echo "    gacl [-$CURRENTBRANCHNAME] package del newuser"
+		echo "    gacl [-$CURRENTBRANCHNAME] package show"
+		exit 0
+	fi
+
+	# FIXME
+	# if two or one param only, try detect
+	if [ -z "$3" ] || [ -z "$2" ] ; then
+		# TODO
+		PROJECTNAME=$(basename `get_root_git_dir`)
+	else
+		PROJECTNAME=$1
+		shift
+	fi
+	#echo PROJNAME: $PROJECTNAME
+
+	COMMAND=$1
+	shift
+	#echo COMMAND: $COMMAND
+
+	PARAM=$1
+	shift
+
+}
+
+#parse_cmd_pre_spec "$@"
+parse_cmd_pre "$@"
+mygetopts $LISTARGS
+set_binaryrepo $MENV
+
+[ -n "$PROJECTNAME" ] || fatal "Project name is missed"
+[ -n "$COMMAND" ] || fatal "Command is missed"
+
+case "$COMMAND" in
+	"add"|"del")
+		[ -n "$PARAM" ] || fatal "Param for command is missed"
+		echo "$GIRARHOST:$BINARYREPO ACL for $PROJECTNAME: $COMMAND $PARAM..."
+		ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $PARAM
+		;;
+	"show")
+		echo -n "$GIRARHOST:$BINARYREPO ACL for "
+		ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
+		;;
+	*)
+		fatal "Unknown command $COMMAND"
+		;;
+esac
+
