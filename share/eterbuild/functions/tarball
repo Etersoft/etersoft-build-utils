@@ -77,7 +77,11 @@ copy_tarball_to_tar()
 make_md5sum()
 {
 	cd "$1"
-	md5sum -b $2 > $2.md5
+	if [ -n "$2" ] ; then
+		md5sum -b $2 > $2.md5
+	else
+		md5sum -b * >MD5SUM
+	fi
 	cd -
 }
 
