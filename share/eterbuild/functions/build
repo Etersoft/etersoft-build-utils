@@ -18,10 +18,12 @@ uni_rpmbuild()
 	local THRPARAM="--quiet"
 	local FOURPARAM="--quiet"
 	local COMMIT=""
+	local COMMANDAFTER=""
 
 	if [ "$1" = "--commit" ] ; then
 		shift
 		COMMIT="--commit"
+		COMMANDAFTER="git reset"
 	fi
 
 	local SPECNAME="$1"
@@ -61,6 +63,7 @@ uni_rpmbuild()
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
 			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" $@ || RET=$?
+			[ -z "$COMMANDAFTER" ] || $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
