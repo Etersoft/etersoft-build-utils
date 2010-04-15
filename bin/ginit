@@ -7,8 +7,8 @@ load_mod git
 test -r "$1" && fatal "Do not need any files in params"
 
 if [ "$1" = "-h" ] ; then
-	echo "ginit [GEAR] - initialize repo in $GIRARHOST for current project"
-	echo "Use: ginit without parameters"
+	echo "ginit - initialize repo in $GIRARHOST for current project"
+	echo "Use: ginit [GEAR]"
 	echo "     ginit git.eter - for init in git.eter gear repo"
 	exit 1
 fi
