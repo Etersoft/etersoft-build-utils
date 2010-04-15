@@ -102,7 +102,7 @@ get_pagepkginfo()
 			PKGVERSION=$(querypackage ${i} VERSION)
 			PKGNAME=$(querypackage ${i} sourcerpm | sed -e "s|-$PKGVERSION.*||g")
 		else
-			PKGNAME=$(eval_spec ${i} | get_var "Name")
+			PKGNAME=$(get_name ${i})
 		fi
 	else
 		# installed package name

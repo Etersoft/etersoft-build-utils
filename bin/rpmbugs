@@ -87,7 +87,7 @@ for i in $SPECLIST ; do
 			# it is rpm package
 			PKGNAME=$(querypackage $i NAME)
 		else
-			PKGNAME=$(eval_spec $i | get_var "Name")
+			PKGNAME=$(get_name $i)
 			test -z ${PKGNAME} && fatal "Cannot get package name"
 		fi
 	else

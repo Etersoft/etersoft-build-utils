@@ -73,6 +73,11 @@ inc_subrelease()
 	set_release "$1" "$(get_txtrelease $1)${MAJOR}.$(($MINOR + 1 ))"
 }
 
+get_name()
+{
+	eval_spec $1 | get_var "Name"
+}
+
 get_version()
 {
 	eval_spec $1 | get_var "Version"
