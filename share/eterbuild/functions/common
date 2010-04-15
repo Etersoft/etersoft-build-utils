@@ -68,6 +68,11 @@ print_list()
 	done
 }
 
+realpath()
+{
+        readlink -f "$@"
+}
+
 get_root_git_dir()
 {
         local DIR="$1"
