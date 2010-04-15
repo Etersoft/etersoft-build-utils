@@ -19,7 +19,7 @@ if is_girar_name $1 ; then
 fi
 
 # FIXME
-PROJECTNAME=$(basename `get_root_git_dir`)
+PROJECTNAME=$(get_gear_name)
 
 echo "Create remote $PROJECTNAME repo in $GIRARHOST:"
 ssh $GIRARHOST git-init-db $PROJECTNAME.git

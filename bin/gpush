@@ -34,7 +34,7 @@ fi
 #	PROJECTNAME=$1
 #	shift
 #else
-	PROJECTNAME=$(basename `get_root_git_dir`)
+	PROJECTNAME=$(get_gear_name)
 #fi
 
 CURRENTBRANCH=$(get_current_branch)

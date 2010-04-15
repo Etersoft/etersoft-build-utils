@@ -97,6 +97,13 @@ is_gear()
 	return 1
 }
 
+# FIXME
+get_gear_name()
+{
+	basename `get_root_git_dir`
+}
+
+
 if [ "$UID" = "0" ] && [ -z "$ALLOW_ROOT_USER" ] ; then
 	fatal "It is strict recommended do not use these scripts as root"
 fi

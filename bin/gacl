@@ -28,7 +28,7 @@ mygetopts()
 	# if two or one param only, try detect
 	if [ -z "$3" ] || [ -z "$2" ] ; then
 		# TODO
-		PROJECTNAME=$(basename `get_root_git_dir`)
+		PROJECTNAME=$(get_gear_name)
 	else
 		PROJECTNAME=$1
 		shift
