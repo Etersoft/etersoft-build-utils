@@ -78,6 +78,7 @@ get_root_git_dir()
         local DIR="$1"
         [ -n "$DIR" ] || DIR=$(pwd)
         [ "$DIR" = "/" ] && return 1
+        [ "$DIR" = "$HOME" ] && return 1
         if [ -d "$DIR/.git" ] ; then
                 readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
                 return
