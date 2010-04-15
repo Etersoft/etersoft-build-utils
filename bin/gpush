@@ -26,6 +26,7 @@ fi
 
 if is_girar_name $1 ; then
 	GIRARHOST=$1
+	OVERRIDEGIRARHOST=$1
 	shift
 fi
 
@@ -68,12 +69,15 @@ push_to_remote()
 	timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 }
 
-# if remote list is empty, do ginit
-if [ -z "$(get_remote_git_list)" ] ; then
-	ginit $GIRARHOST
-fi
 
-for i in `( echo $GIRARHOST; get_remote_git_list  ) | uniq` ; do
+REMOTELIST="$(get_remote_git_list)"
+
+# if remote list is empty, do ginit
+[ -n "$REMOTELIST" ] || ginit $GIRARHOST
+
+LISTGIRARHOST="$GIRARHOST $(do_exclude_list $REMOTELIST $GIRARHOST)"
+[ -n "$OVERRIDEGIRARHOST" ] && LISTGIRARHOST=$OVERRIDEGIRARHOST
+for i in $LISTGIRARHOST ; do
 	push_to_remote $i
 done
 
