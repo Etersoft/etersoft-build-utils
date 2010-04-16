@@ -49,6 +49,7 @@ fi
 ETERDESTSRPM="$1"
 if [ -z "$ETERDESTSRPM" ] ; then
 	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME "$ALPHA")
+	[ -n "$ETERDESTSRPM" ] || fatal "Can't detect target dir from spec (Url in Source: field). Run rpmpub with TARGETDIR param"
 	echo "Prepare src.rpm to $ETERDESTSRPM"
 else
 	test -d "$ETERDESTSRPM" || fatal "You need run with exists dir to publish src.rpm project (I checked $ETERDESTSRPM, it is nonexist)"
