@@ -5,7 +5,7 @@ load_mod spec
 
 check()
 {
-	[ "$2" != "$3" ] && echo "FATAL with '$1': result '$2' do not match with '$3'" || echo "OK for '$1' with '$2'"
+	[ "$2" != "$3" ] && echo "FATAL with '$1': result '$3' do not match with '$2'" || echo "OK for '$1' with '$3'"
 }
 
 check_AD()
@@ -24,7 +24,7 @@ check_AD M40 4.0
 check_AD M30 3.0
 check_AD M41 4.1
 check_AD M50 5.0
-check_AD  SS Sisyphus
+check_AD  SS sisyphus
 
 echo "Check get_altdist_mod"
 check_MOD 2.4 M24
