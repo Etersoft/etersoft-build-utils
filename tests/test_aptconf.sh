@@ -33,3 +33,6 @@ cat $OURAPTCONF
 echo
 echo "sources $OURSOURCES:"
 cat $OURSOURCES
+
+rm -f apt.conf.SS
+rm -f sources.list.SS
