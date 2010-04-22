@@ -70,9 +70,9 @@ print_tmp_sourceslist()
 	fi
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
 	if [ "$DEFAULTARCH" = "x86_64" ] ; then
-		cat "$SLIST" | sed -e "s|x86_64|$DEFAULTARCH|g"
-	else
 		cat "$SLIST" | sed -e "s|i586|$DEFAULTARCH|g"
+	else
+		cat "$SLIST" | sed -e "s|x86_64|$DEFAULTARCH|g"
 	fi
 }
 
