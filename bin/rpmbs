@@ -180,20 +180,23 @@ set_binaryrepo $MENV
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo "Run with gear repo..."
 	build_rpms_name "$LISTNAMES"
+	# hack: get project name from package name
+	#PROJECTNAME=$(echo $BASENAME | filter_gear_name)
+	PROJECTNAME=$(get_gear_name)
 	pkg_release_check
 	TAG=$VERSION-$RELEASE
 	check_gear_and_tag "$TAG"  # || fatal "Can't make tag"
 	$ETERBUILDBIN/gpush $GIRARHOST || fatal "Git push via gpush failed. Possibly you need to run ginit for create remote repo."
 	echo
-	echo "Run build $BASENAME at $GIRARHOST"
+	echo "Run build $PROJECTNAME at $GIRARHOST"
 	if [ -n "$TASKNUMBER" ] ; then
-		ssh $GIRARHOST task add $TASKNUMBER repo $BASENAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		ssh $GIRARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	else
-		ssh $GIRARHOST build -b $BINARYREPO $BASENAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		ssh $GIRARHOST build -b $BINARYREPO $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
 	# FIXME: incorporate
 	cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
-	echo "     run $TASKNUMBER task $BASENAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	rm -f $RPMDIR/uploaded.log.tmp
 	exit
 fi
@@ -212,7 +215,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echog "==== Copying to build server ====="
 	#echog "It is recommended to rename old version at server for save traffic during rsync"
 	rsync -vay --partial --progress --checksum \
-	 	-e ssh $LISTBUILT $BUILDSERVER:/$RPMTOPDIR/SRPMS/ || exit 1
+		-e ssh $LISTBUILT $BUILDSERVER:/$RPMTOPDIR/SRPMS/ || exit 1
 	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
 	exit 0
 fi
