@@ -28,7 +28,7 @@ get_mn_fromspec()
 	#MAJOR=`echo "$BASERELEASE" | sed -e "s|^\([0-9a-zA-Z]*\)\..*|\1|"`
 	#MAJOR=`echo "$BASERELEASE" | sed -e "s|^\([0-9a-zA-Z]*\)\..*|\1|"`
 	MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
-	if [ "$
+	#if [ "$
 }
 
 TESTREL=alt2
@@ -61,6 +61,13 @@ check get_numrelease 3.1 `get_numrelease`
 TESTREL=alt4.2
 check get_txtrelease alt `get_txtrelease`
 
+# release N.N
+TESTREL=alt3.r3003.1
+check get_numrelease 3.r3003.1 `get_numrelease`
+
+TESTREL=alt4.r3003.2
+check get_txtrelease alt `get_txtrelease`
+
 BASERELEASE=27.5
 get_mn_fromspec
 check MAJOR  27 $MAJOR
@@ -76,9 +83,16 @@ get_mn_fromspec
 check MAJOR  27.5 $MAJOR
 check MINOR r12002 $MINOR
 
+BASERELEASE=27.r12002.1
+get_mn_fromspec
+check MAJOR  27 $MAJOR
+check MINOR r12002.1 $MINOR
+
 BASERELEASE=27.5.2
 get_mn_fromspec
 check MAJOR  27.5 $MAJOR
 check MINOR 2 $MINOR
 
-
+# from rpmbh:
+# General rule: alwars alt(N-1).MM.(N)
+set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE

@@ -18,3 +18,5 @@ check_dec 39.1 38
 check_dec 39cvs 38
 check_dec 39.1cvs 38
 check_dec cvs 0
+check_dec 0 0
+check_dec 25.r101.1 24
