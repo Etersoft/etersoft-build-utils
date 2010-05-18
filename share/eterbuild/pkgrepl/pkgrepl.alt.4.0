@@ -7,3 +7,4 @@ sysvinit-utils|
 xorg-sdk|xorg-x11-devel
 libgif-devel|libungif-devel
 libgif|libungif
+libpam-devel|libpam0-devel

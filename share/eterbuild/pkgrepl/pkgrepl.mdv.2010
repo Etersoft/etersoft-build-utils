@@ -7,3 +7,6 @@ libarts-devel|arts3-devel
 
 libfontenc-devel|libfontenc-devel
 jackit-devel|libjack-devel
+
+libXcomposite|libxcomposite1
+libXpm|libxpm4
