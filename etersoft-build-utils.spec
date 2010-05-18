@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.8.1
+Version: 1.8.3
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,25 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue May 18 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
+- improve some requires replacements
+- use PROJECTNAME instead BASENAME
+- add filter_gear_name for replace forbidden + with plus word
+- hasher: fix arch replacement
+- rpmbs: fix rsync upload for src.rpm
+
+* Sat Apr 17 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.2-alt1
+- rpmpub: add fatal error if target dir is not set
+- fix get_root_git_dir against HOME
+- rpmbs: create MD5SUM for packages
+- do git reset after build with gear --commit
+- add gacl: utility for acl control
+- rpmpub: make cp -al for new releases from last link
+- loginhsh: install dbus-tools-gui if package(s) requires dbus
+- rpmbs: add git tag checking
+- always set APTCONF and HASHERDIR
+- add TOPDIR support
+
 * Mon Mar 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
 - fix HASHERBASEDIR detecting
 - rpmbs: chmod generated src.rpm

@@ -244,6 +244,7 @@ function print_error()
 # tarball dirname [options]
 gear_update_from_tarball()
 {
+	# FIXME: -a for special cases
 	local CREATEFLAG=
 	local TARBALL="$1"
 	local CURNAME="$2"

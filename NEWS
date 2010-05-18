@@ -1,3 +1,25 @@
+etersoft-build-utils-1.8.3: 18 May 2010
+- use PROJECTNAME instead BASENAME
+- add filter_gear_name for replace forbidden + with plus word
+- hasher: fix arch replacement
+- rpmbs: fix rsync upload for src.rpm
+
+etersoft-build-utils-1.8.2: 17 Apr 2010
+- rpmpub: add fatal error if target dir is not set
+- fix get_root_git_dir against HOME
+- gpush: improve remote repository enum
+- inroduce get_name (for spec) and use it
+- introduce get_gear_name and use it
+- rpmbs: create MD5SUM for packages
+- introduce realpath function
+- do git reset after build with gear --commit
+- add gacl: utility for acl control
+- rpmpub: make cp -al for new releases from last link
+- loginhsh: install dbus-tools-gui if package(s) requires dbus
+- rpmbs: add git tag checking
+- always set APTCONF and HASHERDIR
+- add TOPDIR support
+
 etersoft-build-utils-1.8.1: 22 Mar 2010
 - fix HASHERBASEDIR detecting
 - add SSHTIMEOUT var and use timeout command for ssh operations in gpush
