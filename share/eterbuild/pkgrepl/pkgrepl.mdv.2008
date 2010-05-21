@@ -5,3 +5,6 @@ python-devel|libpython2.5-devel
 libgtkmm2-devel|libgtkmm2.4-devel
 libldap-devel|libldap2.3_0-devel
 libldap|libldap2.3_0
+
+libXcomposite|libxcomposite1
+libXpm|libxpm4
