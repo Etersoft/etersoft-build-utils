@@ -74,7 +74,7 @@ print_replbased_list()
 
 	# separate checking for x86_64
 	[ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.$VENDOR.$DISTRVERSION.x86_64 $REPLBASE.$VENDOR.x86_64 "
-	[ "$VENDOR" != "alt" ] && [ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.$TARGET.x86_64"
+	[ "$VENDOR" != "alt" ] && [ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.$TARGET.x86_64 "
 
         # general rules listing
 	echo -n "$REPLBASE.$VENDOR.$DISTRVERSION $REPLBASE.$VENDOR "
