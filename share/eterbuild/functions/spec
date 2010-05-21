@@ -18,9 +18,9 @@ eval_spec()
 	# Hack: just print spec if -bE failed
 	if is_alt ; then
 		# on ALT we have to done without errors
-		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
+		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
 	else
-		$RPMBUILD -bE --target $DEFAULTARCH $RPMBUILDARG $@ 2>/dev/null || cat $1
+		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $@ 2>/dev/null || cat $1
 	fi
 }
 

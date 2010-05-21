@@ -3,7 +3,7 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-ETERBUILDVERSION=183
+ETERBUILDVERSION=184
 
 SUDO="sudo"
 
@@ -18,10 +18,10 @@ OURTMPDIR=$TMPDIR
 [ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
 
 # detect our arch
-if [ ! -n "$DEFAULTARCH" ] ; then
-	DEFAULTARCH=$(uname -m)
-	[ "$DEFAULTARCH" = "x86_64" ] || DEFAULTARCH=i586
-fi
+SYSARCH=$(uname -m)
+[ "$SYSARCH" = "x86_64" ] || SYSARCH=i586
+
+[ -n "$DEFAULTARCH" ] || DEFAULTARCH=$SYSARCH
 
 NICE="nice"
 RPMBUILD=rpmbuild
