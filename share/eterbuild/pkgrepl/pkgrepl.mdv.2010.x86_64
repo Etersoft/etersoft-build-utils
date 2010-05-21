@@ -8,3 +8,6 @@ libXtst-devel|lib64xtst6-devel
 libXt-devel|lib64xt6-devel
 libarts-devel|arts3-devel
 libpam-devel|lib64pam-devel
+
+libXcomposite|lib64xcomposite1
+libXpm|lib64xpm4
