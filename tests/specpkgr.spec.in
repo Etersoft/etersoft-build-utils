@@ -1,0 +1,45 @@
+Name: specpkgr
+Version: 0.7.4
+Release: alt18
+
+Summary: Freenx application/thin-client server
+Group: Networking/Remote access
+License: GPLv2
+
+Url: http://freenx.berlios.de
+
+Packager: Boris Savelev <boris@altlinux.org>
+
+Obsoletes: freenx
+Provides: freenx = %version
+
+Requires: nx
+Requires: openssl
+Requires: netcat
+Requires: expect
+Requires: foomatic-db-engine
+%if %_vendor == "alt"
+Requires: dbus-tools-gui
+Requires: binutils
+Requires: Xdialog
+Requires: /usr/bin/xvt
+%endif
+BuildPreReq: rpm-build-compat gcc4.1 gcc
+BuildRequires: imake xorg-cf-files gccmakedep
+
+Source: %name.source
+
+%description
+Freenx is an application/thin-client server based on nx technology.
+NoMachine nx is the next-generation X compression and roundtrip suppression
+scheme. It can operate remote X11 sessions over 56k modem dialup links
+or anything better. This package contains a free (GPL) implementation
+of the nxserver component.
+
+%prep
+%setup
+
+
+%changelog
+* Tue Sep 22 2009 Boris Savelev <boris@altlinux.org> 0.7.4-alt18.12
+- fix CUPSLogLevel config parser
