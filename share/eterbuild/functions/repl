@@ -73,13 +73,14 @@ print_replbased_list()
 	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
 
 	# separate checking for x86_64
-	[ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.$VENDOR.$DISTRVERSION.x86_64 $REPLBASE.$VENDOR.x86_64 "
-	[ "$VENDOR" != "alt" ] && [ $(uname -m) = "x86_64" ] && echo -n "$REPLBASE.$TARGET.x86_64 "
+	if [ $SYSARCH = "x86_64" ] ; then
+		echo -n "$REPLBASE.$VENDOR.$DISTRVERSION.x86_64 $REPLBASE.$VENDOR.x86_64 "
+		[ "$VENDOR" = "alt" ] || echo -n "$REPLBASE.$TARGET.x86_64 "
+	fi
 
         # general rules listing
 	echo -n "$REPLBASE.$VENDOR.$DISTRVERSION $REPLBASE.$VENDOR "
-	[ "$VENDOR" != "alt" ] && echo -n "$REPLBASE.$TARGET"
-
+	[ "$VENDOR" = "alt" ] || echo -n "$REPLBASE.$TARGET "
 }
 
 # TODO: list in  alph. order and use if <= then our version
