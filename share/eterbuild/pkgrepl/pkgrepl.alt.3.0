@@ -48,3 +48,5 @@ libXevie-devel|xorg-x11-devel
 libXv-devel|xorg-x11-devel
 
 xorg-cf-files|
+
+kernel-build-tools|kernel-build-tools
