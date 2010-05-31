@@ -186,6 +186,12 @@ set_specdir()
 	fi
 }
 
+get_gear_rule_spec()
+{
+	local SPEC="$(grep "^spec:" $(get_root_git_dir)/.gear/rules | cut -d" " -f2)"
+	test -r "$(get_root_git_dir)/$SPEC" && echo $(get_root_git_dir)/$SPEC
+}
+
 # search for gear spec
 get_gear_spec()
 {
@@ -194,7 +200,7 @@ get_gear_spec()
         is_gear && trySpec=$(echo *.spec)
         # if not in local dir, check spec in git root dir
         [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir)/*.spec`
-        [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir)/.gear/*.spec`
+        [ -f "$trySpec" ] || trySpec=$(get_gear_rule_spec)
         # printout nothing if can't get spec
         [ -f "$trySpec" ] || trySpec=""
         echo $trySpec
