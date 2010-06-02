@@ -45,6 +45,12 @@ if [ -z "$CURRENTBRANCH" ] ; then
 	exit 1
 fi
 
+if [ "$1" = "origin" ] ; then
+	git push $PUSHALL $PUSHFORCE origin
+	git push --tags $PUSHALL $PUSHFORCE origin
+	exit
+fi
+
 if [ -n "$1" ] ; then
 	TARGETBRANCH=$CURRENTBRANCH:$1
 	shift
@@ -65,8 +71,13 @@ push_to_remote()
 	echo
 	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git"
 	# FIXME: push with one command
-	timeout $SSHTIMEOUT git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
-	timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+	if [ -n "$PUSHALL" ] ; then
+		timeout $SSHTIMEOUT git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git
+		timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git
+	else
+		timeout $SSHTIMEOUT git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+		timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+	fi
 }
 
 
