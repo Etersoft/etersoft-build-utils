@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -48,7 +48,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README TODO NEWS QuickHelp* 
+%doc AUTHORS README TODO NEWS QuickHelp*
 %_bindir/*
 %_datadir/eterbuild/
 # for backward compatibility (will removed in 2.0)
@@ -63,6 +63,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jun 04 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
+- rpmbph: fix rules using when build for target x86_64 from i586
+- rpmbs: extract all tarballs from src.rpm to tarball dir
+- add gpush origin support
+- get spec path if spec is defined in gear rules
+- introduce SYSARCH with real system arch, use it during work with spec and src.rpm packing
+- fix replacements for gcc*, drop last spaces in list repl, add test for pkgrepl
+- update pkgreplreqs
+
 * Tue May 18 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
 - improve some requires replacements
 - use PROJECTNAME instead BASENAME

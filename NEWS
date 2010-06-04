@@ -1,3 +1,14 @@
+etersoft-build-utils-1.8.4: 18 May 2010
+- rpmpub: drop obsoleted requires
+- rpmbph: fix rules using when build for target x86_64 from i586
+- rpmbs: extract all tarballs from src.rpm to tarball dir
+- add gpush origin support
+- get spec path if spec is defined in gear rules
+- drop biarch 32bit on real 32bit
+- update pkgreplreqs
+- introduce SYSARCH with real system arch, use it during work with spec and src.rpm packing
+- fix replacements for gcc*, drop last spaces in list repl, add test for pkgrepl
+
 etersoft-build-utils-1.8.3: 18 May 2010
 - use PROJECTNAME instead BASENAME
 - add filter_gear_name for replace forbidden + with plus word
