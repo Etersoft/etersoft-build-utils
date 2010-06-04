@@ -27,7 +27,8 @@ NOSOURCE=
 NOCHECK=
 UPDATES=
 DELETENOW=
-
+POCKET=
+TASKNUMBER=
 
 #############################
 Usage="Usage: $name [-s -u -c -n --nodeps] [spec or src.rpm]..."
@@ -43,6 +44,7 @@ phelp()
 	echog "Options:"
 	echog " -u - sign and run gear build task after build"
 	echog " -a TASK - sign package(s)/repo, push/upload it and add to (shared) task TASK"
+	echog " -p POCKET - build package in POCKET (supported on git.etersoft.ru)"
 	echog " -l - lazy cleanup (clean before build, not after)"
 	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
@@ -55,7 +57,7 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfscuUdnoa:z opt; do
+while getopts :hfscuUdnop:a:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
@@ -67,6 +69,7 @@ while getopts :hfscuUdnoa:z opt; do
     a) UPLOADNOW=1 ; SIGN=1 ; TASKNUMBER=$OPTARG ;;
     n) NOCHECK=1; ;;
     o) NOSOURCE=1; ;;
+    p) UPLOADNOW=1 ; SIGN=1 ; POCKET=$OPTARG ;;
     z) export USE_LEGACY_COMPRESSION=1;
        ;;
     d) DELETENOW=1 ;;
@@ -196,7 +199,8 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	if [ -n "$TASKNUMBER" ] ; then
 		ssh $GIRARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	else
-		ssh $GIRARHOST build -b $BINARYREPO $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		[ -n "$POCKET" ] && POCKETARG="-p $POCKET" || POCKETARG=""
+		ssh $GIRARHOST build -b $BINARYREPO $POCKETARG $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
 	# FIXME: incorporate
 	cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
