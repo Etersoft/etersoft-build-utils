@@ -73,7 +73,7 @@ print_replbased_list()
 	[ -z "$DISTRVERSION" ] && DISTRVERSION=`distr_vendor -v`
 
 	# separate checking for x86_64
-	if [ $SYSARCH = "x86_64" ] ; then
+	if [ $DEFAULTARCH = "x86_64" ] ; then
 		echo -n "$REPLBASE.$VENDOR.$DISTRVERSION.x86_64 $REPLBASE.$VENDOR.x86_64 "
 		[ "$VENDOR" = "alt" ] || echo -n "$REPLBASE.$TARGET.x86_64 "
 	fi
