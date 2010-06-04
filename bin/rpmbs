@@ -214,7 +214,7 @@ pack_src_rpm ${LISTRPMARGS}
 #LISTARGS=${LISTARGS/-s/}
 if  [ -n "$REMOTEBUILD" ] ; then
 	fatal "Do not realized yet"
-	check_key
+	check_ssh_key
 	REMCOM="ssh $BUILDSERVER"
 
 	echo
@@ -294,7 +294,7 @@ if [ -z "${UPLOADNOW}" ] ; then
 fi
 
 echog "Uploading to $GIRARHOST"
-check_key
+check_ssh_key
 
 $RSYNC -vay --partial --progress --checksum \
  	-e ssh $LISTBUILT $GIRARHOST: && \

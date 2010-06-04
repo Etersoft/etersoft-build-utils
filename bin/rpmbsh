@@ -87,7 +87,7 @@ if echo "$LISTNAMES" | grep -q spec ; then
 fi
 
 if  [ -n "$REMOTEBUILD" ] ; then
-	check_key
+	check_ssh_key
 	test -n "$BUILDSERVER" || fatal "Please set BUILDSERVER in config file"
 	# FIXME - get via etersoft-build-utils
 	REMOTERPMDIR=`ssh $BUILDSERVER echo $HOME`/RPM
