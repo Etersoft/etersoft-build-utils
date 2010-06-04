@@ -171,8 +171,6 @@ fi
 
 [ "$1" = "--help" ] && mygetopts -h
 
-# Build for Sisyphus by default
-MENV=SS
 if is_gear ; then
 	# Set target according to current branch
 	set_target_type $(get_type_by_current_branch)
