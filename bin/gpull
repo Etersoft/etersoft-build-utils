@@ -11,6 +11,7 @@ if [ "$1" = "-h" ] ; then
 	echo "     gpull myrepo - for pull from remote myrepo gear repo"
 	echo "           -a - pull all branches"
 	echo "           -n - do not rebase during pull"
+	echo "           -c - return error status if repo was not uptodate (gpull || echo 'Was updated last time')"
 	exit 1
 fi
 
@@ -20,6 +21,12 @@ if [ "$1" = "-a" ] ; then
 	ALLBRANCHES=1
 	shift
 fi
+
+if [ "$1" = "-c" ] ; then
+	CHECKONLY=1
+	shift
+fi
+
 
 if [ "$1" = "-n" ] ; then
 	REBASE=""
@@ -46,6 +53,14 @@ pull_all_branches()
 
 if [ -n "$ALLBRANCHES" ] ; then
 	pull_all_branches
+	exit
+fi
+
+if [ -n "$CHECKONLY" ] ; then
+	echo "Pull repo from $REPO"
+	UPTODATEres=`git pull $REBASE $REPO $@`
+	echo $UPTODATEres
+	echo $UPTODATEres | tail -n1 | grep -q "is up to date"
 	exit
 fi
 
