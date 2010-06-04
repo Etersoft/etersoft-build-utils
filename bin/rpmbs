@@ -120,13 +120,17 @@ extract_tarball_to_dest()
 	local TDIR=$(mktemp -d || fatal "can't create tmp dir")
 	cd $TDIR
 		cat "$1" | rpm2cpio | cpio -i "*.tar*"
-		#cp -fv *.tar* $2
 		local TARNAME=$(querypackage $1 "" "%{NAME}-%{VERSION}")
 		# FIXME: hack to replace alt release to eter
 		local TARGETTARNAME=$(querypackage $1 "" "%{NAME}-%{VERSION}-%{RELEASE}" | sed -e "s/-alt/-eter/g")
 		copy_tarball_to_tar_bz2 $TARNAME*.tar* $2/$TARGETTARNAME.tar.bz2
+		make_md5sum $2 $TARGETTARNAME.tar.bz2
+		# copy other tarballs
+		for i in $(ls -1 *.tar* | grep -v "^$TARNAME.*\.tar.*") ; do
+			cp -fv $i $2/
+			make_md5sum $2 $(basename $i)
+		done
 	cd -
-	make_md5sum $2 $TARGETTARNAME.tar.bz2
 	rm -f $TDIR/*
 	rmdir $TDIR
 }
