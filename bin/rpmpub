@@ -2,8 +2,6 @@
 
 # Script to publish project as src.rpm on project ftp directory
 
-NEEDETERBUILD=179
-
 # You can use this script separately in your project with
 #. /usr/share/eterbuild/eterbuild
 # instead follow loader
