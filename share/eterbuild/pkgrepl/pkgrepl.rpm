@@ -106,3 +106,7 @@ libopensc-devel|opensc-devel
 ImageMagick-tools|ImageMagick
 libopenal-devel|openal-devel
 libmpg123-devel|
+
+# depends for biarch build
+i586-glibc-core|
+i586-glibc-pthread|

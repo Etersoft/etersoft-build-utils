@@ -7,3 +7,6 @@ libXrandr-devel|lib64xrandr2-devel
 
 libXcomposite|lib64xcomposite1
 libXpm|lib64xpm4
+
+libreadline-devel|libreadline-devel
+libreadline|lib64readline6
