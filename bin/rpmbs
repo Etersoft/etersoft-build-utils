@@ -45,7 +45,6 @@ phelp()
 	echog " -u - sign and run gear build task after build"
 	echog " -a TASK - sign package(s)/repo, push/upload it and add to (shared) task TASK"
 	echog " -p POCKET - build package in POCKET (supported on git.etersoft.ru)"
-	echog " -l - lazy cleanup (clean before build, not after)"
 	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
 	echog " -f - force operation (overwrite tag)"
