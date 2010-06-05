@@ -46,8 +46,10 @@ if [ -z "$CURRENTBRANCH" ] ; then
 fi
 
 if [ "$1" = "origin" ] ; then
-	git push $PUSHALL $PUSHFORCE origin
-	git push --tags $PUSHALL $PUSHFORCE origin
+	REPO="$1"
+	shift
+	git push $PUSHALL $PUSHFORCE $REPO $@
+	git push --tags $PUSHALL $PUSHFORCE $REPO $@
 	exit
 fi
 
