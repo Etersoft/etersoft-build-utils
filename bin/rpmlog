@@ -1,0 +1,78 @@
+#!/bin/sh
+
+# Script for update changelog or increment release
+
+# You can use this script separately in your project with
+#. /usr/share/eterbuild/eterbuild
+# instead follow loader
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+load_mod spec rpm git etersoft
+
+if [ "$1" = "-h" ]; then
+	echog "rpmlog - update changelog"
+	echog "Usage: rpmlog [-r|-s] [SPEC] [TAG]"
+	echog "Options:"
+#	echog " -v - increment version"
+	echog " -r - increment release"
+	echog " -s - increment subrelease"
+	echog " -l - add changelog from git log (since last release tag or TAG)"
+	exit 0
+fi
+
+is_gear || fatal "rpmlog usable only with gear repo"
+
+INCREMENTMODE=""
+if [ "$1" = "-r" ] || [ "$1" = "-s" ] ; then
+	INCREMENTMODE=$1
+	shift
+fi
+
+CHANGELOGUPDATE=
+if [ "$1" = "-l" ] ; then
+	CHANGELOGUPDATE=$1
+	shift
+fi
+
+if [ -n "${1/*.spec/}" ] || [ -z "$1" ] ; then
+	SPECNAME=$(get_gear_spec)
+	echo "Using autodetected spec $SPECNAME..."
+else
+	SPECNAME=$1
+	shift
+fi
+
+FROMTAG=
+if [ -n "$1" ] ; then
+	FROMTAG="$1"
+	shift
+fi
+
+if [ ! -r "$SPECNAME" ] ; then
+	fatal "Spec $SPECNAME does not found"
+fi
+
+[ -n "$CHANGELOGUPDATE" ] || fatal "Run with -l param"
+
+if [ -z "$FROMTAG" ] ; then
+	build_rpms_name $SPECNAME
+	FROMTAG="$VERSION-$RELEASE"
+fi
+
+# TODO: найти параметр для упрощения истории. пока - sort?
+CHANGELOG="$(git log $FROMTAG..HEAD --simplify-merges --dense --pretty="- %s" | sort -u)"
+[ -n "$CHANGELOG" ] || fatal "git log was failed"
+
+# increment release
+if [ "$INCREMENTMODE" = "-r" ] ; then
+	inc_release $SPECNAME
+elif [ "$INCREMENTMODE" = "-s" ] ; then
+	inc_subrelease $SPECNAME
+fi
+
+add_changelog_helper "$CHANGELOG" $SPECNAME
+
+NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
+git_commit_ignore_nothing $SPECNAME -m "update spec to new build $NEWREV (with rpmlog script)"
