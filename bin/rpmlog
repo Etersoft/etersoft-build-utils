@@ -78,4 +78,4 @@ echo "$CHANGELOG"
 
 add_changelog_helper "$CHANGELOG" $SPECNAME
 
-git_commit_ignore_nothing $SPECNAME -m "update spec to new build $NEWREV (with rpmlog script)"
+git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
