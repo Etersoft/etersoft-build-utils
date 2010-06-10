@@ -27,3 +27,7 @@ echog()
 	fi
 }
 
+echocon()
+{
+	tty -s && echo "$@"
+}

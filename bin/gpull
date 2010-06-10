@@ -57,9 +57,9 @@ if [ -n "$ALLBRANCHES" ] ; then
 fi
 
 if [ -n "$CHECKONLY" ] ; then
-	echo "Pull repo from $REPO"
+	echocon "Pull repo from $REPO"
 	UPTODATEres=`git pull $REBASE $REPO $@`
-	echo $UPTODATEres
+	echocon $UPTODATEres
 	echo $UPTODATEres | tail -n1 | grep -q "is up to date"
 	exit
 fi
