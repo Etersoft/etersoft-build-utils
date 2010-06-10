@@ -1,3 +1,10 @@
+etersoft-build-utils-1.8.5: 10 Jun 2010
+- allow to set default target branch (via MENV in config)
+- gpull: add -c option for check repo uptodate status
+- gpush: add support for target origin
+- introduce rpmlog command for autoupdate changelog from git log
+- rpmbs: add pocket build support (-p option)
+
 etersoft-build-utils-1.8.4: 18 May 2010
 - rpmpub: drop obsoleted requires
 - rpmbph: fix rules using when build for target x86_64 from i586
