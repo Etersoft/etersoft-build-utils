@@ -72,7 +72,10 @@ elif [ "$INCREMENTMODE" = "-s" ] ; then
 	inc_subrelease $SPECNAME
 fi
 
+NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
+echo "Add changelog to $NEWREV:"
+echo "$CHANGELOG"
+
 add_changelog_helper "$CHANGELOG" $SPECNAME
 
-NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
 git_commit_ignore_nothing $SPECNAME -m "update spec to new build $NEWREV (with rpmlog script)"
