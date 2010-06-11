@@ -13,12 +13,13 @@ load_mod spec rpm git etersoft
 
 if [ "$1" = "-h" ]; then
 	echog "rpmlog - update changelog"
-	echog "Usage: rpmlog [-r|-s] [SPEC] [TAG]"
+	echog "Usage: rpmlog [-r|-s] [-l|-t] [SPEC] [TAG]"
 	echog "Options:"
 #	echog " -v - increment version"
 	echog " -r - increment release"
 	echog " -s - increment subrelease"
 	echog " -l - add changelog from git log (since last release tag or TAG)"
+	echog " -t - test run (without change files and repo)"
 	exit 0
 fi
 
@@ -33,6 +34,12 @@ fi
 CHANGELOGUPDATE=
 if [ "$1" = "-l" ] ; then
 	CHANGELOGUPDATE=$1
+	shift
+fi
+
+TESTRUN=
+if [ "$1" = "-t" ] ; then
+	TESTRUN=$1
 	shift
 fi
 
@@ -54,7 +61,7 @@ if [ ! -r "$SPECNAME" ] ; then
 	fatal "Spec $SPECNAME does not found"
 fi
 
-[ -n "$CHANGELOGUPDATE" ] || fatal "Run with -l param"
+[ -n "$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -l param"
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
@@ -62,8 +69,13 @@ if [ -z "$FROMTAG" ] ; then
 fi
 
 # TODO: найти параметр для упрощения истории. пока - sort?
-CHANGELOG="$(git log $FROMTAG..HEAD --simplify-merges --dense --pretty="- %s" | sort -u)"
+# Делает первую букву маленькой, убирает точку в конце строки
+CHANGELOG="$(git log $FROMTAG..HEAD --simplify-merges --dense --pretty="- %s" | sort -u | sed -e "s|\.\$||g" | sed -e "s|- \([A-Z]\)|- \l\1|g")"
 [ -n "$CHANGELOG" ] || fatal "git log was failed"
+
+if [ -n "$TESTRUN" ] ; then
+	INCREMENTMODE=""
+fi
 
 # increment release
 if [ "$INCREMENTMODE" = "-r" ] ; then
@@ -75,6 +87,10 @@ fi
 NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
 echo "Add changelog to $NEWREV:"
 echo "$CHANGELOG"
+
+if [ -n "$TESTRUN" ] ; then
+	exit
+fi
 
 add_changelog_helper "$CHANGELOG" $SPECNAME
 
