@@ -59,7 +59,9 @@ fi
 if [ "$VENDOR" = "mdv" ] || [ "$VENDOR" = "pclinux" ] ; then
 	# due new libtool, affected on Mandriva 2009.0
 	test -z "$VERBOSE" || echo "Disable libtoolize"
-	RECONFT="%define _disable_libtoolize 1"
+	# FIXME
+	#RECONFT="%define _disable_libtoolize 1"
+	RECONFT="%define __libtoolize true"
 fi
 
 # Do not add BuildReq if already exist
