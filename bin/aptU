@@ -30,7 +30,7 @@ export LC_ALL=C
 
 get_requires()
 {
-	rpm --requires $@ | grep -v rpmlib | cut -f1 -d" " | sort -u
+	rpm --requires $@ | cut -f1 -d" " | sed -e "s|([A-Z].*||g" | sort -u
 }
 
 # Translate rpm requires to package names
@@ -60,8 +60,8 @@ install_by_requires()
 	fi
 }
 
-ALREADYHANDLEDAPT="bash sh apt rpm glibc-core glibc-locales glibc-preinstall filesystem alt-gpgkeys"
-ALREADYHANDLEDRPM=""
+ALREADYHANDLEDAPT="bash sh apt rpm filesystem alt-gpgkeys"
+ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.*"
 install_packages()
 {
 	local ERROR=
@@ -72,7 +72,7 @@ install_packages()
 	$SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
 	REQLIST="$(get_requires $LIST)"
-	REQLIST=$(do_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }
 	install_by_requires $REQLIST
