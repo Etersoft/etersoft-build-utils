@@ -1,3 +1,11 @@
+etersoft-build-utils-1.8.6: 16 Jun 2010
+- add remove_from_list and regexp_exclude_list with regexp support
+- all output from git pull to stdout
+- improve aptU: skip glibc/stdc++ libs and lib versioning
+- introduce echocon (print only if there is real console) and use it
+- rewrite add_changelog_helper
+- rpmlog: add test run mode, fix changelog format
+
 etersoft-build-utils-1.8.5: 10 Jun 2010
 - allow to set default target branch (via MENV in config)
 - gpull: add -c option for check repo uptodate status
