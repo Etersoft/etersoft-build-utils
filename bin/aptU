@@ -60,8 +60,8 @@ install_by_requires()
 	fi
 }
 
-ALREADYHANDLEDAPT="bash sh apt rpm filesystem alt-gpgkeys"
-ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.*"
+ALREADYHANDLEDAPT="bash sh apt rpm filesystem alt-gpgkeys glibc-core glibc-locales"
+ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
 install_packages()
 {
 	local ERROR=
