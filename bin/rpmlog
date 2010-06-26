@@ -65,6 +65,8 @@ fi
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
+	[ -n "$VERSION" ] || fatal "Can't get package version"
+	[ -n "$RELEASE" ] || fatal "Can't get package releasr"
 	FROMTAG="$VERSION-$RELEASE"
 fi
 
