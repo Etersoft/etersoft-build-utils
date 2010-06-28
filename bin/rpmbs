@@ -21,6 +21,7 @@
 load_mod rpm tarball alt git web
 
 SIGN=
+SIGNTAG=
 UPLOADNOW=
 CHECKONLY=
 NOSOURCE=
@@ -31,7 +32,7 @@ POCKET=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [-s -u -c -n --nodeps] [spec or src.rpm]..."
+Usage="Usage: $name [-s|-t|-u|-a|-c] [-o -z -n -p --nodeps] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -49,6 +50,7 @@ phelp()
 	echog " -c - only sign package(s) with checking"
 	echog " -f - force operation (overwrite tag)"
 	echog " -s - sign package(s) and copy it to upload dir (ETERDESTSRPM)"
+	echog " -t - set tag with sign"
 	echog " -n - do not check with sisyphus_check before upload"
 	echog " -o - create nosrc.rpm package"
 	echog " -z - create src.rpm with compatible gzip compression"
@@ -56,10 +58,11 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfscuUdnop:a:z opt; do
+while getopts :hfstcuUdnop:a:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
+    t) SIGNTAG=1 ;;
     f) FORCE="--force" ;;
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
@@ -171,6 +174,12 @@ mygetopts $LISTARGS
 #############################
 LISTBUILT=""
 CURDIR=`pwd`
+
+if [ -n "$SIGNTAG" ] ; then
+	echo "Set tag..."
+	check_gear_and_tag ""
+	exit $?
+fi
 
 if [ -n "$NOSOURCE" ] ; then
 	$RPMBUILD -bs --nosource 0 $LISTNAMES
