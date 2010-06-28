@@ -1,3 +1,10 @@
+etersoft-build-utils-1.8.7: 28 Jun 2010
+- add example comment about default build in config
+- fix add_changelog (run with empty text)
+- fix comments, remove obsoletes code
+- fix md5sum (correct overwrite hardlinked file)
+- rpmlog: add check for package version/release
+
 etersoft-build-utils-1.8.6: 16 Jun 2010
 - add remove_from_list and regexp_exclude_list with regexp support
 - all output from git pull to stdout

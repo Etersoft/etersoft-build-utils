@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.8.6
+Version: 1.8.7
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Jun 28 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.7-alt1
+- fix add_changelog (run with empty text)
+- fix md5sum (correct overwrite hardlinked file)
+- rpmlog: add check for package version/release
+
 * Wed Jun 16 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.6-alt1
 - all output from git pull to stdout
 - improve aptU: skip glibc/stdc++ libs and lib versioning
