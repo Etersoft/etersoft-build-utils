@@ -147,8 +147,7 @@ subst_namever()
 
 add_changelog_helper()
 {
-	# don't work sometime?
-	# TODO: fix with $@, single arg?
+	# it is permitted to run with "" DESC
 	local DESC="$1"
 	shift
 	local SPECS="$*"
@@ -156,7 +155,7 @@ add_changelog_helper()
 		echo "skip changelog fixing without tty"
 		return 1
 	fi
-	[ -z "$DESC$SPEC" ] && fatal "run add_changelog with incorrect args"
+	[ -z "$SPECS" ] && fatal "run add_changelog with incorrect args"
 	add_changelog -e "$DESC" $SPECS
 	R=$?
 	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 1 ; }
