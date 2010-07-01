@@ -156,7 +156,8 @@ add_changelog_helper()
 		return 1
 	fi
 	[ -z "$SPECS" ] && fatal "run add_changelog with incorrect args"
-	add_changelog -e "$DESC" $SPECS
+	# add_changelog broken for LC_DATE
+	LC_ALL=C add_changelog -e "$DESC" $SPECS
 	R=$?
 	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 1 ; }
 	# If changelog sucessfully added
