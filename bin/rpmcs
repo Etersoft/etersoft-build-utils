@@ -253,6 +253,7 @@ do
 	# subst normalize	
 	subst  "s|^sed -i -e |%__subst |g
 		s|^subst |%__subst |g
+		s|^sed -i |%__subst |g
 		s|perl -pi -e *|%__subst |g" $i
 
 	subst "s|^python |%__python |g
