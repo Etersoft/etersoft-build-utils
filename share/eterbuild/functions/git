@@ -48,6 +48,18 @@ is_girar_name()
 	echo "$1" | grep -q "^git\."
 }
 
+is_one_girar_name()
+{
+	local i
+	local RES=""
+	for i in $@ ; do
+		[ -z "$RES" ] || return
+		is_girar_name "$i" || return
+		RES="$i"
+	done
+	[ -n "$RES" ]
+}
+
 _list_git_package()
 {
 	while [ -n "$1" ] ; do
