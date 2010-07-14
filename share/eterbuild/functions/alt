@@ -58,6 +58,11 @@ get_type_by_current_branch()
 set_binaryrepo()
 {
 	BINARYREPO="sisyphus"
+	if [ -n "$BINARYREPONAME" ] ; then
+		BINARYREPO="$BINARYREPONAME"
+		MENVARG="-$(get_altdistr_mod $BINARYREPO)"
+		return
+	fi
 	test -z "$1" && return
 	if [ -n "$UPDATES" ] ; then
 		BINARYREPO="`get_altdistr_version $1`"

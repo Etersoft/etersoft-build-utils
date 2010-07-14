@@ -45,7 +45,8 @@ phelp()
 	echog "Options:"
 	echog " -u - sign and run gear build task after build"
 	echog " -a TASK - sign package(s)/repo, push/upload it and add to (shared) task TASK"
-	echog " -p POCKET - build package in POCKET (supported on git.etersoft.ru)"
+	echog " -p POCKET - build package in POCKET (supported on git.etersoft.ru only)"
+	echog " -b REPONAME - binary repository name (4.1, 5.0, 5.1 and so on)"
 	echog "Ext. options:"
 	echog " -c - only sign package(s) with checking"
 	echog " -f - force operation (overwrite tag)"
@@ -58,7 +59,7 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfstcuUdnop:a:z opt; do
+while getopts :hfstcuUdnop:a:b:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
@@ -69,6 +70,8 @@ while getopts :hfstcuUdnop:a:z opt; do
     u) UPLOADNOW=1 ; SIGN=1 ;;
 #    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
     a) UPLOADNOW=1 ; SIGN=1 ; TASKNUMBER=$OPTARG ;;
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+    b) BINARYREPONAME=$OPTARG ;;
     n) NOCHECK=1; ;;
     o) NOSOURCE=1; ;;
     p) UPLOADNOW=1 ; SIGN=1 ; POCKET=$OPTARG ;;
@@ -189,6 +192,7 @@ fi
 # set SPECDIR from LISTNAMES if empty
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 
 # If we build from gear repo, run task
@@ -334,7 +338,7 @@ for i in $LISTBUILT ; do
 	echo "uploaded">>$LOGFILE
 	TEXTADD="     run $TASKNUMBER build src.rpm"
 	[ -z "$TASKNUMBER" ] || TEXTADD="     add src.rpm to task $TASKNUMBER"
-	echo "$(basename $i) $TEXTADD at $GIRARHOST ($MENV) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	echo "$(basename $i) $TEXTADD at $GIRARHOST ($BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 done
 
 rm -f $RPMDIR/uploaded.log.tmp
