@@ -65,4 +65,7 @@ if [ -n "$CHECKONLY" ] ; then
 fi
 
 echo "Pull repo from $REPO"
-git pull $REBASE $REPO $@
+git pull $REBASE $REPO $@ || exit
+
+# --rebase do not pull tags
+[ -n "$REBASE" ] && git pull $REPO $@
