@@ -94,11 +94,11 @@ push_to_remote()
 	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git $TEXTTAG"
 	# FIXME: push with one command
 	if [ -n "$PUSHALL" ] ; then
-		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git &&
-			[ -n "$TAGSALL" ] && git push --tags $GHOST:packages/$PROJECTNAME.git
+		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git || return
+		[ -z "$TAGSALL" ] || git push --tags $GHOST:packages/$PROJECTNAME.git
 	else
-		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH &&
-			[ -n "$TAGSALL" ] && git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH || return
+		[ -z "$TAGSALL" ] || git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 	fi
 }
 
