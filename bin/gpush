@@ -24,9 +24,18 @@ if [ "$1" = "-a" ] || [ "$1" = "--all" ] ; then
 	shift
 fi
 
+REMOTELIST="$(get_remote_git_list)"
+
 if is_girar_name $1 ; then
 	GIRARHOST=$1
 	OVERRIDEGIRARHOST=$1
+	shift
+fi
+
+# disable use one target if it one
+if false && is_one_girar_name "$REMOTELIST" ; then
+	GIRARHOST="$REMOTELIST"
+	OVERRIDEGIRARHOST=$GIRARHOST
 	shift
 fi
 
@@ -83,12 +92,10 @@ push_to_remote()
 }
 
 
-REMOTELIST="$(get_remote_git_list)"
-
 # if remote list is empty, do ginit
 [ -n "$REMOTELIST" ] || ginit $GIRARHOST
 
-LISTGIRARHOST="$GIRARHOST $(do_exclude_list $REMOTELIST $GIRARHOST)"
+LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
 [ -n "$OVERRIDEGIRARHOST" ] && LISTGIRARHOST=$OVERRIDEGIRARHOST
 for i in $LISTGIRARHOST ; do
 	push_to_remote $i
