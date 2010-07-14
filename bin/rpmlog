@@ -1,17 +1,15 @@
 #!/bin/sh
+# 2010 (c) Etersoft http://etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
 
 # Script for update changelog or increment release
-
-# You can use this script separately in your project with
-#. /usr/share/eterbuild/eterbuild
-# instead follow loader
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
 load_mod spec rpm git etersoft
 
-if [ "$1" = "-h" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmlog - update changelog"
 	echog "Usage: rpmlog [-r|-s] [-l|-t] [SPEC] [TAG]"
 	echog "Options:"
@@ -61,7 +59,7 @@ if [ ! -r "$SPECNAME" ] ; then
 	fatal "Spec $SPECNAME does not found"
 fi
 
-[ -n "$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -l param"
+[ -n "$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -t param for test or with -h for help"
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
