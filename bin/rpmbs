@@ -223,23 +223,6 @@ fi
 
 pack_src_rpm ${LISTRPMARGS}
 
-#LISTARGS=${LISTARGS/-s/}
-if  [ -n "$REMOTEBUILD" ] ; then
-	fatal "Do not realized yet"
-	check_ssh_key
-	REMCOM="ssh $BUILDSERVER"
-
-	echo
-	echog "############ Build at build server `$BUILDSERVER` ############"
-	echo
-	echog "==== Copying to build server ====="
-	#echog "It is recommended to rename old version at server for save traffic during rsync"
-	rsync -vay --partial --progress --checksum \
-		-e ssh $LISTBUILT $BUILDSERVER:/$RPMTOPDIR/SRPMS/ || exit 1
-	$REMCOM rpmbs --helper $MENVARG $LISTRPMARGS $LISTBUILT
-	exit 0
-fi
-
 if [ -n "${DELETENOW}" ]; then
 	fatal "Removing did not realized yet"
 fi
