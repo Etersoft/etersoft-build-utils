@@ -8,7 +8,7 @@ test -r "$1" && fatal "Do not need any files in params"
 
 if [ "$1" = "-h" ] ; then
 	echo "gpush - publish current project repo remote git repo"
-	echo "Use: gpush [-f|--force] [-a|--all] [GEAR] [target branch]"
+	echo "Use: gpush [-f|--force] [-a|--all] [-t|--tags] [GEAR] [target branch]"
 	exit 1
 fi
 
@@ -21,6 +21,12 @@ fi
 PUSHALL=
 if [ "$1" = "-a" ] || [ "$1" = "--all" ] ; then
 	PUSHALL="--all"
+	shift
+fi
+
+TAGSALL=
+if [ "$1" = "-t" ] || [ "$1" = "--tags" ] ; then
+	TAGSALL="--tags"
 	shift
 fi
 
@@ -63,7 +69,7 @@ if [ "$1" = "origin" ] ; then
 fi
 
 if [ -n "$1" ] ; then
-	TARGETBRANCH=$CURRENTBRANCH:$1
+	TARGETBRANCH="$1"
 	shift
 else
 	TARGETBRANCH=$CURRENTBRANCH
@@ -74,20 +80,25 @@ if [ "$PUSHALL" = "--all" ] ; then
 	TARGETBRANCH=
 else
 	TEXTBRANCH="branch $TARGETBRANCH"
+	if echo $TEXTBRANCH | egrep "alt|eter" ; then
+		TEXTBRANCH="tag $TARGETBRANCH"
+	fi
 fi
 
 push_to_remote()
 {
 	local GHOST=$1
+	local TEXTTAG=
+	[ -n "$TAGSALL$PUSHALL" ] && TEXTTAG="(with all tags)"
 	echo
-	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git"
+	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git $TEXTTAG"
 	# FIXME: push with one command
 	if [ -n "$PUSHALL" ] ; then
-		timeout $SSHTIMEOUT git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git
-		timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git
+		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git &&
+			[ -n "$TAGSALL" ] && git push --tags $GHOST:packages/$PROJECTNAME.git
 	else
-		timeout $SSHTIMEOUT git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
-		timeout $SSHTIMEOUT git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH &&
+			[ -n "$TAGSALL" ] && git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
 	fi
 }
 
@@ -100,6 +111,3 @@ LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
 for i in $LISTGIRARHOST ; do
 	push_to_remote $i
 done
-
-#> $ git commit -a; A='0.23-alt1'; git tag -s $A; \
-#>   git tag -s -f -m 'Sisyphus release $A' sisyphus $A
