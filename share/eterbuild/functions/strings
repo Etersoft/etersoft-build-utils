@@ -54,6 +54,7 @@ regexp_exclude_list()
 
 # drop listed options
 # FIXME: do not handle args like -Uh, only -U -h separately
+# "-n -u -r -i" n i -> "-u -r"
 drop_args()
 {
     local ARGS="$1"

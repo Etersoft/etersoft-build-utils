@@ -274,10 +274,11 @@ phelp()
 	echog "$Usage"
 	echo  "Use rpmbph -$CURRENTBRANCHNAME for backport to ALT $CURRENTBRANCHNAME and so on"
 	echog "Options:"
-	echog " -r - remote build"
-	echog " -u - sign and upload after build"
-	echog " -n - do not build in hasher (use first in the list)"
-	echog " -i - install built packages in test hasher"
+	echog " -u - sign and upload after build" # will pass to rpmbs/rpmbsh
+	echog " -n - do not build in hasher"
+	echog " -i - install built packages in test hasher" # will pass to rpmbs/rpmbsh
+	echog "Ext. options:"
+	echog " -r - remote build" # will pass to rpmbs/rpmbsh
 	echog " -v - more verbose"
 #	echog " -m - send result via e-mail"
 }
@@ -295,12 +296,13 @@ while getopts :hniuv opt; do
 done
 
 # remove args that were options
-if [ $# -gt 0 ]; then 
+if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
 fi
 
-# pass other options to RPM:
-LISTRPMARGS=$@
+# pass other options to RPM (exclude -n -v):
+LISTRPMARGS=$(drop_args "$@" n v)
+
 }
 
 if is_girar_name $1 ; then
