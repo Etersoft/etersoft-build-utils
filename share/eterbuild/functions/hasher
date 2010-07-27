@@ -70,7 +70,7 @@ print_tmp_sourceslist()
 	fi
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
 	if [ "$DEFAULTARCH" = "x86_64" ] ; then
-		cat "$SLIST" | sed -e "s|i586|$DEFAULTARCH|g"
+		cat "$SLIST" | sed -e "s|i[56]86|$DEFAULTARCH|g"
 	else
 		# Note: drop biarch 32bit on real 32bit
 		cat "$SLIST" | sed -e "s|x86_64|$DEFAULTARCH|g" | grep -v "x86_32"
