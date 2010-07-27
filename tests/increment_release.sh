@@ -15,11 +15,20 @@ get_release()
 	echo $TESTREL
 }
 
+get_version()
+{
+	echo $TESTVER
+}
+
 set_release()
 {
 	echo "$2"
 }
 
+set_version()
+{
+	echo "$2"
+}
 
 
 TESTREL=alt5
@@ -39,3 +48,5 @@ check inc_release "alt6" `inc_release ""`
 TESTREL=alt6.2
 check inc_release "alt7" `inc_release ""`
 
+TESTVER=1.5.7
+check inc_version "1.5.8" `inc_version ""`

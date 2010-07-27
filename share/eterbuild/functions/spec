@@ -127,6 +127,17 @@ set_version()
 	fi
 }
 
+inc_version()
+{
+	local VER=$(get_version "$1")
+	# fixme: more general and use in other functions (see increment_release test)
+	local MAJOR=`echo "$VER" | sed -e "s|\.[0-9]*$||"`
+	local MINOR=`echo "$VER" | sed -e "s|.*\.||"`
+	[ "$MINOR" = "$VER" ] && MINOR="0"
+	VER="${MAJOR}.$(($MINOR + 1 ))"
+	set_version "$1" $VER
+}
+
 # decrement release with workaround about non textual release
 decrement_release()
 {

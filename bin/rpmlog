@@ -11,9 +11,9 @@ load_mod spec rpm git etersoft
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmlog - update changelog"
-	echog "Usage: rpmlog [-r|-s] [-l|-t] [SPEC] [TAG]"
+	echog "Usage: rpmlog [-r|-s|-v] [-l|-t] [SPEC] [TAG]"
 	echog "Options:"
-#	echog " -v - increment version"
+	echog " -v - increment version"
 	echog " -r - increment release"
 	echog " -s - increment subrelease"
 	echog " -l - add changelog from git log (since last release tag or TAG)"
@@ -24,7 +24,7 @@ fi
 is_gear || fatal "rpmlog usable only with gear repo"
 
 INCREMENTMODE=""
-if [ "$1" = "-r" ] || [ "$1" = "-s" ] ; then
+if [ "$1" = "-r" ] || [ "$1" = "-s" ] || [ "$1" = "-v" ]; then
 	INCREMENTMODE=$1
 	shift
 fi
@@ -82,6 +82,8 @@ if [ "$INCREMENTMODE" = "-r" ] ; then
 	inc_release $SPECNAME
 elif [ "$INCREMENTMODE" = "-s" ] ; then
 	inc_subrelease $SPECNAME
+elif [ "$INCREMENTMODE" = "-v" ] ; then
+	inc_version $SPECNAME
 fi
 
 NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
