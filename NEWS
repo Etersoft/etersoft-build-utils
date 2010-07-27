@@ -1,3 +1,14 @@
+etersoft-build-utils-1.8.8: 27 Jul 2010
+- drop obsoleted code
+- gpull: do normal pull in additional to pull --rebase
+- gpush: drop timeout using, disable push --tags by default (only with -t/--tags option)
+- introduce is_one_girar_name
+- rpmbs: push only our tag, not all tags
+- rpmbph: fix bug with positional -n param
+- rpmbs: add support for -b (binary repo)
+- rpmbs: add -t option (just set signed tag)
+- rpmlog: add support for -v (increment version) introduce inc_release
+
 etersoft-build-utils-1.8.7: 28 Jun 2010
 - add example comment about default build in config
 - fix add_changelog (run with empty text)
