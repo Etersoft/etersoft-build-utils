@@ -6,9 +6,16 @@ load_mod git
 
 test -r "$1" && fatal "Do not need any files in params"
 
+if is_girar_name $1 ; then
+	GIRARHOST=$1
+	OVERRIDEGIRARHOST=$1
+	shift
+fi
+
+
 if [ "$1" = "-h" ] ; then
 	echo "gpush - publish current project repo remote git repo"
-	echo "Use: gpush [-f|--force] [-a|--all] [-t|--tags] [GEAR] [target branch]"
+	echo "Use: gpush [GIRAR] [-f|--force] [-a|--all] [-t|--tags] [target branch]"
 	exit 1
 fi
 
@@ -31,12 +38,6 @@ if [ "$1" = "-t" ] || [ "$1" = "--tags" ] ; then
 fi
 
 REMOTELIST="$(get_remote_git_list)"
-
-if is_girar_name $1 ; then
-	GIRARHOST=$1
-	OVERRIDEGIRARHOST=$1
-	shift
-fi
 
 # disable use one target if it one
 if false && is_one_girar_name "$REMOTELIST" ; then
