@@ -301,8 +301,7 @@ if [ $# -gt 0 ]; then
 fi
 
 # pass other options to RPM (exclude -n -v):
-LISTRPMARGS=$(drop_args "$@" n v)
-
+LISTRPMARGS=$(drop_args "$*" n v)
 }
 
 if is_girar_name $1 ; then
