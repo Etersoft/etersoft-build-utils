@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Aug 20 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.9-alt1
+- gpush: add some heroustic for default behavior
+- rpmcs: add clean for some macros
+- show git diff only for interactive session
+
 * Tue Jul 27 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.8-alt1
 - gpull: do normal pull in additional to pull --rebase
 - rpmbs/gpush: push only our tag, not all tags
