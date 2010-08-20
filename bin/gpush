@@ -6,12 +6,12 @@ load_mod git
 
 test -r "$1" && fatal "Do not need any files in params"
 
+# If run with remote alias like girar name, use only it
 if is_girar_name $1 ; then
 	GIRARHOST=$1
 	OVERRIDEGIRARHOST=$1
 	shift
 fi
-
 
 if [ "$1" = "-h" ] ; then
 	echo "gpush - publish current project repo remote git repo"
@@ -39,11 +39,10 @@ fi
 
 REMOTELIST="$(get_remote_git_list)"
 
-# disable use one target if it one
-if false && is_one_girar_name "$REMOTELIST" ; then
+# use one target if it one
+if is_one_girar_name "$REMOTELIST" && [ -z "$OVERRIDEGIRARHOST" ] ; then
 	GIRARHOST="$REMOTELIST"
 	OVERRIDEGIRARHOST=$GIRARHOST
-	shift
 fi
 
 # use as project name
@@ -61,9 +60,16 @@ if [ -z "$CURRENTBRANCH" ] ; then
 	exit 1
 fi
 
-if [ "$1" = "origin" ] ; then
+if [ "$1" = "origin" ]; then
 	REPO="$1"
 	shift
+	git push $PUSHALL $PUSHFORCE $REPO $@
+	git push --tags $PUSHALL $PUSHFORCE $REPO $@
+	exit
+fi
+
+if [ "$(git remote | uniq)" = "origin" ] ; then
+	REPO="origin"
 	git push $PUSHALL $PUSHFORCE $REPO $@
 	git push --tags $PUSHALL $PUSHFORCE $REPO $@
 	exit
