@@ -71,6 +71,7 @@ do
 	# Unneeded on ALT
 	subst "s|^Prefix:.*$||" $i
 	subst "s|^BuildRoot:.*$||i" $i
+	subst "s|%mkrel||g" $i
 
 	# Add packager
 	if ! grep "^Packager" $i ; then
@@ -139,6 +140,9 @@ do
 
 	subst "s|\(%post.*-p *\)/sbin/ldconfig|\1%post_ldconfig|g" $i
 	subst "s|\(%postun.*-p *\)/sbin/ldconfig|\1%postun_ldconfig|g" $i
+
+	subst "s|^%_post_service.*||g" $i
+	subst "s|^%_preun_service.*||g" $i
 	
 	subst "s|\$RPM_BUILD_ROOT/%|%buildroot%|g" $i
 	subst "s|\$RPM_BUILD_ROOT|%buildroot|g" $i
