@@ -1,5 +1,5 @@
 etersoft-build-utils-1.8.9: 20 Aug 2010
-- gpush: add some heroustic for default behavior
+- gpush: add some heuristic for default behavior
 - show git diff only for interactive session
 
 etersoft-build-utils-1.8.8: 27 Jul 2010

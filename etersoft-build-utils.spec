@@ -64,8 +64,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 
 %changelog
 * Fri Aug 20 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.9-alt1
-- gpush: add some heroustic for default behavior
-- rpmcs: add clean for some macros
+- gpush: add some heuristic for default behavior
 - show git diff only for interactive session
 
 * Tue Jul 27 2010 Vitaly Lipatov <lav@altlinux.ru> 1.8.8-alt1
