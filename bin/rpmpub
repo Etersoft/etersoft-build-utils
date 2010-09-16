@@ -12,7 +12,7 @@
 load_mod spec rpm etersoft
 
 if [ "$1" = "-h" ]; then
-	echog "rpmpub - Etersoft specific script for publish gear repo to target ftp dir"
+	echog "rpmpub - Etersoft specific script for publish gear repo to target ftp dir as src.rpm"
 	echog "Usage: rpmpub [-r PROJECTVERSION ] [SPEC] [TARGETDIR]"
 	echog "Options:"
 	echog " -r PROJECTVERSION - set other project version (PROJECTVERSION/sources)"

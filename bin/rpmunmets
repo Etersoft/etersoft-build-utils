@@ -31,7 +31,7 @@ make_testingbox()
 }
 
 
-Usage="Usage: $name [-M24 -M40] [-s]"
+Usage="Usage: $name [-$CURRENTBRANCHNAME] [-s]"
 function mygetopts()
 {
 name=${0##*/}

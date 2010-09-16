@@ -32,7 +32,7 @@ POCKET=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [-s|-t|-u|-a|-c] [-o -z -n -p --nodeps] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-s|-t|-u|-a|-c] [-o -z -n -p --nodeps] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}

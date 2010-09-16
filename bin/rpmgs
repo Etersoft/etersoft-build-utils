@@ -20,7 +20,7 @@ GETSOURCE=""
 LOADLIST="0"
 
 #############################
-Usage="Usage: $name [-a -r ] spec [new_version]"
+Usage="Usage: $name [GIRAR] [-a -r ] spec [new_version]"
 function mygetopts()
 {
 name=${0##*/}
