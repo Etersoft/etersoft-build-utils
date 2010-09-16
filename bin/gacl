@@ -15,13 +15,20 @@ mygetopts()
 {
 
 	if [ "$1" = "-h" ] ; then
-		echo "gacl - acl control for gear repo in $GIRARHOST"
-		echo "Use: gacl [GEAR] [-$CURRENTBRANCHNAME] [package] command [params]"
-		echo "Examples:"
-		echo "    gacl [-$CURRENTBRANCHNAME] package add newuser"
-		echo "    gacl [-$CURRENTBRANCHNAME] package del newuser"
-		echo "    gacl [-$CURRENTBRANCHNAME] package show"
+		echog "gacl - acl control for gear repo in $GIRARHOST"
+		echog "Use: gacl [GIRAR] [-$CURRENTBRANCHNAME] | [-b REPONAME]  [package] command [params]"
+		echog "Options:"
+		echog " -b REPONAME - binary repository name (4.1, 5.0, 5.1 and so on)"
+		echog "Examples:"
+		echog "    gacl [-$CURRENTBRANCHNAME] package add newuser"
+		echog "    gacl [-$CURRENTBRANCHNAME] package del newuser"
+		echog "    gacl [-$CURRENTBRANCHNAME] package show"
 		exit 0
+	fi
+
+	if [ "$1" = "-b" ] ; then
+		BINARYREPONAME="$2"
+		shift 2
 	fi
 
 	# FIXME
@@ -47,6 +54,7 @@ mygetopts()
 #parse_cmd_pre_spec "$@"
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 
 [ -n "$PROJECTNAME" ] || fatal "Project name is missed"
