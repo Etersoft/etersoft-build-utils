@@ -172,7 +172,7 @@ while getopts :habcdglmrs opt; do
     d) DOWNLOADALL=1 ;;
     g) CLONEGIT=1 ;;
     l) LISTREQS=1 ;;
-    m) MIGRATEGEAR=1 ;;
+    m) MIGRATEGIRAR=1 ;;
     r) UPDATECACHE=1 ;;
     s) load_systems_list
        list_systems
@@ -180,7 +180,7 @@ while getopts :habcdglmrs opt; do
        ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
-	?) OPTIND=$((OPTIND-1)); break;
+    ?) OPTIND=$((OPTIND-1)); break;
     esac
 done
 
@@ -217,13 +217,13 @@ test -z "$PKGNAME" && fatal "Please run with spec/package name"
 
 # install required for build binary packages
 if [ -n "$INSTALLBINARY" ] ; then
-	# pack by LISTNAMES list
-	pack_src_rpm --commit $LISTRPMARGS
-	LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
-	DISTRVENDOR=$(distr_vendor -d)
-	CMD=$(get_install_package_command $DISTRVENDOR interactive)
-	echog "Running $SUDO $CMD $LISTPKG"
-	exec $SUDO $CMD $LISTPKG
+    # pack by LISTNAMES list
+    pack_src_rpm --commit $LISTRPMARGS
+    LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
+    DISTRVENDOR=$(distr_vendor -d)
+    CMD=$(get_install_package_command $DISTRVENDOR interactive)
+    echog "Running $SUDO $CMD $LISTPKG"
+    exec $SUDO $CMD $LISTPKG
 fi
 
 # TODO: do gpull -a for get all branches?
@@ -250,7 +250,7 @@ if [ -n "$CLONEGIT" ] ; then
 	# http://git.altlinux.org/gears/N/NAME.git
 	RREPO="/gears/$REPOPATH"
 
-	if [ -z "$MIGRATEGEAR" ] ; then
+	if [ -z "$MIGRATEGIRAR" ] ; then
 		echo "Clone from $GIRARHOST:$RREPO ..."
 		if ! git clone $GIRARHOST:$RREPO ; then
 			# http://git.altlinux.org/srpms/N/NAME.git
@@ -281,7 +281,7 @@ if [ -n "$CLONEGIT" ] ; then
 	exit $?
 fi
 
-if [ -n "$MIGRATEGEAR" ] ; then
+if [ -n "$MIGRATEGIRAR" ] ; then
 	for INFILE in $LISTNAMES ; do
 		# call for each file due generated BASENAME
 		LISTNAMES=$INFILE pack_src_rpm $INFILE $LISTRPMARGS
