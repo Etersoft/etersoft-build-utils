@@ -262,7 +262,7 @@ add_changelog $SPECNAME -e "$ENTRY"
 
 #############################
 
-Usage="Usage: $name [-r -u -U -n -i -m -v] [-$CURRENTBRANCHNAME] spec..."
+Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-$CURRENTBRANCHNAME] [-b REPONAME] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -277,18 +277,22 @@ phelp()
 	echog " -u - sign and upload after build" # will pass to rpmbs/rpmbsh
 	echog " -n - do not build in hasher"
 	echog " -i - install built packages in test hasher" # will pass to rpmbs/rpmbsh
+	echog " -b REPONAME - binary repository name (4.1, 5.0, 5.1 and so on)"
 	echog "Ext. options:"
 	echog " -r - remote build" # will pass to rpmbs/rpmbsh
 	echog " -v - more verbose"
+	echog " -q - quiet"
 #	echog " -m - send result via e-mail"
 }
 
 
-while getopts :hniuv opt; do
+while getopts :hniuvqb: opt; do
     case $opt in
     h) phelp; exit 0;;
     n) NOBUILD=1;;
     v) VERBOSE=1;;
+    b) BINARYREPONAME=$OPTARG ;;
+    q) QUIET=1;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
@@ -316,6 +320,7 @@ test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
 if [ "$VENDOR" = "alt" ] ; then
 	MDISTR=$MENV
+	[ -n "$BINARYREPONAME" ] && MDISTR=$(get_altdistr_mod $BINARYREPONAME)
 	test -z "$MDISTR" && fatal "Missed backport version (f.i. run with -M24 param for Master 2.4)"
 	[ "$MDISTR" = "SS" ] && fatal "It is senseless to backport to Sisyphus. Run with -$CURRENTBRANCHNAME for example."
 	DISTRVERSION=$(get_altdistr_version $MDISTR)
@@ -373,7 +378,7 @@ if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	git merge $CURBRANCH
 	mv -f $BPSPEC $SPEC
 	# FIXME: Ctrl-\ and q will cancelled less with return error code
-	if tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
+	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 		#git checkout $SPEC $MDISTR
 		#git checkout $CURBRANCH
 		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
