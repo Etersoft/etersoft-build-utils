@@ -6,6 +6,8 @@ load_mod git
 
 test -r "$1" && fatal "Do not need any files in params"
 
+OVERRIDEGIRARHOST=
+
 # If run with remote alias like girar name, use only it
 if is_girar_name $1 ; then
 	GIRARHOST=$1
@@ -68,7 +70,7 @@ if [ "$1" = "origin" ]; then
 	exit
 fi
 
-if [ "$(git remote | uniq)" = "origin" ] ; then
+if [ -z "$OVERRIDEGIRARHOST" ] && [ "$(git remote | uniq)" = "origin" ] ; then
 	REPO="origin"
 	git push $PUSHALL $PUSHFORCE $REPO $@
 	git push --tags $PUSHALL $PUSHFORCE $REPO $@
