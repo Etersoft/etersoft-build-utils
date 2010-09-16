@@ -35,6 +35,7 @@ toalt_pkgrepl()
 		s/| /|/g"
 	for i in $PKGREPLBASE/pkgrepl.fedora $PKGREPLBASE/pkgrepl.* ; do
 		#echo $i - $1
+		test -r "$i" || continue
 		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "$1\$" | sed -e "$WARULES" | sed -e "s/^\(.*\)|\(.*\)\$/\2|\1/g" | head -n1`
 		# For broken rule
 		echo $REPLRULE | grep "^|" >/dev/null && REPLRULE=""
@@ -46,6 +47,34 @@ toalt_pkgrepl()
 		else
 			REPLRULE1=
 			REPLRULE2=
+		fi
+	done
+	return 1
+}
+
+# TODO: down handle spaces correctly
+# Get replacement rule for some group in $1 to ALT
+toalt_grprepl()
+{
+	local i REPLRULE WARULES
+	WARULES="s/^ //g 
+		s/ \$//g 
+		s/ |/|/g 
+		s/| /|/g"
+	GRPREPLBASE=$PKGREPLBASE/../grprepl
+	for i in $GRPREPLBASE/grprepl.fedora $GRPREPLBASE/grprepl.rpm $GRPREPLBASE/grprepl.* ; do
+		test -r "$i" || continue
+		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "$1\$" | sed -e "$WARULES" | sed -e "s/^\(.*\)|\(.*\)\$/\2|\1/g" | head -n1`
+		# For broken rule
+		echo $REPLRULE | grep "^|" >/dev/null && REPLRULE=""
+		echo $REPLRULE | grep "|\$" >/dev/null && REPLRULE=""
+		if [ -n "$REPLRULE" ] ; then
+			GRPREPLRULE1=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
+			GRPREPLRULE2=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
+			return 0
+		else
+			GRPREPLRULE1=
+			GRPREPLRULE2=
 		fi
 	done
 	return 1
@@ -327,6 +356,13 @@ do
 	for n in `print_buildreq $i` ; do
 		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
 			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
+		#echo REPLRULE: $REPLRULE
+	done
+
+	echog -n "fix groups..."
+	for n in `print_grpreq $i` ; do
+		toalt_grprepl $n && ALLREPLRULES="$ALLREPLRULES
+			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
 		#echo REPLRULE: $REPLRULE
 	done
 

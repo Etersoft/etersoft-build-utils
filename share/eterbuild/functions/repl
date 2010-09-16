@@ -65,6 +65,12 @@ print_pkgreq()
 	eval_spec ${1} | grep "^Requires" | sed -e "s|^.*:||g" | clean_pkgreq
 }
 
+# Print list of all groups
+print_grpreq()
+{
+	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | filter_strip_spaces
+}
+
 # internal
 print_replbased_list()
 {
