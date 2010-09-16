@@ -168,6 +168,12 @@ rpmbs_copying_built()
 if is_girar_name $1 ; then
 	GIRARHOST=$1
 	shift
+else
+	REMOTELIST="$(get_remote_git_list)"
+	if is_one_girar_name "$REMOTELIST" ; then
+		# use one target if it one
+		GIRARHOST="$REMOTELIST"
+	fi
 fi
 
 parse_cmd_pre_spec "$@"
