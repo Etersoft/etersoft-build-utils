@@ -197,6 +197,11 @@ shift $((OPTIND - 1))
 LISTRPMARGS=$@
 }
 
+if is_girar_name $1 ; then
+    GIRARHOST=$1
+    shift
+fi
+
 parse_cmd_pre "$@"
 mygetopts $LISTARGS
 
