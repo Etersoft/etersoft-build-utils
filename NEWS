@@ -1,3 +1,13 @@
+etersoft-build-utils-1.9.0: 16 Sep 2010
+- gacl: update description and add -b REPO param support
+- gpush: fix origin publish
+- rpmbph: add -b REPONAME and -q (quiet) support
+- rpmbs: add support for default remote
+- rpmbs: push branch too
+- rpmcs: implement group replacing
+- rpmgp: add select girar support
+- rpmgp: fix tabs and varname
+
 etersoft-build-utils-1.8.9: 20 Aug 2010
 - gpush: add some heuristic for default behavior
 - show git diff only for interactive session
