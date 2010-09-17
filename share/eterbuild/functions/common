@@ -18,6 +18,8 @@ set_eterbuilddir()
 		[ -n "$TOPDIR" ] || TOPDIR=../
 		ETERBUILDDIR=$(realpath `dirname $0`/$TOPDIR/share/eterbuild)
 		ETERBUILDETC=$(realpath `dirname $0`/$TOPDIR/etc)
+		DISTRVENDOR=$(realpath `dirname $0`/$TOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor)
+		[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
 			if [ -n "$VERBOSE" ] ; then
 				echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
@@ -136,11 +138,11 @@ fi
 # Internal
 detect_target_env()
 {
-local DISTRNAME=`distr_vendor -e`
+local DISTRNAME=$($DISTRVENDOR -e)
 MENVARG=""
-TARGET=`distr_vendor -p`
-VENDOR=`distr_vendor -s`
-RPMVENDOR=`distr_vendor -n`
+TARGET=$($DISTRVENDOR -p)
+VENDOR=$($DISTRVENDOR -s)
+RPMVENDOR=$($DISTRVENDOR -n)
 
 if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	#[ -n "$APTCONF" ] && fatal "Internal error: APTCONF already defined as $APTCONF for $MENV"

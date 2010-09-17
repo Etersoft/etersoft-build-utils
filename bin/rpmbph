@@ -14,7 +14,7 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod repl rpm git
 
-DISTRVERSION=`distr_vendor -v`
+DISTRVERSION=`$DISTRVENDOR -v`
 
 altspec_to_local()
 {
@@ -69,8 +69,10 @@ cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
 
 FIXMKTEMP=""
 
+DISTRSYS="$($DISTRVENDOR -d)"
+
 # fix readlink -m, introduced by new libtool and missed in RHEL4 (replace with readlink -f)
-if [ "`distr_vendor -d`/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
+if [ "$DISTRSYS/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -m"
 	FIXMKTEMP="%__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
 fi
@@ -81,7 +83,7 @@ if [ "$VENDOR" = "generic" ] ; then
 	FIXMKTEMP="%__subst 's|readlink -mv|realpath|g' configure ltmain.sh"
 fi
 
-if [ "`distr_vendor -d`" = "Ubuntu" ] || [ "`distr_vendor -d`" = "Debian" ]; then
+if [ "$DISTRSYS" = "Ubuntu" ] || [ "$DISTRSYS" = "Debian" ]; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	FIXMKTEMP="%remove_optflags -m64"
 fi
@@ -243,12 +245,12 @@ if [ "$VENDOR" = "alt" ] ; then
 		export USE_LEGACY_COMPRESSION=1
 	fi
 
-	subst "1i# This spec is backported to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
-	ENTRY="- backport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
+	subst "1i# This spec is backported to $DISTRSYS $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	ENTRY="- backport to $DISTRSYS $DISTRVERSION (by rpmbph script)"
 	DISTRARG="-$MDISTR"
 else
-	subst "1i# This spec is autoported from ALT Linux Sisyphus to `distr_vendor -d` $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
-	ENTRY="- autoport to `distr_vendor -d` $DISTRVERSION (by rpmbph script)"
+	subst "1i# This spec is autoported from ALT Linux Sisyphus to $DISTRSYS $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	ENTRY="- autoport to $DISTRSYS $DISTRVERSION (by rpmbph script)"
 	export USE_VENDOR=$RPMVENDOR
 	export USE_LEGACY_COMPRESSION=1
 	DISTRARG=""
