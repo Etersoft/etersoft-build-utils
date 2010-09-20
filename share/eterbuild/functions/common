@@ -16,9 +16,10 @@ set_eterbuilddir()
 		# if run from no system installation
 		# TODO: use real root dir not script dirname
 		[ -n "$TOPDIR" ] || TOPDIR=../
-		ETERBUILDDIR=$(realpath `dirname $0`/$TOPDIR/share/eterbuild)
-		ETERBUILDETC=$(realpath `dirname $0`/$TOPDIR/etc)
-		DISTRVENDOR=$(realpath `dirname $0`/$TOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor)
+		ATOPDIR=`dirname $0`/$TOPDIR
+		ETERBUILDDIR=$(realpath $ATOPDIR/share/eterbuild)
+		ETERBUILDETC=$(realpath $ATOPDIR/etc)
+		DISTRVENDOR=$(realpath $ATOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
 		[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
 			if [ -n "$VERBOSE" ] ; then
