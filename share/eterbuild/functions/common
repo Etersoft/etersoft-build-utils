@@ -19,8 +19,6 @@ set_eterbuilddir()
 		ATOPDIR=`dirname $0`/$TOPDIR
 		ETERBUILDDIR=$(realpath $ATOPDIR/share/eterbuild)
 		ETERBUILDETC=$(realpath $ATOPDIR/etc)
-		DISTRVENDOR=$(realpath $ATOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
-		[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 		if [ -r "$ETERBUILDETC/../AUTHORS" ] ; then
 			if [ -n "$VERBOSE" ] ; then
 				echo "Note: run from source tree, datadir=$ETERBUILDDIR, sysconfdir=$ETERBUILDETC"
@@ -41,6 +39,9 @@ if ! set_eterbuilddir ; then
 	echo "Can't detect package files location" >&2
 	exit 1
 fi
+
+DISTRVENDOR=$(realpath $ATOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
+[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 
 # Выводит указанное сообщение об ошибке и завершает программу
 fatal()
