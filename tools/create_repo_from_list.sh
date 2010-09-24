@@ -12,13 +12,19 @@
 #load_mod rpm
 
 ORIGREPO=/var/ftp/pub/ALTLinux/5.0
-DESTREPO=/var/ftp/pub/Etersoft/LINUX@Etersoft/branch/builder50
+DESTREPO=/var/ftp/pub/Etersoft/LINUX@Etersoft/5.0/asu
 RPMSEXT=base
-ARCHLIST="noarch i586 x86_64"
+# FIXME: no support for list arch
+ARCHLIST="i586 noarch"
 
 for i in $ARCHLIST; do
 	mkdir -p $DESTREPO/$i/RPMS.$RPMSEXT
 done
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "create new repo in $DESTREPO based on packages installed in the current system"
+	exit
+fi
 
 # Get pkg list
 if [ -n "$1" ] ; then
@@ -36,9 +42,20 @@ for i in $PKGLIST ; do
 		REALFILE=$ORIGREPO/$i/RPMS.classic/$PKGNAME.$i.rpm
 		test -e "$REALFILE" && { PKGARCH=$i ; break ; }
 	done
+
+	# Если не нашли с данной версией, ищем без версии
+	if false && [ -z "$PKGARCH" ] ; then
+		for i in $ARCHLIST ; do
+			REALFILE=$ORIGREPO/$i/RPMS.classic/$i.$i.rpm
+			test -e "$REALFILE" && { PKGARCH=$i ; break ; }
+		done
+	fi
+
 	#echo "$PKGNAME, real package: $REALFILE"
-	test -e "$REALFILE" || { echo "ERROR: $REALFILE for $PKGNAME is missed" >&2; continue ; }
-	ln $REALFILE $DESTREPO/$PKGARCH/RPMS.$RPMSEXT/$(basename $REALFILE)
+	test -e "$REALFILE" || { echo "ERROR: $PKGNAME is missed" >&2; continue ; }
+	DESTFILE=$DESTREPO/$PKGARCH/RPMS.$RPMSEXT/$(basename $REALFILE)
+	test -e "$DESTFILE" && continue
+	ln "$REALFILE" "$DESTFILE"
 done
 
 for i in $ARCHLIST ; do
