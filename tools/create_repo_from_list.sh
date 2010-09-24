@@ -8,8 +8,8 @@
 # need packages to be installed
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm
+#. `dirname $0`/../share/eterbuild/functions/common
+#load_mod rpm
 
 ORIGREPO=/var/ftp/pub/ALTLinux/5.0
 DESTREPO=/var/ftp/pub/Etersoft/LINUX@Etersoft/branch/builder50
@@ -29,12 +29,15 @@ fi
 
 for i in $PKGLIST ; do
 	#PKGNAME=$(querypackage $i "" "%{name}-%{version}-%{release}")
+	#PKGARCH=$(querypackage $i %{arch}")
 	PKGNAME=$i
-	# TODO: do package try instead query info
-	PKGARCH=$(querypackage $i "" "%{arch}")
-	REALFILE=$ORIGREPO/$PKGARCH/RPMS.classic/$PKGNAME.$PKGARCH.rpm
+	PKGARCH=""
+	for i in $ARCHLIST ; do
+		REALFILE=$ORIGREPO/$i/RPMS.classic/$PKGNAME.$i.rpm
+		test -e "$REALFILE" && { PKGARCH=$i ; break ; }
+	done
 	#echo "$PKGNAME, real package: $REALFILE"
-	test -e "$REALFILE" || { echo "ERROR: $REALFILE for $PKGNAME is missed" >&2 ; continue ; }
+	test -e "$REALFILE" || { echo "ERROR: $REALFILE for $PKGNAME is missed" >&2; continue ; }
 	ln $REALFILE $DESTREPO/$PKGARCH/RPMS.$RPMSEXT/$(basename $REALFILE)
 done
 
