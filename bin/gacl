@@ -23,6 +23,9 @@ mygetopts()
 		echog "    gacl [-$CURRENTBRANCHNAME] package add newuser"
 		echog "    gacl [-$CURRENTBRANCHNAME] package del newuser"
 		echog "    gacl [-$CURRENTBRANCHNAME] package show"
+		echog "Examples for current git project:"
+		echog "    gacl [-$CURRENTBRANCHNAME] add newuser"
+		echog "    gacl [-$CURRENTBRANCHNAME] show"
 		exit 0
 	fi
 
@@ -31,23 +34,28 @@ mygetopts()
 		shift 2
 	fi
 
-	# FIXME
-	# if two or one param only, try detect
-	if [ -z "$3" ] || [ -z "$2" ] ; then
-		# TODO
+	# one param
+	if [ -z "$2" ] ; then
+		[ "$1" = "show" ] || fatal "See $0 --help for correct options"
 		PROJECTNAME=$(get_gear_name)
-	else
+		COMMAND=$1
+	# two param: add newuser or package show
+	elif [ -z "$3" ] ; then
+		if [ "$1" = "add" ] ; then
+			# add newuser
+			PROJECTNAME=$(get_gear_name)
+			COMMAND=$1
+			PARAM=$2
+		else
+			# package show
+			PROJECTNAME=$1
+			COMMAND=$2
+		fi
+	else # 3 or more param
 		PROJECTNAME=$1
-		shift
+		COMMAND=$2
+		PARAM=$3
 	fi
-	#echo PROJNAME: $PROJECTNAME
-
-	COMMAND=$1
-	shift
-	#echo COMMAND: $COMMAND
-
-	PARAM=$1
-	shift
 
 }
 
