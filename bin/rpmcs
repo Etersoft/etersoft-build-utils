@@ -238,8 +238,10 @@ do
 		s|^make *install|%make_install install|g
 		s|^make %{?_smp_mflags}|%make_build|g
 		s|%make_install *install *DESTDIR=%buildroot|%makeinstall_std|g
-		s|%make_install *DESTDIR=%buildroot *install|%makeinstall_std|g
-		s|^make *DESTDIR=%buildroot *install|%makeinstall_std|g" $i
+		s|%make_install *DESTDIR=%buildroot *install\$|%makeinstall_std|g
+		s|%make_install *DESTDIR=%buildroot *install |%makeinstall_std|g
+		s|^make *DESTDIR=%buildroot *install\$|%makeinstall_std|g
+		s|^make *DESTDIR=%buildroot *install |%makeinstall_std|g" $i
 
 	subst  "s|/etc/|%_sysconfdir/|g
 		s|%_sysconfdir/rc.d/init.d|%_initdir/|g
