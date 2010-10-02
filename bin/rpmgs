@@ -141,7 +141,7 @@ function get_zip()
 	get_archive zip || return
 	mkdir $WEXT.zip.dir || return
 	cd $WEXT.zip.dir
-	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar . || { rm -fv $WEXT.zip ; return 1; }
+	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar ./* || { rm -fv $WEXT.zip ; return 1; }
 	cd ..
 	rm -rf $WEXT.zip.dir
 }
@@ -154,7 +154,7 @@ function get_rar()
 	get_archive rar || return
 	mkdir $WEXT.rar.dir || return
 	cd $WEXT.rar.dir
-	$UNRAR x ../$WEXT.rar && tar cf ../$WEXT.tar . || { rm -fv $WEXT.rar ; return 1; }
+	$UNRAR x ../$WEXT.rar && tar cf ../$WEXT.tar ./* || { rm -fv $WEXT.rar ; return 1; }
 	cd ..
 	rm -rf $WEXT.rar.dir
 }
@@ -167,7 +167,7 @@ function get_7z()
 	get_archive 7z || return
 	mkdir $WEXT.7z.dir || return
 	cd $WEXT.7z.dir
-	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar . || { rm -fv $WEXT.7z ; return 1; }
+	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar ./* || { rm -fv $WEXT.7z ; return 1; }
 	cd ..
 	rm -rf $WEXT.7z.dir
 }
