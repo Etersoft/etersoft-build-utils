@@ -13,8 +13,9 @@ load_mod spec rpm etersoft
 
 if [ "$1" = "-h" ]; then
 	echog "rpmpub - Etersoft specific script for publish gear repo to target ftp dir as src.rpm"
-	echog "Usage: rpmpub [-r PROJECTVERSION ] [SPEC] [TARGETDIR]"
+	echog "Usage: rpmpub [-f] [-r PROJECTVERSION ] [SPEC] [TARGETDIR]"
 	echog "Options:"
+	echog " -f - force set tag"
 	echog " -r PROJECTVERSION - set other project version (PROJECTVERSION/sources)"
 	echog " TARGETDIR - copy signed src.rpm package to TARGETDIR (f.i., /tmp/some_version/sources)"
 	echog "By default used path from Source: spec field. "
@@ -22,7 +23,11 @@ if [ "$1" = "-h" ]; then
 	exit 0
 fi
 
-
+FORCE=
+if [ "$1" = "-f" ] ; then
+	FORCE=$1
+	shift
+fi
 
 # publish to unstable by default
 ALPHA=
@@ -61,7 +66,7 @@ if [ -n "$ALPHA" ] && [ ! -d "$ETERDESTSRPM" ] && [ -d "$PREVPATH" ] ; then
 fi
 
 # just for your information: rpmbs supports ssh-like target
-$ETERBUILDBIN/rpmbs -s $SPECNAME || fatal "Can't build SRPMS"
+$ETERBUILDBIN/rpmbs $FORCE -s $SPECNAME || fatal "Can't build SRPMS"
 
 # if known target and last link already exists
 if [ -n "$ALPHA" ] && [ -L "$ETERDESTSRPM/../../last" ] ; then
