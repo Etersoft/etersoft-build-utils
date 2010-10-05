@@ -258,15 +258,21 @@ function print_error()
 # tarball dirname [options]
 gear_update_from_tarball()
 {
-	# FIXME: -a for special cases
 	local CREATEFLAG=
 	local TARBALL="$1"
 	local CURNAME="$2"
 	shift 2
 	[ -d "$CURNAME" ] || CREATEFLAG=-c
 	# TODO: check tarball ext. for unsupported arch and realize it here or in gear-update
-	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."
-	gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" || fatal "can't import tarball '$TARBALL'"
+	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME' with $CREATEFLAG..."
+	if ! gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" ; then
+		if gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" 2>&1 | grep -q "More than one subdirectory specified" ; then
+			echo "Try unpack as is"
+			CREATEFLAG="$CREATEFLAG -a"
+			gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" && return
+		fi
+	fi
+	fatal "can't import tarball '$TARBALL'"
 }
 
 parse_cmd_pre_spec "$@"
