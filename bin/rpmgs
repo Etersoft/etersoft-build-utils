@@ -264,13 +264,15 @@ gear_update_from_tarball()
 	shift 2
 	[ -d "$CURNAME" ] || CREATEFLAG=-c
 	# TODO: check tarball ext. for unsupported arch and realize it here or in gear-update
-	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME' with $CREATEFLAG..."
+	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."
 	if ! gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" ; then
 		if gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" 2>&1 | grep -q "More than one subdirectory specified" ; then
 			echo "Try unpack as is"
 			CREATEFLAG="$CREATEFLAG -a"
 			gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" && return
 		fi
+	else
+		return 0
 	fi
 	fatal "can't import tarball '$TARBALL'"
 }
