@@ -50,3 +50,4 @@ libXv-devel|xorg-x11-devel
 xorg-cf-files|
 
 kernel-build-tools|kernel-build-tools
+rpm-build-intro|rpm-build-compat
