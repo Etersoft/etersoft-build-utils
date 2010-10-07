@@ -8,9 +8,11 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "gpull - do git pull --rebase"
 	echo "Use: gpull [-a] [-n] [repo] [branch]"
 	echo "     gpull without parameters or with branch name"
-	echo "     gpull myrepo - for pull from remote myrepo gear repo"
+	echo "     gpull myrepo - for pull from remote myrepo gear repo (with --rebase by default)"
 	echo "           -a - pull all branches"
-	echo "           -n - do not rebase during pull"
+	echo "           -r - rebase during pull"
+	echo "           -m - do merge if possible"
+	echo "           -f - pull with fast forward only (default)"
 	echo "           -c - return error status if repo was not uptodate (gpull || echo 'Was updated last time')"
 	exit 1
 fi
@@ -28,11 +30,20 @@ if [ "$1" = "-c" ] ; then
 fi
 
 
-if [ "$1" = "-n" ] ; then
+REBASE="--ff-only"
+if [ "$1" = "-r" ] ; then
+	REBASE="--rebase"
+	shift
+fi
+
+if [ "$1" = "-m" ] ; then
 	REBASE=""
 	shift
-else
-	REBASE="--rebase"
+fi
+
+if [ "$1" = "-f" ] ; then
+	REBASE="--ff-only"
+	shift
 fi
 
 if is_exist_remote_repo "$1" ; then
