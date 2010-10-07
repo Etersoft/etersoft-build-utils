@@ -10,6 +10,8 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod hasher
 
+WITHSTUFF="--with-stuff"
+
 #############################
 Usage="Usage: $name [-m -s -u -i -c -l] src.rpm..."
 function mygetopts()
@@ -23,7 +25,7 @@ phelp()
 	echog "$Usage"
 	echog "Options:"
 	echog " -i - install built packages in test hasher"
-	echog " -c - build without stuff (previous built packages)"
+	echog " -c - build without stuff (without previous built packages)"
 	echog " -l - lazy cleanup (before build, not after)"
 
 }
@@ -33,7 +35,7 @@ while getopts :hmicl opt; do
     h) phelp; exit 0;;
     i) TESTINSTALL=1;;
     l) HASHERARG="$HASHERARG --lazy-cleanup";;
-    c) HASHERARG="$HASHERARG --without-stuff";;
+    c) WITHSTUFF="--without-stuff";;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
@@ -54,6 +56,7 @@ mygetopts $LISTARGS
 
 RESULT=0
 
+HASHERARG="$HASHERARG $WITHSTUFF"
 set_hasherdir
 
 mkdir -p $LOGDIR $HASHERDIR || fatal "cannot mkdir"

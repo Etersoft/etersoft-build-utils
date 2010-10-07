@@ -4,7 +4,7 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod git
 
-if [ "$1" = "-h" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "gpull - do git pull --rebase"
 	echo "Use: gpull [-a] [-n] [repo] [branch]"
 	echo "     gpull without parameters or with branch name"

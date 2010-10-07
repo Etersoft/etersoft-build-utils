@@ -69,7 +69,7 @@ mygetopts $LISTARGS
 # export OURAPTCONF with temp. file contains correct path to sources.list
 prepare_aptconfig
 
-HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $DEFAULTARCH"
+HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $DEFAULTARCH --with-stuff"
 
 set_hasherdir
 if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then

@@ -15,7 +15,7 @@ if is_girar_name $1 ; then
 	shift
 fi
 
-if [ "$1" = "-h" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "gpush - publish current project repo remote git repo"
 	echo "Use: gpush [GIRAR] [-f|--force] [-a|--all] [-t|--tags] [target branch]"
 	exit 1
