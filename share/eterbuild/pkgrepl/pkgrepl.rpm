@@ -18,6 +18,7 @@ libarts-devel|arts-devel
 # Uwaga! use first matching rule, write devel package first
 pkg-config|pkgconfig
 rpm-build-compat|rpm-build-altlinux-compat
+rpm-build-intro|rpm-build-altlinux-compat
 libntfs-devel|ntfsprogs-devel
 libntfs|ntfsprogs
 libe2fs-devel|e2fsprogs-devel
