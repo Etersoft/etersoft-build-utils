@@ -310,10 +310,7 @@ fi
 LISTRPMARGS=$(drop_args "$*" n v)
 }
 
-if is_girar_name $1 ; then
-	GIRARHOST=$1
-	shift
-fi
+set_girar_host $1 && shift
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS

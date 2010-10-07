@@ -18,10 +18,7 @@ if [ "$1" = "-r" ] ; then
 	shift
 fi
 
-if is_girar_name $1 ; then
-	GIRARHOST=$1
-	shift
-fi
+set_girar_host $1 && shift
 
 SPEC=$1
 VER=$2

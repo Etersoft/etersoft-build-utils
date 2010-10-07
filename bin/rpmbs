@@ -165,16 +165,7 @@ rpmbs_copying_built()
 	fi
 }
 
-if is_girar_name $1 ; then
-	GIRARHOST=$1
-	shift
-else
-	REMOTELIST="$(get_remote_git_list)"
-	if is_one_girar_name "$REMOTELIST" ; then
-		# use one target if it one
-		GIRARHOST="$REMOTELIST"
-	fi
-fi
+set_girar_host $1 && shift
 
 parse_cmd_pre_spec "$@"
 # quotes brokes option handling
