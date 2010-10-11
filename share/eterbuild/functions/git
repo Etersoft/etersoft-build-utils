@@ -34,7 +34,7 @@ get_current_branch()
 get_remote_git_list()
 {
         local i
-        for i in $(git remote | uniq) ; do
+        for i in $(git remote 2>/dev/null | uniq) ; do
                 if is_girar_name $i ; then
                         echo $i
                 fi
