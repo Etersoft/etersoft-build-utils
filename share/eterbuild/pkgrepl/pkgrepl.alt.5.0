@@ -1,2 +1,2 @@
-kernel-build-tools|kernel-build-tools kernel-headers-modules-std-srv kernel-headers-modules-ovz-rhel kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
+kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-rhel kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
 rpm-build-intro|rpm-build-compat
