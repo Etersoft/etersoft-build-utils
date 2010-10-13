@@ -58,7 +58,7 @@ set_last_link()
 	echo $1 | grep -q /testing/sources && return
 	# do not change last if unstable publish
 	echo $1 | grep -q /unstable/sources && return
-	# do not update last link if it is not exists
-	# test -L "$1/../last" || return
+	# do not create last link to last
+	[ "$2" = "last" ] && return
 	rm -f "$LASTNAME" && ln -s "$2" "$LASTNAME"
 }
