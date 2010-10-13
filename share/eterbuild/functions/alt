@@ -64,23 +64,19 @@ set_binaryrepo()
 		return
 	fi
 	test -z "$1" && return
-	if [ -n "$UPDATES" ] ; then
-		BINARYREPO="`get_altdistr_version $1`"
-	else
-		BINARYREPO="`get_altdistr_version $1`"
-	fi
+	BINARYREPO="`get_altdistr_version $1`"
 }
 
 # M50 -> 5.0
 get_altdistr_version()
 {
-	echo "$1" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|sisyphus|g" | sed -e "s|DD|daedalus|g" | sed -e "s|Sisyphus|sisyphus|g"
+	echo "$1" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|sisyphus|g" | sed -e "s|DD|daedalus|g" | sed -e "s|Sisyphus|sisyphus|g" | sed -e "s|M50|p5|g"
 }
 
 # 5.0 -> M50
 get_altdistr_mod()
 {
-	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|g" | sed -e "s|sisyphus|SS|g"
+	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|g" | sed -e "s|sisyphus|SS|g" | sed -e "s|p5|M50|g"
 }
 
 # TODO: include in sisyphus_check
