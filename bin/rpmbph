@@ -288,16 +288,16 @@ phelp()
 }
 
 
-while getopts :hniuvqb: opt; do
+while getopts :hnuivqb: opt; do
     case $opt in
-    h) phelp; exit 0;;
-    n) NOBUILD=1;;
-    v) VERBOSE=1;;
-    b) BINARYREPONAME=$OPTARG ;;
-    q) QUIET=1;;
-    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
-#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
-	?) OPTIND=$((OPTIND-1)); break;
+        h) phelp; exit 0 ;;
+        n) NOBUILD=1 ;;
+        u) UPLOADARG="-$opt" ;;
+        v) VERBOSE=1 ;;
+        b) BINARYREPONAME=$OPTARG ;;
+        q) QUIET=1 ;;
+        +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+        ?) OPTIND=$((OPTIND-1)); break;
     esac
 done
 
@@ -306,8 +306,8 @@ if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
 fi
 
-# pass other options to RPM (exclude -n -v):
-LISTRPMARGS=$(drop_args "$*" n v)
+# pass other options to RPM (exclude -v):
+LISTRPMARGS=$(drop_args "$*" v)
 }
 
 set_girar_host $1 && shift
@@ -388,7 +388,8 @@ if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
 	fi
 	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
-	$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+	echo "Run $BUILDCOMMAND"
+	$BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
 	git checkout $CURBRANCH
 	exit $?
 fi
@@ -411,6 +412,6 @@ for i in $LISTBUILT ; do
 	# FIXME: do not remove if not repacked
 	#rm -f $SPKG
 	altspec_to_local $SPECNAME
-	$BUILDCOMMAND $LISTRPMARGS $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
+	$BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
 done
 
