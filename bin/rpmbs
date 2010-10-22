@@ -153,7 +153,7 @@ rpmbs_copying_built()
 	else
 		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
 		chmod ug+rw $LISTBUILT
-		cp -fva $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
 		make_md5sum "$ETERDESTSRPM"
 			# Publish tarball if target dir is exist
 		if [ -d "$ETERDESTSRPM/tarball" ] ; then
