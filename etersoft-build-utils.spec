@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Oct 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- support rpm-build-intro (as rpm-build-compat)
+- add script from create repo from package list
+- check_display: do not run xset directly
+- fix replace p5<->M50
+- gpull: replace -n with -r/-m/-f options (do --ff-only by default)
+- rpmbph: fix -n -u param handling
+- rpmgs: add support for download and commit tarballs with more than one subdirs
+
 * Thu Sep 16 2010 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - gpush: fix origin publish
 - rpmbph: add -b REPONAME and -q (quiet) support

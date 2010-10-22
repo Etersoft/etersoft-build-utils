@@ -1,3 +1,34 @@
+etersoft-build-utils-1.9.1: 22 Oct 2010
+- add_changelog will break if LC_ALL is set to non C, so drop out workaround
+- add replacement for rpm-build-intro (as for rpm-build-compat)
+- add rules for pclinux.2010
+- add script from create repo from package list
+- add some checking and fix target
+- check_display: do not run xset directly
+- fix replace p5<->M50
+- fix set_last_link
+- gacl: rewrite arg parsing
+- get_tarballname: fix hack for get tarball name
+- gpull: replace -n with -r/-m/-f options (do --ff-only by default)
+- gpull: use --rebase for -c
+- introduce set_girar_host and use it
+- loginhsh: add -v (verbose) param
+- misc changes
+- remove etersoft-build-utils using, drop out rpm query
+- remove kernel std-srv from ALT 5.0
+- rpmbph: fix -n -u param handling
+- rpmbs: do not copy attrs during copying
+- rpmcs: fix make install replacements
+- rpmgs: add support for download and commit tarballs with more than one subdirs
+- rpmgs: fix download result checking (really skip broken downloaded)
+- rpmgs: fix return state
+- rpmgs: fix zip/7z/rar converting
+- rpmpub: add support for -f key (force for rpmgs)
+- silence check git remote
+- small fix if rpm-build-altlinux-compat is missed
+- use distr_vendor from git repo if possible
+- use rpm-build-compat on ALT <5.1
+
 etersoft-build-utils-1.9.0: 16 Sep 2010
 - gacl: update description and add -b REPO param support
 - gpush: fix origin publish
