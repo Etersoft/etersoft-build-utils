@@ -264,5 +264,7 @@ enable_ccache()
 # If DISPLAY is broken
 check_display()
 {
-	xset -b
+	local XSET=$(which xset 2>/dev/null)
+	[ -n "$XSET" ] || return
+	$XSET -b
 }
