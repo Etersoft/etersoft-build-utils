@@ -20,7 +20,7 @@ REMCOM=
 COMMIT=
 
 #############################
-Usage="Usage: $name [-r -s -u -m -i -c] [spec or src.rpm]..."
+Usage="Usage: $name [-r -s -u -m -i -c] [-f] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -39,6 +39,7 @@ phelp()
 	echog " -s - sign and and copy to upload dir (ETERDESTSRPM) after build"
 	echog " -t - make temporary commit before build (rpmbb like behavior)"
 	echog " -l - lazy cleanup (clean before build, not after)"
+	echog " -f - force tag set (see rpmbs --help)"
 }
 
 while getopts :hrulsimt opt; do
@@ -77,7 +78,7 @@ fi
 
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
-pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u U i c l)
+pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u U i c l f)
 
 if echo "$LISTNAMES" | grep -q spec ; then
 	set_specdir $LISTNAMES
