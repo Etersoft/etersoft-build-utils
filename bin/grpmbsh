@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod git
+
+set_girar_host $1 && shift
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "grpmbsh - multi repo rpmbsh analogue (build packages in hasher)"
+	echo "Use: grpmbs [GIRAR] package1... package2..."
+	# FIXME: concatenate grpmbsh and grpmbs
+	#echo "Options:"
+	#echo "    -a - build all packages in one task"
+	#echo "    -u - build packages separately (one package per task)"
+	#echo "    -f - force set tags (see rpmbs)"
+	exit 1
+fi
+
+
+for i in "$@" ; do
+	cd $i || fatal "Run in dir, contains '$i' directory."
+	rpmbsh $GIRARHOST || fatal
+	cd -
+done

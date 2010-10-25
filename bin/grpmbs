@@ -1,0 +1,66 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod git
+
+set_girar_host $1 && shift
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "grpmbs - multi repo rpmbs analogue (build packages via girar)"
+	echo "Run in dir contains subdirs"
+	echo "Use: grpmbs [GIRAR] [-a|-u] [-f] package1... package2..."
+	echo "Options:"
+	echo "    -a - build all packages in one task"
+	echo "    -u - build packages separately (one package per task)"
+	echo "    -f - force set tags (see rpmbs)"
+	exit 1
+fi
+
+TASKADD=
+if [ "$1" = "-a" ] ; then
+	TASKADD="-a"
+	shift
+fi
+
+SINGLETASK=
+if [ "$1" = "-u" ] ; then
+	SINGLETASK="-u"
+	shift
+fi
+
+if [ -z "$TASKADD$SINGLETASK" ] ; then
+	fatal "Missing arguments. Run with --help for help."
+fi
+
+FORCE=
+if [ "$1" = "-f" ] ; then
+	FORCE="-f"
+	shift
+fi
+
+fatal()
+{
+	echo $@
+	exit 1
+}
+
+if [ -n "TASKADD" ] ; then
+	TASK=$(ssh $GIRARHOST task new | head -n1)
+	[ -n "$TASK" ] || fatal
+	RUNCOMMAND="rpmbs $GIRARHOST -a $TASK"
+else
+	RUNCOMMAND="rpmbs $GIRARHOST -u"
+fi
+
+for i in "$@" ; do
+	cd $i || fatal "Run in dir contains '$i' dir"
+	echo
+	echo "== Run $RUNCOMMAND in $(pwd)"
+	$RUNCOMMAND $FORCE || fatal
+	cd -
+done
+
+if [ -n "TASKADD" ] ; then
+	ssh $GIRARHOST task run "$TASK"
+fi
