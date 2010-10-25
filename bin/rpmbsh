@@ -1,15 +1,11 @@
 #!/bin/sh
-# 2003-2009 (c) Etersoft www.etersoft.ru
+# 2003-2010 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # BSH - build source; use hasher
 #
 # Создаёт пакет(ы) по указанным спекам и собирает в hasher
-# Поддерживает удалённую сборку пакета ( ключ -r)
-# Присылка результата сборки по почте (ключ -m)
-# TODO: Сжимать отправляемый лог
-# TODO: присылать обратно собранные пакеты??
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common

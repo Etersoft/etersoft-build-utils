@@ -96,4 +96,5 @@ fi
 
 add_changelog_helper "$CHANGELOG" $SPECNAME
 
+# TODO: use gear-commit ?
 git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"

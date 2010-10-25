@@ -9,11 +9,12 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "Use: gpull [-a] [-n] [repo] [branch]"
 	echo "     gpull without parameters or with branch name"
 	echo "     gpull myrepo - for pull from remote myrepo gear repo (with --rebase by default)"
-	echo "           -a - pull all branches"
-	echo "           -r - rebase during pull"
-	echo "           -m - do merge if possible"
-	echo "           -f - pull with fast forward only (default)"
-	echo "           -c - return error status if repo was not uptodate (gpull || echo 'Was updated last time')"
+	echo "Options:"
+	echo "     -a - pull all branches"
+	echo "     -r - rebase during pull"
+	echo "     -m - do merge if possible"
+	echo "     -f - pull with fast forward only (default)"
+	echo "     -c - return error status if repo was not uptodate (gpull || echo 'Was updated last time')"
 	exit 1
 fi
 
