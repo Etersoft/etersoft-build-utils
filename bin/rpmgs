@@ -117,6 +117,16 @@ function get_targz()
 	return 1
 }
 
+function get_tarxz()
+{
+	BIN7ZIP=/usr/bin/7z
+	test -x $BIN7ZIP || return
+	get_archive tar.xz || return
+	$BIN7ZIP x $WEXT.tar.xz && return
+	rm -fv $WEXT.tar.xz
+	return 1
+}
+
 function get_tar()
 {
 	get_archive tar || return
@@ -201,7 +211,7 @@ function get_source()
 # download GETSOURCE url to tar.bz2 or tar (set WEXT as without extension name)
 download_any_tarball()
 {
-	get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
+	get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tar || get_tarxz || get_rar || dir_name || fatal "Cannot retrieve $GETSOURCE"
 }
 
 # param: spec name number (f.i., url for Source-url)
