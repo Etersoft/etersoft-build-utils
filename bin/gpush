@@ -99,15 +99,17 @@ push_to_remote()
 	local GHOST=$1
 	local TEXTTAG=
 	[ -n "$TAGSALL$PUSHALL" ] && TEXTTAG="(with all tags)"
+	# FIXME: почему тут прибито packages, а мы не используем remote alias, если он есть?
+	# Видимо, стоит только через alias, он же всё равно создаётся, и мы всё равно его используем, чтобы определить, куда публиковать
 	echo
-	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST:packages/$PROJECTNAME.git $TEXTTAG"
+	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST $TEXTTAG"
 	# FIXME: push with one command
 	if [ -n "$PUSHALL" ] ; then
-		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git || return
-		[ -z "$TAGSALL" ] || git push --tags $GHOST:packages/$PROJECTNAME.git
+		git push $PUSHALL $PUSHFORCE $GHOST || return
+		[ -z "$TAGSALL" ] || git push --tags $GHOST
 	else
-		git push $PUSHALL $PUSHFORCE $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH || return
-		[ -z "$TAGSALL" ] || git push --tags $GHOST:packages/$PROJECTNAME.git $TARGETBRANCH
+		git push $PUSHALL $PUSHFORCE $GHOST $TARGETBRANCH || return
+		[ -z "$TAGSALL" ] || git push --tags $GHOST $TARGETBRANCH
 	fi
 }
 
