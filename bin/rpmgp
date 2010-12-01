@@ -292,6 +292,7 @@ if [ -n "$MIGRATEGIRAR" ] ; then
 			continue
 		fi
 		echo "Create gear repo $BASENAME from $PKGNAME in $GITREPODIR"
+		[ -n "$GITREPODIR" ] || GITREPODIR=$(pwd)
 		GEARDIR=$GITREPODIR/$BASENAME
 		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
 		mkdir -p "$GEARDIR" || fatal "can't create dir $GEARDIR"
