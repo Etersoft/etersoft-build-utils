@@ -80,13 +80,20 @@ toalt_grprepl()
 	return 1
 }
 
+# If run without params, try autodetect spec
+if [ -z "$1" ] ; then
+	LISTNAMES=$(get_gear_spec)
+	[ -n "$LISTNAMES" ] && echo "Using autodetected spec $LISTNAMES..."
+else
+	parse_cmd_pre "$@"
+fi
 
-parse_cmd_pre "$@"
 
 if [ "$1" = "-h" ]; then
 	echog "rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT"
 	exit 0
 fi
+
 
 for i in $LISTNAMES
 do

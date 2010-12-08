@@ -301,6 +301,7 @@ if [ -n "$MIGRATEGIRAR" ] ; then
 		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
 		# remove src.rpm only if it was generated from spec
 		[ -z ${INFILE/*rpm/} ] || rm -vf $PKGNAME
+		rpmcs
 	done
 	exit 0
 fi
