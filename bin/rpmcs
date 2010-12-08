@@ -108,6 +108,8 @@ do
 	subst "s|^Prefix:.*$||" $i
 	subst "s|^BuildRoot:.*$||i" $i
 	subst "s|%mkrel||g" $i
+# use in cases
+#	subst "s|%mdkversion||g" $i
 
 	# Add packager
 	if ! grep "^Packager" $i ; then
@@ -317,6 +319,7 @@ do
 	subst "s|%_datadir/man/|%_mandir/|g" $i
 	subst "s|%_mandir/man\([0-9]\)|%_man\1dir|g" $i
 	subst "s|%_libdir/pkgconfig|%_pkgconfigdir|g" $i
+	#subst "s|%_datadir/pkgconfig|%_noarchpkgconfigdir|g" $i
 	subst "s|%_datadir/pixmaps|%_pixmapsdir|g" $i
 	subst "s|%_datadir/applications|%_desktopdir|g" $i
 
