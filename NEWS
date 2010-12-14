@@ -1,3 +1,13 @@
+etersoft-build-utils-1.9.2: 14 Dec 2010
+- fix error with empty GITREPODIR
+- gpush: use remote alias, not direct path
+- introduce grpmbs - send a group of packages to girar build introduce grpmbsh - build a group of packages in hasher
+- pkgrepl: add mdv.2010, suse support
+- remove Development Tools->Other (ALT #24724)
+- rpmbsh: add support for -f (--force) option
+- rpmcs: add support for spec filename autodetection rpmgp: run rpmcs after spec/srpm -> git migrate
+- rpmgs: add tar.xz support
+
 etersoft-build-utils-1.9.1: 22 Oct 2010
 - add_changelog will break if LC_ALL is set to non C, so drop out workaround
 - add replacement for rpm-build-intro (as for rpm-build-compat)

@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Dec 14 2010 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
+- gpush: use remote alias, not direct path
+- introduce grpmbs - send a group of packages to girar build introduce grpmbsh - build a group of packages in hasher
+- remove Development Tools->Other (ALT #24724)
+- rpmgs: add tar.xz support
+
 * Fri Oct 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
 - support rpm-build-intro (as rpm-build-compat)
 - add script from create repo from package list
