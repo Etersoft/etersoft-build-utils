@@ -6,112 +6,103 @@ load_mod git
 
 test -r "$1" && fatal "Do not need any files in params"
 
-OVERRIDEGIRARHOST=
-
-# If run with remote alias like girar name, use only it
-if is_girar_name $1 ; then
-	GIRARHOST=$1
-	OVERRIDEGIRARHOST=$1
-	shift
-fi
-
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	echo "gpush - publish current project repo remote git repo"
-	echo "Use: gpush [GIRAR] [-f|--force] [-a|--all] [-t|--tags] [target branch]"
-	exit 1
-fi
-
 PUSHFORCE=
-if [ "$1" = "-f" ] || [ "$1" = "--force" ] ; then
-	PUSHFORCE="--force"
-	shift
-fi
-
 PUSHALL=
-if [ "$1" = "-a" ] || [ "$1" = "--all" ] ; then
-	PUSHALL="--all"
-	shift
-fi
-
 TAGSALL=
-if [ "$1" = "-t" ] || [ "$1" = "--tags" ] ; then
-	TAGSALL="--tags"
-	shift
+
+#############################
+Usage="Usage: $name [GIRAR/remote alias] [-f|--force] [-a|--all] [-t|--tags] [tag]"
+function mygetopts()
+{
+name=${0##*/}
+Descr="$name - publish current project repo remote git repo"
+
+phelp()
+{
+	echog "$Descr"
+	echog "$Usage"
+	echog "Options:"
+	echog " -f - force push"
+	echog " -a - push all branches"
+	echog " -t - push all tags"
+}
+
+while getopts :hfat opt; do
+    case $opt in
+    h) phelp; exit 0;;
+    f) PUSHFORCE="--force" ;;
+    a) PUSHALL="--all" ;;
+    t) TAGSALL="--tags" ;;
+    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+    ?) OPTIND=$((OPTIND-1)); break;
+    esac
+done
+
+## remove args that were options
+if [ $# -gt 0 ]; then
+	shift $((OPTIND - 1))
 fi
 
-REMOTELIST="$(get_remote_git_list)"
+LISTARGS=$@
 
-# use one target if it one
-if is_one_girar_name "$REMOTELIST" && [ -z "$OVERRIDEGIRARHOST" ] ; then
-	GIRARHOST="$REMOTELIST"
-	OVERRIDEGIRARHOST=$GIRARHOST
-fi
+}
 
-# use as project name
-#if [ -n "$1" ] ; then
-#	PROJECTNAME=$1
-#	shift
-#else
-	PROJECTNAME=$(get_gear_name)
-#fi
+mygetopts $@
 
-CURRENTBRANCH=$(get_current_branch)
-
-if [ -z "$CURRENTBRANCH" ] ; then
-	echo "Can't detect current branch"
-	exit 1
-fi
-
-if [ "$1" = "origin" ]; then
-	REPO="$1"
-	shift
-	git push $PUSHALL $PUSHFORCE $REPO $@
-	git push --tags $PUSHALL $PUSHFORCE $REPO $@
-	exit
-fi
-
-if [ -z "$OVERRIDEGIRARHOST" ] && [ "$(git remote | uniq)" = "origin" ] ; then
-	REPO="origin"
-	git push $PUSHALL $PUSHFORCE $REPO $@
-	git push --tags $PUSHALL $PUSHFORCE $REPO $@
-	exit
-fi
-
-if [ -n "$1" ] ; then
-	TARGETBRANCH="$1"
-	shift
-else
-	TARGETBRANCH=$CURRENTBRANCH
-fi
-
-if [ "$PUSHALL" = "--all" ] ; then
-	TEXTBRANCH="all branches"
-	TARGETBRANCH=
-else
-	TEXTBRANCH="branch $TARGETBRANCH"
-	if echo $TEXTBRANCH | egrep "alt|eter" ; then
-		TEXTBRANCH="tag $TARGETBRANCH"
-	fi
-fi
 
 push_to_remote()
 {
 	local GHOST=$1
 	local TEXTTAG=
+	local PROJECTNAME=$(pwd)/$(get_gear_name)
+
 	[ -n "$TAGSALL$PUSHALL" ] && TEXTTAG="(with all tags)"
-	# FIXME: почему тут прибито packages, а мы не используем remote alias, если он есть?
-	# Видимо, стоит только через alias, он же всё равно создаётся, и мы всё равно его используем, чтобы определить, куда публиковать
+
 	echo
 	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST $TEXTTAG"
-	# FIXME: push with one command
-	if [ -n "$PUSHALL" ] ; then
-		git push $PUSHALL $PUSHFORCE $GHOST || return
-		[ -z "$TAGSALL" ] || git push --tags $GHOST
-	else
-		git push $PUSHALL $PUSHFORCE $GHOST $TARGETBRANCH || return
-		[ -z "$TAGSALL" ] || git push --tags $GHOST $TARGETBRANCH
-	fi
+
+	git push $PUSHALL $PUSHFORCE $GHOST $CURRENTBRANCH || return
+	[ -z "$TAGSALL" ] || git push --tags $GHOST $CURRENTBRANCH
 }
+
+do_push()
+{
+
+REMOTELIST="$(get_remote_git_list)"
+
+GIRARHOST=$1
+shift
+
+# use one target if it one
+if is_one_girar_name "$REMOTELIST" && [ -z "$GIRARHOST" ] ; then
+	GIRARHOST="$REMOTELIST"
+fi
+# origin by default if exists and alone
+if [ -z "$GIRARHOST" ] && [ "$(git remote | uniq)" = "origin" ] ; then
+	GIRARHOST="origin"
+fi
+
+CURRENTBRANCH=$(get_current_branch)
+
+# if set it can be tag
+if [ -n "$1" ] ; then
+       CURRENTBRANCH="$1"
+       shift
+fi
+
+[ -n "$CURRENTBRANCH" ] || fatal "Can't detect current branch"
+
+
+if [ "$PUSHALL" = "--all" ] ; then
+	TEXTBRANCH="all branches"
+	CURRENTBRANCH=
+else
+	TEXTBRANCH="branch $CURRENTBRANCH"
+	if echo $TEXTBRANCH | egrep "alt|eter" ; then
+		TEXTBRANCH="tag $CURRENTBRANCH"
+	fi
+fi
+
 
 
 # if remote list is empty, do ginit
@@ -122,3 +113,6 @@ LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
 for i in $LISTGIRARHOST ; do
 	push_to_remote $i
 done
+}
+
+do_push $LISTARGS
