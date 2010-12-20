@@ -98,16 +98,13 @@ get_pagepkginfo()
 	then
 		if [ -z ${i/*rpm/} ]
 		then
-			# it is rpm package
-			PKGVERSION=$(querypackage ${i} VERSION)
-			PKGNAME=$(querypackage ${i} sourcerpm | sed -e "s|-$PKGVERSION.*||g")
+			PKGNAME=$(get_sourcepkg_name "$i")
 		else
 			PKGNAME=$(get_name ${i})
 		fi
 	else
 		# installed package name
-		PKGVERSION=$(querypackage ${i} VERSION})
-		PKGNAME=$(querypackage ${i} sourcerpm | sed -e "s|-$PKGVERSION.*||g")
+		PKGNAME=$(get_sourcepkg_name "$i")
 	fi
 	if [ -z "$PKGNAME" ] ; then
 		PKGNAME="$i"

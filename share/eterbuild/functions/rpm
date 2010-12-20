@@ -107,6 +107,14 @@ get_pkgname_from_filename()
 	echo ${1/-[0-9]*/}
 }
 
+# return source package name by binary rpm package file
+get_sourcepkg_name()
+{
+	local FILE="$1"
+	local PKGVERSION=$(querypackage "$FILE" VERSION)
+	querypackage "$FILE" sourcerpm | sed -e "s|-$PKGVERSION.*||g"
+}
+
 
 # build binary package list (1st - repo dir, 2st - pkgname)
 # algorithm: list all files in PKGDIR, print packages with our source pkg name
