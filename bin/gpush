@@ -65,33 +65,49 @@ push_to_remote()
 	[ -z "$TAGSALL" ] || git push --tags $GHOST $CURRENTBRANCH
 }
 
-do_push()
+tune_girarlist()
 {
 
 REMOTELIST="$(get_remote_git_list)"
 
-GIRARHOST=$1
-shift
+NEWGIRAR=$1
 
-# use one target if it one
-if is_one_girar_name "$REMOTELIST" && [ -z "$GIRARHOST" ] ; then
-	GIRARHOST="$REMOTELIST"
+# If run with gear as param
+if [ -n "$NEWGIRAR" ] ; then
+	# if run with girar host in arg
+	if is_girar_name "$NEWGIRAR" ; then
+		# if remote list is empty, do ginit
+		[ -n "$REMOTELIST" ] || ginit $NEWGIRAR
+	fi
+	LISTGIRARHOST="$NEWGIRAR"
+	shift
+else
+	# use one target if it one
+	if is_one_girar_name "$REMOTELIST" ; then
+		GIRARHOST="$REMOTELIST"
+	fi
+
+	# origin by default if exists and alone
+	if [ "$(get_remote_repo_list)" = "origin" ] ; then
+		GIRARHOST="origin"
+	fi
+	LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
 fi
-# origin by default if exists and alone
-if [ -z "$GIRARHOST" ] && [ "$(git remote | uniq)" = "origin" ] ; then
-	GIRARHOST="origin"
-fi
 
-CURRENTBRANCH=$(get_current_branch)
 
-# if set it can be tag
+# if set it can be tag or branch name
 if [ -n "$1" ] ; then
-       CURRENTBRANCH="$1"
-       shift
+	CURRENTBRANCH="$1"
+	shift
+else
+	CURRENTBRANCH=$(get_current_branch)
 fi
 
 [ -n "$CURRENTBRANCH" ] || fatal "Can't detect current branch"
 
+}
+
+tune_girarlist $LISTARGS
 
 if [ "$PUSHALL" = "--all" ] ; then
 	TEXTBRANCH="all branches"
@@ -103,16 +119,6 @@ else
 	fi
 fi
 
-
-
-# if remote list is empty, do ginit
-[ -n "$REMOTELIST" ] || ginit $GIRARHOST
-
-LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
-[ -n "$OVERRIDEGIRARHOST" ] && LISTGIRARHOST=$OVERRIDEGIRARHOST
 for i in $LISTGIRARHOST ; do
 	push_to_remote $i
 done
-}
-
-do_push $LISTARGS
