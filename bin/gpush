@@ -88,7 +88,7 @@ else
 	fi
 
 	# origin by default if exists and alone
-	if [ "$(get_remote_repo_list)" = "origin" ] ; then
+	if get_remote_repo_list | grep -q origin ; then
 		GIRARHOST="origin"
 	fi
 	LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
