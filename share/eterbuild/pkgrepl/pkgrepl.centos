@@ -7,3 +7,7 @@ xorg-sdk|xorg-x11-server-sdk
 libsmbclient-devel|samba-common
 
 perl-unicore|
+
+# missed on CentOS
+libopenal-devel|
+libopenal|
