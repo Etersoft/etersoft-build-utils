@@ -1,3 +1,8 @@
+etersoft-build-utils-1.9.3: 23 Dec 2010
+- gpush: rewrite girar/branch detection part, refactoring
+- gpush: use origin by default if exists
+- rpmbs: use name from spec as target repo name
+
 etersoft-build-utils-1.9.3: 20 Dec 2010
 - add get_sourcepkg_name function (rpm only) and use it in rpmurl
 - gpush: full rewrite, use mygetopts
