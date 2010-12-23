@@ -78,7 +78,10 @@ tune_girarlist()
 
 REMOTELIST="$(get_remote_git_list)"
 
-[ -n "$NEWGIRAR" ] || NEWGIRAR="$1"
+if [ -z "$NEWGIRAR" ] ; then
+	NEWGIRAR="$1"
+	shift
+fi
 
 # If run with gear as param
 if [ -n "$NEWGIRAR" ] ; then
@@ -88,7 +91,6 @@ if [ -n "$NEWGIRAR" ] ; then
 		[ -n "$REMOTELIST" ] || ginit $NEWGIRAR
 	fi
 	LISTGIRARHOST="$NEWGIRAR"
-	shift
 else
 	# use one target if it one
 	if is_one_girar_name "$REMOTELIST" ; then
@@ -101,7 +103,6 @@ else
 	fi
 	LISTGIRARHOST="$GIRARHOST $(do_exclude_list "$GIRARHOST" "$REMOTELIST")"
 fi
-
 
 # if set it can be tag or branch name
 if [ -n "$1" ] ; then
