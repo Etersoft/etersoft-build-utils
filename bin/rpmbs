@@ -197,8 +197,8 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo "Run with gear repo..."
 	build_rpms_name "$LISTNAMES"
 	# hack: get project name from package name
-	#PROJECTNAME=$(echo $BASENAME | filter_gear_name)
-	PROJECTNAME=$(get_gear_name)
+	PROJECTNAME=$(echo $BASENAME | filter_gear_name)
+	#PROJECTNAME=$(get_gear_name)
 	pkg_release_check
 	TAG=$VERSION-$RELEASE
 	check_gear_and_tag "$TAG"  # || fatal "Can't make tag"
