@@ -9,6 +9,7 @@ test -r "$1" && fatal "Do not need any files in params"
 PUSHFORCE=
 PUSHALL=
 TAGSALL=
+NEWGIRAR=
 
 #############################
 Usage="Usage: $name [GIRAR/remote alias] [-f|--force] [-a|--all] [-t|--tags] [tag]"
@@ -43,9 +44,16 @@ if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
 fi
 
-LISTARGS=$@
+LISTARGS="$@"
+#LISTARGS=$(drop_args "$*" f a t)
 
 }
+
+# Skip first param
+if ! echo "$1" | grep -q "^-" ; then
+    NEWGIRAR="$1"
+    shift
+fi
 
 mygetopts $@
 
@@ -70,7 +78,7 @@ tune_girarlist()
 
 REMOTELIST="$(get_remote_git_list)"
 
-NEWGIRAR=$1
+[ -n "$NEWGIRAR" ] || NEWGIRAR="$1"
 
 # If run with gear as param
 if [ -n "$NEWGIRAR" ] ; then

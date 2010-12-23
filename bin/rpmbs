@@ -64,7 +64,7 @@ while getopts :hfstcuUdnop:a:b:z opt; do
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     t) SIGNTAG=1 ;;
-    f) FORCE="--force" ;;
+    f) FORCE="-f" ;;
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
