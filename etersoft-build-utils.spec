@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Dec 28 2010 Vitaly Lipatov <lav@altlinux.ru> 1.9.5-alt1
+- rpmgp: add support for clone via public url
+
 * Thu Dec 23 2010 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
 - gpush: rewrite girar/branch detection part, refactoring
 - gpush: use origin by default if exists
