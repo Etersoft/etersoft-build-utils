@@ -53,6 +53,8 @@ MENV=SS
 
 #SSH_KEYFILE=~/.ssh/id_dsa
 GIRARHOST=git.alt
+GIRARURL="http://git.altlinux.org"
+
 # Timeout in sec for ssh commands
 SSHTIMEOUT=300
 

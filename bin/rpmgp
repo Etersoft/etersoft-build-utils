@@ -153,6 +153,7 @@ phelp()
 	echog " -c  check if this package exists in the ALT Linux repository"
 	echog " -d  download all matched packages"
 	echog " -g  clone last built package repo"
+	echog " -gp  clone last built package repo via public access"
 	echog " -gm remote clone repo to USER/packages and clone it locally"
 	echog " -m  migrate to gear from spec/srpm"
 	echog "Ext. options:"
@@ -163,7 +164,7 @@ phelp()
 	exit 0
 }
 
-while getopts :habcdglmrs opt; do
+while getopts :habcdglmprs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
@@ -173,6 +174,7 @@ while getopts :habcdglmrs opt; do
     g) CLONEGIT=1 ;;
     l) LISTREQS=1 ;;
     m) MIGRATEGIRAR=1 ;;
+    p) PUBLICACCESS=1 ;;
     r) UPDATECACHE=1 ;;
     s) load_systems_list
        list_systems
@@ -244,22 +246,33 @@ get_all_remote_branches()
 	git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
 }
 
+git_clone()
+{
+	local RREPO="$1"
+	# Test if ssh access is available
+	if [ -z "$PUBLICACCESS" ] && ssh $GIRARHOST help >/dev/null 2>&1 ; then
+		echo "Clone from $GIRARHOST:$RREPO ..."
+		git clone $GIRARHOST:$RREPO
+	else
+		echo "Clone from $GIRARURL/$RREPO ..."
+		git clone $GIRARURL/$RREPO
+	fi
+}
+
 # clone remote git
 if [ -n "$CLONEGIT" ] ; then
-	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
-
 	# http://git.altlinux.org/gears/N/NAME.git
+	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
 	RREPO="/gears/$REPOPATH"
 
 	if [ -z "$MIGRATEGIRAR" ] ; then
-		echo "Clone from $GIRARHOST:$RREPO ..."
-		if ! git clone $GIRARHOST:$RREPO ; then
+		if ! git_clone $RREPO; then
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
-			echo "Try clone from $RREPO ..."
-			git clone $GIRARHOST:$RREPO || fatal "Can't clone."
+			git_clone $RREPO || fatal "Can't clone $RREPO."
 		fi
 	else
+		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
 		echo "Remote clone from $RREPO ..."
 		if ! ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git ; then
 			# http://git.altlinux.org/srpms/N/NAME.git
