@@ -11,3 +11,7 @@ perl-unicore|
 # missed on CentOS
 libopenal-devel|
 libopenal|
+libv4l-devel|
+libv4l|
+libgsm-devel|
+libgsm|
