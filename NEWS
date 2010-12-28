@@ -1,4 +1,7 @@
-etersoft-build-utils-1.9.3: 23 Dec 2010
+etersoft-build-utils-1.9.5: 28 Dec 2010
+- rpmgp: add support for clone via public url
+
+etersoft-build-utils-1.9.4: 23 Dec 2010
 - gpush: rewrite girar/branch detection part, refactoring
 - gpush: use origin by default if exists
 - rpmbs: use name from spec as target repo name
