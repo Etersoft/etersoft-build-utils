@@ -60,7 +60,7 @@ drop_args()
     local ARGS="$1"
     shift
     local LISTIGNORE="$@"
-    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | sed -e "s| \+| |g" | filter_strip_spaces
+    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | filter_strip_spaces
     #echo "$ARGS" | \
     #    ( for i in $LISTIGNORE ; do sed -e "s|-$i||g" ;  done ) #| sed -e "s| +| |g"
 }
