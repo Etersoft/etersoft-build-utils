@@ -108,6 +108,13 @@ ImageMagick-tools|ImageMagick
 libopenal-devel|openal-devel
 libmpg123-devel|
 
+libgsm-devel|gsm-devel
+libgsm|gsm
+libgstreamer-devel|gstreamer-devel
+libgstreamer|gstreamer
+libunixODBC-devel|unixODBC-devel
+libunixODBC|unixODBC
+
 # depends for biarch build
 i586-glibc-core|
 i586-glibc-pthread|
