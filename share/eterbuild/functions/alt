@@ -70,7 +70,7 @@ set_binaryrepo()
 # M50 -> 5.0
 get_altdistr_version()
 {
-	echo "$1" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|sisyphus|g" | sed -e "s|DD|daedalus|g" | sed -e "s|Sisyphus|sisyphus|g" | sed -e "s|M50|p5|g"
+	echo "$1" | sed -e "s|M50|p5|g" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|sisyphus|g" | sed -e "s|DD|daedalus|g" | sed -e "s|Sisyphus|sisyphus|g"
 }
 
 # 5.0 -> M50
