@@ -64,6 +64,8 @@ toalt_grprepl()
 	GRPREPLBASE=$PKGREPLBASE/../grprepl
 	for i in $GRPREPLBASE/grprepl.fedora $GRPREPLBASE/grprepl.rpm $GRPREPLBASE/grprepl.* ; do
 		test -r "$i" || continue
+		# altbug #24724 (FIXME: check again for cyclic)
+		echo $i | grep -q "grprepl.alt" && continue
 		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "$1\$" | sed -e "$WARULES" | sed -e "s/^\(.*\)|\(.*\)\$/\2|\1/g" | head -n1`
 		# For broken rule
 		echo $REPLRULE | grep "^|" >/dev/null && REPLRULE=""
