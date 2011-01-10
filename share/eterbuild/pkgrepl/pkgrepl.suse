@@ -81,3 +81,6 @@ libesd-devel|libesd-devel
 
 # cifs
 samba-client|cifs-mount
+
+libgsm-devel|libgsm-devel
+libgsm|libgsm

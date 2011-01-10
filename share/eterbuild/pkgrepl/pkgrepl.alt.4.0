@@ -12,3 +12,6 @@ ImageMagick-tools|ImageMagick
 
 kernel-build-tools|kernel-build-tools kernel-headers-modules-std-smp kernel-headers-modules-ovz-smp kernel-headers-modules-wks-smp
 rpm-build-intro|rpm-build-compat
+
+libv4l-devel|
+libmpg123-devel|
