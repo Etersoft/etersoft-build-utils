@@ -148,8 +148,7 @@ extract_tarball_to_dest()
 
 rpmbs_copying_built()
 {
-	[ -n "$ETERDESTSRPM" ] || return
-	#[ -n "$ETERDESTSRPM" ] || fatal "Set ETERDESTSRPM to destination dir"
+	[ -n "$ETERDESTSRPM" ] || return 0
 	echog "Copying package(s) in \$ETERDESTSRPM"
 	if is_ssh_target "$ETERDESTSRPM" ; then
 		scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
