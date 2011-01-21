@@ -83,7 +83,7 @@ get_altdistr_mod()
 # Проверяем, соответствует ли релиз пакетов указанному в MENV
 function pkg_release_check()
 {
-	local STREL=alt
+	local STREL=$RELEASEPREFIX
 	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
 
 	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then

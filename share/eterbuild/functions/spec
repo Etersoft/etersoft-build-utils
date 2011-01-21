@@ -38,7 +38,7 @@ get_numrelease()
 # get alt from alt11
 get_txtrelease()
 {
-	get_release "$1" | sed -e "s|\([a-zA-Z]*\)\([0-9\.]\).*|\1|" || echo "alt"
+	get_release "$1" | sed -e "s|\([a-zA-Z]*\)\([0-9\.]\).*|\1|" || echo "$RELEASEPREFIX"
 }
 
 set_var()
@@ -49,9 +49,7 @@ set_var()
 set_release()
 {
 	local RELEASE=$2
-	if [ -z "$RELEASE" ] ; then
-		RELEASE=alt1
-	fi
+	[ -n "$RELEASE" ] || RELEASE="${RELEASEPREFIX}1"
 	set_var $1 Release $RELEASE
 }
 
