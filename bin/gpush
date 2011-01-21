@@ -123,7 +123,7 @@ if [ "$PUSHALL" = "--all" ] ; then
 	CURRENTBRANCH=
 else
 	TEXTBRANCH="branch $CURRENTBRANCH"
-	if echo $TEXTBRANCH | egrep "alt|eter" ; then
+	if git tag | grep -q "^$CURRENTBRANCH\$" ; then
 		TEXTBRANCH="tag $CURRENTBRANCH"
 	fi
 fi
