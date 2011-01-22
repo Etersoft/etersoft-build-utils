@@ -116,6 +116,18 @@ uni_rpminstall()
 	return $RET
 }
 
+# remove source and spec
+uni_rpmrm()
+{
+	local TWOPARAM="-v"
+
+	if [ -n "$RPMTOPDIR" ] ; then
+		TWOPARAM="--define=_topdir $RPMTOPDIR"
+	fi
+
+	$RPMBUILD "$TWOPARAM" --rmsource --rmspec $@
+}
+
 
 # LISTNAMES, options in arg
 # build LISTBUILT list with src.rpm full path

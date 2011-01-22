@@ -101,6 +101,10 @@ if  [ -n "$REMOTEBUILD" ] ; then
 else
 	time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
+	# remove generated src.rpm
+	for i in $LISTBUILT ; do
+		echo $LISTNAMES | grep -q $i || rm -f $i
+	done
 
 	date
 	echo "-------------------------------"

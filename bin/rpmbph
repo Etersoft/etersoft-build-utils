@@ -18,6 +18,7 @@ DISTRVERSION=`$DISTRVENDOR -v`
 
 altspec_to_local()
 {
+local i
 local TXTRELEASE
 local SPECNAME
 SPECNAME=$1
@@ -396,7 +397,7 @@ fi
 
 unset MENV MENVARG
 
-# handle src.rpm and spec both, LISTBUILT - result with full pathes to src.rpms
+# handle src.rpm and spec both, LISTBUILT - result with full paths to src.rpms
 pack_src_rpm $LISTNAMES
 
 export RPMTOPDIR=$RPMDIR/BP
@@ -407,11 +408,14 @@ export IGNOREGEAR=1
 
 for i in $LISTBUILT ; do
 	uni_rpminstall $i
+	# remove primary src.rpm only if src.rpm was not primary
+	echo $LISTNAMES | grep -q $i || rm -f $i
+
 	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
-	# FIXME: do not remove if not repacked
-	#rm -f $SPKG
 	altspec_to_local $SPECNAME
+
 	$BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
+	uni_rpmrm $SPECNAME || true
 done
 
