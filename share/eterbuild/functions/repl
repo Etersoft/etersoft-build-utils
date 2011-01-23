@@ -71,6 +71,16 @@ print_grpreq()
 	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | filter_strip_spaces
 }
 
+internal_repl_list()
+{
+	local REPLBASE="$1"
+	local ARCHEXT="$2"
+	local FINDPKG=$REPLBASE.$VENDOR.$DISTRVERSION$ARCHEXT
+	( ls -1 $PKGREPLBASE/pkgrepl.$VENDOR*$ARCHEXT | ( test -n "$ARCHEXT" && cat || grep -v "x86_64" ) ; echo $FINDPKG ) | sort -u | grep "^$FINDPKG\$" -B1000 | sort -r
+	echo $REPLBASE.$VENDOR$ARCHEXT
+	[ "$VENDOR" = "alt" ] || echo "$REPLBASE.$TARGET$ARCHEXT "
+}
+
 # internal
 print_replbased_list()
 {
@@ -78,15 +88,12 @@ print_replbased_list()
 	# VENDOR, TARGET is already defined in detect_target_env() func
 	[ -z "$DISTRVERSION" ] && DISTRVERSION=`$($DISTRVENDOR -v)`
 
-	# separate checking for x86_64
 	if [ $DEFAULTARCH = "x86_64" ] ; then
-		echo -n "$REPLBASE.$VENDOR.$DISTRVERSION.x86_64 $REPLBASE.$VENDOR.x86_64 "
-		[ "$VENDOR" = "alt" ] || echo -n "$REPLBASE.$TARGET.x86_64 "
+		internal_repl_list $REPLBASE .x86_64
 	fi
 
         # general rules listing
-	echo -n "$REPLBASE.$VENDOR.$DISTRVERSION $REPLBASE.$VENDOR "
-	[ "$VENDOR" = "alt" ] || echo -n "$REPLBASE.$TARGET "
+	internal_repl_list $REPLBASE ""
 }
 
 # TODO: list in  alph. order and use if <= then our version
