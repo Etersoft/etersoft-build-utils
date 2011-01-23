@@ -11,4 +11,4 @@ libpam-devel|lib64pam-devel
 
 libXcomposite|lib64xcomposite1
 libXpm|lib64xpm4
-libssl-devel|lib64openssl-devel
+libssl-devel|lib64openssl1.0.0-devel

@@ -10,5 +10,7 @@ jackit-devel|libjack-devel
 
 libXcomposite|libxcomposite1
 libXpm|libxpm4
-libssl-devel|libopenssl1.0.0-devel
+libssl-devel|libopenssl-devel
 libXt-devel|libxt-devel
+libldap-devel|libldap2.4_2-devel
+libldap|libldap2.4_2
