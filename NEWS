@@ -1,3 +1,20 @@
+etersoft-build-utils-1.9.6: 28 Jan 2011
+- add Mandriva/2010.2
+- always use p5 for M50
+- drop release to alt1 if incrementing version
+- fix CentOS pkgrepl skipping
+- fix cyclic group replacement again (ALT #24724)
+- fix mdv pkgrepl (eterbug #6688)
+- fix replacements for p5, overall rpm
+- gpush: real check tag
+- initial fix rules for new order
+- introduce RELEASEPREFIX and use it
+- pkgrepl: fix libv4l, libmpg123 for ALT 4.x, libgsm for SUSE
+- remove all temp generated src.rpm, sources, specs
+- rewrite replacement rule: check for each file from new version to old
+- rpmbs: no error if no need to copy
+- use only Mandriva 2010 and Mandriva 2011 files
+
 etersoft-build-utils-1.9.5: 28 Dec 2010
 - rpmgp: add support for clone via public url
 
