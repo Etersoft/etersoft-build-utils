@@ -1,14 +1,18 @@
 
 # ALT Linux
 git.alt sisyphus rsync.altlinux.org::ALTLinux/Sisyphus
+git.alt 6.0 rsync.altlinux.org::ALTLinux/6.0/branch
 git.alt 5.1 rsync.altlinux.org::ALTLinux/5.1/branch
+git.alt p5 rsync.altlinux.org::ALTLinux/p5/branch
 git.alt 5.0 rsync.altlinux.org::ALTLinux/5.0/branch
 git.alt 4.1 rsync.altlinux.org::ALTLinux/4.1/branch
 git.alt 4.0 rsync.altlinux.org::ALTLinux/4.0/branch
 
 # Etersoft
 git.eter sisyphus rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/Sisyphus
+git.eter 6.0 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/6.0/branch
 git.eter 5.1 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/5.1/branch
+git.eter p5 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/p5/branch
 git.eter 5.0 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/5.0/branch
 git.eter 4.1 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/4.1/branch
 git.eter 4.0 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/4.0/branch
