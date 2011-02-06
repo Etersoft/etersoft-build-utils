@@ -4,8 +4,6 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod git
 
-test -r "$1" && fatal "Do not need any files in params"
-
 if [ "$1" = "-h" ] ; then
 	echo "ginit - initialize repo in $GIRARHOST for current project"
 	echo "Use: ginit [GIRAR]"
@@ -18,9 +16,13 @@ if is_girar_name $1 ; then
 	shift
 fi
 
+test -r "$1" && fatal "Do not need any files in params"
+
 PROJECTNAME=$(get_gear_name)
 
+[ -n "$PROJECTNAME" ] || fatal "Can't detect project name. Run inside git repo."
+
 echo "Create remote $PROJECTNAME repo in $GIRARHOST:"
-ssh $GIRARHOST git-init-db $PROJECTNAME.git
+ssh $GIRARHOST git-init-db "$PROJECTNAME.git"
 echo "Create $GIRARHOST remote repo alias"
 git remote add $GIRARHOST $GIRARHOST:packages/$PROJECTNAME.git
