@@ -32,7 +32,7 @@ phelp()
 	echog " -i - install built packages in test hasher (via loginhsh -t)"
 	echog "Ext. options:"
 	echog " -c - build without stuff (previous built packages)"
-	echog " -s - sign and and copy to upload dir (ETERDESTSRPM) after build"
+	echog " -s - sign (and move to dir ETERDESTSRPM if defined) after build"
 	echog " -t - make temporary commit before build (rpmbb like behavior)"
 	echog " -l - lazy cleanup (clean before build, not after)"
 	echog " -f - force tag set (see rpmbs --help)"

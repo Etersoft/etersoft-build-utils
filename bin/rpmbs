@@ -53,7 +53,7 @@ phelp()
 	echog " -b REPONAME - binary repository name (4.1, 5.0, 5.1 and so on)"
 	echog " -c - only sign package(s) with checking"
 	echog " -f - force operation (overwrite tag)"
-	echog " -s - sign package(s) and copy it to upload dir (ETERDESTSRPM)"
+	echog " -s - sign package(s) (and move it to dir ETERDESTSRPM if defined)"
 	echog " -t - set tag with sign"
 	echog " -n - do not check with sisyphus_check before upload"
 	echog " -o - create nosrc.rpm package"
@@ -149,13 +149,13 @@ extract_tarball_to_dest()
 rpmbs_copying_built()
 {
 	[ -n "$ETERDESTSRPM" ] || return 0
-	echog "Copying package(s) in \$ETERDESTSRPM"
+	echog "Moving package(s) in \$ETERDESTSRPM"
 	if is_ssh_target "$ETERDESTSRPM" ; then
-		scp $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		scp $LISTBUILT $ETERDESTSRPM && rm -fv $LISTBUILT || echog "Error during copying"
 	else
 		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
 		chmod ug+rw $LISTBUILT
-		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		mv -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
 		make_md5sum "$ETERDESTSRPM"
 			# Publish tarball if target dir is exist
 		if [ -d "$ETERDESTSRPM/tarball" ] ; then
