@@ -13,7 +13,8 @@ download_url()
 {
 	# use wget with try=1 and timeout = 30 sec
 	which wget >/dev/null || fatal "Can't download, wget command is missed"
-	a= wget -c -t 1 -T 30 "$1"
+	# NOTE: disable cert checking
+	a= wget --no-check-certificate -c -t 1 -T 30 "$1"
 }
 
 check_url()
