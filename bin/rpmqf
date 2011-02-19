@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2003-2006, 2009 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2009, 2011 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -7,6 +7,12 @@
 # Параметры:
 # - название файл
 # TODO not -i only, we need any key
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+load_mod spec rpm
+
 
 if [ "$1" = "-h" ]; then
 	echo "rpmqf - the same as rpm -qf, but use which for search command place"
@@ -17,6 +23,8 @@ if [ "$1" = "-i" ]; then
 	ARG=$1
 	shift
 fi
+
+[ -n "$1" ] || fatal "Run with command name. See $0 -h also."
 
 # use and modify TOFILE recursively
 real_file()
@@ -45,4 +53,18 @@ real_file()
 
 real_file "$1"
 
-rpmquery -f $ARG "$FULLFILEPATH"
+case "$($DISTRVENDOR -p)" in
+	"rpm")
+		rpmquery -f $ARG "$FULLFILEPATH"
+		;;
+	"deb")
+		DPKG=dpkg
+		PACKAGE=$($DPKG -S "$FULLFILEPATH" 2>/dev/null | head -n1 | sed -e "s|:.*||")
+		[ -n "$PACKAGE" ] || fatal "Can't find package for $FULLFILEPATH"
+		VERSION=$($DPKG -s "$PACKAGE" 2>/dev/null | grep "Version:" | sed -e "s|Version: ||g")
+		[ -n "$VERSION" ] && echo "$PACKAGE-$VERSION" || fatal "Can't extract version for $PACKAGE package"
+		;;
+	*)
+		fatal "Unsupported package system"
+		;;
+esac
