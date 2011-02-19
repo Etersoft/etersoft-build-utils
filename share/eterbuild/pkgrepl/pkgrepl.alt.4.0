@@ -1,6 +1,7 @@
 xorg-proto-devel|xorg-x11-proto-devel
 xorg-inputproto-devel|xorg-x11-proto-devel
 xorg-xextproto-devel|xorg-x11-proto-devel
+xorg-cf-files|xorg-cf-files
 libslang2-devel|libslang-devel
 libesd-devel|esound-devel
 sysvinit-utils|
