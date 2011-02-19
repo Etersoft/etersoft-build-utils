@@ -71,7 +71,7 @@ fi
 if [ -n "$CHECKONLY" ] ; then
 	echocon "Pull repo from $REPO"
 	UPTODATEres=`git pull --rebase $REPO $@ 2>&1`
-	echocon $UPTODATEres
+	echocon "$UPTODATEres"
 	echo $UPTODATEres | tail -n1 | grep -q "is up to date"
 	exit
 fi
