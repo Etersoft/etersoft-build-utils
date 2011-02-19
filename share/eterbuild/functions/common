@@ -5,6 +5,33 @@
 
 # $1 - needed VERSION of etersoft-build-utils. f.i. 162
 
+# for systems without realpath command
+realpath()
+{
+        readlink -f "$@"
+}
+
+# Выводит указанное сообщение об ошибке и завершает программу
+fatal()
+{
+	if [ -z "$TEXTDOMAIN" ] ; then
+		echo "Error in $0: $@" >&2
+	else
+		echog "Error in $0: $@" >&2
+	fi
+	exit 1
+}
+
+# Выводит указанное сообщение
+warning()
+{
+	if [ -z "$TEXTDOMAIN" ] ; then
+		echo "Warning in $0: $@" >&2
+	else
+		echog "Warning in $0: $@" >&2
+	fi
+}
+
 set_eterbuilddir()
 {
 	[ -z "$ETERBUILDDIR" ] || return 0
@@ -34,6 +61,11 @@ set_eterbuilddir()
 	# returns test result
 }
 
+# check for needed commands
+#for i in distr_vendor realpath ; do
+#	which $i >/dev/null || fatal
+#done
+
 # set if empty and check it
 if ! set_eterbuilddir ; then
 	echo "Can't detect package files location" >&2
@@ -43,27 +75,6 @@ fi
 DISTRVENDOR=$(realpath $ATOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
 [ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 
-# Выводит указанное сообщение об ошибке и завершает программу
-fatal()
-{
-	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "Error in $0: $@" >&2
-	else
-		echog "Error in $0: $@" >&2
-	fi
-	exit 1
-}
-
-# Выводит указанное сообщение
-warning()
-{
-	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "Warning in $0: $@" >&2
-	else
-		echog "Warning in $0: $@" >&2
-	fi
-}
-
 print_list()
 {
 	local i
@@ -72,10 +83,6 @@ print_list()
 	done
 }
 
-realpath()
-{
-        readlink -f "$@"
-}
 
 get_root_git_dir()
 {
