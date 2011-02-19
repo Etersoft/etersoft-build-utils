@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.9.6
+Version: 1.9.7
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Feb 19 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
+- rpmbs/rpmbsh: move src.rpm to ETERDESTSRPM instead copying
+- rpmqf: add deb support
+- update src.rpm repos
+- web: disable cert checking for wget
+
 * Fri Jan 28 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.6-alt1
 - drop release to alt1 if incrementing version
 - fix cyclic group replacement again (ALT #24724)

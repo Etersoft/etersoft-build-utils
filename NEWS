@@ -1,3 +1,9 @@
+etersoft-build-utils-1.9.7: 19 Feb 2011
+- rpmbs/rpmbsh: move src.rpm to ETERDESTSRPM instead copying
+- rpmqf: add deb support
+- update src.rpm repos
+- web: disable cert checking for wget
+
 etersoft-build-utils-1.9.6: 28 Jan 2011
 - add Mandriva/2010.2
 - always use p5 for M50
