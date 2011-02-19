@@ -13,7 +13,9 @@ mandriva-cooker-contrib ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/contr
 mandriva-cooker-main ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/main/release
 mandriva-cooker-non-free ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non-free/release
 suse         ftp://mirror.yandex.ru/opensuse/distribution/11.3/repo/src-oss/suse/src
-suse-factory http://download.opensuse.org/factory/repo/src-oss/suse/src/
+# it is mirrored
+#suse-factory http://download.opensuse.org/factory/repo/src-oss/suse/src/
+suse-factory http://ftp5.gwdg.de/pub/opensuse/source/factory/repo/oss/suse/src/
 suse-edu1    http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2    http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
 alt-obsolete ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
