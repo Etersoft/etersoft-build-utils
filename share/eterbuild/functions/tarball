@@ -65,6 +65,11 @@ copy_tarball_to_tar()
 		return
 	fi
 
+	if [ ! ${SNAME/.tgz/} = "$SNAME" ] ; then
+		gunzip -c "$SNAME" > "$TNAME"
+		return
+	fi
+
 	# FIXME: matchs with .tarNNN
 	if [ ! ${SNAME/.tar/} = "$SNAME" ] ; then
 		cp -fv "$SNAME" "$TNAME"
