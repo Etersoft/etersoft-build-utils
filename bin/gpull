@@ -58,7 +58,7 @@ pull_all_branches()
         # pull all branches
         for i in $(get_branch_list) ; do
             git checkout $i || fatal "can't checkout $i"
-            git pull $REPO $i
+            git pull --tags $REPO $i
         done
         git checkout $CURRENTBRANCH
 }
@@ -79,5 +79,5 @@ fi
 echo "Pull repo from $REPO"
 git pull $REBASE $REPO $@ || exit
 
-# --rebase do not pull tags
-[ -n "$REBASE" ] && git pull $REPO $@
+# assure we get tags
+git pull --tags $REPO $@
