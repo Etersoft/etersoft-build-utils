@@ -76,7 +76,8 @@ internal_repl_list()
 	local REPLBASE="$1"
 	local ARCHEXT="$2"
 	local FINDPKG=$REPLBASE.$VENDOR.$DISTRVERSION$ARCHEXT
-	( ls -1 $PKGREPLBASE/pkgrepl.$VENDOR*$ARCHEXT 2>/dev/null | ( test -n "$ARCHEXT" && cat || grep -v "x86_64" ) ; echo $FINDPKG ) | sort -u | grep "^$FINDPKG\$" -B1000 | sort -r
+	#  Hack for sort by last numbers: sort -n -t . -k 3
+	( ls -1 $PKGREPLBASE/pkgrepl.$VENDOR*$ARCHEXT 2>/dev/null | ( test -n "$ARCHEXT" && cat || grep -v "x86_64" ) ; echo $FINDPKG ) | sort -u | sort -n -t . -k 3 | grep "^$FINDPKG\$" -B1000 | sort -r
 	echo $REPLBASE.$VENDOR$ARCHEXT
 	[ "$VENDOR" = "alt" ] || echo "$REPLBASE.$TARGET$ARCHEXT "
 }
