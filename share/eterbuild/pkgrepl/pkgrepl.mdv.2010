@@ -14,3 +14,4 @@ libssl-devel|libopenssl-devel
 libXt-devel|libxt-devel
 libldap-devel|libldap2.4_2-devel
 libldap|libldap2.4_2
+python-devel|libpython2.6-devel

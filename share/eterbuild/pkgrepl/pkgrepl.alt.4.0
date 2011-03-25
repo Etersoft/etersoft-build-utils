@@ -16,3 +16,5 @@ rpm-build-intro|rpm-build-compat
 libv4l-devel|
 libmpg123-devel|
 libjack-devel|jackit-devel
+libwxGTK-devel|wxGTK-devel
+libwxGTK|wxGTK
