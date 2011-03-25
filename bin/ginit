@@ -4,7 +4,7 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod git
 
-if [ "$1" = "-h" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "ginit - initialize repo in $GIRARHOST for current project"
 	echo "Use: ginit [GIRAR]"
 	echo "     ginit git.eter - for init in git.eter gear repo"
