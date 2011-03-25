@@ -86,8 +86,9 @@ get_system_idx()
 check_name()
 {
 	if [ -z "$1" ] ; then
-		echo "Error: missed package param"
-		exit 1
+		return
+		#echo "Error: missed package param"
+		#exit 1
 	fi
 	NLIST=`cat $LIST | grep -i "$1"`
 #	if [ `cat $LIST | list_filter | grep -i $1 | wc -l` -gt 1 ] ; then
@@ -211,7 +212,10 @@ if [ -n "$UPDATECACHE" ] ; then
 fi
 
 PKGNAME=$(strip_spaces $LISTRPMARGS $LISTNAMES)
-test -z "$PKGNAME" && fatal "Please run with spec/package name"
+
+if [ -z "$ALLSYSTEM$UPDATECACHE" ] ; then
+	test -z "$PKGNAME" && fatal "Please run with spec/package name"
+fi
 
 # список названий систем, адресов (с зеркалами?), и режимов фильтрации
 # название кэш-файла строить из названия системы
