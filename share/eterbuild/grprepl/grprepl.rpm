@@ -2,10 +2,10 @@ System/Libraries|System Environment/Libraries
 System/Libraries/Python|Development/Python
 Development/Other|Development/Libraries
 Sound|Applications/Sound
-X11/Applications/Games|Games/Other
+Games/Other|X11/Applications/Games
 Development/Libraries|Development/C
-Applications/Databases|Databases
+Databases|Applications/Databases
 System/Kernel and hardware|System/Hardware
 System Environment/Base|System/Base
-Office|Applications/Productivity
-Video|Applications/Multimedia
+Applications/Productivity|Office
+Applications/Multimedia|Video
