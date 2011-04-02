@@ -20,6 +20,7 @@ test -r "$1" && fatal "Do not need any files in params"
 
 PROJECTNAME=$(get_gear_name)
 
+# FIXME: если не нашли, стоит взять название каталога за основу
 [ -n "$PROJECTNAME" ] || fatal "Can't detect project name. Run inside git repo."
 
 echo "Create remote $PROJECTNAME repo in $GIRARHOST:"
