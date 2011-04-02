@@ -118,3 +118,7 @@ libunixODBC|unixODBC
 # depends for biarch build
 i586-glibc-core|
 i586-glibc-pthread|
+
+bzlib-devel|bzip2-devel
+rpm-build-python|
+python-modules-compiler|python
