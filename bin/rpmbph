@@ -229,6 +229,13 @@ fi
 subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
 subst "s|^popd|cd - >/dev/null|g" $SPECNAME
 
+if [ "$DISTRSYS/$DISTRVERSION" = "CentOS/5" ] ; then
+	test -z "$VERBOSE" || echo "Remove egg-info from file list"
+	subst "s|.*\.egg-info.*||g" $SPECNAME
+fi
+
+
+
 #TODO:
 #%if %{undefined buildroot}
 #BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
