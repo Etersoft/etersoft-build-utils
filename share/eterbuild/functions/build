@@ -17,6 +17,7 @@ uni_rpmbuild()
 	local TWOPARAM="--quiet"
 	local THRPARAM="--quiet"
 	local FOURPARAM="--quiet"
+	local FIVEPARAM="--define='_unpackaged_files_terminate_build 0'"
 	local COMMIT=""
 	local COMMANDAFTER=""
 
@@ -62,7 +63,7 @@ uni_rpmbuild()
 		fi
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" $@ || RET=$?
+			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
 			[ -z "$COMMANDAFTER" ] || $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
@@ -72,9 +73,9 @@ uni_rpmbuild()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" $@ || RET=$?
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $@" || :
+	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $FIVEPARAM $@" || :
 	return $RET
 }
 
