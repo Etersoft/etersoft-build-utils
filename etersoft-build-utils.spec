@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 1.9.8
+Version: 1.9.9
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Apr 02 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt1
+- build: disable _unpackaged_files_terminate_build
+- gpull: always get tags
+- pkgrepl: fix groups replacement
+- repl: fix for use fedora.9, fedora.10 sort
+- rpmbph: skip egg-info packing with python 2.4 on CentOS/5
+- rpmgp: allow run without params
+- tarball: add support for tgz unpack
+
 * Thu Mar 03 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
 - common: move function before used
 - gpull: fix result output
