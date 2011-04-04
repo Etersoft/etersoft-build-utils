@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
 Version: 1.9.9
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -20,7 +20,7 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: rpm-build
+Requires: rpm-build rpm-build-compat
 
 %if %_vendor == "alt"
 Requires: sisyphus_check rsync openssh-clients srpmcmp
@@ -63,6 +63,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Apr 04 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt2
+- add rpm-build-compat requires (ALT bug #25356)
+
 * Sat Apr 02 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt1
 - build: disable _unpackaged_files_terminate_build
 - gpull: always get tags
