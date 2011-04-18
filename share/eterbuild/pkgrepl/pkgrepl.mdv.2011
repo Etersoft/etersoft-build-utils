@@ -89,3 +89,4 @@ libopenal-devel|libopenal-devel
 samba-client|mount-cifs
 
 gstreamer-devel|libgstreamer0.10-devel
+gst-plugins-devel|libgstreamer-plugins-base0.10-devel

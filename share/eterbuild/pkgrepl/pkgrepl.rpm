@@ -122,3 +122,4 @@ i586-glibc-pthread|
 bzlib-devel|bzip2-devel
 rpm-build-python|
 python-modules-compiler|python
+libgnutls-devel|gnutls-devel
