@@ -1,6 +1,6 @@
 # Mandriva 64bit base replacements rules
 libreadline|lib64readline6
-libarts-devel|lib64arts1-devel
+libarts-devel|arts3-devel
 libXdamage-devel|lib64xdamage-devel
 libXmu-devel|lib64xmu6-devel
 libXrandr-devel|lib64xrandr2-devel
