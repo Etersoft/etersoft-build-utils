@@ -22,8 +22,12 @@ libasound-devel|libasound2-dev
 libreadline-devel|libreadline5-dev
 libreadline|libreadline5
 
+libXxf86misc-devel|x11proto-xf86misc-dev
 libXaw-devel|libxaw7-dev
 libXext-devel|libxext-dev
+#libXevie-devel|libxevie-dev
+# depricated since 2010
+libXevie-devel|
 libXrender-devel|libxrender-dev
 libXrender|libxrender1
 libXdamage-devel|libxdamage-dev
@@ -34,7 +38,7 @@ libXt-devel|libxt-dev
 libXt|libxt1
 libXtst-devel|libxtst-dev
 libXtst|libxtst1
-#libmesa-devel|libglu1-mesa-dev
+libGLU-devel|libglu1-mesa-dev
 libmesa-devel|mesa-common-dev
 #libGL-devel|libgl1-mesa-dev
 
@@ -101,3 +105,10 @@ libtinfo-devel|libncurses5-dev
 
 # cifs
 samba-client|smbfs
+
+jackit-devel|libjack-dev
+libXScrnSaver-devel|
+libalsa-devel|libasound2-dev
+libieee1284-devel|libieee1284-3-dev
+libpng-devel|libpng12-dev
+zlib-devel|zlib1g-dev
