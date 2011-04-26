@@ -81,7 +81,7 @@ get_altdistr_mod()
 
 # TODO: include in sisyphus_check
 # Проверяем, соответствует ли релиз пакетов указанному в MENV
-function pkg_release_check()
+pkg_release_check()
 {
 	local STREL=$RELEASEPREFIX
 	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
