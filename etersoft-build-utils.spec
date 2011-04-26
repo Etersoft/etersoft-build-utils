@@ -11,7 +11,7 @@ Url: http://www.altlinux.org/Etersoft-build-utils
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # git-clone http://git.altlinux.org/people/lav/packages/etersoft-build-utils.git
-Source: %name-%version.tar
+Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
 
