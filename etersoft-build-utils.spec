@@ -1,6 +1,6 @@
 Name: etersoft-build-utils
-Version: 1.9.9
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -63,6 +63,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Apr 26 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- fix pkgrepls, remove bashism
+- repl: sure our version we check firstly
+
 * Mon Apr 04 2011 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt2
 - add rpm-build-compat requires (ALT bug #25356)
 
