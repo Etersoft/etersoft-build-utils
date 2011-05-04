@@ -8,7 +8,7 @@ get_etersoft_srpm_path()
 {
 	local SOURCE BSOURCE BNSOURCE
 	local ALPHA=$2
-	local SOURCEFTP=$(eval_spec $1 | get_var "Source")
+	local SOURCEFTP=$(eval_spec $1 | sed -e "s|^Source0:|Source:|g" | get_var "Source")
 
 	if [ -z "$SOURCEFTP" ] ; then
 		build_rpms_name $1
