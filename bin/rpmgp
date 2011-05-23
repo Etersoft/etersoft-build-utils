@@ -250,17 +250,27 @@ get_all_remote_branches()
 	git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
 }
 
+has_ssh_access()
+{
+	ssh $GIRARHOST help >/dev/null 2>&1
+}
+
 git_clone()
 {
 	local RREPO="$1"
 	# Test if ssh access is available
-	if [ -z "$PUBLICACCESS" ] && ssh $GIRARHOST help >/dev/null 2>&1 ; then
+	if [ -z "$PUBLICACCESS" ] && has_ssh_access ; then
 		echo "Clone from $GIRARHOST:$RREPO ..."
 		git clone $GIRARHOST:$RREPO
 	else
 		echo "Clone from $GIRARURL/$RREPO ..."
 		git clone $GIRARURL/$RREPO
 	fi
+}
+
+exist_git_repo()
+{
+	ssh $GIRARHOST ls $1 >/dev/null 2>&1
 }
 
 # clone remote git
@@ -270,26 +280,38 @@ if [ -n "$CLONEGIT" ] ; then
 	RREPO="/gears/$REPOPATH"
 
 	if [ -z "$MIGRATEGIRAR" ] ; then
-		if ! git_clone $RREPO; then
+		if ! git_clone $RREPO ; then
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
 			git_clone $RREPO || fatal "Can't clone $RREPO."
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
-		echo "Remote clone from $RREPO ..."
-		if ! ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git ; then
-			# http://git.altlinux.org/srpms/N/NAME.git
-			RREPO="/srpms/$REPOPATH"
+		if exist_git_repo $RREPO ; then
 			echo "Remote clone from $RREPO ..."
 			ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
+		else
+			# http://git.altlinux.org/srpms/N/NAME.git
+			RREPO="/srpms/$REPOPATH"
+			if exist_git_repo $RREPO ; then
+				echo "Remote clone from $RREPO ..."
+				ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
+			else
+				fatal "$PKGNAME does not exists in /gears or /srpms, can't clone"
+			fi
 		fi
 
 		git clone $GIRARHOST:packages/$PKGNAME.git
+
+		if cd $PKGNAME ; then
+			# add remotes
+			git remote rename origin $GIRARHOST && git remote add origin $GIRARHOST:$RREPO
+			cd - >/dev/null
+		fi
 	fi
 
-	# get or update all branches
 	if cd $PKGNAME ; then
+		# get or update all branches
 		get_all_remote_branches
 		cd - >/dev/null
 	fi
