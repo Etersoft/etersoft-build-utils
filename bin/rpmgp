@@ -58,7 +58,8 @@ get_list()
 	local CURL=curl
 
 	which $CURL 2>/dev/null >/dev/null || fatal "curl command needed for download"
-	LIST=$OURTMPDIR/tmp-rpmgpall-$SYS
+	mkdir -p $OURTMPDIR/etersoft-build-utils/
+	LIST=$OURTMPDIR/etersoft-build-utils/rpmgpall-$SYS
 	if [ ! -f "$LIST" ] || [ "$FORCE" = "force" ] ; then
 		echo "Get list for $SYS from $URL"
 		#curl -l $URL/ >$LIST
