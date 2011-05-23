@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon May 23 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- get_etersoft_srpm_path: allow Source0 also
+- jmake: always use all CPUs
+- rpmgp: rewrite git clone
+- rpmgs: fix spec comment
+- spec: add tarball url
+
 * Tue Apr 26 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - fix pkgrepls, remove bashism
 - repl: sure our version we check firstly

@@ -1,4 +1,4 @@
-See changelog in etersoft-build-utils.spec
+Since 1.9.7 see changelog in etersoft-build-utils.spec
 
 etersoft-build-utils-1.9.7: 19 Feb 2011
 - rpmbs/rpmbsh: move src.rpm to ETERDESTSRPM instead copying
