@@ -28,10 +28,12 @@ set_target_type()
 	return 1;
 }
 
+# no output if not detected
 get_type_by_git_branch_name()
 {
-        if [ "$1" = "p5" ] ; then
-                echo "M50"
+        # like p5
+        if echo $1 | grep -q "^p[0-9]$" ; then
+                get_altdistr_mod $1
                 return
         fi
 
@@ -43,7 +45,7 @@ get_type_by_git_branch_name()
 
         # like M50
         if echo $1 | grep -q "^M[0-9][0-9]$" ; then
-                get_altdistr_mod ${1/^M/}
+                echo $1
                 return
         fi
 }
@@ -70,13 +72,13 @@ set_binaryrepo()
 # M50 -> 5.0
 get_altdistr_version()
 {
-	echo "$1" | sed -e "s|M50|p5|g" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|sisyphus|g" | sed -e "s|DD|daedalus|g" | sed -e "s|Sisyphus|sisyphus|g"
+	echo "$1" | sed -e "s|M\([5-9]\)0|p\1|g" | sed -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" | sed -e "s|SS|sisyphus|g" | sed -e "s|DD|daedalus|g" | sed -e "s|Sisyphus|sisyphus|g"
 }
 
 # 5.0 -> M50
 get_altdistr_mod()
 {
-	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|g" | sed -e "s|sisyphus|SS|g" | sed -e "s|p5|M50|g"
+	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|gi" | sed -e "s|p\([5-9]\)|M\10|g"
 }
 
 # TODO: include in sisyphus_check
