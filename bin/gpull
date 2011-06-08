@@ -68,16 +68,21 @@ if [ -n "$ALLBRANCHES" ] ; then
 	exit
 fi
 
+REMOTEBRANCH="$2"
+
+# use current branch name as default
+[ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
+
 if [ -n "$CHECKONLY" ] ; then
 	echocon "Pull repo from $REPO"
-	UPTODATEres=`git pull --rebase $REPO $@ 2>&1`
+	UPTODATEres=`git pull --rebase $REPO $REMOTEBRANCH 2>&1`
 	echocon "$UPTODATEres"
 	echo $UPTODATEres | tail -n1 | grep -q "is up to date"
 	exit
 fi
 
-echo "Pull repo from $REPO"
-git pull $REBASE $REPO $@ || exit
+echo "Pull repo from $REPO $REMOTEBRANCH"
+git pull $REBASE $REPO $REMOTEBRANCH || exit
 
 # assure we get tags
-git pull --tags $REPO $@
+git pull --tags $REPO $REMOTEBRANCH
