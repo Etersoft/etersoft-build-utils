@@ -3,7 +3,7 @@
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS
 fedora14       ftp://mirror.yandex.ru/fedora/linux/releases/14/Fedora/source/SRPMS/
 fedora       ftp://mirror.yandex.ru/fedora/linux/releases/15/Fedora/source/SRPMS/
-fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/source/SRPMS
+fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS/
 fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/15/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
 fedora-epel http://download.fedora.redhat.com/pub/epel/6/SRPMS
@@ -13,14 +13,15 @@ mandriva-contrib ftp://mirror.yandex.ru/mandriva/official/2011.2/SRPMS/contrib/r
 mandriva-cooker-contrib ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/contrib/release
 mandriva-cooker-main ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/main/release
 mandriva-cooker-non-free ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non-free/release
-suse         ftp://mirror.yandex.ru/opensuse/distribution/11.4/repo/src-oss/suse/src
+#suse         ftp://mirror.yandex.ru/opensuse/distribution/11.4/repo/src-oss/suse/src
+suse          http://download.opensuse.org/source/distribution/11.4/repo/oss/suse/src
 # it is mirrored
 #suse-factory http://download.opensuse.org/factory/repo/src-oss/suse/src/
 suse-factory http://ftp5.gwdg.de/pub/opensuse/source/factory/repo/oss/suse/src/
 suse-edu1    http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2    http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
-alt-obsolete ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
-alt-orphaned ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned
+#alt-obsolete ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
+#alt-orphaned ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned
 pld          ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS
 fedoraf      http://download1.rpmfusion.org/free/fedora/releases/14/Everything/source/SRPMS/
 rpmfusion    http://download1.rpmfusion.org/free/fedora/development/source/SRPMS/
