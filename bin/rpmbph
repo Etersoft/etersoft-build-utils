@@ -209,7 +209,7 @@ mv $SPECNAME $SPECNAME.old &&
 		cat > $SPECNAME
 
 # Fedora 10 does mismatch for Patch: and %patch0
-subst "s|Patch:|Patch0:|g" $SPECNAME
+#subst "s|Patch:|Patch0:|g" $SPECNAME
 
 if [ "$VENDOR" != "alt" ] ; then 
 	# Due possible using %release in Source: and Patch: names
