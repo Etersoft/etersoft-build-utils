@@ -1,0 +1,27 @@
+perl-devel|perl
+jackit-devel|
+
+# XOrg
+xorg-x11-devel|
+xorg-sdk|xorg-x11-server-sdk
+libsmbclient-devel|samba-common
+
+perl-unicore|
+
+# missed on CentOS
+libopenal-devel|
+libopenal|
+libv4l-devel|
+libv4l|
+libgsm-devel|
+libgsm|
+
+rpm-build-python|python-devel
+python-modules-compiler|python-devel
+
+# perl-ExtUtils-Embed packed in perl package on ALT
+# For rpmbph: perl -> perl perl-ExtUtils-Embed
+perl|perl perl-ExtUtils-Embed
+
+# For rpmcs: perl-ExtUtils-Embed -> perl
+perl|perl-ExtUtils-Embed
