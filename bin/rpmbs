@@ -163,7 +163,8 @@ rpmbs_copying_built()
 			done
 		fi
 		mv -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
-		make_md5sum "$ETERDESTSRPM"
+		# FIXME: update only for published file
+		#make_md5sum "$ETERDESTSRPM"
 	fi
 }
 
