@@ -2,9 +2,9 @@
 #
 # You can add [alt] after rpm for digital signature check
 
-rpm file:/var/ftp/ pub/ALTLinux/5.0/i586 classic
-rpm file:/var/ftp/ pub/ALTLinux/5.0/noarch classic
-rpm file:/var/ftp/ pub/ALTLinux/5.0/x86_32 classic
+rpm file:/var/ftp/ pub/ALTLinux/p5/branch/i586 classic
+rpm file:/var/ftp/ pub/ALTLinux/p5/branch/noarch classic
+rpm file:/var/ftp/ pub/ALTLinux/p5/branch/x86_32 classic
 
 #rpm file:/var/ftp/ pub/ALTLinux/updates/5.0/i586 updates
 #rpm file:/var/ftp/ pub/ALTLinux/backports/5.0/i586 backports
