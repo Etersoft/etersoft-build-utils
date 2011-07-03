@@ -82,6 +82,7 @@ if [ -n "$CHECKONLY" ] ; then
 fi
 
 echo "Pull repo from $REPO $REMOTEBRANCH"
+git fetch $REPO || exit
 git pull $REBASE $REPO $REMOTEBRANCH || exit
 
 # assure we get tags
