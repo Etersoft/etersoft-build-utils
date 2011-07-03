@@ -11,7 +11,7 @@ realpath()
         readlink -f "$@"
 }
 
-# Выводит указанное сообщение об ошибке и завершает программу
+# Print error message and stop the program
 fatal()
 {
 	if [ -z "$TEXTDOMAIN" ] ; then
@@ -22,7 +22,7 @@ fatal()
 	exit 1
 }
 
-# Выводит указанное сообщение
+# Just print warning message
 warning()
 {
 	if [ -z "$TEXTDOMAIN" ] ; then
@@ -31,6 +31,7 @@ warning()
 		echog "Warning in $0: $@" >&2
 	fi
 }
+
 
 set_eterbuilddir()
 {
@@ -135,7 +136,7 @@ load_mod()
 	done
 }
 
-load_mod config gettext alt spec strings
+load_mod config gettext alt spec strings outformat
 
 
 # check for needed version
@@ -276,4 +277,21 @@ check_display()
 	local XSET=$(which xset 2>/dev/null)
 	[ -n "$XSET" ] || return
 	$XSET -b
+}
+
+# Print command line and run command line
+docmd()
+{
+	SETCOLOR_SUCCESS
+	echo " \$ $@"
+	SETCOLOR_NORMAL
+	$@
+}
+
+# Print command line only
+showcmd()
+{
+	SETCOLOR_SUCCESS
+	echo " \$ $@"
+	SETCOLOR_NORMAL
 }
