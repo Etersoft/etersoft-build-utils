@@ -232,8 +232,8 @@ if [ -n "$INSTALLBINARY" ] ; then
     pack_src_rpm --commit $LISTRPMARGS
     LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
     CMD=$(get_install_package_command `$DISTRVENDOR -d` interactive)
-    echog "Running $SUDO $CMD $LISTPKG"
-    exec $SUDO $CMD $LISTPKG
+    docmd $SUDO $CMD $LISTPKG
+    exit
 fi
 
 # TODO: do gpull -a for get all branches?
@@ -244,13 +244,13 @@ get_all_remote_branches()
 	for i in $(git branch -a | grep -v "/HEAD" | grep "remotes/origin/") ; do
 		local BRANCHNAME=$(echo $i | sed -e "s|remotes.*/||g")
 		if is_exist_branch $BRANCHNAME ; then
-			git checkout $BRANCHNAME || fatal "can't checkout $BRANCHNAME"
-			git pull origin $BRANCHNAME
+			docmd git checkout $BRANCHNAME || fatal "can't checkout $BRANCHNAME"
+			docmd git pull origin $BRANCHNAME
 		else
-			git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
+			docmd git checkout -b $(echo $i | sed -e "s|remotes.*/||g") $i
 		fi
 	done
-	git checkout sisyphus || git checkout master || git checkout $CURRENTBRANCH
+	docmd git checkout sisyphus || docmd git checkout master || docmd git checkout $CURRENTBRANCH
 }
 
 has_ssh_access()
@@ -263,11 +263,9 @@ git_clone()
 	local RREPO="$1"
 	# Test if ssh access is available
 	if [ -z "$PUBLICACCESS" ] && has_ssh_access ; then
-		echo "Clone from $GIRARHOST:$RREPO ..."
-		git clone $GIRARHOST:$RREPO
+		docmd git clone $GIRARHOST:$RREPO
 	else
-		echo "Clone from $GIRARURL/$RREPO ..."
-		git clone $GIRARURL/$RREPO
+		docmd git clone $GIRARURL/$RREPO
 	fi
 }
 
@@ -283,32 +281,32 @@ if [ -n "$CLONEGIT" ] ; then
 	RREPO="/gears/$REPOPATH"
 
 	if [ -z "$MIGRATEGIRAR" ] ; then
-		if ! git_clone $RREPO ; then
+		if ! docmd git_clone $RREPO ; then
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
-			git_clone $RREPO || fatal "Can't clone $RREPO."
+			docmd git_clone $RREPO || fatal "Can't clone $RREPO."
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
 		if exist_git_repo $RREPO ; then
 			echo "Remote clone from $RREPO ..."
-			ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
+			docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 		else
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
 			if exist_git_repo $RREPO ; then
 				echo "Remote clone from $RREPO ..."
-				ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
+				docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 			else
 				fatal "$PKGNAME does not exists in /gears or /srpms, can't clone"
 			fi
 		fi
 
-		git clone $GIRARHOST:packages/$PKGNAME.git
+		docmd git clone $GIRARHOST:packages/$PKGNAME.git
 
 		if cd $PKGNAME ; then
 			# add remotes
-			git remote rename origin $GIRARHOST && git remote add origin $GIRARHOST:$RREPO
+			docmd git remote rename origin $GIRARHOST && git remote add origin $GIRARHOST:$RREPO
 			cd - >/dev/null
 		fi
 	fi
@@ -336,14 +334,14 @@ if [ -n "$MIGRATEGIRAR" ] ; then
 		echo "Create gear repo $BASENAME from $PKGNAME in $GITREPODIR"
 		[ -n "$GITREPODIR" ] || GITREPODIR=$(pwd)
 		GEARDIR=$GITREPODIR/$BASENAME
-		test -d "$GEARDIR" && fatal "repo $GEARDIR already exits"
-		mkdir -p "$GEARDIR" || fatal "can't create dir $GEARDIR"
-		cd $GEARDIR || fatal "can't cd to $GEARDIR"
-		git init-db || fatal "can't init db"
-		gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
+		test -d "$GEARDIR" && fatal "repo $GEARDIR already exists"
+		docmd mkdir -p "$GEARDIR" || fatal "can't create dir $GEARDIR"
+		docmd cd $GEARDIR || fatal "can't cd to $GEARDIR"
+		docmd git init-db || fatal "can't init db"
+		docmd gear-srpmimport $PKGNAME || fatal "can't import srpm $PKGNAME"
 		# remove src.rpm only if it was generated from spec
 		[ -z ${INFILE/*rpm/} ] || rm -vf $PKGNAME
-		rpmcs
+		docmd rpmcs
 	done
 	exit 0
 fi
@@ -385,7 +383,7 @@ if [ -n "$CHECKONLINE" ] ; then
 
 	set_binaryrepo $MENV
 	echo -n "ACL list for $GIRARHOST $BINARYREPO: "
-	ssh $GIRARHOST acl $BINARYREPO $PKGNAME show
+	docmd ssh $GIRARHOST acl $BINARYREPO $PKGNAME show
 	RET="MISSED"
 	if [ -n "$SRCRPM" ] ; then
 		RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
@@ -396,14 +394,14 @@ if [ -n "$CHECKONLINE" ] ; then
 		else
 			# upstream version difference, just printout list
 			RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
-			$RSYNC -n "$RSYNCPATH/files/SRPMS/$PKGNAME-[0-9]*" 2>/dev/null | grep $PKGNAME || echo "Package $PKGNAME is missed"
+			docmd $RSYNC -n "$RSYNCPATH/files/SRPMS/$PKGNAME-[0-9]*" 2>/dev/null | grep $PKGNAME || echo "Package $PKGNAME is missed"
 			echo "Local package $SRCRPM differs from the latest version from $RSYNCPATH"
 		fi
 	else
 		SRCRPM="$PKGNAME-[0-9]*"
 		RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
 		echog "Checking '$SRCRPM' in '$RSYNCPATH' ..."
-		$RSYNC -n $RSYNCPATH/files/SRPMS/$SRCRPM 2>/dev/null | grep $PKGNAME
+		docmd $RSYNC -n $RSYNCPATH/files/SRPMS/$SRCRPM 2>/dev/null | grep $PKGNAME
 		echo "Package '$PKGNAME' is not installed locally"
 	fi
 

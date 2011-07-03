@@ -62,7 +62,8 @@ set_binaryrepo()
 	BINARYREPO="sisyphus"
 	if [ -n "$BINARYREPONAME" ] ; then
 		BINARYREPO="$BINARYREPONAME"
-		MENVARG="-$(get_altdistr_mod $BINARYREPO)"
+		MENV="$(get_altdistr_mod $BINARYREPO)"
+		MENVARG="-$MENV"
 		return
 	fi
 	test -z "$1" && return

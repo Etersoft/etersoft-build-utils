@@ -60,10 +60,10 @@ pull_all_branches()
         local CURRENTBRANCH=$(get_current_branch)
         # pull all branches
         for i in $(get_branch_list) ; do
-            git checkout $i || fatal "can't checkout $i"
-            git pull --tags $REPO $i
+            docmd git checkout $i || fatal "can't checkout $i"
+            docmd git pull --tags $REPO $i
         done
-        git checkout $CURRENTBRANCH
+        docmd git checkout $CURRENTBRANCH
 }
 
 if [ -n "$ALLBRANCHES" ] ; then
@@ -77,16 +77,15 @@ REMOTEBRANCH="$2"
 [ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
 
 if [ -n "$CHECKONLY" ] ; then
-	echocon "Pull repo from $REPO"
+	showcmd git pull --rebase $REPO $REMOTEBRANCH
 	UPTODATEres=`git pull --rebase $REPO $REMOTEBRANCH 2>&1`
 	echocon "$UPTODATEres"
 	echo $UPTODATEres | tail -n1 | grep -q "is up to date"
 	exit
 fi
 
-echo "Pull repo from $REPO $REMOTEBRANCH"
-git fetch $REPO || exit
-git pull $REBASE $REPO $REMOTEBRANCH || exit
+docmd git fetch $REPO || exit
+docmd git pull $REBASE $REPO $REMOTEBRANCH || exit
 
-# assure we get tags
-git pull --tags $REPO $REMOTEBRANCH
+# REWRITE ME: assure we get tags
+docmd git pull --tags $REPO $REMOTEBRANCH

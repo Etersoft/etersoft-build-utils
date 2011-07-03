@@ -63,19 +63,21 @@ uni_rpmbuild()
 		fi
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
+			showcmd $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@
 			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
-			[ -z "$COMMANDAFTER" ] || $COMMANDAFTER
+			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
-			$NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
+			docmd $NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
+		show $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@
 		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
 	fi
-	[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $FIVEPARAM $@" || :
+	#[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $FIVEPARAM $@" || :
 	return $RET
 }
 
@@ -91,9 +93,11 @@ uni_buildreq()
 	local GEARBUILDREQ=gear-buildreq
 
 	if is_gear $SPECDIR ; then
+		showcmd $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" $@
 		$NICE $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" $@ || RET=$?
 	else
-		$NICE buildreq $BUILDREQPARAM "$SPECNAME" $@ || RET=$?
+		showcmd buildreq $BUILDREQPARAM "$SPECNAME" $@
+		docmd $NICE buildreq $BUILDREQPARAM "$SPECNAME" $@ || RET=$?
 	fi
 	return $RET
 }
@@ -111,8 +115,8 @@ uni_rpminstall()
 	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
 	#else
 		echo -n "Install package "
-		mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
-		rpm -iv "$TWOPARAM" $@ || RET=$?
+		docmd mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
+		docmd rpm -iv "$TWOPARAM" $@ || RET=$?
 	#fi
 	return $RET
 }
@@ -126,7 +130,7 @@ uni_rpmrm()
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
-	$RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
+	docmd $RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
 }
 
 

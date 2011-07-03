@@ -31,6 +31,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -i           initialize hasher"
+	echog "   -b REPONAME  binary repository name (4.1, 5.0, 5.1 and so on)"
 	echog "   -c           cleanup hasher"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
@@ -42,13 +43,14 @@ phelp()
 	echog "   -r           remote login to hasher"
 }
 
-while getopts :chitoav opt; do
+while getopts :chitoavb: opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
 	a) AUTOMODE=1 ;;
+	b) BINARYREPONAME=$OPTARG ;;
 	r) REMOTE=1 ;;
 	v) VERBOSE="-v" ;;
 	o) ROOTER="--rooter" ;;
@@ -69,8 +71,11 @@ LISTRPMARGS=$@
 parse_cmd_pre "$@" --
 
 mygetopts $LISTARGS
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
 
 # export OURAPTCONF with temp. file contains correct path to sources.list
+# use MENV
 prepare_aptconfig
 
 HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $DEFAULTARCH --with-stuff"
@@ -90,14 +95,14 @@ fi
 
 if [ "$CLEANUP" = "1" ] ; then
 	echog "Cleanup hasher in $HASHERDIR..."
-	$HSH --cleanup-only $HASHERDIR $HASHERARG || fatal "cleanup"
+	docmd $HSH --cleanup-only $HASHERDIR $HASHERARG || fatal "cleanup"
 	exit
 fi
 
 if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] || [ -n "$AUTOMODE" ]; then
 	echog "Initialize $HASHERDIR ..."
 	mkdir -p $HASHERDIR || fatal "mkdir"
-	$HSH $VERBOSE $HASHERARG --initroot-only $HASHERDIR || fatal "Cannot initialize hasher"
+	docmd $HSH $VERBOSE $HASHERARG --initroot-only $HASHERDIR || fatal "Cannot initialize hasher"
 fi
 
 SHELLHASHERARG="--mountpoints=/proc"
@@ -119,15 +124,15 @@ if [ -n "$TESTMODE$AUTOMODE" ] ; then
 else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
-$HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
 
 echog "You are in hasher shell"
-$HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER -Y --shell
+docmd $HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER -Y --shell
 
 if [ -n "$AUTOMODE" ] ; then
 	# FIXME: do not remove on x86_64
 	echo "Remove package for test preun scripts"
-	$HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)
+	docmd $HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)
 	echo "Cleanup hasher in $HASHERDIR..."
-	$HSH --cleanup-only $HASHERDIR
+	docmd $HSH --cleanup-only $HASHERDIR
 fi

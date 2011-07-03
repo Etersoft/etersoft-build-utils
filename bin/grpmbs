@@ -55,13 +55,13 @@ else
 fi
 
 for i in "$@" ; do
-	cd $i || fatal "Run in dir contains '$i' dir"
+	docmd cd $i || fatal "Run in dir contains '$i' dir"
 	echo
 	echo "== Run $RUNCOMMAND in $(pwd)"
-	$RUNCOMMAND $FORCE || fatal
+	docmd $RUNCOMMAND $FORCE || fatal
 	cd -
 done
 
 if [ -n "TASKADD" ] ; then
-	ssh $GIRARHOST task run "$TASK"
+	docmd ssh $GIRARHOST task run "$TASK"
 fi

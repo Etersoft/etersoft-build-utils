@@ -92,7 +92,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echog "############ Build at build server '$BUILDSERVER' (with $LISTRPMARGS options) ############"
 	echo
 	echog "==== Copying to build server ====="
-	rsync -vay --partial --progress --checksum \
+	docmd rsync -vay --partial --progress --checksum \
 		-e ssh $LISTBUILT $BUILDSERVER:$REMOTERPMDIR/SRPMS/ || fatal "Error with rsync"
 	# TODO: remove after build
 	ssh -t $BUILDSERVER "cd $REMOTERPMDIR/SRPMS && time myhsh $MENVARG $LISTRPMARGS $LISTSRPM"
@@ -101,7 +101,7 @@ if  [ -n "$REMOTEBUILD" ] ; then
 	echo "-------------------------------"
 	test "$RESULT" = "0" && echog "It was remote build at $BUILDSERVER" || echog "There is error during remote build at $BUILDSERVER"
 else
-	time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
+	docmd time $ETERBUILDBIN/myhsh $MENVARG $LISTRPMARGS $LISTBUILT
 	RESULT=$?
 	# remove generated src.rpm
 	for i in $LISTBUILT ; do
@@ -121,5 +121,5 @@ fi
 
 is_gear $SPECDIR && TSKLIST=$LISTNAMES || TSKLIST=$LISTBUILT
 
-exec $ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
+docmd $ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
 

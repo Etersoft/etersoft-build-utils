@@ -78,6 +78,7 @@ if [ -n "${LISTNAMES/*tar/}" ] ; then
 fi
 
 # export OURAPTCONF with temp. file contains correct path to sources.list
+# use MENV
 prepare_aptconfig
 
 # FIXME: we override config value here?
@@ -101,7 +102,7 @@ do
 	echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
 
 	# Note: hasher is already use renice for low priority
-	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	(docmd $HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
 	if [ -f $LOGFILE.failed ] ; then
 		RESULT=1
@@ -134,7 +135,8 @@ if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
-	exec $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
+	docmd $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
+	exit
 fi
 
 exit $RESULT

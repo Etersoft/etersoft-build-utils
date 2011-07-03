@@ -120,8 +120,8 @@ check_gear_and_tag()
 		# needed correct user.name/user.email for get GPG id
 		pushd $SPECDIR >/dev/null
 		# default: <VERSION>-<RELEASE>
-		$GEARCTAG $FORCE || RESULT=1
-		test -z "$TAG" || git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
+		docmd $GEARCTAG $FORCE || RESULT=1
+		test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
 		popd >/dev/null
 	fi
 	return $RESULT
@@ -153,7 +153,7 @@ rpmbs_copying_built()
 	[ -n "$ETERDESTSRPM" ] || return 0
 	echog "Moving package(s) in \$ETERDESTSRPM"
 	if is_ssh_target "$ETERDESTSRPM" ; then
-		scp $LISTBUILT $ETERDESTSRPM && rm -fv $LISTBUILT || echog "Error during copying"
+		docmd scp $LISTBUILT $ETERDESTSRPM && docmd rm -fv $LISTBUILT || echog "Error during copying"
 	else
 		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
 		chmod ug+rw $LISTBUILT
@@ -187,7 +187,7 @@ if [ -n "$SIGNTAG" ] ; then
 fi
 
 if [ -n "$NOSOURCE" ] ; then
-	$RPMBUILD -bs --nosource 0 $LISTNAMES
+	docmd $RPMBUILD -bs --nosource 0 $LISTNAMES
 	exit $?
 fi
 
@@ -207,15 +207,15 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	pkg_release_check
 	TAG=$VERSION-$RELEASE
 	check_gear_and_tag "$TAG"  # || fatal "Can't make tag"
-	$ETERBUILDBIN/gpush $GIRARHOST $FORCE "$TAG" || fatal "gpush failed. Possibly you need to run ginit for create remote repo. Try \$ gpush $GIRARHOST $TAG command separately"
-	$ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed"
+	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE "$TAG" || fatal "gpush failed. Possibly you need to run ginit for create remote repo. Try \$ gpush $GIRARHOST $TAG command separately"
+	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed"
 	echo
 	echo "Run build $PROJECTNAME at $GIRARHOST"
 	if [ -n "$TASKNUMBER" ] ; then
-		ssh $GIRARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		docmd ssh $GIRARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	else
 		[ -n "$POCKET" ] && POCKETARG="-p $POCKET" || POCKETARG=""
-		ssh $GIRARHOST build -b $BINARYREPO $POCKETARG $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		docmd ssh $GIRARHOST build -b $BINARYREPO $POCKETARG $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
 	# FIXME: incorporate
 	cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
@@ -249,7 +249,7 @@ fi
 
 echog "Will try to sign follow packages with GPG: \$LISTBUILT"
 # 1. only rpm command has --addsign 2. do 3 retries
-rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT || rpm --addsign $LISTBUILT
+docmd rpm --addsign $LISTBUILT || docmd rpm --addsign $LISTBUILT || docmd rpm --addsign $LISTBUILT
 RET=$?
 if [ ! "$RET" = "0" ] ; then
 	echog "Impossible to sign package. Check your password and try again."
@@ -294,7 +294,7 @@ fi
 echog "Uploading to $GIRARHOST"
 check_ssh_key
 
-$RSYNC -vay --partial --progress --checksum \
+docmd $RSYNC -vay --partial --progress --checksum \
  	-e ssh $LISTBUILT $GIRARHOST: && \
 echo "---------------------" && \
 echog "All files synced" || fatal "Error during rsync"
@@ -305,12 +305,10 @@ for i in $LISTBUILT ; do
 done
 if [ -n "$TASKNUMBER" ] ; then
 	echo "Add $TASKLIST to task $TASKNUMBER"
-	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST task add $TASKNUMBER $TASKLIST"
-	ssh $GIRARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
+	docmd ssh $GIRARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 else
 	echo "Create task for $TASKLIST"
-	[ -n "$VERBOSE" ] && echo "...with command ssh $GIRARHOST build -b $BINARYREPO $TASKLIST"
-	ssh $GIRARHOST build -b $BINARYREPO $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
+	docmd ssh $GIRARHOST build -b $BINARYREPO $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 fi
 
 # FIXME: parse and incorporate
@@ -340,7 +338,7 @@ for i in $LISTNAMES ; do
 	build_rpms_name $NAME
 	echo -n "    $BUILDROOT "
 	if [ -d "$BUILDROOT" ] ; then
-		rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"
+		docmd rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"
 	else
 		echog "missed"
 	fi

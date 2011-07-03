@@ -15,4 +15,4 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 fi
 
 is_alt && FANCYPERCENT=--fancypercent
-$SUDO rpm -Uvh $FANCYPERCENT "$@"
+docmd $SUDO rpm -Uvh $FANCYPERCENT "$@"

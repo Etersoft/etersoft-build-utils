@@ -69,8 +69,8 @@ push_to_remote()
 	echo
 	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST $TEXTTAG"
 
-	git push $PUSHALL $PUSHFORCE $GHOST $CURRENTBRANCH || return
-	[ -z "$TAGSALL" ] || git push --tags $GHOST $CURRENTBRANCH
+	docmd git push $PUSHALL $PUSHFORCE $GHOST $CURRENTBRANCH || return
+	[ -z "$TAGSALL" ] || docmd git push --tags $GHOST $CURRENTBRANCH
 }
 
 tune_girarlist()

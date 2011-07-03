@@ -36,7 +36,7 @@ fi
 
 test -f "$SPEC" || SPEC=$(get_gear_spec)
 
-$ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
+docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
 add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
 
 if is_gear ; then
@@ -44,5 +44,5 @@ if is_gear ; then
 	git_commit_ignore_nothing $SPEC -m "update spec to new build $(get_version $SPEC) (with rpmrb script)" || exit 1
 fi
 
-$ETERBUILDBIN/rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
-$ETERBUILDBIN/rpmbs $GIRARHOST -u $SPEC || fatal "Error with upload"
+docmd $ETERBUILDBIN/rpmbsh $REMOTE -i $SPEC || fatal "Error with build in hasher"
+docmd $ETERBUILDBIN/rpmbs $GIRARHOST -u $SPEC || fatal "Error with upload"

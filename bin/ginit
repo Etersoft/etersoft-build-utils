@@ -24,6 +24,7 @@ PROJECTNAME=$(get_gear_name)
 [ -n "$PROJECTNAME" ] || fatal "Can't detect project name. Run inside git repo."
 
 echo "Create remote $PROJECTNAME repo in $GIRARHOST:"
-ssh $GIRARHOST git-init-db "$PROJECTNAME.git"
-echo "Create $GIRARHOST remote repo alias"
-git remote add $GIRARHOST $GIRARHOST:packages/$PROJECTNAME.git
+docmd ssh $GIRARHOST git-init-db "$PROJECTNAME.git"
+echo
+echo "Create $GIRARHOST remote repo alias:"
+docmd git remote add $GIRARHOST $GIRARHOST:packages/$PROJECTNAME.git

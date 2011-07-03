@@ -21,11 +21,11 @@ show_bugs()
 {
 	URL=$1
 	if [ -z "$TEXT" ] ; then
-		echog "Opening URL '$URL' in browser $BROWSER"
-		$BROWSER $URL &
+		#echog "Opening URL '$URL' in browser $BROWSER"
+		docmd $BROWSER $URL &
 	else
-		echo "@Fetching from '$URL'..."
-		$BROWSER -dump -no-numbering -no-references -dump-width $COLUMNS $URL
+		#echo "@Fetching from '$URL'..."
+		docmd $BROWSER -dump -no-numbering -no-references -dump-width $COLUMNS $URL
 	fi
 }
 
@@ -42,8 +42,9 @@ show_bugbyid()
 if [ "$1" = "-h" ]; then
 	echog "rpmbugs - open bugs in BROWSER"
 	echog "rpmbugs [-t] spec | bug number | package name | -qf command_name | /path/to/file"
+	echo
 	echog "Options:"
-	echog " -t - list in text console"
+	echog "   -t  list in text console"
 	exit 0
 fi
 

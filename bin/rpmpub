@@ -63,11 +63,11 @@ export ETERDESTSRPM
 PREVPATH=$(readlink -m "$ETERDESTSRPM/../../last")
 if [ -n "$ALPHA" ] && [ ! -d "$ETERDESTSRPM" ] && [ -d "$PREVPATH" ] ; then
 	echo "Copying previous target tree from $PREVPATH"
-	cp -alv $PREVPATH $(readlink -m "$ETERDESTSRPM/..")
+	docmd cp -alv $PREVPATH $(readlink -m "$ETERDESTSRPM/..")
 fi
 
 # just for your information: rpmbs supports ssh-like target
-$ETERBUILDBIN/rpmbs $FORCE -s $SPECNAME || fatal "Can't build SRPMS"
+docmd $ETERBUILDBIN/rpmbs $FORCE -s $SPECNAME || fatal "Can't build SRPMS"
 
 # if known target and last link already exists
 if [ -n "$ALPHA" ] && [ -L "$ETERDESTSRPM/../../last" ] ; then

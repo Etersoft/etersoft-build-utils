@@ -47,7 +47,7 @@ rpmreqs_to_apt()
 install_by_requires()
 {
 	local RLIST="$@"
-	$SUDO apt-get install --no-remove $RLIST
+	docmd $SUDO apt-get install --no-remove $RLIST
 	local ERROR=$?
 	REQLIST="$RLIST"
 	if [ "$ERROR" != "0" ] ; then
@@ -65,14 +65,14 @@ install_by_requires()
 
 ALREADYHANDLEDAPT="bash sh apt rpm filesystem alt-gpgkeys glibc-core glibc-locales"
 ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
+
 install_packages()
 {
 	local ERROR=
 	local LIST="$@"
 	test -n "$LIST" || { echog "There is no more packages to install" ; return ; }
 
-	echo "Install $LIST"
-	$SUDO apt-get install $LIST
+	docmd $SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
 	REQLIST="$(get_requires $LIST)"
 	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")

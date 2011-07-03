@@ -37,6 +37,7 @@ if [ "$VENDOR" = "alt" ] ; then
 	BUILDREQ=
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
+	showcmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
@@ -51,6 +52,7 @@ else
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
 	# Override release with KORINFTARGETRELEASE if set
 	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
+	showcmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$VENDOR
 	set_release $SPECNAME $TXTRELEASE$BASERELEASE$VENDOR
 	test -z "$VERBOSE" || echo "Build package with release $TXTRELEASE"
 	ADDDEF="%defattr(-, root, root)"
@@ -283,16 +285,18 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echo  "Use rpmbph -$CURRENTBRANCHNAME for backport to ALT $CURRENTBRANCHNAME and so on"
+	echo  "Usage: rpmbph -$CURRENTBRANCHNAME for backport to ALT $CURRENTBRANCHNAME and so on"
+	echo
 	echog "Options:"
-	echog " -u - sign and upload after build" # will pass to rpmbs/rpmbsh
-	echog " -n - do not build in hasher"
-	echog " -i - install built packages in test hasher" # will pass to rpmbs/rpmbsh
-	echog " -b REPONAME - binary repository name (4.1, 5.0, 5.1 and so on)"
+	echog "   -u           sign and upload after build" # will pass to rpmbs/rpmbsh
+	echog "   -n           do not build in hasher"
+	echog "   -i           install built packages in test hasher" # will pass to rpmbs/rpmbsh
+	echog "   -b REPONAME  binary repository name (4.1, 5.0, 5.1 and so on)"
+	echo
 	echog "Ext. options:"
-	echog " -r - remote build" # will pass to rpmbs/rpmbsh
-	echog " -v - more verbose"
-	echog " -q - quiet"
+	echog "   -r           remote build" # will pass to rpmbs/rpmbsh
+	echog "   -v           more verbose"
+	echog "   -q           quiet"
 #	echog " -m - send result via e-mail"
 }
 
@@ -376,14 +380,14 @@ if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 	# Create branch if not exist yet
 	if ! is_exist_branch $USEBRANCH ; then
-		git branch $USEBRANCH
+		docmd git branch $USEBRANCH
 	fi
 
 	cp -f $LISTNAMES $BPSPEC
 	altspec_to_local $BPSPEC
 
-	git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
-	git merge $CURBRANCH
+	docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+	docmd git merge $CURBRANCH
 	mv -f $BPSPEC $SPEC
 	# FIXME: Ctrl-\ and q will cancelled less with return error code
 	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
@@ -391,15 +395,15 @@ if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		#git checkout $CURBRANCH
 		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
 	fi
-	git add $SPEC
+	docmd git add $SPEC
 	if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
 		#git checkout $CURBRANCH
 		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
 	fi
 	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
 	echo "Run $BUILDCOMMAND"
-	$BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
-	git checkout $CURBRANCH
+	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+	docmd git checkout $CURBRANCH
 	exit $?
 fi
 
@@ -421,9 +425,10 @@ for i in $LISTBUILT ; do
 
 	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
+	showcmd altspec_to_local $SPECNAME
 	altspec_to_local $SPECNAME
 
-	$BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true
 done
 
