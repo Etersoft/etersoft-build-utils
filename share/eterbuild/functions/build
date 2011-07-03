@@ -126,7 +126,7 @@ uni_rpmrm()
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
-	$RPMBUILD "$TWOPARAM" --rmsource --rmspec $@
+	$RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
 }
 
 
