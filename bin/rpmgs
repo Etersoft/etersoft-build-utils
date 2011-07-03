@@ -31,9 +31,10 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "You can run 'rpmgs file.spec new_version' for set new version and download it"
+	echo
 	echog "Options:"
-	echog " -a - get all source (not only Source|Source0)"
-	echog " -f - force download (remove source before download)"
+	echog "   -a  get all source (not only Source|Source0)"
+	echog "   -f  force download (remove source before download)"
 }
 
 while getopts :haf opt; do

@@ -7,13 +7,14 @@ load_mod git
 set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	echo "grpmbs - multi repo rpmbs analogue (build packages via girar)"
-	echo "Run in dir contains subdirs"
-	echo "Use: grpmbs [GIRAR] [-a|-u] [-f] package1... package2..."
-	echo "Options:"
-	echo "    -a - build all packages in one task"
-	echo "    -u - build packages separately (one package per task)"
-	echo "    -f - force set tags (see rpmbs)"
+	echog "grpmbs - multi repo rpmbs analogue (build packages via girar)"
+	echog "Run in dir contains subdirs"
+	echog "Usage: grpmbs [GIRAR] [-a|-u] [-f] package1... package2..."
+	echo
+	echog "Options:"
+	echog "    -a  build all packages in one task"
+	echog "    -u  build packages separately (one package per task)"
+	echog "    -f  force set tags (see rpmbs)"
 	exit 1
 fi
 

@@ -8,10 +8,13 @@
 load_mod gettext
 
 if [ "$1" = "-h" ]; then
-	echog "aptU [-v] [-l] - update package and all it requires"
-	echog "Usage: aptU [package(s)]"
-	echog " -v - verbose"
-	echog " -l - print list of required packages"
+	echog "aptU - update package and all it requires"
+	echo
+	echog "Usage: aptU [-v] [-l] [package(s)]"
+	echo
+	echog "Options:"
+	echog "  -v  verbose"
+	echog "  -l  print list of required packages"
 	exit 0
 fi
 

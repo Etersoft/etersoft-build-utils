@@ -148,21 +148,23 @@ phelp()
 # TODO: improve description
 	echog "$Descr"
 	echog "$Usage"
-	echog "Options:"
 	echog " pkgname - installed package name or src.rpm"
-	echog " system - name of system (ALT Linux by default if -a missed)"
-	echog " -a  search pkgname in all known repositories"
-	echog " -c  check if this package exists in the ALT Linux repository"
-	echog " -d  download all matched packages"
-	echog " -g  clone last built package repo"
-	echog " -gp  clone last built package repo via public access"
-	echog " -gm remote clone repo to USER/packages and clone it locally"
-	echog " -m  migrate to gear from spec/srpm"
+	echog " system  - name of system (ALT Linux by default if -a missed)"
+	echo
+	echog "Options:"
+	echog "   -a   search pkgname in all known repositories"
+	echog "   -c   check if this package exists in the ALT Linux repository"
+	echog "   -d   download all matched packages"
+	echog "   -g   clone last built package repo"
+	echog "   -gp  clone last built package repo via public access"
+	echog "   -gm  remote clone repo to USER/packages and clone it locally"
+	echog "   -m   migrate to gear from spec/srpm"
+	echo
 	echog "Ext. options:"
-	echog " -b  install packages needed for build (use sudo apt-get) (need spec not package name)"
-	echog " -l  list packages needed for build (in local pkg system notation) (experimental)"
-	echog " -r  refresh package list (download it again)"
-	echog " -s  list all known remote repositories"
+	echog "   -b   install packages needed for build (use sudo apt-get) (need spec not package name)"
+	echog "   -l   list packages needed for build (in local pkg system notation) (experimental)"
+	echog "   -r   refresh package list (download it again)"
+	echog "   -s   list all known remote repositories"
 	exit 0
 }
 

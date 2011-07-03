@@ -23,10 +23,11 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
+	echo
 	echog "Options:"
-	echog " -i - install built packages in test hasher"
-	echog " -c - build without stuff (without previous built packages)"
-	echog " -l - lazy cleanup (before build, not after)"
+	echog "   -i  install built packages in test hasher"
+	echog "   -c  build without stuff (without previous built packages)"
+	echog "   -l  lazy cleanup (before build, not after)"
 
 }
 

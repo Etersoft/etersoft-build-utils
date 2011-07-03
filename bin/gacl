@@ -13,16 +13,26 @@ mygetopts()
 
 	if [ "$1" = "-h" ] ; then
 		echog "gacl - acl control for gear repo in $GIRARHOST"
-		echog "Use: gacl [GIRAR] [-$CURRENTBRANCHNAME] | [-b REPONAME]  [package] command [params]"
+		echo
+		echog "Usage: gacl [GIRAR] [-b REPONAME] [package] command [params]"
+		echo
 		echog "Options:"
-		echog " -b REPONAME - binary repository name (4.1, 5.0, 5.1 and so on)"
+		echog "    GIRAR        git.alt or git.eter"
+		echog "    -b REPONAME  binary repository name (4.1, p5, 5.1 and so on) (sisyphus by default)"
+		echo
+		echog "Commands:"
+		echog "    add USER  add new user to ACL list for package"
+		echog "    del USER  del user from ACL list for package"
+		echog "    show      show current ACL list"
+		echo
 		echog "Examples:"
-		echog "    gacl [-$CURRENTBRANCHNAME] package add newuser"
-		echog "    gacl [-$CURRENTBRANCHNAME] package del newuser"
-		echog "    gacl [-$CURRENTBRANCHNAME] package show"
-		echog "Examples for current git project:"
-		echog "    gacl [-$CURRENTBRANCHNAME] add newuser"
-		echog "    gacl [-$CURRENTBRANCHNAME] show"
+		echog "    gacl package add newuser"
+		echog "    gacl package del newuser"
+		echog "    gacl -b p6 package show"
+		echo
+		echog "Examples for git project from current dir:"
+		echog "    gacl add newuser"
+		echog "    gacl -b p6 show"
 		exit 0
 	fi
 

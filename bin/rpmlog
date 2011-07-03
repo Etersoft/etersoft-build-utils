@@ -12,12 +12,13 @@ load_mod spec rpm git etersoft
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmlog - update changelog"
 	echog "Usage: rpmlog [-r|-s|-v] [-l|-t] [SPEC] [TAG]"
+	echo
 	echog "Options:"
-	echog " -v - increment version"
-	echog " -r - increment release"
-	echog " -s - increment subrelease"
-	echog " -l - add changelog from git log (since last release tag or TAG)"
-	echog " -t - test run (without change files and repo)"
+	echog "   -v  increment version"
+	echog "   -r  increment release"
+	echog "   -s  increment subrelease"
+	echog "   -l  add changelog from git log (since last release tag or TAG)"
+	echog "   -t  test run (without change files and repo)"
 	exit 0
 fi
 

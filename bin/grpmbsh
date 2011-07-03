@@ -8,7 +8,7 @@ set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "grpmbsh - multi repo rpmbsh analogue (build packages in hasher)"
-	echo "Use: grpmbs [GIRAR] package1... package2..."
+	echo "Usage: grpmbs [GIRAR] package1... package2..."
 	# FIXME: concatenate grpmbsh and grpmbs
 	#echo "Options:"
 	#echo "    -a - build all packages in one task"
@@ -19,7 +19,7 @@ fi
 
 
 for i in "$@" ; do
-	cd $i || fatal "Run in dir, contains '$i' directory."
-	rpmbsh $GIRARHOST || fatal
+	docmd cd $i || fatal "Please run in dir with '$i' subdirectory."
+	docmd rpmbsh $GIRARHOST || fatal
 	cd -
 done

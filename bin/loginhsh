@@ -28,16 +28,18 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
+	echo
 	echog "Options:"
-	echog " -i - initialize hasher"
-	echog " -c - cleanup hasher"
-	echog " -o - log in as root user"
-	echog " -v - verbose"
-	echog " -t - use test hasher dir (different to build hasher)"
-	echog " -M?? - branch name"
+	echog "   -i           initialize hasher"
+	echog "   -c           cleanup hasher"
+	echog "   -o           log in as root user"
+	echog "   -v           verbose"
+	echog "   -t           use test hasher dir (different to build hasher)"
+	echog "   -M??         branch name"
+	echo
 	echog "Extra options:"
-	echog " -a - auto test mode for post myhsh build checking"
-	echog " -r - remote login to hasher"
+	echog "   -a           auto test mode for post myhsh build checking"
+	echog "   -r           remote login to hasher"
 }
 
 while getopts :chitoav opt; do
