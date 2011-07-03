@@ -208,8 +208,9 @@ mv $SPECNAME $SPECNAME.old &&
 		sed -e "s|^Obsoletes: *\$||g" | \
 		cat > $SPECNAME
 
-# Fedora 10 does mismatch for Patch: and %patch0
-#subst "s|Patch:|Patch0:|g" $SPECNAME
+# Some system does mismatch for Patch: and %patch0, Patch0: and %patch
+subst "s|^Patch0:|Patch:|g" $SPECNAME
+subst "s|^%patch0 |%patch |g" $SPECNAME
 
 if [ "$VENDOR" != "alt" ] ; then 
 	# Due possible using %release in Source: and Patch: names
