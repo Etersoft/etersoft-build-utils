@@ -35,6 +35,7 @@ phelp()
 	echog "   -c           cleanup hasher"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
+	echog "   -x           allow run X program (set DISPLAY and use xauth)"
 	echog "   -t           use test hasher dir (different to build hasher)"
 	echog "   -M??         branch name"
 	echo
@@ -43,7 +44,7 @@ phelp()
 	echog "   -r           remote login to hasher"
 }
 
-while getopts :chitoavb: opt; do
+while getopts :chitoavb:x opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
@@ -52,6 +53,7 @@ while getopts :chitoavb: opt; do
 	a) AUTOMODE=1 ;;
 	b) BINARYREPONAME=$OPTARG ;;
 	r) REMOTE=1 ;;
+	x) ALLOWX=1 ;;
 	v) VERBOSE="-v" ;;
 	o) ROOTER="--rooter" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -115,12 +117,12 @@ UTILPKG="mc"
 
 # GNOME program needs dbus-tools-gui
 if rpm --requires -p $LISTNAMES 2>/dev/null | grep -q dbus ; then
-	echo "dbus using detecteed, add dbus-tools-gui"
+	echo "dbus using detected, add dbus-tools-gui"
 	UTILPKG="$UTILPKG dbus-tools-gui"
 fi
 
-if [ -n "$TESTMODE$AUTOMODE" ] ; then
-	UTILPKG="$UTILPKG XFree86-xauth fonts-ttf-liberation"
+if [ -n "$AUTOMODE" ] || [ -n "$ALLOWX" ] ; then
+	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
 else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
