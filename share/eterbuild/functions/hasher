@@ -90,6 +90,8 @@ prepare_aptconfig()
 $ETERBUILD_APTREPO
 EOF
 	fi
-	echo "Apt sources from $OURSOURCES:"
+	echo
+	echog "Apt sources from $OURSOURCES:"
 	cat $OURSOURCES | grep -v "^#" | grep -v "^\$" | grep rpm
+	echo
 }

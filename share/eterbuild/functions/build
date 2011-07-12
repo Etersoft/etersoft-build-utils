@@ -74,7 +74,7 @@ uni_rpmbuild()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		show $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@
+		showcmd $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@
 		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
 	fi
 	#[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $FIVEPARAM $@" || :
@@ -116,7 +116,8 @@ uni_rpminstall()
 	#else
 		echo -n "Install package "
 		docmd mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
-		docmd rpm -iv "$TWOPARAM" $@ || RET=$?
+		showcmd rpm -iv "$TWOPARAM" $@
+		rpm -iv "$TWOPARAM" $@ || RET=$?
 	#fi
 	return $RET
 }
@@ -130,7 +131,8 @@ uni_rpmrm()
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
-	docmd $RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
+	showcmd $RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
+	$RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
 }
 
 
