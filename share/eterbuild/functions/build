@@ -97,7 +97,7 @@ uni_buildreq()
 		$NICE $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" $@ || RET=$?
 	else
 		showcmd buildreq $BUILDREQPARAM "$SPECNAME" $@
-		docmd $NICE buildreq $BUILDREQPARAM "$SPECNAME" $@ || RET=$?
+		$NICE buildreq $BUILDREQPARAM "$SPECNAME" $@ || RET=$?
 	fi
 	return $RET
 }

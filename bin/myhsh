@@ -102,7 +102,8 @@ do
 	echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
 
 	# Note: hasher is already use renice for low priority
-	(docmd $HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	showcmd $HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i
+	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
 	if [ -f $LOGFILE.failed ] ; then
 		RESULT=1
