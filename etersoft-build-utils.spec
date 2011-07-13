@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Jul 13 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
+- clean up helps for all commands
+- common: introduce docmd and showcmd funcs
+- gpull: do fetch before pull
+- loginhsh: add -x option for login with X support
+- rpmbph: normalize Patch0 name
+
 * Fri Jul 01 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - repl: skip x86_64 before usual versions
 - rpmbph: drop obsoleted Fedora rules (conflicts with Mandriva/2010)
