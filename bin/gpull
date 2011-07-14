@@ -77,7 +77,8 @@ REMOTEBRANCH="$2"
 [ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
 
 if [ -n "$CHECKONLY" ] ; then
-	showcmd git pull --rebase $REPO $REMOTEBRANCH
+	# Quiet in check mode
+	#showcmd git pull --rebase $REPO $REMOTEBRANCH
 	UPTODATEres=`git pull --rebase $REPO $REMOTEBRANCH 2>&1`
 	echocon "$UPTODATEres"
 	echo $UPTODATEres | tail -n1 | grep -q "is up to date"
