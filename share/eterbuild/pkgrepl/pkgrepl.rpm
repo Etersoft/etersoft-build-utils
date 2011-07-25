@@ -123,3 +123,6 @@ bzlib-devel|bzip2-devel
 rpm-build-python|
 python-modules-compiler|python
 libgnutls-devel|gnutls-devel
+
+rpm-build-licenses|rpm-build-altlinux-compat
+rpm-macros-tts|rpm-build-altlinux-compat

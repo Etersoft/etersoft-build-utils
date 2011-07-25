@@ -59,6 +59,7 @@ libpam0|libpam0g
 libpam-devel|libpam0g-dev
 
 rpm-build-fonts|rpm-build-altlinux-compat
+
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
 menu-devel|
@@ -112,3 +113,7 @@ libalsa-devel|libasound2-dev
 libieee1284-devel|libieee1284-3-dev
 libpng-devel|libpng12-dev
 zlib-devel|zlib1g-dev
+
+rpm-build-licenses|rpm-build-altlinux-compat
+rpm-macros-tts|rpm-build-altlinux-compat
+
