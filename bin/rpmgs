@@ -427,7 +427,8 @@ do
 			test -d "$CURNAME" || CURNAME=$(get_tarballname "$i")
 			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
 			rm -f "$RPMSOURCEDIR/$FTB"
-			docmd git commit -m "just import $FTB with rpmgs script"
+			showcmd git commit -m "just import $FTB with rpmgs script"
+			git commit -m "just import $FTB with rpmgs script"
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f option)."
