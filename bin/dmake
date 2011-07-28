@@ -8,20 +8,22 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
 	exit 0
 fi
 
-export DISTCC_HOSTS
-echo "Build on '$DISTCC_HOSTS' hosts"
-
-if [ -z "$DISTCC_HOSTS" ] || [ -z "$DISTCC_HOSTS_NUM" ] ; then
-    fatal "Set DISTCC_HOSTS and DISTCC_HOSTS_NUM var in config"
-fi
-
 DISTCC=$(which distcc 2>/dev/null)
 [ -n "$DISTCC" ] || fatal "Install distcc for run distributed make via dmake"
 
 if [ "$DEFAULTARCH" = "x86_64" ] ; then
-    fatal "x86_64 is not supported yet"
+    export DISTCC_HOSTS="$DISTCC_64_HOSTS"
+    DISTCC_HOSTS_NUM=$DISTCC_64_HOSTS_NUM
 else
+    export DISTCC_HOSTS="$DISTCC_32_HOSTS $DISTCC_64_HOSTS"
+    DISTCC_HOSTS_NUM=$(($DISTCC_32_HOSTS_NUM + $DISTCC_64_HOSTS_NUM))
     DISTCC="$DISTCC -m32"
+fi
+
+echo "Build on '$DISTCC_HOSTS' hosts ($DEFAULTARCH arch)"
+
+if [ -z "$DISTCC_HOSTS" ] || [ -z "$DISTCC_HOSTS_NUM" ] ; then
+    fatal "Set DISTCC_HOSTS and DISTCC_HOSTS_NUM var in config"
 fi
 
 showcmd time -p make -j$DISTCC_HOSTS_NUM CC="$DISTCC" CXX="$DISTCC" $@
