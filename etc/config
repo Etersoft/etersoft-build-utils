@@ -80,3 +80,8 @@
 
 # Build for Sisyphus by default
 # MENV=SS
+
+# distcc support in jmake
+# https://wiki.office.etersoft.ru/devel/distrubutedcompilation
+# DISTCC_HOSTS="euclid atlant"
+# DISTCC_HOSTS_NUM=12
