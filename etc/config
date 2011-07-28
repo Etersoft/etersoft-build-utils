@@ -85,8 +85,8 @@
 # https://wiki.office.etersoft.ru/devel/distrubutedcompilation
 # i586 only systems
 # DISTCC_32_HOSTS="euclid atlant"
-# DISTCC_32_HOSTS_NUM=12
+# DISTCC_32_THREADS=12
 
 # x86_64 (gcc -m32 supports too)
 # DISTCC_64_HOSTS="builder64"
-# DISTCC_64_HOSTS_NUM=12
+# DISTCC_64_THREADS=12

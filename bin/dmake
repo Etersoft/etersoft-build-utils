@@ -3,28 +3,66 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "dmake - make with distcc using (distributed build)"
 	exit 0
 fi
 
+if [ "$1" = "-p" ] ; then
+	shift
+	PLAIN_DISTCC=distcc
+fi
+
+extra_to_pump_mode()
+{
+    local LIST=
+    if [ -n "$PLAIN_DISTCC" ] ; then
+        echo "$@"
+        return
+    fi
+
+    for i in $@ ; do
+        LIST="$LIST $i,cpp,lzo"
+    done
+    echo "$LIST"
+}
+
 DISTCC=$(which distcc 2>/dev/null)
-[ -n "$DISTCC" ] || fatal "Install distcc for run distributed make via dmake"
+[ -n "$DISTCC" ] || fatal "Install distcc package for run distributed make via dmake"
+
+if [ -n "$PLAIN_DISTCC" ] ; then
+    PUMP=
+else
+    PUMP=$(which pump 2>/dev/null)
+    [ -n "$PUMP" ] || fatal "Install distcc-pump package for run distributed make via dmake"
+fi
+
+DISTCXX="$DISTCC"
 
 if [ "$DEFAULTARCH" = "x86_64" ] ; then
-    export DISTCC_HOSTS="$DISTCC_64_HOSTS"
-    DISTCC_HOSTS_NUM=$DISTCC_64_HOSTS_NUM
+    export DISTCC_HOSTS="$(extra_to_pump_mode $DISTCC_64_HOSTS)"
+    DISTCC_THREADS=$DISTCC_64_THREADS
 else
-    export DISTCC_HOSTS="$DISTCC_32_HOSTS $DISTCC_64_HOSTS"
-    DISTCC_HOSTS_NUM=$(($DISTCC_32_HOSTS_NUM + $DISTCC_64_HOSTS_NUM))
-    DISTCC="$DISTCC -m32"
+    export DISTCC_HOSTS="$(extra_to_pump_mode $DISTCC_32_HOSTS $DISTCC_64_HOSTS)"
+    DISTCC_THREADS=$(($DISTCC_32_THREADS + $DISTCC_64_THREADS))
+    DISTCC="$DISTCC gcc -m32"
+    DISTCXX="$DISTCXX g++ -m32"
 fi
 
 echo "Build on '$DISTCC_HOSTS' hosts ($DEFAULTARCH arch)"
 
-if [ -z "$DISTCC_HOSTS" ] || [ -z "$DISTCC_HOSTS_NUM" ] ; then
-    fatal "Set DISTCC_HOSTS and DISTCC_HOSTS_NUM var in config"
+if [ -z "$DISTCC_HOSTS" ] || [ -z "$DISTCC_THREADS" ] ; then
+    fatal "Set DISTCC_??_HOSTS and DISTCC_??_THREADS var in config"
 fi
 
-showcmd time -p make -j$DISTCC_HOSTS_NUM CC="$DISTCC" CXX="$DISTCC" $@
-time -p make -j$DISTCC_HOSTS_NUM CC="$DISTCC" CXX="$DISTCC" $@
+# Do not use all threads in plain mode
+if [ -n "$PLAIN_DISTCC" ] ; then
+    DISTCC_THREADS=$(($DISTCC_THREADS/2))
+# FIXME: see lsdistcc also
+#else
+#    export DISTCC_POTENTIAL_HOSTS="$DISTCC_HOSTS"
+#    unset DISTCC_HOSTS
+fi
+
+showcmd time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" $@
+time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" $@

@@ -3,7 +3,7 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "jmake - make with ccache using and parallel build enabled"
 	exit 0
 fi
