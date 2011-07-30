@@ -29,7 +29,7 @@ if [ "$1" = "-a" ] ; then
 fi
 
 if [ "$1" = "-c" ] ; then
-	CHECKONLY=1
+	CHECKRESULT=1
 	shift
 fi
 
@@ -76,7 +76,7 @@ REMOTEBRANCH="$2"
 # use current branch name as default
 [ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
 
-if [ -n "$CHECKONLY" ] ; then
+if [ -n "$CHECKRESULT" ] ; then
 	# Quiet in check mode
 	#showcmd git pull --rebase $REPO $REMOTEBRANCH
 	UPTODATEres=`git pull --rebase $REPO $REMOTEBRANCH 2>&1`

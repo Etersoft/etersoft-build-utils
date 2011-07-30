@@ -79,7 +79,7 @@ case "$COMMAND" in
 	"add"|"del")
 		[ -n "$PARAM" ] || fatal "Param for command is missed"
 		echo "$GIRARHOST:$BINARYREPO ACL for $PROJECTNAME: $COMMAND $PARAM..."
-		ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $PARAM
+		docmd ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $PARAM
 		;;
 	"show")
 		echo -n "$GIRARHOST:$BINARYREPO ACL for "
