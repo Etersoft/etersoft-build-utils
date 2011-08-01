@@ -1,5 +1,5 @@
 Name: etersoft-build-utils
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +63,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Aug 01 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.6-alt1
+- dmake: add support for pump mode by default
+- small fixes
+
 * Thu Jul 28 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
 - add dmake for distcc support
 - dmake: add support 64 bit build and build i586 on x86_64
