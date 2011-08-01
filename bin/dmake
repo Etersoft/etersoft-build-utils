@@ -4,13 +4,33 @@
 . `dirname $0`/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	echo "dmake - make with distcc using (distributed build)"
+	echo "dmake [-t] [-p] - make with distcc using (distributed build)"
+	echo " -p  run in plain mode (without pump)"
+	echo " -t  run test compiler via ssh for build hosts"
 	exit 0
 fi
 
 if [ "$1" = "-p" ] ; then
 	shift
 	PLAIN_DISTCC=distcc
+fi
+
+get_quoted_list()
+{
+    local LIST=
+    for i in $@ ; do
+        LIST="$LIST$i,"
+    done
+    echo "$LIST"
+}
+
+
+if [ "$1" = "-t" ] ; then
+	shift
+	PDSH=$(which pdsh 2>/dev/null)
+	[ -n "$PDSH" ] || fatal "Install pdsh package for test build cloud"
+	docmd $PDSH -w$(get_quoted_list $DISTCC_64_HOSTS $DISTCC_32_HOSTS) "g++ -v 2>&1 | tail -n1"
+	exit
 fi
 
 extra_to_pump_mode()
@@ -43,7 +63,7 @@ if [ "$DEFAULTARCH" = "x86_64" ] ; then
     export DISTCC_HOSTS="$(extra_to_pump_mode $DISTCC_64_HOSTS)"
     DISTCC_THREADS=$DISTCC_64_THREADS
 else
-    export DISTCC_HOSTS="$(extra_to_pump_mode $DISTCC_32_HOSTS $DISTCC_64_HOSTS)"
+    export DISTCC_HOSTS="$(extra_to_pump_mode $DISTCC_64_HOSTS $DISTCC_32_HOSTS)"
     DISTCC_THREADS=$(($DISTCC_32_THREADS + $DISTCC_64_THREADS))
     DISTCC="$DISTCC gcc -m32"
     DISTCXX="$DISTCXX g++ -m32"
