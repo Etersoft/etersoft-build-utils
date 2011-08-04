@@ -1,26 +1,35 @@
 #!/bin/bash
-# 2008 Etersoft www.etersoft.ru
+# 2008, 2011 Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
 
+get_gear_rules()
+{
+	local SPECNAME="$1"
+	# FIXME: move get rules file to separate function
+	local BASESPECNAME=$(basename "$SPECNAME")
+	local ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
+	local ALTGEARRULES=$(git rev-parse --git-dir)/../$ALTGEARRULESFILE
+	local GEARRULES=
+	if [ -r "$ALTGEARRULES" ] ; then
+		#echo "Build with alternate rules $ALTGEARRULESFILE"
+		GEARRULES="--rules=$ALTGEARRULESFILE"
+	fi
+	echo "$GEARRULES"
+}
+
 # Universal rpmbuild function
-# 1st: rpmbuild, hsh, buildreq
-# 2nd: spec name(s) (only one if git, we will skip it)
+# 1st: spec name(s) (only one if git, we will skip it)
 # other parameters
 uni_rpmbuild()
 {
 	local RET=0
-	# hack due quotes
-	# just for fill by something
-	local ONEPARAM="--quiet"
-	local TWOPARAM="--quiet"
-	local THRPARAM="--quiet"
-	local FOURPARAM="--quiet"
-	local FIVEPARAM="--define='_unpackaged_files_terminate_build 0'"
+
+	local FIVEPARAM="--define=_unpackaged_files_terminate_build 0"
+
 	local COMMIT=""
 	local COMMANDAFTER=""
-
 	if [ "$1" = "--commit" ] ; then
 		shift
 		COMMIT="--commit"
@@ -31,53 +40,42 @@ uni_rpmbuild()
 	local SPECDIR=`dirname $SPECNAME`
 	local GEAR=gear
 
-	if [ -n "$USE_LEGACY_COMPRESSION" ] ; then
-		# FIXME: do not override -v
-		ONEPARAM="--define=_source_payload w9.gzdio"
-	fi
+	local THRPARAM="--quiet"
+	[ -n "$USE_VENDOR" ] && THRPARAM="--define=_vendor $USE_VENDOR"
 
-	if [ -n "$USE_VENDOR" ] ; then
-		THRPARAM="--define=_vendor $USE_VENDOR"
-	fi
-	
-	if [ -n "$RPMTOPDIR" ] ; then
-		TWOPARAM="--define=_topdir $RPMTOPDIR"
-	fi
+	local TWOPARAM="--quiet"
+	[ -n "$RPMTOPDIR" ] && TWOPARAM="--define=_topdir $RPMTOPDIR"
 
+	local FOURPARAM="--quiet"
 	if [ -n "$CCACHE_ENABLE" ] && [ -n "$CCACHE_DIR" ] ; then
 		FOURPARAM="--define=__ccache_dir $CCACHE_DIR"
 	fi
 
+
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
-		#[ -n "$SPECDIR" ] && [ "$SPECDIR" != "." ] && warning "Spec is not in git dir (SPECDIR='$SPECDIR')"
+
 		# FIXME: use spec name as project name
-		BASESPECNAME=$(basename "$SPECNAME")
-		ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
-		ALTGEARRULES=$(git rev-parse --git-dir)/../$ALTGEARRULESFILE
-		GEARRULES=
-		if [ -r "$ALTGEARRULES" ] ; then
-			echo "Build with alternate rules $ALTGEARRULESFILE"
-			GEARRULES=--rules="$ALTGEARRULESFILE"
-		fi
+		GEARRULES=$(get_gear_rules "$SPECNAME")
+
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			showcmd $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@
-			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
+			showcmd $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@
+			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@ || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
-			docmd $NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
+			#docmd $NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		showcmd $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@
-		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" $@ || RET=$?
+		showcmd $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@
+		$NICE $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@ || RET=$?
 	fi
-	#[ -n "$VERBOSE" ] && echo "Run $RPMBUILD $ONEPARAM $TWOPARAM $THRPARAM $FOURPARAM $FIVEPARAM $@" || :
+
 	return $RET
 }
 
