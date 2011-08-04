@@ -41,9 +41,10 @@ phelp()
 	echog "Ext. options:"
 	echog "   -c  start from compile stage"
 	echog "   -p  packaging installed files into package"
+	echog "   -d  build with dmake"
 }
 
-while getopts :hciprR opt; do
+while getopts :hciprRd opt; do
     case $opt in
     h) phelp; exit 0;;
     c) BUILDOPT="c" ;;
@@ -51,6 +52,7 @@ while getopts :hciprR opt; do
     p) BUILDOPT="b" ;;
     r) BUILDREQ="-bc" ;;
     R) BUILDREQ="-bi" ;;
+    d) USEDMAKE="1" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
     ?) OPTIND=$((OPTIND-1)); break;

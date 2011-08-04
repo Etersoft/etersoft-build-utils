@@ -51,6 +51,8 @@ uni_rpmbuild()
 		FOURPARAM="--define=__ccache_dir $CCACHE_DIR"
 	fi
 
+	local SIXPARAM="--quiet"
+	[ -n "$USEDMAKE" ] && SIXPARAM="--define=make_build dmake"
 
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
