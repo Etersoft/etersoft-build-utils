@@ -57,6 +57,13 @@ else
     [ -n "$PUMP" ] || fatal "Install distcc-pump package for run distributed make via dmake"
 fi
 
+COLORIFER=$(which colorifer 2>/dev/null)
+if false && [ -n "$COLORIFER" ] ; then
+    export COLORIFER_NAME=g++
+    export COLORIFER_REDIRECT=$DISTCC
+    DISTCC=$COLORIFER
+fi
+
 DISTCXX="$DISTCC"
 
 if [ "$DEFAULTARCH" = "x86_64" ] ; then
