@@ -84,5 +84,5 @@ if [ -n "$PLAIN_DISTCC" ] ; then
 #    unset DISTCC_HOSTS
 fi
 
-showcmd time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" $@
-time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" $@
+showcmd $NICE time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" $@
+$NICE time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" $@

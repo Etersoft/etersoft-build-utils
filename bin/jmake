@@ -23,4 +23,4 @@ MAKEARG="-j$NPROCS"
 #[ "$(( $NPROCS - $LOADAVG ))" -gt 1 ] || MAKEARG=""
 
 #make $MAKEARG "CC=$CC" "CXX=$CXX" "CPP=$CPP" "CXXCPP=$CXXCPP" $@
-docmd time -p make $MAKEARG $@
+docmd $NICE time -p make $MAKEARG $@
