@@ -11,7 +11,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm
+load_mod rpm check
 
 # Start as helper
 if [ "$1" = "--helper" ]; then

@@ -1,0 +1,34 @@
+#!/bin/bash
+# 2008, 2011 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+
+check_log()
+{
+	local LOGFILE i RES
+	echo
+	echo "-------------------------------------------------------"
+	echog "Check log for..."
+	LOGFILE=$1
+	
+	if grep -q 'ld: warning: libstdc++\.so\.5, needed by [^ ]\+, may conflict with libstdc++\.so\.6' $LOGFILE ; then
+		echog "Error found: libstdc++.so.5/6 conflicts. Check the log."
+		return 1
+	fi
+
+	if grep -q 'will always overflow destination buffer' $LOGFILE ; then
+		echog "Error found: will always overflow destination buffer. Check the log."
+		return 1
+	fi
+
+	grep 'python-strict' $LOGFILE && warning "python-strict used!!!"
+	NC1="command not found"
+	NC2="-march=athlon -mtune=athlon-xp"
+	#for i in ${NC1} ; do
+	grep -- '$NC1' $LOGFILE && warning "'$NC1' in build output (some errors in a scripts)"
+	grep -- '$NC2' $LOGFILE && warning "'$NC2' in build output (forbidden) "
+	#done
+	return 0
+}
+

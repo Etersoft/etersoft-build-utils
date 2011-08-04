@@ -18,7 +18,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm tarball alt git web
+load_mod rpm tarball alt git web buildsrpm
 
 SIGN=
 SIGNTAG=

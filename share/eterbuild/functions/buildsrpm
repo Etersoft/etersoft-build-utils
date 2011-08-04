@@ -1,0 +1,120 @@
+#!/bin/bash
+# 2008, 2011 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+
+# 1st: spec name(s) (only one if git, we will skip it)
+# other parameters
+uni_rpmbuildsrpm()
+{
+	local RET=0
+
+	local COMMIT=""
+	local COMMANDAFTER=""
+	if [ "$1" = "--commit" ] ; then
+		shift
+		COMMIT="--commit"
+		COMMANDAFTER="git reset"
+	fi
+
+	local SPECNAME="$1"
+	local SPECDIR=`dirname $SPECNAME`
+	local GEAR=gear
+
+	local ONEPARAM="--quiet"
+	[ -n "$USE_LEGACY_COMPRESSION" ] && ONEPARAM="--define=_source_payload w9.gzdio"
+
+	local TWOPARAM="--quiet"
+	[ -n "$RPMTOPDIR" ] && TWOPARAM="--define=_topdir $RPMTOPDIR"
+
+	local THRPARAM="--quiet"
+	[ -n "$USE_VENDOR" ] && THRPARAM="--define=_vendor $USE_VENDOR"
+
+	if is_gear $SPECDIR ; then
+		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
+		shift # skip spec name
+
+		# FIXME: use spec name as project name
+		GEARRULES=$(get_gear_rules "$SPECNAME")
+
+		# build package without MENV checking
+		if true || [ "$MENV" = "SS" ] ; then
+			showcmd $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@
+			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
+		else
+			fatal "Build backported src.rpm from git is unsupported now"
+			# build src.rpm via hasher (on ALT)
+#			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
+			#docmd $NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
+		fi
+	else
+		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
+		showcmd $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@
+		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+	fi
+
+	return $RET
+}
+
+# LISTNAMES, options in arg
+# build LISTBUILT list with src.rpm full path
+pack_src_rpm()
+{
+local i COMMIT
+
+if [ "$1" = "--commit" ] ; then
+	shift
+	COMMIT="--commit"
+fi
+
+ARGS=$@
+[ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES ARGS=$ARGS" || :
+ARGS="$ARGS --nodeps"
+for i in $LISTNAMES
+do
+	
+	if [ -z ${i/*rpm/} ] ; then
+		# if rpm not spec, guess it is src.rpm
+		#NAMESRPMIN=$(basename $i)
+
+		if [ -f "$i" ] ; then
+			LISTBUILT="$LISTBUILT $(realpath $i)"
+			build_rpms_name_by_srpm "$i" $ARGS
+		else
+			fatal "pack_src_rpm: Can't find '$i'"
+		fi
+	else
+		# Получаем названия пакетов по спеку
+		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
+		build_rpms_name "$i" $ARGS
+		if [ -n "${SIGN}" ]; then
+			echog "Try to packing \$NAMESRPMIN package for sign"
+			add_changelog $i
+			if [ $? = "0" ]; then
+				echog "Spec file \$i had not ChangeLog entry. It have added now, check it and enter your command again."
+				echog "Wait for ten seconds."
+				sleep 10
+				exit 1
+			fi
+		else
+			echog "Just packing \$NAMESRPMIN"
+		fi
+
+		uni_rpmbuildsrpm $COMMIT $i -bs $ARGS $NODEPS --target $SYSARCH || fatal "Error with rpmbuild"
+
+		# Check the package really built
+		if [ -f "$RPMTOPDIR/SRPMS/$NAMESRPMIN" ] ; then
+			LISTBUILT="$LISTBUILT $RPMTOPDIR/SRPMS/$NAMESRPMIN"
+		else
+			fatal "Can't find '$NAMESRPMIN' in '$RPMTOPDIR/SRPMS'"
+		fi
+	fi
+
+done
+
+LISTBUILT=$(strip_spaces "$LISTBUILT")
+test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
+}
+

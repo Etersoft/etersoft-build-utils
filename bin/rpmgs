@@ -13,7 +13,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm tarball web
+load_mod rpm tarball web buildsrpm
 
 WEXT=""
 GETSOURCE=""
