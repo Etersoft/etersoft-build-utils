@@ -71,7 +71,7 @@ if [ -n "$ALLBRANCHES" ] ; then
 	exit
 fi
 
-REMOTEBRANCH="$2"
+REMOTEBRANCH="$1"
 
 # use current branch name as default
 [ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
