@@ -409,7 +409,7 @@ do
 		CURVER=$(get_version $i)
 		CURREL=$(get_release $i)
 		EGEARME=""
-		is_gear && EGEARME=" with rpmbs script"
+		is_gear && EGEARME=" with rpmgs script"
 		add_changelog_helper "- new version ($CURVER)$EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
 
