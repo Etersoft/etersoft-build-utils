@@ -84,3 +84,9 @@ samba-client|cifs-mount
 
 libgsm-devel|libgsm-devel
 libgsm|libgsm
+
+openssh-server|openssh
+
+libaudiofile|audiofile
+libaudiofile-devel|audiofile-devel
+
