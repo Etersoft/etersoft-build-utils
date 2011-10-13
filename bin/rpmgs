@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # 2005-2006, 2009 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
@@ -344,6 +344,7 @@ do
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
 		[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
+		# use pushd/popd due several cd / cd -
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 
 		# Test for eterbuild extensions
