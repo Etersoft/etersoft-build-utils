@@ -14,14 +14,19 @@ get_var()
 eval_spec()
 {
 	# TODO: use rpm -showrc instead -bE for get main variables?
+	local SPEC=$1
+	# see http://bugs.etersoft.ru/show_bug.cgi?id=6588
+	#cat $SPEC | awk 'BEGIN{desk=0}{if (desk==0) {print}; if(/^%changelog/&&desk==0){desk++}}' > $SPEC.tmpspec
+	# SPEC=$SPEC.tmpspec
 
 	# Hack: just print spec if -bE failed
 	if is_alt ; then
 		# on ALT we have to done without errors
-		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $@ || fatal "Check spec's fields"
+		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC || fatal "Check spec's fields"
 	else
-		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $@ 2>/dev/null || cat $1
+		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC
 	fi
+#	rm -f $SPEC.tmpspec
 }
 
 get_release()
