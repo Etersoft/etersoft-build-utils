@@ -230,7 +230,7 @@ fi
 if [ -n "$INSTALLBINARY" ] ; then
     # pack by LISTNAMES list
     pack_src_rpm --commit $LISTRPMARGS
-    LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g")
+    LISTPKG=$(rpmquery --requires -p $LISTBUILT | clean_pkgreq | sed -e "s|rpm-build-altlinux-compat||g" | sed -e "s|gcc-c++||g")
     CMD=$(get_install_package_command `$DISTRVENDOR -d` interactive)
     docmd $SUDO $CMD $LISTPKG
     exit
