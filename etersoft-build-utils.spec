@@ -1,5 +1,7 @@
+# NOTE: do not use clean_spec or rpmcs for this spec
+
 Name: etersoft-build-utils
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -63,6 +65,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Oct 18 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
+- dmake: add -t option for test build servers
+- dmake/jmake: use nice
+- fix pkgrepls
+- gpull: fix get branch
+- rpmbb: add dmake support
+- rpmcs: add -h, --help support
+- rpmcs: do not replace changelog part
+- rpm: disable specname warning
+- rpmgp: skip gcc-c++ for install
+- rpmgs: fix changelog message
+- rpmgs: use bash
+
 * Mon Aug 01 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.6-alt1
 - dmake: add support for pump mode by default
 - small fixes
