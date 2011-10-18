@@ -115,14 +115,19 @@ else
 	mygetopts $LISTARGS
 fi
 
-for i in $LISTNAMES
+for SPEC in $LISTNAMES
 do
-	if [ -z ${i/*rpm/} ] ; then
-		fatal "'$i' is not not spec file"
+	if [ -z ${SPEC/*rpm/} ] ; then
+		fatal "'$SPEC' is not not spec file"
 	fi
 
 	# Make backup copy
-	cp -f $i ${i}~ || fatal "Cannot find spec file '$i'"
+	cp -f $SPEC ${SPEC}~ || fatal "Cannot find spec file '$SPEC'"
+
+	# Prepare for fix only before changelog part
+	i=$SPEC.tmpspecbeforechangelog
+	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==0) {print}; if(/^%changelog/&&desk==0){desk++}}' > $i
+	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==1) {print}; if(/^%changelog/&&desk==0){desk++}}' > $SPEC.tmpspecchangelog
 
 	# Unneeded on ALT
 	subst "s|^Prefix:.*$||" $i
@@ -156,12 +161,6 @@ do
 			awk '{if ( ! /^%define date/){print}else{exit}}' $i > $i.tmp && mv -f $i.tmp $i
 			add_changelog $i -e "- initial build for ALT Linux Sisyphus (spec from PLD)"
 		fi
-	fi
-
-	# if there is no altlinux in changelog yet
-	if ! grep -v "Packager" $i | grep "@altlinux" ; then
-			echo "Add changelog with initial build"
-			add_changelog $i -e "- initial build for ALT Linux Sisyphus"
 	fi
 
 	echog "cleanup_spec for $i..."
@@ -410,8 +409,18 @@ do
 	#echo ALL: $ALLREPLRULES
 
 	# Replace package names in source spec
-	mv $i $i.old.cs.txt && cat $i.old.cs.txt | \
-		sed -r -e "$ALLREPLRULES" > $i || mv $i.old.cs.txt $i
-	rm -f $i.old.cs.txt
+	sed -r -e "$ALLREPLRULES" <$i >$SPEC || { warning "Error with replacement" ; cat $i >$SPEC ; }
+
+	# Restore changelog
+	cat $SPEC.tmpspecchangelog >>$SPEC
+	rm -f $i $SPEC.tmpspecchangelog
+	
+	# if there is no altlinux in changelog yet
+	if ! grep -v "Packager" $SPEC | grep -q "@altlinux" ; then
+			echo "Add changelog with initial build"
+			add_changelog $SPEC -e "- initial build for ALT Linux Sisyphus"
+	fi
+
+
 	echog "DONE"
 done
