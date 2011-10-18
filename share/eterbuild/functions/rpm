@@ -54,10 +54,11 @@ build_rpms_name()
 	RPMSOURCEDIR=`rpm --eval %_sourcedir | subst_namever`
 	[ -n "$RPMSOURCEDIR" ] || fatal "Can't detect RPM/SOURCES dir"
 
-	local BNS NSS
-	BNS="$BASENAME".spec
-	NSS=`basename $NAMESPEC`
-	test "$NSS" != "$BNS" && warning "Spec name ($NSS) is not equal to Name of package ($BNS)"
+	# Lav 18.10.11 FIXME: need we this warning?
+	#local BNS NSS
+	#BNS="$BASENAME".spec
+	#NSS=`basename $NAMESPEC`
+	#test "$NSS" != "$BNS" && warning "Spec name ($NSS) is not equal to Name of package ($BNS)"
 	rm -f $tmprpm
 
 	build_buildroot
