@@ -118,11 +118,11 @@ check_gear_and_tag()
 
 	if is_gear $SPECDIR ; then
 		# needed correct user.name/user.email for get GPG id
-		pushd $SPECDIR >/dev/null
+		cd $SPECDIR >/dev/null
 		# default: <VERSION>-<RELEASE>
 		docmd $GEARCTAG $FORCE || RESULT=1
 		test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
-		popd >/dev/null
+		cd - >/dev/null
 	fi
 	return $RESULT
 }
