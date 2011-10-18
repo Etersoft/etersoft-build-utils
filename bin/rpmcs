@@ -82,20 +82,38 @@ toalt_grprepl()
 	return 1
 }
 
+Usage="Usage: rpmcs [specfile]
+spec file can be autodetected from git repo"
+mygetopts()
+{
+Descr="rpmcs - cleanup spec (like cleanup_spec command)"
+
+phelp()
+{
+# TODO: improve description
+	echog "$Descr"
+	echog "$Usage"
+	echog " specfile - spec file (copy will be saved as specfile~)"
+	exit 0
+}
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	phelp
+fi
+
+# pass other options to RPM:
+LISTRPMARGS=$@
+}
+
+
 # If run without params, try autodetect spec
 if [ -z "$1" ] ; then
 	LISTNAMES=$(get_gear_spec)
 	[ -n "$LISTNAMES" ] && echo "Using autodetected spec $LISTNAMES..."
 else
 	parse_cmd_pre "$@"
+	mygetopts $LISTARGS
 fi
-
-
-if [ "$1" = "-h" ]; then
-	echog "rpmcs spec - cleanup spec (like cleanup_spec command), adapted to ALT"
-	exit 0
-fi
-
 
 for i in $LISTNAMES
 do
@@ -104,7 +122,7 @@ do
 	fi
 
 	# Make backup copy
-	cp -f $i ${i}~
+	cp -f $i ${i}~ || fatal "Cannot find spec file '$i'"
 
 	# Unneeded on ALT
 	subst "s|^Prefix:.*$||" $i
