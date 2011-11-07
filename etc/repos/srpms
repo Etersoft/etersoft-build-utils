@@ -1,8 +1,8 @@
 # see whohas package too
 # all known src.rpm repositories (for rpmgp command)
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS
-fedora14       ftp://mirror.yandex.ru/fedora/linux/releases/14/Fedora/source/SRPMS/
-fedora       ftp://mirror.yandex.ru/fedora/linux/releases/15/Fedora/source/SRPMS/
+fedora14     ftp://mirror.yandex.ru/fedora/linux/releases/14/Fedora/source/SRPMS/
+fedora15     ftp://mirror.yandex.ru/fedora/linux/releases/15/Fedora/source/SRPMS/
 fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS/
 fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/15/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
@@ -25,7 +25,7 @@ suse-edu2    http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
 pld          ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS
 fedoraf      http://download1.rpmfusion.org/free/fedora/releases/14/Everything/source/SRPMS/
 rpmfusion    http://download1.rpmfusion.org/free/fedora/development/source/SRPMS/
-asp          http://mirror.yandex.ru/asplinux/sources/SRPMS.14/
+#asp          http://mirror.yandex.ru/asplinux/sources/SRPMS.14/
 elrepo       http://elrepo.org/linux/elrepo/el6/SRPMS/
 elrepo-testing http://elrepo.org/linux/testing/el6/SRPMS/
 elrepo-fasttrack http://elrepo.org/linux/fasttrack/el6/SRPMS/
