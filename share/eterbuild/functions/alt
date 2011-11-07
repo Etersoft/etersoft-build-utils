@@ -79,7 +79,7 @@ get_altdistr_version()
 # 5.0 -> M50
 get_altdistr_mod()
 {
-	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" | sed -e "s|Sisyphus|SS|gi" | sed -e "s|p\([5-9]\)|M\10|g"
+	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" -e "s|Sisyphus|SS|gi" -e "s|p\([5-9]\)|M\10P|g" -e "s|t\([6-9]\)|M\10T|g"
 }
 
 # TODO: include in sisyphus_check
