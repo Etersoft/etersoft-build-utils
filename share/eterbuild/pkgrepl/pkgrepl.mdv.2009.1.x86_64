@@ -6,3 +6,5 @@ libXpm|lib64xpm4
 
 libreadline-devel|libreadline-devel
 libreadline|lib64readline6
+
+libfontenc-devel|lib64fontenc1-devel

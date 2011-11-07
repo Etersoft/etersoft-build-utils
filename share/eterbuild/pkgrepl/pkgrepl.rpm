@@ -111,7 +111,9 @@ libmpg123-devel|
 libgsm-devel|gsm-devel
 libgsm|gsm
 libgstreamer-devel|gstreamer-devel
+gst-plugins-devel|gstreamer-plugins-base-devel
 libgstreamer|gstreamer
+
 libunixODBC-devel|unixODBC-devel
 libunixODBC|unixODBC
 

@@ -2,3 +2,4 @@ xorg-sdk|xorg-x11-proto-devel
 libv4l-devel|
 gstreamer-devel|
 libgsm-devel|
+gst-plugins-devel|gstreamer-plugins-base-devel
