@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -65,6 +65,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Nov 08 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.8-alt1
+- full support for p? / t?, update tests for M60P M60T
+- some pkgrepl fixes
+- update repos/srpms
+- update support for p? and t? alt systems, do name translation more correctly
+- web: replace 20 with space after download
+
 * Tue Oct 18 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
 - dmake: add -t option for test build servers
 - dmake/jmake: use nice
