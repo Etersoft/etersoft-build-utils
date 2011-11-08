@@ -207,7 +207,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	pkg_release_check
 	TAG=$VERSION-$RELEASE
 	check_gear_and_tag "$TAG"  # || fatal "Can't make tag"
-	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE "$TAG" || fatal "gpush failed. Possibly you need to run ginit for create remote repo. Try \$ gpush $GIRARHOST $TAG command separately"
+	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE "$TAG" || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
 	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed"
 	echo
 	echo "Run build $PROJECTNAME at $GIRARHOST"
