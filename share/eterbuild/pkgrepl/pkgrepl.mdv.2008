@@ -3,8 +3,12 @@ libgphoto2-devel|libgphoto-devel
 libxslt-devel|libxslt-devel
 python-devel|libpython2.5-devel
 libgtkmm2-devel|libgtkmm2.4-devel
-libldap-devel|libldap2.3_0-devel
-libldap|libldap2.3_0
+#libldap-devel|libldap2.3_0-devel
+#libldap|libldap2.3_0
+libldap-devel|libldap2.4_2-devel
+libldap|libldap2.4_2
 
 libXcomposite|libxcomposite1
 libXpm|libxpm4
+
+jackit-devel|libjack0-devel

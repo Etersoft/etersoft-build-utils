@@ -1,5 +1,3 @@
 libXcomposite|libxcomposite1
 libXpm|libxpm4
-libldap-devel|libldap2.3_0-devel
-libldap|libldap2.3_0
 gst-plugins-devel|libgstreamer-plugins-base0.10-devel
