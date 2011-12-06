@@ -43,7 +43,7 @@ get_type_by_git_branch_name()
                 return
         fi
 
-        # like M50
+        # like M50P or M41
         if echo $1 | grep -q "^M[0-9][0-9].$" ; then
                 echo $1
                 return
@@ -76,7 +76,7 @@ get_altdistr_version()
 	echo "$1" | sed -e "s|M\([5-9]\)0P|p\1|g" -e "s|M\([5-9]\)0T|t\1|g" -e "s|M\([0-9]\)\([0-9]\)|\1\.\2|g" -e "s|SS|sisyphus|g" -e "s|DD|daedalus|g" -e "s|Sisyphus|sisyphus|g"
 }
 
-# 5.0 -> M50
+# 5.0 -> M50, p6 -> M60P
 get_altdistr_mod()
 {
 	echo "$1" | sed -e "s|\([0-9]\)\.\([0-9]\)|M\1\2|g" -e "s|Sisyphus|SS|gi" -e "s|p\([5-9]\)|M\10P|g" -e "s|t\([6-9]\)|M\10T|g"
