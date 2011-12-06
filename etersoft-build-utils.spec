@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -65,6 +65,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Dec 06 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
+- fix replrules for Mandriva 2011
+- rpmbs: fix gpush error comment
+- rpmbs: hack for multiple specs
+- rename apt conf files
+
 * Tue Nov 08 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.8-alt1
 - full support for p? / t?, update tests for M60P M60T
 - some pkgrepl fixes
