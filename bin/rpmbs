@@ -124,8 +124,14 @@ check_gear_and_tag()
 		# try direct set rule file
 		# FIXME: always use for gear repo path to rule file
 		# Note: gear-create-tag can't use links, hack with readlink
-		if [ "$RESULT" = 1 ] && $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
-			docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
+		# TODO: skip notification if tag still at last commit
+		if [ "$RESULT" = 1 ] ; then
+			if $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
+				docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
+			elif $GEARCTAG $FORCE 2>&1 | grep -q "already exists"; then
+				echog "Note! Tag unchanged! Use -f key for override tag"
+				RESULT=0
+			fi
 		fi
 		test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
 		cd - >/dev/null
