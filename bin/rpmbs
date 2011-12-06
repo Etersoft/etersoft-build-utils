@@ -121,6 +121,12 @@ check_gear_and_tag()
 		cd $SPECDIR >/dev/null
 		# default: <VERSION>-<RELEASE>
 		docmd $GEARCTAG $FORCE || RESULT=1
+		# try direct set rule file
+		# FIXME: always use for gear repo path to rule file
+		# Note: gear-create-tag can't use links, hack with readlink
+		if [ "$RESULT" = 1 ] && $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
+			docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
+		fi
 		test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
 		cd - >/dev/null
 	fi
@@ -206,7 +212,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	#PROJECTNAME=$(get_gear_name)
 	pkg_release_check
 	TAG=$VERSION-$RELEASE
-	check_gear_and_tag "$TAG"  # || fatal "Can't make tag"
+	check_gear_and_tag "$TAG" || fatal "Can't make tag"
 	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE "$TAG" || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
 	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed"
 	echo
