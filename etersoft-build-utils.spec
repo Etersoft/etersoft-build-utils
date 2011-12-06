@@ -2,7 +2,7 @@
 
 Name: etersoft-build-utils
 Version: 2.0.9
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -65,6 +65,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Dec 06 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt2
+- fix override tag
+
 * Tue Dec 06 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
 - fix replrules for Mandriva 2011
 - rpmbs: fix gpush error comment
