@@ -1,4 +1,3 @@
 libhal-devel|
 libssl-devel|libopenssl-devel
-gst-plugins-devel|gstreamer-0_10-plugins-base-devel
-libpng-devel|libpng-14-devel
+libpng-devel|libpng14-devel
