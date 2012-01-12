@@ -306,8 +306,10 @@ if [ -n "$CLONEGIT" ] ; then
 
 		if cd $PKGNAME ; then
 			# add remotes
-			docmd git remote rename origin $GIRARHOST && git remote add origin $GIRARHOST:$RREPO
+			docmd git remote rename origin $GIRARHOST && docmd git remote add gear $GIRARHOST:$RREPO
 			cd - >/dev/null
+		#elif is_exist_remote_repo origin && ! is_exist_remote_repo gears ; then
+		#	git remote -v | grep -q "^origin.*/gears/" && docmd git remote rename origin gears
 		fi
 	fi
 
