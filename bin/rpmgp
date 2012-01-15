@@ -281,10 +281,14 @@ if [ -n "$CLONEGIT" ] ; then
 	RREPO="/gears/$REPOPATH"
 
 	if [ -z "$MIGRATEGIRAR" ] ; then
-		if ! docmd git_clone $RREPO ; then
+		if ! git_clone $RREPO ; then
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
 			docmd git_clone $RREPO || fatal "Can't clone $RREPO."
+		fi
+		if cd $PKGNAME ; then
+			docmd git remote rename origin gear
+			cd - >/dev/null
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
