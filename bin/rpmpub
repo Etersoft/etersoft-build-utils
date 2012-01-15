@@ -20,7 +20,7 @@ if [ "$1" = "-h" ]; then
 	echog "   -r PROJECTVERSION  set other project version (PROJECTVERSION/sources)"
 	echog "   TARGETDIR          copy signed src.rpm package to TARGETDIR (f.i., /tmp/some_version/sources)"
 	echog "                      By default used path from Source: spec field. "
-	echog "                      Also you can set default target dir in ETERDESTDIR variable."
+	echog "                      Also you can set default target dir in ETERDESTSRPM variable."
 	exit 0
 fi
 
@@ -50,7 +50,7 @@ if [ ! -r "$SPECNAME" ] ; then
 fi
 
 #Example: ETERDESTSRPM=/var/ftp/pub/Etersoft/CIFS@Etersoft/$VERSION/sources
-ETERDESTSRPM="$1"
+[ -n "$ETERDESTSRPM" ] || ETERDESTSRPM="$1"
 if [ -z "$ETERDESTSRPM" ] ; then
 	ETERDESTSRPM=$(get_etersoft_srpm_path $SPECNAME "$ALPHA")
 	[ -n "$ETERDESTSRPM" ] || fatal "Can't detect target dir from spec (Url in Source: field). Run rpmpub with TARGETDIR param"
