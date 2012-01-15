@@ -321,6 +321,7 @@ do
 
 	subst "s|^python |%__python |g
 		s|%py_sitescriptdir|%python_sitelibdir|g
+		s|%py_puresitedir|%python_sitelibdir|g
 		s|%python_version|%__python_version|g
 		s|%python_sitelib/|%python_sitelibdir/|g
 		s|%_libdir/python2.6/site-packages/|%python_sitelibdir/|g
@@ -332,7 +333,7 @@ do
 		   s|ruby setup.rb setup|%ruby_setup|g" $i
 
 	subst "s|^%__python setup.py build|%python_build|g" $i
-	subst "s|^%__python setup.py install --root %buildroot|%python_install|g" $i
+	subst "s|^%__python setup.py install --root.%buildroot|%python_install|g" $i
 	subst "s|^%__python setup.py install -O2 --root %buildroot|%python_install|g" $i
 	subst "s|^%__python setup.py install --optimize --root %buildroot|%python_install|g" $i
 	
