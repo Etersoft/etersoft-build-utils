@@ -226,11 +226,11 @@ if [ "$VENDOR" = "alt" ] ; then
 		subst "s|^\(AutoReq.*\),nomingw32|\1|g" $SPECNAME
 		subst "s|^\(AutoProv.*\),nomingw32|\1|g" $SPECNAME
 	fi
+else
+	# for systems with ash as sh (f.i., Ubuntu)
+	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
+	subst "s|^popd|cd - >/dev/null|g" $SPECNAME
 fi
-
-# for systems with ash as sh (f.i., Ubuntu)
-subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
-subst "s|^popd|cd - >/dev/null|g" $SPECNAME
 
 if [ "$DISTRSYS/$DISTRVERSION" = "CentOS/5" ] ; then
 	test -z "$VERBOSE" || echo "Remove egg-info from file list"
