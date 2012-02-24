@@ -20,6 +20,27 @@ bzipit()
 	fi
 }
 
+# TODO: use external converter?
+# $1 - zip name $2 - tar name
+conv_zip_to_tar()
+{
+	local RZ=$(realpath "$1")
+	local RT=$(realpath "$2")
+	# FIXME: use normal mktempdir
+	mkdir $1.tmpdir || fatal
+	cd $1.tmpdir || fatal
+	# unzip or remove broken file
+	unzip -q "$RZ" && tar cf "$RT" ./* || { rm -fv "$RT" ; return 1; }
+	cd ..
+	rm -rf $1.tmpdir
+}
+
+get_archive_type()
+{
+	file "$1" | grep -q "Zip archive data" && echo "zip" && return
+	return 1
+}
+
 # TODO: use bzipit
 copy_tarball_to_tar_bz2()
 {
@@ -45,6 +66,7 @@ copy_tarball_to_tar_bz2()
 		bzip -c "$SNAME" > "$TNAME"
 		return
 	fi
+
 	fatal "Can't repack $SNAME to tar.bz2"
 }
 
@@ -75,6 +97,12 @@ copy_tarball_to_tar()
 		cp -fv "$SNAME" "$TNAME"
 		return
 	fi
+
+	# TODO: use conv_zip_to_$type (type may be undetected)
+	if [ $(get_archive_type $SNAME) = "zip" ] ; then
+		conv_zip_to_tar $SNAME $TNAME && return
+	fi
+
 	fatal "Can't repack $SNAME to tar"
 }
 
