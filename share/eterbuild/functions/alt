@@ -15,7 +15,7 @@ is_alt()
 set_target_type()
 {
 	# check for M51 and so on
-	if echo $1 | grep "^M[0-9][0-9].$" >/dev/null ; then
+	if echo $1 | egrep -q "^M[0-9][0-9].?$" ; then
 		MENV=$1
 		return 0
 	fi
@@ -32,7 +32,7 @@ set_target_type()
 get_type_by_git_branch_name()
 {
         # like p5
-        if echo $1 | grep -q "^[pt][0-9]$" ; then
+        if echo $1 | egrep -q "^[pt][0-9].?$" ; then
                 get_altdistr_mod $1
                 return
         fi
@@ -44,7 +44,7 @@ get_type_by_git_branch_name()
         fi
 
         # like M50P or M41
-        if echo $1 | grep -q "^M[0-9][0-9].$" ; then
+        if echo $1 | egrep -q "^M[0-9][0-9].?$" ; then
                 echo $1
                 return
         fi

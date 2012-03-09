@@ -13,7 +13,7 @@ echo "Current git branch: $(get_current_branch)"
 
 check 1 M40 $(get_type_by_git_branch_name 4.0)
 check 1 M40 $(get_type_by_git_branch_name M40)
-check 1 M50 $(get_type_by_git_branch_name p5)
+check 1 M50P $(get_type_by_git_branch_name p5)
 check 1 M50 $(get_type_by_git_branch_name M50)
 check 1 M50 $(get_type_by_git_branch_name 5.0)
 check 1 M51 $(get_type_by_git_branch_name M51)
