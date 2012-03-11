@@ -271,11 +271,14 @@ do
 		s|^make *DESTDIR=%buildroot *install\$|%makeinstall_std|g
 		s|^make *DESTDIR=%buildroot *install |%makeinstall_std|g" $i
 
-	subst  "s|/etc/|%_sysconfdir/|g
-		s|%_sysconfdir/rc.d/init.d|%_initdir/|g
-		s|%_sysconfdir/rc.d/init.d/|%_initrddir/|g
-		s|%_sysconfdir/init.d/|%_initrddir/|g
-		s|%_sysconfdir/X11/fontpath.d|%_fontpathdir|g" $i
+#	subst  "s|/etc/|%_sysconfdir/|g
+#		s|%_sysconfdir/rc.d/init.d|%_initdir/|g
+#		s|%_sysconfdir/rc.d/init.d/|%_initrddir/|g
+#		s|%_sysconfdir/init.d/|%_initrddir/|g"
+
+	subst	"s|/etc/rc.d/init.d/|%_initrddir/|g"
+
+	subst	"s|%_sysconfdir/X11/fontpath.d|%_fontpathdir|g" $i
 
 	subst  "s|%_libdir/mono/gac|%_monogacdir|g
 		s|%_libdir/mono|%_monodir|g" $i
