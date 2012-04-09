@@ -64,7 +64,14 @@ get_list()
 		echo "Get list for $SYS from $URL"
 		#curl -l $URL/ >$LIST
 		# suitable for ftp and http lists
-		$CURL -l $URL/ | html_filter >$LIST
+		$CURL -l $URL/ | tee $LIST.tmp | html_filter >$LIST
+		for i in $(cat $LIST.tmp) ; do
+		    echo $i | grep -q rpm && break
+		    [ -n "$(echo $i | cut -c2-)" ] && continue
+		    echo "Try get $URL/$i"
+		    $CURL -l $URL/$i/ | html_filter | sed -e "s|^|$i/|g" >>$LIST
+		done
+		rm -f $LIST.tmp
 	else
 		echo "List for $SYS"
 	fi
@@ -133,8 +140,8 @@ update_cache_list()
 		exit 0
 	fi
 	# update all systems
-	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
-		get_list $i force
+	for ((irepo=0; irepo < ${#SYSNAME[*]}; irepo++)) ; do
+		get_list $irepo force
 	done
 }
 
