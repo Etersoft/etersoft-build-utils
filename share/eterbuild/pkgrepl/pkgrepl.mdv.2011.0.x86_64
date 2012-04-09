@@ -1,0 +1,11 @@
+# Mandriva 64bit base replacements rules
+libssl-devel|lib64openssl-devel
+libXext-devel|lib64xext-devel
+libXmu-devel|lib64xmu-devel
+libXrender-devel|lib64xrender-devel
+libXScrnSaver-devel|lib64xscrnsaver-devel
+libXv-devel|lib64xv-devel
+liblcms-devel|lib64lcms-devel
+gstreamer-devel|lib64gstreamer0.10-devel
+lib64gstreamer-plugins-base0.10-devel
+gst-plugins-devel|lib64gstreamer-plugins-base0.10-devel

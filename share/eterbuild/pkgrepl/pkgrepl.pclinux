@@ -10,10 +10,12 @@ libntfs|ntfsprogs
 libntfs-devel|ntfsprogs-devel
 libe2fs|libext2fs2
 libe2fs-devel|libext2fs2-devel
-libncurses|ncurses
-libncurses-devel|ncurses-devel
-libtinfo|ncurses
-libtinfo-devel|ncurses-devel
+libncurses-devel|libncurses-devel
+libncursesw-devel|libncursesw-devel
+libncurses|libncurses5
+libncursesw|libncursesw5
+libtinfo|libncurses5
+libtinfo-devel|libncurses-devel
 libfreetype|libfreetype6
 libfreetype-devel|libfreetype6-devel
 libldap-devel|libldap2.3_0-devel
@@ -74,3 +76,11 @@ libGLU-devel|libmesaglu1-devel
 libGLU|libmesaglu1
 
 libstdc++-devel|libstdc++6-devel
+
+python-devel|libpython2.5-devel
+
+gstreamer-devel|libgstreamer0.10_0.10-devel
+gst-plugins-devel|libgstreamer-plugins-base0.10-devel
+libhal-devel|libhal-devel
+
+libssl-devel|libopenssl0.9.8-devel

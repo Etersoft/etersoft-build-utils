@@ -3,7 +3,7 @@
 # FIXME
 makedepend|
 foomatic-db-engine|
-imake|
+#imake|
 shadow-log|
 w3c-markup-validator-libs|
 xorg-cf-files|

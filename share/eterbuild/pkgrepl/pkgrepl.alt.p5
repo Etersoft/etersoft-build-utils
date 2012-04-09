@@ -1,2 +1,4 @@
 kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-rhel kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
 rpm-build-intro|rpm-build-compat
+libavformat53|libavformat52
+libavcodec53|libavcodec52
