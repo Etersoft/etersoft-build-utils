@@ -133,6 +133,10 @@ do
 	subst "s|^Prefix:.*$||" $i
 	subst "s|^BuildRoot:.*$||i" $i
 	subst "s|%mkrel||g" $i
+	
+	# Unused on ALT
+	subst "s|^Suggests:|#Suggests:|" $i
+
 # use in cases
 #	subst "s|%mdkversion||g" $i
 
@@ -166,6 +170,8 @@ do
 	echog "cleanup_spec for $i..."
 	cleanup_spec $i
 
+	subst "s|^%configure2_5x|%configure|g" $i
+
 	# convert from PLD's cases
 	subst "s|%if %{with \(.*\)}|%if_with \1|g" $i
 	subst "s|%if %{without \(.*\)}|%if_without \1|g" $i
@@ -197,6 +203,7 @@ do
 
 	subst "s|\(%post.*-p *\)/sbin/ldconfig|\1%post_ldconfig|g" $i
 	subst "s|\(%postun.*-p *\)/sbin/ldconfig|\1%postun_ldconfig|g" $i
+
 
 	subst "s|^%_post_service.*||g" $i
 	subst "s|^%_preun_service.*||g" $i
