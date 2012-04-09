@@ -1,11 +1,12 @@
 # see whohas package too
 # all known src.rpm repositories (for rpmgp command)
-alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS
+alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS/
 fedora16     ftp://mirror.yandex.ru/fedora/linux/releases/16/Fedora/source/SRPMS/
 fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS/
+fedora-devel17 ftp://mirror.yandex.ru/fedora/linux/development/17/source/SRPMS/
 fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/16/SRPMS/
-fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
-fedora-epel http://download.fedora.redhat.com/pub/epel/6/SRPMS
+fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS/
+fedora-epel http://download.fedora.redhat.com/pub/epel/6/SRPMS/
 edumandriva  ftp://ftp.linuxcenter.ru/pub/Mandriva/EduMandriva/educontrib/2010.1/SRCRPM/free/
 mandriva     ftp://mirror.yandex.ru/mandriva/official/current/SRPMS/main/release
 mandriva-contrib ftp://mirror.yandex.ru/mandriva/official/current/SRPMS/contrib/release
