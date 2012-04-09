@@ -140,11 +140,11 @@ drop_pkg_extensions()
 # args: distr_vendor [interactive]
 get_install_package_command()
 {
-	local DISTRVENDOR=$1
+	local VENDORNAME=$1
 	local INAC=$2
 	local CMD
 	local RET=0
-	case $DISTRVENDOR in
+	case $VENDORNAME in
 		"ALTLinux"|"Ubuntu"|"Debian"|"PCLinux")
 			[ -n "$INAC" ] && CMD="apt-get install" || CMD="apt-get -y --force-yes install"
 			;;
@@ -159,7 +159,7 @@ get_install_package_command()
 			;;
 		*)
 			RET=1
-			CMD="echo \"Do not known install command for DISTRVENDOR $DISTRVENDOR\""
+			CMD="echo \"Do not known install command for VENDORNAME $VENDORNAME\""
 			;;
 	esac
 	echo $CMD
