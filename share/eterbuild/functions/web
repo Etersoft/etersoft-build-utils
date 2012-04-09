@@ -13,6 +13,10 @@ download_url()
 {
 	# use wget with try=1 and timeout = 30 sec
 	which wget >/dev/null || fatal "Can't download, wget command is missed"
+
+	# do not download if already exists...
+	[ -r "$(basename "$1")" ] && { echo "skipping $1, already exists..."; return; }
+
 	# NOTE: disable cert checking
 	a= wget --no-check-certificate -c -t 1 -T 30 "$1"
 	local RET=$?
