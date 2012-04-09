@@ -36,6 +36,14 @@ tolocal_anyrepl()
 		TARGETPKGNAME="$NEWRESULT"
 		return 0
 	fi
+
+	# Add hack for replace lib with lib64 on Mandriva
+	if [ "$VENDOR" = "mdv" ] && [ $DEFAULTARCH = "x86_64" ] ; then
+		local NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
+		[ "$NEWRESULT" = "$GREP" ] && return 1
+		ALTPKGNAME=$GREP
+		TARGETPKGNAME="$NEWRESULT"
+	fi
 	return 1
 }
 
