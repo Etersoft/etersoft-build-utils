@@ -86,7 +86,9 @@ if [ "$VENDOR" = "generic" ] ; then
 	FIXMKTEMP="%__subst 's|readlink -mv|realpath|g' configure ltmain.sh"
 fi
 
-if [ "$DISTRSYS" = "Ubuntu" ] || [ "$DISTRSYS" = "Debian" ]; then
+# need only for wine on x86_64
+#if [ "$DISTRSYS" = "Ubuntu" ] || [ "$DISTRSYS" = "Debian" ]; then
+if echo $SPECNAME | grep -q wine ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	FIXMKTEMP="%remove_optflags -m64"
 fi
