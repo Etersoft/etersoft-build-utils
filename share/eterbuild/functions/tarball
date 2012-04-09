@@ -35,9 +35,25 @@ conv_zip_to_tar()
 	rm -rf $1.tmpdir
 }
 
+# TODO: use external converter?
+# $1 - rar name $2 - tar name
+conv_rar_to_tar()
+{
+	local RZ=$(realpath "$1")
+	local RT=$(realpath "$2")
+	# FIXME: use normal mktempdir
+	mkdir $1.tmpdir || fatal
+	cd $1.tmpdir || fatal
+	# unzip or remove broken file
+	unrar x "$RZ" && tar cf "$RT" ./* || { rm -fv "$RT" ; return 1; }
+	cd ..
+	rm -rf $1.tmpdir
+}
+
 get_archive_type()
 {
 	file "$1" | grep -q "Zip archive data" && echo "zip" && return
+	file "$1" | grep -q "RAR archive data" && echo "rar" && return
 	return 1
 }
 
@@ -98,9 +114,14 @@ copy_tarball_to_tar()
 		return
 	fi
 
-	# TODO: use conv_zip_to_$type (type may be undetected)
-	if [ $(get_archive_type $SNAME) = "zip" ] ; then
+	# TODO: use conv_$type_to_tar (type may be undetected)
+	if [ "$(get_archive_type $SNAME)" = "zip" ] ; then
 		conv_zip_to_tar $SNAME $TNAME && return
+	fi
+
+	# TODO: use conv_$type_to_tar (type may be undetected)
+	if [ "$(get_archive_type $SNAME)" = "rar" ] ; then
+		conv_rar_to_tar $SNAME $TNAME && return
 	fi
 
 	fatal "Can't repack $SNAME to tar"
