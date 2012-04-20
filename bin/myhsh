@@ -132,7 +132,7 @@ if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	# test install (only for last package in list)
 	# some key for build hasher from scratch
 	echog "Find binary packages for '$(basename $LASTPACKAGE)' in $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher..."
-	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher $LASTPACKAGE`
+	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher $LASTPACKAGE | grep -v debuginfo`
 	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
