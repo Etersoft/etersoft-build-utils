@@ -18,7 +18,7 @@ mygetopts()
 		echo
 		echog "Options:"
 		echog "    GIRAR        git.alt or git.eter"
-		echog "    -b REPONAME  binary repository name (4.1, p5, 5.1 and so on) (sisyphus by default)"
+		echog "    -b REPONAME  binary repository name (4.1, p5, t6 and so on) (sisyphus by default)"
 		echo
 		echog "Commands:"
 		echog "    add USER  add new user to ACL list for package"

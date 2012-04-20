@@ -31,7 +31,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -i           initialize hasher"
-	echog "   -b REPONAME  binary repository name (4.1, 5.0, 5.1 and so on)"
+	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echog "   -c           cleanup hasher"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
