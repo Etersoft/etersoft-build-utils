@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2005-2006 (c) Etersoft www.etersoft.ru
+# 2005-2006, 2012 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -7,8 +7,6 @@
 # -t - use test hasher
 # -i - initialize hasher
 # -M? - set target distro
-# Public domain
-# TODO: -r
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -18,7 +16,7 @@ SAVEOPT=$@
 
 #############################
 
-Usage="Usage: $name [-t -i -h -r -c] [-$CURRENTBRANCHNAME] bin.rpm..."
+Usage="Usage: $name [-t -i -h -r -c -b -i] [package name] [package file bin.rpm] ..."
 function mygetopts()
 {
 name=${0##*/}
@@ -33,26 +31,30 @@ phelp()
 	echog "   -i           initialize hasher"
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echog "   -c           cleanup hasher"
+	echog "   -q           quiet mode (don't run anything)"
+	echog "   -r           run command"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
 	echog "   -x           allow run X program (set DISPLAY and use xauth)"
 	echog "   -t           use test hasher dir (different to build hasher)"
-	echog "   -M??         branch name"
 	echo
 	echog "Extra options:"
 	echog "   -a           auto test mode for post myhsh build checking"
-	echog "   -r           remote login to hasher"
+	echog "   -d           print hasher dir"
+	echog "   -M??         branch name"
 }
 
-while getopts :chitoavb:x opt; do
+while getopts :chitoadvqr:b:x opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
 	a) AUTOMODE=1 ;;
+	d) PRINTHASHERDIR=1 ;;
+	q) QUIETMODE=1 ;;
 	b) BINARYREPONAME=$OPTARG ;;
-	r) REMOTE=1 ;;
+	r) RUNCOMMAND=$OPTARG ;;
 	x) ALLOWX=1 ;;
 	v) VERBOSE="-v" ;;
 	o) ROOTER="--rooter" ;;
@@ -87,13 +89,11 @@ if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
 	HASHERDIR=$HASHERDIR-test
 fi
 
-
-if [ -n "$REMOTE" ] ; then
-	check_ssh_key
-	test -n "$BUILDSERVER" || fatal "Please set BUILDSERVER in config file"
-	ssh -t $BUILDSERVER loginhsh ${SAVEOPT/-r/}
+if [ "$PRINTHASHERDIR" = "1" ] ; then
+	echo $HASHERDIR
 	exit
 fi
+
 
 if [ "$CLEANUP" = "1" ] ; then
 	echog "Cleanup hasher in $HASHERDIR..."
@@ -110,6 +110,23 @@ fi
 SHELLHASHERARG="--mountpoints=/proc"
 
 check_locking
+
+UTILPKG=
+if [ -n "$ALLOWX" ] ; then
+	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
+fi
+
+if [ -n "$RUNCOMMAND" ] ; then
+	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+	docmd $HSH-run $ROOTER $HASHERDIR -- $RUNCOMMAND
+	exit
+fi
+
+if [ -n "$QUIETMODE" ] ; then
+	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+	echog "Exiting (quiet mode)..."
+	exit
+fi
 
 echog "Prepare hasher in $HASHERDIR ..."
 # there is package names in LISTRPMARGS
