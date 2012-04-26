@@ -1,8 +1,8 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.9
-Release: alt2
+Version: 2.0.10
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -65,6 +65,27 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Apr 27 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
+- many repl rules fixes
+- add support for Source0:, add check for empty source name detected
+- fix ALT 4.0/4.1 detection
+- improve binary repo desciptions
+- loginhsh: add -d, -q -r params
+- myhsh: do not install debuginfo packages in test hasher
+- repl: add hack for replace lib with lib64 on Mandriva
+- rpmbph: some hack for build wine on x86_64
+- rpmbsh: don't replace pushd/popd on ALT
+- rpmcs: fix /etc and init.d replacement
+- rpmcs: small fixes, fix replacement rules also
+- rpmgp: add support for optimized dirs (/a, /b, /c subdirs)
+- rpmgp: call gear repo as gear
+- rpmgp: rename origin to gear
+- rpmlog: add toTAG support
+- rpmpub: fix ETERDESTSRPM handle
+- tarball: add conv for zip
+- tarball: add rar support
+- web: skip download if exists
+
 * Tue Dec 06 2011 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt2
 - fix override tag
 
