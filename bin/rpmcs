@@ -283,7 +283,7 @@ do
 #		s|%_sysconfdir/rc.d/init.d/|%_initrddir/|g
 #		s|%_sysconfdir/init.d/|%_initrddir/|g"
 
-	subst	"s|/etc/rc.d/init.d/|%_initrddir/|g"
+	subst	"s|/etc/rc.d/init.d/|%_initrddir/|g" $i
 
 	subst	"s|%_sysconfdir/X11/fontpath.d|%_fontpathdir|g" $i
 
@@ -394,7 +394,7 @@ do
 	echog "DONE"
 
 	# TODO use perl -pe
-	echog -n "fix build requires..."
+	echog "fix build requires..."
 	ALLREPLRULES=""
 	for n in `print_buildreq $i` ; do
 		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
@@ -402,7 +402,7 @@ do
 		#echo REPLRULE: $REPLRULE
 	done
 
-	echog -n "fix package requires..."
+	echog "fix package requires..."
 	ALLREPLRULES=""
 	for n in `print_pkgreq $i` ; do
 		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
@@ -410,17 +410,18 @@ do
 		#echo REPLRULE: $REPLRULE
 	done
 
-	echog -n "fix groups..."
+	echog "fix groups..."
 	for n in `print_grpreq $i` ; do
 		toalt_grprepl $n && ALLREPLRULES="$ALLREPLRULES
 			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
 		#echo REPLRULE: $REPLRULE
 	done
 
-	#echo ALL: $ALLREPLRULES
-
 	# Replace package names in source spec
 	sed -r -e "$ALLREPLRULES" <$i >$SPEC || { warning "Error with replacement" ; cat $i >$SPEC ; }
+
+	echo
+	echo "Total used replacement rules: $ALLREPLRULES"
 
 	# Restore changelog
 	cat $SPEC.tmpspecchangelog >>$SPEC

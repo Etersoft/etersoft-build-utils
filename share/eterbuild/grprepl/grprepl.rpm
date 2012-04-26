@@ -1,3 +1,5 @@
+# ALT group -> Other group
+
 System/Libraries|System Environment/Libraries
 System/Libraries/Python|Development/Python
 Development/Other|Development/Libraries
@@ -6,6 +8,6 @@ Games/Other|X11/Applications/Games
 Development/Libraries|Development/C
 Databases|Applications/Databases
 System/Kernel and hardware|System/Hardware
-System Environment/Base|System/Base
-Applications/Productivity|Office
-Applications/Multimedia|Video
+System/Base|System Environment/Base
+Office|Applications/Productivity
+Video|Applications/Multimedia
