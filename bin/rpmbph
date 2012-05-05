@@ -26,6 +26,9 @@ SPECNAME=$1
 BASERELEASE=$(get_numrelease $SPECNAME)
 RELEASE=$(get_release $SPECNAME)
 
+ADDFIXCOMMAND=""
+
+# hack against very straight patch command
 FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 
 echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
@@ -43,7 +46,8 @@ if [ "$VENDOR" = "alt" ] ; then
 	CLEANTEXT=""
 	# due new libtool, affected on ALT Linux
 	if echo "$MDISTR" | egrep -q "M24|M30|M40|M41|M50" ; then
-		RECONFT="%undefine __libtoolize"
+		ADDFIXCOMMAND="$ADDFIXCOMMAND
+%undefine __libtoolize"
 	fi
 else
 	# Need our compat package and disable strong patch checking
@@ -59,51 +63,57 @@ else
 	CLEANTEXT=""
 fi
 
+
+# FIXME 05.05.2012: it is needed now?
 if [ "$VENDOR" = "mdv" ] || [ "$VENDOR" = "pclinux" ] ; then
 	# due new libtool, affected on Mandriva 2009.0
 	test -z "$VERBOSE" || echo "Disable libtoolize"
 	# FIXME
 	#RECONFT="%define _disable_libtoolize 1"
-	RECONFT="%define __libtoolize true"
+	ADDFIXCOMMAND="$ADDFIXCOMMAND
+%define __libtoolize true"
 fi
 
 # Do not add BuildReq if already exist
 cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
-
-FIXMKTEMP=""
 
 DISTRSYS="$($DISTRVENDOR -d)"
 
 # fix readlink -m, introduced by new libtool and missed in RHEL4 (replace with readlink -f)
 if [ "$DISTRSYS/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -m"
-	FIXMKTEMP="%__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
+	ADDFIXCOMMAND="$ADDFIXCOMMAND
+%__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
 fi
 
 # fix readlink -mv, introduced by new libtool and missed in Generic (FreeBSD) (replace with realpath)
 if [ "$VENDOR" = "generic" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -mv"
-	FIXMKTEMP="%__subst 's|readlink -mv|realpath|g' configure ltmain.sh"
+	ADDFIXCOMMAND="$ADDFIXCOMMAND
+%__subst 's|readlink -mv|realpath|g' libtool configure ltmain.sh"
 fi
 
-# need only for wine on x86_64
+# FIXME HACK need only for wine on x86_64
 #if [ "$DISTRSYS" = "Ubuntu" ] || [ "$DISTRSYS" = "Debian" ]; then
 if echo $SPECNAME | grep -q wine ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
-	FIXMKTEMP="%remove_optflags -m64"
+	ADDFIXCOMMAND="$ADDFIXCOMMAND
+%remove_optflags -m64"
 fi
 
 # fix mktemp using for MCBC
 if [ "$VENDOR" = "mcbc" ] ; then
 	test -z "$VERBOSE" || echo "Add subst mktemp -dt"
-	FIXMKTEMP="%__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
+	ADDFIXCOMMAND="$ADDFIXCOMMAND
+%__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
 fi
 
 # Too old problem
 TOCHANGELOG=
 if [ "$MDISTR" = "M23" ] ; then
 	if grep "%configure" $SPECNAME >/dev/null && ! grep "^autoreconf" $i >/dev/null && ! grep "^%__autoreconf" $i >/dev/null ; then
-		RECONFT="%__autoreconf"
+		ADDFIXCOMMAND="$ADDFIXCOMMAND
+%__autoreconf"
 		TOCHANGELOG="add __autoreconf macros in build section for fix so name problem (by script)"
 	fi
 fi
@@ -146,9 +156,8 @@ for i in $LISTGROUP ; do
 done
 #echo GRP: $LISTGROUP, ALLGRPREPLRULES: $ALLGRPREPLRULES
 
-# Replace all packages names in source spec and add %defattr to files sections
+# add %defattr to files sections
 # FIXME: добавляет ненужные пустые строки
-
 function awk_e1()
 {
 	[ -n "$ADDDEF" ] &&	awk 'BEGIN{desk=0}{print;if(/^%files/){printf("%s\n", text)}}' text="$ADDDEF" || cat
@@ -166,16 +175,10 @@ function awk_e3()
 	[ -n "$BUILDREQ" ] && awk 'BEGIN{desk=0}{if(/^%description/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$BUILDREQ" || cat
 }
 
-# add reconf for M23 after %build
-function awk_e4()
+# add commands in build section
+function awk_section_build()
 {
-	[ -n "$RECONFT" ] && awk 'BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf("%s\n", text);desk++}}' text="$RECONFT" || cat
-}
-
-# fix mktemp param for MCBC after %build
-function awk_e5()
-{
-	[ -n "$FIXMKTEMP" ] && awk 'BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf("%s\n", text);desk++}}' text="$FIXMKTEMP" || cat
+	[ -n "$ADDFIXCOMMAND" ] && awk 'BEGIN{desk=0}{print;if(/^%build/&&desk==0){printf("%s\n", text);desk++}}' text="$ADDFIXCOMMAND" || cat
 }
 
 # apply replacement rules
@@ -203,7 +206,7 @@ fi
 mv $SPECNAME $SPECNAME.old &&
 	cat $SPECNAME.old | \
 		repl_reqs | repl_groups | \
-		awk_e1 | awk_e2 | awk_e3 | awk_e4 | awk_e5 | \
+		awk_e1 | awk_e2 | awk_e3 | awk_section_build | \
 		sed -e "s|^BuildRequires: *\$||g" | \
 		sed -e "s|^BuildPreReq: *\$||g" | \
 		sed -e "s|^Requires: *\$||g" | \

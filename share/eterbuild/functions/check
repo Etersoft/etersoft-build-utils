@@ -21,13 +21,17 @@ check_log()
 		echog "Error found: will always overflow destination buffer. Check the log."
 		return 1
 	fi
+	
+	#grep "WARNING:" $LOGFILE
 
 	grep 'python-strict' $LOGFILE && warning "python-strict used!!!"
 	NC1="command not found"
 	NC2="-march=athlon -mtune=athlon-xp"
+	NC3="WARNING:"
 	#for i in ${NC1} ; do
 	grep -- '$NC1' $LOGFILE && warning "'$NC1' in build output (some errors in a scripts)"
 	grep -- '$NC2' $LOGFILE && warning "'$NC2' in build output (forbidden) "
+	grep -- '$NC3' $LOGFILE && warning "'$NC3' in build output (forbidden) "
 	#done
 	return 0
 }
