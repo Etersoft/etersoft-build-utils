@@ -6,6 +6,9 @@
 # FIXME: use build directly in build scripts
 load_mod build
 
+# REMOVE: for compatibility
+load_mod rpmpkg
+
 
 # get correct BUILDROOT, run build_rpms_name before!
 build_buildroot()
@@ -117,51 +120,3 @@ get_sourcepkg_name()
 }
 
 
-# build binary package list (1st - repo dir, 2st - pkgname)
-# algorithm: list all files in PKGDIR, print packages with our source pkg name
-get_binpkg_list()
-{
-	local PKGDIR=$1
-	local PKGNAME=$(basename $2)
-	find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
-		rpmquery -p --qf='%{sourcerpm}\t%{name}-%{version}-%{release}.%{arch}.rpm\n' "{}" \; \
-		| grep "^$PKGNAME[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
-}
-
-drop_pkg_extensions()
-{
-	for i in $@ ; do
-		echo -n "$(basename $i) " | sed -e "s|\.[a-z_0-9]*\.rpm||g"
-	done | filter_strip_spaces
-}
-
-# TODO: add get_update_repo_command
-# TODO: migrate to file using (as repos)
-# args: distr_vendor [interactive]
-get_install_package_command()
-{
-	local VENDORNAME=$1
-	local INAC=$2
-	local CMD
-	local RET=0
-	case $VENDORNAME in
-		"ALTLinux"|"Ubuntu"|"Debian"|"PCLinux")
-			[ -n "$INAC" ] && CMD="apt-get install" || CMD="apt-get -y --force-yes install"
-			;;
-		"LinuxXP"|"Fedora"|"ASPLinux"|"CentOS"|"RHEL"|"Scientific")
-			[ -n "$INAC" ] && CMD="yum install" || CMD="yum -y install"
-			;;
-		"Mandriva")
-			[ -n "$INAC" ] && CMD="urpmi --no-verify-rpm" || CMD="urpmi --auto --no-verify-rpm"
-			;;
-		"SUSE")
-			[ -n "$INAC" ] && CMD="zypper --non-interactive install" || CMD="yes | zypper --non-interactive install"
-			;;
-		*)
-			RET=1
-			CMD="echo \"Do not known install command for VENDORNAME $VENDORNAME\""
-			;;
-	esac
-	echo $CMD
-	return $RET
-}
