@@ -99,7 +99,7 @@ print_replbased_list()
 {
 	local REPLBASE="$1"
 	# VENDOR, TARGET is already defined in detect_target_env() func
-	[ -z "$DISTRVERSION" ] && DISTRVERSION=`$($DISTRVENDOR -v)`
+	[ -z "$DISTRVERSION" ] && DISTRVERSION=$($DISTRVENDOR -v)
 
 	if [ $DEFAULTARCH = "x86_64" ] ; then
 		internal_repl_list $REPLBASE .x86_64
