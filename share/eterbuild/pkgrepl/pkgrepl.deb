@@ -33,7 +33,7 @@ libXrender|libxrender1
 libXdamage-devel|libxdamage-dev
 libXdamage|libxdamage1
 libXrandr-devel|libxrandr-dev
-libXrandr|libxrandr1
+libXrandr|libxrandr2
 libXt-devel|libxt-dev
 libXt|libxt1
 libXpm|libxpm4
@@ -41,7 +41,7 @@ libXpm-devel|libxpm-dev
 libXcomposite-devel|libxcomposite-dev
 libXcomposite|libxcomposite1
 libXtst-devel|libxtst-dev
-libXtst|libxtst1
+libXtst|libxtst6
 libGLU-devel|libglu1-mesa-dev
 libmesa-devel|mesa-common-dev
 #libGL-devel|libgl1-mesa-dev
@@ -57,7 +57,6 @@ libpopt|libpopt0
 
 libgtkmm2-devel|libgtkmm-2.4-dev
 
-libpng12|libpng
 libpam0-devel|libpam0g-dev
 libpam0|libpam0g
 libpam-devel|libpam0g-dev
@@ -121,3 +120,37 @@ zlib-devel|zlib1g-dev
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
 
+# rx-etersoft
+openssh-clients|openssh-client
+xrdb|x11-xserver-utils
+xsetroot|x11-xserver-utils
+xmodmap|x11-xserver-utils
+setxkbmap|x11-xkb-utils
+xdpyinfo|x11-utils
+su|login
+xinitrc|
+setup|
+service|
+glibc-utils|libc-bin
+dbus-tools-gui|dbus-x11
+python-base|python
+python-module-xml|python-libxml2
+vixie-cron|cron
+
+# nx
+zlib|zlib1g
+libpng12|libpng12-0
+libX11|libx11-6
+libjpeg|libjpeg8
+libcrypto10|openssl
+libalsa|libasound2
+libXmu|libxmu6
+libXfixes|libxfixes3
+
+# postgre
+which|debianutils
+# FIXME
+libicu|libicu48
+libxslt|libxslt1.1
+# FIXME
+libpython|libpython2.7
