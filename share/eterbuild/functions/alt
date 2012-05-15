@@ -118,20 +118,28 @@ get_rpmpkg_requires()
 trans_rpmdeps_to_pkgname()
 {
 	# partially copied from aptU
-	local ALREADYHANDLEDAPT="bash sh apt rpm filesystem alt-gpgkeys glibc-core glibc-locales"
 	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
+
 	local REQLIST
 	REQLIST=$(get_rpmpkg_requires -p "$1")
 	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	# partially copied from aptU
 	VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
+	# FIXME: f.i., we got /usr/bin/lpstat in VIRTREQ (select cups or lprng package?). Skip now
+	REQLIST=$(regexp_exclude_list "VIRTREQ" "$REQLIST")
+
 	TRREALREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "^Selecting" | cut -f2 -d" " | sort -u)
 
-	for ni in $REQLIST $VIRTREQ $TRREALREQ ; do
+	# remove basesystem packages
+	ALREADYHANDLEDRPM="bash sh filesystem alt-gpgkeys glibc-core glibc-locales chkconfig service setup shadow-utils"
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST $VIRTREQ $TRREALREQ" )
+
+	for ni in $REQLIST ; do
 		# drop internal reqs (already converted via apt)
 		echo $ni | grep -q "/" && continue
 		echo $ni | grep -q "\.so\." && continue
+		echo $ni | grep -q ")" && continue
 		# extra words when run on x86_64
 		echo $ni | sed -e "s/^i586-//g" | sed -e "s/\.32bit$//g"
 	done | sort -u
