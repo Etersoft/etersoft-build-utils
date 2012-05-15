@@ -36,6 +36,10 @@ libXrandr-devel|libxrandr-dev
 libXrandr|libxrandr1
 libXt-devel|libxt-dev
 libXt|libxt1
+libXpm|libxpm4
+libXpm-devel|libxpm-dev
+libXcomposite-devel|libxcomposite-dev
+libXcomposite|libxcomposite1
 libXtst-devel|libxtst-dev
 libXtst|libxtst1
 libGLU-devel|libglu1-mesa-dev
