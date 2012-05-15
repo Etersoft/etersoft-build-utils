@@ -31,10 +31,6 @@ fi
 
 export LC_ALL=C
 
-get_requires()
-{
-	rpm --requires $@ | cut -f1 -d" " | sed -e "s|([A-Z].*||g" | sort -u
-}
 
 # Translate rpm requires to package names
 rpmreqs_to_apt()
@@ -74,7 +70,7 @@ install_packages()
 
 	docmd $SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
-	REQLIST="$(get_requires $LIST)"
+	REQLIST="$(get_rpmpkg_requires $LIST)"
 	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }

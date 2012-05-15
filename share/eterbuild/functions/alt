@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2008 Etersoft www.etersoft.ru
+# 2003-2008, 2012 Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -103,5 +103,36 @@ pkg_release_check()
 			# Значит не тот релиз
 			fatal "Incorrect release in $i package: was prepared for $MENV"
 		fi
+	done
+}
+
+# copied from aptU
+get_rpmpkg_requires()
+{
+	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|([A-Z].*||g" | sort -u
+}
+
+# Translate requires from local rpm package to package names (on local ALT Linux Sisyphus)
+# FIXME: do not support x86_64 issues, use only with 32 bit packages
+# Use test from tests/test_cget_depends.sh
+trans_rpmdeps_to_pkgname()
+{
+	# partially copied from aptU
+	local ALREADYHANDLEDAPT="bash sh apt rpm filesystem alt-gpgkeys glibc-core glibc-locales"
+	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
+	local REQLIST
+	REQLIST=$(get_rpmpkg_requires -p "$1")
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+
+	# partially copied from aptU
+	VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
+	TRREALREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "^Selecting" | cut -f2 -d" " | sort -u)
+
+	for ni in $REQLIST $VIRTREQ $TRREALREQ ; do
+		# drop internal reqs (already converted via apt)
+		echo $ni | grep -q "/" && continue
+		echo $ni | grep -q "\.so\." && continue
+		# extra words when run on x86_64
+		echo $ni | sed -e "s/^i586-//g" | sed -e "s/\.32bit$//g"
 	done
 }
