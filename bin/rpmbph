@@ -50,6 +50,8 @@ if [ "$VENDOR" = "alt" ] ; then
 %undefine __libtoolize"
 	fi
 else
+	# Hack for repack on x86_64 packages with ExclusiveArch: %{ix586}
+	subst "s|^ExclusiveArch:.*||g" $SPECNAME
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
