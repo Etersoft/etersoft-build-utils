@@ -132,6 +132,8 @@ xinitrc|
 setup|
 service|
 glibc-utils|libc-bin
+glibc-nss|libc6
+glibc-pthread|libc6
 dbus-tools-gui|dbus-x11
 python-base|python
 python-module-xml|python-libxml2
@@ -154,3 +156,22 @@ libicu|libicu48
 libxslt|libxslt1.1
 # FIXME
 libpython|libpython2.7
+
+# wine
+xz|xz-utils
+xrandr|x11-xserver-utils
+xlsfonts|x11-utils
+udev-rules|udev
+termutils|ncurses-bin
+libuuid|libuuid1
+libssl|libssl0.9.8
+libncurses|libncurses5
+libcups|libcups2
+libICE|libice6
+
+# FIXME
+xdg-utils|
+fonts-ttf-core|ttf-liberation
+
+# meta packages
+webclient|
