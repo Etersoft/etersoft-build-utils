@@ -287,7 +287,7 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echo  "Usage: rpmbph -$CURRENTBRANCHNAME for backport to ALT $CURRENTBRANCHNAME and so on"
+	echo  "Usage: rpmbph -b $EXAMPLEALTDISTRVERSION for backport to ALT Linux $EXAMPLEALTDISTRVERSION and so on"
 	echo
 	echog "Options:"
 	echog "   -u           sign and upload after build" # will pass to rpmbs/rpmbsh
@@ -336,8 +336,8 @@ test -z "$LISTNAMES" && fatal "file not found in '$@'"
 if [ "$VENDOR" = "alt" ] ; then
 	MDISTR=$MENV
 	[ -n "$BINARYREPONAME" ] && MDISTR=$(get_altdistr_mod $BINARYREPONAME)
-	test -z "$MDISTR" && fatal "Missed backport version (f.i. run with -M24 param for Master 2.4)"
-	[ "$MDISTR" = "SS" ] && fatal "It is senseless to backport to Sisyphus. Run with -$CURRENTBRANCHNAME for example."
+	[ "$MDISTR" = "SS" ] && fatal "It is senseless to backport to Sisyphus (You can try with -b $EXAMPLEALTDISTRVERSION)."
+	# override by defined target version
 	DISTRVERSION=$(get_altdistr_version $MDISTR)
 else
 	MDISTR=LOCAL

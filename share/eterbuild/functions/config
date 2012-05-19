@@ -43,8 +43,10 @@ HASHERBASEDIR="$HOME/hasher"
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
 HASHERARG=""
 
+# TODO: do not use this notation at all
 # for use in help as example branch/distro name
-CURRENTBRANCHNAME="M51"
+EXAMPLEALTDISTRVERSION="p6"
+CURRENTBRANCHNAME="M60"
 
 # Build for Sisyphus by default
 MENV=SS
