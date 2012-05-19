@@ -91,10 +91,8 @@ if [ "$VENDOR" = "generic" ] ; then
 %__subst 's|readlink -mv|realpath|g' libtool configure ltmain.sh"
 fi
 
-# FIXME HACK need only for wine on x86_64
-#if [ "$DISTRSYS" = "Ubuntu" ] || [ "$DISTRSYS" = "Debian" ]; then
-# FIXME: add BUILDARCH using
-if echo $SPECNAME | grep -q wine ; then
+# HACK need only for wine on x86_64
+if [ "$BUILDARCH" = x86_64" ] && echo $SPECNAME | grep -q wine ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %remove_optflags -m64"

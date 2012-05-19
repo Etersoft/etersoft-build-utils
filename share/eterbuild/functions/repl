@@ -40,7 +40,7 @@ tolocal_anyrepl()
 	fi
 
 	# Add hack for replace lib with lib64 on Mandriva
-	if [ "$VENDOR" = "mdv" ] && [ $DEFAULTARCH = "x86_64" ] ; then
+	if [ "$VENDOR" = "mdv" ] && [ $BUILDARCH = "x86_64" ] ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
@@ -101,7 +101,7 @@ internal_repl_list()
 print_replbased_list()
 {
 	local REPLBASE="$1"
-	if [ "$DEFAULTARCH" = "x86_64" ] ; then
+	if [ "$BUILDARCH" = "x86_64" ] ; then
 		internal_repl_list $REPLBASE .x86_64
 	fi
 

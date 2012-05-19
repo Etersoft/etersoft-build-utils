@@ -91,7 +91,7 @@ echo "Prepare to unmets checking..."
 # Prepare our confdir
 prepare_aptconfig
 TESTINGAPTCONF=$OURAPTCONF
-echo "rpm file:$HASHERDIR/repo/ $DEFAULTARCH hasher" >>$OURSOURCES
+echo "rpm file:$HASHERDIR/repo/ $BUILDARCH hasher" >>$OURSOURCES
 
 make_ordinalbox
 make_testingbox
@@ -109,7 +109,7 @@ if [ ! -d "$SISYPHUSPATH" ] ; then
 	exit 1
 fi
 
-NEWPKGDIR=$HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher/
+NEWPKGDIR=$HASHERDIR/repo/$BUILDARCH/RPMS.hasher/
 
 echo
 echo "Compare requires between new packages and their Sisyphus version"

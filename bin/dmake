@@ -66,7 +66,7 @@ fi
 
 DISTCXX="$DISTCC"
 
-if [ "$DEFAULTARCH" = "x86_64" ] ; then
+if [ "$BUILDARCH" = "x86_64" ] ; then
     export DISTCC_HOSTS="$(extra_to_pump_mode $DISTCC_64_HOSTS)"
     DISTCC_THREADS=$DISTCC_64_THREADS
 else
@@ -76,7 +76,7 @@ else
     DISTCXX="$DISTCXX g++ -m32"
 fi
 
-echo "Build on '$DISTCC_HOSTS' hosts ($DEFAULTARCH arch)"
+echo "Build on '$DISTCC_HOSTS' hosts ($BUILDARCH arch)"
 
 if [ -z "$DISTCC_HOSTS" ] || [ -z "$DISTCC_THREADS" ] ; then
     fatal "Set DISTCC_??_HOSTS and DISTCC_??_THREADS var in config"

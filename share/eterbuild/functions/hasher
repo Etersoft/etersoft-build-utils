@@ -16,7 +16,7 @@ set_hasherdir()
 	#	fatal "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
 	#fi
 	HASHERDIR=$HASHERBASEDIR$MENVARG
-	if [ "$DEFAULTARCH" = "x86_64" ] ; then
+	if [ "$BUILDARCH" = "x86_64" ] ; then
 		HASHERDIR="$HASHERDIR-64"
 	fi
 }
@@ -69,11 +69,11 @@ print_tmp_sourceslist()
 			grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
 	fi
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
-	if [ "$DEFAULTARCH" = "x86_64" ] ; then
-		cat "$SLIST" | sed -e "s|i[56]86|$DEFAULTARCH|g"
+	if [ "$BUILDARCH" = "x86_64" ] ; then
+		cat "$SLIST" | sed -e "s|i[56]86|$BUILDARCH|g"
 	else
 		# Note: drop biarch 32bit on real 32bit
-		cat "$SLIST" | sed -e "s|x86_64|$DEFAULTARCH|g" | grep -v "x86_32"
+		cat "$SLIST" | sed -e "s|x86_64|$BUILDARCH|g" | grep -v "x86_32"
 	fi
 }
 

@@ -84,7 +84,7 @@ prepare_aptconfig
 # FIXME: we override config value here?
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
 # we do not need check cases for mount points, thanks ldv@ 
-HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target $DEFAULTARCH $HASHERARG"
+HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target $BUILDARCH $HASHERARG"
 HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG"
 
 BUILDARGS=""
@@ -131,9 +131,9 @@ echo
 if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
 	# test install (only for last package in list)
 	# some key for build hasher from scratch
-	echog "Find binary packages for '$(basename $LASTPACKAGE)' in $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher..."
-	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher $LASTPACKAGE | grep -v debuginfo`
-	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$DEFAULTARCH/RPMS.hasher`"
+	echog "Find binary packages for '$(basename $LASTPACKAGE)' in $HASHERDIR/repo/$BUILDARCH/RPMS.hasher..."
+	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$BUILDARCH/RPMS.hasher $LASTPACKAGE | grep -v debuginfo`
+	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$BUILDARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
 	docmd $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES

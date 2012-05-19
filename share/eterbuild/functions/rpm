@@ -49,7 +49,7 @@ build_rpms_name()
 
 	PKGARCH=$(cat $tmprpm | get_var "BuildArch")
 	if [ "$PKGARCH" != "noarch" ] ; then
-		PKGARCH=$DEFAULTARCH
+		PKGARCH=$BUILDARCH
 	fi
 	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
 	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm
@@ -88,7 +88,7 @@ build_rpms_name_by_srpm()
 	PKGARCH=$(querypackage $SRPM ARCH)
 	# suggest target arch
 	if [ "$PKGARCH" != "noarch" ] ; then
-		PKGARCH=$DEFAULTARCH
+		PKGARCH=$BUILDARCH
 	fi
 	NAMERPMIN=$BASENAME-$VERSION-$RELEASE.$PKGARCH.rpm
 	NAMESRPMIN=$BASENAME-$VERSION-$RELEASE.src.rpm

@@ -82,7 +82,7 @@ set_binaryrepo $MENV
 # use MENV
 prepare_aptconfig
 
-HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $DEFAULTARCH --with-stuff"
+HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $BUILDARCH --with-stuff"
 
 set_hasherdir
 if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then

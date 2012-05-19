@@ -17,11 +17,12 @@ fi
 OURTMPDIR=$TMPDIR
 [ -z "$OURTMPDIR" ] || [ -d "$OURTMPDIR" ] || OURTMPDIR=/tmp
 
-# detect our arch
+# current arch
 SYSARCH=$(uname -m)
 [ "$SYSARCH" = "x86_64" ] || SYSARCH=i586
 
-[ -n "$DEFAULTARCH" ] || DEFAULTARCH=$SYSARCH
+# set default target arch
+[ -n "$BUILDARCH" ] || BUILDARCH=$SYSARCH
 
 NICE="nice"
 RPMBUILD=rpmbuild
