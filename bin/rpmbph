@@ -1,20 +1,18 @@
 #!/bin/bash
-# 2003-2010 (c) Etersoft www.etersoft.ru
+# 2003-2010, 2012 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # BPH - backport; use hasher
 
+# Used ROOTDIR if defined
 # Makes backport package to any target platfrom (RPM, DEB, TGZ)
-# Релиз строится на основе релиза из Сизифа. Если там был alt4
-# то здесь будет alt0.M24.4
+# Релиз строится на основе релиза из Сизифа. Если там был alt4, то здесь будет alt0.M24.4
 # TODO: use RPMBUILDARG
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod repl rpm git buildsrpm
-
-DISTRVERSION=`$DISTRVENDOR -v`
 
 altspec_to_local()
 {
@@ -50,8 +48,8 @@ if [ "$VENDOR" = "alt" ] ; then
 %undefine __libtoolize"
 	fi
 else
-	# Hack for repack on x86_64 packages with ExclusiveArch: %{ix586}
-	subst "s|^ExclusiveArch:.*||g" $SPECNAME
+	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
+	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
 	# Need our compat package and disable strong patch checking
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
@@ -79,10 +77,8 @@ fi
 # Do not add BuildReq if already exist
 cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
 
-DISTRSYS="$($DISTRVENDOR -d)"
-
 # fix readlink -m, introduced by new libtool and missed in RHEL4 (replace with readlink -f)
-if [ "$DISTRSYS/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
+if [ "$DISTRNAME/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -m"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
@@ -97,6 +93,7 @@ fi
 
 # FIXME HACK need only for wine on x86_64
 #if [ "$DISTRSYS" = "Ubuntu" ] || [ "$DISTRSYS" = "Debian" ]; then
+# FIXME: add BUILDARCH using
 if echo $SPECNAME | grep -q wine ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
@@ -129,8 +126,6 @@ LISTGROUP=`eval_spec $SPECNAME | grep Group | sed -e "s|^.*:||g"  | xargs -n1 ec
 # Build replacement rules for spec
 ALLREPLRULES=""
 [ -n "$VERBOSE" ] && echo "Checking req names for $LISTDEP"
-
-export DISTRVERSION
 
 if [ -n "$VERBOSE" ] ; then
 	echo -n "Use replacement file: "
@@ -239,7 +234,7 @@ else
 	subst "s|^popd|cd - >/dev/null|g" $SPECNAME
 fi
 
-if [ "$DISTRSYS/$DISTRVERSION" = "CentOS/5" ] ; then
+if [ "$DISTRNAME/$DISTRVERSION" = "CentOS/5" ] ; then
 	test -z "$VERBOSE" || echo "Remove egg-info from file list"
 	subst "s|.*\.egg-info.*||g" $SPECNAME
 fi
@@ -263,12 +258,12 @@ if [ "$VENDOR" = "alt" ] ; then
 		export USE_LEGACY_COMPRESSION=1
 	fi
 
-	subst "1i# This spec is backported to $DISTRSYS $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
-	ENTRY="- backport to $DISTRSYS $DISTRVERSION (by rpmbph script)"
+	subst "1i# This spec is backported to $DISTRNAME $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	ENTRY="- backport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
 	DISTRARG="-$MDISTR"
 else
-	subst "1i# This spec is autoported from ALT Linux Sisyphus to $DISTRSYS $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
-	ENTRY="- autoport to $DISTRSYS $DISTRVERSION (by rpmbph script)"
+	subst "1i# This spec is autoported from ALT Linux Sisyphus to $DISTRNAME $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	ENTRY="- autoport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
 	export USE_VENDOR=$RPMVENDOR
 	export USE_LEGACY_COMPRESSION=1
 	DISTRARG=""
@@ -304,6 +299,7 @@ phelp()
 	echog "   -r           remote build" # will pass to rpmbs/rpmbsh
 	echog "   -v           more verbose"
 	echog "   -q           quiet"
+	echog "Set ROOTDIR variable for backport to the other system"
 #	echog " -m - send result via e-mail"
 }
 

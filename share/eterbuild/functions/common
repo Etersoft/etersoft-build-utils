@@ -148,10 +148,12 @@ if [ -n "$NEEDETERBUILD" ] ; then
 fi
 
 # Internal
+# Detect distro name / vendor according to ROOTDIR system or current system
 detect_target_env()
 {
-local DISTRNAME=$($DISTRVENDOR -e)
 MENVARG=""
+DISTRNAME=$($DISTRVENDOR -d)
+DISTRVERSION=$($DISTRVENDOR -v)
 TARGET=$($DISTRVENDOR -p)
 VENDOR=$($DISTRVENDOR -s)
 RPMVENDOR=$($DISTRVENDOR -n)
@@ -164,7 +166,7 @@ if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	MENVARG="-$MENV"
 else
 	# FIXME: echog breaks vars
-	echog "Distribution: \$DISTRNAME (\$VENDOR) (target package: \$TARGET)"
+	echog "Distribution: \$DISTRNAME/\$DISTRVERSION (\$VENDOR) (target package: \$TARGET)"
 fi
 }
 

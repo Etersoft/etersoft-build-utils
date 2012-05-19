@@ -25,7 +25,7 @@ drop_pkg_extensions()
 
 # TODO: add get_update_repo_command
 # TODO: migrate to file using (as repos)
-# args: distr_vendor [interactive]
+# args: VENDORNAME [interactive]
 get_install_package_command()
 {
 	local VENDORNAME=$1

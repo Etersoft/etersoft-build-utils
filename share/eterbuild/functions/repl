@@ -7,6 +7,8 @@ PKGREPLBASE=$ETERBUILDDIR/pkgrepl
 
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
 # set ALTPKGNAME, TARGETPKGNAME variable
+# used: TARGET, VENDOR, DEFAULTARCH
+# FIXME: BUILDARCH?
 tolocal_anyrepl()
 {
 	local i REPLRULE WARULES
@@ -79,6 +81,7 @@ print_grpreq()
 	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | filter_strip_spaces
 }
 
+# VENDOR, TARGET, DISTRVERSION is already defined in detect_target_env() func
 internal_repl_list()
 {
 	local REPLBASE="$1"
@@ -98,9 +101,6 @@ internal_repl_list()
 print_replbased_list()
 {
 	local REPLBASE="$1"
-	# VENDOR, TARGET is already defined in detect_target_env() func
-	[ -z "$DISTRVERSION" ] && DISTRVERSION=$($DISTRVENDOR -v)
-
 	if [ "$DEFAULTARCH" = "x86_64" ] ; then
 		internal_repl_list $REPLBASE .x86_64
 	fi
