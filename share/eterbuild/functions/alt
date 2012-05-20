@@ -109,7 +109,7 @@ pkg_release_check()
 # copied from aptU
 get_rpmpkg_requires()
 {
-	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|([A-Z].*||g" | sort -u
+	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|([A-Z].*||g" | grep -v "^rpmlib" | sort -u
 }
 
 # Translate requires from local rpm package to package names (on local ALT Linux Sisyphus)
@@ -120,8 +120,7 @@ trans_rpmdeps_to_pkgname()
 	# partially copied from aptU
 	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
 
-	local REQLIST
-	REQLIST=$(get_rpmpkg_requires -p "$1")
+	local REQLIST="$@"
 	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	# partially copied from aptU
