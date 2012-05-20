@@ -25,14 +25,14 @@ drop_pkg_extensions()
 
 # TODO: add get_update_repo_command
 # TODO: migrate to file using (as repos)
-# args: VENDORNAME [interactive]
+# args: DISTRNAME [interactive]
 get_install_package_command()
 {
-	local VENDORNAME=$1
+	local DISTRNAME=$1
 	local INAC=$2
 	local CMD
 	local RET=0
-	case $VENDORNAME in
+	case $DISTRNAME in
 		"ALTLinux"|"Ubuntu"|"Debian"|"PCLinux")
 			[ -n "$INAC" ] && CMD="apt-get install" || CMD="apt-get -y --force-yes install"
 			;;
@@ -47,7 +47,7 @@ get_install_package_command()
 			;;
 		*)
 			RET=1
-			CMD="echo \"Do not known install command for VENDORNAME $VENDORNAME\""
+			CMD="echo \"Do not known install command for DISTRNAME $DISTRNAME\""
 			;;
 	esac
 	echo $CMD

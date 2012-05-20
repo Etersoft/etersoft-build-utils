@@ -53,7 +53,7 @@ real_file()
 
 real_file "$1"
 
-case $TARGET in
+case $PKGFORMAT in
 	"rpm")
 		rpmquery -f $ARG "$FULLFILEPATH"
 		;;

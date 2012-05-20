@@ -73,7 +73,7 @@ if ! set_eterbuilddir ; then
 	exit 1
 fi
 
-DISTRVENDOR=$(realpath $ATOPDIR/../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
+DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
 [ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 
 print_list()
@@ -147,18 +147,38 @@ if [ -n "$NEEDETERBUILD" ] ; then
 	fi
 fi
 
+# Used DISTRNAME
+set_target_pkg_env()
+{
+	[ "$($DISTRVENDOR -V)" -ge "20120519" ] || fatal "update rpm-build-altlinux-compat package to get new $DISTRVENDOR command"
+	[ -n "$DISTRNAME" ] || fatal "Run set_target_pkg_env without DISTRNAME"
+	PKGFORMAT=$($DISTRVENDOR -p "$DISTRNAME")
+	PKGVENDOR=$($DISTRVENDOR -s "$DISTRNAME")
+	RPMVENDOR=$($DISTRVENDOR -n "$DISTRNAME")
+}
+
+# We believe that follow vars correctly in any way:
+#  DISTRNAME - f.i. ALTLinux
+#  DISTRVERSION - f.i. p6
+#  BUILDARCH - f.i. x86_64 (set in config)
+
+# Filled with set_target_pkg_env:
+#  PKGFORMAT (was TARGET) - f.i. rpm
+#  use DISTRNAME if possible instead follow
+#   PKGVENDOR (was VENDOR) - like in package name release, f.i. alt
+#   RPMVENDOR - like %_vendor in spec, f.i. alt
+
 # Internal
 # Detect distro name / vendor according to ROOTDIR system or current system
+# You can set DISTRNAME, DISTRVERSION, BUILDARCH externally
 detect_target_env()
 {
 MENVARG=""
-DISTRNAME=$($DISTRVENDOR -d)
-DISTRVERSION=$($DISTRVENDOR -v)
-TARGET=$($DISTRVENDOR -p)
-VENDOR=$($DISTRVENDOR -s)
-RPMVENDOR=$($DISTRVENDOR -n)
+[ -n "$DISTRNAME" ] || DISTRNAME=$($DISTRVENDOR -d)
+[ -n "$DISTRVERSION" ] || DISTRVERSION=$($DISTRVENDOR -v)
+set_target_pkg_env
 
-if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
+if [ "$PKGVENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	#[ -n "$APTCONF" ] && fatal "Internal error: APTCONF already defined as $APTCONF for $MENV"
 	APTCONF=${APTCONFBASE/.SS}.$MENV
 	
@@ -166,7 +186,7 @@ if [ "$VENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	MENVARG="-$MENV"
 else
 	# FIXME: echog breaks vars
-	echog "Distribution: \$DISTRNAME/\$DISTRVERSION (\$VENDOR) (target package: \$TARGET)"
+	echog "Distribution: \$DISTRNAME/\$DISTRVERSION (\$PKGVENDOR) (target package: \$PKGFORMAT)"
 fi
 }
 

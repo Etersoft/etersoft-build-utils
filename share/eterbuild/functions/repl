@@ -6,9 +6,8 @@
 PKGREPLBASE=$ETERBUILDDIR/pkgrepl
 
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
-# set ALTPKGNAME, TARGETPKGNAME variable
-# used: TARGET, VENDOR, DEFAULTARCH
-# FIXME: BUILDARCH?
+# sets ALTPKGNAME, TARGETPKGNAME variable
+# used for hack: PKGFORMAT, DISTRNAME, BUILDARCH
 tolocal_anyrepl()
 {
 	local i REPLRULE WARULES
@@ -31,7 +30,7 @@ tolocal_anyrepl()
 	done
 
 	# Hack for default replace -devel to -dev on Deb target
-	if [ "$TARGET" = "deb" ] ; then
+	if [ "$PKGFORMAT" = "deb" ] ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1-dev|g"`
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
@@ -40,7 +39,7 @@ tolocal_anyrepl()
 	fi
 
 	# Add hack for replace lib with lib64 on Mandriva
-	if [ "$VENDOR" = "mdv" ] && [ $BUILDARCH = "x86_64" ] ; then
+	if [ "$DISTRNAME" = "Mandriva" ] && [ $BUILDARCH = "x86_64" ] ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
@@ -81,20 +80,20 @@ print_grpreq()
 	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | filter_strip_spaces
 }
 
-# VENDOR, TARGET, DISTRVERSION is already defined in detect_target_env() func
+# PKGVENDOR, PKGFORMAT, DISTRVERSION is already defined in detect_target_env() func
 internal_repl_list()
 {
 	local REPLBASE="$1"
 	local ARCHEXT="$2"
-	local FINDPKG=$REPLBASE.$VENDOR.$DISTRVERSION$ARCHEXT
+	local FINDPKG=$REPLBASE.$PKGVENDOR.$DISTRVERSION$ARCHEXT
 	# sure we use our version firstly
 	echo $FINDPKG
 	#  Hack for sort by last numbers: sort -n -t . -k 3
-	( ls -1 $PKGREPLBASE/pkgrepl.$VENDOR*$ARCHEXT 2>/dev/null | \
-			( test -n "$ARCHEXT" && grep -v "$VENDOR$ARCHEXT\$" || grep -v "x86_64" ) ; echo $FINDPKG ) | \
+	( ls -1 $PKGREPLBASE/pkgrepl.$PKGVENDOR*$ARCHEXT 2>/dev/null | \
+			( test -n "$ARCHEXT" && grep -v "$PKGVENDOR$ARCHEXT\$" || grep -v "x86_64" ) ; echo $FINDPKG ) | \
 		sort -u | sort -n -t . -k 3 | grep "^$FINDPKG\$" -B1000 | sort -r
-	echo $REPLBASE.$VENDOR$ARCHEXT
-	[ "$VENDOR" = "alt" ] || echo "$REPLBASE.$TARGET$ARCHEXT "
+	echo $REPLBASE.$PKGVENDOR$ARCHEXT
+	[ "$PKGVENDOR" = "alt" ] || echo "$REPLBASE.$PKGFORMAT$ARCHEXT "
 }
 
 # internal

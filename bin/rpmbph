@@ -32,7 +32,7 @@ FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
 
 # Set buildreq
-if [ "$VENDOR" = "alt" ] ; then
+if [ "$PKGVENDOR" = "alt" ] ; then
 	# FIXME: needed for some backport level...
 	#BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
 	BUILDREQ=
@@ -54,10 +54,10 @@ else
 	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
-	# Override release with KORINFTARGETRELEASE if set
+	# HACK: Override release with KORINFTARGETRELEASE if set
 	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
-	showcmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$VENDOR
-	set_release $SPECNAME $TXTRELEASE$BASERELEASE$VENDOR
+	showcmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
+	set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
 	test -z "$VERBOSE" || echo "Build package with release $TXTRELEASE"
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
@@ -65,7 +65,7 @@ fi
 
 
 # FIXME 05.05.2012: it is needed now?
-if [ "$VENDOR" = "mdv" ] || [ "$VENDOR" = "pclinux" ] ; then
+if [ "$PKGVENDOR" = "mdv" ] || [ "$PKGVENDOR" = "pclinux" ] ; then
 	# due new libtool, affected on Mandriva 2009.0
 	test -z "$VERBOSE" || echo "Disable libtoolize"
 	# FIXME
@@ -85,21 +85,21 @@ if [ "$DISTRNAME/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 fi
 
 # fix readlink -mv, introduced by new libtool and missed in Generic (FreeBSD) (replace with realpath)
-if [ "$VENDOR" = "generic" ] ; then
+if [ "$PKGVENDOR" = "generic" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -mv"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %__subst 's|readlink -mv|realpath|g' libtool configure ltmain.sh"
 fi
 
 # HACK need only for wine on x86_64
-if [ "$BUILDARCH" = x86_64" ] && echo $SPECNAME | grep -q wine ; then
+if [ "$BUILDARCH" = "x86_64" ] && echo $SPECNAME | grep -q wine ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %remove_optflags -m64"
 fi
 
 # fix mktemp using for MCBC
-if [ "$VENDOR" = "mcbc" ] ; then
+if [ "$PKGVENDOR" = "mcbc" ] ; then
 	test -z "$VERBOSE" || echo "Add subst mktemp -dt"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
@@ -214,14 +214,14 @@ mv $SPECNAME $SPECNAME.old &&
 subst "s|^Patch0:|Patch:|g" $SPECNAME
 subst "s|^%patch0 |%patch |g" $SPECNAME
 
-if [ "$VENDOR" != "alt" ] ; then 
+if [ "$PKGVENDOR" != "alt" ] ; then 
 	# Due possible using %release in Source: and Patch: names
 	subst "s|^\(Source.*\)%release|\1$RELEASE|g" $SPECNAME
 	subst "s|^\(Patch.*\)%release|\1$RELEASE|g" $SPECNAME
 fi
 
 # Auto*=yes,nomingw32 works only since ALT 4.1
-if [ "$VENDOR" = "alt" ] ; then
+if [ "$PKGVENDOR" = "alt" ] ; then
 	if echo "$MDISTR" | egrep -q "M24|M30|M40" ; then
 		subst "s|^\(AutoReq.*\),nomingw32|\1|g" $SPECNAME
 		subst "s|^\(AutoProv.*\),nomingw32|\1|g" $SPECNAME
@@ -249,7 +249,7 @@ fi
 
 rm -f $SPECNAME.old
 
-if [ "$VENDOR" = "alt" ] ; then
+if [ "$PKGVENDOR" = "alt" ] ; then
 	subst "1i#" $SPECNAME
 	# use old compress method for the src.rpm on ALT 4.0 and 4.1
 	if [ "$DISTRVERSION" = "4.0" ] || [ "$DISTRVERSION" = "4.1" ] ; then
@@ -331,7 +331,7 @@ mygetopts $LISTARGS
 
 test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
-if [ "$VENDOR" = "alt" ] ; then
+if [ "$PKGVENDOR" = "alt" ] ; then
 	MDISTR=$MENV
 	[ -n "$BINARYREPONAME" ] && MDISTR=$(get_altdistr_mod $BINARYREPONAME)
 	[ "$MDISTR" = "SS" ] && fatal "It is senseless to backport to Sisyphus (You can try with -b $EXAMPLEALTDISTRVERSION)."
@@ -350,7 +350,7 @@ fi
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
 	# if run for ALT inside gear repo, just create backported spec
-if [ "$VENDOR" = "alt" ] && is_gear $SPECDIR ; then
+if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 	USEBRANCH=$MDISTR
 	SPEC=$LISTNAMES

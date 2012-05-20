@@ -101,7 +101,7 @@ if [ -n "$BUILDOPT" ] ; then
 fi
 
 # Set nodeps if run in non rpm system
-[ "$TARGET" = "rpm" ] && NODEPS="" || NODEPS="--nodeps"
+[ "$PKGFORMAT" = "rpm" ] && NODEPS="" || NODEPS="--nodeps"
 
 for i in $LISTNAMES
 do
