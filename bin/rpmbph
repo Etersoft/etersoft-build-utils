@@ -131,8 +131,9 @@ if [ -n "$VERBOSE" ] ; then
 	echo
 fi
 
+local pkgrepl_list=$(print_pkgrepl_list)
 for i in $LISTDEP ; do
-	tolocal_anyrepl $i `print_pkgrepl_list` || continue
+	tolocal_anyrepl $i $pkgrepl_list || continue
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	NRL="s!(.*Req.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "Use req rule $NRL"
@@ -142,8 +143,9 @@ done
 # Build replacement rules for spec
 [ -n "$VERBOSE" ] && echo "Checking group names for $LISTGROUP"
 ALLGRPREPLRULES=""
+grprepl_list=$(print_grprepl_list)
 for i in $LISTGROUP ; do
-	tolocal_anyrepl $i `print_grprepl_list` || continue
+	tolocal_anyrepl $i $grprepl_list || continue
 	#NRL="s!\(Group.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	NRL="s!(Group.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "Use group name rule $NRL"
