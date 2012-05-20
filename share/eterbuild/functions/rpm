@@ -106,9 +106,11 @@ spec_by_srpm()
 }
 
 # pkg-source-1.0.src.rpm -> pkg-source
+# pkg-source_1.0.src.rpm -> pkg-source
 get_pkgname_from_filename()
 {
-	echo ${1/-[0-9]*/}
+	local FN=$(basename $1)
+	echo ${FN/[-_][0-9]*/}
 }
 
 # return source package name by binary rpm package file
