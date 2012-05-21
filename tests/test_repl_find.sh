@@ -31,8 +31,8 @@ for i in `print_grprepl_list` ; do
 done
 }
 
-VENDOR=fedora
-TARGET=rpm
+PKGVENDOR=fedora
+PKGFORMAT=rpm
 DISTRVERSION=10
 
 echo "PkgRepl:"
@@ -49,24 +49,31 @@ check_repl()
 	check $1 "`print_replace $1`" $2
 }
 
-echo "Correct replacement checking for $VENDOR/$DISTRVERSION (target $TARGET):"
+echo "Correct replacement checking for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 check_repl rpm-build-compat rpm-build-altlinux-compat
 check_repl libusb-devel libusb-devel
 
 
-VENDOR=ubuntu
-TARGET=deb
-DISTRVERSION=9.04
+PKGVENDOR=ubuntu
+PKGFORMAT=deb
+DISTRVERSION=11.04
 
-echo "Correct replacement checking for $VENDOR/$DISTRVERSION (target $TARGET):"
+echo "Correct replacement checking for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+
+print_pkgrepl_list
+
 check_repl rpm-build-compat rpm-build-altlinux-compat
 check_repl libusb-devel libusb-dev
 
-VENDOR=mdv
+
+PKGVENDOR=mdv
 DISTRVERSION=2010.1
-DEFAULTARCH=x86_64
-TARGET=rpm
+BUILDARCH=x86_64
+PKGFORMAT=rpm
 #FINDPKG=$PKGREPLBASE.pkgrepl.$VENDOR.$DISTRVERSION
 #( ls -1 $PKGREPLBASE/pkgrepl.$VENDOR* | grep -v x86_64 ; echo $FINDPKG ) | sort -u | grep "^$FINDPKG\$" -B1000 | sort -r
+
+echo
+echo "Correct replacement checking for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 
 print_pkgrepl_list

@@ -80,6 +80,8 @@ print_grpreq()
 	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | filter_strip_spaces
 }
 
+# FIXME: need improvement
+# use tests/test_repl_find.sh for test it
 # PKGVENDOR, PKGFORMAT, DISTRVERSION is already defined in detect_target_env() func
 internal_repl_list()
 {
@@ -91,7 +93,7 @@ internal_repl_list()
 	#  Hack for sort by last numbers: sort -n -t . -k 3
 	( ls -1 $PKGREPLBASE/pkgrepl.$PKGVENDOR*$ARCHEXT 2>/dev/null | \
 			( test -n "$ARCHEXT" && grep -v "$PKGVENDOR$ARCHEXT\$" || grep -v "x86_64" ) ; echo $FINDPKG ) | \
-		sort -u | sort -n -t . -k 3 | grep "^$FINDPKG\$" -B1000 | sort -r
+		sort -u | sort -n -t . -k 3 | grep "^$FINDPKG\$" -B1000 | sort -r -n -t . -k 3
 	echo $REPLBASE.$PKGVENDOR$ARCHEXT
 	[ "$PKGVENDOR" = "alt" ] || echo "$REPLBASE.$PKGFORMAT$ARCHEXT "
 }
@@ -101,11 +103,11 @@ print_replbased_list()
 {
 	local REPLBASE="$1"
 	if [ "$BUILDARCH" = "x86_64" ] ; then
-		internal_repl_list $REPLBASE .x86_64
+		internal_repl_list $REPLBASE .x86_64 | uniq
 	fi
 
         # general rules listing
-	internal_repl_list $REPLBASE ""
+	internal_repl_list $REPLBASE "" | uniq
 }
 
 # TODO: list in  alph. order and use if <= then our version
