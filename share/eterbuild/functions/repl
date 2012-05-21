@@ -30,8 +30,9 @@ tolocal_anyrepl()
 	done
 
 	# Hack for default replace -devel to -dev on Deb target
+	# Fix upper case
 	if [ "$PKGFORMAT" = "deb" ] ; then
-		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1-dev|g"`
+		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1-dev|g" | tr "[A-Z]" "[a-z]"`
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
 		TARGETPKGNAME="$NEWRESULT"
