@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -65,6 +65,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue May 22 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt1
+- big replacement rules rewrite (deb related)
+- ginit: filter project name before use
+- gitcam: add new command for git --amend -a commit
+- use global vars DISTRNAME, DISTRVERSION, BUILDARCH, PKGFORMAT, PKGVENDOR, RPMVENDOR
+- replace DEFAULTARCH with BUILDARCH
+- rpmbph: add fix commands in the build section in a more universal way
+- rpmbph: add hack for repack on x86_64 system packages contains ExclusiveArch in spec
+
 * Fri Apr 27 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
 - many repl rules fixes
 - add support for Source0:, add check for empty source name detected
