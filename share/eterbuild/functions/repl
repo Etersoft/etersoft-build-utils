@@ -3,7 +3,11 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-PKGREPLBASE=$ETERBUILDDIR/pkgrepl
+# convert pkg names to Debian style
+filter_deb_pkgnames()
+{
+	sed -e "s|^ *\(.*\)-devel *\$|\1-dev|g" | tr "[A-Z]" "[a-z]"
+}
 
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
 # sets ALTPKGNAME, TARGETPKGNAME variable
@@ -29,10 +33,8 @@ tolocal_anyrepl()
 		test -n "$REPLRULE" && return 0
 	done
 
-	# Hack for default replace -devel to -dev on Deb target
-	# Fix upper case
 	if [ "$PKGFORMAT" = "deb" ] ; then
-		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1-dev|g" | tr "[A-Z]" "[a-z]"`
+		local NEWRESULT=`echo $GREP | filter_deb_pkgnames`
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
 		TARGETPKGNAME="$NEWRESULT"
