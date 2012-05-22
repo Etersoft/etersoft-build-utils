@@ -1,0 +1,6 @@
+libpython|libpython2.7
+
+libstdc++-devel|libstdc++6-4.5-dev
+libstdc++6-devel|libstdc++6-4.5-dev
+gcc-g++|g++-4.5
+libicu|libicu44

@@ -51,8 +51,8 @@ libldap-devel|openldap-devel
 libldap|openldap
 liblcms-devel|lcms-devel
 liblcms|lcms
-libgphoto2-devel|gphoto2-devel
-libgphoto2|gphoto2
+#libgphoto2-devel|gphoto2-devel
+#libgphoto2|gphoto2
 libsane-devel|sane-backends-devel
 libsane|sane-backends
 jackit-devel|jack-audio-connection-kit-devel
@@ -106,11 +106,9 @@ glibc-devel-static|glibc-devel
 libopensc-devel|opensc-devel
 ImageMagick-tools|ImageMagick
 libopenal-devel|openal-devel
-libmpg123-devel|
 
 libgsm-devel|gsm-devel
 libgsm|gsm
-libgstreamer-devel|gstreamer-devel
 gst-plugins-devel|gstreamer-plugins-base-devel
 libgstreamer|gstreamer
 
@@ -128,3 +126,7 @@ libgnutls-devel|gnutls-devel
 
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
+
+libnatspec-devel|
+
+postgresql-common|

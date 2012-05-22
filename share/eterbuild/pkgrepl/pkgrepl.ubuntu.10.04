@@ -1,2 +1,16 @@
 libreadline|libreadline6
 libreadline-devel|libreadline6-dev
+
+xz|xz-utils
+diffutils|diffutils
+libmpg123-devel|libmpg123-dev
+libudev-devel|libudev-dev
+libv4l-devel|libv4l-dev
+
+libcups-devel|libcups2-dev
+libcups|libcups2
+
+libstdc++-devel|libstdc++6-4.4-dev
+libstdc++6-devel|libstdc++6-4.4-dev
+gcc-g++|g++-4.4
+libicu|libicu42

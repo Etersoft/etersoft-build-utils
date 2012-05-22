@@ -17,7 +17,9 @@ libncurses-devel|libncurses5-dev
 libncursesw-devel|libncursesw5-dev
 libldap-devel|libldap2-dev
 libjpeg-devel|libjpeg62-dev
-libcups-devel|libcupsys2-dev
+libjpeg|libjpeg62
+libcups-devel|libcups2-dev
+libcups|libcups2
 libasound-devel|libasound2-dev
 libreadline-devel|libreadline5-dev
 libreadline|libreadline5
@@ -43,8 +45,14 @@ libXcomposite|libxcomposite1
 libXtst-devel|libxtst-dev
 libXtst|libxtst6
 libGLU-devel|libglu1-mesa-dev
+libGLU|libglu1-mesa
 libmesa-devel|mesa-common-dev
-#libGL-devel|libgl1-mesa-dev
+
+libGL-devel|libgl1-mesa-dev
+# dummy package
+#libGL|libgl1
+# we have libgl1-mesa-swx11 and libgl1-mesa-glx on Debian systems
+libGL|libgl1-mesa-glx
 
 gcc-c++|g++
 libstdc++6-devel|libstdc++-dev
@@ -115,7 +123,11 @@ libXScrnSaver-devel|
 libalsa-devel|libasound2-dev
 libieee1284-devel|libieee1284-3-dev
 libpng-devel|libpng12-dev
+libtiff-devel|libtiff4-dev
+libtiff|libtiff4
 zlib-devel|zlib1g-dev
+libgsm-devel|libgsm1-dev
+libgsm|libgsm1
 
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
@@ -143,7 +155,6 @@ vixie-cron|cron
 zlib|zlib1g
 libpng12|libpng12-0
 libX11|libx11-6
-libjpeg|libjpeg8
 libcrypto10|openssl
 libalsa|libasound2
 libXmu|libxmu6
@@ -151,14 +162,13 @@ libXfixes|libxfixes3
 
 # postgre
 which|debianutils
-# FIXME
-libicu|libicu48
+libicu|libicu38
 libxslt|libxslt1.1
-# FIXME
-libpython|libpython2.7
+# FIXME try to not depends from python version
+#libpython|libpython2.7
+libpython|
 
 # wine
-xz|xz-utils
 xrandr|x11-xserver-utils
 xlsfonts|x11-utils
 udev-rules|udev
@@ -166,7 +176,6 @@ termutils|ncurses-bin
 libuuid|libuuid1
 libssl|libssl0.9.8
 libncurses|libncurses5
-libcups|libcups2
 libICE|libice6
 
 # FIXME
@@ -175,3 +184,16 @@ fonts-ttf-core|ttf-liberation
 
 # meta packages
 webclient|
+gettext-tools|gettext
+
+perl-XML-Simple|libxml-simple-perl
+
+gstreamer-devel|libgstreamer0.10-dev
+gst-plugins-devel|libgstreamer-plugins-base0.10-dev
+libgstreamer|libgstreamer0.10-0
+
+diffutils|diff
+# xz is missed, has only lzma
+xz|lzma
+
+libnatspec-devel|

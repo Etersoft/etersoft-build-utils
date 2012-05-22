@@ -2,3 +2,5 @@ kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-rhel kernel-hea
 rpm-build-intro|rpm-build-compat
 libavformat53|libavformat52
 libavcodec53|libavcodec52
+libv4l-devel|libv4l-devel
+libmpg123-devel|libmpg123-devel
