@@ -17,3 +17,5 @@ check_pkg pkg-1.0.spec pkg
 check_pkg pkg-source-1.0.spec pkg-source
 check_pkg pkg-source-less-1.0.spec pkg-source-less
 check_pkg pkg123-1.0.spec pkg123
+check_pkg pkg123[_-]1.0.spec pkg123
+check_pkg pkg*.spec pkg
