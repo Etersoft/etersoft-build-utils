@@ -97,6 +97,7 @@ build_rpms_name_by_srpm()
 	fi
 }
 
+# FIXME: hack
 spec_by_srpm()
 {
 	local PKG=$1
@@ -105,13 +106,44 @@ spec_by_srpm()
 	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
 }
 
+
+# FIXME: this is hack and needs to be removed from code!
 # pkg-source-1.0.src.rpm -> pkg-source
 # pkg-source_1.0.src.rpm -> pkg-source
 # pkg-source[-_]1.0.src.rpm -> pkg-source
 # pkg-source*.src.rpm -> pkg-source
+# incorrect for
+# pkg-source-1.0-2.0*.src.rpm -> pkg-source-1.0
+# pkg-source-1.0_2.0*.src.rpm -> pkg-source-1.0
 get_pkgname_from_filename()
 {
-	local FN=$(basename $1 | sed -e "s|[\[\*].*||g")
+	local FN=$(basename $1)
+	#local SR=$(echo ${FN/[\\*]*/})
+	local SR=$(echo $FN | sed -e "s|[\[\*].*||g")
+	if [ "$SR" != "$FN" ] ; then
+		echo $SR
+		return
+	fi
+
+	# for RPM file
+	#if echo $FN | grep -q "rpm$" && [ -e "$FN" ] ; then
+	#	querypackage $FN NAME
+	#	return
+	#fi
+
+	# for DEB
+	if echo $FN | grep -q "deb$" ; then
+		echo ${FN/_[0-9]*/}
+		return
+	fi
+
+	# libpq5.2-9.0eter-9.0.4-alt14.i586.rpm
+	local SR=$(echo $FN | sed -e "s|\(.*\)-[0-9][0-9a-zA-Z\.]*-[a-z]*[0-9][0-9\.a-zA-Z]*\.[a-z0-9_]*.*$|\1|g")
+	if [ "$SR" != "$FN" ] ; then
+		echo $SR
+		return
+	fi
+
 	echo ${FN/[-_][0-9]*/}
 }
 
