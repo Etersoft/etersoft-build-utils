@@ -49,7 +49,7 @@ check_repl()
 	check $1 "`print_replace $1`" $2
 }
 
-echo "Correct replacement checking for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 check_repl rpm-build-compat rpm-build-altlinux-compat
 check_repl libusb-devel libusb-devel
 
@@ -58,7 +58,7 @@ PKGVENDOR=ubuntu
 PKGFORMAT=deb
 DISTRVERSION=11.04
 
-echo "Correct replacement checking for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 
 print_pkgrepl_list
 
@@ -74,6 +74,8 @@ PKGFORMAT=rpm
 #( ls -1 $PKGREPLBASE/pkgrepl.$VENDOR* | grep -v x86_64 ; echo $FINDPKG ) | sort -u | grep "^$FINDPKG\$" -B1000 | sort -r
 
 echo
-echo "Correct replacement checking for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
-
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+echo "Package:"
 print_pkgrepl_list
+echo "Group:"
+print_grprepl_list
