@@ -2,7 +2,7 @@
 
 Name: etersoft-build-utils
 Version: 2.0.11
-Release: alt2
+Release: alt3
 
 Summary: A set of build rpm utilities
 
@@ -22,7 +22,8 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: rpm-build rpm-build-compat
+Requires: rpm-build
+Requires: rpm-build-compat >= %altcompat_ver
 
 %if %_vendor == "alt"
 Requires: sisyphus_check rsync openssh-clients srpmcmp
@@ -65,6 +66,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed May 23 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt3
+- update QuickHelp
+- fix rpm-build-altlinux-compat requires
+
 * Wed May 23 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt2
 - fix rpm-build-altlinux-compat requires
 - update pkgrepls (centos, deb)
