@@ -2,7 +2,7 @@
 
 Name: etersoft-build-utils
 Version: 2.0.11
-Release: alt1
+Release: alt2
 
 Summary: A set of build rpm utilities
 
@@ -17,7 +17,7 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 
 BuildArchitectures: noarch
 
-%define altcompat_ver 0.95
+%define altcompat_ver 1.7.19
 
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
@@ -65,6 +65,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed May 23 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt2
+- fix rpm-build-altlinux-compat requires
+- update pkgrepls (centos, deb)
+
 * Tue May 22 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt1
 - big replacement rules rewrite (deb related)
 - ginit: filter project name before use
