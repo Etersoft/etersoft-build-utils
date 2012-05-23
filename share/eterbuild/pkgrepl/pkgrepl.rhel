@@ -21,3 +21,7 @@ python-modules-compiler|python-devel
 
 libaudiofile-devel|audiofile-devel
 libaudiofile|audiofile
+
+libgphoto2-devel|gphoto2-devel
+libgphoto2|gphoto2
+

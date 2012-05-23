@@ -130,3 +130,9 @@ rpm-macros-tts|rpm-build-altlinux-compat
 libnatspec-devel|
 
 postgresql-common|
+
+# ananas
+libMySQL-devel|mysql-devel
+
+# License problem, add individually
+libmpg123-devel|
