@@ -14,3 +14,6 @@ libstdc++-devel|libstdc++6-4.4-dev
 libstdc++6-devel|libstdc++6-4.4-dev
 gcc-g++|g++-4.4
 libicu|libicu42
+
+libusb-devel|libusb-1.0-0-dev
+libusb|libusb-1.0-0

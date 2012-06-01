@@ -90,3 +90,4 @@ openssh-server|openssh
 libaudiofile|audiofile
 libaudiofile-devel|audiofile-devel
 
+libssl-devel|libopenssl-devel
