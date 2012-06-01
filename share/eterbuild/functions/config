@@ -27,7 +27,8 @@ SYSARCH=$(uname -m)
 NICE="nice"
 RPMBUILD=rpmbuild
 
-RPMDIR="$HOME/RPM"
+# CHECKME: works only on ALT?
+RPMDIR=`rpm --eval %_topdir`
 # Can be overrided in the scripts
 [ -n "$RPMTOPDIR" ] || RPMTOPDIR="$RPMDIR"
 
