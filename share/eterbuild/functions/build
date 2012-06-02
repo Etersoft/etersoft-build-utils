@@ -10,7 +10,7 @@ get_gear_rules()
 	# FIXME: move get rules file to separate function
 	local BASESPECNAME=$(basename "$SPECNAME")
 	local ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
-	local ALTGEARRULES=$(git rev-parse --git-dir)/../$ALTGEARRULESFILE
+	local ALTGEARRULES=$(get_root_git_dir)/$ALTGEARRULESFILE
 	local GEARRULES=
 	if [ -r "$ALTGEARRULES" ] ; then
 		#echo "Build with alternate rules $ALTGEARRULESFILE"

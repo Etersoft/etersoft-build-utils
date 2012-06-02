@@ -1,5 +1,5 @@
 #!/bin/sh
-# Do commit amend for all files
+# Do commit --amend for all files in the repo
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common

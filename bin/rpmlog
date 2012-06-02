@@ -73,6 +73,7 @@ if [ -z "$FROMTAG" ] ; then
 	[ -n "$VERSION" ] || fatal "Can't get package version"
 	[ -n "$RELEASE" ] || fatal "Can't get package release"
 	FROMTAG="$VERSION-$RELEASE"
+	# FIXME: if don't exists, use last tag?
 fi
 
 # TODO: найти параметр для упрощения истории. пока - sort?
@@ -85,14 +86,20 @@ if [ -n "$TESTRUN" ] ; then
 fi
 
 # increment release
-if [ "$INCREMENTMODE" = "-r" ] ; then
-	inc_release $SPECNAME
-elif [ "$INCREMENTMODE" = "-s" ] ; then
-	inc_subrelease $SPECNAME
-elif [ "$INCREMENTMODE" = "-v" ] ; then
-	set_release $SPECNAME
-	inc_version $SPECNAME
-fi
+case "$INCREMENTMODE" in
+        "-r")
+                inc_release $SPECNAME
+                ;;
+        "-s")
+                inc_subrelease $SPECNAME
+                ;;
+        "-v")
+                set_release $SPECNAME
+                inc_version $SPECNAME
+                ;;
+        *)
+                fatal "unknown increment mode $INCREMENTMODE"
+esac
 
 NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
 echo "Add changelog to $NEWREV:"
