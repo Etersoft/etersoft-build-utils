@@ -302,7 +302,7 @@ docmd()
 	SETCOLOR_SUCCESS
 	echo " \$ $@"
 	SETCOLOR_NORMAL
-	$@
+	"$@"
 }
 
 # Print command line only

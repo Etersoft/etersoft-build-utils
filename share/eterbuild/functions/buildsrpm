@@ -40,8 +40,7 @@ uni_rpmbuildsrpm()
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			showcmd $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@
-			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+			docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
@@ -51,8 +50,7 @@ uni_rpmbuildsrpm()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		showcmd $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@
-		$NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" $@ || RET=$?
+		docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
 	fi
 
 	return $RET

@@ -38,8 +38,7 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 	BUILDREQ=
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
-	showcmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
-	set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
+	docmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	ADDDEF=""
 	CLEANTEXT=""
 	# due new libtool, affected on ALT Linux
@@ -56,8 +55,7 @@ else
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
 	# HACK: Override release with KORINFTARGETRELEASE if set
 	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
-	showcmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
-	set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
+	docmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
 	test -z "$VERBOSE" || echo "Build package with release $TXTRELEASE"
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
@@ -428,8 +426,7 @@ for i in $LISTBUILT ; do
 
 	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
-	showcmd altspec_to_local $SPECNAME
-	altspec_to_local $SPECNAME
+	docmd altspec_to_local $SPECNAME
 
 	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true

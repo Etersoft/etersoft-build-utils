@@ -63,8 +63,7 @@ uni_rpmbuild()
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			showcmd $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@
-			$NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@ || RET=$?
+			docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
@@ -74,8 +73,7 @@ uni_rpmbuild()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		showcmd $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@
-		$NICE $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" $@ || RET=$?
+		docmd $NICE $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$@" || RET=$?
 	fi
 
 	return $RET
@@ -93,11 +91,9 @@ uni_buildreq()
 	local GEARBUILDREQ=gear-buildreq
 
 	if is_gear $SPECDIR ; then
-		showcmd $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" $@
-		$NICE $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" $@ || RET=$?
+		docmd $NICE $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" "$@" || RET=$?
 	else
-		showcmd buildreq $BUILDREQPARAM "$SPECNAME" $@
-		$NICE buildreq $BUILDREQPARAM "$SPECNAME" $@ || RET=$?
+		docmd $NICE buildreq $BUILDREQPARAM "$SPECNAME" "$@" || RET=$?
 	fi
 	return $RET
 }
@@ -116,8 +112,7 @@ uni_rpminstall()
 	#else
 		echo -n "Install package "
 		docmd mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
-		showcmd rpm -iv "$TWOPARAM" $@
-		rpm -iv "$TWOPARAM" $@ || RET=$?
+		docmd rpm -iv "$TWOPARAM" "$@" || RET=$?
 	#fi
 	return $RET
 }
@@ -131,7 +126,6 @@ uni_rpmrm()
 		TWOPARAM="--define=_topdir $RPMTOPDIR"
 	fi
 
-	showcmd $RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
-	$RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps $@
+	docmd $RPMBUILD "$TWOPARAM" --rmsource --rmspec --nodeps "$@"
 }
 
