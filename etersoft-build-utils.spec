@@ -1,8 +1,8 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.11
-Release: alt3
+Version: 2.0.12
+Release: alt1
 
 Summary: A set of build rpm utilities
 
@@ -66,6 +66,28 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Jun 02 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.12-alt1
+- rpmlog: disable sort -u for changelog items
+- gpull: get tags for gpull -c too
+- add arg support to get_remote_repo_list
+- gpull: use remote branch name if local name does not exists there
+- introduce gremote
+- rename gitcam to gamend
+- fix docmd and use it instead duplicate showcmd
+- small cleanup
+- common: introduce usearg and use it
+- remove obsoleted publish-compat
+- rpmbs: use get_last_tag
+- git: introduce get_last_tag func
+- rpmbs: rewrite check_gear_and_tag with is_last_commit_tag
+- introduce is_last_commit_tag and use it
+- ginit: small cleanup
+- rewrite get_root_git_dir with using $ git rev-parse --git-dir is_gear: fix get_root_dir_dir using
+- gpush: push last tag also
+- update some pkgrepls
+- allow use any RPM dir defined as topdir in ~/.rpmmacros
+- rpmqf: add missed tune env
+
 * Wed May 23 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt3
 - update QuickHelp
 - fix rpm-build-altlinux-compat requires
