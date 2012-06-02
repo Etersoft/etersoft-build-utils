@@ -98,13 +98,12 @@ LISTRPMARGS=$@
 
 }
 
-# create tag according to package release
+# check and create tag according to package release
 # used: SPECDIR, LISTNAMES, FORCE
 check_gear_and_tag()
 {
 	local RESULT=0
 	local GEARCTAG=gear-create-tag
-	local TAG="$1"
 
 	# set SPECDIR from LISTNAMES if empty
 	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
@@ -112,8 +111,8 @@ check_gear_and_tag()
         # do check only on gear repo
 	is_gear $SPECDIR || return 0
 
-        if [ -z "$FORCE" ] && is_last_commit_tag $TAG ; then
-                echo "Tag $TAG already exists for the last commit"
+        if [ -z "$FORCE" ] && is_last_commit_tag ; then
+                echo "Tag $(get_last_tag) already exists for the last commit"
                 return 0
         fi
 
@@ -126,11 +125,10 @@ check_gear_and_tag()
 	# if there is a problem connecting to the agent.
 	# GPG_AGENT_INFO=
 
-	[ -n "$FORCE" ] && echo "Force create $TAG tag..." || echo "Create $TAG tag..."
+	[ -n "$FORCE" ] && echo "Force create tag..." || echo "Create tag..."
 
 	cd $SPECDIR >/dev/null
 
-	# default: <VERSION>-<RELEASE>
 	docmd $GEARCTAG $FORCE || RESULT=1
 	if [ "$RESULT" = 1 ] ; then
 		if $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
@@ -140,8 +138,10 @@ check_gear_and_tag()
 			RESULT=1
 		fi
 	fi
-	test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG still missed in the repo"
+	local TAG=$(get_last_tag)
+	test -z "$TAG" || is_last_commit_tag || docmd git tag -v "$TAG" || fatal "Tag $TAG still missed in the repo"
 	cd - >/dev/null
+	echo "Tag $TAG is set"
 	return $RESULT
 }
 
@@ -199,8 +199,7 @@ LISTBUILT=""
 CURDIR=`pwd`
 
 if [ -n "$SIGNTAG" ] ; then
-	echo "Set tag..."
-	check_gear_and_tag ""
+	check_gear_and_tag
 	exit $?
 fi
 
@@ -219,14 +218,15 @@ set_binaryrepo $MENV
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	echo "Run with gear repo..."
 	build_rpms_name "$LISTNAMES"
-	# hack: get project name from package name
+	# FIXME: hack: get project name from package name
 	PROJECTNAME=$(echo $BASENAME | filter_gear_name)
 	#PROJECTNAME=$(get_gear_name)
 	pkg_release_check
-	TAG=$VERSION-$RELEASE
-	check_gear_and_tag "$TAG" || fatal "Can't make tag"
-	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE "$TAG" || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
-	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed"
+
+	check_gear_and_tag || fatal "Can't make tag"
+	TAG=$(get_last_tag)
+
+	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
 	echo
 	echo "Run build $PROJECTNAME at $GIRARHOST"
 	if [ -n "$TASKNUMBER" ] ; then
@@ -261,7 +261,7 @@ pkg_release_check $LISTBUILT
 
 # if only one file
 if [ -r "$LISTBUILT" ] ; then
-	check_gear_and_tag ""
+	check_gear_and_tag
 fi
 
 
