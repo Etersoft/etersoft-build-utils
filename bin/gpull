@@ -66,6 +66,13 @@ pull_all_branches()
         docmd git checkout $CURRENTBRANCH
 }
 
+# Если не получилось получить обновление по такому же названию бранча, как локальный, то получаем по удалённому
+pull_from_unique_branch()
+{
+        REMOTEBRANCH=$(git branch -a | grep "^  remotes/$REPO/" | sed -e "s|.*remotes/$REPO/||")
+        docmd git pull $REBASE $REPO $REMOTEBRANCH
+}
+
 if [ -n "$ALLBRANCHES" ] ; then
 	pull_all_branches
 	exit
@@ -86,7 +93,8 @@ if [ -n "$CHECKRESULT" ] ; then
 fi
 
 docmd git fetch $REPO || exit
-docmd git pull $REBASE $REPO $REMOTEBRANCH || exit
+# FIXME: Не факт, что удалённо бранч называется именно $REMOTEBRANCH
+docmd git pull $REBASE $REPO $REMOTEBRANCH || pull_from_unique_branch || exit
 
 # REWRITE ME: assure we get tags
 docmd git pull --tags $REPO $REMOTEBRANCH
