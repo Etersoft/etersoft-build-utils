@@ -73,9 +73,8 @@ push_to_remote()
 	if [ -n "$TAGSALL" ] ; then
 		docmd git push --tags $GHOST $CURRENTBRANCH
 	else
-		local LASTTAG=$(git describe --abbrev=0 --tags)
-		# check if the last tag put on the last commit
-		if [ "$(git rev-parse HEAD)" = "$(git rev-parse $LASTTAG^0)" ] ; then
+		if is_last_commit_tag ; then
+		        local LASTTAG=$(get_last_tag)
 			echo "*** Push last tag $LASTTAG"
 			docmd git push $PUSHFORCE $GHOST $LASTTAG
 		fi

@@ -99,3 +99,13 @@ git_commit_ignore_nothing()
         git commit "$@" 2>&1 | grep "nothing to commit" && return 0
         return 1
 }
+
+# check if tag is last commit tag (put on the last commit). if tag is missed, check with the last tag in repo
+is_last_commit_tag()
+{
+        local TAG=$1
+        test -n "$TAG" || TAG=$(git describe --abbrev=0 --tags)
+        # check if the tag put on the last commit
+        [ "$(git rev-parse HEAD)" = "$(git rev-parse $TAG^0)" ]
+}
+
