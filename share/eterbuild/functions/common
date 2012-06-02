@@ -312,3 +312,13 @@ showcmd()
 	echo " \$ $@"
 	SETCOLOR_NORMAL
 }
+
+# Example: $ command $(usearg -d "$PARAM")
+# will add -d "$PARAM" if $PARAM is not empty
+usearg()
+{
+        local ARG=$1
+        shift
+        [ -n "$1" ] && echo "$ARG $@"
+}
+
