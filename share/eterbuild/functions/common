@@ -87,15 +87,8 @@ print_list()
 
 get_root_git_dir()
 {
-        local DIR="$1"
-        [ -n "$DIR" ] || DIR=$(pwd)
-        [ "$DIR" = "/" ] && return 1
-        [ "$DIR" = "$HOME" ] && return 1
-        if [ -d "$DIR/.git" ] ; then
-                readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
-                return
-        fi
-        get_root_git_dir $(dirname "$DIR") || return 1
+        local DIR=$(git rev-parse --git-dir)/../
+        readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
 }
 
 # Usage: is_gear [path_to_spec|dir_inside_git]
@@ -104,7 +97,9 @@ is_gear()
 	local DIR="$1"
 	[ -z "$IGNOREGEAR" ] || return 1
 	[ -f "$DIR" ] && DIR=$(dirname "$DIR")
-	local GITDIR=$(get_root_git_dir "$DIR")
+	[ -n "$DIR" ] && cd $DIR
+	local GITDIR=$(get_root_git_dir)
+	[ -n "$DIR" ] && cd - >/dev/null
 	[ -d "$GITDIR/.gear" ] && return 0
 	[ -r "$GITDIR/.gear-rules" ] && return 0
 	return 1
