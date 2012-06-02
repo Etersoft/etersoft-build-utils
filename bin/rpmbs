@@ -1,6 +1,6 @@
 #!/bin/bash
-# (c) Etersoft 2003-2010
-# Author: Vitaly Lipatov <lav@etersoft.ru>
+# (c) Etersoft 2003-2012
+# Author: Vitaly Lipatov <lav@etersoft.ru>, 2012
 # Public domain
 #
 # BS - build source
@@ -99,43 +99,49 @@ LISTRPMARGS=$@
 }
 
 # create tag according to package release
+# used: SPECDIR, LISTNAMES, FORCE
 check_gear_and_tag()
 {
 	local RESULT=0
 	local GEARCTAG=gear-create-tag
+	local TAG="$1"
 
-	test -n "$TAG" && echo "Create $TAG tag..."
+	# set SPECDIR from LISTNAMES if empty
+	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
+
+        # do check only on gear repo
+	is_gear $SPECDIR || return 0
+
+        if [ -z "$FORCE" ] && is_last_commit_tag $TAG ; then
+                echo "Tag $TAG already exists for the last commit"
+                return 0
+        fi
+
 	# FIXME: uncomment use-agent in ~/.gnupg/gpg.conf, but with ssh access to build server I got
 	#  gpg: problem with the agent - disabling agent use
 	#  gpg: Invalid passphrase; please try again ...
+	# needed correct user.name/user.email for get GPG id
 
 	# gpg tries to use the agent but will fallback to the regular mode
 	# if there is a problem connecting to the agent.
 	# GPG_AGENT_INFO=
 
-	# set SPECDIR from LISTNAMES if empty
-	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
+	[ -n "$FORCE" ] && echo "Force create $TAG tag..." || echo "Create $TAG tag..."
 
-	if is_gear $SPECDIR ; then
-		# needed correct user.name/user.email for get GPG id
-		cd $SPECDIR >/dev/null
-		# default: <VERSION>-<RELEASE>
-		docmd $GEARCTAG $FORCE || RESULT=1
-		# try direct set rule file
-		# FIXME: always use for gear repo path to rule file
-		# Note: gear-create-tag can't use links, hack with readlink
-		# TODO: skip notification if tag still at last commit
-		if [ "$RESULT" = 1 ] ; then
-			if $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
-				docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
-			elif $GEARCTAG $FORCE 2>&1 | grep -q "already exists"; then
-				echog "Note! Tag unchanged! Use -f key for override tag"
-				RESULT=0
-			fi
+	cd $SPECDIR >/dev/null
+
+	# default: <VERSION>-<RELEASE>
+	docmd $GEARCTAG $FORCE || RESULT=1
+	if [ "$RESULT" = 1 ] ; then
+		if $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
+			docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
+		elif $GEARCTAG $FORCE 2>&1 | grep -q "already exists"; then
+			echog "Note! Tag unchanged! Use -f key for override tag"
+			RESULT=1
 		fi
-		test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG is missed in repo"
-		cd - >/dev/null
 	fi
+	test -z "$TAG" || docmd git tag -v "$TAG" || fatal "Tag $TAG still missed in the repo"
+	cd - >/dev/null
 	return $RESULT
 }
 
