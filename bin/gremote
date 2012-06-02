@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod git
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	echo "gremote - git remote -v"
+	echo "Use: gremote"
+	exit 1
+fi
+
+if is_girar_name $1 ; then
+	GIRARHOST=$1
+	shift
+fi
+
+test -r "$1" && fatal "Do not need any params more"
+
+showcmd git remote -v
+git remote -v | sed -e "s|(fetch)$||" | sed -e "s|(push)$||" | sort -u
