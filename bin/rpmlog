@@ -78,7 +78,7 @@ fi
 
 # TODO: найти параметр для упрощения истории. пока - sort?
 # Делает первую букву маленькой, убирает точку в конце строки
-CHANGELOG="`git log $FROMTAG..$TOTAG --simplify-merges --dense --pretty="- %s" | sort -u | sed -e "s|\.\$||g" | sed -e "s|- \([A-Z]\)|- \l\1|g" | sed -e "s|%||g"`"
+CHANGELOG="`git log $FROMTAG..$TOTAG --simplify-merges --dense --pretty="- %s" | sed -e "s|\.\$||g" | sed -e "s|- \([A-Z]\)|- \l\1|g" | sed -e "s|%||g"`"
 [ -n "$CHANGELOG" ] || fatal "git log was failed"
 
 if [ -n "$TESTRUN" ] ; then
