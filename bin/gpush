@@ -70,7 +70,16 @@ push_to_remote()
 	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST $TEXTTAG"
 
 	docmd git push $PUSHALL $PUSHFORCE $GHOST $CURRENTBRANCH || return
-	[ -z "$TAGSALL" ] || docmd git push --tags $GHOST $CURRENTBRANCH
+	if [ -n "$TAGSALL" ] ; then
+		docmd git push --tags $GHOST $CURRENTBRANCH
+	else
+		local LASTTAG=$(git describe --abbrev=0 --tags)
+		# check if the last tag put on the last commit
+		if [ "$(git rev-parse HEAD)" = "$(git rev-parse $LASTTAG^0)" ] ; then
+			echo "*** Push last tag $LASTTAG"
+			docmd git push $PUSHFORCE $GHOST $LASTTAG
+		fi
+	fi
 }
 
 tune_girarlist()
