@@ -87,7 +87,7 @@ print_list()
 
 get_root_git_dir()
 {
-        local DIR=$(git rev-parse --git-dir)/../
+        local DIR=$(git rev-parse --git-dir 2>/dev/null)/../ || return
         readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
 }
 
