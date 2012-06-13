@@ -110,6 +110,7 @@ is_last_commit_tag()
 {
         local TAG=$1
         test -n "$TAG" || TAG=$(get_last_tag)
+        [ -n "$TAG" ] || return
         # check if the tag put on the last commit
         [ "$(git rev-parse HEAD)" = "$(git rev-parse $TAG^0)" ]
 }
