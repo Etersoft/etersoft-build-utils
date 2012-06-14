@@ -101,11 +101,13 @@ build_rpms_name_by_srpm()
 spec_by_srpm()
 {
 	local PKG=$1
-	local PKGNAME
-	PKGNAME=$(querypackage $PKG NAME)
-	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
+	#local PKGNAME
+	#PKGNAME=$(querypackage $PKG NAME)
+	#[ -n "$PKGNAME" ] && SPECNAME= $PKGNAME.spec
 	# if spec have a different name, use pkg file list
-	[ -r "$PKGNAME.spec" ] || rpm -qlp $PKG | grep "\.spec\$"
+	#[ -r "$PKGNAME.spec" ]
+	# CHECKME: it is possible to have two or more specs in one package?
+	rpm -qlp $PKG | grep "\.spec\$"
 }
 
 
