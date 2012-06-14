@@ -20,6 +20,7 @@ libjpeg-devel|libjpeg62-dev
 libjpeg|libjpeg62
 libcups-devel|libcups2-dev
 libcups|libcups2
+cups|cups cups-bsd cups-client
 libasound-devel|libasound2-dev
 libreadline-devel|libreadline5-dev
 libreadline|libreadline5
@@ -27,6 +28,7 @@ libreadline|libreadline5
 libXxf86misc-devel|x11proto-xf86misc-dev
 libXaw-devel|libxaw7-dev
 libXext-devel|libxext-dev
+libXext|libxext6
 #libXevie-devel|libxevie-dev
 # depricated since 2010
 libXevie-devel|
@@ -37,6 +39,8 @@ libXdamage|libxdamage1
 libXrandr-devel|libxrandr-dev
 libXrandr|libxrandr2
 libXt-devel|libxt-dev
+libXft-devel|libxft-devel
+libXft|libxft2
 libXt|libxt1
 libXpm|libxpm4
 libXpm-devel|libxpm-dev
