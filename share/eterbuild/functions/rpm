@@ -104,6 +104,8 @@ spec_by_srpm()
 	local PKGNAME
 	PKGNAME=$(querypackage $PKG NAME)
 	[ -n "$PKGNAME" ] && echo $PKGNAME.spec
+	# if spec have a different name, use pkg file list
+	[ -r "$PKGNAME.spec" ] || rpm -qlp $PKG | grep "\.spec\$"
 }
 
 
