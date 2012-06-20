@@ -136,3 +136,16 @@ libMySQL-devel|mysql-devel
 
 # License problem, add individually
 libmpg123-devel|
+
+# meta packages
+webclient|
+fonts-ttf-core|liberation-mono-fonts liberation-narrow-fonts liberation-sans-fonts liberation-serif-fonts
+
+glibc-utils|glibc
+glibc-nss|glibc
+glibc-pthread|glibc
+
+termutils|ncurses
+udev-rules|udev
+
+gettext-tools|gettext

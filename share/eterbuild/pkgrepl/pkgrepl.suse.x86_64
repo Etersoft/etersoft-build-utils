@@ -42,7 +42,4 @@ libXv-devel|xorg-x11-libXv-devel
 libXpm|xorg-x11-libXpm
 libXcomposite|xorg-x11
 
-libmesa-devel|Mesa
-libGLU-devel|Mesa
-
 libpng12|libpng12-0

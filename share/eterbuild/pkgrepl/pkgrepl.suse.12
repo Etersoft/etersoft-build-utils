@@ -1,2 +1,5 @@
 libhal-devel|
 libpng-devel|libpng14-devel
+libusb-devel|libusb-1_0-devel
+libusb|libusb-1_0-0
+gstreamer-devel|gstreamer-0_10-devel

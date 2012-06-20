@@ -24,7 +24,6 @@ libsane|libsane1
 xorg-x11-proto-devel|libxorg-x11-devel
 libxorg-x11-devel|libxorg-x11-devel
 
-libICE-devel|libice-devel
 libFS-devel|libfs-devel
 libSM-devel|libsm-devel
 libX11-devel|libx11-devel
@@ -43,6 +42,7 @@ libXmu-devel|libxmu-devel
 libXp-devel|libxp-devel
 libXpm-devel|libxpm-devel
 libXrender-devel|libxrender-devel
+libXrender|libxrender1
 libXres-devel|libxres-devel
 libXScrnSaver-devel|libxscrnsaver1-devel
 libXinerama-devel|libxinerama-devel
@@ -68,6 +68,7 @@ libmesa-devel|libmesagl1-devel
 libGLU-devel|libmesaglu1-devel
 libmesa|libmesagl1
 libGLU|libmesaglu1
+libGL|libmesagl1
 
 libexpat|libexpat1
 libexpat-devel|libexpat1-devel
@@ -78,6 +79,8 @@ xorg-xextproto-devel|x11-proto-devel
 xorg-sdk|x11-server-devel
 
 libICE-devel|libice6-devel
+libICE|libice6
+libuuid|libuuid1
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel
@@ -90,3 +93,5 @@ libopenal-devel|libopenal-devel
 samba-client|mount-cifs
 
 gstreamer-devel|libgstreamer0.10-devel
+
+fonts-ttf-core|fonts-ttf-liberation

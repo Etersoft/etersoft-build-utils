@@ -42,7 +42,5 @@ libXv-devel|xorg-x11-libXv-devel
 libXcomposite|xorg-x11
 libXpm|xorg-x11-libXpm
 
-libmesa-devel|Mesa
-libGLU-devel|Mesa
-
 libpng12|libpng12-0
+gst-plugins-devel|gstreamer-0_10-plugins-base-devel
