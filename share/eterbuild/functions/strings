@@ -32,23 +32,18 @@ remove_from_list()
 # Example: do_exclude_list "1 3" "1 2 3 4" -> "2 4"
 do_exclude_list()
 {
-        local i
-        local RES=
-        for i in $2 ; do
-                echo "$1" | grep -q -w "$i" || RES="$RES $i"
-        done
-        strip_spaces "$RES"
+        $ETERBUILDBIN/estrlist exclude "$@"
 }
 
 # regexp_exclude_list "22 1." "11 12 21 22" -> "21"
 regexp_exclude_list()
 {
-        local i
-        local RES="$2"
-        for i in $1 ; do
-                RES=$(remove_from_list "$i" "$RES")
-        done
-        strip_spaces "$RES"
+        $ETERBUILDBIN/estrlist reg_exclude "$@"
+}
+
+estrlist()
+{
+        $ETERBUILDBIN/estrlist "$@"
 }
 
 
