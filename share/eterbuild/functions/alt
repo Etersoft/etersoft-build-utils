@@ -152,7 +152,15 @@ trans_rpmdeps_to_pkgname()
 	#TRREALREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "^Selecting" | cut -f2 -d" " | sort -u)
 
 	# remove basesystem packages
-	ALREADYHANDLEDRPM="bash sh filesystem alt-gpgkeys glibc-core glibc-locales glibc-preinstall tcb-utils nss_tcb libtcb chkconfig service setup shadow-utils shadow-convert module-init-tools util-linux-control pam
+	ALREADYHANDLEDRPM="
+bash sh filesystem alt-gpgkeys glibc-core glibc-locales glibc-preinstall
+tcb-utils nss_tcb libtcb chkconfig service setup
+shadow-utils shadow-convert module-init-tools util-linux-control pam
+alternatives
+automake-common
+glib2-locales
+rpm-macros-alternatives
+emacs-base
 pam0-config
 pam0_mktemp
 pam0_passwdqc
@@ -162,8 +170,14 @@ pam-config
 pam-config-control
 sysvinit-utils
 libpam0
+control
+libbeecrypt7
+libX11-locales
+glib2-locales
+libtic
 libpasswdqc
 librpm
+libshell
 ca-certificates
 common-licenses
 librpmbuild
