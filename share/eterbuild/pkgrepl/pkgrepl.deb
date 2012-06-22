@@ -6,7 +6,7 @@ libgphoto2|libgphoto2-2
 liblcms-devel|liblcms1-dev
 liblcms|liblcms1
 libldap-devel|libldap2-dev
-libldap|libldap2
+libldap|libldap-2.4-2
 glibc-devel|libc6-dev
 glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
@@ -39,9 +39,9 @@ libXdamage|libxdamage1
 libXrandr-devel|libxrandr-dev
 libXrandr|libxrandr2
 libXt-devel|libxt-dev
-libXft-devel|libxft-devel
+libXft-devel|libxft-dev
 libXft|libxft2
-libXt|libxt1
+libXt|libxt6
 libXpm|libxpm4
 libXpm-devel|libxpm-dev
 libXcomposite-devel|libxcomposite-dev
@@ -118,6 +118,8 @@ ImageMagick-tools|imagemagick
 wxGTK-devel|wx-common
 libopenal-devel|libopenal-dev
 libtinfo-devel|libncurses5-dev
+libtinfo|libncurses5
+terminfo|ncurses-term
 
 # cifs
 samba-client|smbfs
@@ -126,6 +128,8 @@ jackit-devel|libjack-dev
 libXScrnSaver-devel|
 libalsa-devel|libasound2-dev
 libieee1284-devel|libieee1284-3-dev
+libieee1284|libieee1284-3
+
 libpng-devel|libpng12-dev
 libtiff-devel|libtiff4-dev
 libtiff|libtiff4
@@ -195,6 +199,8 @@ perl-XML-Simple|libxml-simple-perl
 gstreamer-devel|libgstreamer0.10-dev
 gst-plugins-devel|libgstreamer-plugins-base0.10-dev
 libgstreamer|libgstreamer0.10-0
+libgst-plugins|libgstreamer-plugins-base0.10-dev
+#libgstreamer-plugins0.8-0
 
 diffutils|diff
 # xz is missed, has only lzma
@@ -204,3 +210,47 @@ libnatspec-devel|
 
 postgresql-common|
 libqt3-devel|libqt3-mt-dev
+
+bzlib-devel|libbz2-dev
+bzlib|libbz2-1.0
+
+libunistring|libunistring0
+liblzma|liblzma2
+
+xml-common|
+getopt|util-linux
+glib2|libglib2.0-0
+glib2-devel|libglib2.0-dev
+libattr|libattr1
+libcap|libcap2
+libsasl2|libsasl2-2
+libelf|libelf1
+libudev1|libudev0
+libacl|libacl1
+libaudit1|libaudit0
+libcom_err|libcomerr2
+libffi|libffi5
+libgmp3|libgmp3c2
+libkeyutils|libkeyutils1
+libkrb5|libkrb5-3
+libmpg123|libmpg123-0
+libsasl2|libsasls2-2
+libselinux|libselinux1
+libSM|libsm6
+libssl10|libssl0.9.8
+libXau|libxau6
+libxcb|libxcb1
+libXdmcp|libxdmcp6
+libXxf86vm|libxxf86vm1
+libpciaccess|libpciaccess0
+libdrm|libdrm2
+#|libgd2-noxpm
+libgd2|
+# ???
+liborc|
+libbeecrypt7|
+libdb4.7|
+libcroco|
+libexif|
+liblockdev|
+libusb-compat|

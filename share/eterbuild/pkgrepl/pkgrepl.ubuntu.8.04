@@ -9,3 +9,5 @@ libv4l-devel|
 
 libcups-devel|libcupsys2-dev
 libcups|libcupsys2
+
+libffi|libffi4
