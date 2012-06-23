@@ -37,3 +37,7 @@ check
 TEST1="BuildPreReq: rpm-build-altlinux-compat, rpm, rpm-build"
 REPL1="BuildPreReq: rpm-build-altlinux-compat, rpm, rpm"
 check
+
+TEST1="BuildPreReq: libstdc++"
+REPL1="BuildPreReq: libstdc++"
+check

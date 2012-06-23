@@ -24,6 +24,7 @@ Requires: binutils
 Requires: Xdialog
 Requires: /usr/bin/xvt
 %endif
+Requires: libstdc++
 BuildPreReq: rpm-build-compat gcc4.1 gcc
 BuildRequires: imake xorg-cf-files gccmakedep
 

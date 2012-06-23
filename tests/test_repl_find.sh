@@ -63,7 +63,8 @@ echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 print_pkgrepl_list
 
 check_repl rpm-build-compat rpm-build-altlinux-compat
-check_repl libusb-devel libusb-dev
+check_repl libusb-devel libusb-1.0-0-dev
+check_repl libstdc++ libstdc++
 
 
 PKGVENDOR=mdv

@@ -26,4 +26,4 @@ check "BuildDep" "imake xorg-cf-files gccmakedep rpm-build-compat" "$LISTBUILDDE
 
 echo -
 LISTREQDEP=`print_pkgreq $SPECNAME`
-check "Reqs" "binutils dbus-tools-gui expect foomatic-db-engine netcat nx openssl /usr/bin/xvt Xdialog" "$LISTREQDEP"
+check "Reqs" "binutils dbus-tools-gui expect foomatic-db-engine libstdc++ netcat nx openssl /usr/bin/xvt Xdialog" "$LISTREQDEP"
