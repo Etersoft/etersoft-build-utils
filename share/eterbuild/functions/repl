@@ -139,7 +139,7 @@ convert_pkgreqs_to_target()
 	local j
 	for j in $listdep; do
 		tolocal_anyrepl $j $repl_list && echo "$TARGETPKGNAME" || echo $j
-	done | sort -u
+	done | sort -u | sed -e "s|\\\\+|\+|g"
 }
 
 # Prints out buildreqs in target notation for SPEC (1st arg)
