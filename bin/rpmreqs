@@ -1,0 +1,170 @@
+#!/bin/sh
+# 2012 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+#
+
+VERBOSE=
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+load_mod spec rpm
+
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "rpmreqs [package(s) file(s)] - print out package requires"
+	exit 0
+fi
+
+# copied from aptU
+get_rpmpkg_requires()
+{
+	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|(.*[0-9])||g" | grep -v "^rpmlib" | sort -u
+}
+
+filter_pkgname()
+{
+	sed -e "s/^i586-//g" | sed -e "s/\.32bit$//g"
+}
+
+convert_pkgfile_to_pkgname()
+{
+	for ni in $@ ; do
+		# drop internal reqs (already converted via apt)
+		#echo $ni | grep -q "/" && continue
+		#echo $ni | grep -q "\.so" && continue
+		#echo $ni | grep -q ")" && continue
+		# extra words when run on x86_64
+		ni=$(querypackage $ni NAME)
+		echo $ni | filter_pkgname
+	done | sort -u
+}
+
+
+# Translate requires from local rpm package to package names (on local ALT Linux Sisyphus)
+# FIXME: do not support x86_64 issues, use only with 32 bit packages
+# Use test from tests/test_cget_depends.sh
+trans_rpmdeps_to_pkgname_ldv()
+{
+	# partially copied from aptU
+	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
+
+	local REQLIST="$@"
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+
+	REALPKGNAMELIST=$(regexp_exclude_list ". /*" "$REQLIST")
+	REQCONVLIST=$(do_exclude_list "$REALPKGNAMELIST" "$REQLIST")
+
+	set_hasherdir
+	HASHERDIR=$HASHERDIR-pkgreqs
+	mkdir -p $HASHERDIR
+	PKGFILES=$(mkaptbox -f $HASHERDIR && $HASHERDIR/aptbox/apt-get install -qqqy -oRPM::PM=external -oDir::Bin::rpm=hsh-rpmi-print-files $REQCONVLIST)
+	# partially copied from aptU
+	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
+	# FIXME: f.i., we got /usr/bin/lpstat in VIRTREQ (select cups or lprng package?). Skip now
+	#REQLIST=$(regexp_exclude_list "VIRTREQ" "$REQLIST")
+
+	#TRREALREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "^Selecting" | cut -f2 -d" " | sort -u)
+
+	# remove basesystem packages
+	ALREADYHANDLEDRPM="
+bash sh filesystem alt-gpgkeys glibc-core glibc-locales glibc-preinstall
+tcb-utils nss_tcb libtcb chkconfig service setup
+shadow-utils shadow-convert module-init-tools util-linux-control pam
+alternatives
+automake-common
+glib2-locales
+rpm-macros-alternatives
+emacs-base
+pam0-config
+pam0_mktemp
+pam0_passwdqc
+pam0_tcb
+pam0_userpass
+pam-config
+pam-config-control
+sysvinit-utils
+libpam0
+control
+libbeecrypt7
+libX11-locales
+glib2-locales
+libtic
+libpasswdqc
+librpm
+libshell
+ca-certificates
+common-licenses
+librpmbuild
+passwdqc-control"
+	REQLIST=$(estrlist union $(convert_pkgfile_to_pkgname $PKGFILES) $REALPKGNAMELIST)
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST" )
+	estrlist union $REQLIST
+}
+
+# Translate requires from local rpm package to package names (on local ALT Linux Sisyphus)
+# FIXME: do not support x86_64 issues, use only with 32 bit packages
+# Use test from tests/test_cget_depends.sh
+trans_rpmdeps_to_pkgname_lav()
+{
+	# partially copied from aptU
+	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
+
+	local REQLIST="$@"
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+
+	# FIXME: strange regexp for drop libNAME.so.NUM and perl(Package) and /bin/sh
+	REALPKGNAMELIST=$(regexp_exclude_list ". .. /* (*" "$REQLIST")
+	# FIXME: external list? Set priorities/
+	REQCONVLIST=$(do_exclude_list "$REALPKGNAMELIST" "$REQLIST" | sed -e "s|/usr/bin/lpstat|cups|g" | sed -e "s|libldap_r-2.4.so.2|libldap|g" | sed -e "s|liblber-2.4.so.2|libldap|g")
+
+	# partially copied from aptU
+	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
+	#FIXME: f.i., we got /usr/bin/lpstat in VIRTREQ (select cups or lprng package?). Skip now
+	#REQLIST=$(regexp_exclude_list "VIRTREQ" "$REQLIST")
+	TFILE=$(make_temp_file)
+	PKGFILES=$(LANG=C apt-get install --print-uris $REQCONVLIST 2>$TFILE | grep "^Selecting" | cut -f2 -d" " | sort -u | filter_pkgname)
+	if grep -q "is a virtual package provided by" $TFILE ; then
+		fatal "multiple provides: $(cat $TFILE)"
+	fi
+	rm -f $TFILE
+
+	# remove basesystem packages
+	ALREADYHANDLEDRPM="
+bash sh filesystem alt-gpgkeys glibc-core glibc-locales glibc-preinstall
+tcb-utils nss_tcb libtcb chkconfig service setup
+shadow-utils shadow-convert module-init-tools util-linux-control pam
+alternatives
+automake-common
+glib2-locales
+rpm-macros-alternatives
+emacs-base
+pam0-config
+pam0_mktemp
+pam0_passwdqc
+pam0_tcb
+pam0_userpass
+pam-config
+pam-config-control
+sysvinit-utils
+libpam0
+control
+libbeecrypt7
+libX11-locales
+glib2-locales
+libtic
+libpasswdqc
+librpm
+libshell
+ca-certificates
+common-licenses
+librpmbuild
+passwdqc-control"
+	REQLIST=$(estrlist union $PKGFILES $REALPKGNAMELIST)
+	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST" )
+	estrlist union $REQLIST
+}
+
+REQLIST=$(get_rpmpkg_requires $@) || fatal "can't get primary requires"
+trans_rpmdeps_to_pkgname_lav $REQLIST
+
