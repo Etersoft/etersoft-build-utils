@@ -138,7 +138,7 @@ convert_pkgreqs_to_target()
 
 	local j
 	for j in $listdep; do
-		tolocal_anyrepl $j $repl_list && echo "$TARGETPKGNAME" || echo $j
+		tolocal_anyrepl $j $repl_list && estrlist list "$TARGETPKGNAME" || echo $j
 	done | sort -u | sed -e "s|\\\\+|\+|g"
 }
 
