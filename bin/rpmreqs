@@ -24,7 +24,17 @@ get_rpmpkg_requires()
 
 filter_pkgname()
 {
-	sed -e "s/^i586-//g" | sed -e "s/\.32bit$//g"
+	sed -e "s/^i586-//g
+		s/\.32bit$//g"
+}
+
+filter_multiple_provides()
+{
+	sed -e "s|/usr/bin/lpstat|cups|g
+		s|libldap_r-2.4.so.2|libldap|g
+		s|liblber-2.4.so.2|libldap|g
+		s|/usr/bin/wine||g
+		s|libwine.so.1||g"
 }
 
 convert_pkgfile_to_pkgname()
@@ -116,7 +126,7 @@ trans_rpmdeps_to_pkgname_lav()
 	# FIXME: strange regexp for drop libNAME.so.NUM and perl(Package) and /bin/sh
 	REALPKGNAMELIST=$(regexp_exclude_list ". .. /* (*" "$REQLIST")
 	# FIXME: external list? Set priorities/
-	REQCONVLIST=$(do_exclude_list "$REALPKGNAMELIST" "$REQLIST" | sed -e "s|/usr/bin/lpstat|cups|g" | sed -e "s|libldap_r-2.4.so.2|libldap|g" | sed -e "s|liblber-2.4.so.2|libldap|g")
+	REQCONVLIST=$(do_exclude_list "$REALPKGNAMELIST" "$REQLIST" | filter_multiple_provides)
 
 	# partially copied from aptU
 	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
