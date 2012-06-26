@@ -2,3 +2,4 @@ libjpeg-devel|libjpeg8-dev
 libjpeg|libjpeg8
 libicu|libicu48
 liblzma|liblzma5
+cups|cups cups-bsd cups-client

@@ -10,6 +10,7 @@ xorg-cf-files|
 netcat|nc
 
 login|util-linux
+getopt|util-linux
 su|coreutils
 
 groff-base|groff
@@ -128,6 +129,7 @@ rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
 
 libnatspec-devel|
+libnatspec|
 
 postgresql-common|
 
@@ -149,3 +151,7 @@ termutils|ncurses
 udev-rules|udev
 
 gettext-tools|gettext
+# drop
+libusb-compat|
+libdb4.7|
+xml-common|

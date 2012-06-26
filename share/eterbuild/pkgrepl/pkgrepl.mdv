@@ -26,18 +26,25 @@ libxorg-x11-devel|libxorg-x11-devel
 
 libFS-devel|libfs-devel
 libSM-devel|libsm-devel
+libSM|libsm6
 libX11-devel|libx11-devel
+libX11|libx11_6
 libXau-devel|libxau-devel
+libXau|libxau6
 libXaw-devel|libxaw-devel
+libXaw|libxaw7
 libXrandr-devel|libxrandr-devel
 libXdmcp-devel|libxdmcp-devel
+libXdmcp|libxdmcp6
 libXfixes-devel|libxfixes-devel
+libXfixes|libxfixes3
 libXfont-devel|libxfont-devel
 libXft-devel|libxft-devel
 libXext-devel|libxext6-devel
 libXext|libxext6
 libXi-devel|libxi-devel
 libXxf86misc-devel|libxxf86misc-devel
+libXxf86misc|libxxf86misc1
 libXmu-devel|libxmu-devel
 libXp-devel|libxp-devel
 libXpm-devel|libxpm-devel
@@ -47,15 +54,18 @@ libXres-devel|libxres-devel
 libXScrnSaver-devel|libxscrnsaver1-devel
 libXinerama-devel|libxinerama-devel
 libXt-devel|libxt-devel
+libXt|libxt6
 libXtst-devel|libxtst-devel
 libXxf86dga-devel|libxxf86dga-devel
 libXcomposite-devel|libxcomposite-devel
 libXxf86vm-devel|libxxf86vm-devel
+libXxf86vm|libxxf86vm1
 libdmx-devel|libdmx-devel
 libdmx|libdmx1
 libfontenc-devel|libfontenc1-devel
 libfontenc|libfontenc1
 libXdamage-devel|libxdamage-devel
+libXdamage|libxdamage1
 libxkbfile-devel|libxkbfile-devel
 libxkbui-devel|libxkbui-devel
 libXTrap-devel|libxtrap-devel
@@ -80,7 +90,8 @@ xorg-sdk|x11-server-devel
 
 libICE-devel|libice6-devel
 libICE|libice6
-libuuid|libuuid1
+#libuuid|libuuid1
+libuuid|
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel

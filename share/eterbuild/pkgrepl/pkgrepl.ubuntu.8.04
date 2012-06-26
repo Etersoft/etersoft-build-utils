@@ -11,3 +11,5 @@ libcups-devel|libcupsys2-dev
 libcups|libcupsys2
 
 libffi|libffi4
+cups|cupsys cupsys-bsd cupsys-client
+glibc-utils|

@@ -12,3 +12,24 @@ libXcomposite|libxcomposite1
 libXpm|libxpm4
 
 jackit-devel|libjack0-devel
+bzlib|libbzip2_1
+getopt|util-linux-ng
+libcroco|libcroco0.6_3
+libffi|libffi5
+liblzma|liblzma2
+libpcre3|libpcre0
+libunistring|
+terminfo|ncurses
+libpciaccess|libpciaccess0
+libaudit1|libaudit0
+liblockdev|liblockdev1
+
+gstreamer-devel|libgstreamer0.10-devel
+gst-plugins-devel|libgstreamer-plugins-base0.10-devel
+libgstreamer|libgstreamer0.10_0.10
+libgst-plugins|libgstreamer-plugins-base0.10
+
+libuuid1
+
+libcrypto10|libopenssl0.9.8
+libssl10|libopenssl0.9.8

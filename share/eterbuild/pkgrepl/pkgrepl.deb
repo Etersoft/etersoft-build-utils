@@ -27,6 +27,7 @@ libreadline|libreadline5
 
 libXxf86misc-devel|x11proto-xf86misc-dev
 libXaw-devel|libxaw7-dev
+libXaw|libxaw7
 libXext-devel|libxext-dev
 libXext|libxext6
 #libXevie-devel|libxevie-dev
@@ -59,11 +60,10 @@ libGL-devel|libgl1-mesa-dev
 libGL|libgl1-mesa-glx
 
 gcc-c++|g++
-libstdc++6-devel|libstdc++-dev
 tcl-devel|tcl8.4-dev
 perl-devel|libperl-dev
 kernel-build-tools|
-#libusb-devel|libusb-dev
+libusb|libusb-0.1-4
 
 libpopt|libpopt0
 
@@ -156,7 +156,11 @@ glibc-nss|libc6
 glibc-pthread|libc6
 dbus-tools-gui|dbus-x11
 python-base|python
-python-module-xml|python-libxml2
+python-modules-xml|python-libxml2
+python-module-dbus|python-dbus
+python-module-pygobject|python-gobject
+python-modules-logging|
+#python-logging
 vixie-cron|cron
 
 # nx
@@ -199,7 +203,7 @@ perl-XML-Simple|libxml-simple-perl
 gstreamer-devel|libgstreamer0.10-dev
 gst-plugins-devel|libgstreamer-plugins-base0.10-dev
 libgstreamer|libgstreamer0.10-0
-libgst-plugins|libgstreamer-plugins-base0.10-dev
+libgst-plugins|libgstreamer-plugins-base0.10
 #libgstreamer-plugins0.8-0
 
 diffutils|diff
@@ -207,6 +211,7 @@ diffutils|diff
 xz|lzma
 
 libnatspec-devel|
+libnatspec|
 
 postgresql-common|
 libqt3-devel|libqt3-mt-dev
@@ -254,3 +259,6 @@ libcroco|
 libexif|
 liblockdev|
 libusb-compat|
+
+gccmakedep|
+crontabs|bsdmainutils

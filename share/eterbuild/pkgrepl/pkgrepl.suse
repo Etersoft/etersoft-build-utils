@@ -12,6 +12,7 @@ libfreetype|freetype2
 gpm-devel|
 libungif-devel|
 libalsa-devel|alsa-devel
+libalsa|libasound2
 libldap-devel|openldap2-devel
 libldap|openldap2-client
 libieee1284-devel|libieee1284
@@ -91,3 +92,22 @@ libaudiofile|audiofile
 libaudiofile-devel|audiofile-devel
 
 libssl-devel|libopenssl-devel
+
+
+bzlib-devel|libbz2-devel
+bzlib|libbz2-1
+
+libgst-plugins|gstreamer-0_10-plugins-base
+
+libcroco|libcroco-0_6-3
+libffi|libffi43
+liblzma|liblzma0
+libpcre3|libpcre0
+libunistring|
+libpciaccess|libpciaccess0
+libaudit1|audit-libs
+liblockdev|
+libselinux|libselinux1
+
+libxcb|xorg-x11-libxcb
+libgd2|gd
