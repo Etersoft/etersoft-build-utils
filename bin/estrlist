@@ -38,12 +38,17 @@ strip_spaces()
         echo "$*" | filter_strip_spaces
 }
 
-union()
+list()
 {
         local i
         for i in $@ ; do
                 echo "$i"
-        done | sort -u
+        done
+}
+
+union()
+{
+         list $@ | sort -u
 }
 
 
