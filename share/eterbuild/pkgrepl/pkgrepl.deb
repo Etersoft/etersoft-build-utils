@@ -203,7 +203,7 @@ perl-XML-Simple|libxml-simple-perl
 gstreamer-devel|libgstreamer0.10-dev
 gst-plugins-devel|libgstreamer-plugins-base0.10-dev
 libgstreamer|libgstreamer0.10-0
-libgst-plugins|libgstreamer-plugins-base0.10
+libgst-plugins|libgstreamer-plugins-base0.10-0
 #libgstreamer-plugins0.8-0
 
 diffutils|diff

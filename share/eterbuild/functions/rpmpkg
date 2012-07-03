@@ -45,7 +45,7 @@ get_install_package_command()
 		"ROSA")
 			[ -n "$INAC" ] && CMD="urpmi --no-verify-rpm" || CMD="urpmi --auto --no-verify-rpm"
 			;;
-		"SUSE")
+		"SUSE|SLED|SLES")
 			[ -n "$INAC" ] && CMD="zypper --non-interactive install" || CMD="yes | zypper --non-interactive install"
 			;;
 		*)

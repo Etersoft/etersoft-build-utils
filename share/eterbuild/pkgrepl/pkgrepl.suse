@@ -76,7 +76,6 @@ sysvinit-utils|sysvinit
 netcat|netcat
 
 xorg-sdk|xorg-x11-server-sdk
-libICE-devel|xorg-x11-libICE-devel
 libesd|libesd
 libesd-devel|libesd-devel
 
@@ -111,3 +110,7 @@ libselinux|libselinux1
 
 libxcb|xorg-x11-libxcb
 libgd2|gd
+
+libXaw|
+libcrypto10|libopenssl0_9_8
+libssl10|libopenssl0_9_8

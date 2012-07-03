@@ -48,6 +48,7 @@ libXxf86misc|libxxf86misc1
 libXmu-devel|libxmu-devel
 libXp-devel|libxp-devel
 libXpm-devel|libxpm-devel
+libXpm|libxpm4
 libXrender-devel|libxrender-devel
 libXrender|libxrender1
 libXres-devel|libxres-devel
@@ -103,6 +104,28 @@ libopenal-devel|libopenal-devel
 # cifs
 samba-client|mount-cifs
 
-gstreamer-devel|libgstreamer0.10-devel
-
 fonts-ttf-core|fonts-ttf-liberation
+
+jackit-devel|libjack0-devel
+bzlib|libbzip2_1
+getopt|util-linux-ng
+libcroco|libcroco0.6_3
+libffi|libffi5
+liblzma|liblzma2
+libpcre3|libpcre0
+libunistring|
+terminfo|ncurses
+libpciaccess|libpciaccess0
+libaudit1|libaudit0
+liblockdev|liblockdev1
+
+libuuid1
+
+libcrypto10|libopenssl0.9.8
+libssl10|libopenssl0.9.8
+
+gstreamer-devel|libgstreamer0.10-devel
+gst-plugins-devel|libgstreamer-plugins-base0.10-devel
+libgstreamer|libgstreamer0.10_0.10
+libgst-plugins|libgstreamer-plugins-base0.10
+

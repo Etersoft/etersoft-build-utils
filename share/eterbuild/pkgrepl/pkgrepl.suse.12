@@ -3,3 +3,9 @@ libpng-devel|libpng14-devel
 libusb-devel|libusb-1_0-devel
 libusb|libusb-1_0-0
 gstreamer-devel|gstreamer-0_10-devel
+libffi|libffi46
+
+libICE-devel|xorg-x11-libICE-devel
+libuuid|libuuid1
+libXrender|xorg-x11-libXrender
+libXrender-devel|xorg-x11-libXrender-devel

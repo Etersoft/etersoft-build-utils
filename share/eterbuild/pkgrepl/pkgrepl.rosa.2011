@@ -96,3 +96,7 @@ libudev-devel|libudev0-devel
 libgphoto2-devel|libgphoto-devel
 gst-plugins-devel|libgstreamer-plugins-base0.10-devel
 
+liblzma|liblzma5
+libjpeg|libjpeg62
+libgmp3|libgmp10
+libaudit1|libaudit1
