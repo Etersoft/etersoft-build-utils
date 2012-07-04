@@ -99,7 +99,7 @@ bzlib|libbz2-1
 libgst-plugins|gstreamer-0_10-plugins-base
 
 libcroco|libcroco-0_6-3
-libffi|libffi43
+libffi|
 liblzma|liblzma0
 libpcre3|libpcre0
 libunistring|

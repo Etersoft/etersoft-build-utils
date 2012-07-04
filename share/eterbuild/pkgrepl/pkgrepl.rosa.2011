@@ -100,3 +100,7 @@ liblzma|liblzma5
 libjpeg|libjpeg62
 libgmp3|libgmp10
 libaudit1|libaudit1
+
+libssl-devel|libopenssl-devel
+libcrypto10|libopenssl1.0.0
+libssl10|libopenssl1.0.0

@@ -40,6 +40,7 @@ libXfixes-devel|libxfixes-devel
 libXfixes|libxfixes3
 libXfont-devel|libxfont-devel
 libXft-devel|libxft-devel
+libXft|libxft2
 libXext-devel|libxext6-devel
 libXext|libxext6
 libXi-devel|libxi-devel

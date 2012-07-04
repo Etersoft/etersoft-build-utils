@@ -6,7 +6,9 @@ makedepend|xutils-dev
 libmpg123-devel|
 libudev-devel|
 libv4l-devel|
-
+libcap|libcap1
+libunistring|
+libltdl7|libltdl3
 libcups-devel|libcupsys2-dev
 libcups|libcupsys2
 

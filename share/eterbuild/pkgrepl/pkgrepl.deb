@@ -220,7 +220,7 @@ bzlib-devel|libbz2-dev
 bzlib|libbz2-1.0
 
 libunistring|libunistring0
-liblzma|liblzma2
+liblzma|
 
 xml-common|
 getopt|util-linux
