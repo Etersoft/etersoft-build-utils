@@ -34,7 +34,10 @@ packages-info-i18n-common|
 # Check on Fedora
 libpam-devel|pam-devel
 libpam0-devel|pam-devel
+# libssl???
 libssl|openssl
+libssl7|openssl
+libssl10|openssl
 libssl-devel|openssl-devel
 libfreetype|freetype
 freetype2-devel|freetype-devel

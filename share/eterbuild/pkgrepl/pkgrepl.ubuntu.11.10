@@ -1,5 +1,5 @@
 libstdc++-devel|libstdc++6-4.6-dev
 libstdc++6-devel|libstdc++6-4.6-dev
 gcc-g++|g++-4.6
-libssl|libssl1.0.0
+libssl10|libssl1.0.0
 libffi|libffi6

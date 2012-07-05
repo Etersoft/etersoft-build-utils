@@ -186,7 +186,9 @@ xlsfonts|x11-utils
 udev-rules|udev
 termutils|ncurses-bin
 libuuid|libuuid1
-libssl|libssl0.9.8
+libssl|
+libssl7|libssl0.9.8
+libssl10|libssl0.9.8
 libncurses|libncurses5
 libICE|libice6
 
@@ -242,7 +244,6 @@ libmpg123|libmpg123-0
 libsasl2|libsasls2-2
 libselinux|libselinux1
 libSM|libsm6
-libssl10|libssl0.9.8
 libXau|libxau6
 libxcb|libxcb1
 libXdmcp|libxdmcp6
