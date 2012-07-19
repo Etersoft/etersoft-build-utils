@@ -6,13 +6,20 @@
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gitcam - do fast git commit amend (apply all current changes to the last commit)"
-	echo "Use: gitcam [-e]"
+	echo "Use: gitcam [-e] [file]"
 	echo "     -e - edit commit message"
 	exit 1
 fi
 
+AMENDARG="-C HEAD"
 if [ "$1" = "-e" ] ; then
-	docmd git commit -a --amend $@
-else
-	docmd git commit -a --amend -C HEAD $@
+	AMENDARG=
+	shift
 fi
+
+# If no args
+if [ -z "$1" ] ; then
+	AMENDARG="$AMENDARG -a"
+fi
+
+docmd git commit --amend $AMENDARG $@
