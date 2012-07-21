@@ -116,7 +116,6 @@ libwine-devel|libwine-devel
 
 ImageMagick-tools|imagemagick
 wxGTK-devel|wx-common
-libopenal-devel|libopenal-dev
 libtinfo-devel|libncurses5-dev
 libtinfo|libncurses5
 terminfo|ncurses-term
@@ -201,6 +200,7 @@ webclient|
 gettext-tools|gettext
 
 perl-XML-Simple|libxml-simple-perl
+perl-XML-LibXML|libxml-libxml-perl
 
 gstreamer-devel|libgstreamer0.10-dev
 gst-plugins-devel|libgstreamer-plugins-base0.10-dev
@@ -240,7 +240,6 @@ libffi|libffi5
 libgmp3|libgmp3c2
 libkeyutils|libkeyutils1
 libkrb5|libkrb5-3
-libmpg123|libmpg123-0
 libsasl2|libsasls2-2
 libselinux|libselinux1
 libSM|libsm6

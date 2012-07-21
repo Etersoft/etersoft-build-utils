@@ -104,3 +104,5 @@ libaudit1|libaudit1
 libssl-devel|libopenssl-devel
 libcrypto10|libopenssl1.0.0
 libssl10|libopenssl1.0.0
+libopenal1|libopenal1
+

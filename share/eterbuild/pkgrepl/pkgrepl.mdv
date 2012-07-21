@@ -101,6 +101,7 @@ libwxGTK-devel|libwxgtk2.8-devel
 netcat|netcat
 libgtkmm2-devel|libgtkmm2.4-devel
 libopenal-devel|libopenal-devel
+libopenal1|libopenal0
 
 # cifs
 samba-client|mount-cifs
@@ -130,3 +131,5 @@ gst-plugins-devel|libgstreamer-plugins-base0.10-devel
 libgstreamer|libgstreamer0.10_0.10
 libgst-plugins|libgstreamer-plugins-base0.10
 
+libudev1|libudev0
+libmpg123|libmpg123_0

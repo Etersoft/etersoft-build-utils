@@ -33,6 +33,7 @@ filter_multiple_provides()
 	sed -e "s|/usr/bin/lpstat|cups|g
 		s|libldap_r-2.4.so.2|libldap|g
 		s|liblber-2.4.so.2|libldap|g
+		s|libudev.so.1|libudev1|g
 		s|/usr/bin/wine||g
 		s|libwine.so.1||g"
 }

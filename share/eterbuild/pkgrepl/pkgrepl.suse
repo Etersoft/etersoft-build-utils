@@ -21,7 +21,7 @@ libsane-devel|sane
 jackit-devel|jack-devel
 jackit|jack
 liblcms-devel|liblcms-devel
-liblcms|liblcms
+liblcms|liblcms1
 libgphoto2-devel|libgphoto2
 libgphoto2|libgphoto2
 perl-devel|perl
@@ -114,3 +114,6 @@ libgd2|gd
 libXaw|
 libcrypto10|libopenssl0_9_8
 libssl10|libopenssl0_9_8
+libmpg123|
+libopenal1|openal
+libudev1|libudev0

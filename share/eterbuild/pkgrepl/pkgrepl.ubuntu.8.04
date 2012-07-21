@@ -4,7 +4,9 @@ libstdc++-devel|libstdc++6-4.2-dev
 gcc-g++|g++-4.2
 makedepend|xutils-dev
 libmpg123-devel|
+libmpg123|
 libudev-devel|
+libudev1|
 libv4l-devel|
 libcap|libcap1
 libunistring|
@@ -15,3 +17,4 @@ libcups|libcupsys2
 libffi|libffi4
 cups|cupsys cupsys-bsd cupsys-client
 glibc-utils|
+libopenal1|libopenal0a

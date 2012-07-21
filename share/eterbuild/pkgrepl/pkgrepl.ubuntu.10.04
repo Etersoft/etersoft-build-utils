@@ -4,7 +4,9 @@ libreadline-devel|libreadline6-dev
 xz|xz-utils
 diffutils|diffutils
 libmpg123-devel|libmpg123-dev
+libmpg123|libmpg123-0
 libudev-devel|libudev-dev
+libudev1|libudev0
 libv4l-devel|libv4l-dev
 
 libcups-devel|libcups2-dev
@@ -23,3 +25,4 @@ liblzma|liblzma1
 libcap|libcap2
 libunistring|libunistring0
 libltdl7|libltdl7
+libopenal1|libopenal1

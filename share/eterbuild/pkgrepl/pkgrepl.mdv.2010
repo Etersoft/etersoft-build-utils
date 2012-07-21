@@ -18,3 +18,4 @@ libsqlite3|libsqlite3_0
 #libsqlite3-devel|libsqlite3_0-devel
 libgmp3|libgmp10
 libaudit1|libaudit1
+libopenal1|libopenal1
