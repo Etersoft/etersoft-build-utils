@@ -63,7 +63,7 @@ fi
 
 
 # FIXME 05.05.2012: it is needed now?
-if [ "$PKGVENDOR" = "mdv" ] || [ "$PKGVENDOR" = "pclinux" ] ; then
+if [ "$PKGVENDOR" = "mdv" ] || [ "$PKGVENDOR" = "pclinux" ] || [ "$PKGVENDOR" = "rosa" ] ; then
 	# due new libtool, affected on Mandriva 2009.0
 	test -z "$VERBOSE" || echo "Disable libtoolize"
 	# FIXME

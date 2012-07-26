@@ -39,13 +39,10 @@ get_install_package_command()
 		"LinuxXP"|"Fedora"|"ASPLinux"|"CentOS"|"RHEL"|"Scientific")
 			[ -n "$INAC" ] && CMD="yum install" || CMD="yum -y install"
 			;;
-		"Mandriva")
+		Mandriva|ROSA)
 			[ -n "$INAC" ] && CMD="urpmi --no-verify-rpm" || CMD="urpmi --auto --no-verify-rpm"
 			;;
-		"ROSA")
-			[ -n "$INAC" ] && CMD="urpmi --no-verify-rpm" || CMD="urpmi --auto --no-verify-rpm"
-			;;
-		"SUSE|SLED|SLES")
+		SUSE|SLED|SLES)
 			[ -n "$INAC" ] && CMD="zypper --non-interactive install" || CMD="yes | zypper --non-interactive install"
 			;;
 		*)
