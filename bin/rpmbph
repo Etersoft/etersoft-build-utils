@@ -82,8 +82,8 @@ if [ "$DISTRNAME/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
 %__subst 's|readlink -m|readlink -f|g' libtool ltmain.sh"
 fi
 
-# fix readlink -mv, introduced by new libtool and missed in Generic (FreeBSD) (replace with realpath)
-if [ "$PKGVENDOR" = "generic" ] ; then
+# fix readlink -mv, introduced by new libtool and missed in FreeBSD (replace with realpath)
+if [ "$PKGVENDOR" = "freebsd" ] ; then
 	test -z "$VERBOSE" || echo "Add subst readlink -mv"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %__subst 's|readlink -mv|realpath|g' libtool configure ltmain.sh"
