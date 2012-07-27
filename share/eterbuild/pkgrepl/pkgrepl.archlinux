@@ -1,0 +1,18 @@
+libncurses|ncurses
+libncurses-devel|ncurses
+terminfo|ncurses
+termutils|ncurses
+rpm-build-fonts|rpm-build-altlinux-compat
+kernel-build-tools|
+#mount|util-linux-ng
+# some problem with install util-linux-ng
+mount|
+libusb-devel|libusb
+gettext-tools|gettext
+perl-XML-LibXML|perl-xml-libxml
+perl-base|perl
+fontconfig-devel|fontconfig
+libGL|libgl
+fonts-ttf-core|
+libGLU|
+glibc-nss|
