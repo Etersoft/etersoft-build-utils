@@ -30,7 +30,6 @@ libSM-devel|libsm-devel
 libX11-devel|libx11-devel
 libXau-devel|libxau-devel
 libXaw-devel|libxaw-devel
-libXrandr-devel|libxrandr-devel
 libXdmcp-devel|libxdmcp-devel
 libXfixes-devel|libxfixes-devel
 libXfont-devel|libxfont-devel
@@ -39,7 +38,6 @@ libXext-devel|libxext6-devel
 libXext|libxext6
 libXi-devel|libxi-devel
 libXxf86misc-devel|libxxf86misc-devel
-libXmu-devel|libxmu-devel
 libXp-devel|libxp-devel
 libXpm-devel|libxpm-devel
 libXrender-devel|libxrender-devel
@@ -47,9 +45,7 @@ libXres-devel|libxres-devel
 libXScrnSaver-devel|libxscrnsaver1-devel
 libXinerama-devel|libxinerama-devel
 libXt-devel|libxt-devel
-libXtst-devel|libxtst-devel
 libXxf86dga-devel|libxxf86dga-devel
-libXcomposite-devel|libxcomposite-devel
 libXxf86vm-devel|libxxf86vm-devel
 libdmx-devel|libdmx-devel
 libdmx|libdmx1

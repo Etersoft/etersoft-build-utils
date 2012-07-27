@@ -34,6 +34,7 @@ libXau|libxau6
 libXaw-devel|libxaw-devel
 libXaw|libxaw7
 libXrandr-devel|libxrandr-devel
+libXrandr|libxrandr2
 libXdmcp-devel|libxdmcp-devel
 libXdmcp|libxdmcp6
 libXfixes-devel|libxfixes-devel
@@ -47,6 +48,7 @@ libXi-devel|libxi-devel
 libXxf86misc-devel|libxxf86misc-devel
 libXxf86misc|libxxf86misc1
 libXmu-devel|libxmu-devel
+libXmu|libxmu6
 libXp-devel|libxp-devel
 libXpm-devel|libxpm-devel
 libXpm|libxpm4
@@ -58,8 +60,10 @@ libXinerama-devel|libxinerama-devel
 libXt-devel|libxt-devel
 libXt|libxt6
 libXtst-devel|libxtst-devel
+libXtst|libxtst6
 libXxf86dga-devel|libxxf86dga-devel
 libXcomposite-devel|libxcomposite-devel
+libXcomposite|libxcomposite1
 libXxf86vm-devel|libxxf86vm-devel
 libXxf86vm|libxxf86vm1
 libdmx-devel|libdmx-devel

@@ -9,7 +9,6 @@
 #libarts-devel|lib64arts1-devel
 #libpam-devel|lib64pam-devel
 
-#libXcomposite|lib64xcomposite1
 #libXpm|lib64xpm4
 libssl-devel|lib64openssl1.0.0-devel
 #python-devel|lib64python2.6-devel

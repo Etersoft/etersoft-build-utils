@@ -8,7 +8,6 @@ libarts-devel|arts3-devel
 libfontenc-devel|libfontenc-devel
 jackit-devel|libjack-devel
 
-libXcomposite|libxcomposite1
 libssl-devel|libopenssl-devel
 libXt-devel|libxt-devel
 libldap-devel|libldap2.4_2-devel

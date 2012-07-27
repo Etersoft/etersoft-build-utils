@@ -262,3 +262,7 @@ libusb-compat|
 
 gccmakedep|
 crontabs|bsdmainutils
+
+python-module-setuptools|python-setuptools
+python-modules|
+python-module-GitPython|python-git

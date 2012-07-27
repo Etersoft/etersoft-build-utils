@@ -82,6 +82,9 @@ libXau-devel|xorg-x11-libXau-devel
 libXau|xorg-x11-libXau
 
 fonts-ttf-core|liberation-fonts
+fonts-ttf-liberation|liberation-fonts
 libuuid|libuuid1
 # ?
 libalsa-devel|
+libopenal1|
+libGLU|freeglut
