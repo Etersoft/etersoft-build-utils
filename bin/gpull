@@ -21,7 +21,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	exit 1
 fi
 
-REPO=origin
+REPO=
 
 if [ "$1" = "-a" ] ; then
 	ALLBRANCHES=1
@@ -69,6 +69,7 @@ pull_all_branches()
 # Если не получилось получить обновление по такому же названию бранча, как локальный, то получаем по удалённому
 pull_from_unique_branch()
 {
+        [ -n "$REPO" ] || return
         REMOTEBRANCH=$(git branch -a | grep "^  remotes/$REPO/" | sed -e "s|.*remotes/$REPO/||")
         docmd git pull $REBASE $REPO $REMOTEBRANCH
 }
@@ -80,8 +81,11 @@ fi
 
 REMOTEBRANCH="$1"
 
-# use current branch name as default
-[ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
+# Only if set REPO
+if [ -n "$REPO" ] ; then
+	# use current branch name as default
+	[ -n "$REMOTEBRANCH" ] || REMOTEBRANCH=$(get_current_branch)
+fi
 
 if [ -n "$CHECKRESULT" ] ; then
 	# Quiet in check mode
@@ -99,4 +103,5 @@ docmd git fetch $REPO || exit
 docmd git pull $REBASE $REPO $REMOTEBRANCH || pull_from_unique_branch || exit
 
 # REWRITE ME: assure we get tags
-docmd git pull --tags $REPO $REMOTEBRANCH
+#docmd git pull --tags $REPO $REMOTEBRANCH
+docmd git fetch --tags $REPO $REMOTEBRANCH
