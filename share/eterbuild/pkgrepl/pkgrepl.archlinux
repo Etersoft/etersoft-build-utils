@@ -7,12 +7,18 @@ kernel-build-tools|
 #mount|util-linux-ng
 # some problem with install util-linux-ng
 mount|
-libusb-devel|libusb
 gettext-tools|gettext
 perl-XML-LibXML|perl-xml-libxml
 perl-base|perl
-fontconfig-devel|fontconfig
-libGL|libgl
 fonts-ttf-core|
 libGLU|
-glibc-nss|
+glibc-nss|glibc
+glibc-devel|glibc
+libcrypto10|openssl
+libfreetype|freetype2
+libfreetype-devel|freetype2
+libnatspec|
+libnatspec-devel|
+libssl-devel|openssl
+libssl10|openssl
+libwine-etersoft-devel|libwine-etersoft-devel

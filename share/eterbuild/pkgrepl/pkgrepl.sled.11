@@ -13,6 +13,7 @@ libXau-devel|xorg-x11-libXau-devel
 libXau|xorg-x11-libXau
 libXaw-devel|xorg-x11-devel
 libXrandr-devel|xorg-x11-devel
+libXrandr|
 libXdmcp-devel|xorg-x11-libXdmcp-devel
 libXdmcp|xorg-x11-libXdmcp
 libXfixes-devel|xorg-x11-libXfixes-devel
@@ -24,6 +25,7 @@ libXi-devel|xorg-x11-devel
 libXext-devel|xorg-x11-libXext-devel
 libXext|xorg-x11-libXext
 libXmu-devel|xorg-x11-libXmu-devel
+libXmu|xorg-x11-libXmu
 libXp-devel|xorg-x11-libXp-devel
 libXpm-devel|xorg-x11-libXpm-devel
 libXrender-devel|xorg-x11-libXrender-devel
@@ -34,6 +36,7 @@ libXinerama-devel|xorg-x11-devel
 libXt-devel|xorg-x11-libXt-devel
 libXt|xorg-x11-libXt
 libXtst-devel|xorg-x11-devel
+libXtst|
 libXcomposite-devel|xorg-x11-devel
 libXxf86dga-devel|xorg-x11-devel
 libXxf86vm-devel|xorg-x11-devel
@@ -54,8 +57,11 @@ libXcomposite|xorg-x11
 libXpm|xorg-x11-libXpm
 
 
-libmesa-devel|Mesa
-libGLU-devel|Mesa
+libmesa-devel|Mesa-devel
+libGLU-devel|Mesa-devel
+libGLU|Mesa
+libGL|Mesa
+libGL-devel|Mesa-devel
 
 libpng12|libpng12-0
 libgmp3|gmp
@@ -69,9 +75,6 @@ libSM|xorg-x11-libSM
 libXrender-devel|xorg-x11-libXrender-devel
 libXrender|xorg-x11-libXrender
 
-libGLU-devel|Mesa-devel
-libGL|Mesa
-libGL-devel|Mesa
 
 which|util-linux
 xrandr|
@@ -87,4 +90,23 @@ libuuid|libuuid1
 # ?
 libalsa-devel|
 libopenal1|
-libGLU|freeglut
+
+gst-plugins-devel|gstreamer-0_10-plugins-base-devel
+libv4l-devel|
+libopenal1|
+libopenal-devel|
+
+imake|xorg-x11-util-devel
+dbus-tools-gui||dbus-1-x11
+openssh-clients|openssh
+python-module-dbus|dbus-1-python
+python-module-pygobject|python-gobject2
+python-modules-logging|
+python-modules-xml|python-xml
+setxkbmap|xorg-x11
+xdpyinfo|xorg-x11
+xinitrc|xorg-x11
+xmodmap|xorg-x11
+xrdb|xorg-x11
+xsetroot|xorg-x11
+
