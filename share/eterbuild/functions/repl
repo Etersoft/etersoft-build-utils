@@ -47,7 +47,17 @@ tolocal_anyrepl()
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
 		TARGETPKGNAME="$NEWRESULT"
+		return 0
 	fi
+
+	if [ "$DISTRNAME" = "ArchLinux" ]  ; then
+		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
+		[ "$NEWRESULT" = "$GREP" ] && return 1
+		ALTPKGNAME=$GREP
+		TARGETPKGNAME="$NEWRESULT"
+		return 0
+	fi
+
 	return 1
 }
 

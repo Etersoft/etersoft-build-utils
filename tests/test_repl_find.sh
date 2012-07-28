@@ -80,3 +80,17 @@ echo "Package:"
 print_pkgrepl_list
 echo "Group:"
 print_grprepl_list
+
+
+DISTRNAME=ArchLinux
+PKGVENDOR=archlinux
+PKGFORMAT=pkg.gz
+DISTRVERSION=2011.08
+
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+
+print_pkgrepl_list
+
+check_repl rpm-build-compat rpm-build-altlinux-compat
+check_repl libusb-devel libusb
+check_repl libX11 libx11
