@@ -34,8 +34,6 @@ libXdmcp-devel|libxdmcp-devel
 libXfixes-devel|libxfixes-devel
 libXfont-devel|libxfont-devel
 libXft-devel|libxft-devel
-libXext-devel|libxext6-devel
-libXext|libxext6
 libXi-devel|libxi-devel
 libXxf86misc-devel|libxxf86misc-devel
 libXp-devel|libxp-devel
@@ -89,5 +87,12 @@ gstreamer-devel|lib64gstreamer0.10-devel
 gst-plugins-devel|lib64gstreamer-plugins-base0.10-devel
 
 libudev-devel|lib64udev0-devel
-libgphoto2-devel|lib64gphoto-devel
 
+libssl-devel|lib64openssl-devel
+libcrypto10|lib64openssl1.0.0
+libssl10|lib64openssl1.0.0
+
+libXext-devel|lib64xext-devel
+libXtst-devel|lib64xtst-devel
+libXrandr-devel|lib64xrandr2-devel
+libXmu-devel|lib64xmu-devel

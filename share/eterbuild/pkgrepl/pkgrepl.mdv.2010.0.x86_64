@@ -1,15 +1,4 @@
 # Mandriva 64bit base replacements rules
-#libreadline|lib64readline6
-#libXrender-devel|lib64xrender1-devel
-#libXrandr-devel|lib64xrandr2-devel
-#libfontenc-devel|lib64fontenc-devel
-#jackit-devel|lib64jack-devel
-#libXtst-devel|lib64xtst6-devel
-#libXt-devel|lib64xt-devel
-#libarts-devel|lib64arts1-devel
-#libpam-devel|lib64pam-devel
-
-#libXpm|lib64xpm4
 libssl-devel|lib64openssl1.0.0-devel
-#python-devel|lib64python2.6-devel
+libssl|lib64openssl1.0.0
 

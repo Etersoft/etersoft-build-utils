@@ -96,17 +96,4 @@ libv4l-devel|
 libopenal1|
 libopenal-devel|
 
-imake|xorg-x11-util-devel
-dbus-tools-gui||dbus-1-x11
-openssh-clients|openssh
-python-module-dbus|dbus-1-python
-python-module-pygobject|python-gobject2
-python-modules-logging|
-python-modules-xml|python-xml
-setxkbmap|xorg-x11
-xdpyinfo|xorg-x11
-xinitrc|xorg-x11
-xmodmap|xorg-x11
-xrdb|xorg-x11
-xsetroot|xorg-x11
 

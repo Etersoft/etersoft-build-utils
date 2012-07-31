@@ -8,3 +8,7 @@ libXv-devel|lib64xv-devel
 liblcms-devel|lib64lcms-devel
 gstreamer-devel|lib64gstreamer0.10-devel
 gst-plugins-devel|lib64gstreamer-plugins-base0.10-devel
+libXtst-devel|lib64xtst-devel
+
+libcrypto10|lib64openssl1.0.0
+libssl10|lib64openssl1.0.0

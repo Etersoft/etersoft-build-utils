@@ -137,3 +137,20 @@ libgst-plugins|libgstreamer-plugins-base0.10
 
 libudev1|libudev0
 libmpg123|libmpg123_0
+
+dbus-tools-gui||dbus-x11-1
+python-module-dbus|python-dbus
+python-module-pygobject|python-gobject
+python-modules-logging|python-logging
+python-modules-xml|libxml2-python
+
+libatkmm|libatkmm1.6_1
+libglibmm|libglibmm2.4_1
+libgtkmm2|libgtkmm2.4_1
+libsigc++2|libsigc++2.0_0
+
+libXft|libxft2
+zlib|zlib1
+zlib-devel|zlib1-devel
+
+libgphoto2-devel|libgphoto-devel

@@ -2,11 +2,6 @@
 libreadline|lib64readline6
 libarts-devel|lib64arts1-devel
 libXdamage-devel|lib64xdamage-devel
-libXmu-devel|lib64xmu6-devel
-libXrandr-devel|lib64xrandr2-devel
-
-libXcomposite|lib64xcomposite1
-libXpm|lib64xpm4
 
 libreadline-devel|libreadline-devel
 libreadline|lib64readline6
