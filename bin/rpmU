@@ -1,18 +1,4 @@
 #!/bin/sh
-# 2004-2005,2010 (c) Etersoft www.etersoft.ru
-# Author: Vitaly Lipatov <lav@etersoft.ru>
-# Public domain
 
-ALLOW_ROOT_USER=1
-# load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
-load_mod gettext
-
-if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echog "rpmU - the same as [sudo] rpm -Uvh - update package"
-	echog "Usage: rpmU [package(s)]"
-	exit 0
-fi
-
-is_alt && FANCYPERCENT=--fancypercent
-docmd $SUDO rpm -Uvh $FANCYPERCENT "$@"
+echo "Use epmu from epm package manager (eepm) instead"
+exec epmu "$@"
