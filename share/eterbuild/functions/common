@@ -76,6 +76,9 @@ fi
 DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
 [ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 
+EPMCMD=$(realpath $ETERBUILDBIN/../../eepm/bin/epm 2>/dev/null)
+[ -x "$EPMCMD" ] || EPMCMD=epm
+
 print_list()
 {
 	local i

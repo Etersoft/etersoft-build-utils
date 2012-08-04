@@ -22,6 +22,8 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
+Requires: eepm >= 1.0
+
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
 
