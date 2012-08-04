@@ -63,19 +63,6 @@ jackit-devel|jack-audio-connection-kit-devel
 kernel-build-tools|
 libreadline-devel|readline-devel
 
-# Xorg dependencies
-#xorg-x11-proto-devel|xorg-x11-devel
-# FIXME: xpm-devel is override by libXpm-devel since xorg
-#libXpm-devel|libXpm-devel
-#libGLU-devel|libMesaGLU1-devel
-#libGLU-devel|xorg-x11-devel
-#libXext-devel|xorg-x11-devel
-#libICE-devel|XFree86-devel
-#libXrandr-devel|XFree86-devel
-#libXrender-devel|XFree86-devel
-#libXi-devel|XFree86-devel
-#libSM-devel|XFree86-devel
-
 libpopt-devel|popt
 libpopt|popt
 

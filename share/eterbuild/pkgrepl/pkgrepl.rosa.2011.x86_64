@@ -35,6 +35,7 @@ libXfixes-devel|libxfixes-devel
 libXfont-devel|libxfont-devel
 libXft-devel|libxft-devel
 libXi-devel|libxi-devel
+libXi|lib64xi6
 libXxf86misc-devel|libxxf86misc-devel
 libXp-devel|libxp-devel
 libXrender-devel|libxrender-devel

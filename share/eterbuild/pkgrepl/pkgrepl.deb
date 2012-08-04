@@ -12,6 +12,7 @@ glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
 libfreetype|libfreetype6
 fontconfig-devel|libfontconfig1-dev
+libfontconfig|libfontconfig1
 libxslt-devel|libxslt1-dev
 libncurses-devel|libncurses5-dev
 libncursesw-devel|libncursesw5-dev
@@ -39,6 +40,8 @@ libXdamage-devel|libxdamage-dev
 libXdamage|libxdamage1
 libXrandr-devel|libxrandr-dev
 libXrandr|libxrandr2
+libXi-devel|libxi-dev
+libXi|libxi6
 libXt-devel|libxt-dev
 libXft-devel|libxft-dev
 libXft|libxft2

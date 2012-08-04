@@ -2,4 +2,5 @@
 libldap-devel|libldap2.2_7-devel
 libldap|libldap2.2_7
 libxslt-devel|libxslt1-devel
+libxslt|libxslt1
 

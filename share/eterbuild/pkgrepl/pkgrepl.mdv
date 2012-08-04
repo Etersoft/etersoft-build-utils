@@ -45,6 +45,7 @@ libXft|libxft2
 libXext-devel|libxext6-devel
 libXext|libxext6
 libXi-devel|libxi-devel
+libXi|libxi6
 libXxf86misc-devel|libxxf86misc-devel
 libXxf86misc|libxxf86misc1
 libXmu-devel|libxmu-devel
@@ -96,8 +97,6 @@ xorg-sdk|x11-server-devel
 
 libICE-devel|libice6-devel
 libICE|libice6
-#libuuid|libuuid1
-libuuid|
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel
@@ -124,8 +123,6 @@ terminfo|ncurses
 libpciaccess|libpciaccess0
 libaudit1|libaudit0
 liblockdev|liblockdev1
-
-libuuid1
 
 libcrypto10|libopenssl0.9.8
 libssl10|libopenssl0.9.8

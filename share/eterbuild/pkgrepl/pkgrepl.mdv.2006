@@ -1,5 +1,4 @@
 # Mandriva base replacements rules
 python-devel|libpython2.4-devel
-libxslt-devel|libxslt1-devel
 
 libgtkmm2-devel|libgtkmm2.4_1-devel

@@ -41,6 +41,7 @@ libXfixes-devel|xorg-x11-devel
 libXfont-devel|xorg-x11-devel
 libXft-devel|xorg-x11-devel
 libXi-devel|xorg-x11-devel
+libXi|xorg-x11-libs
 libXext-devel|xorg-x11-devel
 libXxf86misc-devel|xorg-x11-devel
 libXmu-devel|xorg-x11-devel
@@ -97,6 +98,7 @@ bzlib-devel|libbz2-devel
 bzlib|libbz2-1
 
 libgst-plugins|gstreamer-0_10-plugins-base
+gstreamer|gstreamer-0_10
 
 libcroco|libcroco-0_6-3
 libffi|
@@ -136,3 +138,8 @@ xsetroot|xorg-x11
 libatkmm|libatkmm-1_6-1
 libglibmm|libglibmm-2_4-1
 libgtkmm2|libgtkmm-2_4-1
+libreadline|libreadline5
+gettext-tools|gettext-tools
+libpython|libpython2_6-1_0
+libfontconfig-devel|fontconfig-devel
+libfontconfig|fontconfig
