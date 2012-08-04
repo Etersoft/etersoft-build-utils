@@ -50,7 +50,7 @@ tolocal_anyrepl()
 		return 0
 	fi
 
-	if [ "$DISTRNAME" = "ArchLinux" ]  ; then
+	if [ "$DISTRNAME" = "ArchLinux" ] || [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "FreeBSD" ]  ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
 		[ "$NEWRESULT" = "$GREP" ] && return 1
 		ALTPKGNAME=$GREP
