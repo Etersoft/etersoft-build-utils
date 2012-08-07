@@ -1,6 +1,10 @@
 libssl-devel|libopenssl-devel
 libxslt-devel|libxslt-devel
 libgtkmm2-devel|libgtkmm2.4-devel
+libatkmm|libgtkmm2.4_1
+libglibmm|libgtkmm2.4_1
+libgtkmm2|libgtkmm2.4_1
+
 #libldap-devel|libldap2.3_0-devel
 #libldap|libldap2.3_0
 libldap-devel|libldap2.4_2-devel

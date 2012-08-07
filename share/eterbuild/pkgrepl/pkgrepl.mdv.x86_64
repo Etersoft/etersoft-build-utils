@@ -16,6 +16,7 @@ libcrypto10|lib64openssl0.9.8
 libssl10|lib64openssl0.9.8
 
 libxslt-devel|lib64xslt-devel
+libxslt|lib64xslt1
 xorg-x11-proto-devel|lib64xorg-x11-devel
 libcups-devel|lib64cups2-devel
 jackit-devel|lib64jack-devel

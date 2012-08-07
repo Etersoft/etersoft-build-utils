@@ -77,7 +77,6 @@ libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel
 libwxGTK-devel|libwxgtk2.8-devel
 netcat|netcat
-libgtkmm2-devel|libgtkmm2.4-devel
 libopenal-devel|libopenal-devel
 
 # cifs
@@ -97,3 +96,5 @@ libXext-devel|lib64xext-devel
 libXtst-devel|lib64xtst-devel
 libXrandr-devel|lib64xrandr2-devel
 libXmu-devel|lib64xmu-devel
+
+libicu|lib64icu48

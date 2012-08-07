@@ -5,3 +5,8 @@ libXdamage-devel|lib64xdamage-devel
 
 libreadline-devel|libreadline-devel
 libreadline|lib64readline6
+libicu|lib64icu40
+
+libatkmm|lib64gtkmm2.4_1
+libglibmm|lib64gtkmm2.4_1
+libgtkmm2|lib64gtkmm2.4_1

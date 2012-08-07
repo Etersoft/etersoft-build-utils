@@ -24,3 +24,4 @@ libssl-devel|openssl
 libssl10|openssl
 libwine-etersoft-devel|libwine-etersoft-devel
 gst-plugins-devel|gstreamer0.10-base
+freenx-server|

@@ -3,3 +3,7 @@ python-devel|libpython-devel
 libcrypto10|libopenssl1.0.0
 libssl10|libopenssl1.0.0
 libicu|libicu48
+
+libatkmm|libatkmm1.6_1
+libglibmm|libglibmm2.4_1
+libgtkmm2|libgtkmm2.4_1
