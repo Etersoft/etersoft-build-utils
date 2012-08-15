@@ -78,7 +78,6 @@ libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel
 libwxGTK-devel|libwxgtk2.8-devel
-netcat|netcat
 libgtkmm2-devel|libgtkmm2.4-devel
 libopenal-devel|libopenal-devel
 
@@ -103,3 +102,4 @@ libssl10|libopenssl1.0.0
 libopenal1|libopenal1
 
 libicu|libicu48
+netcat|netcat-traditional
