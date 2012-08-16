@@ -72,17 +72,12 @@ export CCACHE_DIR=$OURTMPDIR/ccache
 # CCACHE_ENABLE=yes
 
 # load system wide config
-test -f /etc/eterbuild/config && . /etc/eterbuild/config
+[ -f /etc/eterbuild/config ] && . /etc/eterbuild/config
 
 # load user config files
 if [ -f ~/.config/eterbuild ] ; then
 	. ~/.config/eterbuild
 elif [ -f ~/.eterbuild-config ] ; then
-	. ~/.eterbuild-config
-	warning "./eterbuild-config is obsoleted, use ~/.config/eterbuild instead"
-else
-	if [ -f ~/.ebconfig ] ; then
-		fatal "./ebconfig is obsoleted, use ~/.config/eterbuild instead"
-	fi
+	fatal "./eterbuild-config is obsoleted, use ~/.config/eterbuild instead"
 fi
 

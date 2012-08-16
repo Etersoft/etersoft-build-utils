@@ -106,6 +106,7 @@ pkg_release_check()
 	done
 }
 
+# TODO: remove for all, use $ rpmreqs instead
 # copied from aptU
 get_rpmpkg_requires()
 {
