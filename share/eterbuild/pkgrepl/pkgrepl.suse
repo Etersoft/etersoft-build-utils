@@ -80,8 +80,7 @@ xorg-sdk|xorg-x11-server-sdk
 libesd|libesd
 libesd-devel|libesd-devel
 
-# cifs
-samba-client|cifs-mount
+cifs-utils|cifs-mount
 
 libgsm-devel|libgsm-devel
 libgsm|libgsm
@@ -143,3 +142,5 @@ gettext-tools|gettext-tools
 libpython|libpython2_6-1_0
 libfontconfig-devel|fontconfig-devel
 libfontconfig|fontconfig
+
+lsb-release|lsb

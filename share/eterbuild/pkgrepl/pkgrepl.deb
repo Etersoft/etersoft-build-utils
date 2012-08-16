@@ -129,8 +129,7 @@ libtinfo-devel|libncurses5-dev
 libtinfo|libncurses5
 terminfo|ncurses-term
 
-# cifs
-samba-client|smbfs
+cifs-utils|smbfs
 
 jackit-devel|libjack-dev
 libXScrnSaver-devel|

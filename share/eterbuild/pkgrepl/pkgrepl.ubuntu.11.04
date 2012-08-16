@@ -5,3 +5,4 @@ libstdc++6-devel|libstdc++6-4.5-dev
 gcc-g++|g++-4.5
 libicu|libicu44
 liblzma|liblzma2
+cifs-utils|cifs-utils

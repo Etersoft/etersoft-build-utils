@@ -78,9 +78,6 @@ wxGTK-devel|libwxgtk2.8-devel
 libwxGTK-devel|libwxgtk2.8-devel
 libopenal-devel|libopenal-devel
 
-# cifs
-samba-client|mount-cifs
-
 # By DKR
 gstreamer-devel|lib64gstreamer0.10-devel
 gst-plugins-devel|lib64gstreamer-plugins-base0.10-devel

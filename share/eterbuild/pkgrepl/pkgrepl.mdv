@@ -106,8 +106,7 @@ libgtkmm2-devel|libgtkmm2.4-devel
 libopenal-devel|libopenal-devel
 libopenal1|libopenal0
 
-# cifs
-samba-client|mount-cifs
+cifs-utils|mount-cifs
 
 fonts-ttf-core|fonts-ttf-liberation
 
