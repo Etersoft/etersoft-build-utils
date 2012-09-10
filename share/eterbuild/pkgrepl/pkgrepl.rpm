@@ -94,7 +94,8 @@ libxml++2-devel|libxml++-devel
 
 glibc-devel-static|glibc-devel
 
-libopensc-devel|opensc-devel
+libopensc-devel|opensc
+libopensc|opensc
 ImageMagick-tools|ImageMagick
 libopenal-devel|openal-devel
 
@@ -147,3 +148,6 @@ libdb4.7|
 xml-common|
 
 freenx-server|
+
+libwxGTK-devel|wxGTK-devel
+libwxGTK|wxGTK
