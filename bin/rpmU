@@ -1,4 +1,4 @@
 #!/bin/sh
 
-echo "Use epmu from epm package manager (eepm) instead"
-exec epmu "$@"
+echo "Use epmi from epm package manager (eepm) instead"
+exec epmi "$@"
