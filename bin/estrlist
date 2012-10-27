@@ -46,6 +46,11 @@ list()
         done
 }
 
+count()
+{
+         list $@ | wc -l
+}
+
 union()
 {
          list $@ | sort -u
@@ -100,7 +105,7 @@ reg_include()
 }
 
 
---help()
+help()
 {
         echo "estrlist developed for string list operations. See also cut, join, paste..."
         echo "Usage: $0 <command> [args]"
@@ -124,6 +129,10 @@ COMMAND="$1"
 if [ -z "$COMMAND" ] ; then
         echo "Run with --help for get command description."
         exit 1
+fi
+
+if [ "$COMMAND" = "-h" ] || [ "$COMMAND" = "--help" ] ; then
+        COMMAND="help"
 fi
 
 shift
