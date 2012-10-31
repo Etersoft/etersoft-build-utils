@@ -33,32 +33,33 @@ tolocal_anyrepl()
 		test -n "$REPLRULE" && return 0
 	done
 
+	# Part of local hack
+	NEWRESULT="$GREP"
+
 	if [ "$PKGFORMAT" = "deb" ] ; then
 		local NEWRESULT=`echo $GREP | filter_deb_pkgnames`
-		[ "$NEWRESULT" = "$GREP" ] && return 1
-		ALTPKGNAME=$GREP
-		TARGETPKGNAME="$NEWRESULT"
-		return 0
 	fi
 
 	# Add hack for replace lib with lib64 on Mandriva
 	if [ "$DISTRNAME" = "Mandriva" ] && [ $BUILDARCH = "x86_64" ] ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
-		[ "$NEWRESULT" = "$GREP" ] && return 1
-		ALTPKGNAME=$GREP
-		TARGETPKGNAME="$NEWRESULT"
-		return 0
 	fi
 
-	if [ "$DISTRNAME" = "ArchLinux" ] || [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "FreeBSD" ]  ; then
+	if [ "$DISTRNAME" = "ArchLinux" ] || [ "$DISTRNAME" = "FreeBSD" ]  ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
-		[ "$NEWRESULT" = "$GREP" ] && return 1
-		ALTPKGNAME=$GREP
-		TARGETPKGNAME="$NEWRESULT"
-		return 0
 	fi
 
-	return 1
+	if [ "$DISTRNAME" = "Slackware" ] ; then
+		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
+	fi
+
+	ALTPKGNAME=$GREP
+	TARGETPKGNAME="$NEWRESULT"
+	[ "$NEWRESULT" = "$GREP" ] && return 1
+
+	# try to resolve recursive
+	tolocal_anyrepl $NEWRESULT $@
+	return 0
 }
 
 # Clean require names from various stuffs
