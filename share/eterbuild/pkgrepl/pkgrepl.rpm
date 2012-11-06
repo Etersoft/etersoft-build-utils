@@ -46,6 +46,9 @@ libfreetype-devel|freetype-devel
 libcups-devel|cups-devel
 libcups|cups
 libalsa-devel|alsa-lib-devel
+libalsa|alsa-lib
+libopenal1|openal-soft
+libopenal1-devel|openal-soft-devel
 # TODO: Check for ALL system
 #libicu-devel|
 # for ISDN
@@ -154,3 +157,7 @@ libwxGTK|wxGTK
 
 libfontconfig-devel|fontconfig-devel
 libfontconfig|fontconfig
+apt-repo|
+perl-base|perl
+
+libpng15|libpng

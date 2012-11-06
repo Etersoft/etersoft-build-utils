@@ -1,1 +1,4 @@
 cifs-utils|samba-client
+libmpg123-devel|
+libmpg123|
+libgst-plugins|gstreamer-plugins-base

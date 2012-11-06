@@ -173,6 +173,7 @@ vixie-cron|cron
 # nx
 zlib|zlib1g
 libpng12|libpng12-0
+libpng15|libpng15-0
 libX11|libx11-6
 libcrypto10|openssl
 libalsa|libasound2
@@ -201,6 +202,7 @@ libICE|libice6
 
 # FIXME
 xdg-utils|
+# FIXME: possible better ttf-mscorefonts-installer
 fonts-ttf-core|ttf-liberation
 
 # meta packages
@@ -278,3 +280,4 @@ python-module-GitPython|python-git
 makedepend|xutils-dev
 perl-XML-Parser|libxml-parser-perl
 freenx-server|
+apt-repo|
