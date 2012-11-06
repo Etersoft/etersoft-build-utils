@@ -91,6 +91,17 @@ echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 
 print_pkgrepl_list
 
-check_repl rpm-build-compat rpm-build-altlinux-compat
+check_repl rpm-build-intro rpm-build-altlinux-intro
 check_repl libusb-devel libusb
 check_repl libX11 libx11
+
+DISTRNAME=Slackware
+PKGVENDOR=slackware
+PKGFORMAT=pkg.gz
+DISTRVERSION=2011.08
+
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+
+print_pkgrepl_list
+
+check_repl libX11-devel libX11
