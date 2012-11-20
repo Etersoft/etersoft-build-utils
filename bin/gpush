@@ -74,9 +74,11 @@ push_to_remote()
 		docmd git push --tags $GHOST $CURRENTBRANCH
 	else
 		if is_last_commit_tag ; then
-		        local LASTTAG=$(get_last_tag)
-			echo "*** Push last tag $LASTTAG"
-			docmd git push $PUSHFORCE $GHOST $LASTTAG
+			local LASTTAG=$(get_last_tag)
+			if [ -n "$LASTTAG" ] ; then
+				echo "*** Push last tag $LASTTAG"
+				docmd git push $PUSHFORCE $GHOST $LASTTAG
+			fi
 		fi
 	fi
 }

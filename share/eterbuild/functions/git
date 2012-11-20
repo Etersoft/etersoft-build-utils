@@ -102,7 +102,7 @@ git_commit_ignore_nothing()
 
 get_last_tag()
 {
-        git describe --abbrev=0 --tags
+        git describe --abbrev=0 --tags 2>/dev/null
 }
 
 # check if tag is last commit tag (put on the last commit). if tag is missed, check with the last tag in repo
