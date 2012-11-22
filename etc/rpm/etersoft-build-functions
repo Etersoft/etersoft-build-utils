@@ -2,5 +2,4 @@
 
 . /usr/share/eterbuild/eterbuild
 load_mod rpm
-load_mod publish-compat
 
