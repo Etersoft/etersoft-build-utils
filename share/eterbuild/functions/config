@@ -29,6 +29,8 @@ RPMBUILD=rpmbuild
 
 # CHECKME: works only on ALT?
 RPMDIR=`rpm --eval %_topdir`
+RPMTMPDIR=`rpm --eval %_tmppath`
+
 # Can be overrided in the scripts
 [ -n "$RPMTOPDIR" ] || RPMTOPDIR="$RPMDIR"
 

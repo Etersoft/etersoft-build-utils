@@ -75,6 +75,7 @@ mygetopts $LISTARGS
 
 mkdir -p "$LOGDIR"
 mkdir -p "$RPMTOPDIR/RPMS"
+test -L "$RPMTOPDIR/tmp" || ln -s $RPMTMPDIR $RPMTOPDIR/tmp
 test -z "$LISTNAMES" && fatal "Please run with spec(s) name"
 test -n "$LISTRPMARGS" && echog "Run $RPMBUILD with options: '$LISTRPMARGS'"
 
