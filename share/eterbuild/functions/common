@@ -268,6 +268,11 @@ make_temp_file()
 	fi
 }
 
+cd_to_realcwd()
+{
+	cd "$(realpath "$(pwd)" )"
+}
+
 # check if path is server:/path
 is_ssh_target()
 {

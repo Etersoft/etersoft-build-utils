@@ -91,4 +91,5 @@ if [ -n "$PLAIN_DISTCC" ] ; then
 #    unset DISTCC_HOSTS
 fi
 
+cd_to_realcwd
 docmd $NICE time -p $PUMP make -j$DISTCC_THREADS CC="$DISTCC" CXX="$DISTCXX" "$@"
