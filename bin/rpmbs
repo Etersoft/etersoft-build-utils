@@ -194,6 +194,8 @@ parse_cmd_pre_spec "$@"
 # quotes brokes option handling
 mygetopts $LISTARGS
 
+prepare_rpmdir
+
 #############################
 LISTBUILT=""
 CURDIR=`pwd`
@@ -332,8 +334,6 @@ fi
 cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 
 for i in $LISTBUILT ; do
-	# FIXME: more general way
-	mkdir -p $LOGDIR
 	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
 	echo >>$LOGFILE
 	date >>$LOGFILE

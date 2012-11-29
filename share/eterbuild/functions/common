@@ -96,6 +96,15 @@ assert_var()
 	done
 }
 
+prepare_rpmdir()
+{
+	assert_var RPMTOPDIR LOGDIR
+	mkdir -p $(realpath $RPMDIR)
+	mkdir -p $(realpath $RPMTOPDIR)
+	mkdir -p "$LOGDIR"
+	mkdir -p "$RPMTOPDIR/RPMS"
+	test -L "$RPMTOPDIR/tmp" || ln -s $RPMTMPDIR $RPMTOPDIR/tmp
+}
 
 get_root_git_dir()
 {
