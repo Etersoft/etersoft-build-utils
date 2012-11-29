@@ -87,6 +87,15 @@ print_list()
 	done
 }
 
+assert_var()
+{
+	local i re
+	for i in $@ ; do
+		re=$(eval echo \$$i)
+		[ -n "$re" ] || fatal "assert: $i nonexist"
+	done
+}
+
 
 get_root_git_dir()
 {
