@@ -30,7 +30,7 @@ conv_zip_to_tar()
 	mkdir $1.tmpdir || fatal
 	cd $1.tmpdir || fatal
 	# unzip or remove broken file
-	unzip -q "$RZ" && tar cf "$RT" ./* || { rm -fv "$RT" ; return 1; }
+	a= unzip -q "$RZ" && tar cf "$RT" ./* || { rm -fv "$RT" ; return 1; }
 	cd ..
 	rm -rf $1.tmpdir
 }
@@ -45,7 +45,7 @@ conv_rar_to_tar()
 	mkdir $1.tmpdir || fatal
 	cd $1.tmpdir || fatal
 	# unzip or remove broken file
-	unrar x "$RZ" && tar cf "$RT" ./* || { rm -fv "$RT" ; return 1; }
+	a= unrar x "$RZ" && tar cf "$RT" ./* || { rm -fv "$RT" ; return 1; }
 	cd ..
 	rm -rf $1.tmpdir
 }
