@@ -227,8 +227,8 @@ fi
 # Auto*=yes,nomingw32 works only since ALT 4.1
 if [ "$PKGVENDOR" = "alt" ] ; then
 	if echo "$MDISTR" | egrep -q "M24|M30|M40" ; then
-		subst "s|^\(AutoReq.*\),nomingw32|\1|g" $SPECNAME
-		subst "s|^\(AutoProv.*\),nomingw32|\1|g" $SPECNAME
+		subst "s|^\(Auto[RP].*\),nomingw32|\1|g" $SPECNAME
+		subst "s|^\(Auto[RP].*\), nomingw32|\1|g" $SPECNAME
 	fi
 else
 	# for systems with ash as sh (f.i., Ubuntu)
