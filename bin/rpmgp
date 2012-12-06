@@ -237,7 +237,7 @@ fi
 if [ -n "$INSTALLBINARY" ] ; then
     # pack by LISTNAMES list
     pack_src_rpm --commit $LISTRPMARGS
-    epm install $($ETERBUILDBIN/rpmreqs -p $LISTBUILT)
+    epm install --skip-installed $($ETERBUILDBIN/rpmreqs -p $LISTBUILT)
     exit
 fi
 
