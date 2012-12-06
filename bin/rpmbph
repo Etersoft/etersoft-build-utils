@@ -36,6 +36,12 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 	# FIXME: needed for some backport level...
 	#BUILDREQ="BuildRequires: rpm-build-compat >= 0.95"
 	BUILDREQ=
+
+	# FIXME: use separate macro list
+	if grep -q _sharedstatedir $SPECNAME ; then
+		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.24"
+	fi
+
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
 	docmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
