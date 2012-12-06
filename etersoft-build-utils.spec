@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.17
+Version: 2.0.18
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -68,6 +68,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Dec 06 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.18-alt1
+- rpmbph: add rpm-build-compat to backported ALT if used _sharedstatedir
+- rpmbph: it is possible to use AutoReq with spaces after comma
+- fix set_binary_repo (call detect_target_env if set binary repo with -b)
+- rpmbs: print destination gear host before ask gpg signature
+
 * Thu Dec 06 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.17-alt1
 - config: add missed GIRARHOST setting
 - fix epm using
