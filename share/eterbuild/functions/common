@@ -11,25 +11,28 @@ realpath()
         readlink -f "$@"
 }
 
+print_message()
+{
+	local DESC="$1"
+	shift
+	if [ -z "$TEXTDOMAIN" ] ; then
+		echo "$DESC in $(basename $0): $@" >&2
+	else
+		echog "$DESC in $(basename $0): $@" >&2
+	fi
+}
+
 # Print error message and stop the program
 fatal()
 {
-	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "Error in $0: $@" >&2
-	else
-		echog "Error in $0: $@" >&2
-	fi
+	print_message Error "$@"
 	exit 1
 }
 
 # Just print warning message
 warning()
 {
-	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "Warning in $0: $@" >&2
-	else
-		echog "Warning in $0: $@" >&2
-	fi
+	print_message Warning "$@"
 }
 
 
