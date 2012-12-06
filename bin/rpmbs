@@ -174,7 +174,10 @@ rpmbs_copying_built()
 		docmd scp $LISTBUILT $ETERDESTSRPM && docmd rm -fv $LISTBUILT || echog "Error during copying"
 	else
 		mkdir -p $ETERDESTSRPM || echog "Error mkdir $ETERDESTSRPM"
-		chmod ug+rw $LISTBUILT
+
+		# Lav disable 06.12.2012: use umask instead
+		#chmod ug+rw $LISTBUILT
+
 		# Publish tarball if target dir is exist
 		if [ -d "$ETERDESTSRPM/tarball" ] ; then
 			echog "There is tarball dir exists. Extract tarball for other build system compatibility."
@@ -182,7 +185,10 @@ rpmbs_copying_built()
 				extract_tarball_to_dest $i $ETERDESTSRPM/tarball
 			done
 		fi
-		mv -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+
+		# Note: use cp for apply directory group (forced by sgid on dir)
+		cp -fv $LISTBUILT $ETERDESTSRPM || echog "Error during copying"
+		rm -f $LISTBUILT
 		# FIXME: update only for published file
 		#make_md5sum "$ETERDESTSRPM"
 	fi
