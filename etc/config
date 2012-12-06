@@ -72,6 +72,9 @@
 # username on $GIRARHOST host
 # GIRAR_USER=lav
 
+# default girar ssh alias
+# GIRARHOST=git.alt
+
 # Skip error if there are unpackaged files in the build
 #NOSTRICT_UNPACKAGED=1
 
