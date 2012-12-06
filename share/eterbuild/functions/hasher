@@ -70,10 +70,10 @@ print_tmp_sourceslist()
 	fi
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
 	if [ "$BUILDARCH" = "x86_64" ] ; then
-		cat "$SLIST" | sed -e "s|i[56]86|$BUILDARCH|g"
+		cat "$SLIST" | sed -e "s|\([ /]\)i[56]86|\1$BUILDARCH|g"
 	else
 		# Note: drop biarch 32bit on real 32bit
-		cat "$SLIST" | sed -e "s|x86_64|$BUILDARCH|g" | grep -v "x86_32" | grep -v "x86-i586"
+		cat "$SLIST" | sed -e "s|x86_64\([ /]\)|$BUILDARCH\1|g" | grep -v "x86_32" | grep -v "x86_64-i586"
 	fi
 }
 
