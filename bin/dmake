@@ -29,7 +29,7 @@ if [ "$1" = "-t" ] ; then
 	shift
 	PDSH=$(which pdsh 2>/dev/null)
 	[ -n "$PDSH" ] || fatal "Install pdsh package for test build cloud"
-	docmd $PDSH -w$(get_quoted_list $DISTCC_64_HOSTS $DISTCC_32_HOSTS) "g++ -v 2>&1 | tail -n1"
+	docmd $PDSH -w$(get_quoted_list $DISTCC_64_HOSTS $DISTCC_32_HOSTS) "echo -n \"\$(g++ -v 2>&1 | tail -n1) ;  \$(distccd --version | head -n1 ) \$(ps ax | grep -v grep | grep -q distccd || echo "DISABLED")\" "
 	exit
 fi
 
