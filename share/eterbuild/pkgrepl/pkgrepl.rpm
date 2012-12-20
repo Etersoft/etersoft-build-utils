@@ -161,3 +161,8 @@ apt-repo|
 perl-base|perl
 
 libpng15|libpng
+libcrypto10|openssl
+
+dbus-tools-gui|dbus-x11
+python-base|python
+xinitrc|
