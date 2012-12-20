@@ -4,7 +4,7 @@ Name: etersoft-build-utils
 Version: 2.0.18
 Release: alt1
 
-Summary: A set of build rpm utilities
+Summary: A set of rpm build utilities from Etersoft
 
 License: Public domain
 Group: Development/Other
