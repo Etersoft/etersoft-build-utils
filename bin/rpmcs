@@ -367,10 +367,11 @@ do
 		s|%_iconsdir/large|%_liconsdir|g
 		s|%_datadir/icons|%_iconsdir|g" $i
 
-	# mozilla extensions
+	# browser/mozilla extensions
 	subst  "s|%_libdir/mozilla/extensions|%mozilla_arch_extdir|g
 		s|%_datadir/mozilla/extensions/any|%mozilla_any_extdir|g
-		s|%_datadir/mozilla/extensions|%mozilla_noarch_extdir|g" $i
+		s|%_datadir/mozilla/extensions|%mozilla_noarch_extdir|g
+		s|%_libdir/browser-plugins|%browser_plugins_path|g" $i
 
 	# remove MDK compatibility macroses
 	subst "s|%perl_vendorlib|%perl_vendor_privlib|g
