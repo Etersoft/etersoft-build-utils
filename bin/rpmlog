@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2010 (c) Etersoft http://etersoft.ru
+# 2010, 2012 (c) Etersoft http://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 
 # Script for update changelog or increment release
@@ -10,7 +10,7 @@
 load_mod spec rpm git etersoft
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echog "rpmlog - update changelog"
+	echog "rpmlog - update version/release and changelog"
 	echog "Usage: rpmlog [-r|-s|-v] [-l|-t] [SPEC] [fromTAG] [toTAG]"
 	echo
 	echog "Options:"
@@ -109,7 +109,7 @@ if [ -n "$TESTRUN" ] ; then
 	exit
 fi
 
-add_changelog_helper "$CHANGELOG" $SPECNAME
+add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, do not commit anything"
 
 # TODO: use gear-commit ?
 git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
