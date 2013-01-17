@@ -91,7 +91,10 @@ uni_buildreq()
 	local GEARBUILDREQ=gear-buildreq
 
 	if is_gear $SPECDIR ; then
-		docmd $NICE $GEARBUILDREQ $BUILDREQPARAM --commit -- "$SPECNAME" "$@" || RET=$?
+		# FIXME: use spec name as project name
+		GEARRULES=$(get_gear_rules "$SPECNAME")
+
+		docmd $NICE $GEARBUILDREQ $BUILDREQPARAM $GEARRULES --commit -- "$SPECNAME" "$@" || RET=$?
 	else
 		docmd $NICE buildreq $BUILDREQPARAM "$SPECNAME" "$@" || RET=$?
 	fi
