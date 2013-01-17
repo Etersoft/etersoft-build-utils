@@ -124,7 +124,9 @@ librsvg|librsvg2
 libwine-devel|libwine-devel
 
 ImageMagick-tools|imagemagick
-wxGTK-devel|wx-common
+libopensc2-devel|opensc
+libwxGTK|libwxgtk2.8-0
+libwxGTK-devel|libwxgtk2.8-dev
 libtinfo-devel|libncurses5-dev
 libtinfo|libncurses5
 terminfo|ncurses-term

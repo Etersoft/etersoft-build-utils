@@ -1,6 +1,8 @@
 libreadline-devel|libreadline-devel
 libreadline|libreadline6
 libgtkmm2-devel|libgtkmm2.4-devel
+libgtk+2-devel|libgtk+2.0-devel
+libgtk+2|libgtk+2.0_0
 glibc-devel-static|glibc-static-devel
 libarts-devel|arts3-devel
 
