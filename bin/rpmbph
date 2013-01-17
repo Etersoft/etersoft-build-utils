@@ -382,26 +382,28 @@ fi
 	# if run for ALT inside gear repo, just create backported spec
 if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
-	USEBRANCH=$MDISTR
+
+	# set branch name
+	USEBRANCH=$(get_altdistr_version $MDISTR)
 	SPEC=$LISTNAMES
 	BPSPEC=$SPEC.$USEBRANCH
 
-	# support for without M names like 5.1
-	USENUMBRANCH=$(get_altdistr_version $USEBRANCH)
-	if [ "$USENUMBRANCH" != "$USEBRANCH" ] ; then
-		if is_exist_branch $USENUMBRANCH ; then
-			echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-			USEBRANCH=$USENUMBRANCH
+	# support for obsoleted M?? names
+	OLDBRANCH=$MDISTR
+	if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
+		if is_exist_branch $OLDBRANCH ; then
+			echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
+			USEBRANCH=$OLDBRANCH
 		fi
 		# hack about p5, M50 -> p5
-		if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
-			USENUMBRANCH=p5
-			echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-			USEBRANCH=$USENUMBRANCH
-		fi
+		#if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
+		#	USENUMBRANCH=p5
+		#	echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+		#	USEBRANCH=$USENUMBRANCH
+		#fi
 	fi
 
-	[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it"
+	[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
 
 	CURBRANCH=$(get_current_branch)
 
