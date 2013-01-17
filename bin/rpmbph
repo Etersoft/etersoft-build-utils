@@ -14,6 +14,25 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod repl rpm git buildsrpm
 
+# for rpm + (d)ash
+remove_bashism()
+{
+	local SPECNAME=$1
+
+	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
+	subst "s|^popd|cd - >/dev/null|g" $SPECNAME
+
+	# {1,2} translation
+	# FIXME: miss first spaces
+	while read -r n ; do
+		echo "$n" | grep -v "{.*}" && continue
+		eval echo "$n"
+	done < $SPECNAME >$SPECNAME.tmp
+	[ -e "$SPECNAME.tmp" ] && mv -f $SPECNAME.tmp $SPECNAME
+	checkbashisms $SPECNAME
+}
+
+
 altspec_to_local()
 {
 local i
@@ -236,10 +255,11 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 		subst "s|^\(Auto[RP].*\),nomingw32|\1|g" $SPECNAME
 		subst "s|^\(Auto[RP].*\), nomingw32|\1|g" $SPECNAME
 	fi
-else
-	# for systems with ash as sh (f.i., Ubuntu)
-	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
-	subst "s|^popd|cd - >/dev/null|g" $SPECNAME
+fi
+
+if [ "$PKGVENDOR" = "ubuntu" ] || [ "$PKGVENDOR" = "debian" ] ; then
+	# for systems with (d)ash as sh (f.i., Ubuntu)
+	remove_bashism $SPECNAME
 fi
 
 if [ "$DISTRNAME/$DISTRVERSION" = "CentOS/5" ] ; then
