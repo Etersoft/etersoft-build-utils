@@ -11,7 +11,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	exit 1
 fi
 
-AMENDARG="-C HEAD"
+#AMENDARG=" --date=\"$(date -R)\" -C HEAD"
+AMENDARG=" --reset-author -C HEAD"
 if [ "$1" = "-e" ] ; then
 	AMENDARG=
 	shift
