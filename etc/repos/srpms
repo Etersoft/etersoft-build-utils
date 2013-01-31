@@ -2,7 +2,7 @@
 # all known src.rpm repositories (for rpmgp command)
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS/
 altautoimports http://autoimports.altlinux.org/pub/ALTLinux/autoimports/Sisyphus/files/SRPMS/
-fedora17     ftp://mirror.yandex.ru/fedora/linux/releases/17/Fedora/source/SRPMS/
+fedora18     ftp://mirror.yandex.ru/fedora/linux/releases/18/Fedora/source/SRPMS/
 fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS/
 #fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/17/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS/

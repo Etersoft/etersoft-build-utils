@@ -98,6 +98,8 @@ fi
 if [ "$CLEANUP" = "1" ] ; then
 	echog "Cleanup hasher in $HASHERDIR..."
 	docmd $HSH --cleanup-only $HASHERDIR $HASHERARG || fatal "cleanup"
+	rm -fv $HASHERDIR/*
+	rmdir $HASHERDIR/
 	exit
 fi
 
