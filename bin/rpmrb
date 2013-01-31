@@ -1,16 +1,24 @@
 #!/bin/sh
-# 2006, 2008 (c) Etersoft www.etersoft.ru
+# 2006, 2008, 2013 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 # 
 # Обновляет версию пакета, получает исходники,
-# собирает, устанавливает на тестирование и выкладывает новую версию пакета:
-# rpmrb спек версия [релиз]
+# собирает, устанавливает на тестирование и выкладывает новую версию пакета.
 # версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod spec git
+
+if [ "$1" = "-h" ]; then
+	echog "rpmrb - update spec to vermajor.verminor version, build %rel release"
+	echog "Usage: rpmrb [spec] [vermajor][.verminor] [rel]"
+	echog "Example:"
+	echog "          $ rpmrb [name.spec] 22.6 alt2"
+	echog "          $ rpmrb 1.2.3"
+	exit 0
+fi
 
 REMOTE=
 if [ "$1" = "-r" ] ; then
@@ -21,18 +29,14 @@ fi
 set_girar_host $1 && shift
 
 SPEC=$1
-VER=$2
+# allow run without spec, version only
+[ -r "$SPEC" ] && [ -n "$VER" ] && shift
+
+VER=$1
 # need for rpmgs
-GSSETRELEASE=$3
+GSSETRELEASE=$2
 test -n "$GSSETRELEASE" || GSSETRELEASE=alt1
 export GSSETRELEASE
-
-if [ "$1" = "-h" ]; then
-	echog "rpmrb - update spec to vermajor.verminor version, build %rel release"
-	echog "Usage: rpmrb spec [vermajor][.verminor] [rel]"
-	echog "Example: rpmrb name.spec 22.6 alt2"
-	exit 0
-fi
 
 test -f "$SPEC" || SPEC=$(get_gear_spec)
 
