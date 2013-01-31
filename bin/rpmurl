@@ -4,8 +4,6 @@
 # Public domain
 #
 # Open package Url in BROWSER
-# Параметры:
-# - название спек-файла
 #
 
 # load common functions, compatible with local and installed script
@@ -20,18 +18,19 @@ Usage="Usage: $name [-c -f -p -s] spec or package..."
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - open package Url in browser"
+Descr="$name - open package Url in the default browser"
 
 phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog " -c - check URL"
-	echog " -p - open package page at sisyphus.ru"
-	echog " -s - open source dir in browser"
+	echog "   -c  check if package URL is accessible"
+	echog "   -p  open package page on http://sisyphus.ru"
+	echog "   -s  open source dir in the default browser"
+	echo
 	echog "Ext. options:"
-	echog " -f - print failed URL only"
+	echog "   -f  print failed URL only"
 }
 
 while getopts :hcfsp opt; do

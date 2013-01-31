@@ -28,16 +28,16 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
-	echog "   -r  remote build (on $BUILDSERVER host)"
 	echog "   -u  sign and run gear build task after build"
 	echog "   -i  install built packages in test hasher (via loginhsh -t)"
+	echog "   -f  force tag set (see rpmbs --help)"
 	echo
 	echog "Ext. options:"
-	echog "   -c  build without stuff (previous built packages)"
+	echog "   -c  build without stuff (without previous built packages)"
 	echog "   -s  sign (and move to dir ETERDESTSRPM if defined) after build"
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
-	echog "   -f  force tag set (see rpmbs --help)"
+#	echog "   -r  remote build (on $BUILDSERVER host)"
 }
 
 while getopts :hrulsimt opt; do

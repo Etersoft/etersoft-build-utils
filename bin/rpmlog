@@ -18,7 +18,12 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "   -r  increment release"
 	echog "   -s  increment subrelease"
 	echog "   -l  add changelog from git log (since last release tag or TAG)"
+	echo
+	echog "Ext. options:"
 	echog "   -t  test run (without change files and repo)"
+	echo
+	echog "Example:"
+	echog "   $ rpmlog -v -l   - typical build new version"
 	exit 0
 fi
 

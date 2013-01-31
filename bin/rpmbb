@@ -22,11 +22,11 @@ fi
 
 #############################
 
-Usage="Usage: $name [-c -p -i -r -R] spec..."
+Usage="Usage: $name [-c -p -i -r -R] [spec]"
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - build  binary rpm from spec"
+Descr="$name - build  binary rpm from spec or from git"
 
 phelp()
 {
@@ -34,13 +34,17 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
-	echog "   -i  skip build, but do install and package"
-	echog "   -r  find build requires"
-	echog "   -R  find build requires with -bi"
+if is_alt ; then
+	echog "   -i  skip build stage, but do install files and package it"
+	echog "   -p  only packaging installed files into package"
+fi
+	echog "   -r  find build requires (run buildrequires)"
+	echog "   -R  find build requires during install (run buildrequires with -bi)"
 	echo
 	echog "Ext. options:"
+if is_alt ; then
 	echog "   -c  start from compile stage"
-	echog "   -p  packaging installed files into package"
+fi
 	echog "   -d  build with dmake"
 }
 

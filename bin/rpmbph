@@ -5,7 +5,7 @@
 #
 # BPH - backport; use hasher
 
-# Used ROOTDIR if defined
+# Used ROOTDIR if defined (for non ALT systems)
 # Makes backport package to any target platfrom (RPM, DEB, TGZ)
 # Релиз строится на основе релиза из Сизифа. Если там был alt4, то здесь будет alt0.M24.4
 # TODO: use RPMBUILDARG
@@ -315,7 +315,7 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echo  "Usage: rpmbph -b $EXAMPLEALTDISTRVERSION for backport to ALT Linux $EXAMPLEALTDISTRVERSION and so on"
+	echo  "Usage: rpmbph [GIRAR] -b $EXAMPLEALTDISTRVERSION for backport to ALT Linux $EXAMPLEALTDISTRVERSION and so on"
 	echo
 	echog "Options:"
 	echog "   -u           sign and upload after build" # will pass to rpmbs/rpmbsh
@@ -324,10 +324,13 @@ phelp()
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echo
 	echog "Ext. options:"
-	echog "   -r           remote build" # will pass to rpmbs/rpmbsh
+#	echog "   -r           remote build" # will pass to rpmbs/rpmbsh
 	echog "   -v           more verbose"
 	echog "   -q           quiet"
-	echog "Set ROOTDIR variable for backport to the other system"
+	echo
+	echog "Examples:"
+	echog " $ rpmbph -b p6 -n -u  - backport to p6 and ask to build it"
+#	echog "Set ROOTDIR variable for backport to the other system"
 #	echog " -m - send result via e-mail"
 }
 

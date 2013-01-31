@@ -35,13 +35,13 @@ phelp()
 	echog "   -r           run command"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
-	echog "   -x           allow run X program (set DISPLAY and use xauth)"
-	echog "   -t           use test hasher dir (different to build hasher)"
+	echog "   -x           allow run X program (set DISPLAY and install xauth)"
+	echog "   -t           use test hasher dir (different to usual build dir)"
 	echo
 	echog "Extra options:"
 	echog "   -a           auto test mode for post myhsh build checking"
 	echog "   -d           print hasher dir"
-	echog "   -M??         branch name"
+	echog "   -M??         binary repository name (obsoleted)"
 }
 
 while getopts :chitoadvqr:b:x opt; do
