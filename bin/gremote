@@ -2,11 +2,15 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod git
+load_mod git rpm
+#load_mod rpm tarball alt git web buildsrpm
+
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gremote - git remote -v"
 	echo "Use: gremote"
+	echo "Options:"
+	echo "  -u USER  add path to USER package repo"
 	exit 1
 fi
 
@@ -15,7 +19,22 @@ if is_girar_name $1 ; then
 	shift
 fi
 
+if [ "$1" = "-u" ] ; then
+	shift
+	RU="$1"
+	[ -n "$RU" ] || fatal "User missed. Please, run as gremote -u USER"
+	SPEC=$(get_gear_spec)
+	build_rpms_name "$SPEC"
+	# copied from rpmbs
+	# FIXME: hack: get project name from package name
+	PROJECTNAME=$(echo $BASENAME | filter_gear_name)
+	[ -n "$PROJECTNAME" ] || fatal "Can't detect current project name"
+	docmd git remote add $RU $GIRARHOST:/people/$RU/packages/$PROJECTNAME.git
+	exit
+fi
+
 test -r "$1" && fatal "Do not need any params more"
 
 showcmd git remote -v
 git remote -v | sed -e "s|(fetch)$||" | sed -e "s|(push)$||" | sort -u
+
