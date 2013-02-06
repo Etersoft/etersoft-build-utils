@@ -233,3 +233,26 @@ separate_changelog()
 	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==1) {print}; if(/^%changelog/&&desk==0){desk++}}' > "$3"
 }
 
+# for rpm + (d)ash
+remove_bashism()
+{
+	local SPECNAME="$1"
+	test -w "$SPECNAME" || fatal "File '$SPECNAME' is missed or read only"
+
+	separate_changelog $SPECNAME $SPECNAME.main $SPECNAME.changelog
+
+	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME.main
+	subst "s|^popd|cd - >/dev/null|g" $SPECNAME.main
+
+	# {1,2} translation
+	# FIXME: miss first spaces
+	while read -r n ; do
+		echo "$n" | grep -v "{.*}" && continue
+		eval echo "$n"
+	done < $SPECNAME.main >$SPECNAME.tmp
+	[ -s "$SPECNAME.tmp" ] && mv -f $SPECNAME.tmp $SPECNAME
+	checkbashisms $SPECNAME
+	cat $SPECNAME.changelog >>$SPECNAME
+	rm -f $SPECNAME.main $SPECNAME.changelog
+}
+

@@ -12,25 +12,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod repl rpm git buildsrpm
-
-# for rpm + (d)ash
-remove_bashism()
-{
-	local SPECNAME=$1
-
-	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME
-	subst "s|^popd|cd - >/dev/null|g" $SPECNAME
-
-	# {1,2} translation
-	# FIXME: miss first spaces
-	while read -r n ; do
-		echo "$n" | grep -v "{.*}" && continue
-		eval echo "$n"
-	done < $SPECNAME >$SPECNAME.tmp
-	[ -e "$SPECNAME.tmp" ] && mv -f $SPECNAME.tmp $SPECNAME
-	checkbashisms $SPECNAME
-}
+load_mod repl rpm git buildsrpm spec
 
 
 altspec_to_local()
