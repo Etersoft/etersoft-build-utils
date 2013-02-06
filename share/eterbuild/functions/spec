@@ -224,3 +224,12 @@ get_gear_spec()
         echo $trySpec
         test -f "$trySpec"
 }
+
+separate_changelog()
+{
+	local SPEC="$1"
+	[ "$SPEC" != "$2" ] && [ "$SPEC" != "$3" ] || fatal "separate_changelog: cannot write to itself"
+	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==0) {print}; if(/^%changelog/&&desk==0){desk++}}' > "$2"
+	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==1) {print}; if(/^%changelog/&&desk==0){desk++}}' > "$3"
+}
+

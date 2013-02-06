@@ -126,8 +126,7 @@ do
 
 	# Prepare for fix only before changelog part
 	i=$SPEC.tmpspecbeforechangelog
-	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==0) {print}; if(/^%changelog/&&desk==0){desk++}}' > $i
-	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==1) {print}; if(/^%changelog/&&desk==0){desk++}}' > $SPEC.tmpspecchangelog
+	separate_changelog $SPEC $i $SPEC.tmpspecchangelog
 
 	# Unneeded on ALT
 	subst "s|^Prefix:.*$||" $i
