@@ -123,7 +123,7 @@ fi
 LISTBUILDDEP=`print_buildreq $SPECNAME`
 LISTREQDEP=`print_pkgreq $SPECNAME`
 LISTDEP=`echo $LISTBUILDDEP $LISTREQDEP | xargs -n1 echo | sort -u`
-LISTGROUP=`eval_spec $SPECNAME | grep Group | sed -e "s|^.*:||g"  | xargs -n1 echo | sort -u`
+LISTGROUP=`eval_spec $SPECNAME | grep "^Group" | sed -e "s|^.*:||g"  | xargs -n1 echo | sort -u`
 
 
 # Build replacement rules for spec
