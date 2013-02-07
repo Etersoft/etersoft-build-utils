@@ -161,6 +161,7 @@ subst_namever()
 }
 
 
+# args: "desc text" <spec(s)>
 add_changelog_helper()
 {
 	# it is permitted to run with "" DESC
@@ -168,13 +169,13 @@ add_changelog_helper()
 	shift
 	local SPECS="$*"
 	if ! tty -s && [ -z "$DESC" ] ; then
-		echo "skip changelog fixing without tty"
+		echo "skip changelog fixing without tty and without desc"
 		return 1
 	fi
-	[ -z "$SPECS" ] && fatal "run add_changelog with incorrect args"
+	[ -z "$SPECS" ] && fatal "run add_changelog without spec(s)"
 	add_changelog -e "$DESC" $SPECS
 	R=$?
-	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 1 ; }
+	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 0 ; }
 	# If changelog sucessfully added
 	if [ "$R" = "0" ]; then
 		local SPEC
