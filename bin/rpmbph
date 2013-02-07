@@ -396,6 +396,10 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		fatal "Run rpmbph in sisyphus or master branch, not in backport branch $USEBRANCH"
 	fi
 
+	if [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
+		fatal "Run rpmbph in sisyphus or master branch, not in backport branch $OLDBRANCH"
+	fi
+
 	# Create branch if not exist yet
 	if ! is_exist_branch $USEBRANCH ; then
 		docmd git branch $USEBRANCH
