@@ -24,6 +24,7 @@ SPECNAME=$1
 
 BASERELEASE=$(get_numrelease $SPECNAME)
 RELEASE=$(get_release $SPECNAME)
+BUILDNAME=$(get_name $SPECNAME)
 
 ADDFIXCOMMAND=""
 
@@ -51,9 +52,6 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 %undefine __libtoolize"
 	fi
 else
-	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
-	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
-
 	BUILDREQ="BuildRequires:"
 	if [ $(basename $SPECNAME) != "eepm.spec" ] ; then
 		# Need our compat package and disable strong patch checking
@@ -63,6 +61,14 @@ else
 	# hack against very straight patch command
 	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
+
+	if [ "$BUILDARCH" = "x86_64" ] && echo $BUILDNAME | grep -q wine ; then
+		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs"
+		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ] && BUILDREQ="$BUILDREQ ia32-libs"
+	fi
+
+	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
+	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
 
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
