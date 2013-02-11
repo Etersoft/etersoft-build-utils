@@ -285,11 +285,14 @@ if [ -n "$CLONEGIT" ] ; then
 	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
 	RREPO="/gears/$REPOPATH"
 
+	# TODO: check appropriate repo with exist_git_repo
 	if [ -z "$MIGRATEGIRAR" ] ; then
 		if ! git_clone $RREPO ; then
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
-			docmd git_clone $RREPO || fatal "Can't clone $RREPO."
+			if ! git_clone $RREPO ; then
+				fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
+			fi
 		fi
 		if cd $PKGNAME ; then
 			docmd git remote rename origin gear
@@ -307,7 +310,7 @@ if [ -n "$CLONEGIT" ] ; then
 				echo "Remote clone from $RREPO ..."
 				docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 			else
-				fatal "$PKGNAME does not exists in /gears or /srpms, can't clone"
+				fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
 			fi
 		fi
 
