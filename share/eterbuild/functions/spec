@@ -14,19 +14,30 @@ get_var()
 eval_spec()
 {
 	# TODO: use rpm -showrc instead -bE for get main variables?
-	local SPEC=$1
+	local SPECNAME=$1
+
+	# Drop changelog and make spec copy
 	# see http://bugs.etersoft.ru/show_bug.cgi?id=6588
-	#cat $SPEC | awk 'BEGIN{desk=0}{if (desk==0) {print}; if(/^%changelog/&&desk==0){desk++}}' > $SPEC.tmpspec
-	# SPEC=$SPEC.tmpspec
+	separate_changelog $SPECNAME $SPECNAME.tmp $SPECNAME.changelog
+	SPEC=$SPECNAME.tmp
+
+	USEARCH=
+	# FIXME: rpm on 64bit ALT has no macros for ix86 arch
+	# use i586 if ExclusiveArch is %{ix86}
+	#[ "$SYSARCH" = "x86_64" ] && grep "^ExclusiveArch:" $SPEC | grep -q "ix86" && USEARCH=i586
+
+	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
+	# See https://bugs.etersoft.ru/show_bug.cgi?id=8394
+	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPEC
 
 	# Hack: just print spec if -bE failed
 	if is_alt ; then
 		# on ALT we have to done without errors
-		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC || fatal "Check spec's fields"
+		$USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC || fatal "Check spec's fields"
 	else
-		$RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC
+		$USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC
 	fi
-#	rm -f $SPEC.tmpspec
+	rm -f $SPECNAME.tmp $SPECNAME.changelog
 }
 
 get_release()
