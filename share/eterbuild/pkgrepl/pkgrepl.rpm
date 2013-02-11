@@ -65,6 +65,7 @@ libsane|sane-backends
 jackit-devel|jack-audio-connection-kit-devel
 kernel-build-tools|
 libreadline-devel|readline-devel
+libreadline|readline
 
 libpopt-devel|popt
 libpopt|popt
@@ -167,5 +168,6 @@ libcrypto10|openssl
 
 dbus-tools-gui|dbus-x11
 python-base|python
+libpython|python-libs
 xinitrc|
 fonts-bitmap-misc|xorg-x11-fonts-misc

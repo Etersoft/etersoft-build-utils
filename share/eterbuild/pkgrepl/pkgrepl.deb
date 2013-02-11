@@ -285,3 +285,5 @@ freenx-server|
 apt-repo|
 fonts-bitmap-misc|xfonts-base
 xkeyboard-config|xkb-data
+
+rpm-build|rpm
