@@ -27,9 +27,6 @@ RELEASE=$(get_release $SPECNAME)
 
 ADDFIXCOMMAND=""
 
-# hack against very straight patch command
-FIXPATCHFUZZ="%define _default_patch_fuzz 3"
-
 echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
 
 # Set buildreq
@@ -56,8 +53,17 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 else
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
 	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
-	# Need our compat package and disable strong patch checking
-	BUILDREQ="BuildRequires: rpm-build-altlinux-compat >= 0.95 make gcc\n$FIXPATCHFUZZ"
+
+	BUILDREQ="BuildRequires:"
+	if [ $(basename $SPECNAME) != "eepm.spec" ] ; then
+		# Need our compat package and disable strong patch checking
+		BUILDREQ="$BUILDREQ rpm-build-altlinux-compat >= 0.95"
+	fi
+
+	# hack against very straight patch command
+	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
+	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
+
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
 	# HACK: Override release with KORINFTARGETRELEASE if set
