@@ -351,3 +351,8 @@ usearg()
         [ -n "$1" ] && echo "$ARG $@"
 }
 
+# return 0 if arg1 >= arg2
+version_more_version()
+{
+	[ "$2" = "$(echo -e "$1\n$2" | sort -n | head -n1)" ]
+}
