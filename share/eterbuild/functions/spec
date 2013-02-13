@@ -18,6 +18,7 @@ eval_spec()
 
 	# Drop changelog and make spec copy
 	# see http://bugs.etersoft.ru/show_bug.cgi?id=6588
+	mark_file_to_remove $SPECNAME.tmp $SPECNAME.changelog
 	separate_changelog $SPECNAME $SPECNAME.tmp $SPECNAME.changelog
 	SPEC=$SPECNAME.tmp
 
@@ -38,6 +39,7 @@ eval_spec()
 		$USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC
 	fi
 	rm -f $SPECNAME.tmp $SPECNAME.changelog
+	remove_file_from_remove $SPECNAME.tmp $SPECNAME.changelog
 }
 
 get_release()

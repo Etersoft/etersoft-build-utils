@@ -26,6 +26,9 @@ print_message()
 fatal()
 {
 	print_message Error "$@"
+	if [ -n "$ETERSOFT_FATAL_REMOVE_FILES" ]; then
+		rm -vf $ETERSOFT_FATAL_REMOVE_FILES
+	fi
 	exit 1
 }
 
@@ -33,6 +36,16 @@ fatal()
 warning()
 {
 	print_message Warning "$@"
+}
+
+mark_file_to_remove()
+{
+	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist union "$ETERSOFT_FATAL_REMOVE_FILES $@")
+}
+
+remove_file_from_remove()
+{
+	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist exclude "$*" "$ETERSOFT_FATAL_REMOVE_FILES")
 }
 
 
