@@ -142,10 +142,10 @@ trans_rpmdeps_to_pkgname_lav()
 	fi
 	rm -f $TFILE
 
-	# remove basesystem packages
+	# remove ALT basesystem packages
 	ALREADYHANDLEDRPM="
 bash sh filesystem alt-gpgkeys glibc-core glibc-locales glibc-preinstall
-rpm
+rpm apt apt-repo
 tcb-utils nss_tcb libtcb chkconfig service setup
 shadow-utils shadow-convert module-init-tools kmod util-linux-control pam
 alternatives

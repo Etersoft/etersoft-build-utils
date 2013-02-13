@@ -282,7 +282,6 @@ python-module-GitPython|python-git
 makedepend|xutils-dev
 perl-XML-Parser|libxml-parser-perl
 freenx-server|
-apt-repo|
 fonts-bitmap-misc|xfonts-base
 xkeyboard-config|xkb-data
 

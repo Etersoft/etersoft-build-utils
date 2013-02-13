@@ -160,7 +160,6 @@ libwxGTK|wxGTK
 
 libfontconfig-devel|fontconfig-devel
 libfontconfig|fontconfig
-apt-repo|
 perl-base|perl
 
 libpng15|libpng
