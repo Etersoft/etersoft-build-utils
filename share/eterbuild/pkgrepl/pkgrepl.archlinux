@@ -4,9 +4,6 @@ terminfo|ncurses
 termutils|ncurses
 rpm-build-fonts|rpm-build-altlinux-compat
 kernel-build-tools|
-#mount|util-linux-ng
-# some problem with install util-linux-ng
-mount|
 gettext-tools|gettext
 perl-XML-LibXML|perl-xml-libxml
 perl-base|perl
@@ -24,4 +21,41 @@ libssl-devel|openssl
 libssl10|openssl
 libwine-etersoft-devel|libwine-etersoft-devel
 gst-plugins-devel|gstreamer0.10-base
+gstreamer|gstreamer0.10
+libgst-plugins|gstreamer0.10
+libgstreamer|gstreamer0.10
 freenx-server|
+libalsa|alsa-lib
+libalsa-devel|alsa-lib
+jackit|jack
+libesd-devel|
+libopenal1|openal
+libopenal|openal
+libfontenc-devel|libfontenc
+libhal-devel|
+libmpg123|
+libfontconfig|fontconfig
+libglu|glu
+liblcms|lcms
+libgnutls|gnutls
+libssl|openssl
+libgsm|gsm
+udev-rules|systemd
+libudev|systemd
+libncursesw|ncurses
+libtinfo|ncurses
+webclient|
+xlsfonts|xorg-xlsfonts
+libsane|sane
+xrandr|xorg-xrandr
+libxscrnsaver|
+# FIXME: can't install
+#mount|util-linux-ng
+#util-linux|util-linux-ng
+mount|
+util-linux|
+# FIXME: can't install
+libxxf86misc|
+# ALT's version?
+rpm-build|
+rpm-build-intro|rpm-build-altlinux-compat
