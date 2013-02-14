@@ -43,6 +43,8 @@ toalt_pkgrepl()
 		if [ -n "$REPLRULE" ] ; then
 			REPLRULE1=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
 			REPLRULE2=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
+			# really if they are identically both, there is no replacement
+			[ "$REPLRULE1" = "$REPLRULE2" ] && return 1
 			return 0
 		else
 			REPLRULE1=
@@ -402,24 +404,27 @@ do
 	echog "fix build requires..."
 	ALLREPLRULES=""
 	for n in `print_buildreq $i` ; do
-		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
-		#echo REPLRULE: $REPLRULE
+		toalt_pkgrepl $n || continue
+		ALLREPLRULES="$ALLREPLRULES
+			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g" 
+		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
 	done
 
 	echog "fix package requires..."
 	ALLREPLRULES=""
 	for n in `print_pkgreq $i` ; do
-		toalt_pkgrepl $n && ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
-		#echo REPLRULE: $REPLRULE
+		toalt_pkgrepl $n || continue
+		ALLREPLRULES="$ALLREPLRULES
+			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
 	done
 
 	echog "fix groups..."
 	for n in `print_grpreq $i` ; do
-		toalt_grprepl $n && ALLREPLRULES="$ALLREPLRULES
-			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g" && test -n "$VERBOSE" && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
-		#echo REPLRULE: $REPLRULE
+		toalt_grprepl $n || continue
+		ALLREPLRULES="$ALLREPLRULES
+			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g"
+		[ -n "$VERBOSE" ] && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
 	done
 
 	# Replace package names in source spec
