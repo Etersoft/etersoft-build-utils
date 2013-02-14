@@ -1,0 +1,33 @@
+#!/bin/sh
+# 2013 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod spec git
+
+if [ "$1" = "-h" ] || [ "$1" = "---help" ] ; then
+	echog "emkimage - run make in mkimage-profiles"
+	echog "Usage: emkimage [-b $EXAMPLEALTDISTRVERSION] <target>"
+	exit 0
+fi
+
+# TODO: use getopts
+if [ "$1" = "-b" ] ; then
+	BINARYREPONAME=$2
+	shift 2
+fi
+
+parse_cmd_pre "$@"
+
+#mygetopts $LISTARGS
+
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
+
+# export OURAPTCONF with temp. file contains correct path to sources.list
+# use MENV
+prepare_aptconfig
+
+docmd setarch $BUILDARCH make APTCONF="$OURAPTCONF" $LISTARGS
