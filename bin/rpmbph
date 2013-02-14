@@ -52,6 +52,8 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 %undefine __libtoolize"
 	fi
 else
+	docmd $ETERBUILDBIN/rpmcs $SPECNAME
+
 	BUILDREQ="BuildRequires:"
 	if [ $(basename $SPECNAME) != "eepm.spec" ] ; then
 		# Need our compat package and disable strong patch checking
