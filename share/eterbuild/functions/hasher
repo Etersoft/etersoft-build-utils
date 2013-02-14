@@ -90,9 +90,9 @@ prepare_aptconfig()
 $ETERBUILD_APTREPO
 EOF
 	fi
-	[ -n "$QUIETMODE" ] || return
+	[ -n "$QUIETMODE" ] && return
 	echo
-	echog "Apt sources from $OURSOURCES:"
+	echog "Apt sources from $APTCONF:"
 	cat $OURSOURCES | grep -v "^#" | grep -v "^\$" | grep rpm
 	echo
 }
