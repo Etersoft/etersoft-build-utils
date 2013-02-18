@@ -128,8 +128,9 @@ get_root_git_dir()
         readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
 }
 
-# Usage: is_gear [path_to_spec|dir_inside_git]
-is_gear()
+# TODO: move to separate gear file
+# TODO: rewrite with get_gear_rules_by_spec in mind
+get_gear_rules()
 {
 	local DIR="$1"
 	[ -z "$IGNOREGEAR" ] || return 1
@@ -137,9 +138,17 @@ is_gear()
 	[ -n "$DIR" ] && cd $DIR
 	local GITDIR=$(get_root_git_dir)
 	[ -n "$DIR" ] && cd - >/dev/null
-	[ -d "$GITDIR/.gear" ] && return 0
-	[ -r "$GITDIR/.gear-rules" ] && return 0
-	return 1
+	local rules="$GITDIR/.gear/rules"
+	[ -r "$rules" ] || rules="$GITDIR/.gear-rules"
+	[ -r "$rules" ] || return
+	echo $rules
+}
+
+
+# Usage: is_gear [path_to_spec|dir_inside_git]
+is_gear()
+{
+	get_gear_rules $@ >/dev/null
 }
 
 filter_gear_name()

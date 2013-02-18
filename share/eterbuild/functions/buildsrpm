@@ -36,7 +36,7 @@ uni_rpmbuildsrpm()
 		shift # skip spec name
 
 		# FIXME: use spec name as project name
-		GEARRULES=$(get_gear_rules "$SPECNAME")
+		GEARRULES=$(get_gear_rules_by_spec "$SPECNAME")
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then

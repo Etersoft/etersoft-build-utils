@@ -3,8 +3,8 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-
-get_gear_rules()
+# TODO: move to gear file
+get_gear_rules_by_spec()
 {
 	local SPECNAME="$1"
 	# FIXME: move get rules file to separate function
@@ -59,7 +59,7 @@ uni_rpmbuild()
 		shift # skip spec name
 
 		# FIXME: use spec name as project name
-		GEARRULES=$(get_gear_rules "$SPECNAME")
+		GEARRULES=$(get_gear_rules_by_spec "$SPECNAME")
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
@@ -92,7 +92,7 @@ uni_buildreq()
 
 	if is_gear $SPECDIR ; then
 		# FIXME: use spec name as project name
-		GEARRULES=$(get_gear_rules "$SPECNAME")
+		GEARRULES=$(get_gear_rules_by_spec "$SPECNAME")
 
 		docmd $NICE $GEARBUILDREQ $BUILDREQPARAM $GEARRULES --commit -- "$SPECNAME" "$@" || RET=$?
 	else
