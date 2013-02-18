@@ -384,7 +384,8 @@ do
 		s|%_datadir/omf|%_omfdir|g
 		s|%_defaultdocdir|%_docdir|g
 		s|%_var/log|%_logdir|g
-		s|%_var/lib|%_localstatedir|g
+		# See https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+		#s|%_var/lib|%_localstatedir|g
 		s|%__autoreconf|%autoreconf|g" $i
 
 	subst "s|%rpmcflags|%optflags|g" $i
