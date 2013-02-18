@@ -37,7 +37,10 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 	BUILDREQ=
 
 	# FIXME: use separate macro list
-	if grep -q _sharedstatedir $SPECNAME ; then
+	# FIXME: check for all rpm-build-compat macro list
+	if grep -q "\(_cupslibdir\|_sudoers\)" $SPECNAME ; then
+		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.25"
+	elif grep -q _sharedstatedir $SPECNAME ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.24"
 	fi
 
