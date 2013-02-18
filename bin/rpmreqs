@@ -121,13 +121,13 @@ passwdqc-control"
 trans_rpmdeps_to_pkgname_lav()
 {
 	# partially copied from aptU
-	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
+	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.* libdl\.so.*"
 
 	local REQLIST="$@"
 	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	# FIXME: strange regexp for drop libNAME.so.NUM and perl(Package) and /bin/sh
-	REALPKGNAMELIST=$(regexp_exclude_list ". .. /* (*" "$REQLIST")
+	REALPKGNAMELIST=$(regexp_exclude_list "\. \.\. /* (*" "$REQLIST")
 	# FIXME: external list? Set priorities/
 	REQCONVLIST=$(do_exclude_list "$REALPKGNAMELIST" "$REQLIST" | filter_multiple_provides)
 
@@ -140,6 +140,7 @@ trans_rpmdeps_to_pkgname_lav()
 	if grep -q "is a virtual package provided by" $TFILE ; then
 		fatal "multiple provides: $(cat $TFILE)"
 	fi
+	#grep -q "^E:" $TFILE && fatal "Can't get correct result from apt: $(cat $TFILE)"
 	rm -f $TFILE
 
 	# remove ALT basesystem packages

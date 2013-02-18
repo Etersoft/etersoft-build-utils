@@ -3,7 +3,7 @@
 # FIXME
 makedepend|
 foomatic-db-engine|
-#imake|
+imake|imake
 shadow-log|
 w3c-markup-validator-libs|
 xorg-cf-files|
@@ -36,15 +36,20 @@ libpam-devel|pam-devel
 libpam0-devel|pam-devel
 # libssl???
 libssl|openssl
+libssl-devel|openssl-devel
 libssl7|openssl
 libssl10|openssl
-libssl-devel|openssl-devel
+libcrypto10|openssl
+# for rpmcs
+openssl|openssl
 libfreetype|freetype
 freetype2-devel|freetype-devel
 freetype2|freetype
 libfreetype-devel|freetype-devel
 libcups-devel|cups-devel
 libcups|cups
+# for rpmcs
+cups|cups
 libalsa-devel|alsa-lib-devel
 libalsa|alsa-lib
 libopenal1|openal-soft
@@ -163,10 +168,14 @@ libfontconfig|fontconfig
 perl-base|perl
 
 libpng15|libpng
-libcrypto10|openssl
-
+python-module-dbus|dbus-python
+python-module-xml|libxml2-python
 dbus-tools-gui|dbus-x11
+libdbus-devel|dbus-devel
+libdbus|dbus-libs
 python-base|python
 libpython|python-libs
 xinitrc|
 fonts-bitmap-misc|xorg-x11-fonts-misc
+# for rpmcs
+xauth|xauth

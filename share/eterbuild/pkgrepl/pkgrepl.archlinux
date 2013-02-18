@@ -49,13 +49,16 @@ xlsfonts|xorg-xlsfonts
 libsane|sane
 xrandr|xorg-xrandr
 libxscrnsaver|
+mount|util-linux
+util-linux|util-linux
 # FIXME: can't install
-#mount|util-linux-ng
-#util-linux|util-linux-ng
-mount|
-util-linux|
-# FIXME: can't install
-libxxf86misc|
-# ALT's version?
-rpm-build|
+#libxxf86misc|
+rpm-build|rpm
 rpm-build-intro|rpm-build-altlinux-compat
+libicu|icu
+libreadline|readline
+gccmakedep|imake
+openssh-server|openssh
+openssh-clients|openssh
+xauth|xorg-xauth
+xorg-cf-files|
