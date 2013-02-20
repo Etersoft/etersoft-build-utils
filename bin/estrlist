@@ -143,4 +143,9 @@ if [ "$COMMAND" = "-h" ] || [ "$COMMAND" = "--help" ] ; then
 fi
 
 shift
-"$COMMAND" "$@"
+if [ "$1" = "-" ] ; then
+    shift
+    "$COMMAND" "$(cat)"
+else
+    "$COMMAND" "$@"
+fi
