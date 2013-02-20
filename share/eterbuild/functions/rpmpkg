@@ -13,7 +13,7 @@ get_binpkg_list()
 	local PKGNAME=$(basename $2)
 	find "$PKGDIR" ! -name '*\.src\.rpm' -name '*\.rpm' -execdir \
 		rpmquery -p --qf='%{sourcerpm}\t%{name}-%{version}-%{release}.%{arch}.rpm\n' "{}" \; \
-		| grep "^$PKGNAME[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo "$PKGDIR/{} "
+		| grep "^$PKGNAME[[:space:]].*" | cut -f2 | xargs -n1 -I "{}" echo -n "$PKGDIR/{} "
 }
 
 drop_pkg_extensions()
