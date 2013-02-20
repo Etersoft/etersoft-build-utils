@@ -1,15 +1,8 @@
 libaudiofile|audiofile
 libaudiofile-devel|audiofile-devel
 libhal-devel|
-libopenal-devel|openal-soft-devel
-libopenal|openal-soft
 libcapi-devel|libcapifax-devel
 libcapi|libcapifax
-
-libgstreamer|gstreamer
-gstreamer-devel|gstreamer-devel
-gst-plugins-devel|gstreamer-plugins-base-devel
-libgst-plugins|libgstreamer-plugins-base
 
 libmesa-devel|mesa-libGL-devel
 libGLU-devel|mesa-libGLU-devel

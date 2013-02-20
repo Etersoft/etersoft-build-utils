@@ -116,12 +116,13 @@ libXaw|
 libcrypto10|libopenssl0_9_8
 libssl10|libopenssl0_9_8
 libmpg123|
+libopenal-devel|openal-devel
 libopenal1|openal
 libudev1|libudev0
 
 imake|xorg-x11-util-devel
 
-dbus-tools-gui||dbus-1-x11
+dbus-tools-gui|dbus-1-x11
 openssh-clients|openssh
 python-module-dbus|dbus-1-python
 python-module-pygobject|python-gobject2

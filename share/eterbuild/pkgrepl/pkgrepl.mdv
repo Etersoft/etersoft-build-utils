@@ -133,7 +133,7 @@ libgst-plugins|libgstreamer-plugins-base0.10
 libudev1|libudev0
 libmpg123|libmpg123_0
 
-dbus-tools-gui||dbus-x11-1
+dbus-tools-gui|dbus-x11-1
 python-module-dbus|python-dbus
 python-module-pygobject|python-gobject
 python-modules-logging|python-logging

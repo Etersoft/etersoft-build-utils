@@ -43,7 +43,7 @@ liblcms|lcms
 libldap|openldap-client
 libmpg123|mpg123
 libncursesw|
-libopenal|
+libopenal-devel|
 libopenal1|
 libsane|sane
 libtinfo|ncurses

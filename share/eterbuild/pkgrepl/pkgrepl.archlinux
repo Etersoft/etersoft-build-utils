@@ -8,10 +8,10 @@ gettext-tools|gettext
 perl-XML-LibXML|perl-xml-libxml
 perl-base|perl
 fonts-ttf-core|
-libGLU|
 glibc-nss|glibc
 glibc-devel|glibc
 glibc-pthread|glibc
+glibc-utils|glibc
 libcrypto10|openssl
 libfreetype|freetype2
 libfreetype-devel|freetype2
@@ -30,12 +30,15 @@ libalsa-devel|alsa-lib
 jackit|jack
 libesd-devel|
 libopenal1|openal
-libopenal|openal
+libopenal-devel|openal
 libfontenc-devel|libfontenc
 libhal-devel|
 libmpg123|
 libfontconfig|fontconfig
+libGLU|glu
+# fixme? why we need libglu??
 libglu|glu
+libGL|mesa
 liblcms|lcms
 libgnutls|gnutls
 libssl|openssl
@@ -51,8 +54,8 @@ xrandr|xorg-xrandr
 libxscrnsaver|
 mount|util-linux
 util-linux|util-linux
-# FIXME: can't install
-#libxxf86misc|
+# missed
+libxxf86misc|
 rpm-build|rpm
 rpm-build-intro|rpm-build-altlinux-compat
 libicu|icu
@@ -62,3 +65,25 @@ openssh-server|openssh
 openssh-clients|openssh
 xauth|xorg-xauth
 xorg-cf-files|
+dbus-tools-gui|dbus
+netcat|gnu-netcat
+python-base|python
+setxkbmap|xorg-setxkbmap
+# cron is just target
+vixie-cron|cron
+xdpyinfo|xorg-xdpyinfo
+xmodmap|xorg-xmodmap
+xrdb|xorg-xrdb
+xsetroot|xorg-xsetroot
+# fixme
+fonts-bitmap-misc|
+docbook-utils|docbook-xml
+groff-base|groff
+libjpeg|libjpeg-turbo
+libpng15|libpng
+libaudiofile|audiofile
+libpam|pam
+makedepend|imake
+libgtk+2-devel|gtk2
+# will not work without gdk
+libgtk+2|gtk2 gdk-pixbuf2

@@ -1,3 +1,4 @@
 libaudiofile|audiofile
 libaudiofile-devel|audiofile-devel
 cifs-utils|cifs-utils
+mount|util-linux

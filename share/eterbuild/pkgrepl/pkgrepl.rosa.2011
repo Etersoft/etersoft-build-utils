@@ -79,7 +79,6 @@ libopensc-devel|libopensc-devel
 wxGTK-devel|libwxgtk2.8-devel
 libwxGTK-devel|libwxgtk2.8-devel
 libgtkmm2-devel|libgtkmm2.4-devel
-libopenal-devel|libopenal-devel
 
 # By DKR
 gstreamer-devel|libgstreamer0.10-devel

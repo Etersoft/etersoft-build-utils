@@ -124,7 +124,8 @@ librsvg|librsvg2
 libwine-devel|libwine-devel
 
 ImageMagick-tools|imagemagick
-libopensc2-devel|opensc
+libopensc-devel|libopensc2-dev
+libopensc|libopensc2
 libwxGTK|libwxgtk2.8-0
 libwxGTK-devel|libwxgtk2.8-dev
 libtinfo-devel|libncurses5-dev
@@ -179,7 +180,8 @@ libpng15|libpng12-0
 libX11|libx11-6
 libcrypto10|openssl
 libalsa|libasound2
-libXmu|libxmu6
+libXmu|libxmu6 libxmuu1
+libXmu-devel|libxmu-dev libxmuu-dev
 libXfixes|libxfixes3
 
 # postgre

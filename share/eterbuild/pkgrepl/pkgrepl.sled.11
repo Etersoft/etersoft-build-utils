@@ -89,7 +89,6 @@ fonts-ttf-liberation|liberation-fonts
 libuuid|libuuid1
 # ?
 libalsa-devel|
-libopenal1|
 
 gst-plugins-devel|gstreamer-0_10-plugins-base-devel
 libv4l-devel|

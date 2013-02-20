@@ -2,7 +2,9 @@
 
 # FIXME
 makedepend|
-foomatic-db-engine|
+
+foomatic-db-engine|foomatic
+foomatic-db|foomatic
 imake|imake
 shadow-log|
 w3c-markup-validator-libs|
@@ -53,7 +55,7 @@ cups|cups
 libalsa-devel|alsa-lib-devel
 libalsa|alsa-lib
 libopenal1|openal-soft
-libopenal1-devel|openal-soft-devel
+libopenal-devel|openal-soft-devel
 # TODO: Check for ALL system
 #libicu-devel|
 # for ISDN
@@ -108,11 +110,12 @@ glibc-devel-static|glibc-devel
 libopensc-devel|opensc
 libopensc|opensc
 ImageMagick-tools|ImageMagick
-libopenal-devel|openal-devel
 
 libgsm-devel|gsm-devel
 libgsm|gsm
+
 gst-plugins-devel|gstreamer-plugins-base-devel
+libgst-plugins|gstreamer-plugins-base
 libgstreamer|gstreamer
 
 libunixODBC-devel|unixODBC-devel
@@ -140,6 +143,7 @@ libMySQL-devel|mysql-devel
 
 # License problem, add individually
 libmpg123-devel|
+libmpg123|
 
 # meta packages
 webclient|
