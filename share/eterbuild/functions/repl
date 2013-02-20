@@ -33,10 +33,6 @@ add_32bit_requires()
 				echo $i | grep -q -- "-dev$" && echo "$i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
-		elif [ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ; then
-			echo "$@ ia32-libs"
-		elif [ "$DISTRNAME" = "Debian" ] ; then
-			echo "$@ ia32-libs"
 		else
 			echo "$@"
 		fi

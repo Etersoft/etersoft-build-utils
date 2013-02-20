@@ -26,7 +26,8 @@ BASERELEASE=$(get_numrelease $SPECNAME)
 RELEASE=$(get_release $SPECNAME)
 BUILDNAME=$(get_name $SPECNAME)
 
-ADDFIXCOMMAND=""
+ADDFIXCOMMAND=
+ADDREQUIRES=
 
 echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
 
@@ -68,8 +69,8 @@ else
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
 
 	if [ "$BUILDARCH" = "x86_64" ] && echo $BUILDNAME | grep -q wine ; then
-		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs"
-		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ] && BUILDREQ="$BUILDREQ ia32-libs"
+		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 	fi
 
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
@@ -138,7 +139,7 @@ if [ "$MDISTR" = "M23" ] ; then
 fi
 
 LISTBUILDDEP=`print_buildreq $SPECNAME`
-LISTREQDEP=`print_pkgreq $SPECNAME`
+LISTREQDEP="`print_pkgreq $SPECNAME` $ADDREQUIRES"
 LISTDEP=`echo $LISTBUILDDEP $LISTREQDEP | xargs -n1 echo | sort -u`
 LISTGROUP=`eval_spec $SPECNAME | grep "^Group" | sed -e "s|^.*:||g"  | xargs -n1 echo | sort -u`
 
