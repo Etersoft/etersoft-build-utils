@@ -3,7 +3,7 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-ETERBUILDVERSION=2022
+ETERBUILDVERSION=2023
 
 SUDO="sudo"
 
