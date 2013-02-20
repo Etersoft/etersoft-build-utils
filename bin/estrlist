@@ -56,6 +56,10 @@ union()
          list $@ | sort -u
 }
 
+uniq()
+{
+        union $@
+}
 
 # remove_from_list "1." "11 12 21 22" -> "21 22"
 reg_remove()
@@ -116,6 +120,7 @@ help()
         echo "exclude <list1> [list2]           - print list2 words contains also in list1"
         echo "reg_exclude <PATTERN> [word list] - print only words not matched with PATTERN"
         echo "union [word list]                 - sort and remove duplicates"
+        echo "uniq  [word list]                 - alias for union"
         echo "list [word list]                  - just list word by line"
         echo "count [word list]                 - print word count"
         echo
@@ -143,9 +148,11 @@ if [ "$COMMAND" = "-h" ] || [ "$COMMAND" = "--help" ] ; then
 fi
 
 shift
+
+# FIXME: do to call function directly, use case instead?
 if [ "$1" = "-" ] ; then
     shift
-    "$COMMAND" "$(cat)"
+    "$COMMAND" "$(cat) $@"
 else
     "$COMMAND" "$@"
 fi
