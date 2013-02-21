@@ -124,12 +124,12 @@ trans_rpmdeps_to_pkgname_lav()
 	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.* libdl\.so.*"
 
 	local REQLIST="$@"
-	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+	REQLIST=$(estrlist reg_wordexclude "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	# FIXME: strange regexp for drop libNAME.so.NUM and perl(Package) and /bin/sh
-	REALPKGNAMELIST=$(regexp_exclude_list "\. \.\. /* (*" "$REQLIST")
+	REALPKGNAMELIST=$(estrlist reg_exclude "\. /.* (.*" "$REQLIST")
 	# FIXME: external list? Set priorities/
-	REQCONVLIST=$(do_exclude_list "$REALPKGNAMELIST" "$REQLIST" | filter_multiple_provides)
+	REQCONVLIST=$(estrlist exclude "$REALPKGNAMELIST" "$REQLIST" | filter_multiple_provides)
 
 	# partially copied from aptU
 	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
@@ -176,8 +176,8 @@ common-licenses
 librpmbuild
 passwdqc-control"
 	REQLIST=$(estrlist union $PKGFILES $REALPKGNAMELIST)
-	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST" )
-	estrlist union $REQLIST
+	REQLIST=$(estrlist reg_wordexclude "$ALREADYHANDLEDRPM" "$REQLIST" )
+	estrlist union $REQLIST | estrlist list -
 }
 
 REQLIST=$(get_rpmpkg_requires $@) || fatal "can't get primary requires"

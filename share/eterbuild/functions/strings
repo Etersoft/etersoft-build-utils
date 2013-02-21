@@ -38,7 +38,7 @@ do_exclude_list()
 # regexp_exclude_list "22 1." "11 12 21 22" -> "21"
 regexp_exclude_list()
 {
-        estrlist reg_exclude "$@"
+        estrlist reg_wordexclude "$@"
 }
 
 estrlist()
