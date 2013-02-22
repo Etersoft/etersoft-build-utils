@@ -5,8 +5,8 @@
 . `dirname $0`/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echo "gitcam - do fast git commit amend (apply all current changes to the last commit)"
-	echo "Use: gitcam [-e] [file]"
+	echo "gamend - do fast git commit amend (apply all current changes to the last commit)"
+	echo "Use: gamend [-e] [file]"
 	echo "     -e - edit commit message"
 	exit 1
 fi

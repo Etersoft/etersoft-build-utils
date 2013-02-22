@@ -1,0 +1,21 @@
+#!/bin/sh
+# Do gear-commit -a
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	echo "gammit - do fast git commit amend (apply all current changes to the last commit)"
+	echo "Use: gammit [-e] [file]"
+	echo "     -e - edit commit message"
+	exit 1
+fi
+
+ARG=
+
+# If no args
+if [ -z "$1" ] ; then
+	ARG="$ARG -a"
+fi
+
+docmd gear-commit $ARG $@
