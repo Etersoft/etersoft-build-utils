@@ -45,6 +45,15 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.24"
 	fi
 
+	# drop unsuported technologies
+	case $DISTRVERSION in
+		4.0|4.1|5.1|p5|p6)
+			# these systems doesn't support systemd
+			subst "s|^install.*%_unitdir.*|# removed install to _unitdir by rpmbph|g" $SPECNAME
+			subst "s|^%_unitdir.*|# removed pack _unitdir by rpmbph|g" $SPECNAME
+			;;
+	esac
+
 	# Change release according to alt policy with extensions
 	# General rule: alwars alt(N-1).MM.(N)
 	docmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
