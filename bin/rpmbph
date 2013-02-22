@@ -441,8 +441,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
 	fi
 	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
-	echo "Run $BUILDCOMMAND"
-	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
 	docmd git checkout $CURBRANCH
 	exit $?
 fi
@@ -467,7 +466,7 @@ for i in $LISTBUILT ; do
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	docmd altspec_to_local $SPECNAME
 
-	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $REMOTEBUILD $DISTRARG $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $DISTRARG $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true
 done
 
