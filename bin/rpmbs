@@ -60,11 +60,10 @@ phelp()
 	echog "   -n           do not check with sisyphus_check before upload"
 	echog "   -o           create nosrc.rpm package"
 	echog "   -z           create src.rpm with compatible gzip compression (obsoleted)"
-#	echog " -U - sign package(s) and upload it to Incoming (updates)"
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfstcuUdnop:a:b:z opt; do
+while getopts :hfstcudnop:a:b:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
@@ -73,7 +72,6 @@ while getopts :hfstcuUdnop:a:b:z opt; do
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
-#    U) UPLOADNOW=1 ; SIGN=1 ; UPDATES=1 ;;
     a) UPLOADNOW=1 ; SIGN=1 ; TASKNUMBER=$OPTARG ;;
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
     b) BINARYREPONAME=$OPTARG ;;

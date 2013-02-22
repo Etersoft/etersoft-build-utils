@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2006, 2008-2010 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2008-2010, 2013 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -10,10 +10,11 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod hasher check
 
+TESTINSTALL=
 WITHSTUFF="--with-stuff"
 
 #############################
-Usage="Usage: $name [-m -s -u -i -c -l] src.rpm..."
+Usage="Usage: $name [-i -c -l] src.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -31,18 +32,17 @@ phelp()
 
 }
 
-while getopts :hmicl opt; do
+while getopts :hicl opt; do
     case $opt in
     h) phelp; exit 0;;
     i) TESTINSTALL=1;;
     l) HASHERARG="$HASHERARG --lazy-cleanup";;
     c) WITHSTUFF="--without-stuff";;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
-#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
-	?) OPTIND=$((OPTIND-1)); break;
+    ?) OPTIND=$((OPTIND-1)); break;
     esac
 done
- 
+
 # remove args that were options
 if [ $# -gt 0 ]; then 
 	shift $((OPTIND - 1))
@@ -128,11 +128,11 @@ fi
 print_list $LISTBUILTSH
 
 echo
-if [ "$RESULT" = "0" -a -n "$TESTINSTALL" ] ; then
+if [ "$RESULT" = "0" ] && [ -n "$TESTINSTALL" ] ; then
 	# test install (only for last package in list)
 	# some key for build hasher from scratch
 	echog "Find binary packages for '$(basename $LASTPACKAGE)' in $HASHERDIR/repo/$BUILDARCH/RPMS.hasher..."
-	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$BUILDARCH/RPMS.hasher $LASTPACKAGE | grep -v debuginfo`
+	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$BUILDARCH/RPMS.hasher $LASTPACKAGE | estrlist reg_exclude debuginfo -`
 	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$BUILDARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
