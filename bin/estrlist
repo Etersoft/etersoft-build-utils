@@ -60,6 +60,13 @@ uniq()
         union $@
 }
 
+has()
+{
+	local wd="$1"
+	shift
+	echo "$@" | grep -q "$wd"
+}
+
 # remove_from_list "1." "11 12 21 22" -> "21 22"
 reg_remove()
 {
@@ -138,6 +145,11 @@ example()
         $0 $CMD "$ARG1" "$@"
 }
 
+example_res()
+{
+	example "$@" && echo TRUE || echo FALSE
+}
+
 help()
 {
         echo "estrlist developed for string list operations. See also cut, join, paste..."
@@ -163,6 +175,8 @@ help()
         example reg_wordexclude "wo.* er" "work were more else"
         example union "1 2 2 3 3"
         example count "1 2 3 4 10"
+        example_res has ex "exactly"
+        example_res has exo "exactly"
 }
 
 COMMAND="$1"
@@ -181,6 +195,8 @@ shift
 if [ "$1" = "-" ] ; then
     shift
     "$COMMAND" "$(cat) $@"
+elif [ "$2" = "-" ] ; then
+    "$COMMAND" "$1" "$(cat)"
 else
     "$COMMAND" "$@"
 fi
