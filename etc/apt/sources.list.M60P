@@ -4,4 +4,4 @@
 
 rpm file:/var/ftp/ pub/ALTLinux/p6/branch/i586 classic
 rpm file:/var/ftp/ pub/ALTLinux/p6/branch/noarch classic
-rpm file:/var/ftp/ pub/ALTLinux/p6/branch/x86_32 classic
+rpm file:/var/ftp/ pub/ALTLinux/p6/branch/x86_64-i586 classic
