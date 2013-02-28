@@ -191,6 +191,7 @@ libxslt|libxslt1.1
 # FIXME try to not depends from python version
 #libpython|libpython2.7
 libpython|
+python-modules|
 
 # wine
 xrandr|x11-xserver-utils
@@ -288,3 +289,12 @@ fonts-bitmap-misc|xfonts-base
 xkeyboard-config|xkb-data
 
 rpm-build|rpm
+phonon-devel|libphonon-dev
+
+# libuniset
+#libcomedi-devel|libcomedi-dev
+#libcommoncpp2-devel|libcommoncpp2-dev
+libomniORB-devel|libomniorb4-dev
+#libsigc++2.0-devel|libsigc++-2.0-dev
+libMySQL-devel|libmysqld-dev
+#libsqlite3-devel|libsqlite3-dev

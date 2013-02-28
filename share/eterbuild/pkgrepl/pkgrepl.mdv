@@ -86,6 +86,7 @@ libGLU-devel|libmesaglu1-devel
 libmesa|libmesagl1
 libGLU|libmesaglu1
 libGL|libmesagl1
+libGL-devel|libmesagl1-devel
 
 libexpat|libexpat1
 libexpat-devel|libexpat1-devel
@@ -100,6 +101,8 @@ libICE|libice6
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 libwxGTK-devel|libwxgtk2.8-devel
+libwxGTK|libwxgtk2.8
+wxGTK|libwxgtk2.8
 netcat|netcat
 libgtkmm2-devel|libgtkmm2.4-devel
 libopenal-devel|libopenal-devel
@@ -150,3 +153,6 @@ zlib-devel|zlib1-devel
 
 libgphoto2-devel|libgphoto-devel
 libtool|libtool
+
+xkeyboard-config|x11-data-xkbdata
+fonts-bitmap-misc|x11-font-cursor-misc

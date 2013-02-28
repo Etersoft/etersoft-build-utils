@@ -75,6 +75,7 @@ libICE-devel|libice6-devel
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
 libwxGTK-devel|libwxgtk2.8-devel
+wxGTK|lib64wxgtk2.8
 
 # By DKR
 gstreamer-devel|lib64gstreamer0.10-devel

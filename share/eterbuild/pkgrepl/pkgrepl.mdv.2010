@@ -20,3 +20,5 @@ libgmp3|libgmp10
 libaudit1|libaudit1
 libopenal1|libopenal1
 libicu|libicu44
+
+libjpeg|libjpeg7

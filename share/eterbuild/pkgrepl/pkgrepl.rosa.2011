@@ -76,8 +76,6 @@ xorg-sdk|x11-server-devel
 libICE-devel|libice6-devel
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
-wxGTK-devel|libwxgtk2.8-devel
-libwxGTK-devel|libwxgtk2.8-devel
 libgtkmm2-devel|libgtkmm2.4-devel
 
 # By DKR

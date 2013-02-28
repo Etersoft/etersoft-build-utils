@@ -253,7 +253,7 @@ if [ "$PKGVENDOR" != "alt" ] ; then
 	subst "s|^\(Source.*\)%release|\1$RELEASE|g" $SPECNAME
 	subst "s|^\(Patch.*\)%release|\1$RELEASE|g" $SPECNAME
 
-	subst "s|^%setup|%setup -q|g" $SPECNAME
+	grep -q "%setup *-q" $SPECNAME || subst "s|^%setup |%setup -q |g" $SPECNAME
 	# obsoletes since Slackware/13 (rpm 4.10)
 	subst "s|^BuildPreReq:|BuildRequires:|g" $SPECNAME
 fi

@@ -7,7 +7,8 @@ kernel-build-tools|
 gettext-tools|gettext
 perl-XML-LibXML|perl-xml-libxml
 perl-base|perl
-fonts-ttf-core|
+fonts-ttf-core|ttf-liberation
+fonts-ttf-liberation|ttf-liberation
 glibc-nss|glibc
 glibc-devel|glibc
 glibc-pthread|glibc
