@@ -80,6 +80,8 @@ else
 	if [ "$BUILDARCH" = "x86_64" ] && echo $BUILDNAME | grep -q wine ; then
 		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 ] && BUILDREQ="$BUILDREQ glibc-devel.i686"
+		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 ] && BUILDREQ="$BUILDREQ glibc-devel.i686"
 	fi
 
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
