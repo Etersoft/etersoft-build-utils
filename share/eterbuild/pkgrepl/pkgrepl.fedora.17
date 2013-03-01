@@ -3,11 +3,3 @@ libaudiofile-devel|audiofile-devel
 libhal-devel|
 libcapi-devel|libcapifax-devel
 libcapi|libcapifax
-
-libmesa-devel|mesa-libGL-devel
-libGLU-devel|mesa-libGLU-devel
-
-libmesa|mesa-libGL
-libGLU|mesa-libGLU
-libGL|mesa-libGL
-

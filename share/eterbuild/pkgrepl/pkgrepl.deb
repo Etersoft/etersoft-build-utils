@@ -120,8 +120,6 @@ libgladeui|libgladeui-1-9
 librsvg-devel|librsvg2-dev
 librsvg|librsvg2
 
-# hack due our wine package with -devel
-libwine-devel|libwine-devel
 
 ImageMagick-tools|imagemagick
 libopensc-devel|libopensc2-dev
@@ -209,6 +207,7 @@ libICE|libice6
 xdg-utils|
 # FIXME: possible better ttf-mscorefonts-installer
 fonts-ttf-core|ttf-liberation
+fonts-ttf-liberation|ttf-liberation
 
 # meta packages
 webclient|
@@ -298,3 +297,8 @@ libomniORB-devel|libomniorb4-dev
 #libsigc++2.0-devel|libsigc++-2.0-dev
 libMySQL-devel|libmysqld-dev
 #libsqlite3-devel|libsqlite3-dev
+
+# hack due our wine package with -devel
+libwine-etersoft-devel|libwine-etersoft-devel
+# for W@E 1.0.12
+libwine-devel|libwine-etersoft-devel

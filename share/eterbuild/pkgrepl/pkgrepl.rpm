@@ -193,3 +193,11 @@ libsigc++2.0-devel|libsigc++20-devel
 xsltproc|libxslt
 libMySQL-devel|mysql-devel
 libsqlite3-devel|libsqlite3x-devel
+
+libmesa-devel|mesa-libGL-devel
+libGLU-devel|mesa-libGLU-devel
+
+libmesa|mesa-libGL
+libGLU|mesa-libGLU
+libGL|mesa-libGL
+
