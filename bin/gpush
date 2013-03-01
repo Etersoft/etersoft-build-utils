@@ -62,12 +62,12 @@ push_to_remote()
 {
 	local GHOST=$1
 	local TEXTTAG=
-	local PROJECTNAME=$(pwd)/$(get_gear_name)
+	local PROJECTDIR=$(get_root_git_dir)
 
 	[ -n "$TAGSALL$PUSHALL" ] && TEXTTAG="(with all tags)"
 
 	echo
-	echo "** Push $TEXTBRANCH from $PROJECTNAME.git to $GHOST $TEXTTAG"
+	echo "** Push $TEXTBRANCH from $PROJECTDIR to $GHOST $TEXTTAG"
 
 	docmd git push $PUSHALL $PUSHFORCE $GHOST $CURRENTBRANCH || return
 	if [ -n "$TAGSALL" ] ; then
