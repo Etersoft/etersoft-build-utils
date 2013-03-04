@@ -65,16 +65,19 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 %undefine __libtoolize"
 	fi
 else
-	docmd $ETERBUILDBIN/rpmcs $SPECNAME
+	docmd $ETERBUILDBIN/rpmcs --skip-reqs $SPECNAME
 
 	BUILDREQ="BuildRequires:"
 	if [ $(basename $SPECNAME) != "eepm.spec" ] ; then
-		# Need our compat package and disable strong patch checking
-		BUILDREQ="$BUILDREQ rpm-build-altlinux-compat >= 0.95"
+		if ! grep -q "BuildRequires:.*rpm-build-altlinux-compat" $SPECNAME ; then
+			# Need our compat package and disable strong patch checking
+			BUILDREQ="$BUILDREQ rpm-build-altlinux-compat >= 0.95"
+		fi
 	fi
 
 	# hack against very straight patch command
 	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
+	# see install in Korinf, need concatenate
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
 
 	if [ "$BUILDARCH" = "x86_64" ] && echo $BUILDNAME | grep -q wine ; then
@@ -255,9 +258,13 @@ if [ "$PKGVENDOR" != "alt" ] ; then
 	subst "s|^\(Source.*\)%release|\1$RELEASE|g" $SPECNAME
 	subst "s|^\(Patch.*\)%release|\1$RELEASE|g" $SPECNAME
 
-	grep -q "%setup *-q" $SPECNAME || subst "s|^%setup |%setup -q |g" $SPECNAME
+	if ! grep -q "%setup *-q" $SPECNAME ; then
+		subst "s|^%setup |%setup -q |g" $SPECNAME
+		subst "s|^%setup$|%setup -q|g" $SPECNAME
+	fi
 	# obsoletes since Slackware/13 (rpm 4.10)
 	subst "s|^BuildPreReq:|BuildRequires:|g" $SPECNAME
+	subst "s|^PreReq:|Requires:|g" $SPECNAME
 fi
 
 # Auto*=yes,nomingw32 works only since ALT 4.1
@@ -307,6 +314,8 @@ else
 	export USE_LEGACY_COMPRESSION=1
 	DISTRARG=""
 fi
+
+test -s "$SPECNAME" || fatal "$SPECNAME is empty"
 
 test -n "$TOCHANGELOG" && ENTRY=`echo -e "$ENTRY\n- $TOCHANGELOG"`
 add_changelog $SPECNAME -e "$ENTRY"
