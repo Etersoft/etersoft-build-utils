@@ -27,7 +27,7 @@ fatal()
 {
 	print_message Error "$@"
 	if [ -n "$ETERSOFT_FATAL_REMOVE_FILES" ]; then
-		rm -vf $ETERSOFT_FATAL_REMOVE_FILES
+		rm -rvf $ETERSOFT_FATAL_REMOVE_FILES
 	fi
 	exit 1
 }

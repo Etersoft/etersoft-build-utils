@@ -471,7 +471,8 @@ unset MENV MENVARG
 # handle src.rpm and spec both, LISTBUILT - result with full paths to src.rpms
 pack_src_rpm $LISTNAMES
 
-export RPMTOPDIR=$RPMDIR/BP
+export RPMTOPDIR=$(mktemp -d || fatal "can't create tmp dir")
+mark_file_to_remove $RPMTOPDIR
 
 # prevent gear detecting (operate inside our dir)
 export IGNOREGEAR=1
@@ -490,3 +491,5 @@ for i in $LISTBUILT ; do
 	uni_rpmrm $SPECNAME || true
 done
 
+rm -rf $RPMTOPDIR
+remove_file_from_remove $RPMTOPDIR
