@@ -23,14 +23,14 @@ add_32bit_requires()
 			# http://www.rpm.org/wiki/PackagerDocs/ArchDependencies
 			# add (x86-32) to all -devel packages
 			for i in $* ; do
-				echo $i | grep -q -- "-devel$" && echo "$i(x86-32)" && continue
+				echo $i | grep -q -- "-devel$" && echo "$i $i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 ; then
 			# i386 on Ubuntu
 			# add :i386 to all -dev packages
 			for i in $* ; do
-				echo $i | grep -q -- "-dev$" && echo "$i:i386" && continue
+				echo $i | grep -q -- "-dev$" && echo "$i $i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		else
