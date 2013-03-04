@@ -9,3 +9,8 @@ libICE-devel|xorg-x11-libICE-devel
 libuuid|libuuid1
 libXrender|xorg-x11-libXrender
 libXrender-devel|xorg-x11-libXrender-devel
+xz|xz
+
+libssl-devel|libopenssl-devel
+libcrypto10|libopenssl1_0_0
+libssl10|libopenssl1_0_0

@@ -5,7 +5,7 @@ groff-base|groff
 libarts-devel|arts-devel
 login|pwdutils
 passwd|pwdutils
-su|su-wrapper
+su|coreutils
 
 libfreetype-devel|freetype2-devel
 libfreetype|freetype2
@@ -90,7 +90,6 @@ openssh-server|openssh
 libaudiofile|audiofile
 libaudiofile-devel|audiofile-devel
 
-libssl-devel|libopenssl-devel
 
 
 bzlib-devel|libbz2-devel
@@ -113,8 +112,11 @@ libxcb|xorg-x11-libxcb
 libgd2|gd
 
 libXaw|
+
+libssl-devel|libopenssl-devel
 libcrypto10|libopenssl0_9_8
 libssl10|libopenssl0_9_8
+
 libmpg123|
 libopenal-devel|openal-devel
 libopenal1|openal
@@ -123,6 +125,8 @@ libudev1|libudev0
 imake|xorg-x11-util-devel
 
 dbus-tools-gui|dbus-1-x11
+libdbus-devel|dbus-1-devel
+libdbus|dbus-1
 openssh-clients|openssh
 python-module-dbus|dbus-1-python
 python-module-pygobject|python-gobject2
@@ -145,3 +149,7 @@ libfontconfig-devel|fontconfig-devel
 libfontconfig|fontconfig
 
 lsb-release|lsb
+fonts-bitmap-misc|xorg-x11-fonts
+pkg-config|pkg-config
+foomatic-db-engine|foomatic-filters
+foomatic-db|foomatic-filters

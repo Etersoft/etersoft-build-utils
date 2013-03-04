@@ -1,15 +1,17 @@
-libpng|libpng0
+libpng12|libpng0
 #gstreamer-devel|libgstreamer0.10-devel
 #gst-plugins-devel|libgstreamer-plugins-base0.10-devel
 libgstreamer|libgstreamer0.10_0
 libgst-plugins|libgstreamer-plugins-base0.10_0
 
-libmesa-devel|libgl1-devel
+libmesa|libgl1
+libmesa-devel|libgl-devel
+libGLU|libglu1
 libGLU-devel|libglu-devel
 
-libmesa|libgl1
-libGLU|libglu1
 libGL|libgl1
+libGL-devel|libgl-devel
+
 libalsa|libasound2
 
 libcups-devel|libcups-devel
@@ -21,3 +23,9 @@ libXv-devel|libxv-devel
 
 libalsa-devel|libasound-devel
 libicu|libicutu49 libicule49 libiculx49
+
+#libgphoto2-devel|libgphoto-devel
+libgphoto2|libgphoto6
+
+zlib|libz1
+zlib-devel|libz-devel

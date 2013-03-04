@@ -152,6 +152,7 @@ zlib|zlib1
 zlib-devel|zlib1-devel
 
 libgphoto2-devel|libgphoto-devel
+libgphoto2|libgphoto
 libtool|libtool
 
 xkeyboard-config|x11-data-xkbdata

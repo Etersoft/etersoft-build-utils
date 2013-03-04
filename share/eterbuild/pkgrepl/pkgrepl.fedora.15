@@ -2,3 +2,6 @@ libaudiofile|audiofile
 libaudiofile-devel|audiofile-devel
 cifs-utils|cifs-utils
 mount|util-linux
+
+fonts-ttf-core|liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts liberation-narrow-fonts
+fonts-ttf-liberation|liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts liberation-narrow-fonts

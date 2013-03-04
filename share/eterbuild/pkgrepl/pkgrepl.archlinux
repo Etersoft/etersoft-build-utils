@@ -39,7 +39,8 @@ libfontconfig|fontconfig
 libGLU|glu
 # fixme? why we need libglu??
 libglu|glu
-libGL|mesa
+libGL-devel|mesa-libgl
+libGL|mesa-libgl
 liblcms|lcms
 libgnutls|gnutls
 libssl|openssl
@@ -57,10 +58,12 @@ mount|util-linux
 util-linux|util-linux
 # missed
 libxxf86misc|
-rpm-build|rpm
+rpm-build|rpm-org
+rpm|rpm-org
 rpm-build-intro|rpm-build-altlinux-compat
 libicu|icu
 libreadline|readline
+gcc-c++|gcc
 gccmakedep|imake
 openssh-server|openssh
 openssh-clients|openssh
@@ -88,3 +91,20 @@ makedepend|imake
 libgtk+2-devel|gtk2
 # will not work without gdk
 libgtk+2|gtk2 gdk-pixbuf2
+
+libsmbclient|smbclient
+imagemagick-tools|imagemagick
+libwxGTK-devel|wxgtk
+libwxGTK|wxgtk
+libopensc-devel|opensc
+libopensc|opensc
+
+libstdc++-devel|libstdc++5
+libstdc++6-devel|libstdc++5
+
+libgtkmm2-devel|gtkmm
+libgtkmm2|gtkmm
+libatkmm|atkmm
+libglibmm|glibmm
+menu-devel|
+su|util-linux

@@ -122,8 +122,11 @@ librsvg|librsvg2
 
 
 ImageMagick-tools|imagemagick
-libopensc-devel|libopensc2-dev
-libopensc|libopensc2
+#libopensc-devel|libopensc2-dev
+#libopensc|libopensc2
+libopensc-devel|opensc
+libopensc|opensc
+
 libwxGTK|libwxgtk2.8-0
 libwxGTK-devel|libwxgtk2.8-dev
 libtinfo-devel|libncurses5-dev
@@ -163,6 +166,8 @@ glibc-utils|libc-bin
 glibc-nss|libc6
 glibc-pthread|libc6
 dbus-tools-gui|dbus-x11
+libdbus-devel|libdbus-1-dev
+libdbus|libdbus-1
 python-base|python
 python-modules-xml|python-libxml2
 python-module-dbus|python-dbus

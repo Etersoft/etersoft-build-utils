@@ -147,8 +147,6 @@ libmpg123|
 
 # meta packages
 webclient|
-fonts-ttf-core|liberation-mono-fonts liberation-narrow-fonts liberation-sans-fonts liberation-serif-fonts
-fonts-ttf-liberation|liberation-mono-fonts liberation-narrow-fonts liberation-sans-fonts liberation-serif-fonts
 glibc-utils|glibc
 glibc-nss|glibc
 glibc-pthread|glibc
@@ -195,9 +193,18 @@ libMySQL-devel|mysql-devel
 libsqlite3-devel|libsqlite3x-devel
 
 libmesa-devel|mesa-libGL-devel
-libGLU-devel|mesa-libGLU-devel
-
 libmesa|mesa-libGL
-libGLU|mesa-libGLU
 libGL|mesa-libGL
+libGL-devel|mesa-libGL-devel
+libGLU-devel|mesa-libGLU-devel
+libGLU|mesa-libGLU
 
+fonts-ttf-core|liberation-fonts
+fonts-ttf-liberation|liberation-fonts
+
+# xz is missed, has only lzma
+xz|lzma
+vixie-cron|cron
+
+# for W@E 1.0.12
+libwine-devel|libwine-etersoft-devel

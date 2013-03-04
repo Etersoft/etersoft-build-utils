@@ -8,8 +8,9 @@ mount|util-linux
 perl-XML-LibXML|
 perl-base|perl
 fonts-ttf-core|liberation-fonts-ttf
+fonts-ttf-liberation|liberation-fonts-ttf
 libGLU|mesa
-libGL|mesa
+libGL|mesa libdrm
 libGLU|mesa
 glibc-nss|glibc
 glibc-devel|glibc
@@ -25,18 +26,19 @@ libnatspec-devel|
 libssl-devel|openssl
 libssl10|openssl
 libssl|
-libwine-etersoft-devel|libwine-etersoft-devel
+libwine-etersoft-devel|wine-etersoft
+libwine-devel|wine-etersoft
 freenx-server|
 webclient|
 unzip|infozip
 udev-rules|udev
 psmisc|procps
-libXrender|libXrender
+libXrender|libXrender renderproto
 libfontconfig|fontconfig
 libhal|hal
 libesd|
 libv4l|v4l-utils
-libgnutls|gnutls
+libgnutls|gnutls libgcrypt libgpg-error
 libgsm|
 libjpeg|libjpeg
 liblcms|lcms
@@ -45,7 +47,7 @@ libmpg123|mpg123
 libncursesw|
 libopenal-devel|
 libopenal1|
-libsane|sane
+libsane|sane libexif net-snmp
 libtinfo|ncurses
 libudev|udev
 perl-XML-Simple|perl
@@ -53,7 +55,7 @@ prelink|
 libgstreamer|gstreamer
 libgst-plugins|gst-plugins-base
 # due missed requires
-libX11|libX11 xproto libxcb libXdmcp
+libX11|libX11 xproto libxcb libXdmcp kbproto libpthread-stubs
 libpython|python
 libreadline|aaa_elflibs
 postgresql-common|
@@ -62,3 +64,11 @@ libpng15|libpng
 libaudiofile|audiofile
 docbook-utils|
 groff-base|groff
+libgphoto2-devel|libgphoto2 libexif
+dbus-tools-gui|dbus
+libdbus-devel|dbus
+libdbus|dbus
+libgtk+2-devel|gtk+2 glib2 pango cairo pixman gdk-pixbuf2 atk
+libgtk+2|gtk+2 glib2 pango cairo pixman gdk-pixbuf2 atk
+gcc-c++|gcc
+pkg-config|pkg
