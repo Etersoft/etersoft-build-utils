@@ -33,7 +33,8 @@ toalt_pkgrepl()
 		s/ \$//g 
 		s/ |/|/g 
 		s/| /|/g"
-	for i in $PKGREPLBASE/pkgrepl.fedora $PKGREPLBASE/pkgrepl.rpm $PKGREPLBASE/pkgrepl.* ; do
+	# FIXME: what rules we need really?
+	for i in $PKGREPLBASE/pkgrepl.fedora* $PKGREPLBASE/pkgrepl.rpm $PKGREPLBASE/pkgrepl.mdv* ; do
 		#echo $i - $1
 		test -r "$i" || continue
 		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "$1\$" | sed -e "$WARULES" | sed -e "s/^\(.*\)|\(.*\)\$/\2|\1/g" | tail -n1`
