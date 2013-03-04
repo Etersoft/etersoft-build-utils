@@ -84,7 +84,47 @@ toalt_grprepl()
 	return 1
 }
 
-Usage="Usage: rpmcs [specfile]
+do_repls()
+{
+	local i=$1
+	local SPEC=$2
+	# TODO use perl -pe
+	echog "fix build requires..."
+	ALLREPLRULES=""
+	for n in `print_buildreq $i` ; do
+		toalt_pkgrepl $n || continue
+		ALLREPLRULES="$ALLREPLRULES
+			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
+	done
+
+	echog "fix package requires..."
+	ALLREPLRULES=""
+	for n in `print_pkgreq $i` ; do
+		toalt_pkgrepl $n || continue
+		ALLREPLRULES="$ALLREPLRULES
+			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
+	done
+
+	echog "fix groups..."
+	for n in `print_grpreq $i` ; do
+		toalt_grprepl $n || continue
+		ALLREPLRULES="$ALLREPLRULES
+			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g"
+		[ -n "$VERBOSE" ] && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
+	done
+
+	# Replace package names in source spec
+	sed -r -e "$ALLREPLRULES" <$i >$SPEC || { warning "Error with replacement" ; cat $i >$SPEC ; }
+
+	echo
+	echo "Total used replacement rules: $ALLREPLRULES"
+}
+
+
+
+Usage="Usage: rpmcs [--skip-reqs] [specfile]
 spec file can be autodetected from git repo"
 mygetopts()
 {
@@ -96,6 +136,7 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog " specfile - spec file (copy will be saved as specfile~)"
+	echog " --skip-reqs  do not replace requires"
 	exit 0
 }
 
@@ -107,6 +148,10 @@ fi
 LISTRPMARGS=$@
 }
 
+if [ "$1" = "--skip-reqs" ] ; then
+	SKIPREQS=1
+	shift
+fi
 
 # If run without params, try autodetect spec
 if [ -z "$1" ] ; then
@@ -401,38 +446,11 @@ do
 	subst "s|^ *%|%|g" $i
 	echog "DONE"
 
-	# TODO use perl -pe
-	echog "fix build requires..."
-	ALLREPLRULES=""
-	for n in `print_buildreq $i` ; do
-		toalt_pkgrepl $n || continue
-		ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g" 
-		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
-	done
-
-	echog "fix package requires..."
-	ALLREPLRULES=""
-	for n in `print_pkgreq $i` ; do
-		toalt_pkgrepl $n || continue
-		ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
-		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
-	done
-
-	echog "fix groups..."
-	for n in `print_grpreq $i` ; do
-		toalt_grprepl $n || continue
-		ALLREPLRULES="$ALLREPLRULES
-			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g"
-		[ -n "$VERBOSE" ] && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
-	done
-
-	# Replace package names in source spec
-	sed -r -e "$ALLREPLRULES" <$i >$SPEC || { warning "Error with replacement" ; cat $i >$SPEC ; }
-
-	echo
-	echo "Total used replacement rules: $ALLREPLRULES"
+	if [ -z "$SKIPREQS" ] ; then
+		do_repls $i $SPEC
+	else
+		cat $i > $SPEC
+	fi
 
 	# Restore changelog
 	cat $SPEC.tmpspecchangelog >>$SPEC
