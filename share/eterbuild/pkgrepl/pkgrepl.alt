@@ -12,3 +12,4 @@ kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-smp kernel-head
 
 libudev-devel|
 cifs-utils|samba-client
+apt-repo|

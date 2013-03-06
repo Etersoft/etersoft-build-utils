@@ -34,8 +34,9 @@ libopenal1|openal
 libopenal-devel|openal
 libfontenc-devel|libfontenc
 libhal-devel|
-libmpg123|
+libmpg123|mpg123
 libfontconfig|fontconfig
+libGLU-devel|glu
 libGLU|glu
 # fixme? why we need libglu??
 libglu|glu
@@ -70,8 +71,11 @@ openssh-clients|openssh
 xauth|xorg-xauth
 xorg-cf-files|
 dbus-tools-gui|dbus
+libdbus-devel|dbus
+libdbus|dbus
 netcat|gnu-netcat
-python-base|python
+python-base|python2
+python-devel|python2
 setxkbmap|xorg-setxkbmap
 # cron is just target
 vixie-cron|cron

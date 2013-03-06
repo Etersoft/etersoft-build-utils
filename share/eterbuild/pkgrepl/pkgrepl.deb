@@ -70,6 +70,9 @@ libusb|libusb-0.1-4
 
 libpopt|libpopt0
 
+libgtk+2|libgtk2.0-0
+libgtk+2-devel|libgtk2.0-dev
+
 libgtkmm2-devel|libgtkmm-2.4-dev
 libatkmm|libgtkmm-2.4-1c2a
 libglibmm|libgtkmm-2.4-1c2a
@@ -103,10 +106,10 @@ libMySQL-devel|libmysqlclient15-dev
 libcomedi|libcomedi0
 libomniORB-devel|libomniorb4-dev
 libomniORB|libomniorb4
-#libsigc++2.0-devel|libsigc++-2.0-dev
-libsigc++2-devel|libsigc++-2.0-dev
-#libsigc++2.0|libsigc++-2.0-0c2a
-libsigc++2|libsigc++-2.0-0c2a
+libsigc++2.0-devel|libsigc++-2.0-dev
+#libsigc++2-devel|libsigc++-2.0-dev
+libsigc++2.0|libsigc++-2.0-0c2a
+#libsigc++2|libsigc++-2.0-0c2a
 libxml++2-devel|libxml++2.6-dev
 libxml++2|libxml++2.6
 
