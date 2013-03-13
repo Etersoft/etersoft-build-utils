@@ -258,25 +258,15 @@ get_all_remote_branches()
 	docmd git checkout sisyphus || docmd git checkout master || docmd git checkout $CURRENTBRANCH
 }
 
-has_ssh_access()
-{
-	ssh $GIRARHOST help >/dev/null 2>&1
-}
-
 git_clone()
 {
 	local RREPO="$1"
 	# Test if ssh access is available
-	if [ -z "$PUBLICACCESS" ] && has_ssh_access ; then
+	if [ -z "$PUBLICACCESS" ] && has_ssh_girar_access ; then
 		docmd git clone $GIRARHOST:$RREPO
 	else
 		docmd git clone $GIRARURL/$RREPO
 	fi
-}
-
-exist_git_repo()
-{
-	ssh $GIRARHOST ls $1 >/dev/null 2>&1
 }
 
 # clone remote git
@@ -300,13 +290,13 @@ if [ -n "$CLONEGIT" ] ; then
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
-		if exist_git_repo $RREPO ; then
+		if is_exist_git_repo $RREPO ; then
 			echo "Remote clone from $RREPO ..."
 			docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 		else
 			# http://git.altlinux.org/srpms/N/NAME.git
 			RREPO="/srpms/$REPOPATH"
-			if exist_git_repo $RREPO ; then
+			if is_exist_git_repo $RREPO ; then
 				echo "Remote clone from $RREPO ..."
 				docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 			else
