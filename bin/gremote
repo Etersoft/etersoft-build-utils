@@ -7,10 +7,11 @@ load_mod git rpm
 
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echo "gremote - git remote -v"
+	echo "gremote - git remote -v analogue"
 	echo "Use: gremote"
 	echo "Options:"
 	echo "  -u USER  add path to USER package repo"
+	echo "  -o       add path to the origin repo (/srpms or /gears)"
 	exit 1
 fi
 
@@ -30,6 +31,20 @@ if [ "$1" = "-u" ] ; then
 	PROJECTNAME=$(echo $BASENAME | filter_gear_name)
 	[ -n "$PROJECTNAME" ] || fatal "Can't detect current project name"
 	docmd git remote add $RU $GIRARHOST:/people/$RU/packages/$PROJECTNAME.git
+	exit
+fi
+
+if [ "$1" = "-o" ] ; then
+	# http://git.altlinux.org/gears/N/NAME.git
+	PKGNAME=$(get_gear_name)
+	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
+	RREPO="/gears/$REPOPATH"
+	if ! is_exist_git_repo $RREPO ; then
+		RREPO="/srpms/$REPOPATH"
+		is_exist_git_repo $RREPO || fatal "Can't detect origin repo for $PKGNAME"
+	fi
+	# TODO: add http access support when have no ssh access
+	docmd git remote add gear $GIRARHOST:$RREPO
 	exit
 fi
 
