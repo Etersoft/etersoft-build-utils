@@ -17,6 +17,7 @@ if [ "$1" = "-h" ]; then
 	echo
 	echog "Options:"
 	echog "   -f                 force set tag"
+	echog "   -s                 skip set tag"
 	echog "   -r PROJECTVERSION  set other project version (PROJECTVERSION/sources)"
 	echog "   TARGETDIR          copy signed src.rpm package to TARGETDIR (f.i., /tmp/some_version/sources)"
 	echog "                      By default used path from Source: spec field. "
@@ -27,6 +28,12 @@ fi
 FORCE=
 if [ "$1" = "-f" ] ; then
 	FORCE=$1
+	shift
+fi
+
+SETTAG=-s
+if [ "$1" = "-s" ] ; then
+	SETTAG=
 	shift
 fi
 
@@ -67,7 +74,7 @@ if [ -n "$ALPHA" ] && [ ! -d "$ETERDESTSRPM" ] && [ -d "$PREVPATH" ] ; then
 fi
 
 # just for your information: rpmbs supports ssh-like target
-docmd $ETERBUILDBIN/rpmbs $FORCE -s $SPECNAME || fatal "Can't build SRPMS"
+docmd $ETERBUILDBIN/rpmbs $FORCE $SETTAG $SPECNAME || fatal "Can't build SRPMS"
 
 # if known target and last link already exists
 if [ -n "$ALPHA" ] && [ -L "$ETERDESTSRPM/../../last" ] ; then
