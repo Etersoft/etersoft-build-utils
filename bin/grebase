@@ -1,0 +1,27 @@
+#!/bin/sh
+# Do git rebase -i
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	echo "grebase - do interactive rebase"
+	echo "Use: grebase [N]"
+	exit 1
+fi
+
+NN=$1
+if [ -z "$NN" ] ; then
+	echo "Will do commit rebase. Last commit list:"
+	git log --pretty=format:"%s, %cd" | head -n 20 | cat -n
+	echo "Input line number (next after needed) or Enter to exit:"
+	read NN other
+	# try convert to numeric
+	NN=$(($NN + 0))
+	[ "$NN" = "0" ] && fatal "Incorrect number"
+fi
+
+# TODO: select from commit list
+CID="HEAD~$NN"
+echo $CID
+docmd git rebase -i $CID
