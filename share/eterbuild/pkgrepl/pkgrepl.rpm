@@ -208,3 +208,7 @@ vixie-cron|cron
 
 # for W@E 1.0.12
 libwine-devel|libwine-etersoft-devel
+
+libqt4-devel|qt-devel
+libqt4-core|qt
+libqt4-gui|qt-x11

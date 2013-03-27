@@ -296,7 +296,7 @@ fonts-bitmap-misc|xfonts-base
 xkeyboard-config|xkb-data
 
 rpm-build|rpm
-phonon-devel|libphonon-dev
+phonon-devel|libphonon-dev phonon-backend-gstreamer qt4-qmake libqt4-dev
 
 # libuniset
 #libcomedi-devel|libcomedi-dev
