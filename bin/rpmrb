@@ -29,8 +29,8 @@ fi
 set_girar_host $1 && shift
 
 SPEC=$1
-# allow run without spec, version only
-[ -r "$SPEC" ] && [ -n "$VER" ] && shift
+# allow run with spec file (obsoleted)
+[ -r "$SPEC" ] && shift
 
 VER=$1
 # need for rpmgs
