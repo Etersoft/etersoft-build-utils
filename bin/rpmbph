@@ -354,7 +354,7 @@ phelp()
 #	echog " -m - send result via e-mail"
 }
 
-
+# FIXME: has difference between
 while getopts :hnvqb: opt; do
     case $opt in
         h) phelp; exit 0 ;;

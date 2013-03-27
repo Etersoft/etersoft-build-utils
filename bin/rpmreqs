@@ -152,6 +152,7 @@ shadow-utils shadow-convert module-init-tools kmod util-linux-control pam
 alternatives
 automake-common
 glib2-locales
+altlinux-release
 rpm-macros-alternatives
 emacs-base
 pam0-config

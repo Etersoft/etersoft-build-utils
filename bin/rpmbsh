@@ -39,7 +39,7 @@ phelp()
 	echog "   -l  lazy cleanup (clean before build, not after)"
 }
 
-while getopts :hulsimt opt; do
+while getopts :ht opt; do
     case $opt in
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
