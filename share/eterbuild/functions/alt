@@ -118,6 +118,6 @@ pkg_release_check()
 # copied from aptU
 get_rpmpkg_requires()
 {
-	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|([A-Z].*||g" | grep -v "^rpmlib" | sort -u
+	$ETERBUILDBIN/rpmreqs $@
 }
 

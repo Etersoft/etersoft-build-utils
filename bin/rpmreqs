@@ -16,8 +16,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	exit 0
 fi
 
-# copied from aptU
-get_rpmpkg_requires()
+# moved from aptU
+get_rpm_package_requires()
 {
 	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|(.*[0-9])||g" | grep -v "^rpmlib" | sort -u
 }
@@ -181,6 +181,6 @@ passwdqc-control"
 	estrlist union $REQLIST | estrlist list -
 }
 
-REQLIST=$(get_rpmpkg_requires $@) || fatal "can't get primary requires"
+REQLIST=$(get_rpm_package_requires $@) || fatal "can't get primary requires"
 trans_rpmdeps_to_pkgname_lav $REQLIST
 
