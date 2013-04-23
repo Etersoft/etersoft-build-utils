@@ -1,5 +1,4 @@
 libusb-devel|libusbx-devel
 libusb|libusbx
 libudev-devel|systemd-devel
-libjpeg-devel|libjpeg-turbo-devel
 udev|systemd
