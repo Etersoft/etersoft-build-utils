@@ -86,14 +86,17 @@ tolocal_anyrepl()
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
 	fi
 
-	NEWRESULT=$(add_32bit_requires $NEWRESULT)
+	FIXNEWRESULT=$(add_32bit_requires $NEWRESULT)
 
 	ALTPKGNAME=$GREP
-	TARGETPKGNAME="$NEWRESULT"
-	[ "$NEWRESULT" = "$GREP" ] && return 1
+	TARGETPKGNAME="$FIXNEWRESULT"
+	# return if no chance to replace anymore
+	[ "$FIXNEWRESULT" = "$GREP" ] && return 1
+	# HACK: return if we get complex result
+	[ "$FIXNEWRESULT" = "$NEWRESULT" ] && return 1
 
 	# try to resolve recursive
-	tolocal_anyrepl $NEWRESULT $@
+	tolocal_anyrepl "$FIXNEWRESULT" $@
 	return 0
 }
 
