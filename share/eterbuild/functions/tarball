@@ -103,6 +103,11 @@ copy_tarball_to_tar()
 		return
 	fi
 
+	if [ ! ${SNAME/.tar.xz/} = "$SNAME" ] ; then
+		a= xz -d "$SNAME"  > "$TNAME"
+		return
+	fi
+
 	if [ ! ${SNAME/.tgz/} = "$SNAME" ] ; then
 		gunzip -c "$SNAME" > "$TNAME"
 		return
