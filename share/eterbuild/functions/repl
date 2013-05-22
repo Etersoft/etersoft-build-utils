@@ -90,10 +90,10 @@ tolocal_anyrepl()
 
 	ALTPKGNAME=$GREP
 	TARGETPKGNAME="$FIXNEWRESULT"
-	# return if no chance to replace anymore
+	# return if no chance to replace
 	[ "$FIXNEWRESULT" = "$GREP" ] && return 1
 	# HACK: return if we get complex result
-	[ "$FIXNEWRESULT" = "$NEWRESULT" ] && return 1
+	[ "$FIXNEWRESULT" = "$NEWRESULT" ] && return 0
 
 	# try to resolve recursive
 	tolocal_anyrepl "$FIXNEWRESULT" $@
