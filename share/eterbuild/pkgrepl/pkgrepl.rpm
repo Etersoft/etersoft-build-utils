@@ -165,7 +165,7 @@ freenx-server|
 libwxGTK-devel|wxGTK-devel
 libwxGTK|wxGTK
 
-libfontconfig-devel|fontconfig-devel
+#libfontconfig-devel|fontconfig-devel
 libfontconfig|fontconfig
 perl-base|perl
 

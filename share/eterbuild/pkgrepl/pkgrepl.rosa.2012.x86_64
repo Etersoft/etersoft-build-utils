@@ -1,0 +1,6 @@
+libreadline-devel|lib64readline-devel
+libreadline|lib64readline6
+
+libwxGTK-devel|lib64wxgtku2.8-devel
+libwxGTK|lib64wxgtku2.8
+wxGTK|lib64wxgtku2.8

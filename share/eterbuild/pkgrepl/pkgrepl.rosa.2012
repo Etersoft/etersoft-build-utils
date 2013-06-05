@@ -1,3 +1,10 @@
 #libudev1|libudev1
-#libalsa-devel|libasound-devel
+libalsa-devel|libasound-devel
+#libalsa|alsa-lib
 python-modules-logging|
+libreadline-devel|libreadline-devel
+libreadline|libreadline6
+
+libwxGTK-devel|libwxgtku2.8-devel
+libwxGTK|libwxgtku2.8
+wxGTK|libwxgtku2.8

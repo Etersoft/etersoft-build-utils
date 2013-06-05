@@ -31,29 +31,16 @@ for i in `print_grprepl_list` ; do
 done
 }
 
-PKGVENDOR=fedora
-PKGFORMAT=rpm
-DISTRVERSION=10
-
-echo "PkgRepl:"
-get_pkglist
-echo
-#check pkgrepl "fedora" `get_pkglist`
-
-echo "GrpRepl:"
-get_grplist
-echo
-
 check_repl()
 {
-	check $1 "`print_replace $1`" $2
+	check "$1" "`print_replace $1`" "$2"
 }
 
-echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
-check_repl rpm-build-compat rpm-build-altlinux-compat
-check_repl libusb-devel libusb-devel
+# global
+BUILDNAME=wine
 
 
+DISTRNAME=Ubuntu
 PKGVENDOR=ubuntu
 PKGFORMAT=deb
 DISTRVERSION=11.04
@@ -67,8 +54,9 @@ check_repl libusb-devel libusb-1.0-0-dev
 check_repl libstdc++ libstdc++
 
 
+DISTRNAME=Mandriva
 PKGVENDOR=mdv
-DISTRVERSION=2010.1
+DISTRVERSION=2011
 BUILDARCH=x86_64
 PKGFORMAT=rpm
 #FINDPKG=$PKGREPLBASE.pkgrepl.$VENDOR.$DISTRVERSION
@@ -85,23 +73,50 @@ print_grprepl_list
 DISTRNAME=ArchLinux
 PKGVENDOR=archlinux
 PKGFORMAT=pkg.gz
-DISTRVERSION=2011.08
+DISTRVERSION=2012.04
 
 echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 
 print_pkgrepl_list
 
-check_repl rpm-build-intro rpm-build-altlinux-intro
+check_repl rpm-build-intro rpm-build-altlinux-compat
 check_repl libusb-devel libusb
 check_repl libX11 libx11
+
+############################# Slackware ##########################
 
 DISTRNAME=Slackware
 PKGVENDOR=slackware
 PKGFORMAT=pkg.gz
-DISTRVERSION=2011.08
+DISTRVERSION=14
 
 echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 
 print_pkgrepl_list
 
 check_repl libX11-devel libX11
+
+############################# Fedora ##########################
+DISTRNAME=Fedora
+PKGVENDOR=fedora
+DISTRVERSION=17
+BUILDARCH=x86_64
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl fontconfig-devel "fontconfig-devel fontconfig-devel(x86-32)"
+check_repl unknown-devel "unknown-devel unknown-devel(x86-32)"
+BUILDARCH=i586
+check_repl fontconfig-devel "fontconfig-devel"
+check_repl unknown-devel "unknown-devel"
+BUILDARCH=x86_64
+BUILDNAME=test
+check_repl fontconfig-devel "fontconfig-devel"
+check_repl unknown-devel "unknown-devel"
+
+check_repl rpm-build-compat rpm-build-altlinux-compat
+check_repl libusb-devel libusb1-devel
+

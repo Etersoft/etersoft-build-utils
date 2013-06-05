@@ -145,8 +145,6 @@ libgtkmm2|libgtkmm-2_4-1
 libreadline|libreadline5
 gettext-tools|gettext-tools
 libpython|libpython2_6-1_0
-libfontconfig-devel|fontconfig-devel
-libfontconfig|fontconfig
 
 lsb-release|lsb
 fonts-bitmap-misc|xorg-x11-fonts

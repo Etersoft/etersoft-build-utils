@@ -29,3 +29,10 @@ libgphoto2|libgphoto6
 
 zlib|libz1
 zlib-devel|libz-devel
+
+ImageMagick-tools|imagemagick
+
+libalsa-devel|libasound-devel
+#libalsa|alsa-lib
+
+glibc-devel|glibc-devel libtirpc-devel

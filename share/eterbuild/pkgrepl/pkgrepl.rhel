@@ -25,3 +25,5 @@ libaudiofile|audiofile
 
 libgphoto2-devel|gphoto2-devel
 libgphoto2|gphoto2
+
+gettext-tools|gettext-devel
