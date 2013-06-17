@@ -62,7 +62,7 @@ libxxf86misc|
 rpm-build|rpm-org
 rpm|rpm-org
 rpm-build-intro|rpm-build-altlinux-compat
-libicu|icu
+libicu50|icu
 libreadline|readline
 gcc-c++|gcc
 gccmakedep|imake

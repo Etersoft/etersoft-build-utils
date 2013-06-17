@@ -19,6 +19,6 @@ libsqlite3|libsqlite3_0
 libgmp3|libgmp10
 libaudit1|libaudit1
 libopenal1|libopenal1
-libicu|libicu44
+libicu50|libicu44
 
 libjpeg|libjpeg7

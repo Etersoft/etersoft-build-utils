@@ -22,7 +22,7 @@ libXScrnSaver-devel|libxscrnsaver-devel
 libXv-devel|libxv-devel
 
 libalsa-devel|libasound-devel
-libicu|libicutu49 libicule49 libiculx49
+libicu50|libicutu49 libicule49 libiculx49
 
 #libgphoto2-devel|libgphoto-devel
 libgphoto2|libgphoto6

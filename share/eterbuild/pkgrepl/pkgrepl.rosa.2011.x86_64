@@ -92,4 +92,4 @@ libXtst-devel|lib64xtst-devel
 libXrandr-devel|lib64xrandr2-devel
 libXmu-devel|lib64xmu-devel
 
-libicu|lib64icu48
+libicu50|lib64icu48

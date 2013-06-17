@@ -192,7 +192,7 @@ libXfixes|libxfixes3
 
 # postgre
 which|debianutils
-libicu|libicu38
+libicu50|libicu38
 libxslt|libxslt1.1
 # FIXME try to not depends from python version
 #libpython|libpython2.7

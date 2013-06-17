@@ -12,4 +12,4 @@ libXtst-devel|lib64xtst-devel
 
 libcrypto10|lib64openssl1.0.0
 libssl10|lib64openssl1.0.0
-libicu|lib64icu48
+libicu50|lib64icu48

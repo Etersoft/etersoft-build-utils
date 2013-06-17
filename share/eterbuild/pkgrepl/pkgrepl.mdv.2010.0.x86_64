@@ -1,4 +1,4 @@
 # Mandriva 64bit base replacements rules
 libssl-devel|lib64openssl1.0.0-devel
 libssl|lib64openssl1.0.0
-libicu|lib64icu44
+libicu50|lib64icu44
