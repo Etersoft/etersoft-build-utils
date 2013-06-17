@@ -4,4 +4,3 @@ libstdc++6-devel|libstdc++6-4.3-dev
 libstdc++-devel|libstdc++6-4.3-dev
 gcc-g++|g++-4.3
 cups|cups cups-bsd cups-client
-glibc-utils|libc-bin

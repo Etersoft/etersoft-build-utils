@@ -1,5 +1,5 @@
 #libudev1|libudev1
-libalsa-devel|libasound-devel
+#libalsa-devel|libalsa-devel
 #libalsa|alsa-lib
 python-modules-logging|
 libreadline-devel|libreadline-devel

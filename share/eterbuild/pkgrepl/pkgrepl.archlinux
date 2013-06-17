@@ -112,3 +112,5 @@ libatkmm|atkmm
 libglibmm|glibmm
 menu-devel|
 su|util-linux
+libusb|libusbx
+procps|procps-ng

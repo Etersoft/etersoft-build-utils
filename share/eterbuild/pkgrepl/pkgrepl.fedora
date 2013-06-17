@@ -9,3 +9,4 @@ fonts-ttf-core|
 fonts-ttf-liberation|
 xlsfonts|xorg-x11-utils
 perl-XML-LibXML|
+lsb-release|redhat-lsb
