@@ -27,10 +27,17 @@ add_32bit_requires()
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7.0 ; then
-			# i386 on Ubuntu
+			# i386 on Debian/Ubuntu
 			# add :i386 to all -dev packages
 			for i in $* ; do
 				echo $i | grep -q -- "-dev$" && echo "$i $i:i386" && continue
+				echo "$i"
+			done | xargs -n 1000 echo
+		elif [ "$DISTRNAME" = "ArchLinux" ] ; then
+			# i386 on ArchLinux
+			# add lib32- to all lib packages
+			for i in $* ; do
+				echo $i | grep -q -- "^lib" && echo "lib32-$i" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		else
