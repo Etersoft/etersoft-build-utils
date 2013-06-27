@@ -56,8 +56,8 @@ libalsa-devel|alsa-lib-devel
 libalsa|alsa-lib
 libopenal1|openal-soft
 libopenal-devel|openal-soft-devel
-# TODO: Check for ALL system
 #libicu-devel|
+libicu50|libicu
 # for ISDN
 libcapi-devel|
 prelink|

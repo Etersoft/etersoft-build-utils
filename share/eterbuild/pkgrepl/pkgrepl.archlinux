@@ -56,6 +56,7 @@ libsane|sane
 xrandr|xorg-xrandr
 libxscrnsaver|
 mount|util-linux
+eject|util-linux
 util-linux|util-linux
 # missed
 libxxf86misc|

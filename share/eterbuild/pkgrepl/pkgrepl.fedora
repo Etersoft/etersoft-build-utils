@@ -10,3 +10,13 @@ fonts-ttf-liberation|
 xlsfonts|xorg-x11-utils
 perl-XML-LibXML|
 lsb-release|redhat-lsb
+
+libatkmm|atkmm
+libatkmm-devel|atkmm-devel
+libglibmm|glibmm24
+libglibmm-devel|glibmm24-devel
+libgtkmm2|libgtkmm2.4_1
+libgtkmm2|gtkmm24
+libgtkmm2-devel|gtkmm24-devel
+libsigc++2|libsigc++20
+libsigc++2-devel|libsigc++20-devel
