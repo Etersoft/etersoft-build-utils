@@ -49,7 +49,7 @@ libopenal-devel|
 libopenal1|
 libsane|sane libexif net-snmp
 libtinfo|ncurses
-libudev|udev
+libudev1|udev
 perl-XML-Simple|perl
 prelink|
 libgstreamer|gstreamer

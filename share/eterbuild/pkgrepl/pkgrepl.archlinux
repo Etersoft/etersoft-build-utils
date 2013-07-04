@@ -47,7 +47,7 @@ libgnutls|gnutls
 libssl|openssl
 libgsm|gsm
 udev-rules|systemd
-libudev|systemd
+libudev1|systemd
 libncursesw|ncurses
 libtinfo|ncurses
 webclient|

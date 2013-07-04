@@ -19,3 +19,6 @@ libmpg123-devel|
 libjack-devel|jackit-devel
 libwxGTK-devel|wxGTK-devel
 libwxGTK|wxGTK
+
+libudev-devel|
+libudev1|

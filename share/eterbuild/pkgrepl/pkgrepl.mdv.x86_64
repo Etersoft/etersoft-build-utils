@@ -38,7 +38,7 @@ libGLU|lib64mesaglu1
 libxml2|lib64xml2_2
 libusb|lib64usb1.0_0
 libudev-devel|lib64dev0-devel
-libudev|lib64dev0
+libudev1|lib64dev0
 
 libpng|lib64png3
 libpng12|lib64png3

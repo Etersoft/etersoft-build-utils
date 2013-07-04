@@ -10,6 +10,5 @@ linux-libc-headers|glibc-kernheaders
 apt-repo-tools|apt-utils
 kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
 
-libudev-devel|
 cifs-utils|samba-client
 apt-repo|
