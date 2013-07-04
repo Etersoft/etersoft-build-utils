@@ -60,7 +60,7 @@ eject|util-linux
 util-linux|util-linux
 # missed
 libxxf86misc|
-rpm-build|rpm-org
+rpm-build|rpm-org fakeroot
 rpm|rpm-org
 rpm-build-intro|rpm-build-altlinux-compat
 libicu50|icu

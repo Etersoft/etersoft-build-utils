@@ -5,7 +5,7 @@ System/Libraries/Python|Development/Python
 Development/Other|Development/Libraries
 Sound|Applications/Sound
 Games/Other|X11/Applications/Games
-Development/Libraries|Development/C
+#Development/Libraries|Development/C
 Databases|Applications/Databases
 System/Kernel and hardware|System/Hardware
 System/Base|System Environment/Base
