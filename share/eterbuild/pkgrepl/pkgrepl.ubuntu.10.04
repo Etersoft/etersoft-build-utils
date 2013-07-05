@@ -8,6 +8,7 @@ libmpg123|libmpg123-0
 libudev-devel|libudev-dev
 libudev1|libudev0
 libv4l-devel|libv4l-dev
+libv4l|libv4l-0
 
 libcups-devel|libcups2-dev
 libcups|libcups2
@@ -26,3 +27,5 @@ libcap|libcap2
 libunistring|libunistring0
 libltdl7|libltdl7
 libopenal1|libopenal1
+
+libgnutls26|libgnutls26

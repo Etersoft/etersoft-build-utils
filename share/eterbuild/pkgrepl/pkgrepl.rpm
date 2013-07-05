@@ -212,3 +212,5 @@ libwine-devel|libwine-etersoft-devel
 libqt4-devel|qt-devel
 libqt4-core|qt
 libqt4-gui|qt-x11
+
+libtiff5|libtiff
