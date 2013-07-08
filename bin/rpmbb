@@ -22,11 +22,10 @@ fi
 
 #############################
 
-Usage="Usage: $name [-c -p -i -r -R] [spec]"
+Usage="Usage: rpmbb [-c -p -i -r -R] [spec]"
 function mygetopts()
 {
-name=${0##*/}
-Descr="$name - build  binary rpm from spec or from git"
+Descr="rpmbb - build binary rpm from spec or from git"
 
 phelp()
 {
