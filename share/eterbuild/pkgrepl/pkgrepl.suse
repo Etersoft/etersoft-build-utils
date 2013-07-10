@@ -16,8 +16,8 @@ libalsa|libasound2
 libldap-devel|openldap2-devel
 libldap|openldap2-client
 libieee1284-devel|libieee1284
-libsane|sane
-libsane-devel|sane
+libsane|sane-backends
+libsane-devel|sane-backends-devel
 jackit-devel|jack-devel
 jackit|jack
 liblcms-devel|liblcms-devel

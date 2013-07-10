@@ -2,8 +2,6 @@
 #libalsa-devel|libalsa-devel
 #libalsa|alsa-lib
 python-modules-logging|
-libreadline-devel|libreadline-devel
-libreadline|libreadline6
 
 libwxGTK-devel|libwxgtku2.8-devel
 libwxGTK|libwxgtku2.8

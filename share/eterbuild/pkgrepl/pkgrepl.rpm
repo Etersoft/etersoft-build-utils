@@ -209,8 +209,21 @@ vixie-cron|cron
 # for W@E 1.0.12
 libwine-devel|libwine-etersoft-devel
 
-libqt4-devel|qt-devel
-libqt4-core|qt
-libqt4-gui|qt-x11
+# by CentOS
+libqt4-devel|qt4-devel
+libqt4-core|qt4
+libqt4-gui|qt4
 
 libtiff5|libtiff
+
+libfuse-devel|fuse-devel
+libfuse|fuse-libs
+
+boost-filesystem-devel|boost-devel
+boost-program_options-devel|boost-devel
+
+libboost_program_options1.53.0|boost141-program-options
+libboost_system1.53.0|boost141-system
+#libboost_system1.53.0|boost141-system
+
+#libtorrent-rasterbar-devel|

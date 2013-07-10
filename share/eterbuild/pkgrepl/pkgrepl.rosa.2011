@@ -1,7 +1,7 @@
 # Mandriva base replacements rules
 
-libreadline-devel|libreadline5-devel
-libreadline|libreadline5
+libreadline-devel|libreadline-devel
+libreadline|libreadline6
 libntfs|ntfsprogs
 libntfs-devel|ntfsprogs-devel
 libe2fs|libext2fs2

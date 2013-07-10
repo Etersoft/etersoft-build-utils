@@ -2,7 +2,6 @@ libhal-devel|
 libpng-devel|libpng14-devel
 libusb-devel|libusb-1_0-devel
 libusb|libusb-1_0-0
-gstreamer-devel|gstreamer-0_10-devel
 libffi|libffi46
 
 libICE-devel|xorg-x11-libICE-devel
@@ -14,3 +13,27 @@ xz|xz
 libssl-devel|libopenssl-devel
 libcrypto10|libopenssl1_0_0
 libssl10|libopenssl1_0_0
+
+libgnutls-devel|libgnutls-devel
+libgnutls26|libgnutls28
+
+jackit-devel|libjack-devel
+jackit|libjack0
+
+libfreetype-devel|freetype2-devel
+libfreetype|libfreetype6
+
+libopenal-devel|openal-soft-devel
+libopenal1|libopenal1-soft
+
+libxml2|libxml2-2
+
+libncurses-devel|ncurses-devel
+libncurses|libncurses5
+libtinfo-devel|ncurses-devel
+libtinfo|libncurses5
+
+gstreamer-devel|gstreamer-0_10-devel
+libgstreamer|libgstreamer-0_10-0
+
+libxslt|libxslt1

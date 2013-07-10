@@ -1,3 +1,10 @@
+coreutils|sys-apps/coreutils
+coreutils|sys-apps/findutils
+coreutils|sys-apps/grep
+coreutils|sys-apps/less
+coreutils|sys-apps/sed
+coreutils|sys-apps/termutils
+coreutils|sys-apps/which
 libncurses|ncurses
 libncurses-devel|ncurses
 terminfo|ncurses
@@ -47,7 +54,6 @@ libgnutls|gnutls
 libssl|openssl
 libgsm|gsm
 udev-rules|systemd
-libudev-devel|systemd
 libudev1|systemd
 libncursesw|ncurses
 libtinfo|ncurses
@@ -57,11 +63,10 @@ libsane|sane
 xrandr|xorg-xrandr
 libxscrnsaver|
 mount|util-linux
-eject|util-linux
 util-linux|util-linux
 # missed
 libxxf86misc|
-rpm-build|rpm-org fakeroot
+rpm-build|rpm-org
 rpm|rpm-org
 rpm-build-intro|rpm-build-altlinux-compat
 libicu50|icu
@@ -114,5 +119,3 @@ libatkmm|atkmm
 libglibmm|glibmm
 menu-devel|
 su|util-linux
-libusb|libusbx
-procps|procps-ng

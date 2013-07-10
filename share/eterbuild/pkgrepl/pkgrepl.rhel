@@ -28,3 +28,5 @@ libgphoto2|gphoto2
 
 gettext-tools|gettext-devel
 lsb-release|redhat-lsb
+
+phonon-devel|qt4-devel
