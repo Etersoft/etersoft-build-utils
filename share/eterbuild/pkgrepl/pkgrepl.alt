@@ -9,6 +9,7 @@ libpq4|libpq3
 linux-libc-headers|glibc-kernheaders
 apt-repo-tools|apt-utils
 kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
+libpng15|libpng12
 
 cifs-utils|samba-client
 apt-repo|

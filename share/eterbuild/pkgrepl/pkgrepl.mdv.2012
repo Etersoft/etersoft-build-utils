@@ -1,4 +1,4 @@
-libpng12|libpng0
+libpng15|libpng0
 #gstreamer-devel|libgstreamer0.10-devel
 #gst-plugins-devel|libgstreamer-plugins-base0.10-devel
 libgstreamer|libgstreamer0.10_0

@@ -17,7 +17,7 @@ libldap-devel|openldap2-devel
 libldap|openldap2-client
 libieee1284-devel|libieee1284
 libsane|sane-backends
-libsane-devel|sane-backends-devel
+libsane-devel|sane-backends
 jackit-devel|jack-devel
 jackit|jack
 liblcms-devel|liblcms-devel
@@ -51,6 +51,7 @@ libXrender-devel|xorg-x11-devel
 libXres-devel|xorg-x11-devel
 libXScrnSaver-devel|xorg-x11-devel
 libXinerama-devel|xorg-x11-devel
+libXinerama|xorg-x11-libs
 libXt-devel|xorg-x11-devel
 libXtst-devel|xorg-x11-devel
 libXxf86dga-devel|xorg-x11-devel

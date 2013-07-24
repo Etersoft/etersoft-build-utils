@@ -43,7 +43,8 @@ libglu|glu
 libGL-devel|mesa-libgl
 libGL|mesa-libgl
 liblcms|lcms
-libgnutls|gnutls
+libgnutls-devel|gnutls
+libgnutls26|gnutls
 libssl|openssl
 libgsm|gsm
 udev-rules|systemd
@@ -116,3 +117,4 @@ menu-devel|
 su|util-linux
 libusb|libusbx
 procps|procps-ng
+libtiff5|libtiff

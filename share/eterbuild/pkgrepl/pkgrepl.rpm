@@ -81,7 +81,6 @@ libgtkmm2-devel|gtkmm24-devel
 libgtk+2-devel|gtk2-devel
 libgtk+2|gtk2
 
-libpng12|libpng
 sysvinit-utils|SysVinit
 menu-devel|
 rpm-build-fonts|rpm-build-altlinux-compat
@@ -129,6 +128,7 @@ bzlib-devel|bzip2-devel
 rpm-build-python|
 python-modules-compiler|python
 libgnutls-devel|gnutls-devel
+libgnutls26|gnutls
 
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat

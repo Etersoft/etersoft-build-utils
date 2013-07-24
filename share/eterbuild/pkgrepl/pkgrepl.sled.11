@@ -13,7 +13,7 @@ libXau-devel|xorg-x11-libXau-devel
 libXau|xorg-x11-libXau
 libXaw-devel|xorg-x11-devel
 libXrandr-devel|xorg-x11-devel
-libXrandr|
+libXrandr|xorg-x11-libs
 libXdmcp-devel|xorg-x11-libXdmcp-devel
 libXdmcp|xorg-x11-libXdmcp
 libXfixes-devel|xorg-x11-libXfixes-devel
@@ -36,7 +36,7 @@ libXinerama-devel|xorg-x11-devel
 libXt-devel|xorg-x11-libXt-devel
 libXt|xorg-x11-libXt
 libXtst-devel|xorg-x11-devel
-libXtst|
+libXtst|xorg-x11-libs
 libXcomposite-devel|xorg-x11-devel
 libXxf86dga-devel|xorg-x11-devel
 libXxf86vm-devel|xorg-x11-devel
@@ -44,13 +44,14 @@ libXxf86vm|xorg-x11
 libXxf86misc-devel|xorg-x11-devel
 libdmx-devel|xorg-x11-libdmx-devel
 libfontenc-devel|xorg-x11-libfontenc-devel
-libXdamage-devel|
-libXdamage|
+libXdamage-devel|xorg-x11-devel
+libXdamage|xorg-x11-libs
 libxkbfile-devel|xorg-x11-libxkbfile-devel
 libxkbui-devel|xorg-x11-libxkbui-devel
 libXTrap-devel|xorg-x11-devel
 libXvMC-devel|xorg-x11-devel
 libXcursor-devel|xorg-x11-devel
+libXcursor|xorg-x11-libs
 libXevie-devel|xorg-x11-devel
 libXv-devel|xorg-x11-libXv-devel
 libXcomposite|xorg-x11
@@ -63,7 +64,7 @@ libGLU|Mesa
 libGL|Mesa
 libGL-devel|Mesa-devel
 
-libpng12|libpng12-0
+libpng15|libpng12-0
 libgmp3|gmp
 liblzma|liblzma5
 libpcre3|pcre
@@ -90,5 +91,6 @@ libalsa-devel|
 
 gst-plugins-devel|gstreamer-0_10-plugins-base-devel
 libv4l-devel|
+libv4l|
 libopenal1|
 libopenal-devel|

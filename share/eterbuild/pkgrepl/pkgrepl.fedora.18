@@ -1,4 +1,6 @@
 libusb-devel|libusbx-devel
 libusb|libusbx
 libudev-devel|systemd-devel
+libudev1|systemd-libs
 udev|systemd
+udev-rules|systemd

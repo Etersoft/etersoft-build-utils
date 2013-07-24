@@ -50,7 +50,7 @@ libglu|glu
 libGL-devel|mesa-libgl
 libGL|mesa-libgl
 liblcms|lcms
-libgnutls|gnutls
+libgnutls26|gnutls
 libssl|openssl
 libgsm|gsm
 udev-rules|systemd

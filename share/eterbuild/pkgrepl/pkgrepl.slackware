@@ -38,8 +38,10 @@ libfontconfig|fontconfig
 libhal|hal
 libesd|
 libv4l|v4l-utils
-libgnutls|gnutls libgcrypt libgpg-error
+libgnutls-devel|gnutls libgcrypt libgpg-error
+libgnutls26|gnutls libgcrypt libgpg-error
 libgsm|
+#libjpeg-devel|libjpeg
 libjpeg|libjpeg
 liblcms|lcms
 libldap|openldap-client
@@ -49,11 +51,13 @@ libopenal-devel|
 libopenal1|
 libsane|sane libexif net-snmp
 libtinfo|ncurses
+libudev-devel|udev
 libudev1|udev
 perl-XML-Simple|perl
 prelink|
 libgstreamer|gstreamer
 libgst-plugins|gst-plugins-base
+gst-plugins-devel|gst-plugins-base
 # due missed requires
 libX11|libX11 xproto libxcb libXdmcp kbproto libpthread-stubs
 libpython|python
@@ -76,3 +80,4 @@ cifs-utils|samba
 # Not LSB compatible
 lsb-release|
 rpm-build|rpm
+libtiff5|libtiff

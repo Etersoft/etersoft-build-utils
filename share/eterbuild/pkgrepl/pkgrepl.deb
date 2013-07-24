@@ -181,7 +181,6 @@ vixie-cron|cron
 
 # nx
 zlib|zlib1g
-libpng12|libpng12-0
 libpng15|libpng12-0
 libX11|libx11-6
 libcrypto10|openssl

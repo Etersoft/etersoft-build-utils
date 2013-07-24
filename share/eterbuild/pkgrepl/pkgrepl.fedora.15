@@ -9,3 +9,4 @@ fonts-ttf-liberation|liberation-mono-fonts liberation-sans-fonts liberation-seri
 xrandr|xrandr
 xlsfonts|xlsfonts
 perl-XML-LibXML|perl-XML-LibXML
+libudev1|libudev
