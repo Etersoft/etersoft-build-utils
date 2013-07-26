@@ -11,7 +11,7 @@
 load_mod spec git
 
 if [ "$1" = "-h" ] || [ "$1" = "---help" ] ; then
-	echog "rpmbk - build package from current repo in Korinf"
+	echog "rpmbk (Build Korinf) - build package from current repo in Korinf"
 	echog "Usage: rpmbk [Distro/Version] [spec]"
 	exit 0
 fi
@@ -20,6 +20,7 @@ DISTROVER="$1"
 shift
 SPEC="$1"
 
+# TODO: Allow build to common place (use rpmpub?)
 #BUILDDIR=$TMPDIR/korinf
 BUILDDIR=$RPMDIR/KORINF
 export ETERDESTSRPM=$BUILDDIR/sources

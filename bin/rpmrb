@@ -12,7 +12,7 @@
 load_mod spec git
 
 if [ "$1" = "-h" ]; then
-	echog "rpmrb - update spec to vermajor.verminor version, build %rel release"
+	echog "rpmrb (Re Build) - update spec to vermajor.verminor version, build %rel release"
 	echog "Usage: rpmrb [spec] [vermajor][.verminor] [rel]"
 	echog "Example:"
 	echog "          $ rpmrb [name.spec] 22.6 alt2"

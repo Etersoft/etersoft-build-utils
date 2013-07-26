@@ -129,7 +129,7 @@ Usage="Usage: rpmcs [--skip-reqs] [specfile]
 spec file can be autodetected from git repo"
 mygetopts()
 {
-Descr="rpmcs - cleanup spec (like cleanup_spec command)"
+Descr="rpmcs (Cleanup Spec) - cleanup spec (like cleanup_spec command)"
 
 phelp()
 {

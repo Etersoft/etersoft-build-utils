@@ -25,7 +25,7 @@ fi
 Usage="Usage: rpmbb [-c -p -i -r -R] [spec]"
 function mygetopts()
 {
-Descr="rpmbb - build binary rpm from spec or from git"
+Descr="rpmbb (Build Binary) - build binary rpm from spec or from git"
 
 phelp()
 {

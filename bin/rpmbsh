@@ -20,7 +20,7 @@ Usage="Usage: $name [-r -s -u -m -i -c] [-f] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - BSH - build [from] source; use hasher"
+Descr="$name (Build Source in the Hasher)  - build [from] source; use hasher"
 
 phelp()
 {

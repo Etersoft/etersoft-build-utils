@@ -145,10 +145,10 @@ update_cache_list()
 	done
 }
 
-Usage="Usage: rpmgp [options] [-$CURRENTBRANCHNAME] [system] pkgname"
+Usage="Usage: rpmgp [GIRAR/remote alias] [options] [-$CURRENTBRANCHNAME] [system] pkgname"
 mygetopts()
 {
-Descr="rpmgp - various package download operations"
+Descr="rpmgp (Get Package) - various package download operations"
 
 phelp()
 {

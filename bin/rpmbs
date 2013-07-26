@@ -36,7 +36,7 @@ Usage="Usage: $name [GIRAR] [-s|-t|-u|-a|-c] [-o -z -n -p --nodeps] [-k [TARGETD
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - run git repo build or make src.rpm from spec"
+Descr="$name (Build Source) - run git repo build or make src.rpm from spec"
 
 phelp()
 {

@@ -24,7 +24,7 @@ Usage="Usage: $name [GIRAR] [-a -r ] spec [new_version]"
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - get sources by spec / repository"
+Descr="$name (Get Source) - get sources by spec / repository"
 
 phelp()
 {

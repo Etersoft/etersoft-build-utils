@@ -329,7 +329,7 @@ Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-$CURRENTBRANCHNAME] [-b REPONAME
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - backports spec and rebuild it"
+Descr="$name (BackPort and Hasher) - backports spec and rebuild it"
 
 phelp()
 {
