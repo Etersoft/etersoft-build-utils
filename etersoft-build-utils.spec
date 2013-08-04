@@ -23,6 +23,7 @@ BuildArchitectures: noarch
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
 Requires: eepm >= 1.3.0
+Requires: erc >= 0.3
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver

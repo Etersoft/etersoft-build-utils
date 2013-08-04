@@ -362,15 +362,15 @@ do
 				# UpUrl for gear
 				download_url "$GETSOURCEURL"
 				# FIXME: gear-update can use any tarball
-				copy_tarball_to_tar $(basename "$GETSOURCEURL") $FTB
+				erc conv $(basename "$GETSOURCEURL") $FTB
 			elif [ -z "${GETSOURCE/*.tar/}" ] ; then
 				# tar target: try to load and convert
 				download_any_tarball
 				test -f $WEXT.tar.bz2 && FTB=$WEXT.tar.bz2
 			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
 				# tar.bz2 target: for src.rpm policy compatibility
-				download_any_tarball 
-				test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Cannot bzip $WEXT.tar"
+				download_any_tarball
+				test -f $WEXT.tar.bz2 || erc $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
 			else
 				download_url "$GETSOURCE"
 			fi
@@ -383,7 +383,7 @@ do
 			if [ -n "${GETSOURCEURL}" ] ; then
 				# UpUrl for rpm
 				download_url "$GETSOURCEURL"
-				copy_tarball_to_tar_bz2 $(basename "$GETSOURCEURL") $FTB
+				erc conv $(basename "$GETSOURCEURL") $FTB
 			elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
 				# if not tar.bz2 target, direct download
 				download_url "$GETSOURCE"
@@ -391,7 +391,7 @@ do
 				# if tar.bz2 target
 				download_any_tarball
 				#echog -n "Compressing to $WEXT.tar.bz2..."
-				test -f $WEXT.tar.bz2 || bzipit $WEXT.tar || fatal "Cannot bzip $WEXT.tar"
+				test -f $WEXT.tar.bz2 || erc $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
 			elif [ -z "${GETSOURCE/*.bz2/}" ] ; then
 				warning "It is not tarball (possible single file)..."
 				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"
