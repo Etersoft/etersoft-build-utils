@@ -229,7 +229,7 @@ get_gear_rule_spec()
 {
 	local rules=$(get_gear_rules)
 	[ -r "$rules" ] || return
-	local SPEC="$(grep "^spec:" $rules 2>/dev/null | cut -d" " -f2)"
+	local SPEC="$(grep "^spec:" $rules 2>/dev/null | sed -e "s/spec:[ 	]*//g")"
 	test -r "$(get_root_git_dir)/$SPEC" && echo $(get_root_git_dir)/$SPEC
 }
 

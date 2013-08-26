@@ -215,7 +215,7 @@ LISTRPMARGS=$@
 
 set_girar_host $1 && shift
 
-parse_cmd_pre "$@"
+parse_cmd_pre_spec "$@"
 
 mygetopts $LISTARGS
 
