@@ -145,7 +145,7 @@ update_cache_list()
 	done
 }
 
-Usage="Usage: rpmgp [GIRAR/remote alias] [options] [-$CURRENTBRANCHNAME] [system] pkgname"
+Usage="Usage: rpmgp [GIRAR/remote alias] [options] -b $EXAMPLEALTDISTRVERSION [system] pkgname"
 mygetopts()
 {
 Descr="rpmgp (Get Package) - various package download operations"
@@ -160,6 +160,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -a   search pkgname in all known repositories"
+	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echog "   -c   check if this package exists in the ALT Linux repository"
 	echog "   -d   download all matched packages"
 	echog "   -g   clone last built package repo"
@@ -168,18 +169,20 @@ phelp()
 	echog "   -m   migrate to gear from spec/srpm"
 	echo
 	echog "Ext. options:"
-	echog "   -b   install packages needed for build (use sudo apt-get) (need spec not package name)"
+	echog "   -i   install packages needed for build (use sudo apt-get) (need spec not package name)"
 	echog "   -l   list packages needed for build (in local pkg system notation) (experimental)"
 	echog "   -r   refresh package list (download it again)"
 	echog "   -s   list all known remote repositories"
 	exit 0
 }
 
-while getopts :habcdglmprs opt; do
+while getopts :hab:icdglmprs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
-    b) INSTALLBINARY=1 ;;
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+    b) BINARYREPONAME=$OPTARG ;;
+    i) INSTALLBINARY=1 ;;
     c) CHECKONLINE=1 ;;
     d) DOWNLOADALL=1 ;;
     g) CLONEGIT=1 ;;
@@ -213,6 +216,7 @@ LISTRPMARGS=$@
 set_girar_host $1 && shift
 
 parse_cmd_pre "$@"
+
 mygetopts $LISTARGS
 
 # optional arg
@@ -237,7 +241,7 @@ fi
 if [ -n "$INSTALLBINARY" ] ; then
     # pack by LISTNAMES list
     pack_src_rpm --commit $LISTRPMARGS
-    epm install --skip-installed $($ETERBUILDBIN/rpmreqs -p $LISTBUILT)
+    docmd epm install --skip-installed $($ETERBUILDBIN/rpmreqs -p $LISTBUILT)
     exit
 fi
 
