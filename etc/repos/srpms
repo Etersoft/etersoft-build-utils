@@ -1,8 +1,12 @@
 # see whohas package too
 # all known src.rpm repositories (for rpmgp command)
 alt          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files/SRPMS/
+#altp5          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/p5/branch/files/SRPMS/
+#altp6          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/p6/branch/files/SRPMS/
+#altp7          ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/p7/branch/files/SRPMS/
 altautoimports http://autoimports.altlinux.org/pub/ALTLinux/autoimports/Sisyphus/files/SRPMS/
-fedora18     ftp://mirror.yandex.ru/fedora/linux/releases/18/Fedora/source/SRPMS/
+altfcimport http://autoimports.altlinux.org/pub/ALTLinux/fcimport/Sisyphus/files/SRPMS/
+fedora19     ftp://mirror.yandex.ru/fedora/linux/releases/19/Fedora/source/SRPMS/
 fedora-devel ftp://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS/
 #fedora-updates ftp://mirror.yandex.ru/fedora/linux/updates/17/SRPMS/
 fedora-ccrma http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS/
@@ -17,7 +21,7 @@ mandriva-cooker-contrib ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/contr
 mandriva-cooker-main ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/main/release
 mandriva-cooker-non-free ftp://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non-free/release
 #suse         ftp://mirror.yandex.ru/opensuse/distribution/11.4/repo/src-oss/suse/src
-suse          http://download.opensuse.org/source/distribution/12.1/repo/oss/suse/src
+suse          http://download.opensuse.org/source/distribution/12.3/repo/oss/suse/src
 # it is mirrored
 #suse-factory http://download.opensuse.org/factory/repo/src-oss/suse/src/
 suse-factory http://ftp5.gwdg.de/pub/opensuse/source/factory/repo/oss/suse/src/
