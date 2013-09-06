@@ -10,3 +10,4 @@ libgtkmm2|libgtkmm2.4_1
 
 libjpeg|libjpeg8
 dbus-tools-gui|dbus-x11
+vixie-cron|cronie

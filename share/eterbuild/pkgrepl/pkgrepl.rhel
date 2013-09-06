@@ -30,3 +30,5 @@ gettext-tools|gettext-devel
 lsb-release|redhat-lsb
 
 phonon-devel|qt4-devel
+
+vixie-cron|vixie-cron

@@ -22,8 +22,8 @@ jackit-devel|jack-devel
 jackit|jack
 liblcms-devel|liblcms-devel
 liblcms|liblcms1
-libgphoto2-devel|libgphoto2
-libgphoto2|libgphoto2
+libgphoto2-devel|
+#libgphoto2|libgphoto2
 perl-devel|perl
 
 # XOrg
@@ -120,7 +120,7 @@ libssl10|libopenssl0_9_8
 
 libmpg123|
 libopenal-devel|openal-devel
-libopenal1|openal
+#libopenal1|openal
 libudev1|libudev0
 
 imake|xorg-x11-util-devel
@@ -152,3 +152,5 @@ fonts-bitmap-misc|xorg-x11-fonts
 pkg-config|pkg-config
 foomatic-db-engine|foomatic-filters
 foomatic-db|foomatic-filters
+
+libwine-etersoft-devel|

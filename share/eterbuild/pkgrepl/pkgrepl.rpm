@@ -205,6 +205,7 @@ fonts-ttf-liberation|liberation-fonts
 # xz is missed, has only lzma
 xz|lzma
 vixie-cron|cron
+#vixie-cron|cronie
 
 # for W@E 1.0.12
 libwine-devel|libwine-etersoft-devel
@@ -227,3 +228,11 @@ libboost_system1.53.0|boost141-system
 #libboost_system1.53.0|boost141-system
 
 #libtorrent-rasterbar-devel|
+
+#checkstyle4|eclipse-checkstyle
+checkstyle4|
+OpenSP|opensp
+python-module-mwlib|python-mwlib
+#python-mwlib|python-mwlib
+python-module-paste|python-paste
+docbook-style-dsssl-utils|docbook-utils

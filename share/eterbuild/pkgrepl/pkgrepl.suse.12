@@ -24,7 +24,7 @@ libfreetype-devel|freetype2-devel
 libfreetype|libfreetype6
 
 libopenal-devel|openal-soft-devel
-libopenal1|libopenal1-soft
+#libopenal1|libopenal1-soft
 
 libxml2|libxml2-2
 

@@ -58,6 +58,7 @@ libXrender|libxrender1
 libXres-devel|libxres-devel
 libXScrnSaver-devel|libxscrnsaver1-devel
 libXinerama-devel|libxinerama-devel
+libXinerama|libxinerama1
 libXt-devel|libxt-devel
 libXt|libxt6
 libXtst-devel|libxtst-devel
@@ -78,8 +79,10 @@ libxkbui-devel|libxkbui-devel
 libXTrap-devel|libxtrap-devel
 libXvMC-devel|libxvmc-devel
 libXcursor-devel|libxcursor-devel
+libXcursor|libxcursor1
 libXevie-devel|libxevie-devel
 libXv-devel|libxv1-devel
+libv4l|libv4l0
 
 libmesa-devel|libmesagl1-devel
 libGLU-devel|libmesaglu1-devel
@@ -157,3 +160,6 @@ libtool|libtool
 
 xkeyboard-config|x11-data-xkbdata
 fonts-bitmap-misc|x11-font-cursor-misc
+
+dbus-libs|libdbus
+libdbus|libdbus-1_3
