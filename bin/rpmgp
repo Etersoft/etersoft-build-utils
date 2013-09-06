@@ -19,12 +19,19 @@ load_systems_list()
 	local line
 	while read line ; do
 		# skip comments
-		echo $line | grep "^#" >/dev/null && continue
+		echo $line | grep -q "^#" && continue
 		SYSNAME[$IDX]=${line/ *.*/}
 		#FTP[$IDX]=${line/.* \+/}
 		SYSURL[$IDX]=$(echo $line | sed -e "s|.* \+||g")
 		IDX=$(($IDX+1))
 	done < $ETERBUILDETC/repos/srpms
+
+	while read name url ; do
+		echo $name | grep -q "^#" && continue
+		SYSNAME[$IDX]="git$name"
+		SYSURL[$IDX]=$url
+		IDX=$(($IDX+1))
+	done <$ETERBUILDETC/repos/gits
 }
 
 list_systems()
@@ -34,7 +41,7 @@ list_systems()
 			printf "[%-17s] %s\n" ${SYSNAME[$i]} ${SYSURL[$i]}
 	done
 	echo
-	echo "You can add system to /etc/eterbuild/repos/srpms"
+	echo "You can add src.rpm repo to /etc/eterbuild/repos/srpms or git url to /etc/eterbuild/repos/gits"
 }
 
 html_filter()
@@ -47,6 +54,17 @@ list_filter()
 	sed -e "s|.src.rpm$||g"
 }
 
+get_git_list()
+{
+	local name=$1
+	local url=$2
+	local list=$3
+	for i in $(curl $url | grep folder | sed -e "s|.*HREF=\"||g" | sed -e "s|\".*||g") ; do
+		curl $url/$i | grep 'class="link"' | sed -e "s|.*href=\"||g" | sed -e "s|\".*||g"
+	done >$list
+
+}
+
 # Using: git_list idx [force]
 # set LIST variable to list file
 get_list()
@@ -55,16 +73,21 @@ get_list()
 	local URL=${SYSURL[$1]}
 	local FORCE=$2
 	local SYS=${SYSNAME[$1]}
-	local CURL=curl
+	CURL=curl
 
 	which $CURL 2>/dev/null >/dev/null || fatal "curl command needed for download"
 	mkdir -p $OURTMPDIR/etersoft-build-utils/
 	LIST=$OURTMPDIR/etersoft-build-utils/rpmgpall-$SYS
 	if [ ! -f "$LIST" ] || [ "$FORCE" = "force" ] ; then
+		if echo $SYS | grep -q ^git ; then
+			get_git_list $SYS $URL $LIST
+			return
+		fi
 		echo "Get list for $SYS from $URL"
 		#curl -l $URL/ >$LIST
 		# suitable for ftp and http lists
 		$CURL -l $URL/ | tee $LIST.tmp | html_filter >$LIST
+		# check if there is letter subdirs (Fedora)
 		for i in $(cat $LIST.tmp) ; do
 		    echo $i | grep -q rpm && break
 		    [ -n "$(echo $i | cut -c2-)" ] && continue

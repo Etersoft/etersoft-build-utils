@@ -1,0 +1,3 @@
+# all known git repositories (for rpmgp command)
+altgears     http://git.altlinux.org/gears/
+altsrpms     http://git.altlinux.org/srpms/
