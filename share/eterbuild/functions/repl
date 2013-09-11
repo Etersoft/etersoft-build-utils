@@ -94,7 +94,7 @@ tolocal_anyrepl()
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
 	fi
 
-	if [ "$DISTRNAME" = "Slackware" ] ; then
+	if [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "Gentoo" ] ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
 	fi
 
