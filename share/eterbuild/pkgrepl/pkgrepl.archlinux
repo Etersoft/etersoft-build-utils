@@ -35,7 +35,6 @@ libopenal-devel|openal
 libfontenc-devel|libfontenc
 libhal-devel|
 libmpg123|mpg123
-libfontconfig|fontconfig
 libGLU-devel|glu
 libGLU|glu
 # fixme? why we need libglu??

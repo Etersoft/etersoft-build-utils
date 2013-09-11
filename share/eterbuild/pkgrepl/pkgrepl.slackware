@@ -34,7 +34,6 @@ unzip|infozip
 udev-rules|udev
 psmisc|procps
 libXrender|libXrender renderproto
-libfontconfig|fontconfig
 libhal|hal
 libesd|
 libv4l|v4l-utils
