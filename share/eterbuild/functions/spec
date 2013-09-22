@@ -257,6 +257,7 @@ separate_changelog()
 }
 
 # for rpm + (d)ash
+# http://mywiki.wooledge.org/Bashism
 remove_bashism()
 {
 	local SPECNAME="$1"
@@ -271,7 +272,9 @@ remove_bashism()
 	# FIXME: miss first spaces
 	while read -r n ; do
 		echo "$n" | grep -v "{.*}" && continue
-		eval echo "$n"
+		rs="$(echo "$n" | perl -pe "s|.*\s(.*?{.*?}.*?)\s.*|\1|g" )"
+		res=$(eval echo "$rs")
+		echo "$n" | perl -pe "s|$rs|$res|g"
 	done < $SPECNAME.main >$SPECNAME.tmp
 	[ -s "$SPECNAME.tmp" ] && mv -f $SPECNAME.tmp $SPECNAME
 	checkbashisms $SPECNAME
