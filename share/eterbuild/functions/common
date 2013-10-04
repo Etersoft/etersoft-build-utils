@@ -5,6 +5,7 @@
 
 # $1 - needed VERSION of etersoft-build-utils. f.i. 162
 
+# TODO: remove it and use appropriate command directly
 # for systems without realpath command
 realpath()
 {
@@ -32,6 +33,8 @@ fatal()
 	exit 1
 }
 
+# TODO: add onexit function
+
 # Just print warning message
 warning()
 {
@@ -47,6 +50,25 @@ remove_file_from_remove()
 {
 	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist exclude "$*" "$ETERSOFT_FATAL_REMOVE_FILES")
 }
+
+# copied from eepm (and modified)
+store_output()
+{
+    # use make_temp_file from etersoft-build-utils
+    RC_STDOUT=$(mktemp)
+    mark_file_to_remove $RC_STDOUT
+    #RC_STDERR=$(mktemp)
+    "$@" 2>&1 | tee $RC_STDOUT
+    # http://tldp.org/LDP/abs/html/bashver3.html#PIPEFAILREF
+    return $PIPESTATUS
+}
+
+# TODO: realize onexit handler (see before) and drop out this clean from use
+clean_store_output()
+{
+    rm -f $RC_STDOUT
+}
+# end of copied from eepm
 
 
 set_eterbuilddir()
