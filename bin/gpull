@@ -72,7 +72,7 @@ pull_from_unique_branch()
         [ -n "$REPO" ] || return
         REMOTEBRANCH=$(git branch -a | grep "^  remotes/$REPO/" | sed -e "s|.*remotes/$REPO/||")
         if [ "$(estrlist count $REMOTEBRANCH)" -gt 1 ] ; then
-            fatal "Can't detect remote branch in $REMOTEBRANCH. Run with one from these."
+            fatal "Can't detect remote branch in $(echo $REMOTEBRANCH). Run with one from these."
         fi
         docmd git pull $REBASE $REPO $REMOTEBRANCH
 }
@@ -102,8 +102,18 @@ if [ -n "$CHECKRESULT" ] ; then
 fi
 
 docmd git fetch $REPO || exit
-# FIXME: Не факт, что удалённо бранч называется именно $REMOTEBRANCH
-docmd git pull $REBASE $REPO $REMOTEBRANCH || pull_from_unique_branch || exit
+
+	# FIXME: Не факт, что удалённо бранч называется именно $REMOTEBRANCH
+if ! LC_ALL=C store_output docmd git pull $REBASE $REPO $REMOTEBRANCH ; then
+	if grep -q "fatal: Couldn't find remote ref" $RC_STDOUT ; then
+		clean_store_output
+		pull_from_unique_branch || exit
+	else
+		clean_store_output
+		exit 1
+	fi
+fi
+clean_store_output
 
 # REWRITE ME: assure we get tags
 #docmd git pull --tags $REPO $REMOTEBRANCH
