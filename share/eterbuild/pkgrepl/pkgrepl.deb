@@ -312,3 +312,7 @@ libwine-devel|libwine-etersoft-devel
 libv4l|libv4l-0
 libXcursor|libxcursor1
 libXinerama|libxinerama1
+# NX
+libXcomp|libxcomp3
+
+mailx|mailutils
