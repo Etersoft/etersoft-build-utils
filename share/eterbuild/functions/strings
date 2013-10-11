@@ -43,6 +43,7 @@ regexp_exclude_list()
 
 estrlist()
 {
+        assert_var ETERBUILDBIN
         $ETERBUILDBIN/estrlist "$@"
 }
 

@@ -118,6 +118,7 @@ pkg_release_check()
 # copied from aptU
 get_rpmpkg_requires()
 {
+	assert_var ETERBUILDBIN
 	$ETERBUILDBIN/rpmreqs $@
 }
 

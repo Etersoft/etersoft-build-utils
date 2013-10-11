@@ -111,6 +111,9 @@ if ! set_eterbuilddir ; then
 	exit 1
 fi
 
+# lines before do the same as
+# assert_var ETERBUILDBIN
+
 DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
 [ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
 
