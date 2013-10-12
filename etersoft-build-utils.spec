@@ -1,8 +1,8 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.27
-Release: alt2
+Version: 2.0.28
+Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
 
@@ -69,6 +69,18 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.28-alt1
+- replace tarball conversion code with erc calls
+- rpmgp: use -b for REPONAME set, use -i for install build requires
+- rpmgp: add support for check ALT gear repos
+- add replacements for SUSE 12.3, Mandriva, ALT
+- major Gentoo repls improvement
+- fix remove_bashism for minimalize intrusion
+- introduce store_output (copied from eepm)
+- gpull: check result for git pull
+- fix check_log: enable log verification again
+- rpmbs: add -A option for add to the current task
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.27-alt2
 - fix internal version
 
