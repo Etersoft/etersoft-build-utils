@@ -29,10 +29,11 @@ NOCHECK=
 UPDATES=
 DELETENOW=
 POCKET=
+PREPARETASK=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [GIRAR] [-s|-t|-u|-a|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -45,7 +46,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -u            sign and run gear build task after build"
-	echog "   -a TASK       sign package(s)/repo, push/upload it and add to (shared) task TASK"
+	echog "   -a TASK | -A  sign package(s)/repo, push/upload it and add to (shared) task TASK"
 	echog "   -p POCKET     build package in POCKET (supported on git.etersoft.ru only)"
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echo
@@ -63,7 +64,7 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfstcudnop:a:b:z opt; do
+while getopts :hfstcudnop:a:Ab:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
@@ -72,7 +73,8 @@ while getopts :hfstcudnop:a:b:z opt; do
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
-    a) UPLOADNOW=1 ; SIGN=1 ; TASKNUMBER=$OPTARG ;;
+    a) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER=$OPTARG ;;
+    A) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER= ;;
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
     b) BINARYREPONAME=$OPTARG ;;
     n) NOCHECK=1; ;;
@@ -236,7 +238,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
 	echo
 	echo "Run build $PROJECTNAME at $GIRARHOST"
-	if [ -n "$TASKNUMBER" ] ; then
+	if [ -n "$PREPARETASK" ] ; then
 		docmd ssh $GIRARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	else
 		docmd ssh $GIRARHOST build -b $BINARYREPO $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
@@ -327,7 +329,7 @@ TASKLIST=""
 for i in $LISTBUILT ; do
 	TASKLIST="$TASKLIST srpm $(basename $i)"
 done
-if [ -n "$TASKNUMBER" ] ; then
+if [ -n "$PREPARETASK" ] ; then
 	echo "Add $TASKLIST to task $TASKNUMBER"
 	docmd ssh $GIRARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 else
@@ -344,7 +346,7 @@ for i in $LISTBUILT ; do
 	date >>$LOGFILE
 	echo "uploaded">>$LOGFILE
 	TEXTADD="     run $TASKNUMBER build src.rpm"
-	[ -z "$TASKNUMBER" ] || TEXTADD="     add src.rpm to task $TASKNUMBER"
+	[ -z "$PREPARETASK" ] || TEXTADD="     add src.rpm to task $TASKNUMBER"
 	echo "$(basename $i) $TEXTADD at $GIRARHOST ($BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 done
 
