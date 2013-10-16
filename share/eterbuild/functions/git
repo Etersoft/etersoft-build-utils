@@ -41,21 +41,6 @@ get_remote_git_list()
         done
 }
 
-
-# Is allow connect with ssh to the GIRARHOST server?
-has_ssh_girar_access()
-{
-	ssh $GIRARHOST help >/dev/null 2>&1
-}
-
-
-# Returns true if repo with path from first arg is exits on the remote GIRARHOST server
-is_exist_git_repo()
-{
-	ssh $GIRARHOST ls $1 >/dev/null 2>&1
-}
-
-
 # Check if $1 like git.alt or git.eter, git.something
 is_girar_name()
 {

@@ -10,7 +10,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm repl git rpm web repos buildsrpm
+load_mod rpm repl git rpm web repos buildsrpm girar
 
 # loads repos file and fill SYSNAME and SYSURL arrays
 load_systems_list()

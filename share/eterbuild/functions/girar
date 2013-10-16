@@ -1,0 +1,34 @@
+#!/bin/bash
+# 2013 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# Is allow connect with ssh to the GIRARHOST server?
+has_ssh_girar_access()
+{
+	ssh $GIRARHOST help >/dev/null 2>&1
+}
+
+
+# Returns true if repo with path from first arg is exits on the remote GIRARHOST server
+is_exist_git_repo()
+{
+	ssh $GIRARHOST ls $1 >/dev/null 2>&1
+}
+
+
+# get gear repo for package name
+get_girar_repo()
+{
+	assert_var GIRARHOST
+	local PKGNAME="$1"
+	# http://git.altlinux.org/gears/N/NAME.git
+	local REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
+	local RREPO="/gears/$REPOPATH"
+	if ! is_exist_git_repo $RREPO ; then
+		RREPO="/srpms/$REPOPATH"
+		is_exist_git_repo $RREPO || return
+	fi
+	echo "$RREPO"
+}
+
