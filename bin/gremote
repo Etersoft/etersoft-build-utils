@@ -2,8 +2,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod git rpm
-#load_mod rpm tarball alt git web buildsrpm
+load_mod rpm git girar
 
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
@@ -37,12 +36,7 @@ fi
 if [ "$1" = "-o" ] ; then
 	# http://git.altlinux.org/gears/N/NAME.git
 	PKGNAME=$(get_gear_name)
-	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
-	RREPO="/gears/$REPOPATH"
-	if ! is_exist_git_repo $RREPO ; then
-		RREPO="/srpms/$REPOPATH"
-		is_exist_git_repo $RREPO || fatal "Can't detect origin repo for $PKGNAME"
-	fi
+	RREPO=$(get_girar_repo $PKGNAME) || fatal "Can't detect origin repo for $PKGNAME"
 	# TODO: add http access support when have no ssh access
 	docmd git remote add gear $GIRARHOST:$RREPO
 	exit

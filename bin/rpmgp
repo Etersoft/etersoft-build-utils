@@ -301,7 +301,7 @@ if [ -n "$CLONEGIT" ] ; then
 	# http://git.altlinux.org/gears/N/NAME.git
 	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
 	RREPO="/gears/$REPOPATH"
-
+	# FIXME: use get_girar_repo?
 	# TODO: check appropriate repo with exist_git_repo
 	if [ -z "$MIGRATEGIRAR" ] ; then
 		if ! git_clone $RREPO ; then
@@ -317,25 +317,16 @@ if [ -n "$CLONEGIT" ] ; then
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
-		if is_exist_git_repo $RREPO ; then
-			echo "Remote clone from $RREPO ..."
-			docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
-		else
-			# http://git.altlinux.org/srpms/N/NAME.git
-			RREPO="/srpms/$REPOPATH"
-			if is_exist_git_repo $RREPO ; then
-				echo "Remote clone from $RREPO ..."
-				docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
-			else
-				fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
-			fi
-		fi
+		RREPO=$(get_girar_repo $PKGNAME) || fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
+
+		echo "Remote clone from $RREPO ..."
+		docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
 
 		docmd git clone $GIRARHOST:packages/$PKGNAME.git
 
 		if cd $PKGNAME ; then
 			# add remotes
-			docmd git remote rename origin $GIRARHOST && docmd git remote add gear $GIRARHOST:$RREPO
+			docmd git remote rename origin $GIRARHOST && docmd $ETERBUILDBIN/gremote $GIRARHOST -o
 			cd - >/dev/null
 		#elif is_exist_remote_repo origin && ! is_exist_remote_repo gears ; then
 		#	git remote -v | grep -q "^origin.*/gears/" && docmd git remote rename origin gears
