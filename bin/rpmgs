@@ -261,8 +261,9 @@ function get_source_url()
 
 function print_error()
 {
-	echog "You have no spec files as arg"
-	echog "Please use for spec files only. If you wish to download src.rpm, use rpmgp script."
+	echog "Can't find any spec file. It is possible you run this script not in git dir."
+	echog "If you use old style build, run rpmgs with spec name as arg."
+	echog "If you wish to download src.rpm, use rpmgp script."
 	exit 1
 }
 

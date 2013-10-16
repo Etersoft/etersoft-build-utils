@@ -67,7 +67,7 @@ echog "List of packages for build: \$LISTNAMES"
 
 if [ -z "${LISTNAMES/*spec/}"  ] ; then
 	echo "!!!!!!!!"
-	fatal "Please use src.rpm as argument, not spec"
+	fatal "Please, use src.rpm as argument, instead a spec"
 fi
 
 # Skip checking for tar arg

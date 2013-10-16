@@ -235,6 +235,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	check_gear_and_tag || fatal "Can't make tag"
 	TAG=$(get_last_tag)
 
+	# TODO: add check for repo (as in rpmgp) and run ginit if needed
 	docmd $ETERBUILDBIN/gpush $GIRARHOST $FORCE || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
 	echo
 	echo "Run build $PROJECTNAME at $GIRARHOST"
