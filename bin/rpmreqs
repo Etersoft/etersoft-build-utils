@@ -35,8 +35,9 @@ filter_multiple_provides()
 		s|liblber-2.4.so.2|libldap|g
 		s|libudev.so.1|libudev1|g
 		s|/usr/bin/wine||g
+		s|/usr/bin/jconsole|java-1.7.0-openjdk-devel|g
 		s|/sbin/modprobe||g
-		s|gcc-c++|gcc4.6-c++|g
+		s|gcc-c++|gcc4.7-c++|g
 		s|libwine.so.1||g"
 }
 
