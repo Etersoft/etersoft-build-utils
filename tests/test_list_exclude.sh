@@ -37,6 +37,7 @@ check "remove 6" "$LIST2" remove_from_list "" "$LIST2"
 check "strip1" "test" strip_spaces " test "
 check "strip2" "test" strip_spaces "test "
 check "strip3" "test" strip_spaces " test"
+check "strip4" "test test" strip_spaces "  test  test  "
 
 REQLIST='foomatic-db foomatic-db-engine nx fonts-bitmap-misc libasound.so.2 libcrypto.so.10 libX11.so.6 libXcomposite.so.1 libXdamage.so.1 libXfixes.so.3 libXmuu.so.1 libXpm.so.4 libXrandr.so.2 libXtst.so.6 libz.so.1 xkeyboard-config libdl.so.2 bc'
 REALPKGNAMELIST="$(estrlist reg_exclude "\. \.\. /.* (.*" "$REQLIST")"
