@@ -128,14 +128,78 @@ print_list()
 	done
 }
 
+
+# Function debug_print_var()
+# show at point of call name of function that called her
+# and show list values of variables, defined in parameters.
+#
+# Difference between function assert_var() -
+# assert_var() call fatal() if variable not defined.
+
+debug_print_var()
+{
+	local i re
+
+	echo
+	echo "==================================================="
+	echo "Into function : ${FUNCNAME[1]}"
+	echo
+	echo "Watch of variables :"
+	echo "------------------------------------------"
+	
+	for i in $@
+	do
+		re=$(eval echo \$$i)
+		if [ -n "$re" ]
+		then
+			echo "    ${i} = ${re}"
+		else
+			echo "Variable ${i} NOT DEFINED !!!"
+		fi
+	done
+
+	echo "------------------------------------------"
+	echo "==================================================="
+}
+
+
+# Function debug_print_backtrace() show all functions
+# (call stack of functions),
+# that called before this funcions (callback list)
+
+debug_print_backtrace()
+{
+	echo
+	echo "==================================================="
+	echo "Into function : ${FUNCNAME[1]}"
+    
+	local i=1
+	while [ -n "${FUNCNAME[i]}" ]
+	do
+		echo "        Callback N${i} : ${FUNCNAME[i]}"
+		let "i+=1"
+	done   
+    
+	echo "==================================================="
+}
+
+
+# Function assert_var() also show callstack, if assert variable is empty.
+
 assert_var()
 {
 	local i re
+	
 	for i in $@ ; do
 		re=$(eval echo \$$i)
-		[ -n "$re" ] || fatal "assert: $i nonexist"
+		if [ -z "$re" ]
+		then
+			debug_print_backtrace
+			fatal "assert: $i nonexist"
+		fi
 	done
 }
+
 
 prepare_rpmdir()
 {
