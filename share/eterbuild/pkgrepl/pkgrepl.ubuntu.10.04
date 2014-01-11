@@ -6,7 +6,8 @@ diffutils|diffutils
 libmpg123-devel|libmpg123-dev
 libmpg123|libmpg123-0
 libudev-devel|libudev-dev
-libudev1|libudev0
+#libudev1|libudev0
+
 libv4l-devel|libv4l-dev
 libv4l|libv4l-0
 

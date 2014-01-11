@@ -255,7 +255,9 @@ libattr|libattr1
 libcap|libcap2
 libsasl2|libsasl2-2
 libelf|libelf1
-libudev1|libudev0
+
+#libudev1|libudev0
+
 libacl|libacl1
 libaudit1|libaudit0
 libcom_err|libcomerr2
