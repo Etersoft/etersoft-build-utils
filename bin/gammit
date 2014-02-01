@@ -5,17 +5,14 @@
 . `dirname $0`/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echo "gammit - do fast git commit amend (apply all current changes to the last commit)"
-	echo "Use: gammit [-e] [file]"
-	echo "     -e - edit commit message"
-	exit 1
+	echo "gammit - make commit with description from last changelog entry in spec"
+	echo "Use: gammit"
+	exit 0
 fi
-
-ARG=
 
 # If no args
 if [ -z "$1" ] ; then
-	ARG="$ARG -a"
+	ARG="ARG -a"
 fi
 
 docmd gear-commit $ARG $@
