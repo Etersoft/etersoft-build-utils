@@ -24,7 +24,7 @@ is_exist_git_repo()
 	fi
 	# TODO: this is workaround for ALT bug #22745
 	# https://bugzilla.altlinux.org/show_bug.cgi?id=22745
-	check_http_status $(get_git_url $GIRARHOST)/$1
+	check_http_status $(get_git_url $GIRARHOST)$1
 }
 
 

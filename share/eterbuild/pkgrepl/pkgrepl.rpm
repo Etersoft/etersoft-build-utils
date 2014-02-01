@@ -238,3 +238,5 @@ docbook-style-dsssl-utils|docbook-utils
 libfontconfig|fontconfig
 # TODO: сделать замену всех python-module- на просто python-
 python-module-setuptools|python-setuptools
+
+xorg-util-macros|xorg-x11-util-macros
