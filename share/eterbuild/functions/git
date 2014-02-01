@@ -72,7 +72,15 @@ set_girar_host()
 	if is_one_girar_name "$REMOTELIST" ; then
 		# use one target if it one
 		GIRARHOST="$REMOTELIST"
+		return 1
 	fi
+
+	# if no default, set default GIRARHOST from ~/.ssh/config
+	if [ -z "$GIRARHOST" ] ; then
+		GIRARHOST=$(get_girar_host_from_ssh)
+		#[ -n "$GIRARHOST" ] || fatal "Can't get default girar alias (like git.alt) from ~/.ssh/config"
+	fi
+
 	return 1
 }
 
