@@ -72,7 +72,9 @@ get_archive1()
 {
 	URL=${GETSOURCE/.bz2/}
 	WEXT=`basename "$URL"`
-	test -f "$WEXT.$1" download_url "$URL.$1" || return
+	[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$WEXT.$1"
+	test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
+	download_url "$URL.$1" || return
 	test -f "$WEXT.$1" || return
 	echog -n "Converting to $WEXT.bz2..."
 }
@@ -225,6 +227,8 @@ function source_ext()
 		local TMPSPEC=$1.tmpurl
 		local NEWSOURCE=$(grep "# Source$3-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g")
 		test -n "$NEWSOURCE" || fatal "Can't extract URL from $Source$3-$2"
+		# Fake replace for correct subst variables
+		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|g" > $TMPSPEC
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
 		rm -f "$TMPSPEC"
