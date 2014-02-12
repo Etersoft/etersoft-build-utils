@@ -14,18 +14,14 @@ download_url()
 	# use wget with try=1 and timeout = 30 sec
 	which wget >/dev/null || fatal "Can't download, wget command is missed"
 
+	local NAME=$(basename $1)
 	# do not download if already exists...
-	[ -r "$(basename "$1")" ] && { echo "skipping $1, already exists..."; return; }
+	#[ -r "$NAME" ] && { echo "skipping $1, already exists..."; return; }
+	rm -f "$NAME"
 
 	# NOTE: disable cert checking
-	a= wget --no-check-certificate -c -t 1 -T 30 "$1"
-	local RET=$?
-
-	# HACK: wget replaced %20 with space after download
-	local NAME=$(basename $1)
-	local SPACEDNAME=$(basename $1 | sed -e "s/%20/ /g")
-	[ "$SPACEDNAME" != "$NAME" ] && mv -f "$SPACEDNAME" "$NAME"
-	return $RET
+	a= wget --no-check-certificate -c -t 1 -T 30 "$1" -O "$NAME"
+	return
 }
 
 check_url()
