@@ -12,7 +12,7 @@ fi
 
 # If no args
 if [ -z "$1" ] ; then
-	ARG="ARG -a"
+	ARG="$ARG -a"
 fi
 
 docmd gear-commit $ARG $@
