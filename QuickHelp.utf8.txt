@@ -17,7 +17,49 @@ dmake [-t] [-p] - make with distcc using (distributed build)
 
 
 ---------------------------
-gacl - acl control for gear repo in git.alt
+emkimage - run make in mkimage-profiles
+Usage: emkimage [-b p6] <target>
+
+
+---------------------------
+estrlist developed for string list operations. See also cut, join, paste...
+Usage: bin/estrlist <command> [args]
+Commands:
+strip_spaces [args]               - remove spaces between words
+filter_strip_spaces               - remove spaces from words from standart input
+reg_remove  <PATTERN> [word list] - remove words containing a match to the given PATTERN (grep notation)
+reg_wordremove  <PATTERN> [word list] - remove words containing a match to the given PATTERN (grep -w notation)
+exclude <list1> [list2]           - print list2 words contains also in list1
+reg_exclude <PATTERN> [word list] - print only words not matched with PATTERN
+reg_wordexclude <PATTERN> [word list] - print only words not matched with PATTERN
+union [word list]                 - sort and remove duplicates
+uniq [word list]                  - alias for union
+list [word list]                  - just list words line by line
+count [word list]                 - print word count
+
+Examples:
+$ bin/estrlist reg_remove "1." "11 12 21 22"
+21 22
+$ bin/estrlist reg_wordremove "1." "11 12 21 22"
+21 22
+$ bin/estrlist exclude "1 3" "1 2 3 4"
+2 4
+$ bin/estrlist reg_exclude "22 1." "11 12 21 22"
+21
+$ bin/estrlist reg_wordexclude "wo.* er" "work were more else"
+were more else
+$ bin/estrlist union "1 2 2 3 3" ""
+1 2 3
+$ bin/estrlist count "1 2 3 4 10" ""
+5
+$ bin/estrlist has "ex" "exactly"
+TRUE
+$ bin/estrlist has "exo" "exactly"
+FALSE
+
+
+---------------------------
+gacl - acl control for gear repo in git.eter
 
 Usage: gacl [GIRAR] [-b REPONAME] [package] command [params]
 
@@ -41,40 +83,8 @@ Examples for git project from current dir:
 
 
 ---------------------------
-ginit - initialize repo in git.alt for current project
-Use: ginit [GIRAR]
-     ginit git.eter - for init in git.eter gear repo
-
-
----------------------------
-gitcam - do fast git commit amend (apply all current changes to the last commit)
-Use: gitcam [-e]
-     -e - edit commit message
-
-
----------------------------
-gpull - do git pull with fast forward only by default.
-
-Usage: gpull [-a] [-n] [repo] [branch]
-
-gpull without parameters or with branch name
-gpull myrepo - for pull from remote myrepo gear repo (with --rebase by default)
-
-Options:
-   -a  pull all branches
-   -r  rebase during pull
-   -m  do merge if possible
-   -f  pull with fast forward only (default)
-   -c  return error status if repo was not uptodate (gpull || echo 'Was updated last time')
-
-
----------------------------
-gpush - publish current project repo remote git repo
-Usage:  [GIRAR/remote alias] [-f|--force] [-a|--all] [-t|--tags] [tag]
-Параметры:
- -f - force push
- -a - push all branches
- -t - push all tags
+gammit - make commit with description from last changelog entry in spec
+Use: gammit
 
 
 ---------------------------
@@ -109,13 +119,13 @@ Usage:  [-t -i -h -r -c -b -i] [package name] [package file bin.rpm] ...
    -r           run command
    -o           log in as root user
    -v           verbose
-   -x           allow run X program (set DISPLAY and use xauth)
-   -t           use test hasher dir (different to build hasher)
+   -x           allow run X program (set DISPLAY and install xauth)
+   -t           use test hasher dir (different to usual build dir)
 
 Extra options:
    -a           auto test mode for post myhsh build checking
    -d           print hasher dir
-   -M??         branch name
+   -M??         binary repository name (obsoleted)
 
 
 ---------------------------
@@ -123,7 +133,7 @@ Extra options:
 
 ---------------------------
 myhsh - build package via hasher
-Usage:  [-m -s -u -i -c -l] src.rpm...
+Usage:  [-i -c -l] src.rpm...
 
 Параметры:
    -i  install built packages in test hasher
@@ -132,26 +142,31 @@ Usage:  [-m -s -u -i -c -l] src.rpm...
 
 
 ---------------------------
-Using autodetected spec etersoft-build-utils.spec...
-rpmbb - build  binary rpm from spec
-Usage:  [-c -p -i -r -R] spec...
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmbb (Build Binary) - build binary rpm from spec or from git
+Usage: rpmbb [-c -p -i -r -R] [spec]
 
 Параметры:
-   -i  skip build, but do install and package
-   -r  find build requires
-   -R  find build requires with -bi
+   -i  skip build stage, but do install files and package it
+   -p  only packaging installed files into package
+   -r  find build requires (run buildrequires)
+   -R  find build requires during install (run buildrequires with -bi)
 
 Ext. options:
    -c  start from compile stage
-   -p  packaging installed files into package
    -d  build with dmake
 
 
 ---------------------------
-Using autodetected spec etersoft-build-utils.spec...
-rpmbph - backports spec and rebuild it
+rpmbk (Build Korinf) - build package from current repo in Korinf
+Usage: rpmbk [Distro/Version] [spec]
+
+
+---------------------------
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmbph (BackPort and Hasher) - backports spec and rebuild it
 Usage:  [-r -u -U -n -i -m -v -q] [-M60] [-b REPONAME] spec...
-Usage: rpmbph -b p6 for backport to ALT Linux p6 and so on
+Usage: rpmbph [GIRAR] -b p6 for backport to ALT Linux p6 and so on
 
 Параметры:
    -u           sign and upload after build
@@ -160,49 +175,49 @@ Usage: rpmbph -b p6 for backport to ALT Linux p6 and so on
    -b REPONAME  binary repository name (4.1, p5, t6 and so on)
 
 Ext. options:
-   -r           remote build
    -v           more verbose
    -q           quiet
-Set ROOTDIR variable for backport to the other system
+
+Examples:
+ $ rpmbph -b p6 -n -u  - backport to p6 and ask to build it
 
 
 ---------------------------
-Using autodetected spec etersoft-build-utils.spec...
-rpmbs - run git repo build or make src.rpm from spec
-Usage:  [GIRAR] [-s|-t|-u|-a|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]...
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmbs (Build Source) - run git repo build or make src.rpm from spec
+Usage:  [GIRAR] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]...
 
 Параметры:
    -u            sign and run gear build task after build
-   -a TASK       sign package(s)/repo, push/upload it and add to (shared) task TASK
+   -a TASK | -A  sign package(s)/repo, push/upload it and add to (shared) task TASK
    -p POCKET     build package in POCKET (supported on git.etersoft.ru only)
+   -b REPONAME  binary repository name (4.1, p5, t6 and so on)
 
 Ext. options:
-   -b REPONAME  binary repository name (4.1, p5, t6 and so on)
    -c           only sign package(s) with checking
    -f           force operation (overwrite tag)
    -s           sign package(s) (and move it to dir ETERDESTSRPM if defined)
    -t           set tag with sign
    -n           do not check with sisyphus_check before upload
    -o           create nosrc.rpm package
-   -z           create src.rpm with compatible gzip compression
+   -z           create src.rpm with compatible gzip compression (obsoleted)
 
 
 ---------------------------
-Using autodetected spec etersoft-build-utils.spec...
-rpmbsh - BSH - build [from] source; use hasher
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmbsh (Build Source in the Hasher)  - build [from] source; use hasher
 Usage:  [-r -s -u -m -i -c] [-f] [spec or src.rpm]...
 
 Параметры:
-   -r  remote build (on builder64 host)
    -u  sign and run gear build task after build
    -i  install built packages in test hasher (via loginhsh -t)
+   -f  force tag set (see rpmbs --help)
 
 Ext. options:
-   -c  build without stuff (previous built packages)
+   -c  build without stuff (without previous built packages)
    -s  sign (and move to dir ETERDESTSRPM if defined) after build
    -t  make temporary commit before build (rpmbb like behavior)
    -l  lazy cleanup (clean before build, not after)
-   -f  force tag set (see rpmbs --help)
 
 
 ---------------------------
@@ -214,20 +229,23 @@ rpmbugs [-t] spec | bug number | package name | -qf command_name | /path/to/file
 
 
 ---------------------------
-rpmcs - cleanup spec (like cleanup_spec command)
-Usage: rpmcs [specfile]
+rpmcs (Cleanup Spec) - cleanup spec (like cleanup_spec command)
+Usage: rpmcs [--skip-reqs] [specfile]
 spec file can be autodetected from git repo
  specfile - spec file (copy will be saved as specfile~)
+ --skip-reqs  do not replace requires
 
 
 ---------------------------
-rpmgp - various package download operations
-Usage: rpmgp [options] [-M60] [system] pkgname
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmgp (Get Package) - various package download operations
+Usage: rpmgp [GIRAR/remote alias] [options] -b p6 [system] pkgname
  pkgname - installed package name or src.rpm
  system  - name of system (ALT Linux by default if -a missed)
 
 Параметры:
    -a   search pkgname in all known repositories
+   -b REPONAME  binary repository name (4.1, p5, t6 and so on)
    -c   check if this package exists in the ALT Linux repository
    -d   download all matched packages
    -g   clone last built package repo
@@ -236,15 +254,15 @@ Usage: rpmgp [options] [-M60] [system] pkgname
    -m   migrate to gear from spec/srpm
 
 Ext. options:
-   -b   install packages needed for build (use sudo apt-get) (need spec not package name)
+   -i   install packages needed for build (use sudo apt-get) (need spec not package name)
    -l   list packages needed for build (in local pkg system notation) (experimental)
    -r   refresh package list (download it again)
    -s   list all known remote repositories
 
 
 ---------------------------
-Using autodetected spec etersoft-build-utils.spec...
-rpmgs - get sources by spec / repository
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmgs (Get Source) - get sources by spec / repository
 Usage:  [GIRAR] [-a -r ] spec [new_version]
 You can run 'rpmgs file.spec new_version' for set new version and download it
 
@@ -254,7 +272,7 @@ You can run 'rpmgs file.spec new_version' for set new version and download it
 
 
 ---------------------------
-rpmlog - update changelog
+rpmlog - update version/release and changelog
 Usage: rpmlog [-r|-s|-v] [-l|-t] [SPEC] [fromTAG] [toTAG]
 
 Параметры:
@@ -262,7 +280,12 @@ Usage: rpmlog [-r|-s|-v] [-l|-t] [SPEC] [fromTAG] [toTAG]
    -r  increment release
    -s  increment subrelease
    -l  add changelog from git log (since last release tag or TAG)
+
+Ext. options:
    -t  test run (without change files and repo)
+
+Example:
+   $ rpmlog -v -l   - typical build new version
 
 
 ---------------------------
@@ -271,6 +294,7 @@ Usage: rpmpub [-f] [-r PROJECTVERSION ] [SPEC] [TARGETDIR]
 
 Параметры:
    -f                 force set tag
+   -s                 skip set tag
    -r PROJECTVERSION  set other project version (PROJECTVERSION/sources)
    TARGETDIR          copy signed src.rpm package to TARGETDIR (f.i., /tmp/some_version/sources)
                       By default used path from Source: spec field. 
@@ -278,18 +302,121 @@ Usage: rpmpub [-f] [-r PROJECTVERSION ] [SPEC] [TARGETDIR]
 
 
 ---------------------------
-rpmqf - the same as rpm -qf, but use which for search command place
+Use epmqf from epm package manager (eepm) instead
+epm - EPM package manager
+Usage: epm [options] <command> [package name(s), package files]...
+ Commands:
+    -i|install|add|i      install package(s) from remote repositories or from local file
+    -e|-P|remove|delete|uninstall|erase|e  remove (delete) package(s) from the database and the system
+    -s|search             search in remote package repositories
+    -qp|qp|query_package  search in the list of installed packages
+    -qf|qf|which|belongs  query package(s) owning file
+    reinstall             reinstall package(s) from remote repositories or from local file
+    Install               perform update package repo info and install package(s) via install command
+    -q|q|installed|query  check presence of package(s) and print this name (also --short is supported)
+    -sf|sf|filesearch     search in which package a file is included
+    -ql|ql|filelist       print package file list
+    check|fix|verify      check local package base integrity and fix it
+    changelog|cl|-cl      show changelog for package
+    -qi|qi|info|show      print package detail info
+    requires|deplist      print package requires
+    provides              print package provides
+    whatdepends           print packages dependences on that
+    whatprovides          print packages provides that target
+    conflicts             print package conflicts
+    -qa|list|packages|-l|qa  list of installed package(s)
+    programs              list of installed GUI program(s)
+    update                update remote package repository databases
+    addrepo|ar            add package repo
+    repolist|sl|rl|listrepo  print repo list
+    removerepo|rr         remove package repo
+    release-upgrade       update whole system to the next release
+    kernel-update|kernel-upgrade|update-kernel|upgrade-kernel  update system kernel to the last repo version
+    clean                 clean local package cache
+    autoremove            auto remove unneeded package(s)
+    upgrade|dist-upgrade  performs upgrades of package software distributions
+    Upgrade               performs update && upgrade command
+    simulate              simulate install (it does check requires, minimally)
+    checkpkg|integrity    check package integrity
+
+ Options:
+    -h|--help|help        this help
+    -v|--version          print version
+    --verbose             verbose mode
+    --skip-installed      skip already install during install
+    --show-command-only   show command only, do not any action (supports install and remove ONLY)
+    --quiet               quiet mode (do not print commands before exec)
+    --nodeps              skip dependency check (during install/simulate and so on)
+    --force               force install/remove package (f.i., override)
+    --short               short output (just 'package' instead 'package-version-release')
+    --sort                sort output, f.i. --sort=size (supported only for packages command)
+    --auto                non interactive mode
+
 
 
 ---------------------------
-rpmrb - update spec to vermajor.verminor version, build %rel release
-Usage: rpmrb spec [vermajor][.verminor] [rel]
-Example: rpmrb name.spec 22.6 alt2
+rpmrb (Re Build) - update spec to vermajor.verminor version, build %rel release
+Usage: rpmrb [spec] [vermajor][.verminor] [rel]
+Example:
+          $ rpmrb [name.spec] 22.6 alt2
+          $ rpmrb 1.2.3
 
 
 ---------------------------
-rpmU - the same as [sudo] rpm -Uvh - update package
-Usage: rpmU [package(s)]
+rpmreqs [package(s) file(s)] - print out package requires
+
+
+---------------------------
+Use epmi from epm package manager (eepm) instead
+epm - EPM package manager
+Usage: epm [options] <command> [package name(s), package files]...
+ Commands:
+    -i|install|add|i      install package(s) from remote repositories or from local file
+    -e|-P|remove|delete|uninstall|erase|e  remove (delete) package(s) from the database and the system
+    -s|search             search in remote package repositories
+    -qp|qp|query_package  search in the list of installed packages
+    -qf|qf|which|belongs  query package(s) owning file
+    reinstall             reinstall package(s) from remote repositories or from local file
+    Install               perform update package repo info and install package(s) via install command
+    -q|q|installed|query  check presence of package(s) and print this name (also --short is supported)
+    -sf|sf|filesearch     search in which package a file is included
+    -ql|ql|filelist       print package file list
+    check|fix|verify      check local package base integrity and fix it
+    changelog|cl|-cl      show changelog for package
+    -qi|qi|info|show      print package detail info
+    requires|deplist      print package requires
+    provides              print package provides
+    whatdepends           print packages dependences on that
+    whatprovides          print packages provides that target
+    conflicts             print package conflicts
+    -qa|list|packages|-l|qa  list of installed package(s)
+    programs              list of installed GUI program(s)
+    update                update remote package repository databases
+    addrepo|ar            add package repo
+    repolist|sl|rl|listrepo  print repo list
+    removerepo|rr         remove package repo
+    release-upgrade       update whole system to the next release
+    kernel-update|kernel-upgrade|update-kernel|upgrade-kernel  update system kernel to the last repo version
+    clean                 clean local package cache
+    autoremove            auto remove unneeded package(s)
+    upgrade|dist-upgrade  performs upgrades of package software distributions
+    Upgrade               performs update && upgrade command
+    simulate              simulate install (it does check requires, minimally)
+    checkpkg|integrity    check package integrity
+
+ Options:
+    -h|--help|help        this help
+    -v|--version          print version
+    --verbose             verbose mode
+    --skip-installed      skip already install during install
+    --show-command-only   show command only, do not any action (supports install and remove ONLY)
+    --quiet               quiet mode (do not print commands before exec)
+    --nodeps              skip dependency check (during install/simulate and so on)
+    --force               force install/remove package (f.i., override)
+    --short               short output (just 'package' instead 'package-version-release')
+    --sort                sort output, f.i. --sort=size (supported only for packages command)
+    --auto                non interactive mode
+
 
 
 ---------------------------
@@ -301,12 +428,13 @@ Usage:  [-M60] [-s]
 
 
 ---------------------------
-Using autodetected spec etersoft-build-utils.spec...
-rpmurl - open package Url in browser
+Using autodetected spec /srv/lav/Projects/git/etersoft-build-utils/etersoft-build-utils.spec...
+rpmurl - open package Url in the default browser
 Usage:  [-c -f -p -s] spec or package...
 Параметры:
- -c - проверить доступность URL
- -p - открыть страницу пакета на sisyphus.ru
- -s - открыть в браузере тот каталог, где в Сети лежат исходники
+   -c  check if package URL is accessible
+   -p  open package page on http://sisyphus.ru
+   -s  open source dir in the default browser
+
 Ext. options:
- -f - print failed URL only
+   -f  print failed URL only
