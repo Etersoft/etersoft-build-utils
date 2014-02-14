@@ -196,6 +196,15 @@ assert_var()
 		then
 			debug_print_backtrace
 			fatal "assert: $i nonexist"
+# FIXME :
+# Strange behavior with echo
+# (may be erase etersoft-build-utils/bin catalog)
+# (also may be error in korinf, stage "convert src.rpm to target gentoo ..."
+#  or "assure build requires ...")
+#
+#		else
+#			echo "   ${i} = ${re}"
+
 		fi
 	done
 }
