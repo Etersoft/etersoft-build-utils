@@ -2,7 +2,7 @@
 
 Name: etersoft-build-utils
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: A set of rpm build utilities from Etersoft
 
@@ -70,7 +70,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
-* Sat Feb 01 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+* Sat Feb 15 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
+- git: set GIRARHOST if empty, get one from ~/.ssh/config
+- web: download_url: force use our output name
+- rpmgs: fix download URL with &
+- rpmbugs: fix links run
 - move all git specific command to the giter package
 
 * Mon Oct 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.29-alt1
