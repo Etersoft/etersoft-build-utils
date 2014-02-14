@@ -25,7 +25,8 @@ show_bugs()
 		docmd $BROWSER $URL &
 	else
 		#echo "@Fetching from '$URL'..."
-		docmd $BROWSER -dump -no-numbering -no-references -dump-width $COLUMNS $URL
+		# FIXME: BROWSER can be some unknown program called links
+		docmd $BROWSER -dump $URL
 	fi
 }
 
