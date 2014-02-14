@@ -12,8 +12,6 @@ glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
 libfreetype|libfreetype6
 fontconfig|libfontconfig1
-# obsoleted
-libfontconfig|libfontconfig1
 fontconfig-devel|libfontconfig1-dev
 libxslt-devel|libxslt1-dev
 libncurses-devel|libncurses5-dev
