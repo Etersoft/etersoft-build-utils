@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2010, 2012 (c) Etersoft http://etersoft.ru
+# 2010, 2012, 2013 (c) Etersoft http://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 
 # Script for update changelog or increment release
@@ -18,12 +18,15 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "   -r  increment release"
 	echog "   -s  increment subrelease"
 	echog "   -l  add changelog from git log (since last release tag or TAG)"
+	echog "   -e  increment and add empty changelog entry"
 	echo
 	echog "Ext. options:"
 	echog "   -t  test run (without change files and repo)"
 	echo
 	echog "Example:"
-	echog "   $ rpmlog -v -l   - typical build new version"
+	echog "   $ rpmlog -v -l          - typical build new version"
+	echog "   $ rpmlog -r -l HEAD~2   - build new version with last two commit message as changelog"
+	echog "   $ rpmlog -r -e          - prepare new version build with empty changelog entry"
 	exit 0
 fi
 
@@ -38,6 +41,12 @@ fi
 CHANGELOGUPDATE=
 if [ "$1" = "-l" ] ; then
 	CHANGELOGUPDATE=$1
+	shift
+fi
+
+CHANGELOGADD=
+if [ "$1" = "-e" ] ; then
+	CHANGELOGADD=$1
 	shift
 fi
 
@@ -71,7 +80,7 @@ if [ ! -r "$SPECNAME" ] ; then
 	fatal "Spec $SPECNAME does not found"
 fi
 
-[ -n "$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -t param for test or with -h for help"
+[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -t param for test or with -h for help"
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
@@ -81,10 +90,14 @@ if [ -z "$FROMTAG" ] ; then
 	# FIXME: if don't exists, use last tag?
 fi
 
+if [ -n "$CHANGELOGADD" ] ; then
+	CHANGELOG="- "
+else
 # TODO: найти параметр для упрощения истории. пока - sort?
 # Делает первую букву маленькой, убирает точку в конце строки
 CHANGELOG="`git log $FROMTAG..$TOTAG --reverse --simplify-merges --dense --pretty="- %s" | sed -e "s|\.\$||g" | sed -e "s|- \([A-Z]\)|- \l\1|g" | sed -e "s|%||g"`"
 [ -n "$CHANGELOG" ] || fatal "git log was failed"
+fi
 
 if [ -n "$TESTRUN" ] ; then
 	INCREMENTMODE=""
