@@ -315,22 +315,22 @@ test -z "$LISTNAMES" && print_error
 
 [ -z "$GSSETRELEASE" ] || GSSKIPADDCHANGELOG=1
 
-for i in $LISTNAMES
+for spec in $LISTNAMES
 do
-	if [ -n "${i/*spec/}" ] ; then
+	if [ -n "${spec/*spec/}" ] ; then
 		print_error
 	fi
 	
-	set_specdir $i
+	set_specdir $spec
 
 	# Set version if needed
 	if [ -n "$GSSETVERSION" ] ; then
-		CURVER=$(get_version $i)
-		set_version $i $GSSETVERSION
+		CURVER=$(get_version $spec)
+		set_version $spec $GSSETVERSION
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
 			[ -n "$GSSETRELEASE" ] || GSSETRELEASE=alt1
-			set_release $i $GSSETRELEASE
-			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $i"
+			set_release $spec $GSSETRELEASE
+			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $spec"
 		else
 			echo "Version $GSSETVERSION already set"
 			GSSKIPADDCHANGELOG=1
@@ -339,12 +339,12 @@ do
 
 	for nn in "" $LOADLIST
 	do
-		get_source $i "Source$nn"
+		get_source $spec "Source$nn"
 		[ "$GETSOURCE$nn" = "0" ] && continue
-		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $i" ; continue ; }
+		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $spec" ; continue ; }
 		FTB=`basename "$GETSOURCE"`
 		# for get RPMSOURCEDIR
-		build_rpms_name $i
+		build_rpms_name $spec
 
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
 		[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
@@ -353,12 +353,12 @@ do
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 
 		# Test for eterbuild extensions
-		get_source_url $i $nn || get_source_svn $i $nn
+		get_source_url $spec $nn || get_source_svn $spec $nn
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
 		elif is_gear $SPECDIR; then
-			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $i"
+			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $spec"
 			if [ -n "${GETSOURCE/*.tar/}" ] ; then
 				warning "It is recommended to use .tar tarballs for sources in gear"
 			fi
@@ -381,7 +381,7 @@ do
 			fi
 		else
 			[ -z "${GETSOURCEURL}" ] || fatal "Source git works only with gear repo"
-			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $i"
+			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $spec"
 			if [ -n "${GETSOURCE/*.bz2/}" ] ; then
 				warning "It is recommended to use .bz2 tarballs for sources in rpm"
 			fi
@@ -412,11 +412,11 @@ do
 
 	if [ -z "$GSSKIPADDCHANGELOG" ] ; then
 		# Write changelog if all done
-		CURVER=$(get_version $i)
-		CURREL=$(get_release $i)
+		CURVER=$(get_version $spec)
+		CURREL=$(get_release $spec)
 		EGEARME=""
 		is_gear && EGEARME=" with rpmgs script"
-		add_changelog_helper "- new version ($CURVER)$EGEARME" $i || echog "Changelog entry for $CURVER-$CURREL already exists"
+		add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
 
 	if [ -n "$GSSETVERSION" ] || [ -n "$FORCEDOWNLOAD" ]; then
@@ -430,7 +430,7 @@ do
 			docmd git svn rebase
 		elif is_gear ; then
 			CURNAME=$BASENAME
-			test -d "$CURNAME" || CURNAME=$(get_tarballname "$i")
+			test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
 			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
 			rm -f "$RPMSOURCEDIR/$FTB"
 			docmd git commit -m "just import $FTB with rpmgs script"
