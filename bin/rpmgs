@@ -263,6 +263,11 @@ function get_source_url()
 	GETSOURCEURL=$(source_ext "$1" url "$2")
 }
 
+has_ext()
+{
+	! test -n "${1/*$2/}"
+}
+
 function print_error()
 {
 	echog "Can't find any spec file. It is possible you run this script not in git dir."
@@ -292,6 +297,7 @@ gear_update_from_tarball()
 	fi
 	fatal "can't import tarball '$TARBALL'"
 }
+
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
@@ -359,7 +365,7 @@ do
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
 		elif is_gear $SPECDIR; then
 			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $spec"
-			if [ -n "${GETSOURCE/*.tar/}" ] ; then
+			if ! has_ext "$GETSOURCE" .tar ; then
 				warning "It is recommended to use .tar tarballs for sources in gear"
 			fi
 			# TODO: rewrite code to use original file format and temp. download dir
@@ -368,11 +374,11 @@ do
 				download_url "$GETSOURCEURL"
 				# FIXME: gear-update can use any tarball
 				erc conv $(basename "$GETSOURCEURL") $FTB
-			elif [ -z "${GETSOURCE/*.tar/}" ] ; then
+			elif has_ext "$GETSOURCE" .tar ; then
 				# tar target: try to load and convert
 				download_any_tarball
-				test -f $WEXT.tar.bz2 && FTB=$WEXT.tar.bz2
-			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
+				test -s $WEXT.tar.bz2 && FTB=$WEXT.tar.bz2
+			elif has_ext "$GETSOURCE" .tar.bz2 ; then
 				# tar.bz2 target: for src.rpm policy compatibility
 				download_any_tarball
 				test -f $WEXT.tar.bz2 || erc $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
@@ -382,22 +388,22 @@ do
 		else
 			[ -z "${GETSOURCEURL}" ] || fatal "Source git works only with gear repo"
 			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $spec"
-			if [ -n "${GETSOURCE/*.bz2/}" ] ; then
+			if ! has_ext "$GETSOURCE" .bz2 ; then
 				warning "It is recommended to use .bz2 tarballs for sources in rpm"
 			fi
 			if [ -n "${GETSOURCEURL}" ] ; then
 				# UpUrl for rpm
 				download_url "$GETSOURCEURL"
 				erc conv $(basename "$GETSOURCEURL") $FTB
-			elif [ -n "${GETSOURCE/*.tar.bz2/}" ] ; then
+			elif ! has_ext "$GETSOURCE" .tar.bz2 ; then
 				# if not tar.bz2 target, direct download
 				download_url "$GETSOURCE"
-			elif [ -z "${GETSOURCE/*.tar.bz2/}" ] ; then
+			elif has_ext "$GETSOURCE" .tar.bz2 ; then
 				# if tar.bz2 target
 				download_any_tarball
 				#echog -n "Compressing to $WEXT.tar.bz2..."
 				test -f $WEXT.tar.bz2 || erc $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
-			elif [ -z "${GETSOURCE/*.bz2/}" ] ; then
+			elif has_ext "$GETSOURCE" .bz2 ; then
 				warning "It is not tarball (possible single file)..."
 				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"
 			else
@@ -430,6 +436,7 @@ do
 			docmd git svn rebase
 		elif is_gear ; then
 			CURNAME=$BASENAME
+			echo $CURNAME
 			test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
 			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
 			rm -f "$RPMSOURCEDIR/$FTB"
