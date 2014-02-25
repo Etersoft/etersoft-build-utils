@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2005-2006, 2009 (c) Etersoft www.etersoft.ru
+# 2005-2006, 2009, 2014 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -54,17 +54,20 @@ LISTRPMARGS=$@
 
 }
 
+# FIXME: use erc, don't work with korinf-sisyphus!
+# WEXT
 # supports only .tar.bz2 or .tar files in SOURCE
 get_archive()
 {
+	assert_var GETSOURCE
+	# FIXME: drop any ext
 	URL=${GETSOURCE/.bz2/}
 	URL=${URL/.tar/}
 	WEXT=`basename "$URL"`
 	[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$WEXT.$1"
 	test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
 	download_url "$URL.$1" || return
-	test -f "$WEXT.$1" || return
-	[ "$1" = "tar.bz2" ] || echog -n "Converting to $WEXT.tar..."
+	erc repack "$WEXT.$1" "$(basename "$GETSOURCE")"
 }
 
 # supports only bz2
@@ -77,15 +80,6 @@ get_archive1()
 	download_url "$URL.$1" || return
 	test -f "$WEXT.$1" || return
 	echog -n "Converting to $WEXT.bz2..."
-}
-
-#TODO: use functions from tarball
-get_tarbz2()
-{
-	get_archive tar.bz2 || return
-	bunzip -t $WEXT.tar.bz2 && return
-	rm -fv $WEXT.tar.bz2
-	return 1
 }
 
 get_bz2()
@@ -112,93 +106,6 @@ function get_raw()
 }
 
 
-function get_targz()
-{
-	get_archive tar.gz || return
-	gunzip -f $WEXT.tar.gz && return
-	rm -fv $WEXT.tar.gz
-	return 1
-}
-
-function get_tarxz()
-{
-	local BIN=/usr/bin/xz
-	test -x $BIN || return
-	get_archive tar.xz || return
-	$BIN -d $WEXT.tar.xz && return
-	rm -fv $WEXT.tar.xz
-	return 1
-}
-
-function get_tar()
-{
-	get_archive tar || return
-	test -f $WEXT.tar
-}
-
-function get_tgz()
-{
-	get_archive tgz || return
-	gunzip -f $WEXT.tgz && return
-	rm -fv $WEXT.tgz
-	return 1
-}
-
-function get_tbz2()
-{
-	get_archive tbz2 || return
-	mv -f $WEXT.tbz2 $WEXT.tar.bz2
-	bunzip -t $WEXT.tar.bz2 && return
-	rm -fv $WEXT.tar.bz2
-	return 1
-}
-
-function get_tbz()
-{
-	get_archive tbz || return
-	mv -f $WEXT.tbz $WEXT.tar.bz2
-	bunzip -t $WEXT.tar.bz2 && return
-	rm -fv $WEXT.tar.bz2
-	return 1
-}
-
-# TODO: use external converter
-function get_zip()
-{
-	get_archive zip || return
-	mkdir $WEXT.zip.dir || return
-	cd $WEXT.zip.dir
-	unzip -q ../$WEXT.zip && tar cf ../$WEXT.tar ./* || { rm -fv $WEXT.zip ; return 1; }
-	cd ..
-	rm -rf $WEXT.zip.dir
-}
-
-# TODO: use external converter
-function get_rar()
-{
-	UNRAR=/usr/bin/unrar
-	test -x $UNRAR || return
-	get_archive rar || return
-	mkdir $WEXT.rar.dir || return
-	cd $WEXT.rar.dir
-	$UNRAR x ../$WEXT.rar && tar cf ../$WEXT.tar ./* || { rm -fv $WEXT.rar ; return 1; }
-	cd ..
-	rm -rf $WEXT.rar.dir
-}
-
-# TODO: use external converter
-function get_7z()
-{
-	BIN7ZIP=/usr/bin/7z
-	test -x $BIN7ZIP || return
-	get_archive 7z || return
-	mkdir $WEXT.7z.dir || return
-	cd $WEXT.7z.dir
-	$BIN7ZIP x ../$WEXT.7z && tar cf ../$WEXT.tar ./* || { rm -fv $WEXT.7z ; return 1; }
-	cd ..
-	rm -rf $WEXT.7z.dir
-}
-
 function dir_name()
 {
 	rm .listing
@@ -214,7 +121,14 @@ function get_source()
 # download GETSOURCE url to tar.bz2 or tar (set WEXT as without extension name)
 download_any_tarball()
 {
-	get_tarbz2 || get_targz || get_tgz || get_7z || get_zip || get_tbz2 || get_tbz || get_tarxz || get_rar || get_tar || dir_name || fatal "Cannot retrieve $GETSOURCE"
+	local ext
+	for ext in tar.bz2dd tar.gz tgz 7z zip tbz2 tbz tarxz rar tar ; do
+		get_archive $ext && return
+		#FIXME:
+		#test -f "$WEXT.$ext" && fatal "$EXT.$ext is exists after fail download!"
+	done
+	dir_name
+	fatal "Cannot retrieve $GETSOURCE"
 }
 
 # param: spec name number (f.i., url for Source-url)
