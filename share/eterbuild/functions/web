@@ -5,14 +5,15 @@
 
 which xdg-open 2>/dev/null >/dev/null && BROWSER=xdg-open
 
+# TODO: use epm assure
 # (command from perl-libwww)
 which GET &>/dev/null && GET=GET || GET=false
+
 which rsync &>/dev/null && RSYNC=rsync || GET=false
 
 download_url()
 {
-	# use wget with try=1 and timeout = 30 sec
-	which wget >/dev/null || fatal "Can't download, wget command is missed"
+	epm assure wget || fatal "Can't download, wget command is missed"
 
 	local NAME="$(basename "$1")"
 	# TODO
@@ -21,6 +22,7 @@ download_url()
 	rm -f "$NAME"
 
 	# NOTE: disable cert checking
+	# use wget with try=1 and timeout = 30 sec
 	a= wget --no-check-certificate --unlink -c -t 1 -T 30 "$1" -O "$NAME"
 	return
 }
