@@ -1,5 +1,4 @@
 kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-rhel kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
-rpm-build-intro|rpm-build-compat
 libv4l-devel|libv4l-devel
 libmpg123-devel|libmpg123-devel
 libudev-devel|libudev-devel
