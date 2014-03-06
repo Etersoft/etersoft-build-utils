@@ -82,8 +82,10 @@ case "$COMMAND" in
 		docmd ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $PARAM
 		;;
 	"show")
+		showcmd ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
 		echo -n "$GIRARHOST:$BINARYREPO ACL for "
 		ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
+		echo
 		;;
 	*)
 		fatal "Unknown command $COMMAND"
