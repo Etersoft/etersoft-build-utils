@@ -195,8 +195,11 @@ add_changelog_helper()
 	[ -z "$SPECS" ] && fatal "run add_changelog without spec(s)"
 	add_changelog -e "$DESC" $SPECS
 	R=$?
+
+	[ -n "$QUIET" ] && return
 	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 0 ; }
-	# If changelog sucessfully added
+
+	# If changelog sucessfully added, let us to edit
 	if [ "$R" = "0" ]; then
 		local SPEC
 		for SPEC in $SPECS ; do

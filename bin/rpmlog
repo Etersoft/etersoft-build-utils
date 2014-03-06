@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2010, 2012, 2013 (c) Etersoft http://etersoft.ru
+# 2010, 2012, 2013, 2014 (c) Etersoft http://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 
 # Script for update changelog or increment release
@@ -7,30 +7,40 @@
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
-load_mod spec rpm git etersoft
+load_mod spec rpm git etersoft spec
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmlog - update version/release and changelog"
-	echog "Usage: rpmlog [-r|-s|-v] [-l|-t] [SPEC] [fromTAG] [toTAG]"
+	echog "Usage: rpmlog [-q] [-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC] [fromTAG] [toTAG]"
 	echo
 	echog "Options:"
 	echog "   -v  increment version"
 	echog "   -r  increment release"
 	echog "   -s  increment subrelease"
 	echog "   -l  add changelog from git log (since last release tag or TAG)"
-	echog "   -e  increment and add empty changelog entry"
+	echog "   -e  increment and add (empty) changelog entry"
 	echo
 	echog "Ext. options:"
 	echog "   -t  test run (without change files and repo)"
+	echog "   -q  quiet mode (do not ask anything)"
 	echo
 	echog "Example:"
-	echog "   $ rpmlog -v -l          - typical build new version"
-	echog "   $ rpmlog -r -l HEAD~2   - build new version with last two commit message as changelog"
-	echog "   $ rpmlog -r -e          - prepare new version build with empty changelog entry"
+	echog "   $ rpmlog -v -l             - typical build new version"
+	echog "   $ rpmlog -r -l HEAD~2      - build new version with last two commit message as changelog"
+	echog "   $ rpmlog -r -e             - prepare new version build with empty changelog entry"
+	echog "   $ rpmlog -r -e 'new build' - prepare new version build with changelog entry 'new build'"
 	exit 0
 fi
 
 is_gear || fatal "rpmlog usable only with gear repo"
+
+# TODO: rewrite option parsing
+
+QUIET=
+if [ "$1" = "-q" ] ; then
+	QUIET=$1
+	shift
+fi
 
 INCREMENTMODE=""
 if [ "$1" = "-r" ] || [ "$1" = "-s" ] || [ "$1" = "-v" ]; then
@@ -48,6 +58,7 @@ CHANGELOGADD=
 if [ "$1" = "-e" ] ; then
 	CHANGELOGADD=$1
 	shift
+	TEXTMESSAGE="$@"
 fi
 
 TESTRUN=
@@ -91,7 +102,7 @@ if [ -z "$FROMTAG" ] ; then
 fi
 
 if [ -n "$CHANGELOGADD" ] ; then
-	CHANGELOG="- "
+	CHANGELOG="- $TEXTMESSAGE"
 else
 # TODO: найти параметр для упрощения истории. пока - sort?
 # Делает первую букву маленькой, убирает точку в конце строки
