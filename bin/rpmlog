@@ -127,7 +127,7 @@ case "$INCREMENTMODE" in
                 inc_version $SPECNAME
                 ;;
         *)
-                fatal "unknown increment mode $INCREMENTMODE"
+                ;;
 esac
 
 NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
