@@ -273,9 +273,7 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 		subst "s|^\(Auto[RP].*\),nomingw32|\1|g" $SPECNAME
 		subst "s|^\(Auto[RP].*\), nomingw32|\1|g" $SPECNAME
 	fi
-fi
-
-if [ "$PKGVENDOR" = "ubuntu" ] || [ "$PKGVENDOR" = "debian" ] ; then
+else
 	# for systems with (d)ash as sh (f.i., Ubuntu)
 	remove_bashism $SPECNAME
 fi

@@ -90,8 +90,12 @@ tolocal_anyrepl()
 		local NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
 	fi
 
-	if [ "$DISTRNAME" = "ArchLinux" ] || [ "$DISTRNAME" = "FreeBSD" ]  ; then
+	if [ "$DISTRNAME" = "ArchLinux" ] ; then
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
+	fi
+
+	if [ "$DISTRNAME" = "FreeBSD" ]  ; then
+		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g"`
 	fi
 
 	if [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "Gentoo" ] ; then
