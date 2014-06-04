@@ -168,7 +168,7 @@ update_cache_list()
 	done
 }
 
-Usage="Usage: rpmgp [GIRAR/remote alias] [options] -b $EXAMPLEALTDISTRVERSION [system] pkgname"
+Usage="Usage: rpmgp [GIRAR/remote alias] [options] [-b $EXAMPLEALTDISTRVERSION] [system] pkgname"
 mygetopts()
 {
 Descr="rpmgp (Get Package) - various package download operations"

@@ -380,10 +380,12 @@ do
 		s|%py_sitescriptdir|%python_sitelibdir|g
 		s|%py_puresitedir|%python_sitelibdir|g
 		s|%python_version|%__python_version|g
+		s|%python2_version|%__python_version|g
 		s|%python_sitelib/|%python_sitelibdir/|g
 		s|%_libdir/python2.6/site-packages/|%python_sitelibdir/|g
 		s|%py_sitedir/|%python_sitelibdir/|g
 		s|%python_sitearch|%python_sitelibdir|g
+		s|%python2_sitearch|%python_sitelibdir|g
 		s|\(%pyrequires_eq.*\)|#\1|g" $i
 
 	subst "s|ruby setup.rb config|%ruby_config|g
@@ -434,6 +436,9 @@ do
 		s|%_var/log|%_logdir|g
 		# See https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 		#s|%_var/lib|%_localstatedir|g
+		s|/var/lock/subsys|%_locksubsysdir|g
+		s|%_sysconfdir/tmpfiles.d|%_tmpfilesdir|g
+		s|/var/run|%_runtimedir|g
 		s|%__autoreconf|%autoreconf|g" $i
 
 	subst "s|%rpmcflags|%optflags|g" $i

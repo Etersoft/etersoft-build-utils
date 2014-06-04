@@ -1,7 +1,7 @@
 # ALT group -> Other group
 
 System/Libraries|System Environment/Libraries
-System/Libraries/Python|Development/Python
+#System/Libraries/Python|Development/Python
 Development/Other|Development/Libraries
 Sound|Applications/Sound
 Games/Other|X11/Applications/Games

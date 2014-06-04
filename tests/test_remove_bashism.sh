@@ -27,6 +27,8 @@ mkdir ${LOCATION}/{loc1,dedt,ohi}
 mkdir $LOCATION/{loc1,dedt,ohi}
 popd
 
+chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
+
 %description
 Get version test
 %changelog
