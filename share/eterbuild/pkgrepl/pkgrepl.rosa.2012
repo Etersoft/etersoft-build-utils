@@ -6,3 +6,4 @@ python-modules-logging|
 libwxGTK-devel|libwxgtku2.8-devel
 libwxGTK|libwxgtku2.8
 wxGTK|libwxgtku2.8
+libxslt|libxslt1

@@ -4,6 +4,7 @@ libavformat53|libavformat52
 libavcodec53|libavcodec52
 libv4l-devel|libv4l-devel
 libmpg123-devel|libmpg123-devel
-
+libpng15|libpng12
+libtiff5|libtiff3
 libudev-devel|libudev-devel
 libudev1|libudev
