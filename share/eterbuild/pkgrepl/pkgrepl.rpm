@@ -234,9 +234,13 @@ python-module-mwlib|python-mwlib
 #python-mwlib|python-mwlib
 python-module-paste|python-paste
 docbook-style-dsssl-utils|docbook-utils
-# obsoleted
+
+# obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+
 # TODO: сделать замену всех python-module- на просто python-
 python-module-setuptools|python-setuptools
 
 xorg-util-macros|xorg-x11-util-macros
+
+gcc4.6-c++|gcc-c++

@@ -80,3 +80,6 @@ cifs-utils|samba
 lsb-release|
 rpm-build|rpm
 libtiff5|libtiff
+fontconfig-devel|fontconfig
+# obsoleted, needed for old wine packages
+libfontconfig|fontconfig

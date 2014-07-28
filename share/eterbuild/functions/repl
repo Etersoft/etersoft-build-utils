@@ -122,8 +122,8 @@ clean_pkgreq()
 	local i VAR
 	VAR=`cat | sort -u`
 	for i in $VAR ; do
-		echo "$i" | egrep "^gcc[0-9]|^cpp[0-9]|^gcc-c++[0-9]" >/dev/null && continue
-		echo "$i" | egrep "gcc\$|cpp\$|gcc-c++\$" >/dev/null && continue
+		#echo "$i" | egrep "^gcc[0-9]|^cpp[0-9]|^gcc-c++[0-9]" >/dev/null && continue
+		#echo "$i" | egrep "gcc\$|cpp\$|gcc-c++\$" >/dev/null && continue
 		echo "$i" | grep "[()<=>]" >/dev/null && continue
 		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
 		echo -n "$i "

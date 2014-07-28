@@ -117,3 +117,6 @@ su|util-linux
 libusb|libusbx
 procps|procps-ng
 libtiff5|libtiff
+
+# obsoleted, needed for old wine packages
+libfontconfig|fontconfig

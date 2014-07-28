@@ -43,6 +43,8 @@ libopenal-devel|media-libs/openal
 libfontenc-devel|libfontenc
 libhal-devel|
 libmpg123|mpg123
+# obsoleted, needed for old wine packages
+libfontconfig|fontconfig
 fontconfig-devel|fontconfig
 libGLU-devel|glu
 libGLU|glu
