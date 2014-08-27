@@ -318,3 +318,5 @@ libXinerama|libxinerama1
 libXcomp|libxcomp3
 
 mailx|mailutils
+libssh2-devel|libssh2-1-dev
+libssh2|libssh2-1

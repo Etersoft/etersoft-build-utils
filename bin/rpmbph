@@ -265,6 +265,9 @@ if [ "$PKGVENDOR" != "alt" ] ; then
 	# obsoletes since Slackware/13 (rpm 4.10)
 	subst "s|^BuildPreReq:|BuildRequires:|g" $SPECNAME
 	subst "s|^PreReq:|Requires:|g" $SPECNAME
+
+	# not supported anywhere exclude ALT
+	subst "s|^BuildRequires(pre):|BuildRequires:|g" $SPECNAME
 fi
 
 # Auto*=yes,nomingw32 works only since ALT 4.1

@@ -73,7 +73,7 @@ while getopts :hfstcudnop:a:Ab:z opt; do
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
-    a) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER=$OPTARG ;;
+    a) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER="$(echo $OPTARG | sed -e 's/before/ /g')" ;;
     A) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER= ;;
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
     b) BINARYREPONAME=$OPTARG ;;
@@ -88,7 +88,7 @@ while getopts :hfstcudnop:a:Ab:z opt; do
 	?) OPTIND=$((OPTIND-1)); break;
     esac
 done
- 
+
 ## remove args that were options
 if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
