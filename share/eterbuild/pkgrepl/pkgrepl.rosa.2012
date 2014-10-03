@@ -7,3 +7,6 @@ libwxGTK-devel|libwxgtku2.8-devel
 libwxGTK|libwxgtku2.8
 wxGTK|libwxgtku2.8
 libxslt|libxslt1
+dbus-tools-gui|dbus-x11
+vixie-cron|cronie
+
