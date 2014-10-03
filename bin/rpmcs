@@ -222,8 +222,9 @@ do
 	# convert from PLD's cases
 	subst "s|%if %{with \(.*\)}|%if_with \1|g" $i
 	subst "s|%if %{without \(.*\)}|%if_without \1|g" $i
-	# replaces with and without too
+	# replaces Fedora's with and without too
 	subst "s|^%bcond_with|%def_with|g" $i
+	subst "s|^%bcond_without|%def_without|g" $i
 	#subst "s|%{?with_\(.*\):|%{subst_with
 
 	echog "fix name and release..."
