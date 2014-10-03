@@ -125,7 +125,7 @@ function get_source()
 download_any_tarball()
 {
 	local ext
-	for ext in tar.bz2 tar.gz tgz 7z zip tbz2 tbz tar.xz rar tar ; do
+	for ext in tar.xz tar.bz2 tar.gz zip tgz 7z tbz2 tbz rar tar ; do
 		get_archive $ext && return
 		#FIXME:
 		#test -f "$WEXT.$ext" && fatal "$EXT.$ext is exists after fail download!"
