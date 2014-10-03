@@ -95,8 +95,8 @@ get_list()
 		    $CURL -l $URL/$i/ | html_filter | sed -e "s|^|$i/|g" >>$LIST
 		done
 		rm -f $LIST.tmp
-	else
-		echo "List for $SYS"
+	#else
+	#	echo "List for $SYS"
 	fi
 }
 
@@ -144,8 +144,8 @@ check_system()
 	#echo "Check for $SYSTEM"
 	get_list $IDX
 	#ls -l $LIST
-	check_name $PKGNAME
-	if [ "$DOWNLOADALL" ] ; then
+	check_name $PKGNAME || return
+	if [ -n "$DOWNLOADALL" ] ; then
 		for i in $NLIST ; do
 			download_url $URL/$i
 		done
@@ -238,7 +238,12 @@ LISTRPMARGS=$@
 
 set_girar_host $1 && shift
 
-parse_cmd_pre_spec "$@"
+# HACK
+if [ "$1" = "-a" ] ; then
+    parse_cmd_pre "$@"
+else
+    parse_cmd_pre_spec "$@"
+fi
 
 mygetopts $LISTARGS
 
@@ -457,14 +462,21 @@ fi
 
 # Check all systems
 if [ -n "$ALLSYSTEM" ] ; then
+	NFLAG=
 	load_systems_list
 	# search throw all systems
 	for ((i=0; i < ${#SYSNAME[*]}; i++)) ; do
+		check_system $i > /dev/null
+		[ -n "$NLIST" ] || continue
 		echo
-		check_system $i
+		echo "List for ${SYSNAME[$i]}:"
 		print_list $NLIST
+		NFLAG=1
 	done
+	if [ -z "$NFLAG" ] ; then
+		echo "No search result for $PKGNAME. Check rpmgp -s for list of all systems."
+	fi
 	exit 0
 fi
 
-fatal "Support for get src.rpm from ALT rsync removed. Use rpmgp with -g option"
+fatal "Support for get src.rpm from ALT rsync removed. Use rpmgp with -g option or rpmgp -h for help."
