@@ -74,13 +74,13 @@ fi
 
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
-pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u i c l f)
+pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u i c l f a A)
 
 if echo "$LISTNAMES" | grep -q spec ; then
 	set_specdir $LISTNAMES
 fi
 
-docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u) $LISTBUILT
+docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
 RESULT=$?
 # remove generated src.rpm
 for i in $LISTBUILT ; do
