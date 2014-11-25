@@ -9,4 +9,5 @@ wxGTK|libwxgtku2.8
 libxslt|libxslt1
 dbus-tools-gui|dbus-x11
 vixie-cron|cronie
+cifs-utils|cifs-utils
 

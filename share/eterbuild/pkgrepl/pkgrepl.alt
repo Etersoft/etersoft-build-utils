@@ -7,7 +7,7 @@ libpq4|libpq3
 %python-dev|
 %python-base|
 linux-libc-headers|glibc-kernheaders
-apt-repo-tools|apt-utils
+#apt-repo-tools|apt-utils
 kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
 libpng15|libpng12
 
