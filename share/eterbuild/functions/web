@@ -23,8 +23,10 @@ download_url()
 
 	# NOTE: disable cert checking
 	# use wget with try=1 and timeout = 30 sec
-	a= wget --no-check-certificate --unlink -c -t 1 -T 30 "$1" -O "$NAME"
-	return
+	a= wget --no-check-certificate --unlink -c -t 1 -T 30 "$1" -O "$NAME" && return
+
+	rm -f "$NAME"
+	return 1
 }
 
 check_url()
