@@ -258,9 +258,12 @@ filter_gear_name()
 # FIXME: use in rpmbs, fix for package name from spec
 get_gear_name()
 {
+	local gn
 	local gitdir=$(get_root_git_dir)
 	[ -n "$gitdir" ] || return
-	basename "$gitdir" | filter_gear_name
+	gn=$(basename "$gitdir" | filter_gear_name)
+	echo "$gn"
+	[ -n "$gn" ]
 }
 
 

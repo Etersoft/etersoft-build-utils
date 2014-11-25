@@ -225,12 +225,14 @@ set_binaryrepo $MENV
 # If we build from gear repo, run task
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	[ -n "$VERBOSE" ] && echo "Run with gear repo..."
+
 	echo "Prepare to publish to $GIRARHOST..."
+
+	# check release
 	build_rpms_name "$LISTNAMES"
-	# FIXME: hack: get project name from package name
-	PROJECTNAME=$(echo $BASENAME | filter_gear_name)
-	#PROJECTNAME=$(get_gear_name)
-	pkg_release_check
+	pkg_release_check $RELEASE
+
+	PROJECTNAME=$(get_repo_name)
 
 	check_gear_and_tag || fatal "Can't make tag"
 	TAG=$(get_last_tag)

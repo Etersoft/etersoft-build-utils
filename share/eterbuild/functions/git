@@ -31,6 +31,31 @@ get_current_branch()
 	git branch | grep '^\*' | sed 's/^..//' | tr -d "\n"
 }
 
+# get name from current remote repository name
+get_remote_repo_name()
+{
+    local branch remote url basename
+    branch=$(get_current_branch)
+    [ -n "$branch" ] || return
+    remote=$(git config --get branch.$branch.remote)
+    url=$(git config --get remote.$remote.url)
+    [ -n "$url" ] || return
+    basename=$(basename "$url" .git)
+    echo "$basename"
+    [ -n "$basename" ]
+}
+
+get_repo_name()
+{
+    # try use remote repo name firstly
+    get_remote_repo_name && return
+    # use repo dir name in other way
+    get_gear_name && return
+    # get name from spec
+    #build_rpms_name "$LISTNAMES"
+    #PROJECTNAME=$(echo $BASENAME | filter_gear_name)
+}
+
 get_remote_git_list()
 {
         local i
