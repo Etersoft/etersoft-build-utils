@@ -468,13 +468,17 @@ showcmd()
 	SETCOLOR_NORMAL
 }
 
-# Example: $ command $(usearg -d "$PARAM")
-# will add -d "$PARAM" if $PARAM is not empty
+# Example:
+# $ command $(usearg -d "$PARAM")
+#  will add -d "$PARAM" if $PARAM is not empty
+# $ command $(usearg -d "$PARAM" "empty-word)
+# will add -d "$PARAM" if $PARAM is not 'empty-word'
 usearg()
 {
         local ARG=$1
         shift
-        [ -n "$1" ] && echo "$ARG $@"
+
+        [ "$1" != "$2" ] && echo "$ARG $1"
 }
 
 # return 0 if arg1 >= arg2
