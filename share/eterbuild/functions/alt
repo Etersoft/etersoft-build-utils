@@ -65,7 +65,8 @@ get_type_by_current_branch()
 # set BYNARYREPO var by MENV in arg (M50 or 5.0)
 set_binaryrepo()
 {
-	BINARYREPO=""
+	BINARYREPO="sisyphus"
+
 	if [ -n "$BINARYREPONAME" ] ; then
 		BINARYREPO="$BINARYREPONAME"
 		MENV="$(get_altdistr_mod $BINARYREPO)"
@@ -78,7 +79,6 @@ set_binaryrepo()
 
 	BINARYREPO="`get_altdistr_version $1`"
 
-	[ "$BINARYREPO" = "sisyphus" ] && BINARYREPO=""
 	return 0
 }
 

@@ -398,6 +398,7 @@ if [ -n "$CHECKONLINE" ] ; then
 	fi
 
 	if [ -n "$GIRAR_USER" ] ; then
+		# FIXME: we have a function to get correct url
 		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$PKGNAME.git"
 		if $GET -d $GITURL ; then
 			echog "Published at $GITURL by $GIRAR_USER"
@@ -409,8 +410,9 @@ if [ -n "$CHECKONLINE" ] ; then
 	list_git_package $PKGNAME
 
 	set_binaryrepo $MENV
-	echo -n "ACL list for $GIRARHOST $BINARYREPO: "
-	docmd ssh $GIRARHOST acl $BINARYREPO $PKGNAME show
+
+	docmd $ETERBUILDBIN/gacl $GIRARHOST -b $BINARYREPO $PKGNAME show
+
 	RET="MISSED"
 	if [ -n "$SRCRPM" ] ; then
 		RSYNCPATH=$(get_rsync_path $GIRARHOST $BINARYREPO)
