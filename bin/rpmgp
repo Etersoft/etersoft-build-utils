@@ -10,7 +10,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm repl git rpm web repos buildsrpm girar
+load_mod rpm repl git rpm web repos buildsrpm
 
 # loads repos file and fill SYSNAME and SYSURL arrays
 load_systems_list()
@@ -294,7 +294,7 @@ git_clone()
 {
 	local RREPO="$1"
 	# Test if ssh access is available
-	if [ -z "$PUBLICACCESS" ] && has_ssh_girar_access ; then
+	if [ -z "$PUBLICACCESS" ] && giter check girar access ; then
 		docmd git clone $GIRARHOST:$RREPO
 	else
 		docmd git clone $GIRARURL/$RREPO
@@ -306,7 +306,7 @@ if [ -n "$CLONEGIT" ] ; then
 	# http://git.altlinux.org/gears/N/NAME.git
 	REPOPATH="$(initial_letter $PKGNAME)/$PKGNAME.git"
 	RREPO="/gears/$REPOPATH"
-	# FIXME: use get_girar_repo?
+	# FIXME: use giter print girar repo?
 	# TODO: check appropriate repo with exist_git_repo
 	if [ -z "$MIGRATEGIRAR" ] ; then
 		if ! git_clone $RREPO ; then
@@ -322,7 +322,7 @@ if [ -n "$CLONEGIT" ] ; then
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
-		RREPO=$(get_girar_repo $PKGNAME) || fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
+		RREPO=$(giter print girar repo $PKGNAME) || fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
 
 		echo "Remote clone from $RREPO ..."
 		docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
@@ -399,7 +399,7 @@ if [ -n "$CHECKONLINE" ] ; then
 
 	if [ -n "$GIRAR_USER" ] ; then
 		# FIXME: we have a function to get correct url
-		GITURL="http://git.altlinux.org/people/$GIRAR_USER/packages/$PKGNAME.git"
+		GITURL="$GIRARURL/people/$GIRAR_USER/packages/$PKGNAME.git"
 		if $GET -d $GITURL ; then
 			echog "Published at $GITURL by $GIRAR_USER"
 		else
