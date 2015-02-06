@@ -80,6 +80,15 @@ check get_numpartrelease 3 `get_numpartrelease $TESTREL`
 TESTREL=eter26.svn724archlinux
 check get_numpartrelease 26 `get_numpartrelease $TESTREL`
 
+GIRARHOST=git.alt
+check get_default_txtrelease alt `get_default_txtrelease`
+
+GIRARHOST=git.eter
+check get_default_txtrelease eter `get_default_txtrelease`
+
+GIRARHOST=giteter
+check get_default_txtrelease eter `get_default_txtrelease`
+
 BASERELEASE=27.5
 get_mn_fromspec
 check MAJOR 27 $MAJOR

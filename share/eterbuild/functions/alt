@@ -98,12 +98,15 @@ get_altdistr_mod()
 # Проверяем, соответствует ли релиз пакетов указанному в MENV
 pkg_release_check()
 {
-	local STREL=$RELEASEPREFIX
+	# assert MENV
+	local STREL=$(get_default_txtrelease)
+	local STRELDEF=alt
+	# FIXME: do we need it?
 	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
 
 	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then
 		for i in $@ ; do
-			if [ -z "${i/*$STREL[0-9].M[0-9][0-9]*/}" ] ; then
+			if [ -z "${i/*$STREL[0-9].M[0-9][0-9]*/}" ] && [ -z "${i/*$STRELDEF[0-9].M[0-9][0-9]*/}" ] ; then
 				# Значит не тот релиз
 				fatal "Incorrect release in $i package: was prepared for Sisyphus"
 			fi
@@ -111,9 +114,9 @@ pkg_release_check()
 		return
 	fi
 	for i in $@ ; do
-		if [ -n "${i/*$STREL[0-9].$MENV*/}" ] ; then
+		if [ -n "${i/*$STREL[0-9].$MENV*/}" ] && [ -n "${i/*$STRELDEF[0-9].$MENV*/}" ] ; then
 			# Значит не тот релиз
-			fatal "Incorrect release in $i package: was prepared for $MENV"
+			fatal "Incorrect release in $i package: was prepared for $MENV (wait for $STREL[0-9].$MENV)"
 		fi
 	done
 }

@@ -58,7 +58,6 @@ MENV=SS
 [ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
 
 #SSH_KEYFILE=~/.ssh/id_dsa
-RELEASEPREFIX=alt
 GIRARHOST=git.alt
 GIRARURL="http://git.altlinux.org"
 
