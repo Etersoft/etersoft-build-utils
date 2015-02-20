@@ -243,7 +243,7 @@ do
 	if [ -n "${spec/*spec/}" ] ; then
 		print_error
 	fi
-	
+
 	set_specdir $spec
 
 	# Set version if needed
@@ -251,7 +251,7 @@ do
 		CURVER=$(get_version $spec)
 		set_version $spec $GSSETVERSION
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
-			[ -n "$GSSETRELEASE" ] || GSSETRELEASE=alt1
+			[ -n "$GSSETRELEASE" ] || GSSETRELEASE=$(get_default_txtrelease)1
 			set_release $spec $GSSETRELEASE
 			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $spec"
 		else

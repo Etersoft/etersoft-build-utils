@@ -194,8 +194,8 @@ do
 	fi
 
 	# If non alt release, set initial alt release
-	if get_release $i | grep -v "^alt" >/dev/null ; then
-		set_release $i "alt1"
+	if get_release $i | grep -q -v "^alt" && get_release $i | grep -q -v "^$(get_default_txtrelease)" ; then
+		reset_release $i
 	fi
 
 	# If it was PLD spec

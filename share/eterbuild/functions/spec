@@ -76,7 +76,18 @@ set_var()
 	subst "s|\($2:\).*\$|\1 $3|" $1
 }
 
+# Args: spec, new_release
+# set release to arg2 or reset numeration if arg2 is empty
 set_release()
+{
+	local RELEASE=$2
+	[ -n "$RELEASE" ] || RELEASE="$(get_txtrelease $1)1"
+	set_var $1 Release $RELEASE
+}
+
+# Args: spec, new_release
+# Set release to arg2 or to the default start value if arg2 is empty
+reset_release()
 {
 	local RELEASE=$2
 	[ -n "$RELEASE" ] || RELEASE="$(get_default_txtrelease)1"

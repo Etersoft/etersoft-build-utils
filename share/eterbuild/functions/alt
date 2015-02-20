@@ -94,8 +94,9 @@ pkg_release_check()
 {
 	# assert MENV
 	local STREL=$(get_default_txtrelease)
+	# support alt in any case
 	local STRELDEF=alt
-	# FIXME: do we need it?
+	# can be set from korinf config
 	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
 
 	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then

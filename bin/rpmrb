@@ -35,7 +35,7 @@ SPEC=$1
 VER=$1
 # need for rpmgs
 GSSETRELEASE=$2
-test -n "$GSSETRELEASE" || GSSETRELEASE=alt1
+test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_default_txtrelease)1
 export GSSETRELEASE
 
 test -f "$SPEC" || SPEC=$(get_gear_spec)

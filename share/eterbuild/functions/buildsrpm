@@ -113,6 +113,6 @@ do
 done
 
 LISTBUILT=$(strip_spaces "$LISTBUILT")
-test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if file is exist."
+test -z "$LISTBUILT" && fatal "Error: List for build is empty. Check if the file is exists."
 }
 
