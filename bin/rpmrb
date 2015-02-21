@@ -32,13 +32,13 @@ SPEC=$1
 # allow run with spec file (obsoleted)
 [ -r "$SPEC" ] && shift
 
+test -f "$SPEC" || SPEC=$(get_gear_spec)
+
 VER=$1
 # need for rpmgs
 GSSETRELEASE=$2
-test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_default_txtrelease)1
+test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_txtrelease $SPEC)1
 export GSSETRELEASE
-
-test -f "$SPEC" || SPEC=$(get_gear_spec)
 
 docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
 add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
