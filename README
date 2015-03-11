@@ -5,73 +5,58 @@ http://www.altlinux.org/Etersoft-build-utils_howto
 
 See QuickHelp.txt also.
 
-This package is tested with follow Linux distributions:
- - ALT Linux 4.0/4.1/5.0/Sisyphus
- - ASP Linux 11/12/14
- - Fedora 9/10/11
- - OpenSuSe 10/11
- - Mandriva 2008/2009
- - Debian 3.1 (Sarge) / 4.0 / 5.0
- - Ubuntu 6.06/7.04/7.10/8.04/8.10/9.04
-
-Replacement rules (for rpmbph):
-alt-package-name|foreign-package-name
-
-pkgrepl.rpm - base rules, use always
-pkgrepl.rpm.x86_64 - base rules, use firstly at x86_64
-pkgrepl.pclinux - rules only for PC Linux
-pkgrepl.pclinux.2007 - rules only for PC Linux 2007
-pkgrepl.pclinux.2007.x86_64 - rules only for PC Linux 2007, use firstly at x86_64
-
 Examples:
 
-rpmbb [-c] [-i] [-p] name.spec - build package
-	-r do build req
+rpmbb [-c] [-i] [-p] [name.spec] - build package
+	-r - update build req
 
-rpmbsh [-r] [-m] [-s] [-u/-U] [-i] name.spec - build package in hasher [and (-s) sign its src.rpm]
+rpmbsh [-r] [-m] [-s] [-u/-U] [-i] [name.spec] - build package in hasher [and (-s) sign its src.rpm]
 
-rpmbs [-s] [-r] [-u/-U] name.spec - make src.rpm [and (-s) sign package]
-	-d delete uploaded package from incoming
+rpmbs [-s] [-r] [-u/-U] [name.spec] - make src.rpm [and (-s) sign package]
 
-rpmbph [-M30] [-r] [-u/-U] name.spec - backport spec and build package for previous/foreign distro
+rpmbph [-b p7] [-r] [-u/-U] [name.spec] - backport spec and build package for previous/foreign distro
 
-rpmgs name.spec - download main source file for spec (works with any types)
+rpmgs [name.spec] - download main source file for spec (works with any tarball types)
 	-f force
 
 rpmgp -g name  - clone git with latest package version
 	-c name | name.spec | package*rpm - check if the package is published in Sisyphus
 	-b name.spec - install need packages for build (via apt-get)
-	-n download only
-	-a check in all known rpm based system
+	-a - check in all known rpm based system
 
 rpmurl [-c -f] name.spec - open Url from spec in browser
 
 rpmbugs [-qf ] name.spec | name - open buglist for package in browser
-	-t console output
-	-n create new bug
+	-t - console output
 
 rpmcs name.spec - cleanup spec (foreign specs adoption helper)
 
-loginhsh [-M30] [-t -i] - log in to shell in hasher
+loginhsh [-b p7] [-t -i] - log in to shell in hasher
 
-myhsh [-u -i] package.src.rpm - rebuild package(s) in hasher
-
-rpmrb spec new_version - get source for new version, rebuild it and upload
-rpmrb spec .2 change only minor version
-rpmrb spec 2.6 change only major version
+rpmrb [spec] new_version - get source for new version, rebuild it and upload
+	rpmrb [spec] .2 change only minor version
+	rpmrb [spec] 2.6 change only major version
 
 Common options:
--r - remote build
--m - send result of remote build by e-mail
 -s - sign package and prepare to publish
 -u/-U - upload signed package to Incoming/Backports(Updates)
 -i - install after build
 
+
+Replacement rules (for rpmbph):
+alt-package-name|foreign-package-name
+
+pkgrepl.rpm - base rules, use always
+pkgrepl.rpm.x86_64 - base rules, use firstly for x86_64
+pkgrepl.pclinux - rules only for PC Linux
+pkgrepl.pclinux.2007 - rules only for PC Linux 2007
+pkgrepl.pclinux.2007.x86_64 - rules only for PC Linux 2007, use firstly for x86_64
+
 NOTE:
 you have to prepare correct ~/.rpmmacros file, GPG signature in ~/.gnupg,
 SSH private key in ~/.ssh/id_dsa,
-hostname 'devel' in ~/.ssh/config as alias for cvs.altlinux.ru (typical for joined at ALT Linux)
+alias 'git.alt' in ~/.ssh/config for altlinux account (typical for joined at ALT Linux)
 
 Please send any questions at lav@etersoft.ru
 
-Vitaly Lipatov, 20 Jul 2009
+Vitaly Lipatov, 11 March, 2015
