@@ -26,6 +26,8 @@ libicu50|libicutu49 libicule49 libiculx49
 
 #libgphoto2-devel|libgphoto-devel
 libgphoto2|libgphoto6
+libgphoto2-6|libgphoto6
+libgphoto2_port-12|libgphoto6
 
 zlib|libz1
 zlib-devel|libz-devel

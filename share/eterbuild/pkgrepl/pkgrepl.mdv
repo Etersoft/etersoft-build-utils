@@ -155,7 +155,8 @@ zlib|zlib1
 zlib-devel|zlib1-devel
 
 libgphoto2-devel|libgphoto-devel
-libgphoto2|libgphoto
+libgphoto2-6|libgphoto
+libgphoto2_port-12|libgphoto
 libtool|libtool
 
 xkeyboard-config|x11-data-xkbdata

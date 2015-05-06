@@ -71,6 +71,8 @@ libICE|lib64ice6
 
 libgphoto2-devel|lib64gphoto-devel
 libgphoto2|lib64gphoto2
+libgphoto2-6|lib64gphoto2
+libgphoto2_port-12|lib64gphoto2
 
 libSM-devel|lib64sm-devel
 libSM|lib64sm6

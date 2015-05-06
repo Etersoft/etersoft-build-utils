@@ -2,7 +2,8 @@
 libe2fs|e2fslibs
 libe2fs-devel|e2fslibs-dev
 libgphoto2-devel|libgphoto2-2-dev
-libgphoto2|libgphoto2-2
+libgphoto2-6|libgphoto2-2
+libgphoto2_port-12|libgphoto2-2
 liblcms-devel|liblcms1-dev
 liblcms|liblcms1
 libldap-devel|libldap2-dev
