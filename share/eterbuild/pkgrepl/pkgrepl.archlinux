@@ -42,6 +42,7 @@ libglu|glu
 libGL-devel|mesa-libgl
 libGL|mesa-libgl
 liblcms|lcms
+liblcms2|lcms2
 libgnutls-devel|gnutls
 libgnutls26|gnutls
 libssl|openssl

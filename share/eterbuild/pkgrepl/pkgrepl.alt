@@ -13,3 +13,6 @@ libpng15|libpng12
 
 cifs-utils|samba-client
 apt-repo|
+
+liblcms2|liblcms
+liblcms2-devel|liblcms-devel

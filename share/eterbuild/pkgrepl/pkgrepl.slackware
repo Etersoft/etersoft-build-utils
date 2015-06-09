@@ -43,6 +43,7 @@ libgsm|
 #libjpeg-devel|libjpeg
 libjpeg|libjpeg
 liblcms|lcms
+liblcms2|lcms2
 libldap|openldap-client
 libmpg123|mpg123
 libncursesw|

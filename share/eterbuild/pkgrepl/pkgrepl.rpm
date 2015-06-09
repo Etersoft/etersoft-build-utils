@@ -65,6 +65,8 @@ libldap-devel|openldap-devel
 libldap|openldap
 liblcms-devel|lcms-devel
 liblcms|lcms
+liblcms2-devel|lcms2-devel
+liblcms2|lcms2
 #libgphoto2-devel|gphoto2-devel
 #libgphoto2-6|gphoto2
 #libgphoto2_port-12|gphoto2

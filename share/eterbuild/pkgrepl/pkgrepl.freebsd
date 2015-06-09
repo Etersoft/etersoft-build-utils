@@ -17,6 +17,7 @@ libgnutls|gnutls3
 libgsm|gsm
 libjpeg|jpeg
 liblcms|lcms2
+liblcms2|lcms2
 libldap|
 libpam|
 libmpg123|mpg123

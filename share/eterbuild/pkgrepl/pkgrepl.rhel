@@ -34,3 +34,8 @@ lsb-release|redhat-lsb
 phonon-devel|qt4-devel
 
 vixie-cron|vixie-cron
+
+liblcms-devel|lcms-devel
+liblcms|lcms
+liblcms2-devel|
+liblcms2|
