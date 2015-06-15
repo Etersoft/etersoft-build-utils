@@ -35,7 +35,7 @@ phelp()
 	echog "Options:"
 if is_alt ; then
 	echog "   -i  skip build stage, but do install files and package it"
-	echog "   -p  only packaging installed files into package"
+	echog "   -p  packaging only stage"
 fi
 	echog "   -r  find build requires (run buildrequires)"
 	echog "   -R  find build requires during install (run buildrequires with -bi)"

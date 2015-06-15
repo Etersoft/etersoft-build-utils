@@ -192,7 +192,7 @@ phelp()
 	echog "   -m   migrate to gear from spec/srpm"
 	echo
 	echog "Ext. options:"
-	echog "   -i   install packages needed for build (use sudo apt-get) (need spec not package name)"
+	echog "   -i   install packages needed for build (use epm)"
 	echog "   -l   list packages needed for build (in local pkg system notation) (experimental)"
 	echog "   -r   refresh package list (download it again)"
 	echog "   -s   list all known remote repositories"
@@ -375,7 +375,7 @@ fi
 
 # lists packages for build
 if [ -n "$LISTREQS" ] ; then
-	print_target_buildreq $PKGNAME
+	print_target_buildreq "$PKGNAME"
 	exit $?
 fi
 
