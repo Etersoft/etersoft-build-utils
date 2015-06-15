@@ -381,14 +381,14 @@ parse_cmd_pre_spec()
 	[ "$1" = "--help" ] && mygetopts -h
 
 	# hack for check spec or src.rpm presence in command line: skip spec detecting
-	if rhas "$@" "\.(spec|src.rpm)" ; then
+	if rhas "$*" "\.(spec|src\.rpm)" ; then
 		parse_cmd_pre "$@"
         else
 		local SPEC=$(get_gear_spec)
 		[ -f "$SPEC" ] && echo "Using autodetected spec $SPEC..."
 		# it is possible in some command we need only possibility for spec
 		# || fatal "Run in dir with spec or in gear repo"
-		parse_cmd_pre $SPEC "$@"
+		parse_cmd_pre "$SPEC" "$@"
 	fi
 }
 
