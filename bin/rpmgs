@@ -70,6 +70,10 @@ get_archive()
 		rm -f "$WEXT.$1"
 		return 1
 	fi
+	if [ "$WEXT.$1" = "$(basename "$GETSOURCE")" ] ; then
+		# Skip repacking if the target has the same name
+		return 0
+	fi
 	erc repack "$WEXT.$1" "$(basename "$GETSOURCE")"
 }
 
