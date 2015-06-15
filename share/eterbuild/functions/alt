@@ -98,10 +98,10 @@ pkg_release_check()
 	local STRELDEF=alt
 	# can be set from korinf config
 	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
-
+# FIXME! broken for release more than 9
 	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then
 		for i in $@ ; do
-			if [ -z "${i/*$STREL[0-9].M[0-9][0-9]*/}" ] && [ -z "${i/*$STRELDEF[0-9].M[0-9][0-9]*/}" ] ; then
+			if rhas "$i" "($STREL|$STRELDEF)[0-9]+\.M[0-9][0-9]\.[0-9]+" ; then
 				# Значит не тот релиз
 				fatal "Incorrect release in $i package: was prepared for Sisyphus"
 			fi
@@ -109,7 +109,7 @@ pkg_release_check()
 		return
 	fi
 	for i in $@ ; do
-		if [ -n "${i/*$STREL[0-9].$MENV*/}" ] && [ -n "${i/*$STRELDEF[0-9].$MENV*/}" ] ; then
+		if ! rhas "$i" "($STREL|$STRELDEF)[0-9]+\.$MENV\.[0-9]+" ; then
 			# Значит не тот релиз
 			fatal "Incorrect release in $i package: was prepared for $MENV (wait for $STREL[0-9].$MENV)"
 		fi
