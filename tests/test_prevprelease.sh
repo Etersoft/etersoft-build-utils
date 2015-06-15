@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod spec
+load_mod spec strings
 
 SPECNAME=get_ver.spec
 
@@ -37,6 +37,10 @@ check_prev()
 	test -n "$BASERELEASE" || fatal "baserelease missed"
 	local RES="$(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE"
 	check "$2" "$1" "$RES"
+
+	#[ -z "${RES/*alt[0-9]*.M40.[0-9]*/}" ] || echo "breaks rule, see the code"
+	rhas "$RES" "alt[0-9]+\.M40\.[0-9]+" || echo "breaks rule 1, see the code"
+	rhas "$1" "(alt|eter)[0-9]+\.M40\.[0-9]+" || echo "breaks rule 2, see the code"
 }
 
 MDISTR=M40
@@ -44,5 +48,7 @@ check_prev alt2.M40.3 alt3
 check_prev alt2.M40.3.r201.2 alt3.r201.2
 check_prev alt0.M40.1 alt1
 check_prev alt0.M40.0 alt0
+check_prev alt50.M40.51 alt51
+check_prev eter50.M40.51 eter51
 
 #rm -f $SPECNAME
