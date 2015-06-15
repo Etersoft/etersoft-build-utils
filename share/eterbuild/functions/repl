@@ -56,6 +56,7 @@ add_32bit_requires()
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
 # sets ALTPKGNAME, TARGETPKGNAME variable
 # used for hack: PKGFORMAT, DISTRNAME, BUILDARCH
+# BUILDNAME used in add_32bit_requires for hack
 tolocal_anyrepl()
 {
 	assert_var PKGFORMAT DISTRNAME BUILDNAME
@@ -211,6 +212,6 @@ convert_pkgreqs_to_target()
 print_target_buildreq()
 {
 	local listdep=$(print_buildreq ${1})
-	echo $(convert_pkgreqs_to_target $listdep)
+	echo $(BUILDNAME="$1" convert_pkgreqs_to_target $listdep)
 }
 
