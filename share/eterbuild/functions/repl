@@ -18,31 +18,31 @@ add_32bit_requires()
 	[ -z "$1" ] && return
 
 	# Only for build wine on x86_64
-	if [ "$BUILDARCH" = "x86_64" ] && echo $BUILDNAME | grep -q wine ; then
+	if [ "$BUILDARCH" = "x86_64" ] && rhas "$BUILDNAME" wine ; then
 		if [ "$DISTRNAME" = "Fedora" ] || [ "$DISTRNAME" = "Scientific" ] || [ "$DISTRNAME" = "CentOS" -a "$DISTRVERSION" != 5 ]; then
 			# http://www.rpm.org/wiki/PackagerDocs/ArchDependencies
 			# add (x86-32) to all -devel packages
 			for i in $* ; do
-				echo $i | grep -q -- "-devel$" && echo "$i $i(x86-32)" && continue
+				rhas $i "-devel$" && echo "$i $i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7.0 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
-				echo $i | grep -q -- "-dev$" && echo "$i $i:i386" && continue
+				rhas $i "-dev$" && echo "$i $i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "ArchLinux" ] ; then
 			# i386 on ArchLinux: add lib32- to all lib packages
 			for i in $* ; do
-				echo $i | grep -q -- "^lib" && echo "lib32-$i" && continue
+				rhas $i "^lib" && echo "lib32-$i" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "SUSE" ] ; then
 			# i386 on SUSE: # add -32bit to all lib packages
 			for i in $* ; do
-				echo $i | grep -q -- "^liberation" && echo "$i" && continue
-				echo $i | grep -q -- "^lib" && echo "$i-32bit" && continue
+				rhas $i "^liberation" && echo "$i" && continue
+				rhas $i "^lib" && echo "$i-32bit" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		else

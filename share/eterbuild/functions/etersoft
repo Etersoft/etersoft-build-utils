@@ -21,7 +21,7 @@ get_etersoft_srpm_path()
 	SOURCEFTP=$(dirname "$SOURCEFTP")
 
 	# FIXME: pass foreign path, needs to handle proto:// separately from ftp.eter:/path
-	if ! echo $SOURCEFTP | grep -q $COMPANYFTP && ! echo $SOURCEFTP | grep -q ":" && ! echo $SOURCEFTP | grep -q "^/"; then
+	if ! rhas "$SOURCEFTP" "$COMPANYFTP" && ! rhas "$SOURCEFTP" ":" && ! rhas "$SOURCEFTP" "^/"; then
 		# if source if not known target, or not ssh dest, or local local path,
 		# just return empty
 		# TODO: we can use table for URL translating
@@ -29,7 +29,7 @@ get_etersoft_srpm_path()
 	fi
 
 	# remove tarball if exists at the end of line (our struct)
-	echo $SOURCEFTP | grep -q "tarball\$" && SOURCEFTP=$(dirname "$SOURCEFTP")
+	rhas $SOURCEFTP "tarball\$" && SOURCEFTP=$(dirname "$SOURCEFTP")
 	# translate ftp to local path
 	SOURCE=$(echo "$SOURCEFTP" | sed -e "s|.*://.*$COMPANYFTP|$TARGETFTPBASE|g")
 
@@ -43,7 +43,7 @@ get_etersoft_srpm_path()
 		ALPHA=unstable
 		BSOURCE=$(dirname $SOURCE)
 		BNSOURCE=$(basename $BSOURCE)
-		if [ "$BNSOURCE" = "last" ] || echo "$BNSOURCE" | grep -q "^[0-9.]\+" ; then
+		if [ "$BNSOURCE" = "last" ] || rhas "$BNSOURCE" "^[0-9.]+" ; then
 			SOURCE=$(dirname $BSOURCE)/$ALPHA/sources
 		fi
 	fi
@@ -55,9 +55,9 @@ set_last_link()
 {
 	local LASTNAME="$1/../last"
 	# do not change last if testing publish
-	echo $1 | grep -q /testing/sources && return
+	rhas "$1" /testing/sources && return
 	# do not change last if unstable publish
-	echo $1 | grep -q /unstable/sources && return
+	rhas "$1" /unstable/sources && return
 	# do not create last link to last
 	[ "$2" = "last" ] && return
 	rm -f "$LASTNAME" && ln -s "$2" "$LASTNAME"

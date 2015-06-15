@@ -381,7 +381,7 @@ parse_cmd_pre_spec()
 	[ "$1" = "--help" ] && mygetopts -h
 
 	# hack for check spec or src.rpm presence in command line: skip spec detecting
-	if echo $@ | grep -q \.spec || echo $@ | grep -q \.src.rpm ; then
+	if rhas "$@" "\.(spec|src.rpm)" ; then
 		parse_cmd_pre "$@"
         else
 		local SPEC=$(get_gear_spec)
@@ -423,7 +423,7 @@ cd_to_realcwd()
 # check if path is server:/path
 is_ssh_target()
 {
-	echo "$1" | grep -q ":"
+	rhas "$1" ":"
 }
 
 enable_ccache()

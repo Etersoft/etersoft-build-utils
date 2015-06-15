@@ -55,7 +55,7 @@ get_remote_git_list()
 # Check if $1 like git.alt or git.eter, git.something
 is_girar_name()
 {
-	echo "$1" | grep -q "^git\."
+	rhas "$1" "^git\."
 }
 
 is_one_girar_name()

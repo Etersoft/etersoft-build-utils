@@ -76,7 +76,7 @@ fi
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u i c l f a A)
 
-if echo "$LISTNAMES" | grep -q spec ; then
+if rhas "$LISTNAMES" spec ; then
 	set_specdir $LISTNAMES
 fi
 

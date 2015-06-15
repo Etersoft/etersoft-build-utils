@@ -60,7 +60,7 @@ print_tmp_sourceslist()
 	local SLIST
 	test -r "$1" || fatal "$1 is missed"
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
-	if echo $1 | grep -q "^/etc" ; then
+	if rhas "$1" "^/etc" ; then
 		SLIST=`cat "$1" | \
 			grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
 	else

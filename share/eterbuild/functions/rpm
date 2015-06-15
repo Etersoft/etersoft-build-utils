@@ -136,7 +136,7 @@ get_pkgname_from_filename()
 	#fi
 
 	# for DEB
-	if echo $FN | grep -q "deb$" ; then
+	if rhas "$FN" "deb$" ; then
 		echo ${FN/_[0-9]*/}
 		return
 	fi

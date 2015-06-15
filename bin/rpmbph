@@ -80,7 +80,7 @@ else
 	# see install in Korinf, need concatenate
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
 
-	if [ "$BUILDARCH" = "x86_64" ] && echo $BUILDNAME | grep -q wine ; then
+	if [ "$BUILDARCH" = "x86_64" ] && rhas "$BUILDNAME" wine ; then
 		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 ] && BUILDREQ="$BUILDREQ glibc-devel.i686"
@@ -129,7 +129,7 @@ if [ "$PKGVENDOR" = "freebsd" ] ; then
 fi
 
 # HACK need only for wine on x86_64
-if [ "$BUILDARCH" = "x86_64" ] && echo $SPECNAME | grep -q wine ; then
+if [ "$BUILDARCH" = "x86_64" ] && rhas "$SPECNAME" wine ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %remove_optflags -m64"
@@ -482,7 +482,7 @@ export IGNOREGEAR=1
 for i in $LISTBUILT ; do
 	uni_rpminstall $i
 	# remove primary src.rpm only if src.rpm was not primary
-	echo $LISTNAMES | grep -q $i || rm -f $i
+	rhas "$LISTNAMES" "$i" || rm -f $i
 
 	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"

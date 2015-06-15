@@ -19,7 +19,7 @@ load_systems_list()
 	local line
 	while read line ; do
 		# skip comments
-		echo $line | grep -q "^#" && continue
+		rhas "$line" "^#" && continue
 		SYSNAME[$IDX]=${line/ *.*/}
 		#FTP[$IDX]=${line/.* \+/}
 		SYSURL[$IDX]=$(echo $line | sed -e "s|.* \+||g")
@@ -27,7 +27,7 @@ load_systems_list()
 	done < $ETERBUILDETC/repos/srpms
 
 	while read name url ; do
-		echo $name | grep -q "^#" && continue
+		rhas "$name" "^#" && continue
 		SYSNAME[$IDX]="git$name"
 		SYSURL[$IDX]=$url
 		IDX=$(($IDX+1))
@@ -79,7 +79,7 @@ get_list()
 	mkdir -p $OURTMPDIR/etersoft-build-utils/
 	LIST=$OURTMPDIR/etersoft-build-utils/rpmgpall-$SYS
 	if [ ! -f "$LIST" ] || [ "$FORCE" = "force" ] ; then
-		if echo $SYS | grep -q ^git ; then
+		if rhas "$SYS" "^git" ; then
 			get_git_list $SYS $URL $LIST
 			return
 		fi
@@ -89,7 +89,7 @@ get_list()
 		$CURL -l $URL/ | tee $LIST.tmp | html_filter >$LIST
 		# check if there is letter subdirs (Fedora)
 		for i in $(cat $LIST.tmp) ; do
-		    echo $i | grep -q rpm && break
+		    rhas "$i" rpm && break
 		    [ -n "$(echo $i | cut -c2-)" ] && continue
 		    echo "Try get $URL/$i"
 		    $CURL -l $URL/$i/ | html_filter | sed -e "s|^|$i/|g" >>$LIST
@@ -388,7 +388,7 @@ if [ -n "$CHECKONLINE" ] ; then
 		SRCRPM=$NAMESRPMIN
 		PKGNAME=$(get_pkgname_from_filename $SRCRPM)
 	else
-		if echo $PKGNAME | grep -q "\.rpm" ; then
+		if rhas "$PKGNAME" "\.rpm" ; then
 			# possible it is rpm package name
 			SRCRPM=$PKGNAME
 			PKGNAME=$(get_pkgname_from_filename $SRCRPM)
