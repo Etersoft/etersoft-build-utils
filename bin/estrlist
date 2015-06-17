@@ -64,8 +64,17 @@ has()
 {
 	local wd="$1"
 	shift
-	echo "$@" | grep -q "$wd"
+	echo "$*" | grep -q -- "$wd"
 }
+
+# Note: used egrep! write '[0-9]+(first|two)', not '[0-9]\+...'
+match()
+{
+	local wd="$1"
+	shift
+	echo "$*" | egrep -q -- "$wd"
+}
+
 
 # remove_from_list "1." "11 12 21 22" -> "21 22"
 reg_remove()
@@ -162,6 +171,8 @@ help()
         echo "exclude <list1> [list2]           - print list2 words contains also in list1"
         echo "reg_exclude <PATTERN> [word list] - print only words not matched with PATTERN"
         echo "reg_wordexclude <PATTERN> [word list] - print only words not matched with PATTERN"
+        echo "has <PATTERN> string              - check the string for a match to the regular expression given in PATTERN (grep notation)"
+        echo "match <PATTERN> string            - check the string for a match to the regular expression given in PATTERN (egrep notation)"
         echo "union [word list]                 - sort and remove duplicates"
         echo "uniq [word list]                  - alias for union"
         echo "list [word list]                  - just list words line by line"
@@ -177,6 +188,8 @@ help()
         example count "1 2 3 4 10"
         example_res has ex "exactly"
         example_res has exo "exactly"
+        example_res match "M[0-9]+" "M250"
+        example_res match "M[0-9]+" "MI"
 }
 
 COMMAND="$1"
