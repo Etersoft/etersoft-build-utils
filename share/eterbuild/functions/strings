@@ -75,6 +75,11 @@ initial_letter()
 
 is_dirpath()
 {
-    [ "$1" = "." ] && return $?
+    [ "$1" = "." ] && return
     rhas "$1" "/"
+}
+
+is_absolute_path()
+{
+    rhas "$1" "^/"
 }
