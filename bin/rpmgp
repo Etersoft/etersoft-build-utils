@@ -345,7 +345,7 @@ if [ -n "$CLONEGIT" ] ; then
 	fi
 
 	echo "See other repos at $GIRARHOST:"
-	list_git_package $PKGNAME
+	giter list packages $PKGNAME
 	exit $?
 fi
 
@@ -407,7 +407,7 @@ if [ -n "$CHECKONLINE" ] ; then
 		fi
 	fi
 	echo "Get repositories at $GIRARHOST:"
-	list_git_package $PKGNAME
+	giter list packages $PKGNAME
 
 	set_binaryrepo $MENV
 

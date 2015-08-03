@@ -95,21 +95,6 @@ set_girar_host()
 	return 1
 }
 
-_list_git_package()
-{
-	while read path date other; do
-		printf "%60s  " $GIRARHOST:$path
-		[ -n "$date" ] || { echo "[Date is missed]" ; continue ; }
-		date -d@$date
-	done
-}
-
-# TODO: make world better, please
-list_git_package()
-{
-	ssh $GIRARHOST find-package $1 | _list_git_package
-}
-
 git_commit_ignore_nothing()
 {
         git commit "$@" && return
