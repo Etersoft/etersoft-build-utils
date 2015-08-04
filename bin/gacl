@@ -12,7 +12,7 @@ mygetopts()
 {
 
 	if [ "$1" = "-h" ] ; then
-		echog "gacl - acl control for gear repo in $GIRARHOST"
+		echog "gacl - acl control for gear repo in $GEARHOST"
 		echo
 		echog "Usage: gacl [GIRAR] [-b REPONAME] [package] command [params]"
 		echo
@@ -78,13 +78,13 @@ set_binaryrepo $MENV
 case "$COMMAND" in
 	"add"|"del")
 		[ -n "$PARAM" ] || fatal "Param for command is missed"
-		echo "$GIRARHOST:$BINARYREPO ACL for $PROJECTNAME: $COMMAND $PARAM..."
-		docmd ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $PARAM
+		echo "$GEARHOST:$BINARYREPO ACL for $PROJECTNAME: $COMMAND $PARAM..."
+		docmd ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $PARAM
 		;;
 	"show")
-		showcmd ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
-		echo -n "$GIRARHOST:$BINARYREPO ACL for "
-		ssh $GIRARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
+		showcmd ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
+		echo -n "$GEARHOST:$BINARYREPO ACL for "
+		ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND
 		echo
 		;;
 	*)

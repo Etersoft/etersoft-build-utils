@@ -240,15 +240,15 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	# TODO: add check for repo (as in rpmgp) and run ginit if needed
 	docmd gpush $GIRARHOST $FORCE || fatal "gpush failed. Possibly you need to run '\$ ginit $GIRARHOST' for create remote repo."
 	echo
-	echo "Run build $PROJECTNAME at $GIRARHOST"
+	echo "Run build $PROJECTNAME at $GEARHOST"
 	if [ -n "$PREPARETASK" ] ; then
-		docmd ssh $GIRARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		docmd ssh $GEARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	else
-		docmd ssh $GIRARHOST build $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 	fi
 	# FIXME: incorporate
 	cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
-	echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GIRARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
+	echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GEARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 	rm -f $RPMDIR/uploaded.log.tmp
 	exit
 fi
@@ -334,10 +334,10 @@ for i in $LISTBUILT ; do
 done
 if [ -n "$PREPARETASK" ] ; then
 	echo "Add $TASKLIST to task $TASKNUMBER"
-	docmd ssh $GIRARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
+	docmd ssh $GEARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 else
 	echo "Create task for $TASKLIST"
-	docmd ssh $GIRARHOST build $(usearg -b $BINARYREPO sisyphus) $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
+	docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 fi
 
 # FIXME: parse and incorporate

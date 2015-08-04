@@ -86,7 +86,7 @@ for i in $SPECLIST ; do
 	remove_if_empty $i.GIT.PUBLISHED
 
 	if [ -r "$i.GIT.PUBLISHED" ] ; then
-		ssh $GIRARHOST acl sisyphus $PKGNAME show 2>> $i.GIT.PUBLISHED
+		ssh $GEARHOST acl sisyphus $PKGNAME show 2>> $i.GIT.PUBLISHED
 	fi
 	
 	#grep " $USER\$" $i.acl

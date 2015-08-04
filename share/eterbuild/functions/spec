@@ -61,9 +61,9 @@ get_numrelease()
 
 get_default_txtrelease()
 {
-	# assert GIRARHOST
+	# assert GITHOST
 	# TODO: check for git.alt in ~/.ssh/config?
-	echo ${GIRARHOST/git./}
+	echo ${GITHOST/git./}
 }
 
 # get alt from alt11

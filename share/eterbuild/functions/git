@@ -70,11 +70,24 @@ is_one_girar_name()
 	[ -n "$RES" ]
 }
 
+# TODO: check the same code in giter
+
+set_gear_host()
+{
+	assert_var GIRARHOST
+	GITHOST="$GIRARHOST"
+	GEARHOST="$GITHOST"
+	[ "$GEARHOST" = "git.alt" ] && GEARHOST="gear.alt"
+	return 0
+}
+
+
 # Try autodetect GIRARHOST. Return true, if get it from arg (need for shift args)
 set_girar_host()
 {
 	if is_girar_name "$1" ; then
 		GIRARHOST="$1"
+		set_gear_host
 		return 0
 	fi
 
@@ -83,6 +96,7 @@ set_girar_host()
 	if is_one_girar_name "$REMOTELIST" ; then
 		# use one target if it one
 		GIRARHOST="$REMOTELIST"
+		set_gear_host
 		return 1
 	fi
 
@@ -92,6 +106,7 @@ set_girar_host()
 		#[ -n "$GIRARHOST" ] || fatal "Can't get default girar alias (like git.alt) from ~/.ssh/config"
 	fi
 
+	set_gear_host
 	return 1
 }
 
