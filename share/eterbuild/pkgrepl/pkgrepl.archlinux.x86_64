@@ -1,2 +1,2 @@
-binutils|binutils-multilib
-gcc|gcc-multilib
+#binutils|binutils-multilib
+#gcc-c++|gcc-multilib
