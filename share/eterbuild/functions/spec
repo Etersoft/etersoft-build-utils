@@ -278,7 +278,7 @@ separate_changelog()
 	cat $SPEC | awk 'BEGIN{desk=0}{if (desk==1) {print}; if(/^%changelog/&&desk==0){desk++}}' > "$3"
 }
 
-# TODO: do standalone command
+# TODO: do standalone command, see ~/Projects/git-eter/fixbashisms
 # for rpm + (d)ash
 # http://mywiki.wooledge.org/Bashism
 remove_bashism()
