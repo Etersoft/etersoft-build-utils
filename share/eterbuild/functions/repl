@@ -127,7 +127,7 @@ clean_pkgreq()
 		#echo "$i" | egrep "gcc\$|cpp\$|gcc-c++\$" >/dev/null && continue
 		echo "$i" | grep "[()<=>]" >/dev/null && continue
 		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
-		echo -n "$i "
+		echo -n "$i " | sed -e "s|,||g"
 	done | filter_strip_spaces
 }
 
