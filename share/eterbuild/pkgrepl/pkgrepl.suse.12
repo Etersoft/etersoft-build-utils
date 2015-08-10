@@ -34,3 +34,8 @@ gstreamer-devel|gstreamer-0_10-devel
 libgstreamer|libgstreamer-0_10-0
 
 libxslt|libxslt1
+
+liblcms-devel|
+liblcms|
+liblcms2-devel|liblcms2-devel
+liblcms2|liblcms2

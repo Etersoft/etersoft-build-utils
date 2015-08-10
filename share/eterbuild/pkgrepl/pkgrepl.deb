@@ -7,6 +7,8 @@ libgphoto2-6|libgphoto2-2
 libgphoto2_port-12|libgphoto2-2
 liblcms-devel|liblcms1-dev
 liblcms|liblcms1
+liblcms2|liblcms2-2
+liblcms2-devel|liblcms2-dev
 libldap-devel|libldap2-dev
 libldap|libldap-2.4-2
 glibc-devel|libc6-dev

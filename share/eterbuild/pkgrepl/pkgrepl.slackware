@@ -68,7 +68,11 @@ libpng15|libpng
 libaudiofile|audiofile
 docbook-utils|
 groff-base|groff
-libgphoto2-devel|libgphoto2 libexif
+libgphoto2-devel|libgphoto2
+libgphoto2|libgphoto2 libexif
+libgphoto2-6|libgphoto2
+libgphoto2_port-12|libgphoto2
+
 dbus-tools-gui|dbus
 libdbus-devel|dbus
 libdbus|dbus

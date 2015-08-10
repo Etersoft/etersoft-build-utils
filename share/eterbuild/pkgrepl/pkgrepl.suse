@@ -22,6 +22,8 @@ jackit-devel|jack-devel
 jackit|jack
 liblcms-devel|liblcms-devel
 liblcms|liblcms1
+liblcms2-devel|liblcms2-devel
+liblcms2|liblcms2
 libgphoto2-devel|libgphoto2-devel
 libgphoto2|libgphoto2
 libgphoto2-6|libgphoto2
