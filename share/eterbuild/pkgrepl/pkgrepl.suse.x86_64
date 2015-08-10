@@ -2,3 +2,20 @@
 libwine-etersoft-devel|
 libwine-devel|
 libwine-vanilla-devel|
+
+# HACK: drop requires for packages with -devel-32bit is missed
+# See http://bugs.etersoft.ru/show_bug.cgi?id=10682
+libudev-devel|
+libudev0|
+libudev1|
+
+libv4l-devel|
+libv4l|
+
+jackit-devel|
+jackit|
+
+libgphoto2-devel|
+libgphoto2|libgphoto2-6
+libgphoto2-6|libgphoto2-6
+libgphoto2_port-12|libgphoto2-6

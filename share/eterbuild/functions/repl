@@ -42,7 +42,7 @@ add_32bit_requires()
 			# i386 on SUSE: # add -32bit to all lib packages
 			for i in $* ; do
 				rhas $i "^liberation" && echo "$i" && continue
-				rhas $i "-devel$" && echo "$i" && continue
+				#rhas $i "-devel$" && echo "$i" && continue
 				rhas $i "^lib" && echo "$i-32bit" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
