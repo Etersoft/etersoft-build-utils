@@ -72,11 +72,11 @@ tolocal_anyrepl()
 	for i in $@ ; do
 		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "^ *$GREP *|" | sed -e "$WARULES" | head -n1`
 		# For broken rule
-		echo $REPLRULE | grep "|" >/dev/null || REPLRULE=""
+		rhas "$REPLRULE" "|" || REPLRULE=""
 		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
 		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
 		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
-		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires $TARGETPKGNAME) && return 0
+		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$TARGETPKGNAME") && return 0
 	done
 
 	# Part of local hack
@@ -105,7 +105,7 @@ tolocal_anyrepl()
 
 	FIXNEWRESULT=$(add_32bit_requires $NEWRESULT)
 
-	ALTPKGNAME=$GREP
+	ALTPKGNAME="$GREP"
 	TARGETPKGNAME="$FIXNEWRESULT"
 	# return if no chance to replace
 	[ "$FIXNEWRESULT" = "$GREP" ] && return 1

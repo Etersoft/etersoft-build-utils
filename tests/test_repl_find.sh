@@ -99,7 +99,7 @@ check_repl libX11-devel libX11
 ############################# Fedora ##########################
 DISTRNAME=Fedora
 PKGVENDOR=fedora
-DISTRVERSION=17
+DISTRVERSION=21
 BUILDARCH=x86_64
 PKGFORMAT=rpm
 
@@ -118,5 +118,22 @@ check_repl fontconfig-devel "fontconfig-devel"
 check_repl unknown-devel "unknown-devel"
 
 check_repl rpm-build-compat rpm-build-altlinux-compat
-check_repl libusb-devel libusb1-devel
+check_repl libusb-devel libusbx-devel
 
+
+
+############################# SUSE ##########################
+BUILDNAME=wine
+
+DISTRNAME=SUSE
+PKGVENDOR=suse
+DISTRVERSION=12.3
+BUILDARCH=x86_64
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libgphoto2-devel "libgphoto2-devel"
+check_repl libgphoto2-6 "libgphoto2-6-32bit"
