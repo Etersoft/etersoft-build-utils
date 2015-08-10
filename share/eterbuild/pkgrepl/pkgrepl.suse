@@ -22,7 +22,8 @@ jackit-devel|jack-devel
 jackit|jack
 liblcms-devel|liblcms-devel
 liblcms|liblcms1
-libgphoto2-devel|
+libgphoto2-devel|libgphoto2-devel
+libgphoto2|libgphoto2
 libgphoto2-6|libgphoto2
 libgphoto2_port-12|libgphoto2
 perl-devel|perl

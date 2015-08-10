@@ -2,16 +2,3 @@
 libwine-etersoft-devel|
 libwine-devel|
 libwine-vanilla-devel|
-
-# HACK: libudev-devel-32bit missed
-libudev-devel|
-# HACK: libv4l-devel-32bit missed
-libv4l-devel|
-libv4l|
-# HACK: libjack-devel-32bit missed
-jackit-devel|
-
-# due false replace lib* (fixed with hack in add32bit function)
-#fonts-ttf-core|liberation-fonts
-#fonts-ttf-liberation|liberation-fonts
-
