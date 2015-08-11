@@ -27,25 +27,25 @@ add_32bit_requires()
 			# http://www.rpm.org/wiki/PackagerDocs/ArchDependencies
 			# add (x86-32) to all -devel packages
 			for i in $* ; do
-				rhas $GREP "-devel$" && echo "$i $i(x86-32)" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" "(x86-32)$" && echo "$i $i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7.0 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
-				rhas $GREP "-devel$" && echo "$i $i:i386" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && echo "$i $i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "ArchLinux" ] ; then
 			# i386 on ArchLinux: add lib32- to all lib packages
 			for i in $* ; do
-				rhas $GREP "^lib" && echo "lib32-$i" && continue
+				rhas "$GREP" "^lib" && ! rhas "$i" "^lib32-" && echo "lib32-$i" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "SUSE" ] || [ "$DISTRNAME" = "SLED" ] || [ "$DISTRNAME" = "SLES" ]; then
 			# i386 on SUSE or SLED : # add -32bit to all lib packages
 			for i in $* ; do
-				rhas $GREP "^lib" && echo "$i-32bit" && continue
+				rhas "$GREP" "^lib" && ! rhas "$i" "-32bit$" && echo "$i-32bit" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		else
