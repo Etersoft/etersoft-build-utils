@@ -16,6 +16,10 @@ add_32bit_requires()
 	assert_var DISTRNAME BUILDARCH BUILDNAME DISTRVERSION
 
 	[ -z "$1" ] && return
+	[ -z "$2" ] && return
+
+	local GREP="$1"
+	shift
 
 	# Only for build wine on x86_64
 	if [ "$BUILDARCH" = "x86_64" ] && rhas "$BUILDNAME" wine ; then
@@ -23,27 +27,25 @@ add_32bit_requires()
 			# http://www.rpm.org/wiki/PackagerDocs/ArchDependencies
 			# add (x86-32) to all -devel packages
 			for i in $* ; do
-				rhas $i "-devel$" && echo "$i $i(x86-32)" && continue
+				rhas $GREP "-devel$" && echo "$i $i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7.0 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
-				rhas $i "-dev$" && echo "$i $i:i386" && continue
+				rhas $GREP "-devel$" && echo "$i $i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "ArchLinux" ] ; then
 			# i386 on ArchLinux: add lib32- to all lib packages
 			for i in $* ; do
-				rhas $i "^lib" && echo "lib32-$i" && continue
+				rhas $GREP "^lib" && echo "lib32-$i" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
-		elif [ "$DISTRNAME" = "SUSE" ] ; then
-			# i386 on SUSE: # add -32bit to all lib packages
+		elif [ "$DISTRNAME" = "SUSE" ] || [ "$DISTRNAME" = "SLED" ] || [ "$DISTRNAME" = "SLES" ]; then
+			# i386 on SUSE or SLED : # add -32bit to all lib packages
 			for i in $* ; do
-				rhas $i "^liberation" && echo "$i" && continue
-				#rhas $i "-devel$" && echo "$i" && continue
-				rhas $i "^lib" && echo "$i-32bit" && continue
+				rhas $GREP "^lib" && echo "$i-32bit" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		else
@@ -62,6 +64,7 @@ tolocal_anyrepl()
 {
 	assert_var PKGFORMAT DISTRNAME BUILDNAME
 	local i REPLRULE WARULES
+	local NEWRESULT
 	local GREP=$1
 	shift
 	# TODO: fix space removing
@@ -77,7 +80,7 @@ tolocal_anyrepl()
 		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
 		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
 		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
-		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$TARGETPKGNAME") && return 0
+		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$GREP" "$TARGETPKGNAME") && return 0
 	done
 
 	# Part of local hack
@@ -104,7 +107,7 @@ tolocal_anyrepl()
 		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
 	fi
 
-	FIXNEWRESULT=$(add_32bit_requires $NEWRESULT)
+	FIXNEWRESULT=$(add_32bit_requires "$GREP" $NEWRESULT)
 
 	ALTPKGNAME="$GREP"
 	TARGETPKGNAME="$FIXNEWRESULT"

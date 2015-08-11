@@ -137,3 +137,23 @@ print_pkgrepl_list
 
 check_repl libgphoto2-devel "libgphoto2-devel"
 check_repl libgphoto2-6 "libgphoto2-6-32bit"
+
+############################# SUSE ##########################
+BUILDNAME=wine
+
+DISTRNAME=SLED
+PKGVENDOR=sled
+DISTRVERSION=11
+BUILDARCH=x86_64
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libXi-devel "xorg-x11-devel-32bit"
+check_repl libX11-devel "xorg-x11-libX11-devel-32bit"
+check_repl libfreetype-devel "freetype2-devel-32bit"
+check_repl zlib-devel "zlib-devel-32bit"
+check_repl libXpm-devel "xorg-x11-libXpm-devel-32bit"
+check_repl fontconfig-devel "fontconfig-devel-32bit"
