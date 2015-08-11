@@ -56,6 +56,36 @@ add_32bit_requires()
 	fi
 }
 
+hack_distr_requires()
+{
+	GREP="$1"
+	# Part of local hack
+	local NEWRESULT="$GREP"
+
+	if [ "$PKGFORMAT" = "deb" ] ; then
+		NEWRESULT=`echo $GREP | filter_deb_pkgnames`
+	fi
+
+	# Add hack for replace lib with lib64 on Mandriva
+	if [ "$DISTRNAME" = "Mandriva" ] && [ $BUILDARCH = "x86_64" ] ; then
+		NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
+	fi
+
+	if [ "$DISTRNAME" = "ArchLinux" ] ; then
+		NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
+	fi
+
+	if [ "$DISTRNAME" = "FreeBSD" ]  ; then
+		NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g"`
+	fi
+
+	if [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "Gentoo" ] ; then
+		NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
+	fi
+
+	echo "$NEWRESULT"
+}
+
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
 # sets ALTPKGNAME, TARGETPKGNAME variable
 # used for hack: PKGFORMAT, DISTRNAME, BUILDARCH
@@ -64,7 +94,6 @@ tolocal_anyrepl()
 {
 	assert_var PKGFORMAT DISTRNAME BUILDNAME
 	local i REPLRULE WARULES
-	local NEWRESULT
 	local GREP=$1
 	shift
 	# TODO: fix space removing
@@ -83,34 +112,13 @@ tolocal_anyrepl()
 		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$GREP" "$TARGETPKGNAME") && return 0
 	done
 
-	# Part of local hack
-	NEWRESULT="$GREP"
-
-	if [ "$PKGFORMAT" = "deb" ] ; then
-		local NEWRESULT=`echo $GREP | filter_deb_pkgnames`
-	fi
-
-	# Add hack for replace lib with lib64 on Mandriva
-	if [ "$DISTRNAME" = "Mandriva" ] && [ $BUILDARCH = "x86_64" ] ; then
-		local NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
-	fi
-
-	if [ "$DISTRNAME" = "ArchLinux" ] ; then
-		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
-	fi
-
-	if [ "$DISTRNAME" = "FreeBSD" ]  ; then
-		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g"`
-	fi
-
-	if [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "Gentoo" ] ; then
-		local NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
-	fi
+	local NEWRESULT=$(hack_distr_requires "$GREP")
 
 	FIXNEWRESULT=$(add_32bit_requires "$GREP" $NEWRESULT)
 
 	ALTPKGNAME="$GREP"
 	TARGETPKGNAME="$FIXNEWRESULT"
+
 	# return if no chance to replace
 	[ "$FIXNEWRESULT" = "$GREP" ] && return 1
 	# HACK: return if we get complex result
