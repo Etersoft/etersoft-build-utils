@@ -1,14 +1,16 @@
+jackit-devel|
+perl-devel|perl
+
+sysvinit-utils|SysVinit
+
+xorg-sdk|xorg-x11-server-sdk
+
 cifs-utils|samba-client
 vixie-cron|cronie
 libjpeg-devel|libjpeg-turbo-devel
 libjpeg|libjpeg-turbo
 mount|util-linux-ng
 util-linux|util-linux-ng
-xrandr|xorg-x11-server-utils
-fonts-ttf-core|
-fonts-ttf-liberation|
-xlsfonts|xorg-x11-utils
-perl-XML-LibXML|
 lsb-release|redhat-lsb
 
 libatkmm|atkmm
@@ -19,3 +21,27 @@ libgtkmm2|gtkmm24
 libgtkmm2-devel|gtkmm24-devel
 libsigc++2|libsigc++20
 libsigc++2-devel|libsigc++20-devel
+
+libgtkmm2-devel|gtkmm24-devel
+libice-devel|ice-devel
+libusb-devel|libusb1-devel
+libusb|libusb1
+
+# perl-ExtUtils-Embed packed in perl package on ALT
+# For rpmbph: perl -> perl perl-ExtUtils-Embed
+perl|perl perl-ExtUtils-Embed
+
+# For rpmcs: perl-ExtUtils-Embed -> perl
+perl|perl-ExtUtils-Embed
+
+xz|xz
+libaudiofile|audiofile
+libaudiofile-devel|audiofile-devel
+cifs-utils|cifs-utils
+mount|util-linux
+util-linux|util-linux
+
+fonts-ttf-core|liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts liberation-narrow-fonts
+fonts-ttf-liberation|liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts liberation-narrow-fonts
+libudev1|libudev
+

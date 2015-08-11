@@ -1,7 +1,7 @@
 # Mandriva base replacements rules
 
-libreadline-devel|libreadline5-devel
-libreadline|libreadline5
+libreadline-devel|libreadline-devel
+libreadline|libreadline6
 libntfs|ntfsprogs
 libntfs-devel|ntfsprogs-devel
 libe2fs|libext2fs2
@@ -114,7 +114,6 @@ cifs-utils|mount-cifs
 
 fonts-ttf-core|fonts-ttf-liberation
 
-jackit-devel|libjack0-devel
 bzlib|libbzip2_1
 getopt|util-linux-ng
 libcroco|libcroco0.6_3
@@ -144,9 +143,6 @@ python-module-pygobject|python-gobject
 python-modules-logging|python-logging
 python-modules-xml|libxml2-python
 
-libatkmm|libatkmm1.6_1
-libglibmm|libglibmm2.4_1
-libgtkmm2|libgtkmm2.4_1
 libsigc++2|libsigc++2.0_0
 
 libXft|libxft2
@@ -164,3 +160,28 @@ fonts-bitmap-misc|x11-font-cursor-misc
 
 dbus-libs|libdbus
 libdbus|libdbus-1_3
+
+libldap-devel|libldap2.4_2-devel
+libldap|libldap2.4_2
+
+libxslt-devel|libxslt-devel
+libxslt|libxslt1
+
+libgtkmm2-devel|libgtkmm2.4-devel
+
+python-devel|libpython2.5-devel
+libpython|libpython2.5
+
+
+libssl-devel|libopenssl-devel
+
+libgtkmm2-devel|libgtkmm2.4-devel
+libatkmm|libgtkmm2.4_1
+libglibmm|libgtkmm2.4_1
+libgtkmm2|libgtkmm2.4_1
+
+libicu50|libicu40
+
+glibc-devel-static|glibc-static-devel
+
+libarts-devel|libarts1-devel
