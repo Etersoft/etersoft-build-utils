@@ -1,0 +1,15 @@
+libusb-devel|libusb-1_0-0
+libgphoto2-devel|libgphoto2
+libgsm-devel|
+libssl-devel|
+libudev-devel|
+
+gcc|gcc-32bit
+libXi-devel|xorg-x11-devel-32bit
+libX11-devel|xorg-x11-libX11-devel-32bit
+libfreetype-devel|freetype2-devel-32bit
+zlib-devel|zlib-devel-32bit
+libXpm-devel|xorg-x11-libXpm-devel-32bit
+fontconfig-devel|fontconfig-devel-32bit
+
+libGLU-devel|Mesa-devel-32bit

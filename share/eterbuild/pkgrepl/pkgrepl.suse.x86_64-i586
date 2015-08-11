@@ -2,6 +2,8 @@
 libwine-etersoft-devel|
 libwine-devel|
 libwine-vanilla-devel|
+# HACK to skip interpackages requires
+libwine-vanilla|
 
 # HACK: drop requires for packages with -devel-32bit is missed
 # See http://bugs.etersoft.ru/show_bug.cgi?id=10682
