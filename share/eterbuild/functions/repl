@@ -190,7 +190,12 @@ print_replbased_list()
 {
 	local REPLBASE="$1"
 	if [ "$BUILDARCH" = "x86_64" ] ; then
-		internal_repl_list $REPLBASE .x86_64 | uniq
+		# FIXME: wine hack, use external replacement package list
+		if rhas "$BUILDNAME" wine ; then
+			internal_repl_list $REPLBASE .x86_64-i586 | uniq
+		else
+			internal_repl_list $REPLBASE .x86_64 | uniq
+		fi
 	fi
 
         # general rules listing
