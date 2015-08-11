@@ -56,34 +56,40 @@ add_32bit_requires()
 	fi
 }
 
+# Part of local hack
 hack_distr_requires()
 {
-	GREP="$1"
-	# Part of local hack
-	local NEWRESULT="$GREP"
+	local GREP="$1"
 
-	if [ "$PKGFORMAT" = "deb" ] ; then
-		NEWRESULT=`echo $GREP | filter_deb_pkgnames`
-	fi
+	case "$PKGFORMAT" in
+		"deb")
+			echo $GREP | filter_deb_pkgnames
+			return
+			;;
+	esac
 
-	# Add hack for replace lib with lib64 on Mandriva
-	if [ "$DISTRNAME" = "Mandriva" ] && [ $BUILDARCH = "x86_64" ] ; then
-		NEWRESULT=`echo $GREP | sed -e "s|^lib\([^6]\)|lib64\1|g"`
-	fi
+	case "$DISTRNAME" in
+		"Mandriva")
+			if [ $BUILDARCH = "x86_64" ] ; then
+				echo "$GREP" | sed -e "s|^lib\([^6]\)|lib64\1|g"
+				return
+			fi
+			;;
+		"ArchLinux")
+			echo "$GREP" | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"
+			return
+			;;
+		"FreeBSD")
+			echo "$GREP" | sed -e "s|^ *\(.*\)-devel *\$|\1|g"
+			return
+			;;
+		"Slackware"|"Gentoo")
+			echo "$GREP" | sed -e "s|^ *\(.*\)-devel *\$|\1|g"
+			return
+			;;
+	esac
 
-	if [ "$DISTRNAME" = "ArchLinux" ] ; then
-		NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" | tr "[A-Z]" "[a-z]"`
-	fi
-
-	if [ "$DISTRNAME" = "FreeBSD" ]  ; then
-		NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g"`
-	fi
-
-	if [ "$DISTRNAME" = "Slackware" ] || [ "$DISTRNAME" = "Gentoo" ] ; then
-		NEWRESULT=`echo $GREP | sed -e "s|^ *\(.*\)-devel *\$|\1|g" `
-	fi
-
-	echo "$NEWRESULT"
+	echo "$GREP"
 }
 
 # Get replacement rule for ALT package to local in $1 (scan for files in $@)
