@@ -80,11 +80,13 @@ else
 	# see install in Korinf, need concatenate
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
 
-	if [ "$BUILDARCH" = "x86_64" ] && rhas "$BUILDNAME" wine ; then
+	if build32on64 ; then
 		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
-		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
-		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 ] && BUILDREQ="$BUILDREQ glibc-devel.i686"
-		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 ] && BUILDREQ="$BUILDREQ glibc-devel.i686"
+		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel.i686"
+		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel.i686"
+		[ "$DISTRNAME" = "SLED" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
+		[ "$DISTRNAME" = "SUSE" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 	fi
 
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
@@ -128,8 +130,7 @@ if [ "$PKGVENDOR" = "freebsd" ] ; then
 %__subst 's|readlink -mv|realpath|g' libtool configure ltmain.sh"
 fi
 
-# HACK need only for wine on x86_64
-if [ "$BUILDARCH" = "x86_64" ] && rhas "$SPECNAME" wine ; then
+if build32on64 ; then
 	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
 	ADDFIXCOMMAND="$ADDFIXCOMMAND
 %remove_optflags -m64"
