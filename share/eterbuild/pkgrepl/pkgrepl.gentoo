@@ -111,8 +111,8 @@ libgtk+2|gtk2 gdk-pixbuf2
 
 libsmbclient|smbclient
 imagemagick-tools|imagemagick
-libwxGTK-devel|wxgtk
-libwxGTK|wxgtk
+libwxGTK3.1-devel|wxgtk
+libwxGTK3.1|wxgtk
 libopensc-devel|opensc
 libopensc|opensc
 

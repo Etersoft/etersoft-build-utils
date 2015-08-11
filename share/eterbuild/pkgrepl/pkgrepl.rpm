@@ -165,8 +165,8 @@ xml-common|
 
 freenx-server|
 
-libwxGTK-devel|wxGTK-devel
-libwxGTK|wxGTK
+libwxGTK3.1-devel|wxGTK-devel
+libwxGTK3.1|wxGTK
 
 perl-base|perl
 

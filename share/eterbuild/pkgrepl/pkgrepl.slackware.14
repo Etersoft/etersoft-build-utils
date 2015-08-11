@@ -16,5 +16,5 @@ openssh-clients|openssh
 openssh-server|
 python-base|python
 libsmbclient|samba
-libwxGTK|wxGTK
+libwxGTK3.1|wxGTK
 zip|infozip
