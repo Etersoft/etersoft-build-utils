@@ -389,7 +389,7 @@ test -z "$LISTNAMES" && fatal "file not found in '$@'"
 if [ "$PKGVENDOR" = "alt" ] ; then
 	MDISTR=$MENV
 	[ -n "$BINARYREPONAME" ] && MDISTR=$(get_altdistr_mod $BINARYREPONAME)
-	[ "$MDISTR" = "SS" ] && fatal "It is senseless to backport to Sisyphus (You can try with -b $EXAMPLEALTDISTRVERSION)."
+	[ "$MDISTR" = "SS" ] && fatal "It makes no sense to backport to Sisyphus (You need to try with -b $EXAMPLEALTDISTRVERSION)."
 	# override by defined target version
 	DISTRVERSION=$(get_altdistr_version $MDISTR)
 else
@@ -433,11 +433,11 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	CURBRANCH=$(get_current_branch)
 
 	if [ "$CURBRANCH" = "$USEBRANCH" ] ; then
-		fatal "Run rpmbph in sisyphus or master branch, not in backport branch $USEBRANCH"
+		fatal "Run rpmbph in sisyphus or master branch only, not in backport branch $USEBRANCH"
 	fi
 
 	if [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
-		fatal "Run rpmbph in sisyphus or master branch, not in backport branch $OLDBRANCH"
+		fatal "Run rpmbph in sisyphus or master branch only, not in backport branch $OLDBRANCH"
 	fi
 
 	# Create branch if not exist yet
@@ -456,12 +456,12 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 		#git checkout $SPEC $MDISTR
 		#git checkout $CURBRANCH
-		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec"
+		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec."
 	fi
 	docmd git add $SPEC
 	if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
 		#git checkout $CURBRANCH
-		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec"
+		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec file"
 	fi
 	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
 	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
