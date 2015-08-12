@@ -11,6 +11,8 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod rpm repl spec
 
+set_gear_host
+
 dummy_spec()
 {
 grep "^Name" $1
@@ -184,19 +186,15 @@ do
 	# Unused on ALT
 	subst "s|^Suggests:|#Suggests:|" $i
 
+	# Add group
+	if ! grep "^Group" $i ; then
+		PACKAGT="Group: Unknown"
+		cat $i | awk 'BEGIN{desk=0}{if(/^Url/&&desk==0){printf("%s\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
+	fi
+
 # use in cases
 #	subst "s|%mdkversion||g" $i
 
-	# Add packager
-	if ! grep "^Packager" $i ; then
-		PACKAGT="Packager: $($RPMBUILD --eval %packager $i)"
-		cat $i | awk 'BEGIN{desk=0}{if(/^Source/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
-	fi
-
-	# If non alt release, set initial alt release
-	if get_release $i | grep -q -v "^alt" && get_release $i | grep -q -v "^$(get_default_txtrelease)" ; then
-		reset_release $i
-	fi
 
 	# If it was PLD spec
 	if grep "^%define date" $i ; then
@@ -230,12 +228,6 @@ do
 	echog "fix name and release..."
 	build_rpms_name "$i"
 
-	# For case if name was macros
-	test -n "$BASENAME" && set_var $i Name $BASENAME
-	
-	# For case if version was macros
-	# set_version is major define safe
-	test -n "$VERSION" && set_version $i $VERSION
 	
 	echog -n "fix obsoleted constructions..."
 	subst "s|Source0:|Source:|" $i
@@ -453,6 +445,25 @@ do
 	subst "s|^%defattr(644,root,root,755)||g" $i
 	#subst "s|^%attr(.*)\(.*\)$|\1|g" $i
 	subst "s|^ *%|%|g" $i
+
+	# If non alt release, set initial alt release
+	if ! rhas "$RELEASE" "^alt" && ! rhas "$RELEASE" "^$(get_default_txtrelease)" ; then
+		reset_release $i
+	fi
+
+	# For case if name was macros
+	test -n "$BASENAME" && set_var $i Name $BASENAME
+	
+	# For case if version was macros
+	# set_version is major define safe
+	test -n "$VERSION" && set_version $i $VERSION
+
+	# Add packager
+	if ! grep "^Packager" $i ; then
+		PACKAGT="Packager: $($RPMBUILD --eval %packager $i)"
+		cat $i | awk 'BEGIN{desk=0}{if(/^Source/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
+	fi
+
 	echog "DONE"
 
 	if [ -z "$SKIPREQS" ] ; then
@@ -460,6 +471,7 @@ do
 	else
 		cat $i > $SPEC
 	fi
+
 
 	# Restore changelog
 	cat $SPEC.tmpspecchangelog >>$SPEC
