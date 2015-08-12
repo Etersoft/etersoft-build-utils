@@ -38,7 +38,7 @@ uni_rpmbuild()
 
 	local SPECNAME="$1"
 	local SPECDIR=`dirname $SPECNAME`
-	local GEAR=gear
+	local GEAR="gear -v"
 
 	local THRPARAM="--quiet"
 	[ -n "$USE_VENDOR" ] && THRPARAM="--define=_vendor $USE_VENDOR"
