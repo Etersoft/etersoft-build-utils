@@ -31,6 +31,8 @@ get_mn_fromspec()
 	#if [ "$
 }
 
+GITHOST=alt
+
 TESTREL=alt2
 check get_release alt2 `get_release`
 
@@ -77,16 +79,19 @@ check get_numpartrelease 5 `get_numpartrelease $TESTREL`
 TESTREL=alt3.r3003.1
 check get_numpartrelease 3 `get_numpartrelease $TESTREL`
 
+TESTREL=alt3.eter50
+check get_numpartrelease 3 `get_numpartrelease $TESTREL`
+
 TESTREL=eter26.svn724archlinux
 check get_numpartrelease 26 `get_numpartrelease $TESTREL`
 
-GIRARHOST=git.alt
+GITHOST=git.alt
 check get_default_txtrelease alt `get_default_txtrelease`
 
-GIRARHOST=git.eter
+GITHOST=git.eter
 check get_default_txtrelease eter `get_default_txtrelease`
 
-GIRARHOST=giteter
+GITHOST=git.eter
 check get_default_txtrelease eter `get_default_txtrelease`
 
 BASERELEASE=27.5

@@ -50,3 +50,12 @@ check inc_release "alt7" `inc_release ""`
 
 TESTVER=1.5.7
 check inc_version "1.5.8" `inc_version ""`
+
+TESTREL=alt6.eter51
+check inc_release "alt6.eter52" `inc_release ""`
+
+TESTREL=alt5.14f23
+check inc_release "alt6" `inc_release ""`
+
+TESTREL=alt4.ff
+check inc_release "alt5" `inc_release ""`

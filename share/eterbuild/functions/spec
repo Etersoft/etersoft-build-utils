@@ -47,6 +47,7 @@ get_release()
 	eval_spec $1 | get_var "Release"
 }
 
+# TODO: fix description
 # get 11 from alt11, 12.1 from alt12.1t
 get_numpartrelease()
 {
@@ -67,8 +68,11 @@ get_default_txtrelease()
 }
 
 # get alt from alt11
+# TODO: support alt1.eter2
+# TODO: change to use mask gggNNN gggNNN.NNN gggNNN.NNNggg gggNNN.eeee.MMMM.ffff
 get_txtrelease()
 {
+	# TODO: txtrelease is all exclude num part
 	get_release "$1" | sed -e "s|\([a-zA-Z]*\)\([0-9\.]\).*|\1|" || get_default_txtrelease
 }
 
