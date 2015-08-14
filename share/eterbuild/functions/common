@@ -290,6 +290,9 @@ if [ -n "$NEEDETERBUILD" ] ; then
 	fi
 fi
 
+set_gear_host
+
+
 # Used DISTRNAME
 set_target_pkg_env()
 {
