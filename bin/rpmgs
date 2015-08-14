@@ -20,7 +20,7 @@ GETSOURCE=""
 LOADLIST="0"
 
 #############################
-Usage="Usage: $name [GIRAR] [-a -r ] spec [new_version]"
+Usage="Usage: $name [-a -f ] [spec] [new_version]"
 function mygetopts()
 {
 name=${0##*/}
@@ -30,7 +30,7 @@ phelp()
 {
 	echog "$Descr"
 	echog "$Usage"
-	echog "You can run 'rpmgs file.spec new_version' for set new version and download it"
+	echog "You can run 'rpmgs 1.2' for set new version 1.2 and download it"
 	echo
 	echog "Options:"
 	echog "   -a  get all source (not only Source|Source0)"
