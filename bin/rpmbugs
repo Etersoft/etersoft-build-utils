@@ -22,7 +22,7 @@ show_bugs()
 	URL=$1
 	if [ -z "$TEXT" ] ; then
 		#echog "Opening URL '$URL' in browser $BROWSER"
-		docmd $BROWSER $URL &
+		docmd $BROWSER $URL
 	else
 		#echo "@Fetching from '$URL'..."
 		# FIXME: BROWSER can be some unknown program called links
@@ -37,12 +37,28 @@ show_bugbyid()
 	show_bugs "$URLSHOWBUG"
 }
 
+clean_args()
+{
+	if [ -n "$2" ] && rhas "$1" ".spec" ; then
+		shift
+	fi
+	echo "$@"
+}
 
-#parse_cmd_pre "$@"
+check_qf()
+{
+	[ "$1" = "-qf" ] || return
+	shift
+	docmd epmqf --short "$1" | xargs --no-run-if-empty -- $ETERBUILDBIN/rpmbugs
+}
+
+
+mygetopts()
+{
 
 if [ "$1" = "-h" ]; then
 	echog "rpmbugs - open bugs in BROWSER"
-	echog "rpmbugs [-t] spec | bug number | package name | -qf command_name | /path/to/file"
+	echog "rpmbugs [-t] [spec] | bug number | package name | -qf command_name | /path/to/file"
 	echo
 	echog "Options:"
 	echog "   -t  list in text console"
@@ -60,37 +76,41 @@ if [ "$1" = "-t" ] ; then
 	which links >/dev/null && BROWSER=links
 fi
 
+}
+
+parse_cmd_pre_spec "$@"
+LISTNAMES=$(clean_args $LISTNAMES $LISTRPMARGS $LISTARGS)
+mygetopts $LISTARGS
+
+check_qf $LISTNAMES && exit
+
 if ! check_display ; then
 	TEXT=1
 	which links >/dev/null && BROWSER=links
 fi
 
-SPECLIST=$@
-if [ "$1" = "-qf" ]
-then
-	shift
-	SPECLIST=$(rpmqf "$1")
-	if [ -e "$1" ] ; then
-		SPECLIST=$(querypackage $SPECLIST NAME)
-	fi
-fi
 
-# if param is number
-if [ -z `echo ${1} | sed -e "s/[0-9]*//"` ] ; then
-	show_bugbyid "$1"
+is_number()
+{
+	rhas "$@" "^[0-9]+$"
+}
+
+if is_number "$LISTNAMES" ; then
+	show_bugbyid "$LISTNAMES"
 	exit
 fi
 
-for i in $SPECLIST ; do
+i=$LISTNAMES
 	if [ -f $i ]
 	then
+		# TODO: strange code
 		if [ -z ${i/*rpm/} ]
 		then
 			# it is rpm package
 			PKGNAME=$(querypackage $i NAME)
 		else
 			PKGNAME=$(get_name $i)
-			test -z ${PKGNAME} && fatal "Cannot get package name"
+			test -z ${PKGNAME} && fatal "Cannot get package name from $i"
 		fi
 	else
 		# yes, DD=$(false) || DD=other works
@@ -110,5 +130,3 @@ for i in $SPECLIST ; do
 		URLBUGLIST="$BUGZILLAURL/buglist.cgi?product=$PRODUCT&component=$PKGNAME&component_type=equals&simple=1"
 		show_bugs "$URLBUGLIST" | grep "@"
 	fi
-
-done
