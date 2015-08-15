@@ -65,7 +65,7 @@ get_archive()
 	URL=${URL/.tar/}
 	WEXT=`basename "$URL"`
 	[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$WEXT.$1"
-	test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
+	#test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
 	if ! download_url "$URL.$1" ; then
 		rm -f "$WEXT.$1"
 		return 1
@@ -83,7 +83,7 @@ get_archive1()
 	URL=${GETSOURCE/.bz2/}
 	WEXT=`basename "$URL"`
 	[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$WEXT.$1"
-	test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
+	#test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
 	download_url "$URL.$1" || return
 	test -f "$WEXT.$1" || return
 	echog -n "Converting to $WEXT.bz2..."
