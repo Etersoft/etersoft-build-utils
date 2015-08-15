@@ -74,7 +74,7 @@ get_archive()
 		# Skip repacking if the target has the same name
 		return 0
 	fi
-	erc repack "$WEXT.$1" "$(basename "$GETSOURCE")"
+	erc -f repack "$WEXT.$1" "$(basename "$GETSOURCE")"
 }
 
 # supports only bz2
@@ -272,9 +272,11 @@ do
 		# for get RPMSOURCEDIR
 		build_rpms_name $spec
 
+		# TODO: do not use RPMSOURCEDIR for temp. tarballs
 		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
-		[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
+		#[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
+		# TODO: dropout these pushd/popd
 		# use pushd/popd due several cd / cd -
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
 
@@ -293,7 +295,7 @@ do
 				# UpUrl for gear
 				download_url "$GETSOURCEURL"
 				# FIXME: gear-update can use any tarball
-				erc conv $(basename "$GETSOURCEURL") $FTB
+				erc -f repack $(basename "$GETSOURCEURL") $FTB
 			elif has_ext "$GETSOURCE" .tar ; then
 				# tar target: try to load and convert
 				download_any_tarball
@@ -301,7 +303,7 @@ do
 			elif has_ext "$GETSOURCE" .tar.bz2 ; then
 				# tar.bz2 target: for src.rpm policy compatibility
 				download_any_tarball
-				test -f $WEXT.tar.bz2 || erc $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
+				test -f $WEXT.tar.bz2 || erc -f $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
 			else
 				download_url "$GETSOURCE"
 			fi
@@ -314,7 +316,7 @@ do
 			if [ -n "${GETSOURCEURL}" ] ; then
 				# UpUrl for rpm
 				download_url "$GETSOURCEURL"
-				erc conv $(basename "$GETSOURCEURL") $FTB
+				erc -f repack $(basename "$GETSOURCEURL") $FTB
 			elif ! has_ext "$GETSOURCE" .tar.bz2 ; then
 				# if not tar.bz2 target, direct download
 				download_url "$GETSOURCE"
@@ -322,7 +324,7 @@ do
 				# if tar.bz2 target
 				download_any_tarball
 				#echog -n "Compressing to $WEXT.tar.bz2..."
-				test -f $WEXT.tar.bz2 || erc $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
+				test -f $WEXT.tar.bz2 || erc -f $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
 			elif has_ext "$GETSOURCE" .bz2 ; then
 				warning "It is not tarball (possible single file)..."
 				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"

@@ -24,7 +24,7 @@ BuildRequires: rpm-build-compat >= %altcompat_ver
 
 Requires: giter >= 0.8
 Requires: eepm >= 1.5.0
-Requires: erc >= 0.7
+Requires: erc >= 0.8
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
