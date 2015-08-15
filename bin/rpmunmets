@@ -19,7 +19,7 @@ make_ordinalbox()
 	mkdir -p $ORDINALWORKDIR
 	echo "Build aptbox from ordinal repo in $ORDINALWORKDIR ..."
 	#rm -rf $ORDINALWORKDIR
-	$MKAPTBOX -f --apt-config=$ORDINALAPTCONF $ORDINALWORKDIR
+	docmd $MKAPTBOX -f --apt-config=$ORDINALAPTCONF $ORDINALWORKDIR
 }
 
 make_testingbox()
@@ -27,7 +27,7 @@ make_testingbox()
 	mkdir -p $TESTINGWORKDIR
 	echo "Build aptbox from testing repo in $TESTINGWORKDIR ..."
 	#rm -rf $TESTINGWORKDIR
-	$MKAPTBOX -f --apt-config=$TESTINGAPTCONF $TESTINGWORKDIR
+	docmd $MKAPTBOX -f --apt-config=$TESTINGAPTCONF $TESTINGWORKDIR
 }
 
 
@@ -73,6 +73,7 @@ mygetopts $LISTARGS
 ORDINALWORKDIR=$OURTMPDIR/WD1
 TESTINGWORKDIR=$OURTMPDIR/WD2
 
+# apt.conf for current system
 ORDINALAPTCONF=$APTCONF
 
 set_hasherdir
@@ -82,27 +83,30 @@ if [ ! -d $HASHERDIR/repo ] || [ -n "$SKIPTST" ] ; then
 	make_ordinalbox
 	echo
 	echo "All unmets in repo $MENV"
-	$ORDINALWORKDIR/aptbox/apt-cache unmet
+	docmd $ORDINALWORKDIR/aptbox/apt-cache unmet
 	rm -rf $ORDINALWORKDIR
 	exit 0
 fi
 
 echo "Prepare to unmets checking..."
-# Prepare our confdir
+
+# Prepare modified confdir
 prepare_aptconfig
 TESTINGAPTCONF=$OURAPTCONF
-echo "rpm file:$HASHERDIR/repo/ $BUILDARCH hasher" >>$OURSOURCES
+
+echo "rpm file:$HASHERDIR/repo/ $BUILDARCH hasher" | tee -a $OURSOURCES
 
 make_ordinalbox
 make_testingbox
 
+echo
 echo "Calculate unmets..."
 $ORDINALWORKDIR/aptbox/apt-cache unmet > $OURTMPDIR/unmets.old
 $TESTINGWORKDIR/aptbox/apt-cache unmet > $OURTMPDIR/unmets.new
 
 echo
 echo "New unmets:"
-diff -U0 $OURTMPDIR/unmets.{old,new}
+diff -U0 $OURTMPDIR/unmets.{old,new} && echo "NO UNMETS detected."
 
 if [ ! -d "$SISYPHUSPATH" ] ; then
 	echo "Sisyphus repo is not found in '$SISYPHUSPATH'. Set SISYPHUSPATH to compare requires with new packages"
@@ -112,17 +116,22 @@ fi
 NEWPKGDIR=$HASHERDIR/repo/$BUILDARCH/RPMS.hasher/
 
 echo
-echo "Compare requires between new packages and their Sisyphus version"
+echo "Compare requires between new packages and their Sisyphus version..."
 export LESS_PROGRAM=/dev/null
 for i in $(echo $NEWPKGDIR/*.rpm) ; do
+	echo -n "."
+	# FIXME: use function to get package name
 	OLDPKGNAME=$(rpm -qp $i | sed -e "s|-[0-9].*||g")
+	echo -n "."
 	# search in the our arch repo
 	PKGARCH=$(querypackage $i ARCH)
+	echo -n "."
 	OLDPKG=$(echo $SISYPHUSPATH/$PKGARCH/RPMS.*/$OLDPKGNAME-[0-9]*.rpm)
 	if [ ! -r "$OLDPKG" ] ; then
 		echo "Cannot find old package for $(basename $i), skipping"
 		continue
 	fi
+	echo
 	echo "Compare $OLDPKG with new $i"
 	compare_packages -a -R -- $OLDPKG  -- $i
 done
