@@ -374,8 +374,10 @@ do
 		s|%py_sitescriptdir|%python_sitelibdir|g
 		s|%py_puresitedir|%python_sitelibdir|g
 		s|%python_version|%__python_version|g
+		s|%__python2 |%__python |g
 		s|%python2_version|%__python_version|g
 		s|%python_sitelib/|%python_sitelibdir/|g
+		s|%python2_sitelib/|%python_sitelibdir/|g
 		s|%_libdir/python2.[67]/site-packages/|%python_sitelibdir/|g
 		s|%py_sitedir/|%python_sitelibdir/|g
 		s|%python_sitearch|%python_sitelibdir|g
