@@ -10,7 +10,7 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod rpm web
 
-PAGEURL="http://sisyphus.ru/srpm/Sisyphus"
+PAGEURL="http://packages.altlinux.org/en/Sisyphus/srpms"
 
 #############################
 
@@ -26,7 +26,7 @@ phelp()
 	echog "$Usage"
 	echog "Options:"
 	echog "   -c  check if package URL is accessible"
-	echog "   -p  open package page on http://sisyphus.ru"
+	echog "   -p  open package page on http://packages.altlinux.org"
 	echog "   -s  open source dir in the default browser"
 	echo
 	echog "Ext. options:"
