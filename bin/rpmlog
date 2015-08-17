@@ -101,13 +101,18 @@ if [ -z "$FROMTAG" ] ; then
 	# FIXME: if don't exists, use last tag?
 fi
 
+if is_last_commit_tag ; then
+	echo "There is no new commits after $(get_last_tag)"
+	exit 0
+fi
+
 if [ -n "$CHANGELOGADD" ] ; then
 	CHANGELOG="- $TEXTMESSAGE"
 else
-# TODO: найти параметр для упрощения истории. пока - sort?
-# Делает первую букву маленькой, убирает точку в конце строки
-CHANGELOG="`git log $FROMTAG..$TOTAG --reverse --simplify-merges --dense --pretty="- %s" | sed -e "s|\.\$||g" | sed -e "s|- \([A-Z]\)|- \l\1|g" | sed -e "s|%||g"`"
-[ -n "$CHANGELOG" ] || fatal "git log was failed. Probably, you have no tag $FROMTAG in your repo. Check the source repository."
+	# TODO: найти параметр для упрощения истории. пока - sort?
+	# Делает первую букву маленькой, убирает точку в конце строки
+	CHANGELOG="`git log $FROMTAG..$TOTAG --reverse --simplify-merges --dense --pretty="- %s" | sed -e "s|\.\$||g" | sed -e "s|- \([A-Z]\)|- \l\1|g" | sed -e "s|%||g"`"
+	[ -n "$CHANGELOG" ] || fatal "git log was failed. Probably, you have no tag $FROMTAG in your repo. Check the source repository."
 fi
 
 [ -n "$(get_packager $SPECNAME)" ] || fatal "You need set packager in your spec (use $ rpmcs for it) or in ~/.rpmmacros file"
