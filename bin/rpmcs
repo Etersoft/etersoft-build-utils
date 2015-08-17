@@ -389,6 +389,7 @@ do
 
 	subst "s|^%__python setup.py build|%python_build|g" $i
 	subst 's|^CFLAGS="$RPM_OPT_FLAGS" python setup.py build|%python_build|g' $i
+	subst 's|^CFLAGS="%optflags" python setup.py build|%python_build|g' $i
 	subst "s|^%__python setup.py install --root.%buildroot|%python_install|g" $i
 	subst "s|^%__python setup.py install --skip-build --root %buildroot|%python_install|g" $i
 	subst "s|^%__python setup.py install -O1 --skip-build --root %buildroot|%python_install|g" $i
@@ -464,7 +465,8 @@ do
 
 	# Add packager
 	if ! grep "^Packager" $i ; then
-		PACKAGT="Packager: $($RPMBUILD --eval %packager $i)"
+		PACKAGT="Packager: $OWNERMAIL"
+		rhas "$OWNERMAIL" "packager" && fatal "Packager $OWNERMAIL is not defined correctly in ~/.rpmmacros"
 		cat $i | awk 'BEGIN{desk=0}{if(/^Source/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
 	fi
 

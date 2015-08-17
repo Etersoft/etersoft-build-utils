@@ -28,8 +28,8 @@ NICE="nice"
 RPMBUILD=rpmbuild
 
 # CHECKME: works only on ALT?
-RPMDIR=`rpm --eval %_topdir`
-RPMTMPDIR=`rpm --eval %_tmppath`
+RPMDIR=$(rpm --eval %_topdir) || fatal
+RPMTMPDIR=$(rpm --eval %_tmppath) || fatal
 
 # Can be overrided in the scripts
 [ -n "$RPMTOPDIR" ] || RPMTOPDIR="$RPMDIR"
@@ -38,7 +38,9 @@ RPMTMPDIR=`rpm --eval %_tmppath`
 
 #OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
 # works only on ALT?
-OWNERMAIL=`rpm --eval %packager`
+# TODO: get from git also?
+OWNERMAIL=$(rpm --eval %packager) || fatal
+
 
 COMPANYFTP=etersoft.ru
 TARGETFTPBASE="/var/ftp"
@@ -49,8 +51,9 @@ HASHERARG=""
 
 # TODO: do not use this notation at all
 # for use in help as example branch/distro name
-EXAMPLEALTDISTRVERSION="p6"
-CURRENTBRANCHNAME="M60"
+EXAMPLEALTDISTRVERSION="p7"
+# FIXME: obsoleted
+CURRENTBRANCHNAME="M70"
 
 # Build for Sisyphus by default
 MENV=SS

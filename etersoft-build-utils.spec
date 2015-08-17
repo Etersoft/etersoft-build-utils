@@ -22,7 +22,7 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 0.8
+Requires: giter >= 1.2
 Requires: eepm >= 1.5.0
 Requires: erc >= 0.8
 
