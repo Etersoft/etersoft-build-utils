@@ -110,6 +110,8 @@ CHANGELOG="`git log $FROMTAG..$TOTAG --reverse --simplify-merges --dense --prett
 [ -n "$CHANGELOG" ] || fatal "git log was failed. Probably, you have no tag $FROMTAG in your repo. Check the source repository."
 fi
 
+[ -n "$(get_packager $SPECNAME)" ] || fatal "You need set packager in your spec (use $ rpmcs for it) or in ~/.rpmmacros file"
+
 if [ -n "$TESTRUN" ] ; then
 	INCREMENTMODE=""
 fi

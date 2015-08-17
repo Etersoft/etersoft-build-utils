@@ -266,6 +266,12 @@ get_gear_name()
 	[ -n "$gn" ]
 }
 
+get_packager()
+{
+	local packager=$($RPMBUILD --eval "%packager" "$1")
+	rhas "$packager" "packager" && fatal "Packager $packager is not defined correctly in spec $1 or in ~/.rpmmacros"
+}
+
 
 if [ "$UID" = "0" ] && [ -z "$ALLOW_ROOT_USER" ] ; then
 	fatal "It is strict recommended do not use these scripts as root"
@@ -489,3 +495,4 @@ version_more_version()
 {
 	[ "$2" = "$(echo -e "$1\n$2" | sort -n | head -n1)" ]
 }
+
