@@ -35,11 +35,38 @@ fatal()
 
 # TODO: add onexit function
 
+isatty()
+{
+	# check stdout
+	test -t 1
+}
+
+isatty2()
+{
+	# check stderr
+	test -t 2
+}
+
+
 # Just print warning message
 warning()
 {
 	print_message Warning "$@"
 }
+
+info()
+{
+	[ -n "$quiet" ] && return
+
+	# print message to stderr if stderr forwarded to (a file)
+	if isatty2 ; then
+		isatty || return 0
+		echo "$@"
+	else
+		echo "$@" >&2
+	fi
+}
+
 
 mark_file_to_remove()
 {
@@ -394,7 +421,7 @@ parse_cmd_pre_spec()
 		parse_cmd_pre "$@"
         else
 		local SPEC=$(get_gear_spec)
-		[ -f "$SPEC" ] && echo "Using autodetected spec $SPEC..."
+		[ -f "$SPEC" ] && info "Using autodetected spec $SPEC..."
 		# it is possible in some command we need only possibility for spec
 		# || fatal "Run in dir with spec or in gear repo"
 		parse_cmd_pre "$SPEC" "$@"
