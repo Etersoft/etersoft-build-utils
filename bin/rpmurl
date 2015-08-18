@@ -1,10 +1,12 @@
 #!/bin/sh
-# 2005-2006, 2009 (c) Etersoft www.etersoft.ru
+# 2005-2006, 2009, 2015 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # Open package Url in BROWSER
 #
+
+# TODO: use only for repo packages. add option -t for print url
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -14,7 +16,7 @@ PAGEURL="http://packages.altlinux.org/en/Sisyphus/srpms"
 
 #############################
 
-Usage="Usage: $name [-c -f -p -s] spec or package..."
+Usage="Usage: $name [-c -f -p -s] [spec]"
 function mygetopts()
 {
 name=${0##*/}
@@ -25,9 +27,10 @@ phelp()
 	echog "$Descr"
 	echog "$Usage"
 	echog "Options:"
-	echog "   -c  check if package URL is accessible"
 	echog "   -p  open package page on http://packages.altlinux.org"
-	echog "   -s  open source dir in the default browser"
+	echog "   -c  check if package URL is accessible"
+	echog "   -t  just print URL"
+	echog "   -s  open package source dir in the default browser (for spec / git repo only"
 	echo
 	echog "Ext. options:"
 	echog "   -f  print failed URL only"
@@ -35,13 +38,14 @@ phelp()
 
 while getopts :hcfsp opt; do
     case $opt in
-    h) phelp; exit 0;;
-    c) CHECKONLY=1 ;;
+	h) phelp; exit 0;;
+	c) CHECKONLY=1 ;;
 	s) ABOUTDIR=1 ;;
+	t) PRINTONLY=1 ;;
 	p) SISYPHUSRU=1 ;;
 	f) FAILEDONLY=1; CHECKONLY=1 ;;
-    +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
-#    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
+	+?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
+#	?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
     esac
 done
@@ -59,95 +63,44 @@ parse_cmd_pre_spec "$@"
 
 mygetopts $LISTARGS
 
-#TODO: fix
-# $LISTNAMES | wc -w
-if [ -n "$2" ] ; then
-	echo
-	# more than 1 arg
-	#PARALL=1
-	#test `ps a | wc -l` -gt 70 && sleep 3
-fi
-
-get_pkginfo()
+check_spec()
 {
-	local i=${1}
-	if [ -f ${i} ]
-	then
-		if [ -z ${i/*rpm/} ]
-		then
-			# it is rpm package
-			RPM_URL=$(querypackage ${i} URL)
-			SOURCE=
-		else
-			RPM_URL=$(eval_spec ${i} | get_var "Url")
-			SOURCE=$(eval_spec ${i} | get_var "Source")
-		fi
-	else
-		# will it package name
-		RPM_URL=$(querypackage ${i} URL)
-		SOURCE=$(querypackage ${i} SOURCE)
-	fi
-}
+	local SPEC="$1"
+	rhas "$SPEC" "\.spec$" || fatal "Use only for git repo or with spec"
 
-get_pagepkginfo()
-{
-	local i=${1}
-	local PKGNAME
-	if [ -f ${i} ]
-	then
-		if [ -z ${i/*rpm/} ]
-		then
-			PKGNAME=$(get_sourcepkg_name "$i")
-		else
-			PKGNAME=$(get_name ${i})
-		fi
-	else
-		# installed package name
-		PKGNAME=$(get_sourcepkg_name "$i")
-	fi
-	if [ -z "$PKGNAME" ] ; then
-		PKGNAME="$i"
-	fi
-	RPM_URL=$PAGEURL/$PKGNAME
-}
+	PKGNAME=$(eval_spec $SPEC | get_var "Name")
+	RPM_URL=$(eval_spec $SPEC | get_var "Url")
+	SOURCE=$(eval_spec $SPEC | get_var "Source")
 
-for i in $LISTNAMES $LISTRPMARGS
-do
 	if [ -n "$SISYPHUSRU" ] ; then
-		get_pagepkginfo $i
+		RPM_URL=$PAGEURL/$PKGNAME
 		if [ -n "$ABOUTDIR" ] ; then
 			RPM_URL=$RPM_URL/get
 		fi
 	else
-		get_pkginfo $i
 		if [ -n "$ABOUTDIR" ] ; then
-			RPM_URL=`dirname $SOURCE`
+			RPM_URL=$(dirname $SOURCE)
 		fi
 
 		[ "$RPM_URL" = "(none)" ] && RPM_URL=""
-		if [ -z "${RPM_URL}" ] ; then
-			warning "Cannot get package URL, open from $PAGEURL"
-			get_pagepkginfo $i
-		fi
+
+		[ -z "${RPM_URL}" ] && fatal "Cannot get package URL"
 	fi
 
-	if [ -z "$CHECKONLY" ] ; then
-		echog "Opening URL '$RPM_URL' with browser '$BROWSER'"
-		$BROWSER $RPM_URL &
-		continue
+	if [ -z "$PRINTONLY" ] ; then
+		echo "$RPM_URL"
+		return
 	fi
 
-	# Check package URL
-	if [ -z "$PARALL" ] ; then
-		echog -n "Checking URL '$RPM_URL' from package $i ..."
-		$GET $RPM_URL -s -d
-	else
-		( RESULT=`$GET $RPM_URL -s -d` ;
-		if [ -n "$FAILEDONLY" ] ; then
-			test ${RESULT/ *} = "200" || printf "%-40s %s   %s\n" $i $RPM_URL "${RESULT}"
-		else
-			echog "Checking URL '$RPM_URL' from package $i ... $RESULT" ; 
-		fi
-		) &
+	if [ -n "$CHECKONLY" ] ; then
+		# Check package URL
+		echog -n "Checking URL $RPM_URL ..."
+		docmd $GET $RPM_URL -s -d
+		return
 	fi
-done
+
+	echog "Opening URL '$RPM_URL' with browser '$BROWSER'"
+	$BROWSER $RPM_URL
+}
+
+check_spec $LISTNAMES
