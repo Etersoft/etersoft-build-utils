@@ -295,8 +295,9 @@ get_gear_name()
 
 get_packager()
 {
-	local packager=$($RPMBUILD --eval "%packager" "$1")
-	rhas "$packager" "packager" && fatal "Packager $packager is not defined correctly in spec $1 or in ~/.rpmmacros"
+	local packager="$($RPMBUILD --eval "%packager" "$1" 2>/dev/null)"
+	rhas "$packager" "%packager" && fatal "Packager $packager is not defined correctly in spec $1 or in ~/.rpmmacros"
+	echo "$packager"
 }
 
 
