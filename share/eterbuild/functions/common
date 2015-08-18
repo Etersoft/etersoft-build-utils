@@ -12,14 +12,19 @@ realpath()
         readlink -f "$@"
 }
 
+colorify()
+{
+	csed '/(warning|предупреждение):/ p magenta,bold' '/(error|ошибка):/ p red,bold'
+}
+
 print_message()
 {
 	local DESC="$1"
 	shift
 	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "$DESC in $(basename $0): $@" >&2
+		echo "$DESC in $(basename $0): $@" | colorify >&2
 	else
-		echog "$DESC in $(basename $0): $@" >&2
+		echog "$DESC in $(basename $0): $@" | colorify >&2
 	fi
 }
 
@@ -523,4 +528,3 @@ version_more_version()
 {
 	[ "$2" = "$(echo -e "$1\n$2" | sort -n | head -n1)" ]
 }
-

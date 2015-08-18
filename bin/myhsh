@@ -103,7 +103,7 @@ do
 
 	# Note: hasher is already use renice for low priority
 	showcmd $HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i
-	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE
+	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE | colorify
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
 	if [ -f $LOGFILE.failed ] ; then
 		RESULT=1
