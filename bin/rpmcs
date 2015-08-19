@@ -102,7 +102,6 @@ do_repls()
 	done
 
 	echog "fix package requires..."
-	ALLREPLRULES=""
 	for n in `print_pkgreq $i` ; do
 		toalt_pkgrepl $n || continue
 		ALLREPLRULES="$ALLREPLRULES
