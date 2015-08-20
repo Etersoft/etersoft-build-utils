@@ -195,11 +195,12 @@ phelp()
 	echog "   -i   install packages needed for build (use epm)"
 	echog "   -l   list packages needed for build (in local pkg system notation) (experimental)"
 	echog "   -r   refresh package list (download it again)"
+	echog "   -p   force use public access to the git repo"
 	echog "   -s   list all known remote repositories"
 	exit 0
 }
 
-while getopts :hab:icdglmprs opt; do
+while getopts :hab:icdglmpprs opt; do
     case $opt in
     h) phelp; exit 0;;
     a) ALLSYSTEM=1 ;;
@@ -294,10 +295,12 @@ git_clone()
 {
 	local RREPO="$1"
 	# Test if ssh access is available
-	if [ -z "$PUBLICACCESS" ] && giter check girar access ; then
+	if [ -z "$PUBLICACCESS" ] && giter $GITHOST check girar access ; then
 		docmd git clone $GIRARHOST:$RREPO
 	else
-		docmd git clone $GIRARURL/$RREPO
+		local GIRARURL=$(get_git_url $GITHOST)
+		[ -n "$GIRARURL" ] || fatal "Can't get public URL for $GIRHOST"
+		docmd git clone $GIRARURL$RREPO.git
 	fi
 }
 
@@ -345,7 +348,7 @@ if [ -n "$CLONEGIT" ] ; then
 	fi
 
 	echo "See other repos at $GIRARHOST:"
-	giter list packages $PKGNAME
+	giter $GITHOST list packages $PKGNAME
 	exit $?
 fi
 
@@ -399,7 +402,9 @@ if [ -n "$CHECKONLINE" ] ; then
 
 	if [ -n "$GIRAR_USER" ] ; then
 		# FIXME: we have a function to get correct url
-		GITURL="$GIRARURL/people/$GIRAR_USER/packages/$PKGNAME.git"
+		local GIRARURL=$(get_git_url $GITHOST)
+		[ -n "$GIRARURL" ] || fatal "Can't get public URL for $GIRHOST"
+		GITURL="${GIRARURL}people/$GIRAR_USER/packages/$PKGNAME.git"
 		if $GET -d $GITURL ; then
 			echog "Published at $GITURL by $GIRAR_USER"
 		else
@@ -407,7 +412,7 @@ if [ -n "$CHECKONLINE" ] ; then
 		fi
 	fi
 	echo "Get repositories at $GIRARHOST:"
-	giter list packages $PKGNAME
+	giter $GITHOST list packages $PKGNAME
 
 	set_binaryrepo $MENV
 
