@@ -87,7 +87,7 @@ check_spec()
 		[ -z "${RPM_URL}" ] && fatal "Cannot get package URL"
 	fi
 
-	if [ -z "$PRINTONLY" ] ; then
+	if [ -n "$PRINTONLY" ] ; then
 		echo "$RPM_URL"
 		return
 	fi
