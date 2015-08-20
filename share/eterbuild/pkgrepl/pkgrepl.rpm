@@ -247,3 +247,12 @@ python-module-setuptools|python-setuptools
 xorg-util-macros|xorg-x11-util-macros
 
 gcc4.6-c++|gcc-c++
+libspeex-devel|speex-devel speexdsp-devel
+# repeat for rpmcs
+libspeex-devel|speex-devel
+libspeex-devel|speexdsp-devel
+libspeex|speex
+libportaudio2-devel|portaudio-devel
+libportaudio2|portaudio
+libsrtp|libsrtp-devel
+
