@@ -26,13 +26,13 @@ EOF
 check_get_version()
 {
 RES=$1
-gen_spec
 RESGET=`get_tarballname $SPEC`
 	[ "$RES" != "$RESGET" ] && echo "FATAL with 'get_tarballname': result '$RES' do not match with '$RESGET'" || echo "OK for 'get_tarballname' with '$RESGET'"
 }
 
 TESTVER=1.0.10
 SOURCEPATH=
+gen_spec
 check_get_version get_version_test
 
 SOURCEPATH=ftp://etersoft.ru/pub/Etersoft/TEST/
@@ -55,4 +55,10 @@ echo "Source path $SOURCEPATH: "
 gen_spec
 get_etersoft_srpm_path $SPEC
 
+echo "TODO"
+subst "s|Source:.*|Source: http://fp.ru/python-larch_1.20131130.orig.tar.gz|g" $SPEC
+check_get_version python-larch
+
 rm -f $SPEC
+
+echo "DONE"
