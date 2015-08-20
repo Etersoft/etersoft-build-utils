@@ -65,6 +65,7 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 %undefine __libtoolize"
 	fi
 else
+	# All non ALT Linux distros
 	docmd $ETERBUILDBIN/rpmcs --skip-reqs $SPECNAME
 
 	BUILDREQ="BuildRequires:"
