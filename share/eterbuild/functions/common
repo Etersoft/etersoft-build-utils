@@ -14,7 +14,7 @@ realpath()
 
 colorify()
 {
-	csed '/(warning|предупреждение):/ p magenta,bold' '/(error|ошибка):/ p red,bold'
+	csed '/(warning|WARNING|Warning|предупреждение):/ p magenta,bold' '/(error|ERROR|Error|ошибка):/ p red,bold' '/(Command not found):/ p red,bold'
 }
 
 print_message()
