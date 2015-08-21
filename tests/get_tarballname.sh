@@ -61,4 +61,7 @@ check_get_version python-larch
 
 rm -f $SPEC
 
+echo "Tarball"
+get_tardir_from_rules || echo "No tarball"
+
 echo "DONE"

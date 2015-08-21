@@ -266,7 +266,7 @@ get_gear_rules()
 	local DIR="$1"
 	[ -z "$IGNOREGEAR" ] || return 1
 	[ -f "$DIR" ] && DIR=$(dirname "$DIR")
-	[ -n "$DIR" ] && cd $DIR
+	[ -n "$DIR" ] && cd "$DIR"
 	local GITDIR=$(get_root_git_dir)
 	[ -n "$DIR" ] && cd - >/dev/null
 	local rules="$GITDIR/.gear/rules"
@@ -280,6 +280,16 @@ get_gear_rules()
 is_gear()
 {
 	get_gear_rules $@ >/dev/null
+}
+
+get_tardir_from_rules()
+{
+	local rules=$(get_gear_rules)
+	assert_var rules
+	local dir=$(grep "tar: " $rules | sed -e "s|tar: *||g
+s| .*||g")
+	[ "$dir" = "." ] || [ -z "$dir" ] && return 1
+	echo "$dir"
 }
 
 filter_gear_name()
