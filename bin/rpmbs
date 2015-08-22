@@ -154,7 +154,7 @@ extract_tarball_to_dest()
 		local TARNAME=$(querypackage $1 "" "%{NAME}-%{VERSION}")
 		# FIXME: hack to replace alt release to eter
 		local TARGETTARNAME=$(querypackage $1 "" "%{NAME}-%{VERSION}-%{RELEASE}" | sed -e "s/-alt/-eter/g")
-		erc conv $TARNAME*.tar* $2/$TARGETTARNAME.tar.bz2
+		erc --force conv $TARNAME*.tar* $2/$TARGETTARNAME.tar.bz2
 		make_md5sum $2 $TARGETTARNAME.tar.bz2
 		# copy other tarballs
 		for i in $(ls -1 *.tar* | grep -v "^$TARNAME.*\.tar.*") ; do
