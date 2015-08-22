@@ -36,14 +36,14 @@ phelp()
 	echog "   -f  print failed URL only"
 }
 
-while getopts :hcfsp opt; do
+while getopts :hcfstp opt; do
     case $opt in
 	h) phelp; exit 0;;
 	c) CHECKONLY=1 ;;
+	f) FAILEDONLY=1; CHECKONLY=1 ;;
 	s) ABOUTDIR=1 ;;
 	t) PRINTONLY=1 ;;
 	p) SISYPHUSRU=1 ;;
-	f) FAILEDONLY=1; CHECKONLY=1 ;;
 	+?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #	?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;
@@ -68,22 +68,20 @@ check_spec()
 	local SPEC="$1"
 	rhas "$SPEC" "\.spec$" || fatal "Use only for git repo or with spec"
 
-	PKGNAME=$(eval_spec $SPEC | get_var "Name")
-	RPM_URL=$(eval_spec $SPEC | get_var "Url")
-	SOURCE=$(eval_spec $SPEC | get_var "Source")
-
 	if [ -n "$SISYPHUSRU" ] ; then
+		PKGNAME=$(eval_spec $SPEC | get_var "Name")
 		RPM_URL=$PAGEURL/$PKGNAME
 		if [ -n "$ABOUTDIR" ] ; then
 			RPM_URL=$RPM_URL/get
 		fi
 	else
+		RPM_URL=$(eval_spec $SPEC | get_var "Url")
 		if [ -n "$ABOUTDIR" ] ; then
+			SOURCE=$(eval_spec $SPEC | get_var "Source")
 			RPM_URL=$(dirname $SOURCE)
 		fi
 
 		[ "$RPM_URL" = "(none)" ] && RPM_URL=""
-
 		[ -z "${RPM_URL}" ] && fatal "Cannot get package URL"
 	fi
 
