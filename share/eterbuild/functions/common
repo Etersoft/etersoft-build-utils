@@ -22,16 +22,18 @@ print_message()
 	local DESC="$1"
 	shift
 	if [ -z "$TEXTDOMAIN" ] ; then
-		echo "$DESC in $(basename $0): $@" | colorify >&2
+		echo "$DESC in $(basename $0): $@" >&2
 	else
-		echog "$DESC in $(basename $0): $@" | colorify >&2
+		echog "$DESC in $(basename $0): $@" >&2
 	fi
 }
 
 # Print error message and stop the program
 fatal()
 {
+	SETCOLOR_FAILURE
 	print_message Error "$@"
+	SETCOLOR_NORMAL
 	if [ -n "$ETERSOFT_FATAL_REMOVE_FILES" ]; then
 		rm -rvf $ETERSOFT_FATAL_REMOVE_FILES
 	fi
@@ -56,7 +58,9 @@ isatty2()
 # Just print warning message
 warning()
 {
+	SETCOLOR_WARNING
 	print_message Warning "$@"
+	SETCOLOR_NORMAL
 }
 
 info()
@@ -66,7 +70,9 @@ info()
 	# print message to stderr if stderr forwarded to (a file)
 	if isatty2 ; then
 		isatty || return 0
+		SETCOLOR_WARNING
 		echo "$@"
+		SETCOLOR_NORMAL
 	else
 		echo "$@" >&2
 	fi
