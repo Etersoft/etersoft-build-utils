@@ -45,10 +45,12 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
-	echog "   -u            sign and run gear build task after build"
-	echog "   -a TASK | -A  sign package(s)/repo, push/upload it and add to (shared) task TASK"
-	echog "   -p POCKET     build package in POCKET (supported on git.etersoft.ru only)"
-	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
+	echog "   -u           sign and run gear build task after build"
+	echog "   -a TASK      sign package(s)/repo, push/upload it and add to (shared) task TASK"
+	echog "                -a TASKbeforeSUBTASK (f.i., 43122before90) for put task before SUBTASK in TASK"
+	echog "   -A           sign package(s)/repo, push/upload it and add to the last task"
+	echog "   -p POCKET    build package in POCKET (supported on git.etersoft.ru only)"
+	echog "   -b REPONAME  binary repository name (p7, t7 and so on)"
 	echo
 	#echog "Korinf options:"
 	#echog " -k [TARGET] - generate src.rpm and publish to TARGET dir (from Source: by default)"
