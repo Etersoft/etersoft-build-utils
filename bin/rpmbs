@@ -324,7 +324,7 @@ echog "Uploading to $GIRARHOST"
 check_ssh_key
 
 docmd $RSYNC -vay --partial --progress --checksum \
- 	-e ssh $LISTBUILT $GIRARHOST: && \
+ 	-e ssh $LISTBUILT $GEARHOST: && \
 echo "---------------------" && \
 echog "All files synced" || fatal "Error during rsync"
 
@@ -364,7 +364,6 @@ for i in $LISTNAMES ; do
 	# Hack about paths
 	test -f "$i" && NAME=$i || NAME=$CURDIR/$i
 	build_rpms_name $NAME
-	echo -n "    $BUILDROOT "
 	if [ -d "$BUILDROOT" ] ; then
 		docmd rm -rf "$BUILDROOT" && echog "DONE" || echog "failed"
 	else
