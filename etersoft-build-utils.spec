@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.3.3
+Version: 2.4.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,22 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- rpmgp: rewrite via giter, use full paths
+- rpmgs: fix get dir name from gear rules
+- rpmgs: full rewrite
+- rpmurl: fix handle -t, small optimize
+- rpmreqs: fix for x86_64
+- rpmreqs: fix for already installed packages
+- rpmbs: fix upload srpms
+- rpmbs: improve help
+- use colors for fatal, warning and info messages
+- remove obsoleted commands rpmU, rpmqf, rpmbk
+- update QuickHelp, TODO
+- remove obsoleted aliases
+- grpmbs: fix GEARHOST
+- fix pkgrepls
+
 * Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
 - rpmcs: fix replace build requires
 - rpmgp: fix for get via public url
