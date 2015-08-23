@@ -60,8 +60,7 @@ fi
 [ -n "$ETERDESTSRPM" ] || ETERDESTSRPM="$1"
 
 # add sources if not yet
-# && [ -d $ETERDESTSRPM/sources ]
-if [ -n "$ETERDESTSRPM" ] && echo $ETERDESTSRPM | grep -q -v /sources ; then
+if [ -n "$ETERDESTSRPM" ] && ! rhas "$ETERDESTSRPM" "/sources" ; then
 	ETERDESTSRPM=$ETERDESTSRPM/sources
 fi
 
