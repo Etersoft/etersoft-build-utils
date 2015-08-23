@@ -222,15 +222,14 @@ print_grprepl_list()
 
 # Converts ALT Linux Sisyphus dependencies to target notation
 # and print out result dependencies
-# needs DISTRVENDOR, BUILDARCH, PKGFORMAT and so one
 # call with package list
 convert_pkgreqs_to_target()
 {
-	local listdep=$@ TARGETPKGNAME
+	assert_var DISTRVENDOR BUILDARCH PKGFORMAT
 	repl_list=$(print_pkgrepl_list)
 
 	local j
-	for j in $listdep; do
+	for j in "$@" ; do
 		tolocal_anyrepl $j $repl_list && estrlist list "$TARGETPKGNAME" || echo $j
 	done | sort -u | sed -e "s|\\\\+|\+|g"
 }

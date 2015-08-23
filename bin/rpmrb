@@ -26,7 +26,8 @@ SPEC=$1
 # allow run with spec file (obsoleted)
 [ -r "$SPEC" ] && shift
 
-test -f "$SPEC" || SPEC=$(get_gear_spec)
+[ -s "$SPEC" ] || SPEC=$(get_gear_spec)
+[ -s "$SPEC" ] || fatal "Can't find spec file. Run $0 --help for help."
 
 VER=$1
 # need for rpmgs
