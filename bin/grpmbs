@@ -47,7 +47,7 @@ fatal()
 }
 
 if [ -n "TASKADD" ] ; then
-	TASK=$(ssh $GIRARHOST task new | head -n1)
+	TASK=$(ssh $GEARHOST task new | head -n1)
 	[ -n "$TASK" ] || fatal
 	RUNCOMMAND="rpmbs $GIRARHOST -a $TASK"
 else
@@ -63,5 +63,5 @@ for i in "$@" ; do
 done
 
 if [ -n "TASKADD" ] ; then
-	docmd ssh $GIRARHOST task run "$TASK"
+	docmd ssh $GEARHOST task run "$TASK"
 fi
