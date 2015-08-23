@@ -1,6 +1,6 @@
 #!/bin/bash
-# 2005-2006, 2009, 2014 (c) Etersoft www.etersoft.ru
-# Author: Vitaly Lipatov <lav@etersoft.ru>
+# 2005-2006, 2009, 2014, 2015 (c) Etersoft www.etersoft.ru
+# 2005-2015 Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # GS - get source
@@ -34,7 +34,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -a  get all source (not only Source|Source0)"
-	echog "   -f  force download (remove source before download)"
+	echog "   -f  force download (remove source file before download)"
 }
 
 while getopts :haf opt; do
@@ -54,87 +54,35 @@ LISTRPMARGS=$@
 
 }
 
-# FIXME: use erc, don't work with korinf-sisyphus!
-# WEXT
-# supports only .tar.bz2 or .tar files in SOURCE
-get_archive()
-{
-	assert_var GETSOURCE
-	# FIXME: drop any ext
-	URL=${GETSOURCE/.bz2/}
-	URL=${URL/.tar/}
-	WEXT=`basename "$URL"`
-	[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$WEXT.$1"
-	#test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
-	if ! download_url "$URL.$1" ; then
-		rm -f "$WEXT.$1"
-		return 1
-	fi
-	if [ "$WEXT.$1" = "$(basename "$GETSOURCE")" ] ; then
-		# Skip repacking if the target has the same name
-		return 0
-	fi
-	erc -f repack "$WEXT.$1" "$(basename "$GETSOURCE")"
-}
-
-# supports only bz2
-get_archive1()
-{
-	URL=${GETSOURCE/.bz2/}
-	WEXT=`basename "$URL"`
-	[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$WEXT.$1"
-	#test -f "$WEXT.$1" && echog "$WEXT.$1 already exists" && return
-	download_url "$URL.$1" || return
-	test -f "$WEXT.$1" || return
-	echog -n "Converting to $WEXT.bz2..."
-}
-
-get_bz2()
-{
-	get_archive1 bz2 || return
-	bunzip -t $WEXT.bz2 && return
-	rm -fv $WEXT.bz2
-	return 1
-}
-
-function get_gz()
-{
-	get_archive1 gz || return
-	gunzip -f $WEXT.gz && return
-	rm -fv $WEXT.gz
-	return 1
-}
-
-function get_raw()
-{
-	download_url "$GETSOURCE"
-	WEXT=`basename $GETSOURCE`
-	test -f "$WEXT"
-}
-
-
-function dir_name()
-{
-	rm .listing
-	#wget `dirname $MAINSOURCE` --dont-remove-listing
-	
-}
-
 function get_source()
 {
 	GETSOURCE=$(eval_spec $1 | get_var "$2")
 }
 
-# download GETSOURCE url to tar.bz2 or tar (set WEXT as without extension name)
+repack_tarball()
+{
+	[ "$(realpath "$1")" = "$(realpath "$2")" ] && return
+	docmd erc -f repack "$1" "$2"
+}
+
 download_any_tarball()
 {
+	local GETSOURCE="$1"
+	local TARGET="$2"
 	local ext
-	for ext in tar.xz tar.bz2 tar.gz zip tgz 7z tbz2 tbz rar tar ; do
-		get_archive $ext && return
-		#FIXME:
-		#test -f "$WEXT.$ext" && fatal "$EXT.$ext is exists after fail download!"
+	local FORMATS="tar.xz tar.bz2 tar.gz zip tgz 7z tbz2 tbz rar tar"
+	local BASESOURCE="$GETSOURCE"
+	# drop any ext
+	for ext in $FORMATS ; do
+		BASESOURCE=$(echo "$BASESOURCE" | sed -e "s|\.$ext$||g")
 	done
-	dir_name
+	# try download with some ext
+	for ext in $FORMATS ; do
+		[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$BASESOURCE.$ext"
+		download_url "$BASESOURCE.$ext" || continue
+		repack_tarball "$(basename "$BASESOURCE.$ext")" "$TARGET" || continue
+		return
+	done
 	fatal "Cannot retrieve $GETSOURCE"
 }
 
@@ -185,16 +133,11 @@ function get_source_url()
 	GETSOURCEURL=$(source_ext "$1" url "$2")
 }
 
-has_ext()
-{
-	! test -n "${1/*$2/}"
-}
-
 function print_error()
 {
 	echog "Can't find any spec file. It is possible you run this script not in git dir."
 	echog "If you use old style build, run rpmgs with spec name as arg."
-	echog "If you wish to download src.rpm, use rpmgp script."
+	echog "If you wish download src.rpm, use rpmgp script."
 	exit 1
 }
 
@@ -279,63 +222,34 @@ do
 
 		# TODO: dropout these pushd/popd
 		# use pushd/popd due several cd / cd -
-		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
+		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ >/dev/null || fatal "Can't create/chdir..."
 
-		# Test for eterbuild extensions
+		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
 		get_source_url $spec $nn || get_source_svn $spec $nn
+
+		if ! rhas "$GETSOURCE" ".tar$" ; then
+			warning "It is recommended to use .tar tarballs for sources ($FTB now)"
+		fi
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
-		elif is_gear $SPECDIR; then
-			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $spec"
-			if ! has_ext "$GETSOURCE" .tar ; then
-				warning "It is recommended to use .tar tarballs for sources in gear"
-			fi
-			# TODO: rewrite code to use original file format and temp. download dir
-			if [ -n "${GETSOURCEURL}" ] ; then
-				# UpUrl for gear
-				download_url "$GETSOURCEURL"
-				# FIXME: gear-update can use any tarball
-				erc -f repack $(basename "$GETSOURCEURL") $FTB
-			elif has_ext "$GETSOURCE" .tar ; then
-				# tar target: try to load and convert
-				download_any_tarball
-				test -s $WEXT.tar.bz2 && FTB=$WEXT.tar.bz2
-			elif has_ext "$GETSOURCE" .tar.bz2 ; then
-				# tar.bz2 target: for src.rpm policy compatibility
-				download_any_tarball
-				test -f $WEXT.tar.bz2 || erc -f $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
-			else
-				download_url "$GETSOURCE"
-			fi
+		# TODO: GETSOURCEGIT
+		# TODO: rewrite code to use original file format and temp. download dir
+		elif [ -n "${GETSOURCEURL}" ] ; then
+			echog "Try to load ${GETSOURCEURL} for $spec"
+			download_url "$GETSOURCEURL" || fatal "Can't download $GETSOURCEURL"
+			# FIXME: gear-update can use any tarball
+			repack_tarball "$(basename "$GETSOURCEURL")" "$FTB"
 		else
-			[ -z "${GETSOURCEURL}" ] || fatal "Source git works only with gear repo"
-			echog "Try to load ${GETSOURCEURL:-$GETSOURCE} for $spec"
-			if ! has_ext "$GETSOURCE" .bz2 ; then
-				warning "It is recommended to use .bz2 tarballs for sources in rpm"
-			fi
-			if [ -n "${GETSOURCEURL}" ] ; then
-				# UpUrl for rpm
-				download_url "$GETSOURCEURL"
-				erc -f repack $(basename "$GETSOURCEURL") $FTB
-			elif ! has_ext "$GETSOURCE" .tar.bz2 ; then
-				# if not tar.bz2 target, direct download
-				download_url "$GETSOURCE"
-			elif has_ext "$GETSOURCE" .tar.bz2 ; then
-				# if tar.bz2 target
-				download_any_tarball
-				#echog -n "Compressing to $WEXT.tar.bz2..."
-				test -f $WEXT.tar.bz2 || erc -f $WEXT.tar tar.bz2: || fatal "Cannot bzip $WEXT.tar"
-			elif has_ext "$GETSOURCE" .bz2 ; then
-				warning "It is not tarball (possible single file)..."
-				get_bz2 || get_gz || get_raw || fatal "Cannot retrieve $GETSOURCE"
-			else
-				fatal "Logical error with $GETSOURCE"
-			fi
+			rhas "$GETSOURCE" "p://" || fatal "$GETSOURCE is not URL"
+			download_any_tarball "$GETSOURCE" "$FTB"
+		# TODO: fix download single packed file
+		#else
+		#		download_url "$GETSOURCE"
 		fi
 
-		echo "DONE"
-		popd
+		echog "DONE with $FTB"
+		popd >/dev/null
 
 	done
 
