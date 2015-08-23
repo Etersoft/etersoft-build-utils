@@ -1,4 +1,0 @@
-#!/bin/sh
-echo "Use epmqf from epm package manager (eepm) instead"
-exec epmqf "$@"
-

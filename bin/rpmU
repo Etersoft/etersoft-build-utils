@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo "Use epmi from epm package manager (eepm) instead"
-exec epmi "$@"
