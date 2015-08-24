@@ -9,8 +9,8 @@ cifs-utils|samba-client
 vixie-cron|cronie
 libjpeg-devel|libjpeg-turbo-devel
 libjpeg|libjpeg-turbo
-mount|util-linux-ng
-util-linux|util-linux-ng
+mount|util-linux
+util-linux|util-linux
 lsb-release|redhat-lsb
 
 libatkmm|atkmm
