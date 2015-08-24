@@ -200,9 +200,13 @@ do
 		set_version $spec $GSSETVERSION
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
 			set_release $spec $GSSETRELEASE
-			echo "Set new $GSSETVERSION-$GSSETRELEASE version for $spec"
+			if [ -n "$GSSETRELEASE" ] ; then
+				echo "Set new $GSSETVERSION-$GSSETRELEASE version for $spec"
+			else
+				echo "Set new $GSSETVERSION version for $spec"
+			fi
 		else
-			echo "Version $GSSETVERSION already set"
+			echo "Version $GSSETVERSION already was set"
 			GSSKIPADDCHANGELOG=1
 		fi
 	fi
