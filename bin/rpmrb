@@ -30,6 +30,14 @@ SPEC=$1
 [ -s "$SPEC" ] || fatal "Can't find spec file. Run $0 --help for help."
 
 VER=$1
+
+case "$2" in
+	-*)
+		fatal "No options are supported. See --help."
+		;;
+	*)
+esac
+
 # need for rpmgs
 GSSETRELEASE=$2
 test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_txtrelease $SPEC)1
