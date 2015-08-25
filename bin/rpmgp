@@ -300,6 +300,7 @@ git_clone()
 	else
 		local GIRARURL=$(get_git_url $GITHOST)
 		[ -n "$GIRARURL" ] || fatal "Can't get public URL for $GIRHOST"
+		PUBLICACCESS=1
 		docmd git clone $GIRARURL$RREPO
 	fi
 }
@@ -337,9 +338,12 @@ if [ -n "$CLONEGIT" ] ; then
 		cd - >/dev/null
 	fi
 
-	echo "See other repos at $GIRARHOST:"
-	giter $GITHOST list packages $PKGNAME
-	exit $?
+	if [ -z "$PUBLICACCESS" ] ; then
+		echo "See other repos at $GIRARHOST:"
+		giter $GITHOST list packages $PKGNAME
+	fi
+
+	exit $0
 fi
 
 if [ -n "$MIGRATEGIRAR" ] ; then
