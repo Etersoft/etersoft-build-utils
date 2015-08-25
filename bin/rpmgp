@@ -480,4 +480,5 @@ if [ -n "$ALLSYSTEM" ] ; then
 	exit 0
 fi
 
-fatal "Support for get src.rpm from ALT rsync removed. Use rpmgp with -g option or rpmgp -h for help."
+phelp
+exit 1
