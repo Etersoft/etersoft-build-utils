@@ -343,7 +343,7 @@ if [ -n "$CLONEGIT" ] ; then
 		giter $GITHOST list packages $PKGNAME
 	fi
 
-	exit $0
+	exit 0
 fi
 
 if [ -n "$MIGRATEGIRAR" ] ; then
