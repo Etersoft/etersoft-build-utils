@@ -66,10 +66,11 @@ mygetopts $LISTARGS
 check_spec()
 {
 	local SPEC="$1"
-	rhas "$SPEC" "\.spec$" || fatal "Use only for git repo or with spec"
+	rhas "$SPEC" "\.spec$" || fatal "Use only for git repo or with spec. Use $ epm site for packages."
 
 	if [ -n "$SISYPHUSRU" ] ; then
 		PKGNAME=$(eval_spec $SPEC | get_var "Name")
+		# epm site -p $PKGNAME
 		RPM_URL=$PAGEURL/$PKGNAME
 		if [ -n "$ABOUTDIR" ] ; then
 			RPM_URL=$RPM_URL/get
