@@ -59,10 +59,9 @@ get_git_list()
 	local name=$1
 	local url=$2
 	local list=$3
-	for i in $(curl $url | grep folder | sed -e "s|.*HREF=\"||g" | sed -e "s|\".*||g") ; do
-		curl $url/$i | grep 'class="link"' | sed -e "s|.*href=\"||g" | sed -e "s|\".*||g"
+	for i in $($CURL -s $url | grep folder | sed -e "s|.*HREF=\"||g" | sed -e "s|\".*||g") ; do
+		$CURL -s $url/$i | grep 'class="link"' | sed -e "s|.*href=\"||g" | sed -e "s|\".*||g"
 	done >$list
-
 }
 
 # Using: git_list idx [force]
@@ -86,13 +85,13 @@ get_list()
 		echo "Get list for $SYS from $URL"
 		#curl -l $URL/ >$LIST
 		# suitable for ftp and http lists
-		$CURL -l $URL/ | tee $LIST.tmp | html_filter >$LIST
+		$CURL -s -l $URL/ | tee $LIST.tmp | html_filter >$LIST
 		# check if there is letter subdirs (Fedora)
 		for i in $(cat $LIST.tmp) ; do
 		    rhas "$i" rpm && break
 		    [ -n "$(echo $i | cut -c2-)" ] && continue
 		    echo "Try get $URL/$i"
-		    $CURL -l $URL/$i/ | html_filter | sed -e "s|^|$i/|g" >>$LIST
+		    $CURL -s -l $URL/$i/ | html_filter | sed -e "s|^|$i/|g" >>$LIST
 		done
 		rm -f $LIST.tmp
 	#else
