@@ -276,7 +276,7 @@ do
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
 		elif is_gear ; then
-			CURNAME=$(get_tardir_from_rules) || fatal "There is no tar: line in gear rules file"
+			CURNAME=$(get_tardir_from_rules) || fatal "There is no 'tar:' line in gear rules file or 'tar: .' used"
 			test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
 			test -d "$CURNAME" || CURNAME=$BASENAME
 			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD

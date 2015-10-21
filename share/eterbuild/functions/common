@@ -292,7 +292,7 @@ get_tardir_from_rules()
 {
 	local rules=$(get_gear_rules)
 	assert_var rules
-	local dir=$(grep "tar: " $rules | sed -e "s|tar: *||g
+	local dir=$(grep "tar.*: " $rules | sed -e "s|tar.*: *||g
 s| .*||g")
 	[ "$dir" = "." ] || [ -z "$dir" ] && return 1
 	echo "$dir"
