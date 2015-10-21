@@ -245,7 +245,7 @@ do
 			# FIXME: gear-update can use any tarball
 			repack_tarball "$(basename "$GETSOURCEURL")" "$FTB"
 		else
-			rhas "$GETSOURCE" "p://" || fatal "$GETSOURCE is not URL"
+			rhas "$GETSOURCE" "ps?://" || fatal "$GETSOURCE is not URL"
 			download_any_tarball "$GETSOURCE" "$FTB"
 		# TODO: fix download single packed file
 		#else
