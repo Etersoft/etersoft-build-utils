@@ -74,7 +74,7 @@ get_list()
 	local SYS=${SYSNAME[$1]}
 	CURL=curl
 
-	which $CURL 2>/dev/null >/dev/null || fatal "curl command needed for download"
+	epm assure $CURL || fatal "curl command needed for download"
 	mkdir -p $OURTMPDIR/etersoft-build-utils/
 	LIST=$OURTMPDIR/etersoft-build-utils/rpmgpall-$SYS
 	if [ ! -f "$LIST" ] || [ "$FORCE" = "force" ] ; then
