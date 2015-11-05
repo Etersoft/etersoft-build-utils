@@ -330,8 +330,10 @@ do
 	subst  "s|%_libdir/mono/gac|%_monogacdir|g
 		s|%_libdir/mono|%_monodir|g" $i
 
-	subst  "s|%prefix/lib|%_libdir|g
+	subst  "s|%prefix/lib/|%_libdir/|g
+		s|%prefix/lib64/|%_libdir/|g
 		s|%prefix/%_lib|%_libdir|g
+		s|%prefix/libexec|%_libexecdir|g
 		s|/usr/%_lib|%_libdir|g
 		s|%prefix/include|%_includedir|g
 		s|/usr/include|%_includedir|g
@@ -351,6 +353,7 @@ do
 	# TODO: not in expressions
 	subst  "s|/usr/sbin/|%_sbindir/|g
 		s|/usr/bin/|%_bindir/|g
+		s|%prefix/bin/|%_bindir/|g
 		s|/usr/lib/|%_libdir/|g
 		s|/usr/share/|%_datadir/|g
 		s|%_datadir/games|%_gamesdatadir|g" $i
@@ -377,6 +380,7 @@ do
 		s|%python2_version|%__python_version|g
 		s|%python_sitelib/|%python_sitelibdir/|g
 		s|%python2_sitelib/|%python_sitelibdir/|g
+		s|%python3_sitelib/|%python3_sitelibdir/|g
 		s|%_libdir/python2.[67]/site-packages/|%python_sitelibdir/|g
 		s|%py_sitedir/|%python_sitelibdir/|g
 		s|%python_sitearch|%python_sitelibdir|g
@@ -390,7 +394,8 @@ do
 	subst 's|^CFLAGS="$RPM_OPT_FLAGS" python setup.py build|%python_build|g' $i
 	subst 's|^CFLAGS="%optflags" python setup.py build|%python_build|g' $i
 	subst "s|^%__python setup.py install --root.%buildroot|%python_install|g" $i
-	subst "s|^%__python setup.py install --skip-build --root %buildroot|%python_install|g" $i
+	subst "s|^%__python setup.py install --skip-build --root[ =]%buildroot|%python_install|g" $i
+	subst "s|^%__python3 setup.py install --skip-build --root[ =]%buildroot|%python3_install|g" $i
 	subst "s|^%__python setup.py install -O1 --skip-build --root %buildroot|%python_install|g" $i
 	subst "s|^%__python setup.py install -O2 --root %buildroot|%python_install|g" $i
 	subst "s|^%__python setup.py install --optimize --root %buildroot|%python_install|g" $i
@@ -439,6 +444,9 @@ do
 		s|%__autoreconf|%autoreconf|g" $i
 
 	subst "s|%rpmcflags|%optflags|g" $i
+
+	# %license means License field in ALT rpm
+	subst "s|^%license |%doc |g" $i
 
 	# drop useless construction
 	subst "s|%setup -q|%setup|g" $i
