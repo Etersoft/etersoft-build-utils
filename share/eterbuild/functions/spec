@@ -294,6 +294,7 @@ remove_bashism()
 
 	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME.main
 	subst "s|^popd|cd - >/dev/null|g" $SPECNAME.main
+	subst "s|^echo -e '\\\n'|echo ''|g" $SPECNAME.main
 
 	# {1,2} translation
 	# FIXME: miss first spaces
