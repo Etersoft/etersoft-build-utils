@@ -106,9 +106,10 @@ xorg-inputproto-devel|x11proto-input-dev
 xorg-sdk|
 xorg-xextproto-devel|x11proto-xext-dev
 
-libMySQL-devel|libmysqlclient15-dev
+#libMySQL-devel|libmysqlclient15-dev
+libMySQL-devel|libmysqld-dev
 libcomedi|libcomedi0
-libomniORB-devel|libomniorb4-dev
+libomniORB-devel|libomniorb4-dev omniidl
 libomniORB|libomniorb4
 libsigc++2-devel|libsigc++-2.0-dev
 #libsigc++2-devel|libsigc++-2.0-dev
@@ -117,8 +118,6 @@ libsigc++2|libsigc++-2.0-0c2a
 libxml++2-devel|libxml++2.6-dev
 libxml++2|libxml++2.6
 
-# only in Ubuntu
-#omniORB|omniorb4
 
 libglademm-devel|libglademm-2.4-dev
 libglademm|libglademm-2.4
@@ -302,13 +301,29 @@ xkeyboard-config|xkb-data
 
 rpm-build|rpm
 phonon-devel|libphonon-dev phonon-backend-gstreamer qt4-qmake libqt4-dev
+qt5-base-devel|qt5-default
+libqt5-core|libqt5core5a
+libqt5-gui|libqt5gui5
+libqt5-network|libqt5network5
+libqt5-widgets|libqt5widgets5
+libqt5-xml|libqt5xml5
 
-# libuniset
-#libcomedi-devel|libcomedi-dev
-#libcommoncpp2-devel|libcommoncpp2-dev
-libomniORB-devel|libomniorb4-dev
-libMySQL-devel|libmysqld-dev
-#libsqlite3-devel|libsqlite3-dev
+# do not use obsoleted pj project
+#libpjsip-devel|libpjproject-dev
+libpjsip-devel|libpjsip-devel
+# keep broken name
+sipgateway-devel|sipgateway-devel
+
+libportaudio2-devel|portaudio19-dev
+libportaudio2|libportaudio2
+libsrtp|libsrtp0-dev
+libuuid-devel|uuid-dev
+
+libspeex-devel|libspeex-dev libspeexdsp-dev
+# repeat for rpmcs
+libspeex-devel|libspeex-dev
+libspeex-devel|libspeexdsp-dev
+libspeex|libspeex1
 
 # hack due our wine package with -devel
 libwine-etersoft-devel|libwine-etersoft-devel

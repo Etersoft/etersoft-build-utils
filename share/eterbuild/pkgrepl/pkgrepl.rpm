@@ -216,6 +216,8 @@ libqt4-devel|qt4-devel
 libqt4-core|qt4
 libqt4-gui|qt4
 
+qt5-base-devel|qt5-qtbase-devel
+
 libtiff5|libtiff
 
 libfuse-devel|fuse-devel
