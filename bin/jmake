@@ -8,9 +8,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	exit 0
 fi
 
-if [ -z "$CCACHE_DISABLE" ] ; then
-	enable_ccache
-fi
+try_enable_ccache "$@"
 
 # get number of available processors
 [ -n "$NPROCS" ] || NPROCS=`/usr/bin/getconf _NPROCESSORS_ONLN`

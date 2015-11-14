@@ -484,20 +484,35 @@ is_ssh_target()
 	rhas "$1" ":"
 }
 
-enable_ccache()
+try_enable_ccache()
 {
-	which ccache >/dev/null || fatal "Install ccache package before using"
+	if [ -n "$CCACHE_DISABLE" ] ; then
+		info "ccache disabled by CCACHE_DISABLE var"
+		return
+	fi
 
+	if ! which ccache >/dev/null ; then
+		info "No ccache (from ccache package)"
+		return
+	fi
+
+	# TODO: add support for clang
+	# TODO: check for work with scan-build (clang-analizer)
 	# handled in gcc-common
 	export GCC_USE_CCACHE=1
+
+	if [ -n "$CXX$CC" ] ; then
+		info "CXX=$CXX CC=$CC already exists, skip setting"
+		return
+	fi
+
+	if rhas "$*" "C[CX].?=" ; then
+		info "ran with CXX= or CC= in args '$*', skip setting"
+		return
+	fi
+
 	# step to gcc-common
 	export CC=gcc CXX=g++
-
-	#export CC="ccache gcc"
-	#export CPP="ccache gcc -E"
-	#export CXX="ccache g++"
-	#export CXXCPP="ccache g++ -E"
-
 }
 
 

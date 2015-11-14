@@ -79,10 +79,7 @@ prepare_rpmdir
 test -z "$LISTNAMES" && fatal "Please run with spec(s) name"
 test -n "$LISTRPMARGS" && echog "Run $RPMBUILD with options: '$LISTRPMARGS'"
 
-# enable ccache using
-if [ -n "$CCACHE_ENABLE" ] ; then
-	enable_ccache
-fi
+try_enable_ccache
 
 # instead cbuild req
 if [ -n "$BUILDREQ" ] ; then
