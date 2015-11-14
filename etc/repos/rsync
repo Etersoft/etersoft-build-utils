@@ -1,6 +1,7 @@
 
 # ALT Linux
 git.alt sisyphus rsync.altlinux.org::ALTLinux/Sisyphus
+git.alt p8 rsync.altlinux.org::ALTLinux/p8/branch
 git.alt p7 rsync.altlinux.org::ALTLinux/p7/branch
 git.alt p6 rsync.altlinux.org::ALTLinux/p6/branch
 git.alt t6 rsync.altlinux.org::ALTLinux/t6/branch
@@ -12,6 +13,7 @@ git.alt 4.0 rsync.altlinux.org::ALTLinux/4.0/branch
 
 # Etersoft
 git.eter sisyphus rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/Sisyphus
+git.eter p8 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/p8/branch
 git.eter p7 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/p7/branch
 git.eter p6 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/p6/branch
 git.eter t6 rsync://rsync.etersoft.ru/pub/Etersoft/LINUX@Etersoft/t6/branch
