@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,17 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Nov 16 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- rpmgs: allow https urls
+- rpmgp: use curl -s, add http source support for multi letter dirs
+- fix get tar rule from .gear/rules
+- rpmcs: update
+- remove_bashism: add replacement for echo -e '\n'
+- make ccache optional
+- add pkgrepls for build qt project
+- repos/srpms: big update
+- repos/rsync: add p8
+
 * Fri Oct 09 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
 - pkgrepl: fix util-linux name
 - rpmrb: check for extra options
