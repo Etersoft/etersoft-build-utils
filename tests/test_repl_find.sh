@@ -157,3 +157,20 @@ check_repl libfreetype-devel "freetype2-devel-32bit"
 check_repl zlib-devel "zlib-devel-32bit"
 check_repl libXpm-devel "xorg-x11-libXpm-devel-32bit"
 check_repl fontconfig-devel "fontconfig-devel-32bit"
+
+
+############################# Ubuntu ##########################
+BUILDNAME=wine
+
+DISTRNAME=Ubuntu
+PKGVENDOR=ubuntu
+DISTRVERSION=14.04
+#BUILDARCH=x86_64
+BUILDARCH=i586
+PKGFORMAT=deb
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libportaudio2-devel "portaudio19-dev"
