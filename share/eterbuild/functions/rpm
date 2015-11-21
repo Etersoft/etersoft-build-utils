@@ -151,6 +151,7 @@ get_pkgname_from_filename()
 	echo ${FN/[-_][0-9]*/}
 }
 
+# TODO: epm print srcname from filename
 # return source package name by binary rpm package file
 get_sourcepkg_name()
 {

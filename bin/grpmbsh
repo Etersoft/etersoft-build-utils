@@ -17,9 +17,14 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	exit 1
 fi
 
+OPTIONS=
+if [ "$1" = "-i" ] ; then
+	OPTIONS="-i"
+fi
+
 
 for i in "$@" ; do
 	docmd cd $i || fatal "Please run in dir with '$i' subdirectory."
-	docmd rpmbsh $GIRARHOST || fatal
+	docmd rpmbsh $GIRARHOST $OPTIONS || fatal
 	cd -
 done
