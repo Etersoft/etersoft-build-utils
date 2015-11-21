@@ -120,6 +120,8 @@ passwdqc-control"
 # Translate requires from local rpm package to package names (on local ALT Linux Sisyphus)
 # FIXME: do not support x86_64 issues, use only with 32 bit packages
 # Use test from tests/test_cget_depends.sh
+# TODO: use hasher (see func before)
+# TODO: do not run apt-get install directly
 trans_rpmdeps_to_pkgname_lav()
 {
 	# partially copied from aptU
@@ -137,10 +139,19 @@ trans_rpmdeps_to_pkgname_lav()
 	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
 	#FIXME: f.i., we got /usr/bin/lpstat in VIRTREQ (select cups or lprng package?). Skip now
 	#REQLIST=$(regexp_exclude_list "VIRTREQ" "$REQLIST")
+	# TODO: we have store_output function
 	TFILE=$(make_temp_file)
 	PKGFILES=$(LANG=C apt-get install --print-uris $REQCONVLIST 2>$TFILE | egrep "(^Selecting|.* is already the newest version.)" | sed -e "s|^Selecting ||g" | sed -e "s| is already the newest version.||g" | sed -e "s| .*||g" | sort -u | filter_pkgname) || warning "Error return code from apt-get install"
 	if grep -q "is a virtual package provided by" $TFILE ; then
-		fatal "multiple provides: $(cat $TFILE)"
+		local INSTALLMARK="\[Installed\]"
+		if ! grep -q "$INSTALLMARK" $TFILE ; then
+			fatal "multiple provides: $(cat $TFILE)"
+		fi
+		PKGINSTALLED="$(grep "$INSTALLMARK" $TFILE | estrlist filter_strip_spaces | sed -e "s| .*||g")"
+		if [ -z "$PKGINSTALLED" ] ; then
+			fatal "can't resolve multiple provides: $(cat $TFILE)"
+		fi
+		PKGFILES="$PKGFILES $PKGINSTALLED"
 	fi
 
 	if grep -q "Couldn't find package" $TFILE ; then
