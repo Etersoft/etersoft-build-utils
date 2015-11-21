@@ -316,7 +316,8 @@ sipgateway-devel|sipgateway-devel
 
 libportaudio2-devel|portaudio19-dev
 libportaudio2|libportaudio2
-libsrtp|libsrtp0-dev
+libsrtp-devel|libsrtp0-dev
+libsrtp1|libsrtp0
 libuuid-devel|uuid-dev
 
 libspeex-devel|libspeex-dev libspeexdsp-dev
@@ -339,3 +340,9 @@ libXcomp|libxcomp3
 mailx|mailutils
 libssh2-devel|libssh2-1-dev
 libssh2|libssh2-1
+
+boost-asio-devel|libasio-dev
+boost-program_options-devel|libboost-program-options-dev libboost-system-dev libboost-thread-dev
+
+tbb-headers|libtbb-dev
+libtbb|libtbb2

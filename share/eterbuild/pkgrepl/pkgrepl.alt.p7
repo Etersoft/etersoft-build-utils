@@ -4,3 +4,5 @@ libpng15|libpng15
 # semibroken 2.9
 #libwxGTK3.1|libwxGTK2.9
 #libwxGTK3.1-devel|libwxGTK2.9-devel
+libsrtp-devel|libsrtp
+libsrtp1|libsrtp

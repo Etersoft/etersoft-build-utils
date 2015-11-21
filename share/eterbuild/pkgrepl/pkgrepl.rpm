@@ -256,5 +256,7 @@ libspeex-devel|speexdsp-devel
 libspeex|speex
 libportaudio2-devel|portaudio-devel
 libportaudio2|portaudio
-libsrtp|libsrtp-devel
+libsrtp1|libsrtp
 
+tbb-headers|tbb-devel
+libtbb|tbb
