@@ -3,3 +3,6 @@ libwine-etersoft-devel|
 libwine-devel|
 libwine-vanilla-devel|
 perl-XML-LibXML|
+
+liblcms2-devel|lcms-devel
+liblcms2|lcms-libs

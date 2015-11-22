@@ -37,6 +37,7 @@ libhal-devel|
 libmpg123|mpg123
 libGLU-devel|glu
 libGLU|glu
+
 # fixme? why we need libglu??
 libglu|glu
 libGL-devel|mesa-libgl
@@ -60,6 +61,7 @@ libxscrnsaver|
 mount|util-linux
 eject|util-linux
 util-linux|util-linux
+
 # missed
 libxxf86misc|
 rpm-build|rpm-org fakeroot
@@ -80,12 +82,14 @@ netcat|gnu-netcat
 python-base|python2
 python-devel|python2
 setxkbmap|xorg-setxkbmap
+
 # cron is just target
 vixie-cron|cron
 xdpyinfo|xorg-xdpyinfo
 xmodmap|xorg-xmodmap
 xrdb|xorg-xrdb
 xsetroot|xorg-xsetroot
+
 # fixme
 fonts-bitmap-misc|
 docbook-utils|docbook-xml
@@ -96,6 +100,7 @@ libaudiofile|audiofile
 libpam|pam
 makedepend|imake
 libgtk+2-devel|gtk2
+
 # will not work without gdk
 libgtk+2|gtk2 gdk-pixbuf2
 
@@ -121,3 +126,7 @@ libtiff5|libtiff
 
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+
+libunixODBC|unixodbc
+unixODBC|unixodbc
+libunixodbc|unixodbc

@@ -1,0 +1,11 @@
+build-essential | build-essential alien fakeroot
+
+#Stranno, est' `ta zamena v pkgrepl.deb
+libXtst-devel|libxtst-dev
+libxtst-devel|libxtst-dev
+
+# nxsadmin 
+libatkmm|libgtkmm-2.4-1v5
+libglibmm|libgtkmm-2.4-1v5
+libgtkmm2|libgtkmm-2.4-1v5
+libsigc++2|libsigc++-2.0-0v5

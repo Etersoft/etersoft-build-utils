@@ -1,7 +1,6 @@
 libpng-devel|libpng16-devel
 libpng12-devel|libpng12-devel
 
-libudev0|libudev1
-libudev1|libudev1
+libdbus-devel|dbus-1-devel
+libdbus|dbus-1-devel
 
-liblcms2|liblcms2-2

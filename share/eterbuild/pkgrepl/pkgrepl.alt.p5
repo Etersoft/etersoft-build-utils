@@ -10,3 +10,6 @@ libudev1|libudev
 
 libwxGTK3.1|wxGTK
 libwxGTK3.1-devel|wxGTK-devel
+
+liblcms2-devel|liblcms-devel
+liblcms2|liblcms

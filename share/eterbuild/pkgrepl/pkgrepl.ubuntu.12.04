@@ -11,3 +11,5 @@ python-modules-unittest|python-unittest2
 libunixODBC-devel|unixodbc-dev
 libpqxx-devel|libpqxx3-dev
 lipqxx|libpqxx-3.1
+libwxGTK-devel|libwxgtk2.8-dev
+libwxGTK|libwxgtk2.8

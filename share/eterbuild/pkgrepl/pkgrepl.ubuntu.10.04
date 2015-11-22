@@ -30,3 +30,6 @@ libltdl7|libltdl7
 libopenal1|libopenal1
 
 libgnutls26|libgnutls26
+
+libunixodbc|unixodbc
+libunixodbc-dev|unixodbc-dev

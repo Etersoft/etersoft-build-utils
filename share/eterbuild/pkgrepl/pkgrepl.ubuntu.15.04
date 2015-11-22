@@ -3,4 +3,6 @@ libgnutls28|libgnutls-deb0-28
 libgnutls-devel|libgnutls28-dev
 liblcms-devel|
 liblcms|
+libwxGTK|libwxgtk2.8-0
+libwxGTK-devel|libwxgtk2.8-dev
 
