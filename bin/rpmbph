@@ -131,11 +131,11 @@ if [ "$PKGVENDOR" = "freebsd" ] ; then
 %__subst 's|readlink -mv|realpath|g' libtool configure ltmain.sh"
 fi
 
-if build32on64 ; then
-	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
-	ADDFIXCOMMAND="$ADDFIXCOMMAND
-%remove_optflags -m64"
-fi
+#if build32on64 ; then
+#	test -z "$VERBOSE" || echo "Add remove_optflags -m64"
+#	ADDFIXCOMMAND="$ADDFIXCOMMAND
+#%remove_optflags -m64"
+#fi
 
 # fix mktemp using for MCBC
 if [ "$PKGVENDOR" = "mcbc" ] ; then
