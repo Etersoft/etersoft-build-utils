@@ -249,6 +249,8 @@ python-module-setuptools|python-setuptools
 xorg-util-macros|xorg-x11-util-macros
 
 gcc4.6-c++|gcc-c++
+# skip reverse replacing
+gcc-c++|gcc-c++
 libspeex-devel|speex-devel speexdsp-devel
 # repeat for rpmcs
 libspeex-devel|speex-devel
