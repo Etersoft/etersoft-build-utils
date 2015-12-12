@@ -6,3 +6,5 @@ libwxGTK3.1-devel|libwxGTK3.1-devel
 
 libsrtp-devel|libsrtp-devel
 libsrtp1|libsrtp1
+libspeexdsp-devel|libspeexdsp-devel
+qt5-base-devel|qt5-base-devel

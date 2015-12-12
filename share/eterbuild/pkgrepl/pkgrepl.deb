@@ -306,6 +306,7 @@ libqt5-core|libqt5core5a
 libqt5-gui|libqt5gui5
 libqt5-network|libqt5network5
 libqt5-widgets|libqt5widgets5
+qt5-webkit-devel|libqt5webkit5-dev
 libqt5-xml|libqt5xml5
 
 # do not use obsoleted pj project

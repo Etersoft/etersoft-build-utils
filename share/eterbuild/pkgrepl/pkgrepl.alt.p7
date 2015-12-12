@@ -6,3 +6,5 @@ libpng15|libpng15
 #libwxGTK3.1-devel|libwxGTK2.9-devel
 libsrtp-devel|libsrtp
 libsrtp1|libsrtp
+libspeexdsp-devel|libspeex-devel
+qt5-base-devel|qt5-base-devel libEGL-devel
