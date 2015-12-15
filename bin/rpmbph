@@ -1,14 +1,11 @@
 #!/bin/bash
-# 2003-2010, 2012 (c) Etersoft www.etersoft.ru
+# 2003-2010, 2012, 2015 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
-# BPH - backport; use hasher
+# BPH - backport package with hasher checking
 
 # Used ROOTDIR if defined (for non ALT systems)
-# Makes backport package to any target platfrom (RPM, DEB, TGZ)
-# Релиз строится на основе релиза из Сизифа. Если там был alt4, то здесь будет alt0.M24.4
-# TODO: use RPMBUILDARG
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -29,7 +26,7 @@ BUILDNAME=$(get_name $SPECNAME)
 ADDFIXCOMMAND=
 ADDREQUIRES=
 
-echo "Converting spec $(basename $SPECNAME) to $MDISTR..."
+echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR)..."
 
 # Set buildreq
 if [ "$PKGVENDOR" = "alt" ] ; then
@@ -401,13 +398,13 @@ fi
 
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
-[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs"
+[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
 [ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 
 # set SPECDIR from LISTNAMES if empty
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
-	# if run for ALT inside gear repo, just create backported spec
+# if run for ALT inside gear repo, just create backported spec
 if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 
@@ -435,12 +432,8 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 	CURBRANCH=$(get_current_branch)
 
-	if [ "$CURBRANCH" = "$USEBRANCH" ] ; then
-		fatal "Run rpmbph in sisyphus or master branch only, not in backport branch $USEBRANCH"
-	fi
-
-	if [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
-		fatal "Run rpmbph in sisyphus or master branch only, not in backport branch $OLDBRANCH"
+	if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
+		fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
 	fi
 
 	# Create branch if not exist yet
@@ -448,6 +441,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		docmd git branch $USEBRANCH
 	fi
 
+	# Only one spec supported
 	cp -f $LISTNAMES $BPSPEC
 	altspec_to_local $BPSPEC
 
@@ -459,12 +453,12 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 		#git checkout $SPEC $MDISTR
 		#git checkout $CURBRANCH
-		fatal "User cancelled. You are still in $USEBRANCH branch with modified spec."
+		fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
 	fi
 	docmd git add $SPEC
 	if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
 		#git checkout $CURBRANCH
-		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec file"
+		fatal "Commit error. You are still in $MDISTR branch with modified and uncommitted spec file."
 	fi
 	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
 	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
