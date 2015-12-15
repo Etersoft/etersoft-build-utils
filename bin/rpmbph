@@ -43,6 +43,8 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.25"
 	elif grep -q _sharedstatedir $SPECNAME ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.24"
+	elif grep -q configure32 $SPECNAME ; then
+		BUILDREQ="BuildRequires: rpm-build-compat >= 1.9.0"
 	fi
 
 	# drop unsuported technologies
