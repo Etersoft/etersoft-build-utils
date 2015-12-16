@@ -371,13 +371,13 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 	subst "1i# This spec is backported to $DISTRNAME $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
 	ENTRY="- backport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
 	# TODO: obsoleted
-	DISTRARG="-$MDISTR"
+	#DISTRARG="-$MDISTR"
 else
 	subst "1i# This spec is autoported from ALT Linux Sisyphus to $DISTRNAME $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
 	ENTRY="- autoport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
 	export USE_VENDOR=$RPMVENDOR
 	export USE_LEGACY_COMPRESSION=1
-	DISTRARG=""
+	#DISTRARG=""
 fi
 
 test -s "$SPECNAME" || fatal "something is wrong. $SPECNAME is empty after converting."
