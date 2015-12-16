@@ -149,7 +149,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		#git checkout $CURBRANCH
 		fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
 	fi
-	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $DISTRARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
 	docmd git checkout $CURBRANCH
 	exit $?
 fi
@@ -175,7 +175,7 @@ for i in $LISTBUILT ; do
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPONAME $SPECNAME
 
-	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $DISTRARG $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true
 done
 
