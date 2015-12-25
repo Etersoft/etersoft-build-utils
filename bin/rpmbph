@@ -77,7 +77,11 @@ test -z "$LISTNAMES" && fatal "file not found in '$@'"
 if [ "$PKGVENDOR" = "alt" ] ; then
 	# FIXME: where we was detected MENV?
 	MDISTR=$MENV
-	[ -n "$BINARYREPONAME" ] && MDISTR=$(get_altdistr_mod $BINARYREPONAME)
+	if [ -n "$BINARYREPONAME" ] ; then
+		MDISTR=$(get_altdistr_mod $BINARYREPONAME)
+	else
+		BINARYREPONAME=$(get_altdistr_version $MDISTR)
+	fi
 	[ "$MDISTR" = "SS" ] && fatal "It makes no sense to backport to Sisyphus (You need to try with -b $EXAMPLEALTDISTRVERSION)."
 	# override by defined target version
 	DISTRVERSION=$(get_altdistr_version $MDISTR)
@@ -100,7 +104,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 
 	# set branch name
-	USEBRANCH=$(get_altdistr_version $MDISTR)
+	USEBRANCH=$BINARYREPONAME
 	SPEC=$LISTNAMES
 	BPSPEC=$SPEC.$USEBRANCH
 
