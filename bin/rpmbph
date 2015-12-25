@@ -87,8 +87,10 @@ fi
 
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
-[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
-[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
+if [ -z "$BUILDCOMMAND" ] ; then
+	BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
+	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
+fi
 
 # set SPECDIR from LISTNAMES if empty
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
@@ -131,13 +133,13 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	fi
 
 	# Only one spec supported
-	cp -f $LISTNAMES $BPSPEC
-	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPONAME $BPSPEC
+	cp -f $LISTNAMES $BPSPEC || fatal
+	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPONAME $BPSPEC || fatal
 
 	docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
 	# TODO: check result message for merge?
 	docmd git merge --no-ff $CURBRANCH
-	mv -f $BPSPEC $SPEC
+	mv -f $BPSPEC $SPEC || fatal
 	# FIXME: Ctrl-\ and q will cancelled less with return error code
 	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 		#git checkout $SPEC $MDISTR
