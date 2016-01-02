@@ -32,7 +32,7 @@ phelp()
 #	echog "   -q           quiet"
 	echo
 	echog "Examples:"
-	echog " $ rpmbps -b p6 - backport spec to p6 form"
+	echog " $ rpmbps -b $EXAMPLEALTDISTRVERSION - backport spec to $EXAMPLEALTDISTRVERSION form"
 }
 
 # FIXME: has difference between
@@ -57,6 +57,8 @@ LISTRPMARGS=$(drop_args "$*" v)
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
 
 # TODO
 SPECNAME="$LISTNAMES"
@@ -64,10 +66,9 @@ test -f "$SPECNAME" || fatal "file '$SPECNAME' is not found"
 
 if [ "$PKGVENDOR" = "alt" ] ; then
 	MDISTR=$MENV
-	[ -n "$BINARYREPONAME" ] && MDISTR=$(get_altdistr_mod $BINARYREPONAME)
 	[ "$MDISTR" = "SS" ] && fatal "It makes no sense to backport to Sisyphus (You need to try with -b $EXAMPLEALTDISTRVERSION)."
 	# override by defined target version
-	DISTRVERSION=$(get_altdistr_version $MDISTR)
+	DISTRVERSION=$BINARYREPO
 else
 	# then ROOTDIR is used?
 	MDISTR=LOCAL

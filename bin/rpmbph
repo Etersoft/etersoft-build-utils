@@ -39,17 +39,18 @@ phelp()
 	echog "   -q           quiet"
 	echo
 	echog "Examples:"
-	echog " $ rpmbph -b p6 -n -u  - backport to p6 and ask to build it"
+	echog " $ rpmbph -b $EXAMPLEALTDISTRVERSION -n -u  - backport to $EXAMPLEALTDISTRVERSION and ask to build it"
 #	echog "Set ROOTDIR variable for backport to the other system"
 #	echog " -m - send result via e-mail"
 }
 
 # FIXME: has difference between
+UPLOADARG=
 while getopts :hnvqb: opt; do
     case $opt in
         h) phelp; exit 0 ;;
         n) NOBUILD=1 ;;
-        #u) UPLOADARG="-$opt" ;;
+        u) UPLOADARG="-$opt" ;;
         v) VERBOSE=1 ;;
         b) BINARYREPONAME=$OPTARG ;;
         q) QUIET=1 ;;
@@ -64,7 +65,7 @@ if [ $# -gt 0 ]; then
 fi
 
 # pass other options to RPM (exclude -v):
-LISTRPMARGS=$(drop_args "$*" v)
+LISTRPMARGS="$UPLOADARG $(drop_args "$*" v n q)"
 }
 
 set_girar_host $1 && shift
@@ -72,19 +73,16 @@ set_girar_host $1 && shift
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
+
 test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
 if [ "$PKGVENDOR" = "alt" ] ; then
-	# FIXME: where we was detected MENV?
 	MDISTR=$MENV
-	if [ -n "$BINARYREPONAME" ] ; then
-		MDISTR=$(get_altdistr_mod $BINARYREPONAME)
-	else
-		BINARYREPONAME=$(get_altdistr_version $MDISTR)
-	fi
 	[ "$MDISTR" = "SS" ] && fatal "It makes no sense to backport to Sisyphus (You need to try with -b $EXAMPLEALTDISTRVERSION)."
 	# override by defined target version
-	DISTRVERSION=$(get_altdistr_version $MDISTR)
+	DISTRVERSION=$BINARYREPO
 else
 	MDISTR=LOCAL
 fi
@@ -104,7 +102,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 
 	# set branch name
-	USEBRANCH=$BINARYREPONAME
+	USEBRANCH=$BINARYREPO
 	SPEC=$LISTNAMES
 	BPSPEC=$SPEC.$USEBRANCH
 
@@ -138,7 +136,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 	# Only one spec supported
 	cp -f $LISTNAMES $BPSPEC || fatal
-	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPONAME $BPSPEC || fatal
+	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
 
 	docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
 	# TODO: check result message for merge?
@@ -155,7 +153,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		#git checkout $CURBRANCH
 		fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
 	fi
-	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+	docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
 	docmd git checkout $CURBRANCH
 	exit $?
 fi
@@ -179,7 +177,7 @@ for i in $LISTBUILT ; do
 
 	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
-	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPONAME $SPECNAME
+	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
 	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true

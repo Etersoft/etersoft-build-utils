@@ -65,10 +65,15 @@ set_binaryrepo()
 		BINARYREPO="$BINARYREPONAME"
 		MENV="$(get_altdistr_mod $BINARYREPO)"
 		MENVARG="-$MENV"
-		# already was in parse_cmd_pre, but call in again for refill with updated $MENV
+		# fill with updated $MENV
 		detect_target_env
 		return
+	else
+		# parse MENV
+		detect_target_env
+		BINARYREPO=$(get_altdistr_version $MENV)
 	fi
+
 	test -z "$1" && return
 
 	BINARYREPO="`get_altdistr_version $1`"

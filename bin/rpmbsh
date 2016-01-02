@@ -63,6 +63,8 @@ set_girar_host $1 && shift
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
 
 [ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"
 
@@ -75,6 +77,8 @@ fi
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u i c l f a A)
+
+# TODO: use gear --hasher directly, drop myhsh
 
 if rhas "$LISTNAMES" spec ; then
 	set_specdir $LISTNAMES

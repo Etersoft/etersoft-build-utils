@@ -429,8 +429,6 @@ do
 done
 LISTNAMES=$(strip_spaces "$LISTNAMES")
 LISTARGS=$(strip_spaces "$LISTARGS")
-# parse MENV
-detect_target_env
 [ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :
 }
 
