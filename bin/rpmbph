@@ -158,8 +158,6 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	exit $?
 fi
 
-unset MENV MENVARG
-
 # handle src.rpm and spec both, LISTBUILT - result with full paths to src.rpms
 pack_src_rpm $LISTNAMES
 
@@ -179,7 +177,7 @@ for i in $LISTBUILT ; do
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
-	docmd $BUILDCOMMAND $LISTRPMARGS $UPLOADARG $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $UPLOADARG $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true
 done
 

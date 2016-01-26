@@ -75,6 +75,7 @@ LISTRPMARGS=$@
 parse_cmd_pre "$@" --
 
 mygetopts $LISTARGS
+
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 

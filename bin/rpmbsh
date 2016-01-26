@@ -37,12 +37,14 @@ phelp()
 	echog "   -s  sign (and move to dir ETERDESTSRPM if defined) after build"
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
+	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 }
 
-while getopts :ht opt; do
+while getopts :htb: opt; do
     case $opt in
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
+    b) BINARYREPONAME=$OPTARG ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
 	?) OPTIND=$((OPTIND-1)); break;

@@ -163,7 +163,6 @@ gear_update_from_tarball()
 	fatal "can't import tarball '$TARBALL'"
 }
 
-
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
