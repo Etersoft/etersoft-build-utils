@@ -49,7 +49,7 @@ check_qf()
 {
 	[ "$1" = "-qf" ] || return
 	shift
-	docmd epmqf --short "$1" | xargs --no-run-if-empty -- $ETERBUILDBIN/rpmbugs
+	docmd $EPMCMD -qf --short "$1" | xargs --no-run-if-empty -- $ETERBUILDBIN/rpmbugs
 }
 
 

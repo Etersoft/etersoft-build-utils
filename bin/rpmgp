@@ -74,7 +74,7 @@ get_list()
 	local SYS=${SYSNAME[$1]}
 	CURL=curl
 
-	epm assure $CURL || fatal "curl command needed for download"
+	$EPMCMD assure $CURL || fatal "curl command needed for download"
 	mkdir -p $OURTMPDIR/etersoft-build-utils/
 	LIST=$OURTMPDIR/etersoft-build-utils/rpmgpall-$SYS
 	if [ ! -f "$LIST" ] || [ "$FORCE" = "force" ] ; then
@@ -282,7 +282,7 @@ fi
 if [ -n "$INSTALLBINARY" ] ; then
     # pack by LISTNAMES list
     pack_src_rpm --commit $LISTRPMARGS
-    docmd epm install --skip-installed $($ETERBUILDBIN/rpmreqs -p $LISTBUILT)
+    docmd $EPMCMD install --skip-installed $($ETERBUILDBIN/rpmreqs -p $LISTBUILT)
     exit
 fi
 
