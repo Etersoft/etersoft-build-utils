@@ -11,7 +11,7 @@
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod spec git
 
-if [ "$1" = "-h" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmrb (Re Build) - update spec to vermajor.verminor version, build %rel release"
 	echog "Usage: rpmrb [spec] [vermajor][.verminor] [rel]"
 	echog "Example:"

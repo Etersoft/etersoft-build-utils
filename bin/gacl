@@ -11,7 +11,7 @@ set_girar_host $1 && shift
 mygetopts()
 {
 
-	if [ "$1" = "-h" ] ; then
+	if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 		echog "gacl - acl control for gear repo in $GEARHOST"
 		echo
 		echog "Usage: gacl [GIRAR] [-b REPONAME] [package] command [params]"

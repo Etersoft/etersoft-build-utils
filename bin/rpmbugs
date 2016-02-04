@@ -56,7 +56,7 @@ check_qf()
 mygetopts()
 {
 
-if [ "$1" = "-h" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmbugs - open bugs in BROWSER"
 	echog "rpmbugs [-t] [spec] | bug number | package name | -qf command_name | /path/to/file"
 	echo
