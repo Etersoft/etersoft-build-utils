@@ -81,6 +81,12 @@ test -n "$LISTRPMARGS" && echog "Run $RPMBUILD with options: '$LISTRPMARGS'"
 
 try_enable_ccache
 
+detect_target_env
+
+assert_var PKGFORMAT
+# Set nodeps if run in non rpm system
+[ "$PKGFORMAT" = "rpm" ] && NODEPS="" || NODEPS="--nodeps"
+
 # instead cbuild req
 if [ -n "$BUILDREQ" ] ; then
 	uni_buildreq $BUILDREQ $LISTNAMES
@@ -91,15 +97,12 @@ fi
 
 if [ -n "$BUILDOPT" ] ; then
 	is_alt || fatal "Sorry, only ALT Linux rpm supports --short-circuit correctly"
-	for it in $BUILDOPT
-	do
-		uni_rpmbuild --commit $LISTNAMES -b$it $LISTRPMARGS --target $BUILDARCH --short-circuit
+	for it in $BUILDOPT ; do
+		uni_rpmbuild --commit $LISTNAMES -b$it $LISTRPMARGS $NODEPS --target $BUILDARCH --short-circuit
 	done
 	exit 0
 fi
 
-# Set nodeps if run in non rpm system
-[ "$PKGFORMAT" = "rpm" ] && NODEPS="" || NODEPS="--nodeps"
 
 for i in $LISTNAMES
 do
