@@ -174,9 +174,10 @@ print_grpreq()
 
 # FIXME: need improvement
 # use tests/test_repl_find.sh for test it
-# PKGVENDOR, PKGFORMAT, DISTRVERSION is already defined in detect_target_env() func
 internal_repl_list()
 {
+	# need be defined in detect_target_env()
+	assert_var PKGVENDOR PKGFORMAT DISTRVERSION
 	local REPLBASE="$1"
 	local ARCHEXT="$2"
 	local FINDPKG=$REPLBASE.$PKGVENDOR.$DISTRVERSION$ARCHEXT
