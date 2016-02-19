@@ -1,0 +1,40 @@
+#!/bin/sh
+# 2016 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# TODO: hasher per program
+# TODO: run by desktop file from installed package
+# TODO: run the same binary like in host system with autodetected package
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "runinhsh [-b REPONAME] [command] - run command inside hasher for REPONAME distro"
+	exit 0
+fi
+
+PLATFORM=
+
+# firefox plugin hack
+PLUGINJAVA=mozilla-plugin-java-1.7.0-openjdk
+if [ "$1" = "-b" ] ; then
+	PLATFORM="-b $2"
+	PLUGINJAVA=mozilla-plugin-java-1.6.0-sun
+	shift 2
+fi
+
+# TODO --short
+#PACKAGE=$(epmqf --quiet --short "$1")
+COMMAND="$1"
+PACKAGE=$(epmqf --quiet "$COMMAND" | epm print name for package)
+
+case $PACKAGE in
+	firefox)
+		PACKAGE="$PACKAGE $PLUGINJAVA"
+		;;
+	"")
+		echo "Can't find package for '$COMMAND'" >&2
+		exit -1
+		;;
+esac
+
+share_network=1 loginhsh -Y -t -p $COMMAND -r $COMMAND $PLATFORM $PACKAGE
