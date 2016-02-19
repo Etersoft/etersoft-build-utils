@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2005-2006, 2012 (c) Etersoft www.etersoft.ru
+# 2005-2006, 2012, 2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -35,16 +35,18 @@ phelp()
 	echog "   -r           run command"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
-	echog "   -x           allow run X program (set DISPLAY and install xauth)"
+	echog "   -X|-Y        allow run X program (set DISPLAY and install xauth)"
 	echog "   -t           use test hasher dir (different to usual build dir)"
+	echog "   -p NAME      use hasher dir with NAME postfix"
 	echo
 	echog "Extra options:"
 	echog "   -a           auto test mode for post myhsh build checking"
-	echog "   -d           print hasher dir"
+	echog "   -d           print hasher dir only"
 	echog "   -M??         binary repository name (obsoleted)"
+	echog "   -x           allow run X program (obsoleted)"
 }
 
-while getopts :chitoadvqr:b:x opt; do
+while getopts :chitoadvqr:b:p:xXY opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
@@ -55,7 +57,10 @@ while getopts :chitoadvqr:b:x opt; do
 	q) QUIETMODE=1 ;;
 	b) BINARYREPONAME=$OPTARG ;;
 	r) RUNCOMMAND=$OPTARG ;;
-	x) ALLOWX=1 ;;
+	p) HASHERPOSTFIX=$OPTARG ;;
+	X) ALLOWX=-X ;;
+	Y) ALLOWX=-Y ;;
+	x) ALLOWX=-Y ;;
 	v) VERBOSE="-v" ;;
 	o) ROOTER="--rooter" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -86,7 +91,9 @@ prepare_aptconfig
 HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $BUILDARCH --with-stuff"
 
 set_hasherdir
-if [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
+if [ -n "$HASHERPOSTFIX" ] ; then
+	HASHERDIR=$HASHERDIR-$HASHERPOSTFIX
+elif [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
 	HASHERDIR=$HASHERDIR-test
 fi
 
@@ -119,12 +126,6 @@ if [ -n "$ALLOWX" ] ; then
 	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
 fi
 
-if [ -n "$RUNCOMMAND" ] ; then
-	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
-	docmd $HSH-run $ROOTER $HASHERDIR -- $RUNCOMMAND
-	exit
-fi
-
 if [ -n "$QUIETMODE" ] ; then
 	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
 	echog "Exiting (quiet mode)..."
@@ -143,13 +144,20 @@ fi
 
 if [ -n "$AUTOMODE" ] || [ -n "$ALLOWX" ] ; then
 	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
+	SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
 else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
+
 docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
 
+if [ -n "$RUNCOMMAND" ] ; then
+	docmd $HSH-run $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock -- $RUNCOMMAND
+	exit
+fi
+
 echog "You are in hasher shell"
-docmd $HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER -Y --shell
+docmd $HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock --shell
 
 if [ -n "$AUTOMODE" ] ; then
 	# FIXME: do not remove on x86_64
