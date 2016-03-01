@@ -140,7 +140,8 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 	docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
 	# TODO: check result message for merge?
-	docmd git merge --no-ff $CURBRANCH
+	# Use heads/ against warning: refname 'branch-name' is ambiguous
+	docmd git merge --no-ff heads/$CURBRANCH
 	mv -f $BPSPEC $SPEC || fatal
 	# FIXME: Ctrl-\ and q will cancelled less with return error code
 	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
