@@ -138,7 +138,8 @@ if [ "$RESULT" = "0" ] && [ -n "$TESTINSTALL" ] ; then
 	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$BUILDARCH/RPMS.hasher`"
 	echo "List: $BINPACKAGES"
 	echo
-	docmd $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
+	showcmd $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
+	$ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
 	exit
 fi
 
