@@ -369,12 +369,12 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 		export USE_LEGACY_COMPRESSION=1
 	fi
 
-	subst "1i# This spec is backported to $DISTRNAME $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	subst "1i# This spec is backported to $DISTRNAME $DISTRVERSION automatically by rpmbph script from etersoft-build-utils." $SPECNAME
 	ENTRY="- backport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
 	# TODO: obsoleted
 	#DISTRARG="-$MDISTR"
 else
-	subst "1i# This spec is autoported from ALT Linux Sisyphus to $DISTRNAME $DISTRVERSION automatically by rpmbph script. Do not edit it." $SPECNAME
+	subst "1i# This spec is autoported from ALT Linux Sisyphus to $DISTRNAME $DISTRVERSION automatically by rpmbph script from etersoft-build-utils." $SPECNAME
 	ENTRY="- autoport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
 	export USE_VENDOR=$RPMVENDOR
 	export USE_LEGACY_COMPRESSION=1
