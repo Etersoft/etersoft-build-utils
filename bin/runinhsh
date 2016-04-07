@@ -35,6 +35,8 @@ case $PACKAGE in
 		echo "Can't find package for '$COMMAND'" >&2
 		exit -1
 		;;
+	*)
+		PACKAGE="$PACKAGE dbus"
 esac
 
 share_network=1 loginhsh -Y -t -p $COMMAND -r $COMMAND $PLATFORM $PACKAGE
