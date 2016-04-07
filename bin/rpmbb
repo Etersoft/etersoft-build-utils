@@ -117,10 +117,13 @@ do
 	fi
 	LOGFILE="$LOGDIR/`basename $NAMESRPMIN .src.rpm`$MENVARG.log"
 	echo "Build in native system" >$LOGFILE
-	rm -f $LOGFILE.failed
-	(uni_rpmbuild --commit $i -bb $LISTRPMARGS $NODEPS --target $BUILDARCH 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE | colorify
+	rm -f $LOGFILE.ok
+	(uni_rpmbuild --commit $i -bb $LISTRPMARGS $NODEPS --target $BUILDARCH 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
 
-	[ -r "$LOGFILE.failed" ] && RET=1 || RET=0
+	[ -r "$LOGFILE.ok" ]
+	RET=$?
+	rm -f $LOGFILE.ok
+
 	if [ "$RET" = "0" ] ; then
 		check_log $LOGFILE
 		RET=$?

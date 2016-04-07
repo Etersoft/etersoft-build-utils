@@ -100,17 +100,18 @@ for i in $LISTNAMES
 do
 	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
 	echo "Build in hasher ($MENV) in $HASHERDIR dir" >$LOGFILE
-	rm -f $LOGFILE.failed
+	rm -f $LOGFILE.ok
 	echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
 
 	# Note: hasher is already use renice for low priority
 	showcmd $HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i
-	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 || touch $LOGFILE.failed) | tee -a $LOGFILE | colorify
+	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
-	if [ -f $LOGFILE.failed ] ; then
+	if [ ! -f $LOGFILE.ok ] ; then
 		RESULT=1
 		break
 	fi
+	rm -f $LOGFILE.ok
 	check_log $LOGFILE ; RESULT=$?
 	test $RESULT = 1 && break
 	echog "########## Build of `basename $i` is done in hasher $MENV  #############"

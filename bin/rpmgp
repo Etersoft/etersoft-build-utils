@@ -87,14 +87,15 @@ get_list()
 		#curl -l $URL/ >$LIST
 		touch $LIST
 		# suitable for ftp and http lists
-		rm -f $LIST.failed
-		( $CURL -s -l $URL/ || touch $LIST.failed ) | tee $LIST.tmp | html_filter >$LIST
-		if [ -e $LIST.failed ] ; then
+		rm -f $LIST.ok
+		( $CURL -s -l $URL/ && touch $LIST.ok ) | tee $LIST.tmp | html_filter >$LIST
+		if [ ! -e $LIST.ok ] ; then
 			#echo -e -n "\r"
 			warning "Could't download list for $SYS from $URL"
 			#rm -f "$LIST.tmp"
 			return
 		fi
+		rm -f $LIST.ok
 		# check if there is letter subdirs (Fedora)
 		for i in $(cat $LIST.tmp | sed -e "s|<a href=\"||g" -e "s|/\">.*||g") ; do
 		    rhas "$i" rpm && break
