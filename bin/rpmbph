@@ -46,7 +46,7 @@ phelp()
 
 # FIXME: has difference between
 UPLOADARG=
-while getopts :hnvqb: opt; do
+while getopts :hnuvqb: opt; do
     case $opt in
         h) phelp; exit 0 ;;
         n) NOBUILD=1 ;;
