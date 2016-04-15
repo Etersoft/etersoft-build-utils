@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.8
+Version: 2.4.9
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Apr 16 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt1
+- require rpm-build-intro 1.9.3 (with distr_vendor supported ALT Linux p8)
+- add some asserts for non empty MENV
+
 * Fri Apr 15 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.8-alt1
 - spec: replace only first var
 - rpmbph: fix params handing (-n order)
