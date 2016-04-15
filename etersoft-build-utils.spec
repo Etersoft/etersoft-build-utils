@@ -17,7 +17,7 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 
 BuildArchitectures: noarch
 
-%define altcompat_ver 1.7.37
+%define altcompat_ver 1.9.3
 
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
