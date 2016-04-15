@@ -357,6 +357,7 @@ set_target_pkg_env()
 	PKGVENDOR=$($DISTRVENDOR -s "$DISTRNAME")
 	RPMVENDOR=$($DISTRVENDOR -n "$DISTRNAME")
 	[ -n "$MENV" ] || MENV="$(get_altdistr_mod "$DISTRVERSION")"
+	assert_var MENV
 }
 
 # We believe that follow vars correctly in any way:

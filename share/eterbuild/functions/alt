@@ -15,8 +15,8 @@ is_alt()
 set_target_type()
 {
 	# check for M51 and so on
-	if echo $1 | egrep -q "^M[0-9][0-9].?$" ; then
-		MENV=$1
+	if echo "$1" | egrep -q "^M[0-9][0-9].?$" ; then
+		MENV="$1"
 		return 0
 	fi
 	case "$1" in
@@ -48,6 +48,7 @@ get_type_by_git_branch_name()
                 echo $1
                 return
         fi
+        # it is ok to do nothing here
 }
 
 get_type_by_current_branch()
@@ -94,7 +95,7 @@ get_altdistr_mod()
 # Проверяем, соответствует ли релиз пакетов указанному в MENV
 pkg_release_check()
 {
-	# assert MENV
+	assert_var MENV
 	local STREL=$(get_default_txtrelease)
 	# support alt in any case
 	local STRELDEF=alt
