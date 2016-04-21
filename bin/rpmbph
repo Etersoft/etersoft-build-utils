@@ -106,7 +106,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	for SPEC in $LISTNAMES ; do
 
 		set_specdir $SPEC
-		cd $SPECDIR || fatal
+		docmd cd $SPECDIR || fatal
 
 		# TODO: move branch detection to a separate function
 		#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
@@ -130,6 +130,14 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		# set branch name
 		BPSPEC=$SPEC.$USEBRANCH
 
+		CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
+		if [ -n "$CURBRANCH" ] ; then
+			echog "Autorestore from broken build..."
+			docmd git checkout $CURBRANCH
+			rm -fv $(get_root_git_dir)/.git/.rpmbph.current
+			rm -fv $BPSPEC $BPSPEC.*
+		fi
+
 		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
 		cp -f $SPEC $BPSPEC || fatal
 
@@ -139,6 +147,8 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
 			fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
 		fi
+
+		echo "$CURBRANCH" > $(get_root_git_dir)/.git/.rpmbph.current
 
 		# Create branch if not exist yet
 		if ! is_exist_branch $USEBRANCH ; then
@@ -163,11 +173,24 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 			#git checkout $CURBRANCH
 			fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
 		fi
-		docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
-		docmd git checkout $CURBRANCH
 		cd - >/dev/null
 	done
-	exit $?
+
+	docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $LISTNAMES
+	RET=$?
+	
+	for SPEC in $LISTNAMES ; do
+		set_specdir $SPEC
+		docmd cd $SPECDIR || fatal
+
+		CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current)
+		rm -f $(get_root_git_dir)/.git/.rpmbph.current
+		docmd git checkout $CURBRANCH || RET=$?
+
+		cd - >/dev/null
+	done
+
+	exit $RET
 fi
 
 # handle src.rpm and spec both, LISTBUILT - result with full paths to src.rpms
