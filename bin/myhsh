@@ -149,7 +149,6 @@ do
 	echog "########## Build of `basename $i` is done in hasher $MENV  #############"
 	echo
 	LISTBUILTSH="$LISTBUILTSH$i "
-	LASTPACKAGE=$i
 done
 
 echo

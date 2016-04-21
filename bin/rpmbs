@@ -255,7 +255,13 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 
 		PROJECTNAME=$(get_repo_name)
 
-		check_gear_and_tag || fatal "Can't make tag"
+		if ! check_gear_and_tag ; then
+			if [ "$PREPARETASK" = "internal" ] ; then
+				docmd ssh $GEARHOST task rm $TASKNUMBER
+			fi
+			fatal "Can't make tag"
+		fi
+
 		TAG=$(get_last_tag)
 
 		# TODO: add check for repo (as in rpmgp) and run ginit if needed
