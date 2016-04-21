@@ -7,10 +7,12 @@
 get_gear_rules_by_spec()
 {
 	local SPECNAME="$1"
+	local SPECDIR
+	set_specdir
 	# FIXME: move get rules file to separate function
 	local BASESPECNAME=$(basename "$SPECNAME")
 	local ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
-	local ALTGEARRULES=$(get_root_git_dir)/$ALTGEARRULESFILE
+	local ALTGEARRULES=$(get_root_git_dir $SPECDIR)/$ALTGEARRULESFILE
 	local GEARRULES=
 	if [ -r "$ALTGEARRULES" ] ; then
 		#echo "Build with alternate rules $ALTGEARRULESFILE"
@@ -113,7 +115,7 @@ uni_rpminstall()
 	#if is_gear $SPECDIR ; then
 	#	$NICE $GEARBUILDREQ --commit -- $@ || RET=$?
 	#else
-		echo -n "Install package "
+	#	echog "Install package "
 		docmd mkdir -p $RPMTOPDIR/SOURCES $RPMTOPDIR/SRPMS $RPMTOPDIR/RPMS
 		docmd rpm -iv "$TWOPARAM" "$@" || RET=$?
 	#fi

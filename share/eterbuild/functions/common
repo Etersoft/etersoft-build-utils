@@ -260,8 +260,20 @@ prepare_rpmdir()
 
 get_root_git_dir()
 {
-        local DIR=$(git rev-parse --git-dir 2>/dev/null)/../ || return
+        local DIR=
+        local LOCDIR="$1"
+
+        if [ -n "$LOCDIR" ] ; then
+            cd "$LOCDIR" || fatal "Only dir arg allowed for get_root_git_dir"
+        fi
+
+        DIR=$(git rev-parse --git-dir 2>/dev/null)/../ || DIR=
         readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
+ 
+        if [ -n "$LOCDIR" ] ; then
+            cd - >/dev/null
+        fi
+
         # FIXME: 1) can return / with good status 2) no one check status later
 }
 
@@ -272,9 +284,7 @@ get_gear_rules()
 	local DIR="$1"
 	[ -z "$IGNOREGEAR" ] || return 1
 	[ -f "$DIR" ] && DIR=$(dirname "$DIR")
-	[ -n "$DIR" ] && cd "$DIR"
-	local GITDIR=$(get_root_git_dir)
-	[ -n "$DIR" ] && cd - >/dev/null
+	local GITDIR=$(get_root_git_dir $DIR)
 	local rules="$GITDIR/.gear/rules"
 	[ -r "$rules" ] || rules="$GITDIR/.gear-rules"
 	[ -r "$rules" ] || return
@@ -420,8 +430,8 @@ LISTARGS=
 OPTINDEX=1
 for i in "$@"
 do
-	# Если файл существует, то добавляем, иначе считаем аргумент параметром.
-	if [ -f "$i" ]; then
+	# Если файл или каталог существует, то добавляем, иначе считаем аргумент параметром.
+	if [ -e "$i" ]; then
 		# echo is workaround for missed readlink
 		LISTNAMES="$LISTNAMES $(readlink -f "$i" 2>/dev/null || realpath "$i" || echo "$i")"
 	else
@@ -443,7 +453,7 @@ parse_cmd_pre_spec()
 		parse_cmd_pre "$@"
         else
 		local SPEC=$(get_gear_spec)
-		[ -f "$SPEC" ] && info "Using autodetected spec $SPEC..."
+		[ -f "$SPEC" ] && info "Using autodetected spec $SPEC ..."
 		# it is possible in some command we need only possibility for spec
 		# || fatal "Run in dir with spec or in gear repo"
 		parse_cmd_pre "$SPEC" "$@"

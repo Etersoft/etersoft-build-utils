@@ -71,6 +71,9 @@ set_binaryrepo $MENV
 
 [ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"
 
+# assure we have only specs or src.rpm
+LISTNAMES=$(repodirs_to_specs $LISTNAMES)
+
 # Skip for prev. packed src.rpm
 if estrlist has spec "$LISTNAMES" ; then
 	# If fail, we already has correct changelog
@@ -83,9 +86,9 @@ pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c l f a A)
 
 # TODO: use gear --hasher directly, drop myhsh
 
-if rhas "$LISTNAMES" spec ; then
-	set_specdir $LISTNAMES
-fi
+#if rhas "$LISTNAMES" spec ; then
+#	set_specdir $LISTNAMES
+#fi
 
 # build in hasher
 docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT

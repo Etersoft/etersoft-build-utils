@@ -76,6 +76,9 @@ mygetopts $LISTARGS
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 
+# assure we have only specs or src.rpm
+LISTNAMES=$(repodirs_to_specs $LISTNAMES)
+
 test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
 if [ "$PKGVENDOR" = "alt" ] ; then
@@ -94,73 +97,81 @@ if [ -z "$BUILDCOMMAND" ] ; then
 	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
 fi
 
-# set SPECDIR from LISTNAMES if empty
+# set SPECDIR from LISTNAMES if empty (need for is_gear below)
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
 # if run for ALT inside gear repo, just create backported spec
 if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
-	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 
-	# set branch name
-	USEBRANCH=$BINARYREPO
-	SPEC=$LISTNAMES
-	BPSPEC=$SPEC.$USEBRANCH
+	for SPEC in $LISTNAMES ; do
 
-	# support for obsoleted M?? names
-	OLDBRANCH=$MDISTR
-	if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
-		if is_exist_branch $OLDBRANCH ; then
-			echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
-			USEBRANCH=$OLDBRANCH
+		set_specdir $SPEC
+		cd $SPECDIR || fatal
+
+		# TODO: move branch detection to a separate function
+		#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
+		USEBRANCH=$BINARYREPO
+		# support for obsoleted M?? names
+		OLDBRANCH=$MDISTR
+
+		if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
+			if is_exist_branch $OLDBRANCH ; then
+				echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
+				USEBRANCH=$OLDBRANCH
+			fi
+			# hack about p5, M50 -> p5
+			#if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
+			#	USENUMBRANCH=p5
+			#	echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
+			#	USEBRANCH=$USENUMBRANCH
+			#fi
 		fi
-		# hack about p5, M50 -> p5
-		#if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
-		#	USENUMBRANCH=p5
-		#	echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-		#	USEBRANCH=$USENUMBRANCH
-		#fi
-	fi
 
-	[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
+		# set branch name
+		BPSPEC=$SPEC.$USEBRANCH
 
-	CURBRANCH=$(get_current_branch)
+		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
+		cp -f $SPEC $BPSPEC || fatal
 
-	if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
-		fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
-	fi
+		CURBRANCH=$(get_current_branch)
 
-	# Create branch if not exist yet
-	if ! is_exist_branch $USEBRANCH ; then
-		docmd git branch $USEBRANCH
-	fi
+		# TODO: move to a separate function
+		if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
+			fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
+		fi
 
-	# Only one spec supported
-	cp -f $LISTNAMES $BPSPEC || fatal
-	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
+		# Create branch if not exist yet
+		if ! is_exist_branch $USEBRANCH ; then
+			docmd git branch $USEBRANCH
+		fi
 
-	docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
-	# TODO: check result message for merge?
-	# Use heads/ against warning: refname 'branch-name' is ambiguous
-	docmd git merge --no-ff heads/$CURBRANCH
-	mv -f $BPSPEC $SPEC || fatal
-	# FIXME: Ctrl-\ and q will cancelled less with return error code
-	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
-		#git checkout $SPEC $MDISTR
-		#git checkout $CURBRANCH
-		fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
-	fi
-	docmd git add $SPEC
-	if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
-		#git checkout $CURBRANCH
-		fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
-	fi
-	docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
-	docmd git checkout $CURBRANCH
+		docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
+
+		docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+		# TODO: check result message for merge?
+		# Use heads/ against warning: refname 'branch-name' is ambiguous
+		docmd git merge --no-ff heads/$CURBRANCH
+		mv -f $BPSPEC $SPEC || fatal
+		# FIXME: Ctrl-\ and q will cancelled less with return error code
+		if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
+			#git checkout $SPEC $MDISTR
+			#git checkout $CURBRANCH
+			fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
+		fi
+		docmd git add $SPEC
+		if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
+			#git checkout $CURBRANCH
+			fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
+		fi
+		docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
+		docmd git checkout $CURBRANCH
+		cd - >/dev/null
+	done
 	exit $?
 fi
 
 # handle src.rpm and spec both, LISTBUILT - result with full paths to src.rpms
-pack_src_rpm $LISTNAMES
+pack_src_rpm
 
 export RPMTOPDIR=$(mktemp -d || fatal "can't create tmp dir")
 mark_file_to_remove $RPMTOPDIR

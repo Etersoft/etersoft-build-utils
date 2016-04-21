@@ -240,6 +240,12 @@ add_changelog_helper()
 # set specdir by spec (run with full path to spec only or in spec dir)
 set_specdir()
 {
+	# support for use git dir instead spec
+	if [ -d "$1" ] ; then
+		SPECDIR="$1"
+		return 0
+	fi
+
 	SPECDIR=.
 	# get dir from the first spec
 	if [ -r "$1" ] ; then
@@ -249,30 +255,43 @@ set_specdir()
 	if [ "$SPECDIR" = "." ] ; then
 		SPECDIR=`pwd`
 	fi
+	[ -d "$SPECDIR" ]
 }
 
 # internal func
 get_gear_rule_spec()
 {
-	local rules=$(get_gear_rules)
+	local rules=$(get_gear_rules $@)
 	[ -r "$rules" ] || return
 	local SPEC="$(grep "^spec:" $rules 2>/dev/null | sed -e "s/spec:[ 	]*//g")"
-	test -r "$(get_root_git_dir)/$SPEC" && echo $(get_root_git_dir)/$SPEC
+	test -r "$(get_root_git_dir $@)/$SPEC" && echo $(get_root_git_dir $@)/$SPEC
 }
 
 # search for gear spec
 get_gear_spec()
 {
         local trySpec
-        trySpec=$(get_gear_rule_spec)
+        trySpec=$(get_gear_rule_spec $@)
         # check spec in git root dir (by default)
-        [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir)/*.spec` || return
+        [ -f "$trySpec" ] || trySpec=`echo $(get_root_git_dir $@)/*.spec` || return
         # check locally only if in gear repo
         #is_gear && trySpec=$(echo *.spec)
         # printout nothing if can't get spec
         [ -f "$trySpec" ] || trySpec=""
         echo $trySpec
         test -f "$trySpec"
+}
+
+# transform dir to spec if it is dir
+repodirs_to_specs()
+{
+        local i
+        for i in "$@" ; do
+            if [ -d "$i" ] ; then
+                i=$(get_gear_spec "$i") || continue
+            fi
+            echo "$i"
+        done
 }
 
 separate_changelog()
