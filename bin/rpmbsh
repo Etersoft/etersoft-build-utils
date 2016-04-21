@@ -40,10 +40,11 @@ phelp()
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 }
 
-while getopts :htb: opt; do
+while getopts :ihtb: opt; do
     case $opt in
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
+    i) INSTALLPKG=1 ;;
     b) BINARYREPONAME=$OPTARG ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -78,7 +79,7 @@ fi
 
 # We do not not pass args for myhsh here...
 # FIXME: не обрабатывает два пропускаемых вместе параметра
-pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u i c l f a A)
+pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c l f a A)
 
 # TODO: use gear --hasher directly, drop myhsh
 
@@ -86,8 +87,27 @@ if rhas "$LISTNAMES" spec ; then
 	set_specdir $LISTNAMES
 fi
 
+# build in hasher
 docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
 RESULT=$?
+
+# if ok and requested test install, do it
+if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
+	BINPACKAGES=$($ETERBUILDBIN/myhsh -b $LISTBUILT) || fatal "Can't get binary packages for $LISTBUILT"
+
+	echo
+	echog "List of binary packages:"
+	print_list $BINPACKAGES
+	echo
+
+	# showcmd separately due console input
+	showcmd $ETERBUILDBIN/loginhsh -Y -t -i $MENVARG $BINPACKAGES
+	$ETERBUILDBIN/loginhsh -Y -t -i $MENVARG $BINPACKAGES
+
+	# test remove packages from test hasher dir
+	docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
+fi
+
 # remove generated src.rpm
 for i in $LISTBUILT ; do
 	estrlist has $i $LISTNAMES || rm -f $i

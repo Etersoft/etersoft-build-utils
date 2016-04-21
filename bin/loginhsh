@@ -46,13 +46,12 @@ phelp()
 	echog "   -x           allow run X program (obsoleted)"
 }
 
-while getopts :chitoadvqr:b:p:xXY opt; do
+while getopts :chitodvqr:b:p:xXY opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
-	a) AUTOMODE=1 ;;
 	d) PRINTHASHERDIR=1 ;;
 	q) QUIETMODE=1 ;;
 	b) BINARYREPONAME=$OPTARG ;;
@@ -93,7 +92,7 @@ HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $BUILDARCH --with-stuff"
 set_hasherdir
 if [ -n "$HASHERPOSTFIX" ] ; then
 	HASHERDIR=$HASHERDIR-$HASHERPOSTFIX
-elif [ -n "$TESTMODE" ] || [ -n "$AUTOMODE" ] ; then
+elif [ -n "$TESTMODE" ] ; then
 	HASHERDIR=$HASHERDIR-test
 fi
 
@@ -111,7 +110,7 @@ if [ "$CLEANUP" = "1" ] ; then
 	exit
 fi
 
-if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] || [ -n "$AUTOMODE" ]; then
+if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] ; then
 	echog "Initialize $HASHERDIR ..."
 	mkdir -p $HASHERDIR || fatal "mkdir"
 	docmd $HSH $VERBOSE $HASHERARG --initroot-only $HASHERDIR || fatal "Cannot initialize hasher"
@@ -142,7 +141,7 @@ if epm requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
 	UTILPKG="$UTILPKG dbus-tools-gui"
 fi
 
-if [ -n "$AUTOMODE" ] || [ -n "$ALLOWX" ] ; then
+if [ -n "$ALLOWX" ] ; then
 	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
 	SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
 else
@@ -158,13 +157,3 @@ fi
 
 echog "You are in hasher shell"
 docmd $HSH-shell $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock --shell
-
-if [ -n "$AUTOMODE" ] ; then
-	# FIXME: do not remove on x86_64
-	echo "Removing package for test preun scripts..."
-	# use when eepm >= 1.3.0 will everywhere
-	#docmd $HSH-run --rooter $HASHERDIR -- epm remove $LISTNAMES
-	docmd $HSH-run --rooter $HASHERDIR -- rpm -e $(drop_pkg_extensions $LISTNAMES)
-	echo "Cleanup hasher in $HASHERDIR..."
-	docmd $HSH --cleanup-only $HASHERDIR
-fi

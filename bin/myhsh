@@ -1,16 +1,14 @@
 #!/bin/bash
-# 2003-2006, 2008-2010, 2013 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2008-2010, 2013, 2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # Пересборка указанных SRPM-пакетов в hasher
-# -i устанавливает в тестовый hasher после пересборки
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 load_mod hasher check
 
-TESTINSTALL=
 WITHSTUFF="--with-stuff"
 
 #############################
@@ -18,7 +16,7 @@ Usage="Usage: $name [-i -c -l] src.rpm..."
 function mygetopts()
 {
 name=${0##*/}
-Descr="$name - build package via hasher"
+Descr="$name - internal helper for build package via hasher"
 
 phelp()
 {
@@ -26,16 +24,18 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
-	echog "   -i  install built packages in test hasher"
 	echog "   -c  build without stuff (without previous built packages)"
+	echog "   -r  remove packages from test hasher"
+	echog "   -b  print binary packages by built list"
 	echog "   -l  lazy cleanup (before build, not after)"
 
 }
 
-while getopts :hicl opt; do
+while getopts :hbclr opt; do
     case $opt in
     h) phelp; exit 0;;
-    i) TESTINSTALL=1;;
+    b) PRINTBINPKG=1;;
+    r) REMOVEPKG=1;;
     l) HASHERARG="$HASHERARG --lazy-cleanup";;
     c) WITHSTUFF="--without-stuff";;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -61,6 +61,36 @@ RESULT=0
 
 HASHERARG="$HASHERARG $WITHSTUFF"
 set_hasherdir
+
+if [ -n "$PRINTBINPKG" ] ; then
+	BINPACKAGES=
+	# allow absolute path and just src.rpm name
+	LISTNAMES="$LISTNAMES $LISTRPMARGS"
+	RPMHASHERDIR=$HASHERDIR/repo/$BUILDARCH/RPMS.hasher
+	for i in $LISTNAMES ; do
+		#echog "Find binary packages for '$(basename $i)' in $RPMHASHERDIR ..."
+		BINPACKAGES="$BINPACKAGES $(epm print binpkgfilelist $RPMHASHERDIR $i)"
+	done
+	
+	test -n "$BINPACKAGES" || fatal "Can't find any binary packages for $LISTNAMES in $(ls -l $RPMHASHERDIR)"
+	echo "$BINPACKAGES"
+	exit
+fi
+
+if [ -n "$REMOVEPKG" ] ; then
+	check_locking
+	HASHERDIR=$HASHERDIR-test
+
+	# FIXME: do not remove on x86_64
+	echo "Removing package(s)..."
+	# use when eepm >= 1.3.0 will everywhere
+	#docmd $HSH-run --rooter $HASHERDIR -- epm remove $LISTNAMES
+	docmd $HSH-run --rooter $HASHERDIR -- rpm -e $(epm print pkgname from filename $LISTNAMES)
+
+	#echo "Cleanup hasher in $HASHERDIR ..."
+	#docmd $HSH --cleanup-only $HASHERDIR
+	exit
+fi
 
 mkdir -p $LOGDIR $HASHERDIR || fatal "cannot mkdir"
 check_locking
@@ -121,27 +151,15 @@ do
 done
 
 echo
-if [ "$RESULT" = "1" ] ; then
+if [ "$RESULT" = "0" ] ; then
+	echog "Full list of the hashered packages:"
+else
 	echo
 	echog "!!!!!!! Hasher: FAILED FAILED FAILED !!!!!!!!!"
 	echog "Build failed with $i, built only"
-else
-	echog "Full list of the hashered packages:"
 fi
-print_list $LISTBUILTSH
 
+print_list $LISTBUILTSH
 echo
-if [ "$RESULT" = "0" ] && [ -n "$TESTINSTALL" ] ; then
-	# test install (only for last package in list)
-	# some key for build hasher from scratch
-	echog "Find binary packages for '$(basename $LASTPACKAGE)' in $HASHERDIR/repo/$BUILDARCH/RPMS.hasher..."
-	BINPACKAGES=`get_binpkg_list $HASHERDIR/repo/$BUILDARCH/RPMS.hasher $LASTPACKAGE | estrlist reg_exclude debuginfo -`
-	test -n "$BINPACKAGES" || fatal "Can't find binary packages for $LASTPACKAGE in `ls -l $HASHERDIR/repo/$BUILDARCH/RPMS.hasher`"
-	echo "List: $BINPACKAGES"
-	echo
-	showcmd $ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
-	$ETERBUILDBIN/loginhsh -a $MENVARG $BINPACKAGES
-	exit
-fi
 
 exit $RESULT

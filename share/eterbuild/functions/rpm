@@ -6,10 +6,6 @@
 # FIXME: use build directly in build scripts
 load_mod build
 
-# REMOVE: for compatibility
-load_mod rpmpkg
-
-
 # get correct BUILDROOT, run build_rpms_name before!
 build_buildroot()
 {
