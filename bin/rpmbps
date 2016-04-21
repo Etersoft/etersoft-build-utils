@@ -87,7 +87,7 @@ BUILDNAME=$(get_name $SPECNAME)
 ADDFIXCOMMAND=
 ADDREQUIRES=
 
-echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR)..."
+echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR) ..."
 
 # TODO: check if spec is already backported by line:
 # # This spec is backported 
