@@ -107,6 +107,7 @@ if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
 	# showcmd separately due console input
 	showcmd $ETERBUILDBIN/loginhsh -Y -t -i $MENVARG $BINPACKAGES
 	$ETERBUILDBIN/loginhsh -Y -t -i $MENVARG $BINPACKAGES
+	RESULT=$?
 
 	# test remove packages from test hasher dir
 	docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES

@@ -64,5 +64,4 @@ for SPEC in $LISTNAMES ; do
 	cd - >/dev/null
 done
 
-showcmd $ETERBUILDBIN/rpmbsh -i $LISTNAMES
-$ETERBUILDBIN/rpmbsh -i -u $LISTNAMES
+docmd $ETERBUILDBIN/rpmbsh $GIRARHOST -i -u $LISTNAMES
