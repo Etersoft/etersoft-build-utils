@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2006, 2008, 2013 (c) Etersoft www.etersoft.ru
+# 2006, 2008, 2013, 2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 # 
@@ -20,37 +20,49 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	exit 0
 fi
 
+parse_r()
+{
+	VER=$1
+
+	case "$2" in
+		-*)
+			fatal "No options are supported. See --help."
+			;;
+		*)
+	esac
+
+	# need for rpmgs
+	GSSETRELEASE=$2
+}
+
 set_girar_host $1 && shift
 
-SPEC=$1
-# allow run with spec file (obsoleted)
-[ -r "$SPEC" ] && shift
+parse_cmd_pre_spec "$@"
 
-[ -s "$SPEC" ] || SPEC=$(get_gear_spec)
-[ -s "$SPEC" ] || fatal "Can't find spec file. Run $0 --help for help."
+parse_r $LISTARGS
 
-VER=$1
+# assure we have only specs or src.rpm
+LISTNAMES=$(repodirs_to_specs $LISTNAMES)
 
-case "$2" in
-	-*)
-		fatal "No options are supported. See --help."
-		;;
-	*)
-esac
+#[ -s "$SPEC" ] || fatal "Can't find spec file. Run $0 --help for help."
 
-# need for rpmgs
-GSSETRELEASE=$2
-test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_txtrelease $SPEC)1
-export GSSETRELEASE
+for SPEC in $LISTNAMES ; do
+	set_specdir $SPEC
+	docmd cd $SPECDIR || fatal
 
-docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
-add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
+	test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_txtrelease $SPEC)1
+	export GSSETRELEASE
 
-if is_gear ; then
-	#git diff $SPEC
-	git_commit_ignore_nothing $SPEC -m "update spec to new build $(get_version $SPEC) (with rpmrb script)" || exit 1
-fi
+	docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
+	add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
 
-showcmd $ETERBUILDBIN/rpmbsh -i $SPEC
-$ETERBUILDBIN/rpmbsh -i $SPEC || fatal "Error with build in hasher"
-docmd $ETERBUILDBIN/rpmbs $GIRARHOST -u $SPEC || fatal "Error with upload"
+	if is_gear ; then
+		#git diff $SPEC
+		git_commit_ignore_nothing $SPEC -m "update spec to new build $(get_version $SPEC) (with rpmrb script)" || exit 1
+	fi
+
+	cd - >/dev/null
+done
+
+showcmd $ETERBUILDBIN/rpmbsh -i $LISTNAMES
+$ETERBUILDBIN/rpmbsh -i -u $LISTNAMES
