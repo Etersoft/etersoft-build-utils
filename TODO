@@ -1,5 +1,9 @@
 $ GIT_ALT=gear.alt girar-show
 
+https://www.altlinux.org/Gear/remotes
+
+https://www.altlinux.org/Gear/cronbuild
+
 Применить shell check или что-то подобное
 https://www.google.ru/search?q=lint+bash
 
@@ -11,11 +15,6 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
 
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 http://semver.org/
-
-Проблемы c dpkg:
-1. применяется tar.xz, что не подходит для старых систем
-2. нужен неисправленный alien (то есть готовить архив в два приёма)
-В итоге, надо перенести конвертацию в саму систему
 
 Скрипт update-kernel стал примером того, как стоит писать разбор параметров
 

@@ -40,7 +40,6 @@ phelp()
 	echog "   -p NAME      use hasher dir with NAME postfix"
 	echo
 	echog "Extra options:"
-	echog "   -a           auto test mode for post myhsh build checking"
 	echog "   -d           print hasher dir only"
 	echog "   -M??         binary repository name (obsoleted)"
 	echog "   -x           allow run X program (obsoleted)"

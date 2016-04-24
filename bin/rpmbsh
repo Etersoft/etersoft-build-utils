@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2003-2010 (c) Etersoft www.etersoft.ru
+# 2003-2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -123,13 +123,16 @@ date
 echo "-------------------------------"
 
 # make src.rpm if build OK and we have options for rpmbs
-
 RPMBSARGS=$(drop_args "$LISTRPMARGS" i c l)
 if [ ! "$RESULT" = "0" ] || [ -z "$RPMBSARGS" ]; then
 	exit $RESULT
 fi
 
-is_gear $SPECDIR && TSKLIST=$LISTNAMES || TSKLIST=$LISTBUILT
+if rhas "$LISTNAMES" .spec ; then
+	is_gear $SPECDIR && TSKLIST=$LISTNAMES
+else
+	TSKLIST=$LISTBUILT
+fi
 
 docmd $ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
 
