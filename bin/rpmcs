@@ -358,7 +358,7 @@ do
 	subst  "s|/usr/sbin/|%_sbindir/|g
 		s|/usr/bin/|%_bindir/|g
 		s|%prefix/bin/|%_bindir/|g
-		s|/usr/lib/|%_libdir/|g
+		s|/usr/lib/|%_libexecdir/|g
 		s|/usr/share/|%_datadir/|g
 		s|%_datadir/games|%_gamesdatadir|g" $i
 
