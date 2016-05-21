@@ -31,5 +31,5 @@ libopenal1|libopenal1
 
 libgnutls26|libgnutls26
 
-libunixodbc|unixodbc
-libunixodbc-dev|unixodbc-dev
+libunixODBC1|unixodbc
+libunixODBC2|unixodbc

@@ -76,6 +76,7 @@ jackit-devel|jack-audio-connection-kit-devel
 kernel-build-tools|
 libreadline-devel|readline-devel
 libreadline|readline
+libreadline6|readline
 
 libpopt-devel|popt
 libpopt|popt
@@ -132,6 +133,8 @@ rpm-build-python|
 python-modules-compiler|python
 libgnutls-devel|gnutls-devel
 libgnutls26|gnutls
+libgnutls28|gnutls
+libgnutls30|gnutls
 
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat

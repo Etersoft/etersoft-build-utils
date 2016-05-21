@@ -8,8 +8,8 @@ libice-devel|libice-dev ice34-translators libzeroc-ice34-dev
 python-module-ice|python-zeroc-ice
 python-module-yaml|python-yaml
 python-modules-unittest|python-unittest2
-libunixODBC-devel|unixodbc-dev
 libpqxx-devel|libpqxx3-dev
 lipqxx|libpqxx-3.1
+
 libwxGTK-devel|libwxgtk2.8-dev
 libwxGTK|libwxgtk2.8

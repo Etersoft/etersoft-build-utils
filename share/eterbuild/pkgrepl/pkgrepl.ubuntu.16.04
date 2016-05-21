@@ -1,0 +1,11 @@
+libgnutls26|libgnutls30
+libgnutls28|libgnutls30
+libgnutls30|libgnutls30
+libgnutls-devel|libgnutls-dev
+
+libwxGTK3.0|libwxgtk3.0-0
+libwxGTK3.0-devel|libwxgtk3.0-dev
+libwxGTK3.1|libwxgtk3.0-0
+libwxGTK3.1-devel|libwxgtk3.0-dev
+libwxGTK|libwxgtk3.0-0
+libwxGTK-devel|libwxgtk3.0-dev
