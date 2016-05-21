@@ -184,6 +184,7 @@ libpam0
 control
 libbeecrypt7
 libX11-locales
+gcc-c++
 glib2-locales
 libtic
 libpasswdqc
