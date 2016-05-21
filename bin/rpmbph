@@ -34,9 +34,9 @@ phelp()
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echo
 	echog "Ext. options:"
-#	echog "   -r           remote build" # will pass to rpmbs/rpmbsh
 	echog "   -v           more verbose"
 	echog "   -q           quiet"
+	echog "   -z           create src.rpm with compatible gzip compression (obsoleted)"
 	echo
 	echog "Examples:"
 	echog " $ rpmbph -b $EXAMPLEALTDISTRVERSION -n -u  - backport to $EXAMPLEALTDISTRVERSION and ask to build it"
