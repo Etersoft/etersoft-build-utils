@@ -16,6 +16,8 @@ libssl10|libopenssl1_0_0
 
 libgnutls-devel|libgnutls-devel
 libgnutls26|libgnutls28
+libgnutls28|libgnutls28
+libgnutls30|libgnutls30
 
 jackit-devel|libjack-devel
 jackit|libjack0

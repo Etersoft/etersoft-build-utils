@@ -46,6 +46,7 @@ liblcms|lcms
 liblcms2|lcms2
 libgnutls-devel|gnutls
 libgnutls26|gnutls
+libgnutls30|gnutls
 libssl|openssl
 libgsm|gsm
 udev-rules|systemd

@@ -22,6 +22,8 @@ cups|cups cups-bsd cups-client
 glibc-utils|
 libopenal1|libopenal0a
 libgnutls26|libgnutls13
+libgnutls28|libgnutls13
+libgnutls30|libgnutls13
 libv4l|
 libarts-devel|
 libarts|
