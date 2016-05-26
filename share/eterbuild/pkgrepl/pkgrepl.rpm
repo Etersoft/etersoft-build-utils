@@ -122,7 +122,8 @@ libgst-plugins|gstreamer-plugins-base
 libgstreamer|gstreamer
 
 libunixODBC-devel|unixODBC-devel
-libunixODBC|unixODBC
+libunixODBC1|unixODBC
+libunixODBC2|unixODBC
 
 # depends for biarch build
 i586-glibc-core|

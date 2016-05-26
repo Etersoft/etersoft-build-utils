@@ -347,3 +347,13 @@ boost-program_options-devel|libboost-program-options-dev libboost-system-dev lib
 
 tbb-headers|libtbb-dev
 libtbb|libtbb2
+
+libgnutls26|libgnutls26
+libgnutls28|libgnutls26
+libgnutls30|libgnutls26
+libgnutls-devel|libgnutls-dev
+
+libunixODBC1|unixodbc
+libunixODBC2|unixodbc
+unixODBC|unixodbc
+libunixODBC-devel|unixodbc-dev

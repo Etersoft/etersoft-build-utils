@@ -28,10 +28,3 @@ libcap|libcap2
 libunistring|libunistring0
 libltdl7|libltdl7
 libopenal1|libopenal1
-
-libgnutls26|libgnutls26
-libgnutls28|libgnutls26
-libgnutls30|libgnutls26
-
-libunixODBC1|unixodbc
-libunixODBC2|unixodbc
