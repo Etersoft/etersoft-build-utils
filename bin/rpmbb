@@ -98,7 +98,7 @@ fi
 if [ -n "$BUILDOPT" ] ; then
 	is_alt || fatal "Sorry, only ALT Linux rpm supports --short-circuit correctly"
 	for it in $BUILDOPT ; do
-		uni_rpmbuild --commit $LISTNAMES -b$it $LISTRPMARGS $NODEPS --target $BUILDARCH --short-circuit
+		uni_rpmbuild --commit $LISTNAMES -b$it $LISTRPMARGS $NODEPS --target $BUILDARCH --short-circuit || exit
 	done
 	exit 0
 fi
