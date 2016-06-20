@@ -266,3 +266,7 @@ libsrtp1|libsrtp
 
 tbb-headers|tbb-devel
 libtbb|tbb
+
+libpulseaudio-devel|pulseaudio-libs-devel
+libpulseaudio|pulseaudio-libs
+

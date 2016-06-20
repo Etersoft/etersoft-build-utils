@@ -357,3 +357,6 @@ libunixODBC1|unixodbc
 libunixODBC2|unixodbc
 unixODBC|unixodbc
 libunixODBC-devel|unixodbc-dev
+
+libpulseaudio-devel|libpulse-dev
+libpulseaudio|libpulse0

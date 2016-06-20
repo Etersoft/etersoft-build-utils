@@ -3,7 +3,6 @@ libjpeg|libjpeg8
 libicu50|libicu48
 liblzma|liblzma5
 cups|cups cups-bsd cups-client
-gtkmm-2.4|libgtkmm-2.4
 libtiff5|libtiff5
 libtiff-devel|libtiff5-dev
 libgphoto2|libgphoto2-6
