@@ -57,10 +57,11 @@ libgnutls28|libgnutls26
 libgnutls30|libgnutls26
 libgnutls-devel|libgnutls-dev
 
-libgphoto2-2|libgphoto2-6
-libgphoto2-devel|libgphoto2-dev
+libgphoto2|libgphoto2-6
+libgphoto2-devel|libgphoto2-6-dev
 libgphoto2|libgphoto2-6
 libgphoto2-6|libgphoto2-6
+libgphoto2_port-12|libgphoto2-6
 
 fontconfig-devel|libfontconfig1-dev
 fontconfig|libfontconfig1
