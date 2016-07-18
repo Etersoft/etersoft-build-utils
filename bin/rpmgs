@@ -148,6 +148,7 @@ gear_update_from_tarball()
 	local TARBALL="$1"
 	local CURNAME="$2"
 	shift 2
+	assert_var TARBALL CURNAME
 	[ -d "$CURNAME" ] || CREATEFLAG=-c
 	# TODO: check tarball ext. for unsupported arch and realize it here or in gear-update
 	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."

@@ -140,19 +140,21 @@ else
 		fi
 	fi
 
-	# hack against very straight patch command
-	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
-	# see install in Korinf, need concatenate
-	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
-
 	if build32on64 ; then
-		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "Debian" ] && ! version_more_version $DISTRVERSION 8 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "AstraLinux" ] && BUILDREQ="$BUILDREQ ia32-libs-dev" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel.i686"
 		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel.i686"
 		[ "$DISTRNAME" = "SLED" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 		[ "$DISTRNAME" = "SUSE" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 	fi
+
+	# hack against very straight patch command
+	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
+	# see install in Korinf, need concatenate
+	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
+	# (do not modify BUILDREQ anymore)
 
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
 	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME

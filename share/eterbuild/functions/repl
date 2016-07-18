@@ -35,7 +35,7 @@ add_32bit_requires()
 				rhas "$GREP" "-devel$" && ! rhas "$i" "(x86-32)$" && echo "$i $i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
-		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7.0 ; then
+		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
 				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && echo "$i $i:i386" && continue
