@@ -3,10 +3,15 @@ libgnutls28|libgnutls30
 libgnutls30|libgnutls30
 libgnutls-devel|libgnutls-dev
 
-libwxGTK3.0|libwxgtk3.0-0
+libwxGTK3.0|libwxgtk3.0-0v5
 libwxGTK3.0-devel|libwxgtk3.0-dev
-libwxGTK3.1|libwxgtk3.0-0
+libwxGTK3.1|libwxgtk3.0-0v5
 libwxGTK3.1-devel|libwxgtk3.0-dev
-libwxGTK|libwxgtk3.0-0
+libwxGTK|libwxgtk3.0-0v5
 libwxGTK-devel|libwxgtk3.0-dev
+
+libgphoto2|libgphoto2-6
+libgphoto2-6|libgphoto2-6
+libgphoto2-devel|libgphoto2-dev
+
 libicu56|libicu55

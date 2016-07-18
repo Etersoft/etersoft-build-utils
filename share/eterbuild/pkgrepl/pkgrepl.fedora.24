@@ -1,0 +1,6 @@
+#nx
+libwxGTK|wxGTK
+libwxGTK-devel|wxGTK-devel
+#wine
+libncurses-devel|ncurses-devel
+libncurses|ncurses-libs
