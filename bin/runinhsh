@@ -15,20 +15,32 @@ fi
 PLATFORM=
 
 # firefox plugin hack
-PLUGINJAVA=mozilla-plugin-java-1.7.0-openjdk
+PLUGINJAVA=mozilla-plugin-java-1.8.0-openjdk
+# mozilla-plugin-java-1.7.0-openjdk
 if [ "$1" = "-b" ] ; then
 	PLATFORM="-b $2"
-	PLUGINJAVA=mozilla-plugin-java-1.6.0-sun
+	case "$2" in
+		p6|p7)
+			PLUGINJAVA=mozilla-plugin-java-1.6.0-sun
+			;;
+		*)
+			# use default
+			;;
+	esac
 	shift 2
 fi
 
 # TODO --short
 #PACKAGE=$(epmqf --quiet --short "$1")
 COMMAND="$1"
-PACKAGE=$(epmqf --quiet "$COMMAND" | epm print name for package)
+PACKAGE=$(epmqf --quiet "$COMMAND" 2>/dev/null)
+if [ -n "$PACKAGE" ] ; then
+	PACKAGE=$(echo "$PACKAGE" | epm print name for package)
+fi
+[ -n "$PACKAGE" ] || PACKAGE="$COMMAND"
 
 case $PACKAGE in
-	firefox)
+	firefox*)
 		PACKAGE="$PACKAGE $PLUGINJAVA"
 		;;
 	"")
