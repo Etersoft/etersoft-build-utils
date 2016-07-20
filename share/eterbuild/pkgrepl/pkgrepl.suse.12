@@ -41,3 +41,9 @@ liblcms-devel|
 liblcms|
 liblcms2-devel|liblcms2-devel
 liblcms2|liblcms2-2
+
+libpulseaudio-devel|libpulse-devel
+libpulseaudio|libpulse0
+
+libdbus-devel|dbus-1-devel
+libdbus|libdbus-1-3
