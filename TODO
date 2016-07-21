@@ -1,3 +1,7 @@
+ia32-libs не прибавляется к x86_64 там, где это нужно (Astra)
+
+rpmgs комиттит в текущий каталог!!!
+
 $ GIT_ALT=gear.alt girar-show
 
 https://www.altlinux.org/Gear/remotes
