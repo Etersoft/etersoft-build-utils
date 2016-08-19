@@ -15,7 +15,7 @@ load_mod repl rpm git buildsrpm spec
 #############################
 
 # FIXME: CURRENTBRANCHNAME??
-Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-$CURRENTBRANCHNAME] [-b REPONAME] spec..."
+Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-b REPONAME] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -44,13 +44,13 @@ phelp()
 #	echog " -m - send result via e-mail"
 }
 
-# FIXME: has difference between
-UPLOADARG=
-while getopts :hnuvqb: opt; do
+PASSEDARGS=
+while getopts :hnuaAfvqb: opt; do
     case $opt in
         h) phelp; exit 0 ;;
         n) NOBUILD=1 ;;
-        u) UPLOADARG="-$opt" ;;
+        u|a|A) PASSEDARGS="$PASSEDARGS -$opt" ;;
+        f) PASSEDARGS="$PASSEDARGS -$opt" ;;
         v) VERBOSE=1 ;;
         b) BINARYREPONAME=$OPTARG ;;
         q) QUIET=1 ;;
@@ -64,8 +64,8 @@ if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
 fi
 
-# pass other options to RPM (exclude -v):
-LISTRPMARGS="$UPLOADARG $(drop_args "$*" v n q)"
+# pass other options
+LISTRPMARGS="$PASSEDARGS $*"
 }
 
 set_girar_host $1 && shift
@@ -176,7 +176,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		cd - >/dev/null
 	done
 
-	docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $LISTNAMES
+	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $LISTNAMES
 	RET=$?
 	
 	for SPEC in $LISTNAMES ; do
@@ -212,7 +212,7 @@ for i in $LISTBUILT ; do
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
-	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $UPLOADARG $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true
 done
 
