@@ -33,7 +33,7 @@ PREPARETASK=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [GIRAR] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-b REPONAME] [-p POCKET] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -235,8 +235,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	# if more then one spec, use common task
 	if [ $NUMSPECS -gt 1 ] && [ -z "$PREPARETASK" ] ; then
 		PREPARETASK=internal
-		showcmd ssh $GEARHOST task new
-		TASKNUMBER=$(ssh $GEARHOST task new | head -n1) || fatal
+		# FIXME: no pocket support on git.eter task new?
+		showcmd ssh $GEARHOST task new $BINARYREPO
+		TASKNUMBER=$(ssh $GEARHOST task new $BINARYREPO | head -n1) || fatal
 		[ -n "$TASKNUMBER" ] || fatal "Can't get task number from $GEARHOST"
 	fi
 
