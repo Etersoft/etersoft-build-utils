@@ -7,8 +7,15 @@
 # TODO: run by desktop file from installed package
 # TODO: run the same binary like in host system with autodetected package
 
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	echo "runinhsh [-b REPONAME] [command] - run command inside hasher for REPONAME distro"
+	echo "runinhsh [-b REPONAME] [package/command] [command] - run command inside hasher for REPONAME distro"
+	echo "Examples:"
+	echo "  $ runinhsh -b p8 firefox-gost firefox"
+	echo "  $ runinhsh -b p8 chromium"
 	exit 0
 fi
 
@@ -36,19 +43,27 @@ COMMAND="$1"
 PACKAGE=$(epmqf --quiet "$COMMAND" 2>/dev/null)
 if [ -n "$PACKAGE" ] ; then
 	PACKAGE=$(echo "$PACKAGE" | epm print name for package)
+else
+	PACKAGE="$COMMAND"
 fi
-[ -n "$PACKAGE" ] || PACKAGE="$COMMAND"
 
+shift
+[ -n "$1" ] && COMMAND="$@"
+
+PACKAGES="$PACKAGE"
+OPTIONS=
 case $PACKAGE in
 	firefox*)
-		PACKAGE="$PACKAGE $PLUGINJAVA"
+		PACKAGES="$PACKAGES $PLUGINJAVA"
+		OPTIONS="$OPTIONS --no-remote"
 		;;
-	"")
-		echo "Can't find package for '$COMMAND'" >&2
-		exit -1
-		;;
+#	"")
+#		echo "Can't find package for '$COMMAND'" >&2
+#		exit -1
+#		;;
 	*)
-		PACKAGE="$PACKAGE dbus"
+		PACKAGES="$PACKAGES dbus"
 esac
 
-share_network=1 loginhsh -Y -t -p $COMMAND -r $COMMAND $PLATFORM $PACKAGE
+showcmd loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+share_network=1 loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
