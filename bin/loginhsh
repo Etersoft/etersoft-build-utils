@@ -32,7 +32,7 @@ phelp()
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echog "   -c           cleanup hasher"
 	echog "   -q           quiet mode (don't run anything)"
-	echog "   -r           run command"
+	echog "   -r COMMAND   run command"
 	echog "   -o           log in as root user"
 	echog "   -v           verbose"
 	echog "   -X|-Y        allow run X program (set DISPLAY and install xauth)"
@@ -53,9 +53,9 @@ while getopts :chitodvqr:b:p:xXY opt; do
 	c) CLEANUP=1 ;;
 	d) PRINTHASHERDIR=1 ;;
 	q) QUIETMODE=1 ;;
-	b) BINARYREPONAME=$OPTARG ;;
-	r) RUNCOMMAND=$OPTARG ;;
-	p) HASHERPOSTFIX=$OPTARG ;;
+	b) BINARYREPONAME="$OPTARG" ;;
+	r) RUNCOMMAND="$OPTARG" ;;
+	p) HASHERPOSTFIX="$OPTARG" ;;
 	X) ALLOWX=-X ;;
 	Y) ALLOWX=-Y ;;
 	x) ALLOWX=-Y ;;
@@ -72,12 +72,12 @@ if [ $# -gt 0 ]; then
 	shift $((OPTIND - 1))
 fi
 
-LISTRPMARGS=$@
+LISTNAMES="$@"
 }
 
-parse_cmd_pre "$@" --
+#parse_cmd_pre "$@" --
 
-mygetopts $LISTARGS
+mygetopts "$@"
 
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
@@ -125,13 +125,12 @@ if [ -n "$ALLOWX" ] ; then
 fi
 
 if [ -n "$QUIETMODE" ] ; then
-	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
 	echog "Exiting (quiet mode)..."
 	exit
 fi
 
 echog "Prepare hasher in $HASHERDIR ..."
-# there is package names in LISTRPMARGS
 UTILPKG="mc eepm"
 
 # GNOME program needs dbus-tools-gui
@@ -147,7 +146,7 @@ else
 	UTILPKG="$UTILPKG etersoft-build-utils"
 fi
 
-docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTRPMARGS $LISTNAMES || fatal "Error with install"
+docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
 
 if [ -n "$RUNCOMMAND" ] ; then
 	docmd $HSH-run $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock -- $RUNCOMMAND
