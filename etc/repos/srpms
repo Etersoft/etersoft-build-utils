@@ -6,7 +6,7 @@ alt              ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files
 #altp7           ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/p7/branch/files/SRPMS
 altautoimports  http://autoimports.altlinux.org/pub/ALTLinux/autoimports/Sisyphus/files/SRPMS
 altfcimport     http://autoimports.altlinux.org/pub/ALTLinux/fcimport/Sisyphus/files/SRPMS
-fedora23        http://mirror.yandex.ru/fedora/linux/development/23/source/SRPMS
+fedora24        http://mirror.yandex.ru/fedora/linux/development/24/source/SRPMS
 #fedora-test     http://mirror.yandex.ru/fedora/linux/releases/test/Fedora/source/SRPMS
 fedora-rawhide  http://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS
 fedora-ccrma    http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS

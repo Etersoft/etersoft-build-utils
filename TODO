@@ -1,3 +1,10 @@
+Source-git:
+git remote add upstream
+git fetch
+git merge vVERSION
+add_changelog
+gammit
+
 ia32-libs не прибавляется к x86_64 там, где это нужно (Astra)
 
 rpmgs комиттит в текущий каталог!!!

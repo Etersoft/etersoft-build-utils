@@ -476,6 +476,7 @@ fi
 
 # Check all systems
 if [ -n "$ALLSYSTEM" ] ; then
+	#info "Note: you can use whohas also"
 	NFLAG=
 	load_systems_list
 	# search throw all systems

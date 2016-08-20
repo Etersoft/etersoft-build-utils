@@ -93,8 +93,7 @@ fi
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
 if [ -z "$BUILDCOMMAND" ] ; then
-	BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
-	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
+	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST" || BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 fi
 
 # set SPECDIR from LISTNAMES if empty (need for is_gear below)
@@ -119,12 +118,6 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 				echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
 				USEBRANCH=$OLDBRANCH
 			fi
-			# hack about p5, M50 -> p5
-			#if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
-			#	USENUMBRANCH=p5
-			#	echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-			#	USEBRANCH=$USENUMBRANCH
-			#fi
 		fi
 
 		# set branch name
