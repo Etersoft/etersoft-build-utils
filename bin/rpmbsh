@@ -105,9 +105,9 @@ if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
 	print_list $BINPACKAGES
 	echo
 
-	# showcmd separately due console input
-	showcmd $ETERBUILDBIN/loginhsh -Y -t -i $MENVARG $BINPACKAGES
-	$ETERBUILDBIN/loginhsh -Y -t -i $MENVARG $BINPACKAGES
+	# Note: use showcmd due console input or some other conflict
+	showcmd $ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
+	$ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
 	RESULT=$?
 
 	# test remove packages from test hasher dir
@@ -134,5 +134,5 @@ else
 	TSKLIST=$LISTBUILT
 fi
 
-docmd $ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
+docmd $ETERBUILDBIN/rpmbs $GIRARHOST -b $BINARYREPO $RPMBSARGS $TSKLIST
 
