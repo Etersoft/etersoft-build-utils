@@ -1,6 +1,6 @@
 #!/bin/bash
-# 2005-2006, 2009, 2014, 2015 (c) Etersoft www.etersoft.ru
-# 2005-2015 Author: Vitaly Lipatov <lav@etersoft.ru>
+# 2005-2006, 2009, 2014, 2015, 2016 (c) Etersoft www.etersoft.ru
+# 2005-2016 Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # GS - get source
@@ -123,7 +123,7 @@ function get_source_svn()
 # Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
 function get_source_git()
 {
-	fatal "realize me"
+	GETSOURCEGIT=$(source_ext "$1" git "$2")
 }
 
 # Source-url: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
@@ -229,7 +229,7 @@ do
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ >/dev/null || fatal "Can't create/chdir..."
 
 		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
-		get_source_url $spec $nn || get_source_svn $spec $nn
+		get_source_url $spec $nn || get_source_git $spec $nn || get_source_svn $spec $nn
 
 		if ! rhas "$GETSOURCE" ".tar$" ; then
 			warning "It is recommended to use .tar tarballs for sources ($FTB now)"
@@ -237,7 +237,8 @@ do
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
-		# TODO: GETSOURCEGIT
+		elif [ -n "${GETSOURCEGIT}" ] ; then
+			is_gear $SPECDIR || fatal "Source-git works only with gear repo"
 		# TODO: rewrite code to use original file format and temp. download dir
 		elif [ -n "${GETSOURCEURL}" ] ; then
 			echog "Try to load ${GETSOURCEURL} for $spec"
@@ -275,13 +276,28 @@ do
 			docmd git svn clone $GETSOURCESVN $GITROOT
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
+		elif [ -n "${GETSOURCEGIT}" ] ; then
+			echog "Try to fetch ${GETSOURCEGIT} for $spec"
+			#TODO check upstream
+			#TODO error if incompatible
+			docmd git remote add upstream $GETSOURCEGIT
+			docmd git fetch upstream || fatal
+			#TODO check tag: v%version or %version
+			docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
+			#docmd git commit -m "mergejust import $FTB with rpmgs script"
 		elif is_gear ; then
 			CURNAME=$(get_tardir_from_rules) || fatal "There is no 'tar:' line in gear rules file or 'tar: .' used"
+			# FIXME: hack to unpack to correct place.
+			[ $(basename `pwd`) = ".gear" ] && cd ..
 			test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
 			test -d "$CURNAME" || CURNAME=$BASENAME
-			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
-			rm -f "$RPMSOURCEDIR/$FTB"
-			docmd git commit -m "just import $FTB with rpmgs script"
+			if [ -d "$RPMSOURCEDIR" ] && [ -f "$RPMSOURCEDIR/$FTB" ] ; then
+				gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
+				rm -f "$RPMSOURCEDIR/$FTB"
+				docmd git commit -m "just import $FTB with rpmgs script"
+			else
+				echo "Skip missed tarball commiting"
+			fi
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f option)."
