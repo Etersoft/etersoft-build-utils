@@ -273,6 +273,7 @@ do
 		if [ -n "${GETSOURCESVN}" ] ; then
 			# clone svn repo to current dir
 			# FIXME: need to clone in git root dir
+			# FIXME: remove hack with GITROOT
 			GITROOT=.
 			[ $(basename `pwd`) = ".gear" ] && GITROOT=../
 			docmd git svn clone $GETSOURCESVN $GITROOT
@@ -285,8 +286,18 @@ do
 			docmd git remote add upstream $GETSOURCEGIT
 			docmd git fetch upstream || fatal
 			#TODO check tag: v%version or %version
+			[ -n "$GSSETVERSION" ] || fatal "Sorry, I don't know new version"
 			docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
-			#docmd git commit -m "mergejust import $FTB with rpmgs script"
+
+			# FIXME: remove hack with GITROOT
+			GITROOT=.
+			[ $(basename `pwd`) = ".gear" ] && GITROOT=../
+
+			if [ -d "$GITROOT/tags" ] ; then
+				docmd gear-update-tag -a
+			fi
+			#docmd gammit
+			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
 			CURNAME=$(get_tardir_from_rules) || fatal "There is no 'tar:' line in gear rules file or 'tar: .' used"
 			# FIXME: hack to unpack to correct place.
