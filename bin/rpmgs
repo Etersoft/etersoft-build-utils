@@ -92,10 +92,12 @@ function source_ext()
 	local GETSOURCEEXT=
 	# %define SourceUrl ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
 	#GETSOURCEURL=$(eval_spec $1 | grep -i "^%define ${2}Url${3} " | head -n 1 | sed -e "s/ *\$//g" | sed -e "s/^%define[ \t].*[ \t]//g")
-	if grep -q "# Source$3-$2:" "$1" ; then
+	local SN="$3"
+	[ "$SN" = "0" ] && SN="$SN\?"
+	if grep -q "# Source$SN-$2:" "$1" ; then
 		local TMPSPEC=$1.tmpurl
-		local NEWSOURCE=$(grep "# Source$3-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g")
-		test -n "$NEWSOURCE" || fatal "Can't extract URL from $Source$3-$2"
+		local NEWSOURCE=$(grep "# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g")
+		test -n "$NEWSOURCE" || fatal "Can't extract URL from Source$SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		# TODO: use special field before %build

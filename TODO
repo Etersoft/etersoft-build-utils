@@ -1,3 +1,6 @@
+Нужно проще получать спек с раскрытыми переменными
+Нужно научиться получать из него также значение Source-(url|git)N
+
 Source-git:
 git remote add upstream
 git fetch
