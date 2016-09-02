@@ -99,7 +99,7 @@ check_repl libX11-devel libX11
 ############################# Fedora ##########################
 DISTRNAME=Fedora
 PKGVENDOR=fedora
-DISTRVERSION=21
+DISTRVERSION=23
 BUILDARCH=x86_64
 PKGFORMAT=rpm
 
@@ -119,6 +119,7 @@ check_repl unknown-devel "unknown-devel"
 
 check_repl rpm-build-compat rpm-build-altlinux-compat
 check_repl libusb-devel libusbx-devel
+check_repl libkrb5-devel "krb5-devel"
 
 
 

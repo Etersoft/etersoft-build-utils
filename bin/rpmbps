@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2010, 2012, 2015 (c) Etersoft www.etersoft.ru
+# 2003-2010, 2012, 2015, 2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -240,7 +240,7 @@ pkgrepl_list=$(print_pkgrepl_list)
 for i in $LISTDEP ; do
 	tolocal_anyrepl $i $pkgrepl_list || continue
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
-	NRL="s!(.*Req.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
+	NRL="s!(.*Req.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "Use req rule $NRL"
 	ALLREPLRULES="$ALLREPLRULES $NRL;"
 done
@@ -252,7 +252,7 @@ grprepl_list=$(print_grprepl_list)
 for i in $LISTGROUP ; do
 	tolocal_anyrepl $i $grprepl_list || continue
 	#NRL="s!\(Group.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
-	NRL="s!(Group.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
+	NRL="s!(Group.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "Use group name rule $NRL"
 	ALLGRPREPLRULES="$ALLGRPREPLRULES $NRL;"
 done

@@ -28,6 +28,12 @@ Requires: libstdc++
 BuildPreReq: rpm-build-compat gcc4.1 gcc
 BuildRequires: imake, xorg-cf-files gccmakedep
 
+%def_with krb
+
+%{?_with_krb:Requires: libkrb5-devel}
+#Requires: libkrb5-devel
+
+
 Source: %name.source
 
 %description
