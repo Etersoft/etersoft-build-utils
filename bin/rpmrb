@@ -53,7 +53,7 @@ for SPEC in $LISTNAMES ; do
 	test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_txtrelease $SPEC)1
 	export GSSETRELEASE
 
-	docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error with get source"
+	docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error within rpmgs"
 	add_changelog_helper "- new version $(get_version $SPEC) (with rpmrb script)" $SPEC || echog "Changelog entry already exists"
 
 	if is_gear ; then

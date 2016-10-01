@@ -269,8 +269,10 @@ do
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
+
 		elif [ -n "${GETSOURCEGIT}" ] ; then
 			is_gear $SPECDIR || fatal "Source-git works only with gear repo"
+
 		# TODO: rewrite code to use original file format and temp. download dir
 		elif [ -n "${GETSOURCEURL}" ] ; then
 			echog "Try to load ${GETSOURCEURL} for $spec"
