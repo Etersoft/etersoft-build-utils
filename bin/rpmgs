@@ -284,10 +284,7 @@ do
 		if [ -n "${GETSOURCESVN}" ] ; then
 			# clone svn repo to current dir
 			# FIXME: need to clone in git root dir
-			# FIXME: remove hack with GITROOT
-			GITROOT=.
-			[ $(basename `pwd`) = ".gear" ] && GITROOT=../
-			docmd git svn clone $GETSOURCESVN $GITROOT
+			docmd git svn clone $GETSOURCESVN $(get_root_git_dir)
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
 		elif [ -n "${GETSOURCEGIT}" ] ; then
@@ -300,11 +297,8 @@ do
 			[ -n "$GSSETVERSION" ] || fatal "Sorry, I don't know new version"
 			docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
 
-			# FIXME: remove hack with GITROOT
-			GITROOT=.
-			[ $(basename `pwd`) = ".gear" ] && GITROOT=../
-
-			if [ -d "$GITROOT/tags" ] ; then
+			# TODO: it is more clean detect that dir
+			if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
 				docmd gear-update-tag -a
 			fi
 			#docmd gammit
