@@ -69,14 +69,21 @@ download_any_tarball()
 {
 	local GETSOURCE="$1"
 	local TARGET="$2"
-	local ext
 	local FORMATS="tar.xz tar.bz2 tar.gz zip tgz 7z tbz2 tbz rar tar"
 	local BASESOURCE="$GETSOURCE"
-	# drop any ext
-	for ext in $FORMATS ; do
-		BASESOURCE=$(echo "$BASESOURCE" | sed -e "s|\.$ext$||g")
-	done
-	# try download with some ext
+
+	local ORIGEXT=$(rhas "$BASESOURCE" "\." && echo "$BASESOURCE" | sed -e "s|.*\.||")
+	[ -n "$ORIGEXT" ] || fatal "Have no idea how to load files without extension"
+
+	# first try download with original extension (exclude for tar)
+	if [ "$ORIGEXT" != "tar" ] ; then
+		FORMATS="$ORIGEXT $(estrlist exclude "$ORIGEXT" "$FORMATS")"
+	fi
+
+	BASESOURCE=$(echo "$BASESOURCE" | sed -e "s|\.$ORIGEXT$||g")
+
+	local ext
+	# try download by exts list
 	for ext in $FORMATS ; do
 		[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$BASESOURCE.$ext"
 		download_url "$BASESOURCE.$ext" || continue
@@ -105,6 +112,7 @@ function source_ext()
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
 		rm -f "$TMPSPEC"
 	fi
+	
 	echo "$GETSOURCEEXT"
 	test -n "$GETSOURCEEXT"
 }
