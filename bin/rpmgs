@@ -40,7 +40,7 @@ phelp()
 while getopts :haf opt; do
     case $opt in
     h) phelp; exit 0;;
-    a) LOADLIST=" 0 1 2 3 4 5 6 7 8" ;;
+    a) LOADLIST="$(seq 0 100)" ;;
     f) FORCEDOWNLOAD=-f ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -216,8 +216,11 @@ do
 	for nn in "" $LOADLIST
 	do
 		get_source $spec "Source$nn"
-		[ "$GETSOURCE$nn" = "0" ] && continue
-		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $spec" ; continue ; }
+
+		[ -z "$GETSOURCE" ] && continue
+		#[ "$GETSOURCE$nn" = "0" ] && continue
+		#test -z "$GETSOURCE" && { echog "Skip Source${nn} from $spec" ; continue ; }
+
 		FTB=`basename "$GETSOURCE"`
 		# for get RPMSOURCEDIR
 		build_rpms_name $spec
