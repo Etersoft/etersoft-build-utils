@@ -269,3 +269,7 @@ libtbb|tbb
 libpulseaudio-devel|pulseaudio-libs-devel
 libpulseaudio|pulseaudio-libs
 
+
+#for openssl
+perl-podlators|perl
+libkrb5-devel|krb5-devel
