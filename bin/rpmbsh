@@ -129,9 +129,9 @@ if [ ! "$RESULT" = "0" ] || [ -z "$RPMBSARGS" ]; then
 fi
 
 if rhas "$LISTNAMES" .spec ; then
-	is_gear $SPECDIR && TSKLIST=$LISTNAMES
+	is_gear $LISTNAMES && TSKLIST="$LISTNAMES"
 else
-	TSKLIST=$LISTBUILT
+	TSKLIST="$LISTBUILT"
 fi
 
 docmd $ETERBUILDBIN/rpmbs $GIRARHOST -b $BINARYREPO $RPMBSARGS $TSKLIST
