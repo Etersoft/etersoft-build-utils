@@ -146,6 +146,7 @@ else
 		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
 		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
 		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "GosLinux" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
 		[ "$DISTRNAME" = "SLED" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 		[ "$DISTRNAME" = "SUSE" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 	fi
