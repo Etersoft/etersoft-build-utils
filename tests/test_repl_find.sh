@@ -175,3 +175,35 @@ echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 print_pkgrepl_list
 
 check_repl libportaudio2-devel "portaudio19-dev"
+
+############################# Astralinux ##########################
+BUILDNAME=wine
+
+DISTRNAME=AstraLinux
+PKGVENDOR=AstraLinux
+DISTRVERSION=orel
+BUILDARCH=x86_64
+#BUILDARCH=i586
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl pkg-config "pkg-config"
+
+############################# ROSA ##########################
+BUILDNAME=wine
+
+DISTRNAME=rosa
+PKGVENDOR=rosa
+DISTRVERSION=2014
+BUILDARCH=x86_64
+#BUILDARCH=i586
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libicu-devel "lib64icu-devel"

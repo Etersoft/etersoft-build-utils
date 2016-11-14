@@ -1,0 +1,33 @@
+#NX troubles:
+libalsa-devel|libasound-devel
+libXext-devel|libxext-devel
+
+#Wine troubles:
+libcups-devel|libcups-devel
+liblcms-devel|liblcms2-devel
+libudev-devel|libudev-devel
+libXScrnSaver-devel|libxscrnsaver-devel
+libXv-devel|libxv-devel
+libfreetype|libfreetype6 libpango-modules1.0
+
+#No more libopenssl
+libcrypto10|libcrypto1.0.0
+libssl10|libssl1.0.0
+libssl-devel|libdssl-devel
+
+#Wine install check:
+libudev1|libudev1
+libtiff5|libtiff3
+
+#postgres92
+python-devel|libpython-devel
+libpython|libpython2.7
+libicu56|libicudata53
+libicu56|libicui18n53
+libicu56|libicuio53
+libicu56|libicule53
+libicu56|libiculx53
+libicu56|libicutest53
+libicu56|libicutu53
+libicu56|libicuuc53
+

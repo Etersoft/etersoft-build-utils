@@ -1,4 +1,5 @@
 build-essential | build-essential alien fakeroot
+libgphoto2-devel|libgphoto2-dev
 
 # nxsadmin
 libatkmm|libgtkmm-2.4-1v5
