@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.4
+Version: 2.5.5
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Nov 14 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.5-alt1
+- rpmgs: load Source up to 100
+- rpmgs: if tarball is not tar, try download it firstly
+- pkgrepl: add for openssl
+- add GosLinux support
+- improve pkgrepls
+
 * Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.4-alt1
 - fix OPTIND error with shift: -1: shift count
 - rpmgs: fix get #Source-* for Source0
