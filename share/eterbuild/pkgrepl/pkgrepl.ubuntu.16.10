@@ -1,0 +1,5 @@
+libpng15|libpng16-16
+libpng-devel|libpng-dev
+# strange change, but we have 28-dev for libgnutls30: http://packages.ubuntu.com/ru/source/yakkety/gnutls28
+libgnutls-devel|libgnutls28-dev
+libhal-devel|
