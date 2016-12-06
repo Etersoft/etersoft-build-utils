@@ -88,9 +88,11 @@ libpam0|libpam0g
 libpam-devel|libpam0g-dev
 
 rpm-build-fonts|rpm-build-altlinux-compat
+rpm-macros-webserver-common|rpm-build-altlinux-compat
 
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
+
 menu-devel|
 
 libexpat|libexpat1

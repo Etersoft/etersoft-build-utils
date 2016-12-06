@@ -95,7 +95,6 @@ libltdl-devel|libtool-ltdl-devel
 libhal-devel|hal-devel
 liblua5-devel|lua-devel
 libctemplate-devel|ctemplate-devel
-libuuid-devel|uuid-devel
 libesd-devel|esound-devel
 xorg-inputproto-devel|xorg-x11-proto-devel
 xorg-xextproto-devel|xorg-x11-proto-devel
@@ -138,6 +137,7 @@ libgnutls30|gnutls
 
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
+rpm-macros-webserver-common|rpm-build-altlinux-compat
 
 libnatspec-devel|
 libnatspec|
