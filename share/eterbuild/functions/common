@@ -305,7 +305,7 @@ get_tardir_from_rules()
 	local dir=$(grep "tar.*: " $rules | sed -e "s|tar.*: *||g
 s| .*||g")
 	[ "$dir" = "." ] || [ -z "$dir" ] && return 1
-	echo "$dir"
+	realpath "$(get_root_git_dir)/$dir"
 }
 
 filter_gear_name()
