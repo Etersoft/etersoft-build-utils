@@ -17,3 +17,6 @@ liblcms2|liblcms
 libgnutls26|libgnutls26
 libgnutls28|libgnutls26
 libgnutls30|libgnutls26
+
+libmozjs17-devel|libmozjs-devel
+libsystemd-devel|

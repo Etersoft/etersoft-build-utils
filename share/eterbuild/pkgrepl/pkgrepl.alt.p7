@@ -10,3 +10,7 @@ libspeexdsp-devel|libspeex-devel
 qt5-base-devel|qt5-base-devel libEGL-devel
 
 # ignore the fact we have libgnutls28-devel on this branch
+
+# restore after p6
+libmozjs17-devel|libmozjs17-devel
+libsystemd-devel|libsystemd-devel
