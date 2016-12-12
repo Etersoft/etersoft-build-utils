@@ -66,8 +66,7 @@ SSHTIMEOUT=300
 
 BUILDSERVER=
 
-# TODO: use common ccache dir
-export CCACHE_DIR=$OURTMPDIR/ccache
+[ -n "$CCACHE_DIR" ] || CCACHE_DIR=$OURTMPDIR/ccache
 
 # enable ccache using
 # CCACHE_ENABLE=yes
@@ -82,3 +81,4 @@ elif [ -f ~/.eterbuild-config ] ; then
 	fatal "./eterbuild-config is obsoleted, use ~/.config/eterbuild instead"
 fi
 
+export CCACHE_DIR
