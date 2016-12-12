@@ -15,7 +15,7 @@ load_mod repl rpm git buildsrpm spec
 #############################
 
 # FIXME: CURRENTBRANCHNAME??
-Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-$CURRENTBRANCHNAME] [-b REPONAME] spec..."
+Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-b REPONAME] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -34,9 +34,9 @@ phelp()
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 	echo
 	echog "Ext. options:"
-#	echog "   -r           remote build" # will pass to rpmbs/rpmbsh
 	echog "   -v           more verbose"
 	echog "   -q           quiet"
+	echog "   -z           create src.rpm with compatible gzip compression (obsoleted)"
 	echo
 	echog "Examples:"
 	echog " $ rpmbph -b $EXAMPLEALTDISTRVERSION -n -u  - backport to $EXAMPLEALTDISTRVERSION and ask to build it"
@@ -44,13 +44,13 @@ phelp()
 #	echog " -m - send result via e-mail"
 }
 
-# FIXME: has difference between
-UPLOADARG=
-while getopts :hnuvqb: opt; do
+PASSEDARGS=
+while getopts :hnuaAfvqb: opt; do
     case $opt in
         h) phelp; exit 0 ;;
         n) NOBUILD=1 ;;
-        u) UPLOADARG="-$opt" ;;
+        u|a|A) PASSEDARGS="$PASSEDARGS -$opt" ;;
+        f) PASSEDARGS="$PASSEDARGS -$opt" ;;
         v) VERBOSE=1 ;;
         b) BINARYREPONAME=$OPTARG ;;
         q) QUIET=1 ;;
@@ -61,11 +61,11 @@ done
 
 # remove args that were options
 if [ $# -gt 0 ]; then
-	shift $((OPTIND - 1))
+	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
-# pass other options to RPM (exclude -v):
-LISTRPMARGS="$UPLOADARG $(drop_args "$*" v n q)"
+# pass other options
+LISTRPMARGS="$PASSEDARGS $*"
 }
 
 set_girar_host $1 && shift
@@ -75,6 +75,9 @@ mygetopts $LISTARGS
 
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
+
+# assure we have only specs or src.rpm
+LISTNAMES=$(repodirs_to_specs $LISTNAMES)
 
 test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
@@ -90,77 +93,101 @@ fi
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
 if [ -z "$BUILDCOMMAND" ] ; then
-	BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
-	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST"
+	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST" || BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
 fi
 
-# set SPECDIR from LISTNAMES if empty
+# set SPECDIR from LISTNAMES if empty (need for is_gear below)
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
 # if run for ALT inside gear repo, just create backported spec
 if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
-	[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 
-	# set branch name
-	USEBRANCH=$BINARYREPO
-	SPEC=$LISTNAMES
-	BPSPEC=$SPEC.$USEBRANCH
+	for SPEC in $LISTNAMES ; do
 
-	# support for obsoleted M?? names
-	OLDBRANCH=$MDISTR
-	if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
-		if is_exist_branch $OLDBRANCH ; then
-			echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
-			USEBRANCH=$OLDBRANCH
+		set_specdir $SPEC
+		docmd cd $SPECDIR || fatal
+
+		# TODO: move branch detection to a separate function
+		#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
+		USEBRANCH=$BINARYREPO
+		# support for obsoleted M?? names
+		OLDBRANCH=$MDISTR
+
+		if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
+			if is_exist_branch $OLDBRANCH ; then
+				echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
+				USEBRANCH=$OLDBRANCH
+			fi
 		fi
-		# hack about p5, M50 -> p5
-		#if [ "$USEBRANCH" = "M50" ] && is_exist_branch p5 ; then
-		#	USENUMBRANCH=p5
-		#	echo "Exists $USENUMBRANCH branch, will use it instead $USEBRANCH"
-		#	USEBRANCH=$USENUMBRANCH
-		#fi
-	fi
 
-	[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
+		# set branch name
+		BPSPEC=$SPEC.$USEBRANCH
 
-	CURBRANCH=$(get_current_branch)
+		CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
+		if [ -n "$CURBRANCH" ] ; then
+			echog "Autorestore from broken build..."
+			docmd git checkout $CURBRANCH
+			rm -fv $(get_root_git_dir)/.git/.rpmbph.current
+			rm -fv $BPSPEC $BPSPEC.*
+		fi
 
-	if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
-		fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
-	fi
+		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
+		cp -f $SPEC $BPSPEC || fatal
 
-	# Create branch if not exist yet
-	if ! is_exist_branch $USEBRANCH ; then
-		docmd git branch $USEBRANCH
-	fi
+		CURBRANCH=$(get_current_branch)
 
-	# Only one spec supported
-	cp -f $LISTNAMES $BPSPEC || fatal
-	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
+		# TODO: move to a separate function
+		if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
+			fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
+		fi
 
-	docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
-	# TODO: check result message for merge?
-	# Use heads/ against warning: refname 'branch-name' is ambiguous
-	docmd git merge --no-ff heads/$CURBRANCH
-	mv -f $BPSPEC $SPEC || fatal
-	# FIXME: Ctrl-\ and q will cancelled less with return error code
-	if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
-		#git checkout $SPEC $MDISTR
-		#git checkout $CURBRANCH
-		fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
-	fi
-	docmd git add $SPEC
-	if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
-		#git checkout $CURBRANCH
-		fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
-	fi
-	docmd $BUILDCOMMAND $MENVARG $LISTRPMARGS $UPLOADARG $SPEC || { git checkout $CURBRANCH ; fatal "Can't build" ; }
-	docmd git checkout $CURBRANCH
-	exit $?
+		echo "$CURBRANCH" > $(get_root_git_dir)/.git/.rpmbph.current
+
+		# Create branch if not exist yet
+		if ! is_exist_branch $USEBRANCH ; then
+			docmd git branch $USEBRANCH
+		fi
+
+		docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
+
+		docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+		# TODO: check result message for merge?
+		# Use heads/ against warning: refname 'branch-name' is ambiguous
+		docmd git merge --no-ff heads/$CURBRANCH
+		mv -f $BPSPEC $SPEC || fatal
+		# FIXME: Ctrl-\ and q will cancelled less with return error code
+		if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
+			#git checkout $SPEC $MDISTR
+			#git checkout $CURBRANCH
+			fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
+		fi
+		docmd git add $SPEC
+		if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
+			#git checkout $CURBRANCH
+			fatal "Commit error. You are still in $CURBRANCH branch with modified and uncommitted spec file."
+		fi
+		cd - >/dev/null
+	done
+
+	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $LISTNAMES
+	RET=$?
+	
+	for SPEC in $LISTNAMES ; do
+		set_specdir $SPEC
+		docmd cd $SPECDIR || fatal
+
+		CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current)
+		rm -f $(get_root_git_dir)/.git/.rpmbph.current
+		docmd git checkout $CURBRANCH || RET=$?
+
+		cd - >/dev/null
+	done
+
+	exit $RET
 fi
 
 # handle src.rpm and spec both, LISTBUILT - result with full paths to src.rpms
-pack_src_rpm $LISTNAMES
+pack_src_rpm
 
 export RPMTOPDIR=$(mktemp -d || fatal "can't create tmp dir")
 mark_file_to_remove $RPMTOPDIR
@@ -178,7 +205,7 @@ for i in $LISTBUILT ; do
 	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
-	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $UPLOADARG $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $SPECNAME || fatal "Can't build"
 	uni_rpmrm $SPECNAME || true
 done
 

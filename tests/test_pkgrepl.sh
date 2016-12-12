@@ -11,7 +11,7 @@ export VERBOSE=1
 export IGNOREGEAR=1
 #sh ../bin/rpmbph -n -M51 specpkgr.spec
 
-export ROOTDIR=/net/os/stable/SUSE/11.3
+#export ROOTDIR=/net/os/stable/CentOS/7
 #sh ../bin/rpmbph -n specpkgr.spec
 
 check()
@@ -21,9 +21,12 @@ check()
 '$2'" || echo "OK for '$1' with '$2'"
 }
 
+#print_pkgrepl_list
+
+
 LISTBUILDDEP=`print_buildreq $SPECNAME`
 check "BuildDep" "imake xorg-cf-files gccmakedep rpm-build-compat gcc4.1 gcc" "$LISTBUILDDEP"
 
 echo -
 LISTREQDEP=`print_pkgreq $SPECNAME`
-check "Reqs" "binutils dbus-tools-gui expect foomatic-db-engine libstdc++ netcat nx openssl /usr/bin/xvt Xdialog" "$LISTREQDEP"
+check "Reqs" "binutils dbus-tools-gui expect foomatic-db-engine libkrb5-devel libstdc++ netcat nx openssl /usr/bin/xvt Xdialog" "$LISTREQDEP"

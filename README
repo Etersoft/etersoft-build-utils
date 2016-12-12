@@ -5,6 +5,12 @@ http://www.altlinux.org/Etersoft-build-utils_howto
 
 See QuickHelp.txt also.
 
+Set target distro in MENV in ~/.config/eterbuild, f.i. for Sisyphus
+MENV=SS
+or
+MENV=M80P
+for ALT Linux p8
+
 Examples:
 
 rpmbb [-c] [-i] [-p] [name.spec] - build package

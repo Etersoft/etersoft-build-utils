@@ -88,9 +88,11 @@ libpam0|libpam0g
 libpam-devel|libpam0g-dev
 
 rpm-build-fonts|rpm-build-altlinux-compat
+rpm-macros-webserver-common|rpm-build-altlinux-compat
 
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
+
 menu-devel|
 
 libexpat|libexpat1
@@ -194,7 +196,7 @@ libXfixes|libxfixes3
 
 # postgre
 which|debianutils
-libicu50|libicu38
+libicu56|libicu38
 libxslt|libxslt1.1
 # FIXME try to not depends from python version
 #libpython|libpython2.7
@@ -347,3 +349,16 @@ boost-program_options-devel|libboost-program-options-dev libboost-system-dev lib
 
 tbb-headers|libtbb-dev
 libtbb|libtbb2
+
+libgnutls26|libgnutls26
+libgnutls28|libgnutls26
+libgnutls30|libgnutls26
+libgnutls-devel|libgnutls-dev
+
+libunixODBC1|unixodbc
+libunixODBC2|unixodbc
+unixODBC|unixodbc
+libunixODBC-devel|unixodbc-dev
+
+libpulseaudio-devel|libpulse-dev
+libpulseaudio|libpulse0

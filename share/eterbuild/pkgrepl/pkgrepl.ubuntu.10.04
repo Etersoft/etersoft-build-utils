@@ -17,7 +17,7 @@ libcups|libcups2
 libstdc++-devel|libstdc++6-4.4-dev
 libstdc++6-devel|libstdc++6-4.4-dev
 gcc-g++|g++-4.4
-libicu50|libicu42
+libicu56|libicu42
 
 libusb-devel|libusb-1.0-0-dev
 libusb|libusb-1.0-0
@@ -28,8 +28,3 @@ libcap|libcap2
 libunistring|libunistring0
 libltdl7|libltdl7
 libopenal1|libopenal1
-
-libgnutls26|libgnutls26
-
-libunixodbc|unixodbc
-libunixodbc-dev|unixodbc-dev

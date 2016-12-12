@@ -3,7 +3,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.9
+Version: 2.5.6
 Release: alt0.M80P.1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -24,8 +24,8 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 1.7
-Requires: eepm >= 1.6.0
+Requires: giter >= 1.10
+Requires: eepm >= 1.7.2
 Requires: erc >= 0.8
 
 Requires: rpm-build
@@ -72,8 +72,71 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
-* Sat Apr 16 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt0.M80P.1
+* Mon Dec 12 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.6-alt0.M80P.1
 - backport to ALTLinux p8 (by rpmbph script)
+
+* Mon Dec 12 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.6-alt1
+- add replacement rules for GosLinux
+- add ubuntu 16.10 rule
+- spec: keep spaces in set_var substing
+- fix pkgrepl: add rpm-macros-webserver-common
+- fix unpacking tarball to current dir
+- do not override CCACHE_DIR
+- fix pkgrepls on ALT
+
+* Mon Nov 14 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.5-alt1
+- rpmgs: load Source up to 100
+- rpmgs: if tarball is not tar, try download it firstly
+- pkgrepl: add for openssl
+- add GosLinux support
+- improve pkgrepls
+
+* Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.4-alt1
+- fix OPTIND error with shift: -1: shift count
+- rpmgs: fix get #Source-* for Source0
+- rpmgs: improve for tags support
+- spec: add reset_subrelease
+- fix pkgrepl for packages in {}
+
+* Fri Aug 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt1
+- rpmbs: fix set branch name in common task
+- rpmbph: fix passed args
+- loginhsh: fix params with white spaces handling
+- runinhsh: fix running firefox-gost
+- rpmbsh: use -b BINARYREPO for loginhsh and rpmbs instead MENVARG
+- rpmgs: initial support for Source-git
+
+* Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
+- rpmcs: replace /usr/lib with libexecdir (semifix ALT bug #32056)
+- rpmbp: fix to pass extra (-z) option
+- update buildreqs
+- rpmreqs: skip gcc-c++
+- many fix in pkrepls
+- rpmbb: exit on error when use short-circuit
+- add apt conf for p8
+- fix gnutls for ALT
+- rpmbp: add -n after other params
+- update libicu: move to libicu56 from Sisyphus, update versions for a latest distros
+- add pkgrepl for AstraLinux/orel
+- rpmbs: fix builde32on64 CentOS glibc-devel requires
+- runinhsh: update for p8
+- fix error with spec in koi8-r
+
+* Wed Apr 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
+- rpmbsh: add -w for build via gear --hasher and make src.rpm in hasher (ALT bug #31673)
+- small fixes
+
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- loginhsh: drop automode (-a)
+- myhsh: add -b for get binary packages, -r for remove packages
+- rpmbsh: release -i (install in hasher) here
+- rewrite git repo using to support a few specs or git dirs as args
+- make rpmbsh install all built packages in one hasher
+- make rpmbs create one task with all packages
+- rpmbph: run rpmbs(h) for all repo together, add autorestore current branch
+- rpmrb: rewrite to support multiple dirs/spec in common task
+- config: fix run on non rpm systems
+- pkgrepls: improve repls for Debian 7/8
 
 * Sat Apr 16 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt1
 - require rpm-build-intro 1.9.3 (with distr_vendor supported ALT Linux p8)

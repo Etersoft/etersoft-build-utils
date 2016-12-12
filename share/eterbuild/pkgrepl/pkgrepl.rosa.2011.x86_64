@@ -29,5 +29,5 @@ libXtst-devel|lib64xtst-devel
 libXrandr-devel|lib64xrandr2-devel
 libXmu-devel|lib64xmu-devel
 
-libicu50|lib64icu48
+libicu56|lib64icu48
 libxslt|libxslt1

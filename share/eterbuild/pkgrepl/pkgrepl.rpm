@@ -56,8 +56,7 @@ libalsa-devel|alsa-lib-devel
 libalsa|alsa-lib
 libopenal1|openal-soft
 libopenal-devel|openal-soft-devel
-#libicu-devel|
-libicu50|libicu
+libicu56|libicu
 # for ISDN
 libcapi-devel|
 prelink|
@@ -76,6 +75,7 @@ jackit-devel|jack-audio-connection-kit-devel
 kernel-build-tools|
 libreadline-devel|readline-devel
 libreadline|readline
+libreadline6|readline
 
 libpopt-devel|popt
 libpopt|popt
@@ -95,7 +95,6 @@ libltdl-devel|libtool-ltdl-devel
 libhal-devel|hal-devel
 liblua5-devel|lua-devel
 libctemplate-devel|ctemplate-devel
-libuuid-devel|uuid-devel
 libesd-devel|esound-devel
 xorg-inputproto-devel|xorg-x11-proto-devel
 xorg-xextproto-devel|xorg-x11-proto-devel
@@ -121,7 +120,8 @@ libgst-plugins|gstreamer-plugins-base
 libgstreamer|gstreamer
 
 libunixODBC-devel|unixODBC-devel
-libunixODBC|unixODBC
+libunixODBC1|unixODBC
+libunixODBC2|unixODBC
 
 # depends for biarch build
 i586-glibc-core|
@@ -132,9 +132,12 @@ rpm-build-python|
 python-modules-compiler|python
 libgnutls-devel|gnutls-devel
 libgnutls26|gnutls
+libgnutls28|gnutls
+libgnutls30|gnutls
 
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
+rpm-macros-webserver-common|rpm-build-altlinux-compat
 
 libnatspec-devel|
 libnatspec|
@@ -262,3 +265,11 @@ libsrtp1|libsrtp
 
 tbb-headers|tbb-devel
 libtbb|tbb
+
+libpulseaudio-devel|pulseaudio-libs-devel
+libpulseaudio|pulseaudio-libs
+
+
+#for openssl
+perl-podlators|perl
+libkrb5-devel|krb5-devel

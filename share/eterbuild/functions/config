@@ -28,18 +28,19 @@ NICE="nice"
 RPMBUILD=rpmbuild
 
 # CHECKME: works only on ALT?
+if [ -x /bin/rpm ] ; then
 RPMDIR=$(rpm --eval %_topdir) || fatal
 RPMTMPDIR=$(rpm --eval %_tmppath) || fatal
+
+# TODO: get from git also?
+OWNERMAIL=$(rpm --eval %packager) || fatal
+fi
 
 # Can be overrided in the scripts
 [ -n "$RPMTOPDIR" ] || RPMTOPDIR="$RPMDIR"
 
 [ -n "$APTCONFBASE" ] || APTCONFBASE=$ETERBUILDETC/apt/apt.conf
 
-#OWNERMAIL=`grep "^%packager" ~/.rpmmacros | head -n 1 | sed -e "s/%packager[ \t]*//g"`
-# works only on ALT?
-# TODO: get from git also?
-OWNERMAIL=$(rpm --eval %packager) || fatal
 
 
 COMPANYFTP=etersoft.ru
@@ -65,8 +66,7 @@ SSHTIMEOUT=300
 
 BUILDSERVER=
 
-# TODO: use common ccache dir
-export CCACHE_DIR=$OURTMPDIR/ccache
+[ -n "$CCACHE_DIR" ] || CCACHE_DIR=$OURTMPDIR/ccache
 
 # enable ccache using
 # CCACHE_ENABLE=yes
@@ -81,3 +81,4 @@ elif [ -f ~/.eterbuild-config ] ; then
 	fatal "./eterbuild-config is obsoleted, use ~/.config/eterbuild instead"
 fi
 
+export CCACHE_DIR

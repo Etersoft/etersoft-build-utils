@@ -14,3 +14,5 @@ libpng15|libpng12
 cifs-utils|samba-client
 apt-repo|
 
+# due broken req in polkit
+systemd-devel|

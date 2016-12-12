@@ -13,7 +13,8 @@ libdbus|dbus
 gst-plugins|gstreamer1-plugins
 libfreetype|freetype2
 freetype|freetype2
-libgnutls|gnutls3
+libgnutls26|gnutls3
+libgnutls30|gnutls3
 libgsm|gsm
 libjpeg|jpeg
 liblcms|lcms2

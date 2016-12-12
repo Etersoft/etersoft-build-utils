@@ -1,0 +1,17 @@
+
+libssl-devel|lib64dssl-devel
+libssl10|libssl1.0.0 #lib64ssl1.0.0
+
+#postgres92
+python-devel|lib64python-devel
+libpython|lib64python2.7
+libicu-devel|lib64icu-devel
+libicu56|lib64icudata53
+libicu56|lib64icui18n53
+libicu56|lib64icuio53
+libicu56|lib64icule53
+libicu56|lib64iculx53
+libicu56|lib64icutest53
+libicu56|lib64icutu53
+libicu56|lib64icuuc53
+

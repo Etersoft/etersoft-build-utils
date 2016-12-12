@@ -180,7 +180,7 @@ libatkmm|libgtkmm2.4_1
 libglibmm|libgtkmm2.4_1
 libgtkmm2|libgtkmm2.4_1
 
-libicu50|libicu40
+libicu56|libicu40
 
 glibc-devel-static|glibc-static-devel
 

@@ -1,6 +1,6 @@
 #!/bin/bash
-# 2005-2006, 2009, 2014, 2015 (c) Etersoft www.etersoft.ru
-# 2005-2015 Author: Vitaly Lipatov <lav@etersoft.ru>
+# 2005-2006, 2009, 2014, 2015, 2016 (c) Etersoft www.etersoft.ru
+# 2005-2016 Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
 # GS - get source
@@ -40,7 +40,7 @@ phelp()
 while getopts :haf opt; do
     case $opt in
     h) phelp; exit 0;;
-    a) LOADLIST=" 0 1 2 3 4 5 6 7 8" ;;
+    a) LOADLIST="$(seq 0 100)" ;;
     f) FORCEDOWNLOAD=-f ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -48,7 +48,7 @@ while getopts :haf opt; do
 done
  
 # remove args that were options
-shift $((OPTIND - 1))
+[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 
 LISTRPMARGS=$@
 
@@ -69,14 +69,21 @@ download_any_tarball()
 {
 	local GETSOURCE="$1"
 	local TARGET="$2"
-	local ext
 	local FORMATS="tar.xz tar.bz2 tar.gz zip tgz 7z tbz2 tbz rar tar"
 	local BASESOURCE="$GETSOURCE"
-	# drop any ext
-	for ext in $FORMATS ; do
-		BASESOURCE=$(echo "$BASESOURCE" | sed -e "s|\.$ext$||g")
-	done
-	# try download with some ext
+
+	local ORIGEXT=$(rhas "$BASESOURCE" "\." && echo "$BASESOURCE" | sed -e "s|.*\.||")
+	[ -n "$ORIGEXT" ] || fatal "Have no idea how to load files without extension"
+
+	# first try download with original extension (exclude for tar)
+	if [ "$ORIGEXT" != "tar" ] ; then
+		FORMATS="$ORIGEXT $(estrlist exclude "$ORIGEXT" "$FORMATS")"
+	fi
+
+	BASESOURCE=$(echo "$BASESOURCE" | sed -e "s|\.$ORIGEXT$||g")
+
+	local ext
+	# try download by exts list
 	for ext in $FORMATS ; do
 		[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$BASESOURCE.$ext"
 		download_url "$BASESOURCE.$ext" || continue
@@ -92,10 +99,12 @@ function source_ext()
 	local GETSOURCEEXT=
 	# %define SourceUrl ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
 	#GETSOURCEURL=$(eval_spec $1 | grep -i "^%define ${2}Url${3} " | head -n 1 | sed -e "s/ *\$//g" | sed -e "s/^%define[ \t].*[ \t]//g")
-	if grep -q "# Source$3-$2:" "$1" ; then
+	local SN="$3"
+	[ "$SN" = "0" ] && SN="$SN\?"
+	if grep -q "# Source$SN-$2:" "$1" ; then
 		local TMPSPEC=$1.tmpurl
-		local NEWSOURCE=$(grep "# Source$3-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g")
-		test -n "$NEWSOURCE" || fatal "Can't extract URL from $Source$3-$2"
+		local NEWSOURCE=$(grep "# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
+		test -n "$NEWSOURCE" || fatal "Can't extract URL from Source$SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		# TODO: use special field before %build
@@ -103,6 +112,7 @@ function source_ext()
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
 		rm -f "$TMPSPEC"
 	fi
+	
 	echo "$GETSOURCEEXT"
 	test -n "$GETSOURCEEXT"
 }
@@ -123,7 +133,7 @@ function get_source_svn()
 # Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
 function get_source_git()
 {
-	fatal "realize me"
+	GETSOURCEGIT=$(source_ext "$1" git "$2")
 }
 
 # Source-url: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
@@ -148,6 +158,7 @@ gear_update_from_tarball()
 	local TARBALL="$1"
 	local CURNAME="$2"
 	shift 2
+	assert_var TARBALL CURNAME
 	[ -d "$CURNAME" ] || CREATEFLAG=-c
 	# TODO: check tarball ext. for unsupported arch and realize it here or in gear-update
 	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."
@@ -161,6 +172,25 @@ gear_update_from_tarball()
 		return 0
 	fi
 	fatal "can't import tarball '$TARBALL'"
+}
+
+# TODO: rewrite for any tarball commit
+# $nn $FTB
+commit_tarball()
+{
+	#rhas "$GETSOURCE" "ps?://" || GETSOURCE=""
+	CURNAME=$(get_tardir_from_rules) || fatal "There is no correct 'tar:' line in gear rules file, needed for commit tarball"
+	# FIXME: hack to unpack to correct place.
+	[ $(basename `pwd`) = ".gear" ] && cd ..
+	test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
+	test -d "$CURNAME" || CURNAME=$BASENAME
+	if [ -d "$RPMSOURCEDIR" ] && [ -f "$RPMSOURCEDIR/$FTB" ] ; then
+		gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
+		rm -f "$RPMSOURCEDIR/$FTB"
+		docmd git commit -m "just import $FTB with rpmgs script"
+	else
+		echo "Skip missed tarball commiting"
+	fi
 }
 
 parse_cmd_pre_spec "$@"
@@ -213,8 +243,11 @@ do
 	for nn in "" $LOADLIST
 	do
 		get_source $spec "Source$nn"
-		[ "$GETSOURCE$nn" = "0" ] && continue
-		test -z "$GETSOURCE" && { echog "Skip Source${nn} from $spec" ; continue ; }
+
+		[ -z "$GETSOURCE" ] && continue
+		#[ "$GETSOURCE$nn" = "0" ] && continue
+		#test -z "$GETSOURCE" && { echog "Skip Source${nn} from $spec" ; continue ; }
+
 		FTB=`basename "$GETSOURCE"`
 		# for get RPMSOURCEDIR
 		build_rpms_name $spec
@@ -228,7 +261,7 @@ do
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ >/dev/null || fatal "Can't create/chdir..."
 
 		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
-		get_source_url $spec $nn || get_source_svn $spec $nn
+		get_source_url $spec $nn || get_source_git $spec $nn || get_source_svn $spec $nn
 
 		if ! rhas "$GETSOURCE" ".tar$" ; then
 			warning "It is recommended to use .tar tarballs for sources ($FTB now)"
@@ -236,7 +269,10 @@ do
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
-		# TODO: GETSOURCEGIT
+
+		elif [ -n "${GETSOURCEGIT}" ] ; then
+			is_gear $SPECDIR || fatal "Source-git works only with gear repo"
+
 		# TODO: rewrite code to use original file format and temp. download dir
 		elif [ -n "${GETSOURCEURL}" ] ; then
 			echog "Try to load ${GETSOURCEURL} for $spec"
@@ -249,6 +285,13 @@ do
 		# TODO: fix download single packed file
 		#else
 		#		download_url "$GETSOURCE"
+
+			# commit tarball
+			if [ -n "$GSSETVERSION" ] || [ -n "$FORCEDOWNLOAD" ]; then
+				if false && is_gear ; then
+					commit_tarball $nn $FTB
+				fi
+			fi
 		fi
 
 		echog "DONE with $FTB"
@@ -269,18 +312,28 @@ do
 		if [ -n "${GETSOURCESVN}" ] ; then
 			# clone svn repo to current dir
 			# FIXME: need to clone in git root dir
-			GITROOT=.
-			[ $(basename `pwd`) = ".gear" ] && GITROOT=../
-			docmd git svn clone $GETSOURCESVN $GITROOT
+			docmd git svn clone $GETSOURCESVN $(get_root_git_dir)
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
+		elif [ -n "${GETSOURCEGIT}" ] ; then
+			echog "Try to fetch ${GETSOURCEGIT} for $spec"
+			#TODO check upstream
+			#TODO error if incompatible
+			docmd git remote add upstream $GETSOURCEGIT
+			docmd git fetch upstream || fatal
+			#TODO check tag: v%version or %version
+			[ -n "$GSSETVERSION" ] || fatal "Sorry, I don't know new version"
+			docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
+
+			# TODO: it is more clean detect that dir
+			if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
+				docmd gear-update-tag -a
+			fi
+			#docmd gammit
+			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
-			CURNAME=$(get_tardir_from_rules) || fatal "There is no 'tar:' line in gear rules file or 'tar: .' used"
-			test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
-			test -d "$CURNAME" || CURNAME=$BASENAME
-			gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
-			rm -f "$RPMSOURCEDIR/$FTB"
-			docmd git commit -m "just import $FTB with rpmgs script"
+			# TODO: realize above
+			commit_tarball
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f option)."

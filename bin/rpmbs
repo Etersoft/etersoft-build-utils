@@ -33,7 +33,7 @@ PREPARETASK=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [GIRAR] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-b REPONAME] [-p POCKET] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -93,7 +93,7 @@ done
 
 ## remove args that were options
 if [ $# -gt 0 ]; then
-	shift $((OPTIND - 1))
+	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
 LISTRPMARGS=$@
@@ -218,6 +218,7 @@ if [ -n "$NOSOURCE" ] ; then
 	exit $?
 fi
 
+# FIXME: need we it later?
 # set SPECDIR from LISTNAMES if empty
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
@@ -226,36 +227,70 @@ set_binaryrepo $MENV
 
 # If we build from gear repo, run task
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
-	[ -n "$VERBOSE" ] && echo "Run with gear repo..."
 
-	echo "Prepare to publish to $GIRARHOST..."
+	# assure we have only specs or src.rpm
+	LISTNAMES=$(repodirs_to_specs $LISTNAMES)
 
-	# check release
-	build_rpms_name "$LISTNAMES"
-	pkg_release_check $RELEASE
-
-	PROJECTNAME=$(get_repo_name)
-
-	check_gear_and_tag || fatal "Can't make tag"
-	TAG=$(get_last_tag)
-
-	# TODO: add check for repo (as in rpmgp) and run ginit if needed
-	docmd gpush $GIRARHOST $FORCE || fatal "gpush failed. It is possible you need run '\$ ginit $GIRARHOST' to create remote repo."
-	echo
-	echo "Run build $PROJECTNAME at $GEARHOST"
-	if [ -n "$PREPARETASK" ] ; then
-		docmd ssh $GEARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
-	else
-		docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+	NUMSPECS=$(estrlist count $LISTNAMES)
+	# if more then one spec, use common task
+	if [ $NUMSPECS -gt 1 ] && [ -z "$PREPARETASK" ] ; then
+		PREPARETASK=internal
+		# FIXME: no pocket support on git.eter task new?
+		showcmd ssh $GEARHOST task new $BINARYREPO
+		TASKNUMBER=$(ssh $GEARHOST task new $BINARYREPO | head -n1) || fatal
+		[ -n "$TASKNUMBER" ] || fatal "Can't get task number from $GEARHOST"
 	fi
-	# FIXME: incorporate
-	cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
-	echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GEARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
-	rm -f $RPMDIR/uploaded.log.tmp
+
+	for ln in $LISTNAMES ; do
+		# force SPECDIR
+		set_specdir $ln
+
+		[ -n "$VERBOSE" ] && echo "Run with gear repo in dir $SPECDIR..."
+
+		echo "Prepare to publish to $GIRARHOST..."
+		cd $SPECDIR || fatal
+
+		# check release
+		build_rpms_name "$ln"
+		pkg_release_check $RELEASE
+
+		PROJECTNAME=$(get_repo_name)
+
+		if ! check_gear_and_tag ; then
+			if [ "$PREPARETASK" = "internal" ] ; then
+				docmd ssh $GEARHOST task rm $TASKNUMBER
+			fi
+			fatal "Can't make tag"
+		fi
+
+		TAG=$(get_last_tag)
+
+		# TODO: add check for repo (as in rpmgp) and run ginit if needed
+		docmd gpush $GIRARHOST $FORCE || fatal "gpush failed. It is possible you need run '\$ ginit $GIRARHOST' to create remote repo."
+		echo
+		echo "Run build $PROJECTNAME at $GEARHOST"
+		# FIXME: tee hangup during first call with ssh ControlMaster
+		if [ -n "$PREPARETASK" ] ; then
+			docmd ssh $GEARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		else
+			docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+		fi
+		# FIXME: incorporate
+		cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
+		echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GEARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
+		rm -f $RPMDIR/uploaded.log.tmp
+		cd - >/dev/null
+	done
+
+	# if more then one spec, use common task
+	if [ "$PREPARETASK" = "internal" ] ; then
+		docmd ssh $GEARHOST task run $TASKNUMBER
+	fi
+
 	exit
 fi
 
-pack_src_rpm ${LISTRPMARGS}
+pack_src_rpm $LISTRPMARGS
 
 if [ -n "${DELETENOW}" ]; then
 	fatal "Removing did not realized yet"

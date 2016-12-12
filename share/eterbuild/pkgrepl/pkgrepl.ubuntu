@@ -1,10 +1,7 @@
-libstdc++6-devel|libstdc++6-4.3-dev
-libstdc++-devel|libstdc++6-4.3-dev
 
 libieee1284-devel|libieee1284-3-dev
 
 ice|zeroc-ice
-gcc-g++|g++-4.3
 
 libmpg123-devel|
 libmpg123|
@@ -21,7 +18,6 @@ libffi|libffi4
 cups|cups cups-bsd cups-client
 glibc-utils|
 libopenal1|libopenal0a
-libgnutls26|libgnutls13
 libv4l|
 libarts-devel|
 libarts|

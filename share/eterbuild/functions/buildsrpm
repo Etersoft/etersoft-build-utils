@@ -19,7 +19,9 @@ uni_rpmbuildsrpm()
 	fi
 
 	local SPECNAME="$1"
-	local SPECDIR=`dirname $SPECNAME`
+	local SPECDIR
+	set_specdir $SPECNAME || fatal "Dir for $SPECNAME does not exists"
+
 	local GEAR=gear
 
 	local ONEPARAM="--quiet"
@@ -30,6 +32,8 @@ uni_rpmbuildsrpm()
 
 	local THRPARAM="--quiet"
 	[ -n "$USE_VENDOR" ] && THRPARAM="--define=_vendor $USE_VENDOR"
+
+	cd $SPECDIR || fatal
 
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
@@ -53,6 +57,8 @@ uni_rpmbuildsrpm()
 		docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
 	fi
 
+	cd - >/dev/null
+
 	return $RET
 }
 
@@ -70,9 +76,15 @@ fi
 ARGS=$@
 [ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES ARGS=$ARGS" || :
 ARGS="$ARGS --nodeps"
+
+# i is a spec or src.rpm
 for i in $LISTNAMES
 do
-	
+	# transform dir to spec if it is dir
+	if [ -d "$i" ] ; then
+		i=$(get_gear_spec $i)
+	fi
+
 	if [ -z ${i/*rpm/} ] ; then
 		# if rpm not spec, guess it is src.rpm
 		#NAMESRPMIN=$(basename $i)

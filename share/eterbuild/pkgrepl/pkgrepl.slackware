@@ -39,6 +39,7 @@ libesd|
 libv4l|v4l-utils
 libgnutls-devel|gnutls libgcrypt libgpg-error
 libgnutls26|gnutls libgcrypt libgpg-error
+libgnutls30|gnutls libgcrypt libgpg-error
 libgsm|
 #libjpeg-devel|libjpeg
 libjpeg|libjpeg

@@ -1,14 +1,13 @@
 libjpeg-devel|libjpeg8-dev
 libjpeg|libjpeg8
-libicu50|libicu48
+libicu56|libicu52
 liblzma|liblzma5
 cups|cups cups-bsd cups-client
-gtkmm-2.4|libgtkmm-2.4
 libtiff5|libtiff5
 libtiff-devel|libtiff5-dev
 libgphoto2|libgphoto2-6
 libgphoto2-6|libgphoto2-6
 libgphoto2_port-12|libgphoto2-6
 
-libwxgtk|libwxgtk2.8-0
-libwxgtk-dev|libwxgtk2.8-dev
+libwxGTK|libwxgtk2.8-0
+libwxGTK-devel|libwxgtk2.8-dev

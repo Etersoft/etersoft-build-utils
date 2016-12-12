@@ -93,6 +93,6 @@ EOF
 	[ -n "$QUIETMODE" ] && return
 	echo
 	echog "Apt sources from $APTCONF:"
-	cat $OURSOURCES | grep -v "^#" | grep -v "^\$" | grep rpm
+	cat $OURSOURCES | grep -v "^#" | grep -v "^\$" | grep rpm | sed -e "s|rpm|    rpm|"
 	echo
 }

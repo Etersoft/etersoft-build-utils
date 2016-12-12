@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2010, 2012, 2015 (c) Etersoft www.etersoft.ru
+# 2003-2010, 2012, 2015, 2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -48,7 +48,7 @@ done
 
 # remove args that were options
 if [ $# -gt 0 ]; then
-	shift $((OPTIND - 1))
+	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
 # pass other options to RPM (exclude -v):
@@ -87,7 +87,7 @@ BUILDNAME=$(get_name $SPECNAME)
 ADDFIXCOMMAND=
 ADDREQUIRES=
 
-echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR)..."
+echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR) ..."
 
 # TODO: check if spec is already backported by line:
 # # This spec is backported 
@@ -140,19 +140,22 @@ else
 		fi
 	fi
 
+	if build32on64 ; then
+		[ "$DISTRNAME" = "Debian" ] && ! version_more_version $DISTRVERSION 8 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "AstraLinux" ] && BUILDREQ="$BUILDREQ ia32-libs-dev gcc-multilib" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
+		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "GosLinux" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "SLED" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
+		[ "$DISTRNAME" = "SUSE" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
+	fi
+
 	# hack against very straight patch command
 	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
 	# see install in Korinf, need concatenate
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
-
-	if build32on64 ; then
-		[ "$DISTRNAME" = "Debian" ] && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
-		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs" && ADDREQUIRES="$ADDREQUIRES ia32-libs"
-		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel.i686"
-		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel.i686"
-		[ "$DISTRNAME" = "SLED" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
-		[ "$DISTRNAME" = "SUSE" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
-	fi
+	# (do not modify BUILDREQ anymore)
 
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
 	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
@@ -238,7 +241,7 @@ pkgrepl_list=$(print_pkgrepl_list)
 for i in $LISTDEP ; do
 	tolocal_anyrepl $i $pkgrepl_list || continue
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
-	NRL="s!(.*Req.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
+	NRL="s!(.*Req.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "Use req rule $NRL"
 	ALLREPLRULES="$ALLREPLRULES $NRL;"
 done
@@ -250,7 +253,7 @@ grprepl_list=$(print_grprepl_list)
 for i in $LISTGROUP ; do
 	tolocal_anyrepl $i $grprepl_list || continue
 	#NRL="s!\(Group.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
-	NRL="s!(Group.*)$ALTPKGNAME( |,|\$)!\1$TARGETPKGNAME\2!g"
+	NRL="s!(Group.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "Use group name rule $NRL"
 	ALLGRPREPLRULES="$ALLGRPREPLRULES $NRL;"
 done

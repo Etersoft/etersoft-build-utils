@@ -1,3 +1,14 @@
 #!/bin/sh
 
-$(dirname $0)/rpmbph "$@" -n
+# workaround for last passed through options
+case "$1" in
+    -*)
+        FIRST=
+        ;;
+    *)
+        FIRST="$1"
+        shift
+        ;;
+esac
+
+$(dirname $0)/rpmbph $FIRST -n "$@"

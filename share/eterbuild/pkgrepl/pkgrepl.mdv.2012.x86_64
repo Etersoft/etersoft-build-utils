@@ -1,7 +1,7 @@
 libalsa|lib64alsa2
 libalsa-devel|lib64alsa-devel
 libpng-devel|lib64png-devel
-libicu50|lib64icutu49 lib64icule49 lib64iculx49
+libicu56|lib64icutu49 lib64icule49 lib64iculx49
 
 zlib|lib64z1
 zlib-devel|lib64z-devel

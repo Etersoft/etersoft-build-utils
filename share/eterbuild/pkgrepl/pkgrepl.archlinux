@@ -46,6 +46,7 @@ liblcms|lcms
 liblcms2|lcms2
 libgnutls-devel|gnutls
 libgnutls26|gnutls
+libgnutls30|gnutls
 libssl|openssl
 libgsm|gsm
 udev-rules|systemd
@@ -67,7 +68,7 @@ libxxf86misc|
 rpm-build|rpm-org fakeroot
 rpm|rpm-org
 rpm-build-intro|rpm-build-altlinux-compat
-libicu50|icu
+libicu56|icu
 libreadline|readline
 gcc-c++|gcc
 gccmakedep|imake
@@ -127,6 +128,7 @@ libtiff5|libtiff
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
 
-libunixODBC|unixodbc
+libunixODBC-devel|unixodbc
+libunixODBC1|unixodbc
+libunixODBC2|unixodbc
 unixODBC|unixodbc
-libunixodbc|unixodbc

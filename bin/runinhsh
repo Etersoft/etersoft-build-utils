@@ -7,36 +7,63 @@
 # TODO: run by desktop file from installed package
 # TODO: run the same binary like in host system with autodetected package
 
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	echo "runinhsh [-b REPONAME] [command] - run command inside hasher for REPONAME distro"
+	echo "runinhsh [-b REPONAME] [package/command] [command] - run command inside hasher for REPONAME distro"
+	echo "Examples:"
+	echo "  $ runinhsh -b p8 firefox-gost firefox"
+	echo "  $ runinhsh -b p8 chromium"
 	exit 0
 fi
 
 PLATFORM=
 
 # firefox plugin hack
-PLUGINJAVA=mozilla-plugin-java-1.7.0-openjdk
+PLUGINJAVA=mozilla-plugin-java-1.8.0-openjdk
+# mozilla-plugin-java-1.7.0-openjdk
 if [ "$1" = "-b" ] ; then
 	PLATFORM="-b $2"
-	PLUGINJAVA=mozilla-plugin-java-1.6.0-sun
+	case "$2" in
+		p6|p7)
+			PLUGINJAVA=mozilla-plugin-java-1.6.0-sun
+			;;
+		*)
+			# use default
+			;;
+	esac
 	shift 2
 fi
 
 # TODO --short
 #PACKAGE=$(epmqf --quiet --short "$1")
 COMMAND="$1"
-PACKAGE=$(epmqf --quiet "$COMMAND" | epm print name for package)
+PACKAGE=$(epmqf --quiet "$COMMAND" 2>/dev/null)
+if [ -n "$PACKAGE" ] ; then
+	PACKAGE=$(echo "$PACKAGE" | epm print name for package)
+else
+	PACKAGE="$COMMAND"
+fi
 
+shift
+[ -n "$1" ] && COMMAND="$@"
+
+PACKAGES="$PACKAGE"
+OPTIONS=
 case $PACKAGE in
-	firefox)
-		PACKAGE="$PACKAGE $PLUGINJAVA"
+	firefox*)
+		PACKAGES="$PACKAGES $PLUGINJAVA"
+		OPTIONS="$OPTIONS --no-remote"
 		;;
-	"")
-		echo "Can't find package for '$COMMAND'" >&2
-		exit -1
-		;;
+#	"")
+#		echo "Can't find package for '$COMMAND'" >&2
+#		exit -1
+#		;;
 	*)
-		PACKAGE="$PACKAGE dbus"
+		PACKAGES="$PACKAGES dbus"
 esac
 
-share_network=1 loginhsh -Y -t -p $COMMAND -r $COMMAND $PLATFORM $PACKAGE
+showcmd loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+share_network=1 loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES

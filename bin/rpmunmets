@@ -57,7 +57,7 @@ done
 
 # remove args that were options
 if [ $# -gt 0 ]; then 
-	shift $((OPTIND - 1))
+	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
 # pass other options to RPM:

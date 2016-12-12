@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2003-2010 (c) Etersoft www.etersoft.ru
+# 2003-2016 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -37,13 +37,16 @@ phelp()
 	echog "   -s  sign (and move to dir ETERDESTSRPM if defined) after build"
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
+	echog "   -w  build with gear --hasher myhsh directly"
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
 }
 
-while getopts :htb: opt; do
+while getopts :hitwb: opt; do
     case $opt in
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
+    w) THOROUGH=1 ;;
+    i) INSTALLPKG=1 ;;
     b) BINARYREPONAME=$OPTARG ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
 #    ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -53,7 +56,7 @@ done
 
 ## remove args that were options
 if [ $# -gt 0 ]; then 
-	shift $((OPTIND - 1))
+	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
 LISTRPMARGS=$@
@@ -70,40 +73,66 @@ set_binaryrepo $MENV
 
 [ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"
 
+# assure we have only specs or src.rpm
+LISTNAMES=$(repodirs_to_specs $LISTNAMES)
+
 # Skip for prev. packed src.rpm
 if estrlist has spec "$LISTNAMES" ; then
 	# If fail, we already has correct changelog
 	add_changelog_helper "- new version" $LISTNAMES
 fi
 
-# We do not not pass args for myhsh here...
-# FIXME: не обрабатывает два пропускаемых вместе параметра
-pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u i c l f a A)
+if [ -n "$THOROUGH" ] ; then
+	# TODO: use gear --hasher for fix macro problem (https://bugzilla.altlinux.org/show_bug.cgi?id=31673)
+	docmd time gear --hasher -- $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
+	exit
+else
+	# We do not not pass args for myhsh here...
+	# FIXME: не обрабатывает два пропускаемых вместе параметра
+	pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c l f a A)
 
-# TODO: use gear --hasher directly, drop myhsh
-
-if rhas "$LISTNAMES" spec ; then
-	set_specdir $LISTNAMES
+	# build in hasher
+	docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
+	RESULT=$?
 fi
 
-docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
-RESULT=$?
+# if ok and requested test install, do it
+if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
+	BINPACKAGES=$($ETERBUILDBIN/myhsh -b $LISTBUILT | estrlist reg_exclude debuginfo -) || fatal "Can't get binary packages for $LISTBUILT"
+
+	echo
+	echog "List of binary packages:"
+	print_list $BINPACKAGES
+	echo
+
+	# Note: use showcmd due console input or some other conflict
+	showcmd $ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
+	$ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
+	RESULT=$?
+
+	# test remove packages from test hasher dir
+	docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
+fi
+
 # remove generated src.rpm
 for i in $LISTBUILT ; do
-	estrlist has $i $LISTNAMES || rm -f $i
+	estrlist has $i $LISTNAMES || rm -fv $i
 done
 
 date
 echo "-------------------------------"
 
 # make src.rpm if build OK and we have options for rpmbs
-
 RPMBSARGS=$(drop_args "$LISTRPMARGS" i c l)
 if [ ! "$RESULT" = "0" ] || [ -z "$RPMBSARGS" ]; then
 	exit $RESULT
 fi
 
-is_gear $SPECDIR && TSKLIST=$LISTNAMES || TSKLIST=$LISTBUILT
+if rhas "$LISTNAMES" .spec ; then
+	is_gear $LISTNAMES && TSKLIST="$LISTNAMES"
+else
+	TSKLIST="$LISTBUILT"
+fi
 
-docmd $ETERBUILDBIN/rpmbs $GIRARHOST $MENVARG $RPMBSARGS $TSKLIST
+docmd $ETERBUILDBIN/rpmbs $GIRARHOST -b $BINARYREPO $RPMBSARGS $TSKLIST
 
