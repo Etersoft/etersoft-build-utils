@@ -136,7 +136,7 @@ check_gear_and_tag()
 		if $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
 			docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
 		elif $GEARCTAG $FORCE 2>&1 | grep -q "already exists"; then
-			is_last_commit_tag || fatal "Tag $(get_last_tag) is set NOT on the last commit! Use -f key for override tag"
+			is_last_commit_tag || fatal "Tag is set NOT on the last commit! Use -f key for override tag"
 			RESULT=1
 		fi
 	fi

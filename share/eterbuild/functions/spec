@@ -237,7 +237,7 @@ add_changelog_helper()
 	if [ "$R" = "0" ]; then
 		local SPEC
 		for SPEC in $SPECS ; do
-			N=`grep -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
+			N=`grep --text -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
 			# +1 -- comment with date and packager name
 			# +2 -- place for edit comments
 			# +N works for mcedit and vi
