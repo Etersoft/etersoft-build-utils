@@ -2,6 +2,7 @@
 
 # FIXME
 makedepend|
+gccmakedep|imake
 
 foomatic-db-engine|foomatic
 foomatic-db|foomatic
@@ -273,3 +274,5 @@ libpulseaudio|pulseaudio-libs
 #for openssl
 perl-podlators|perl
 libkrb5-devel|krb5-devel
+
+bash4|bash
