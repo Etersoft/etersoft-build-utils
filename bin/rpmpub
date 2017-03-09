@@ -75,8 +75,15 @@ export ETERDESTSRPM
 
 PREVPATH=$(readlink -m "$ETERDESTSRPM/../../last")
 if [ -n "$ALPHA" ] && [ ! -d "$ETERDESTSRPM" ] && [ -d "$PREVPATH" ] ; then
-	echo "Copying previous target tree from $PREVPATH"
-	docmd cp -alv $PREVPATH $(readlink -m "$ETERDESTSRPM/..")
+	NEXTPATH=$(readlink -m "$ETERDESTSRPM/..")
+	echo "Copying previous target tree from $PREVPATH to $NEXTPATH"
+	docmd cp -alv $PREVPATH $NEXTPATH
+	echo "Fix permissions and group..."
+	NAME_GR=$(stat -c "%G" $PREVPATH)
+	[ -n "$NAME_GR" ] || fatal "Can't get group for $PREVPATH"
+	find -H "$NEXTPATH" ! -group "$NAME_GR" -print0 | xargs -0 --no-run-if-empty chgrp -v $NAME_GR
+	find -H "$NEXTPATH" ! -perm 0664  -type f -print0 | xargs -0 --no-run-if-empty chmod -v 0664
+	find -H "$NEXTPATH" ! -perm 02775 -type d -print0 | xargs -0 --no-run-if-empty chmod -v 02775
 fi
 
 # just for your information: rpmbs supports ssh-like target
