@@ -190,6 +190,7 @@ commit_tarball()
 		docmd git commit -m "just import $FTB with rpmgs script"
 	else
 		echo "Skip missed tarball commiting"
+		return 1
 	fi
 }
 
@@ -333,7 +334,7 @@ do
 			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
 			# TODO: realize above
-			commit_tarball
+			commit_tarball || fatal
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f option)."
