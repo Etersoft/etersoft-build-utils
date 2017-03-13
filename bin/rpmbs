@@ -1,6 +1,6 @@
 #!/bin/bash
-# (c) Etersoft 2003-2012
-# Author: Vitaly Lipatov <lav@etersoft.ru>, 2012
+# (c) Etersoft 2003-2012, 2017
+# Author: Vitaly Lipatov <lav@etersoft.ru>, 2012, 2017
 # Public domain
 #
 # BS - build source
@@ -18,7 +18,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod rpm tarball alt git web buildsrpm
+load_mod rpm tarball alt git web buildsrpm branch
 
 SIGN=
 SIGNTAG=
@@ -250,6 +250,12 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		echo "Prepare to publish to $GIRARHOST..."
 		cd $SPECDIR || fatal
 
+		# select needed branch
+		if [ -n "$BINARYREPO" ] ; then
+			set_usebranch
+			checkout_usebranch || fatal
+		fi
+
 		# check release
 		build_rpms_name "$ln"
 		pkg_release_check $RELEASE
@@ -275,6 +281,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		else
 			docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 		fi
+
+		checkout_original_branch
+
 		# FIXME: incorporate
 		cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 		echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GEARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
