@@ -110,7 +110,7 @@ if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
 	$ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
 	RESULT=$?
 
-	echog"Remove packages from test hasher dir ..."
+	echog "Remove packages from test hasher dir ..."
 	docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
 fi
 
