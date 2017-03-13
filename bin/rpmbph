@@ -127,6 +127,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		# if version-release from backported spec is already committed
 		if [ -z "$FORCE" ] && is_last_commit_tag "$(get_version $BPSPEC)-$(get_release $BPSPEC)" ; then
 			echo "Tag $(get_last_tag) already exists for the last commit, skipping"
+			rm -f $BPSPEC
 			# so just skipping
 			continue
 		fi
