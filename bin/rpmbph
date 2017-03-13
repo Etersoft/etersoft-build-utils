@@ -107,17 +107,22 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		set_specdir $SPEC
 		docmd cd $SPECDIR || fatal
 
+		# set USEBRANCH
+		set_usebranch
+
 		# spec name for branch
 		BPSPEC=$SPEC.$USEBRANCH
+
+		set_currentbranch
+
 		#[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
 		cp -f $SPEC $BPSPEC || fatal "Can't copy to $BPSPEC"
 
-		# set USEBRANCH CURBRANCH
-		# checkout to $USERBRANCH
-		checkout_bpbranch
-
 		# backport spec
 		docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
+
+		# checkout to $USEBRANCH
+		checkout_bpbranch
 
 		# TODO: check result message for merge?
 		# Use heads/ against warning: refname 'branch-name' is ambiguous
@@ -141,16 +146,6 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $LISTNAMES
 	RET=$?
-	
-	for SPEC in $LISTNAMES ; do
-		set_specdir $SPEC
-		docmd cd $SPECDIR || fatal
-
-		# return to CURBRANCH
-		checkout_original_branch || RET=$?
-
-		cd - >/dev/null
-	done
 
 	exit $RET
 fi

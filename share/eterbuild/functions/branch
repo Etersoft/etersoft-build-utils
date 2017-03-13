@@ -3,10 +3,11 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-# used: BINARYREPO MDISTR BPSPEC
-# set: USEBRANCH CURBRANCH
-checkout_bpbranch()
+# used: BINARYREPO MDISTR
+# set: USEBRANCH OLDBRANCH
+set_usebranch()
 {
+	#local OLDBRANCH
 	#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 	USEBRANCH=$BINARYREPO
 
@@ -20,22 +21,35 @@ checkout_bpbranch()
 			USEBRANCH=$OLDBRANCH
 		fi
 	fi
+}
 
-	CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
-	if [ -n "$CURBRANCH" ] ; then
-		echog "Autorestore from broken build..."
-		docmd git checkout $CURBRANCH
-		rm -fv $(get_root_git_dir)/.git/.rpmbph.current
-		#rm -fv $BPSPEC $BPSPEC.*
-		rm -fv $BPSPEC.*
-	fi
-
+# used: USEBRANCH OLDBRANCH BPSPEC
+# set: CURBRANCH
+set_currentbranch()
+{
 	CURBRANCH=$(get_current_branch)
 
-	# TODO: move to a separate function
+	local cb
+	cb=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
+	if [ -n "$cb" ] ; then
+		echog "Autorestore from broken build..."
+		docmd git checkout $cb || fatal
+		CURBRANCH=$cb
+		rm -fv $(get_root_git_dir)/.git/.rpmbph.current
+		#rm -fv $BPSPEC $BPSPEC.*
+		[ -n "$BPSPEC" ] && rm -fv $BPSPEC.*
+	fi
+
 	if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
 		fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
 	fi
+}
+
+# used: USEBRANCH
+checkout_bpbranch()
+{
+	# TODO
+	[ -n "$CURBRANCH" ] || fatal "use assert in checkout_bpbranch"
 
 	echo "$CURBRANCH" > $(get_root_git_dir)/.git/.rpmbph.current
 
@@ -47,10 +61,26 @@ checkout_bpbranch()
 	fi
 }
 
+# used: USEBRNACH
+# set: CURBRANCH
+checkout_usebranch()
+{
+	CURBRANCH=$(get_current_branch)
+
+	if [ "$USEBRANCH" = "$CURBRANCH" ] ; then
+		# let's think we called from rpmbph
+		return
+	fi
+
+	checkout_bpbranch
+}
+
 checkout_original_branch()
 {
 	local CURBRANCH
-	CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current)
+	CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
+	[ -z "$CURBRANCH" ] && return
+
 	rm -f $(get_root_git_dir)/.git/.rpmbph.current
 	docmd git checkout $CURBRANCH
 }
