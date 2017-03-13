@@ -1,0 +1,56 @@
+#!/bin/bash
+# 2003-2010, 2012, 2015, 2017 (c) Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# used: BINARYREPO MDISTR BPSPEC
+# set: USEBRANCH CURBRANCH
+checkout_bpbranch()
+{
+	#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
+	USEBRANCH=$BINARYREPO
+
+	# TODO: drop support of it
+	# support for obsoleted M?? names
+	OLDBRANCH=$MDISTR
+
+	if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
+		if is_exist_branch $OLDBRANCH ; then
+			echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
+			USEBRANCH=$OLDBRANCH
+		fi
+	fi
+
+	CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
+	if [ -n "$CURBRANCH" ] ; then
+		echog "Autorestore from broken build..."
+		docmd git checkout $CURBRANCH
+		rm -fv $(get_root_git_dir)/.git/.rpmbph.current
+		#rm -fv $BPSPEC $BPSPEC.*
+		rm -fv $BPSPEC.*
+	fi
+
+	CURBRANCH=$(get_current_branch)
+
+	# TODO: move to a separate function
+	if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
+		fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
+	fi
+
+	echo "$CURBRANCH" > $(get_root_git_dir)/.git/.rpmbph.current
+
+	# Create branch if not exist yet
+	if is_exist_branch $USEBRANCH ; then
+		docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+	else
+		docmd git branch $USEBRANCH || fatal
+	fi
+}
+
+checkout_original_branch()
+{
+	local CURBRANCH
+	CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current)
+	rm -f $(get_root_git_dir)/.git/.rpmbph.current
+	docmd git checkout $CURBRANCH
+}
