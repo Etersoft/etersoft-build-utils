@@ -44,6 +44,7 @@ phelp()
 #	echog " -m - send result via e-mail"
 }
 
+FORCE=
 PASSEDARGS=
 while getopts :hnuaAfvqb: opt; do
     case $opt in
@@ -117,12 +118,18 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 		#[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
 		cp -f $SPEC $BPSPEC || fatal "Can't copy to $BPSPEC"
-
 		# backport spec
 		docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
 
 		# checkout to $USEBRANCH
 		checkout_bpbranch
+
+		# if version-release from backported spec is already committed
+		if [ -z "$FORCE" ] && is_last_commit_tag "$(get_version $BPSPEC)-$(get_release $BPSPEC)" ; then
+			echo "Tag $(get_last_tag) already exists for the last commit, skipping"
+			# so just skipping
+			continue
+		fi
 
 		# TODO: check result message for merge?
 		# Use heads/ against warning: refname 'branch-name' is ambiguous
@@ -130,12 +137,14 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 		# override spec conflicts
 		mv -f $BPSPEC $SPEC || fatal
+
 		# FIXME: Ctrl-\ and q will cancelled less with return error code
 		if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 			#git checkout $SPEC $MDISTR
 			#git checkout $CURBRANCH
 			fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
 		fi
+
 		docmd git add $SPEC
 		if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
 			#git checkout $CURBRANCH
