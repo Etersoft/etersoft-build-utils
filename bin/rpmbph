@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2010, 2012, 2015 (c) Etersoft www.etersoft.ru
+# 2003-2010, 2012, 2015, 2017 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -9,7 +9,7 @@
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
-load_mod repl rpm git buildsrpm spec
+load_mod repl rpm git buildsrpm spec branch
 
 
 #############################
@@ -44,6 +44,7 @@ phelp()
 #	echog " -m - send result via e-mail"
 }
 
+FORCE=
 PASSEDARGS=
 while getopts :hnuaAfvqb: opt; do
     case $opt in
@@ -107,60 +108,44 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		set_specdir $SPEC
 		docmd cd $SPECDIR || fatal
 
-		# TODO: move branch detection to a separate function
-		#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
-		USEBRANCH=$BINARYREPO
-		# support for obsoleted M?? names
-		OLDBRANCH=$MDISTR
+		# set USEBRANCH
+		set_usebranch
 
-		if [ "$OLDBRANCH" != "$USEBRANCH" ] ; then
-			if is_exist_branch $OLDBRANCH ; then
-				echo "Exists $OLDBRANCH branch, will use it instead $USEBRANCH"
-				USEBRANCH=$OLDBRANCH
-			fi
-		fi
-
-		# set branch name
+		# spec name for branch
 		BPSPEC=$SPEC.$USEBRANCH
 
-		CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current 2>/dev/null)
-		if [ -n "$CURBRANCH" ] ; then
-			echog "Autorestore from broken build..."
-			docmd git checkout $CURBRANCH
-			rm -fv $(get_root_git_dir)/.git/.rpmbph.current
-			rm -fv $BPSPEC $BPSPEC.*
-		fi
+		set_currentbranch
 
-		[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
-		cp -f $SPEC $BPSPEC || fatal
-
-		CURBRANCH=$(get_current_branch)
-
-		# TODO: move to a separate function
-		if [ "$CURBRANCH" = "$USEBRANCH" ] || [ "$CURBRANCH" = "$OLDBRANCH" ] ; then
-			fatal "You are already in backported branch $CURBRANCH. Run rpmbph in sisyphus or master branch only."
-		fi
-
-		echo "$CURBRANCH" > $(get_root_git_dir)/.git/.rpmbph.current
-
-		# Create branch if not exist yet
-		if ! is_exist_branch $USEBRANCH ; then
-			docmd git branch $USEBRANCH
-		fi
-
+		#[ -f "$BPSPEC" ] && fatal "File $BPSPEC is already exists, check it and remove"
+		cp -f $SPEC $BPSPEC || fatal "Can't copy to $BPSPEC"
+		# backport spec
 		docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $BPSPEC || fatal
 
-		docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+		# checkout to $USEBRANCH
+		checkout_bpbranch
+
+		# if version-release from backported spec is already committed
+		if [ -z "$FORCE" ] && is_last_commit_tag "$(get_version $BPSPEC)-$(get_release $BPSPEC)" ; then
+			echo "Tag $(get_last_tag) already exists for the last commit, skipping"
+			rm -f $BPSPEC
+			# so just skipping
+			continue
+		fi
+
 		# TODO: check result message for merge?
 		# Use heads/ against warning: refname 'branch-name' is ambiguous
 		docmd git merge --no-ff heads/$CURBRANCH
+
+		# override spec conflicts
 		mv -f $BPSPEC $SPEC || fatal
+
 		# FIXME: Ctrl-\ and q will cancelled less with return error code
 		if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
 			#git checkout $SPEC $MDISTR
 			#git checkout $CURBRANCH
 			fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
 		fi
+
 		docmd git add $SPEC
 		if ! git_commit_ignore_nothing -a -m "backported to $USEBRANCH as $(get_version $SPEC)-$(get_release $SPEC) (with rpmbph script)" ; then
 			#git checkout $CURBRANCH
@@ -171,17 +156,6 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $LISTNAMES
 	RET=$?
-	
-	for SPEC in $LISTNAMES ; do
-		set_specdir $SPEC
-		docmd cd $SPECDIR || fatal
-
-		CURBRANCH=$(cat $(get_root_git_dir)/.git/.rpmbph.current)
-		rm -f $(get_root_git_dir)/.git/.rpmbph.current
-		docmd git checkout $CURBRANCH || RET=$?
-
-		cd - >/dev/null
-	done
 
 	exit $RET
 fi

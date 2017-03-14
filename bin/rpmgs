@@ -103,7 +103,7 @@ function source_ext()
 	[ "$SN" = "0" ] && SN="$SN\?"
 	if grep -q "# Source$SN-$2:" "$1" ; then
 		local TMPSPEC=$1.tmpurl
-		local NEWSOURCE=$(grep "# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
+		local NEWSOURCE=$(grep --text "# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
 		test -n "$NEWSOURCE" || fatal "Can't extract URL from Source$SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
@@ -190,6 +190,7 @@ commit_tarball()
 		docmd git commit -m "just import $FTB with rpmgs script"
 	else
 		echo "Skip missed tarball commiting"
+		return 1
 	fi
 }
 
@@ -333,7 +334,7 @@ do
 			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
 			# TODO: realize above
-			commit_tarball
+			commit_tarball || fatal
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f option)."

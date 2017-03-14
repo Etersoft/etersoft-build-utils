@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2003-2016 (c) Etersoft www.etersoft.ru
+# 2003-2017 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -98,7 +98,7 @@ fi
 
 # if ok and requested test install, do it
 if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
-	BINPACKAGES=$($ETERBUILDBIN/myhsh -b $LISTBUILT | estrlist reg_exclude debuginfo -) || fatal "Can't get binary packages for $LISTBUILT"
+	BINPACKAGES=$($ETERBUILDBIN/myhsh $MENVARG -b $LISTBUILT | estrlist reg_exclude debuginfo -) || fatal "Can't get binary packages for $LISTBUILT"
 
 	echo
 	echog "List of binary packages:"
@@ -110,7 +110,7 @@ if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
 	$ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
 	RESULT=$?
 
-	# test remove packages from test hasher dir
+	echog "Remove packages from test hasher dir ..."
 	docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
 fi
 

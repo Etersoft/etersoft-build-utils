@@ -19,7 +19,7 @@ fi
 # moved from aptU
 get_rpm_package_requires()
 {
-	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|(.*[0-9])||g" | grep -v "^rpmlib" | sort -u
+	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|\(^lib.*\)(.*[0-9])|\1|g" | grep -v "^rpmlib" | sort -u
 }
 
 filter_pkgname()
