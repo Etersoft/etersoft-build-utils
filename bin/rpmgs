@@ -101,9 +101,9 @@ function source_ext()
 	#GETSOURCEURL=$(eval_spec $1 | grep -i "^%define ${2}Url${3} " | head -n 1 | sed -e "s/ *\$//g" | sed -e "s/^%define[ \t].*[ \t]//g")
 	local SN="$3"
 	[ "$SN" = "0" ] && SN="$SN\?"
-	if grep -q "# Source$SN-$2:" "$1" ; then
+	if grep -q "^# Source$SN-$2:" "$1" ; then
 		local TMPSPEC=$1.tmpurl
-		local NEWSOURCE=$(grep --text "# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
+		local NEWSOURCE=$(grep --text "^# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
 		test -n "$NEWSOURCE" || fatal "Can't extract URL from Source$SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
