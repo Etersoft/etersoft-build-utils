@@ -129,6 +129,6 @@ is_last_commit_tag()
         test -n "$TAG" || TAG=$(get_last_tag)
         [ -n "$TAG" ] || return
         # check if the tag put on the last commit
-        [ "$(git rev-parse HEAD)" = "$(git rev-parse $TAG^0)" ]
+        [ "$(git rev-parse HEAD)" = "$(git rev-parse $TAG^0 2>/dev/null)" ]
 }
 
