@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2005-2006, 2009, 2014, 2015, 2016 (c) Etersoft www.etersoft.ru
+# 2005-2006, 2009, 2014, 2015, 2016, 2017 (c) Etersoft www.etersoft.ru
 # 2005-2016 Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -194,6 +194,31 @@ commit_tarball()
 	fi
 }
 
+# update .gear/@name@-postsubmodules if needed
+# uses: BASENAME VERSION
+update_post_git_submodules()
+{
+	local PSM=$(get_root_git_dir)/.gear/$BASENAME-postsubmodules
+	[ -d $PSM ] || return
+
+	info "Detected post git submodules hook"
+
+	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*-postsubmodules" || fatal "missed tar:.gear/$BASENAME-posmodules in $(get_root_git_dir)/.gear/rules"
+
+	docmd git submodule init
+	docmd git submodule sync
+	docmd git submodule update || fatal
+
+	rm -rfv $PSM/*
+	# echo * do not catch .names really
+	cp -a $(echo * | grep -v -E "(.gear|.git)") $PSM/ || fatal
+	find $PSM -name ".git" -type f -delete -print
+	find $PSM -name ".gitsubmodules" -type f -delete -print
+	docmd git add -f $PSM
+	docmd git commit $PSM -m "update source prepared with submodules for version $VERSION"
+}
+
+
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
@@ -330,6 +355,8 @@ do
 			if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
 				docmd gear-update-tag -a
 			fi
+
+			update_post_git_submodules
 			#docmd gammit
 			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
