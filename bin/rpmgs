@@ -215,6 +215,8 @@ update_post_git_submodules()
 	find $PSM -name ".git" -type f -delete -print
 	find $PSM -name ".gitsubmodules" -type f -delete -print
 	docmd git add -f $PSM
+	# TODO: put short commit id in a description
+	# git rev-parse --short HEAD
 	docmd git commit $PSM -m "update source prepared with submodules for version $VERSION"
 }
 
@@ -250,7 +252,7 @@ do
 	set_specdir $spec
 
 	# Set version if needed
-	if [ -n "$GSSETVERSION" ] ; then
+	if [ -n "$GSSETVERSION" ] && [ "$GSSETVERSION" != "HEAD" ] ; then
 		CURVER=$(get_version $spec)
 		set_version $spec $GSSETVERSION
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
@@ -349,7 +351,11 @@ do
 			docmd git fetch upstream || fatal
 			#TODO check tag: v%version or %version
 			[ -n "$GSSETVERSION" ] || fatal "Sorry, I don't know new version"
-			docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
+			if [ "$GSSETVERSION" = "HEAD" ] ; then
+				docmd git merge upstream/master
+			else
+				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
+			fi
 
 			# TODO: it is more clean detect that dir
 			if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
