@@ -186,7 +186,9 @@ commit_tarball()
 	test -d "$CURNAME" || CURNAME=$BASENAME
 	if [ -d "$RPMSOURCEDIR" ] && [ -f "$RPMSOURCEDIR/$FTB" ] ; then
 		gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
-		rm -f "$RPMSOURCEDIR/$FTB"
+		rm -fv "$RPMSOURCEDIR/$FTB"
+		# force commit ever files from .gitignore
+		docmd git add -f "$CURNAME"
 		docmd git commit -m "just import $FTB with rpmgs script"
 	else
 		echo "Skip missed tarball commiting"
