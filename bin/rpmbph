@@ -140,10 +140,15 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		mv -f $BPSPEC $SPEC || fatal
 
 		# FIXME: Ctrl-\ and q will cancelled less with return error code
-		if [ -z "$QUIET" ] && tty -s && ! ( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; echo "# etersoft-build-utils NOTE: You can press Ctrl-\ before quit for cancel process."; echo ; git diff $USEBRANCH ) | less; then
-			#git checkout $SPEC $MDISTR
-			#git checkout $CURBRANCH
-			fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
+		if [ -z "$QUIET" ] && tty -s ; then
+			if [ "$(git diff | wc -l)" = "0" ] ; then
+				info "Strange, there is no differences in backported spec."
+			else
+				( echo "etersoft-build-utils INFO: Please check diff for backported spec:" ; \
+				echo "# etersoft-build-utils NOTE: You can press Ctrl-\ for cancel the process."; \
+				echo ; git diff ) | less
+				[ $? = 0 ] || fatal "Cancelled by user. You are still in $USEBRANCH branch with modified spec."
+			fi
 		fi
 
 		docmd git add $SPEC
