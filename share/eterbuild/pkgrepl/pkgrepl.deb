@@ -362,3 +362,5 @@ libunixODBC-devel|unixodbc-dev
 
 libpulseaudio-devel|libpulse-dev
 libpulseaudio|libpulse0
+
+xxd|vim-common

@@ -276,3 +276,5 @@ perl-podlators|perl
 libkrb5-devel|krb5-devel
 
 bash4|bash
+
+xxd|vim-common

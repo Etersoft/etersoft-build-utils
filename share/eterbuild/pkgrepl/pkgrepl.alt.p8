@@ -12,3 +12,5 @@ qt5-base-devel|qt5-base-devel
 libgnutls26|libgnutls28
 libgnutls28|libgnutls28
 libgnutls30|libgnutls30
+
+libgomp6-devel|libgomp5-devel
