@@ -308,7 +308,9 @@ fi
 # if just packing
 if [ -z "$SIGN" ]; then
 	rpmbs_copying_built
-	exit $?
+	RET=$?
+	checkout_original_branch
+	exit $RET
 fi
 
 ######## Sign src.rpm and upload it

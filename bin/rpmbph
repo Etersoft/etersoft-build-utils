@@ -129,7 +129,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
 		# if version-release from backported spec is already committed
 		if [ -z "$FORCE" ] && is_last_commit_tag "$(get_version $BPSPEC)-$(get_release $BPSPEC)" ; then
-			echo "Tag $(get_last_tag) already exists for the last commit, skipping"
+			info "Tag $(get_last_tag) already exists for the last commit, skipping"
 			rm -f $BPSPEC
 			# so just skipping
 			continue
@@ -138,7 +138,7 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		docmd git merge --no-ff $LASTTAG
 
 		# override spec conflicts
-		mv -f $BPSPEC $SPEC || fatal
+		docmd mv -f $BPSPEC $SPEC || fatal
 
 		# FIXME: Ctrl-\ and q will cancelled less with return error code
 		if [ -z "$QUIET" ] && tty -s ; then
