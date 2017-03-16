@@ -53,11 +53,28 @@ checkout_bpbranch()
 
 	echo "$CURBRANCH" > $(get_root_git_dir)/.git/.rpmbph.current
 
+	local PGEAR="gear"
 	# Create branch if not exist yet
 	if is_exist_branch $USEBRANCH ; then
 		docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
+		# if we successful with gear
+		if git branch -a | grep -q "remotes/$PGEAR/$USEBRANCH" ; then
+			docmd git fetch $PGEAR $USEBRANCH
+			docmd git merge --ff-only $PGEAR/$USEBRANCH || fatal
+		fi
 	else
+		info "Creating branch $USEBRANCH..."
+		if ! git branch -a | grep -q "remotes/$PGEAR/$USEBRANCH" ; then
+			# if we have no fetched branch
+			docmd gremote $GIRARHOST -o
+		fi
+		# if we successful with gear
+		if git branch -a | grep -q "remotes/$PGEAR/$USEBRANCH" ; then
+			docmd git fetch $PGEAR $USEBRANCH
+			docmd git checkout -b $USEBRANCH $PGEAR/$USEBRANCH || fatal
+		else
 			docmd git checkout -b $USEBRANCH || fatal
+		fi
 	fi
 }
 
