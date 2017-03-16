@@ -174,12 +174,22 @@ gear_update_from_tarball()
 	fatal "can't import tarball '$TARBALL'"
 }
 
+is_gear_sources()
+{
+	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*\.gear/gear-sources"
+	#fatal "missed tar:.gear/gear-sources in $(get_root_git_dir)/.gear/rules"
+}
+
 # TODO: rewrite for any tarball commit
 # $nn $FTB
 commit_tarball()
 {
 	#rhas "$GETSOURCE" "ps?://" || GETSOURCE=""
 	CURNAME=$(get_tardir_from_rules) || fatal "There is no correct 'tar:' line in gear rules file, needed for commit tarball"
+
+	# use real path for download
+	is_gear_sources && CURNAME=
+
 	# FIXME: hack to unpack to correct place.
 	[ $(basename `pwd`) = ".gear" ] && cd ..
 	test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
@@ -223,6 +233,34 @@ update_post_git_submodules()
 	docmd git commit $PSM -m "update source prepared with submodules for version $VERSION"
 }
 
+# note: for tarball based only now
+# uses: BASENAME VERSION
+update_gear_sources()
+{
+	is_gear_sources || return
+	PSM=$(get_root_git_dir)/.gear/gear-sources
+
+	# npm install section
+	local RGD=$(get_root_git_dir)
+	if [ -d $RGD/package ] && [ -s $RGD/package/package.json ] ; then
+		info "Detected npm install hook"
+
+	# hack: try detect dir for unpacking
+	test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
+	test -d "$CURNAME" || CURNAME=$BASENAME
+
+		# TODO: add support for git
+		rm -rf $PSM
+		cp -a $RGD/$CURNAME $PSM || fatal
+
+		cd $PSM || fatal
+		npm install || fatal
+		cd - >/dev/null
+
+		docmd git add -f $PSM
+		docmd git commit $PSM -m "update source with npm install for $VERSION"
+	fi
+}
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
@@ -366,11 +404,16 @@ do
 			fi
 
 			update_post_git_submodules
+			# TODO: make plugins
+			update_gear_sources
+
 			#docmd gammit
 			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
 			# TODO: realize above
-			commit_tarball || fatal
+			commit_tarball
+			# TODO: make plugins
+			update_gear_sources
 		fi
 	else
 		is_gear && echo "Skip tarball committing (run with version or with -f option)."
