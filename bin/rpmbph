@@ -51,7 +51,7 @@ while getopts :hnuaAfvqb: opt; do
         h) phelp; exit 0 ;;
         n) NOBUILD=1 ;;
         u|a|A) PASSEDARGS="$PASSEDARGS -$opt" ;;
-        f) PASSEDARGS="$PASSEDARGS -$opt" ;;
+        f) FORCE=1 ; PASSEDARGS="$PASSEDARGS -$opt" ;;
         v) VERBOSE=1 ;;
         b) BINARYREPONAME=$OPTARG ;;
         q) QUIET=1 ;;
