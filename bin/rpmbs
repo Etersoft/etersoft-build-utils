@@ -251,9 +251,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		echo "Prepare to publish to $GIRARHOST..."
 		cd $SPECDIR || fatal
 
-		# select needed branch
-		if [ -n "$BINARYREPO" ] ; then
-			set_usebranch
+		if set_usebranch ; then
 			checkout_usebranch || fatal
 		fi
 

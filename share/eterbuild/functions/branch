@@ -11,6 +11,9 @@ set_usebranch()
 	#[ -f "$LISTNAMES" ] || fatal "Run with one spec inside gear repo"
 	USEBRANCH=$BINARYREPO
 
+	[ -n "$USEBRANCH" ] || return 1
+	[ "$USEBRANCH" = "sisyphus" ] && return 1
+
 	# TODO: drop support of it
 	# support for obsoleted M?? names
 	OLDBRANCH=$MDISTR
@@ -21,6 +24,8 @@ set_usebranch()
 			USEBRANCH=$OLDBRANCH
 		fi
 	fi
+
+	return 0
 }
 
 # used: USEBRANCH OLDBRANCH BPSPEC
