@@ -192,8 +192,11 @@ commit_tarball()
 
 	# FIXME: hack to unpack to correct place.
 	[ $(basename `pwd`) = ".gear" ] && cd ..
+
+	# hack: try detect dir for unpacking
 	test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
 	test -d "$CURNAME" || CURNAME=$BASENAME
+
 	if [ -d "$RPMSOURCEDIR" ] && [ -f "$RPMSOURCEDIR/$FTB" ] ; then
 		gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
 		rm -fv "$RPMSOURCEDIR/$FTB"
@@ -224,7 +227,7 @@ update_post_git_submodules()
 
 	rm -rfv $PSM/*
 	# echo * do not catch .names really
-	cp -a $(echo * | grep -v -E "(.gear|.git)") $PSM/ || fatal
+	cp -a $(echo * | grep -v -E "(.gear|.git)") $PSM/ || fatal #"
 	find $PSM -name ".git" -type f -delete -print
 	find $PSM -name ".gitsubmodules" -type f -delete -print
 	docmd git add -f $PSM
