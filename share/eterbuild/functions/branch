@@ -57,7 +57,7 @@ checkout_bpbranch()
 	if is_exist_branch $USEBRANCH ; then
 		docmd git checkout $USEBRANCH || fatal "Can't checkout branch $USEBRANCH. Use $BPSPEC manually or remove it."
 	else
-		docmd git branch $USEBRANCH || fatal
+			docmd git checkout -b $USEBRANCH || fatal
 	fi
 }
 
