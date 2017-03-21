@@ -257,7 +257,7 @@ update_gear_sources()
 		cp -a $RGD/$CURNAME $PSM || fatal
 
 		cd $PSM || fatal
-		npm install || fatal
+		a= npm install || fatal
 		cd - >/dev/null
 
 		docmd git add -f $PSM
