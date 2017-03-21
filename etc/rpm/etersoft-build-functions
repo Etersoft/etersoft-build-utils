@@ -1,5 +1,0 @@
-# for backward compatibility
-
-. /usr/share/eterbuild/eterbuild
-load_mod rpm
-

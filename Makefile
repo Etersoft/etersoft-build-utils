@@ -13,7 +13,6 @@ QuickHelp.txt:
 install: 
 	$(MAKE) -C po install
 	mkdir -p $(DESTDIR)$(bindir)
-	mkdir -p $(DESTDIR)$(sysconfdir)/rpm
 	mkdir -p $(DESTDIR)$(sysconfdir)/eterbuild/apt
 	mkdir -p $(DESTDIR)$(sysconfdir)/eterbuild/repos
 	mkdir -p $(DESTDIR)$(sysconfdir)/bashrc.d/
@@ -23,7 +22,6 @@ install:
 	# do not pack anymore
 	rm -f  $(DESTDIR)$(bindir)/mkpatch
 	install -m 644 etc/apt/* $(DESTDIR)$(sysconfdir)/eterbuild/apt/
-	install -m 644 etc/rpm/* $(DESTDIR)$(sysconfdir)/rpm/
 	install -m 644 etc/config $(DESTDIR)$(sysconfdir)/eterbuild/
 	install -m 644 etc/repos/* $(DESTDIR)$(sysconfdir)/eterbuild/repos/
 	install -m 644 etc/bashrc.d/* $(DESTDIR)$(sysconfdir)/bashrc.d/
