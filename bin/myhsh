@@ -106,9 +106,7 @@ fi
 
 # Skip checking for tar arg
 if [ -n "${LISTNAMES/*tar/}" ] ; then
-	echog -n "Checking with sisyphus_check (with $HASHER_NOCHECK skipping)... "
-	sisyphus_check --no-check=$HASHER_NOCHECK --files $LISTNAMES || fatal "check for sisyphus failed"
-	echog "OK"
+	docmd sisyphus_check --no-check=$HASHER_NOCHECK --files $LISTNAMES || fatal "check for sisyphus failed"
 fi
 
 # export OURAPTCONF with temp. file contains correct path to sources.list

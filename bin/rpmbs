@@ -338,15 +338,15 @@ fi
 ############################################
 echog "Changing permissions..."
 chmod 644 -- $LISTBUILT || fatal "can't chmod"
-echog -n "Checking with sisyphus_check..."
 
 # TODO: check for ALT specific
 # skip some checking for src.rpm if it is local upload
 CHECK_OPTIONS=""
 [ -n "${UPLOADNOW}" ] || CHECK_OPTIONS="--no-check=$HASHER_NOCHECK"
 
-test -n "$NOCHECK" || sisyphus_check $CHECK_OPTIONS --files $LISTBUILT || fatal "sisyphus check failed"
-echog "OK"
+if [ -z "$NOCHECK" ] ; then
+    docmd sisyphus_check $CHECK_OPTIONS --files $LISTBUILT || fatal "sisyphus check failed"
+fi
 
 # due rpm's find-req
 RPMLINT=rpmlint
