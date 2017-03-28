@@ -392,13 +392,13 @@ do
 			#TODO check upstream
 			#TODO error if incompatible
 			docmd git remote add upstream $GETSOURCEGIT
-			docmd git fetch upstream || fatal
+			docmd git fetch --tags upstream || fatal
 			#TODO check tag: v%version or %version
 			[ -n "$GSSETVERSION" ] || fatal "Sorry, I don't know new version"
 			if [ "$GSSETVERSION" = "HEAD" ] ; then
 				docmd git merge upstream/master
 			else
-				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION
+				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION || fatal
 			fi
 
 			# TODO: it is more clean detect that dir
