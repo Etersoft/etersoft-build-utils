@@ -163,6 +163,15 @@ if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $LISTNAMES
 	RET=$?
 
+	# TODO: move it to some exit handler?
+	# usually it will done in rpmbs after upload
+	for SPEC in $LISTNAMES ; do
+		set_specdir $SPEC
+		docmd cd $SPECDIR || fatal
+		checkout_original_branch
+		cd - >/dev/null
+	done
+
 	exit $RET
 fi
 
