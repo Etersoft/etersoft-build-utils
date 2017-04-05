@@ -404,6 +404,10 @@ do
 			# TODO: it is more clean detect that dir
 			if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
 				docmd gear-update-tag -a
+				cd $(get_root_git_dir)/.gear || fatal
+				docmd git add tags/* -f
+				docmd git commit -m "update .gear/tags"
+				cd - >/dev/null
 			fi
 
 			update_post_git_submodules
