@@ -52,9 +52,9 @@ HASHERARG=""
 
 # TODO: do not use this notation at all
 # for use in help as example branch/distro name
-EXAMPLEALTDISTRVERSION="p7"
+EXAMPLEALTDISTRVERSION="p8"
 # FIXME: obsoleted
-CURRENTBRANCHNAME="M70"
+CURRENTBRANCHNAME="M80"
 
 [ -n "$DEBUG" ] && HASHERARG="-v $HASHERARG"
 
