@@ -44,7 +44,7 @@ uni_rpmbuildsrpm()
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
+			LANG=C docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
