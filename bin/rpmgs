@@ -34,7 +34,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -a  get all source (not only Source|Source0)"
-	echog "   -f  force download (remove source file before download)"
+	echog "   -f  force download and commit tarball(s) (remove source file before download)"
 }
 
 while getopts :haf opt; do
@@ -60,6 +60,13 @@ repack_tarball()
 	docmd erc -f repack "$1" "$2"
 }
 
+check_tarball()
+{
+	[ -s "$1" ] || return
+	erc -q check "$1"
+}
+
+# Args: URL target_file
 download_any_tarball()
 {
 	local GETSOURCE="$1"
@@ -68,7 +75,7 @@ download_any_tarball()
 	local BASESOURCE="$GETSOURCE"
 
 	local ORIGEXT=$(rhas "$BASESOURCE" "\." && echo "$BASESOURCE" | sed -e "s|.*\.||")
-	[ -n "$ORIGEXT" ] || fatal "Have no idea how to load files without extension"
+	[ -n "$ORIGEXT" ] || fatal "Error with $GETSOURCE. Have no idea how to load files without extension"
 
 	# first try download with original extension (exclude for tar)
 	if [ "$ORIGEXT" != "tar" ] ; then
@@ -81,6 +88,7 @@ download_any_tarball()
 	# try download by exts list
 	for ext in $FORMATS ; do
 		[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$BASESOURCE.$ext"
+		[ -z "$FORCEDOWNLOAD" ] && check_tarball "$TARGET" && { echo "$TARGET already exists, continue... " ; continue; }
 		download_url "$BASESOURCE.$ext" || continue
 		repack_tarball "$(basename "$BASESOURCE.$ext")" "$TARGET" || continue
 		return
@@ -342,10 +350,14 @@ do
 
 		# TODO: rewrite code to use original file format and temp. download dir
 		elif [ -n "${GETSOURCEURL}" ] ; then
-			echog "Try to load ${GETSOURCEURL} for $spec"
-			download_url "$GETSOURCEURL" || fatal "Can't download $GETSOURCEURL"
-			# FIXME: gear-update can use any tarball
-			repack_tarball "$(basename "$GETSOURCEURL")" "$FTB"
+			if [ -z "$FORCEDOWNLOAD" ] && check_tarball "$FTB" ; then
+				echo "$FTB already exists, skipping... "
+			else
+				echog "Try to load ${GETSOURCEURL} for $spec"
+				download_url "$GETSOURCEURL" || fatal "Can't download $GETSOURCEURL"
+				# FIXME: gear-update can use any tarball
+				repack_tarball "$(basename "$GETSOURCEURL")" "$FTB"
+			fi
 		else
 			if ! rhas "$GETSOURCE" "ps?://" ; then
 				if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
