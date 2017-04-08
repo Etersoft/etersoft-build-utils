@@ -17,7 +17,7 @@ load_mod rpm tarball web buildsrpm
 
 WEXT=""
 GETSOURCE=""
-LOADLIST="0"
+LOADALL=''
 
 #############################
 Usage="Usage: $name [-a -f ] [spec] [new_version]"
@@ -40,7 +40,7 @@ phelp()
 while getopts :haf opt; do
     case $opt in
     h) phelp; exit 0;;
-    a) LOADLIST="$(seq 0 100)" ;;
+    a) LOADALL=1 ;;
     f) FORCEDOWNLOAD=-f ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -52,11 +52,6 @@ done
 
 LISTRPMARGS=$@
 
-}
-
-function get_source()
-{
-	GETSOURCE=$(eval_spec $1 | get_var "$2")
 }
 
 repack_tarball()
@@ -100,11 +95,11 @@ function source_ext()
 	# %define SourceUrl ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
 	#GETSOURCEURL=$(eval_spec $1 | grep -i "^%define ${2}Url${3} " | head -n 1 | sed -e "s/ *\$//g" | sed -e "s/^%define[ \t].*[ \t]//g")
 	local SN="$3"
-	[ "$SN" = "0" ] && SN="$SN\?"
-	if grep -q "^# Source$SN-$2:" "$1" ; then
+	#[ "$SN" = "0" ] && SN="$SN\?"
+	if grep -q "^# $SN-$2:" "$1" ; then
 		local TMPSPEC=$1.tmpurl
-		local NEWSOURCE=$(grep --text "^# Source$SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
-		test -n "$NEWSOURCE" || fatal "Can't extract URL from Source$SN-$2"
+		local NEWSOURCE=$(grep --text "^# $SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
+		test -n "$NEWSOURCE" || fatal "Can't extract URL from $SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		# TODO: use special field before %build
@@ -312,13 +307,13 @@ do
 		fi
 	fi
 
-	for nn in "" $LOADLIST
-	do
-		get_source $spec "Source$nn"
+	SOURCELIST="Source Source0"
+	[ -n "$LOADALL" ] && SOURCELIST=$(grep "^Source[0-9]*:" $spec | sed -e "s|:.*||g")
 
+	for SN in $SOURCELIST
+	do
+		GETSOURCE=$(eval_spec $spec | get_var "$SN")
 		[ -z "$GETSOURCE" ] && continue
-		#[ "$GETSOURCE$nn" = "0" ] && continue
-		#test -z "$GETSOURCE" && { echog "Skip Source${nn} from $spec" ; continue ; }
 
 		FTB=`basename "$GETSOURCE"`
 		# for get RPMSOURCEDIR
@@ -333,7 +328,7 @@ do
 		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ >/dev/null || fatal "Can't create/chdir..."
 
 		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
-		get_source_url $spec $nn || get_source_git $spec $nn || get_source_svn $spec $nn
+		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN
 
 		if ! rhas "$GETSOURCE" ".tar$" ; then
 			warning "It is recommended to use .tar tarballs for sources ($FTB now)"
@@ -352,7 +347,15 @@ do
 			# FIXME: gear-update can use any tarball
 			repack_tarball "$(basename "$GETSOURCEURL")" "$FTB"
 		else
-			rhas "$GETSOURCE" "ps?://" || fatal "$GETSOURCE is not URL"
+			if ! rhas "$GETSOURCE" "ps?://" ; then
+				if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
+					info "No URL. Skipping $GETSOURCE downloading"
+					continue
+				else
+					# only for main source
+					fatal "$SN $GETSOURCE has no URL"
+				fi
+			fi
 			download_any_tarball "$GETSOURCE" "$FTB"
 		# TODO: fix download single packed file
 		#else
