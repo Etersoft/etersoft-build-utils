@@ -66,6 +66,27 @@ check_tarball()
 	erc -q check "$1"
 }
 
+get_ext()
+{
+	rhas "$1" "\." && echo "$1" | sed -e "s|.*\.||"
+}
+
+# Args: URL TARGET
+download_to()
+{
+	local URL="$1"
+	local TARGET="$2"
+	pushd $(dirname $TARGET)
+		local DF="$(basename "$URL")"
+		download_url "$URL" && repack_tarball "$DF" "$TARGET"
+		local RET=$?
+		# TODO: repack need remove origin
+		rm -fv "$DF"
+		[ "$RET" = "0" ] || rm -fv "$DF" "$TARGET"
+	popd
+	return $RET
+}
+
 # Args: URL target_file
 download_any_tarball()
 {
@@ -74,7 +95,7 @@ download_any_tarball()
 	local FORMATS="tar.xz tar.bz2 tar.gz zip tgz 7z tbz2 tbz rar tar"
 	local BASESOURCE="$GETSOURCE"
 
-	local ORIGEXT=$(rhas "$BASESOURCE" "\." && echo "$BASESOURCE" | sed -e "s|.*\.||")
+	local ORIGEXT=$(get_ext "$BASESOURCE")
 	[ -n "$ORIGEXT" ] || fatal "Error with $GETSOURCE. Have no idea how to load files without extension"
 
 	# first try download with original extension (exclude for tar)
@@ -82,15 +103,13 @@ download_any_tarball()
 		FORMATS="$ORIGEXT $(estrlist exclude "$ORIGEXT" "$FORMATS")"
 	fi
 
-	BASESOURCE=$(echo "$BASESOURCE" | sed -e "s|\.$ORIGEXT$||g")
+	BASESOURCE=$(dirname "$BASESOURCE")/$(basename "$BASESOURCE" .$ORIGEXT)
 
 	local ext
 	# try download by exts list
 	for ext in $FORMATS ; do
-		[ -n "$FORCEDOWNLOAD" ] && docmd rm -f "$BASESOURCE.$ext"
 		[ -z "$FORCEDOWNLOAD" ] && check_tarball "$TARGET" && { echo "$TARGET already exists, continue... " ; continue; }
-		download_url "$BASESOURCE.$ext" || continue
-		repack_tarball "$(basename "$BASESOURCE.$ext")" "$TARGET" || continue
+		download_to "$BASESOURCE.$ext" "$TARGET" || continue
 		return
 	done
 	fatal "Cannot retrieve $GETSOURCE"
@@ -120,16 +139,12 @@ function source_ext()
 	test -n "$GETSOURCEEXT"
 }
 
+# Get real URL from comment Source-xxx
 
 # Source-svn: http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/Collection/
 function get_source_svn()
 {
 	GETSOURCESVN=$(source_ext "$1" svn "$2")
-	#if [ -n "$GETSOURCESVN" ] ; then
-	#	warning "Source-svn is not supported yet"
-	#	( cd $SPECDIR ; git svn clone $GETSOURCESVN .)
-	#fi
-	#test -n "$GETSOURCESVN"
 }
 
 
@@ -140,7 +155,6 @@ function get_source_git()
 }
 
 # Source-url: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
-# Get real Url from comment
 function get_source_url()
 {
 	GETSOURCEURL=$(source_ext "$1" url "$2")
@@ -167,7 +181,7 @@ gear_update_from_tarball()
 	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."
 	if ! docmd gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" ; then
 		if gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" 2>&1 | grep -q "More than one subdirectory specified" ; then
-			echo "Try unpack as is"
+			info "Try unpack as is"
 			CREATEFLAG="$CREATEFLAG -a"
 			docmd gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" && return
 		fi
@@ -183,41 +197,44 @@ is_gear_sources()
 	#fatal "missed tar:.gear/gear-sources in $(get_root_git_dir)/.gear/rules"
 }
 
-# Args: file dir
+# Args: tarball dir
 # Uses: RPMSOURCEDIR FORCEDOWNLOAD
-commit_tarball()
+commit_tarball_to_dir()
 {
-	local TARBALL="$RPMSOURCEDIR/$1"
+	local TARBALL="$1"
 	local CURNAME="$2"
 
-	if [ -d "$RPMSOURCEDIR" ] && [ -f "$TARBALL" ] ; then
-		gear_update_from_tarball "$TARBALL" "$CURNAME" $FORCEDOWNLOAD && rm -fv "$TARBALL"
+	if [ -f "$TARBALL" ] ; then
+		gear_update_from_tarball "$TARBALL" "$CURNAME" $FORCEDOWNLOAD || { warning "Error with update tarball in repo" ; return 1 ; }
 		# force commit ever files from .gitignore
 		docmd git add -f "$CURNAME"
-		docmd git commit -m "just import $TARBALL with rpmgs script"
+		docmd git commit -m "just import $(basename $TARBALL) with rpmgs script"
+		rm -fv "$TARBALL"
 	else
-		echo "Skip missed $TARBALL tarball commiting"
+		echo "Skip missed $TARBALL tarball committing"
 		return 1
 	fi
 	return 0
 }
 
 # TODO: rewrite for any tarball commit
-# $nn $FTB
-commit_tarballs()
+# Arg: tarball
+commit_tarball()
 {
-	#rhas "$GETSOURCE" "ps?://" || GETSOURCE=""
-	CURNAME=$(get_tardir_from_rules) || fatal "There is no correct 'tar:' line in gear rules file, needed for commit tarball"
-
+	local TARBALL="$1"
+	local CURNAME
+	CURNAME=$(get_tardir_from_rules "$(get_ext $TARBALL)" $(basename "$TARBALL")) || fatal "There is no correct 'tar:' line in gear rules file, needed for commit tarball"
+	# "
 	# FIXME:
 	# use real path for download
-	is_gear_sources && CURNAME=
+	#is_gear_sources && CURNAME=
+	is_gear_sources && fatal "FIXME: is_gear_sources"
 
 	# hack: try detect dir for unpacking
-	test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$(get_tarballname "$spec")
-	test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$BASENAME
+	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$(get_tarballname "$spec")
+	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$BASENAME
 
-	commit_tarball $FTB $CURNAME
+	commit_tarball_to_dir $TARBALL $CURNAME
 }
 
 # update .gear/@name@-postsubmodules if needed
@@ -323,32 +340,35 @@ do
 		fi
 	fi
 
-	SOURCELIST="Source Source0"
-	[ -n "$LOADALL" ] && SOURCELIST=$(grep "^Source[0-9]*:" $spec | sed -e "s|:.*||g")
+	if [ -n "$LOADALL" ] ; then
+		SOURCELIST=$(grep "^Source[0-9]*:" $spec | sed -e "s|:.*||g")
+	else
+		SOURCELIST=$(grep "^Source0\?:" $spec | sed -e "s|:.*||g")
+	fi
 
 	for SN in $SOURCELIST
 	do
 		GETSOURCE=$(eval_spec $spec | get_var "$SN")
-		[ -z "$GETSOURCE" ] && continue
+		[ -n "$GETSOURCE" ] || fatal "Problem with empty $SN"
 
-		FTB=`basename "$GETSOURCE"`
-		# for get RPMSOURCEDIR
+		echo "Updating $SN:$GETSOURCE ..."
+
+		# for get RPMSOURCEDIR and BASENAME/VERSION/RELEASE
 		build_rpms_name $spec
 
-		# TODO: do not use RPMSOURCEDIR for temp. tarballs
-		[ -n "$FORCEDOWNLOAD" ] && rm -f "$RPMSOURCEDIR/$FTB"
-		#[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
+		mkdir -p $RPMSOURCEDIR/ || fatal "Can't create/chdir..."
+		FTB=$RPMSOURCEDIR/$(basename "$GETSOURCE")
 
-		# TODO: dropout these pushd/popd
-		# use pushd/popd due several cd / cd -
-		mkdir -p $RPMSOURCEDIR/ && pushd $RPMSOURCEDIR/ >/dev/null || fatal "Can't create/chdir..."
+		# TODO: do not use RPMSOURCEDIR for temp. tarballs
+		[ -n "$FORCEDOWNLOAD" ] && rm -f "$FTB"
+		#[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
 		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
 		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN
 
-		if ! rhas "$GETSOURCE" ".tar$" ; then
-			warning "It is recommended to use .tar tarballs for sources ($FTB now)"
-		fi
+		#if ! rhas "$GETSOURCE" ".tar$" ; then
+		#	warning "It is recommended to use .tar tarballs for sources ($FTB now)"
+		#fi
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
@@ -362,9 +382,7 @@ do
 				echo "$FTB already exists, skipping... "
 			else
 				echog "Try to load ${GETSOURCEURL} for $spec"
-				download_url "$GETSOURCEURL" || fatal "Can't download $GETSOURCEURL"
-				# FIXME: gear-update can use any tarball
-				repack_tarball "$(basename "$GETSOURCEURL")" "$FTB"
+				download_to "$GETSOURCEURL" "$FTB" || fatal "Can't download $GETSOURCEURL"
 			fi
 		else
 			if ! rhas "$GETSOURCE" "ps?://" ; then
@@ -379,31 +397,14 @@ do
 			download_any_tarball "$GETSOURCE" "$FTB"
 		# TODO: fix download single packed file
 		#else
-		#		download_url "$GETSOURCE"
-
-			# commit tarball
-			if [ -n "$GSSETVERSION" ] || [ -n "$FORCEDOWNLOAD" ]; then
-				if false && is_gear ; then
-					commit_tarball $nn $FTB
-				fi
-			fi
+		#		download_to "$GETSOURCE" "$FTB"
 		fi
 
-		echog "DONE with $FTB"
-		popd >/dev/null
+		if [ -z "$GSSETVERSION" ] && [ -z "$FORCEDOWNLOAD" ]; then
+			echog "Skip $FTB committing (run without new version or without -f)"
+			continue
+		fi
 
-	done
-
-	if [ -z "$GSSKIPADDCHANGELOG" ] ; then
-		# Write changelog if all done
-		CURVER=$(get_version $spec)
-		CURREL=$(get_release $spec)
-		EGEARME=""
-		is_gear && EGEARME=" with rpmgs script"
-		add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
-	fi
-
-	if [ -n "$GSSETVERSION" ] || [ -n "$FORCEDOWNLOAD" ]; then
 		if [ -n "${GETSOURCESVN}" ] ; then
 			# clone svn repo to current dir
 			# FIXME: need to clone in git root dir
@@ -440,14 +441,24 @@ do
 			#docmd gammit
 			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
-			# TODO: realize above
-			commit_tarballs
+			commit_tarball "$FTB"
 			# TODO: make plugins
 			update_gear_sources
 		fi
-	else
-		is_gear && echo "Skip tarball committing (run with version or with -f option)."
+
+		echog "DONE with $FTB"
+
+	done
+
+	if [ -z "$GSSKIPADDCHANGELOG" ] ; then
+		# Write changelog if all done
+		CURVER=$(get_version $spec)
+		CURREL=$(get_release $spec)
+		EGEARME=""
+		is_gear && EGEARME=" with rpmgs script"
+		add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
 	fi
+
 done
 
 exit 0
