@@ -1,0 +1,81 @@
+#!/bin/bash
+# 2009-2017 Etersoft www.etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# TODO: rewrite with get_gear_rules_by_spec in mind
+get_gear_rules()
+{
+	local DIR="$1"
+	[ -z "$IGNOREGEAR" ] || return 1
+	[ -f "$DIR" ] && DIR=$(dirname "$DIR")
+	local GITDIR=$(get_root_git_dir $DIR)
+	local rules="$GITDIR/.gear/rules"
+	[ -r "$rules" ] || rules="$GITDIR/.gear-rules"
+	[ -r "$rules" ] || return
+	echo $rules
+}
+
+# TODO: move to gear file
+get_gear_rules_by_spec()
+{
+	local SPECNAME="$1"
+	local SPECDIR
+	set_specdir
+	# FIXME: move get rules file to separate function
+	local BASESPECNAME=$(basename "$SPECNAME")
+	local ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
+	local ALTGEARRULES=$(get_root_git_dir $SPECDIR)/$ALTGEARRULESFILE
+	local GEARRULES=
+	if [ -r "$ALTGEARRULES" ] ; then
+		#echo "Build with alternate rules $ALTGEARRULESFILE"
+		GEARRULES="--rules=$ALTGEARRULESFILE"
+	fi
+	echo "$GEARRULES"
+}
+
+
+print_gear_rules()
+{
+	is_gear || fatal "Can't get rules"
+	cat $(get_gear_rules) | sed -e "s|@name@|$BASENAME|g" | sed -e "s|@version@|$VERSION|g" | sed -e "s|@release@|$RELEASE|g"
+}
+
+# args: tar_format, packaging_name
+# uses: version
+get_tardir_from_rules()
+{
+	local tar="$1"
+	local packname="$(basename "$2" .$tar)"
+	local dir
+	dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
+	if [ -z "$dir" ] ; then
+		if ! print_gear_rules | grep "$tar *:" | grep -q "name=" ; then
+			dir=$(print_gear_rules | grep "$tar *:" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
+		else
+			fatal "no $tar rules found in $(get_gear_rules) between
+$(print_gear_rules | grep "$tar *:")"
+		fi
+	fi
+	if [ "$dir" = "." ] || [ -z "$dir" ] || echo "$dir" | grep -q ":" ; then
+		return 1
+	fi
+	realpath "$(get_root_git_dir)/$dir"
+}
+
+filter_gear_name()
+{
+	sed -e "s|\+|plus|g"
+}
+
+# FIXME: use in rpmbs, fix for package name from spec
+get_gear_name()
+{
+	local gn
+	local gitdir=$(get_root_git_dir)
+	[ -n "$gitdir" ] || return
+	gn=$(basename "$gitdir" | filter_gear_name)
+	echo "$gn"
+	[ -n "$gn" ]
+}
+

@@ -3,23 +3,7 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
-# TODO: move to gear file
-get_gear_rules_by_spec()
-{
-	local SPECNAME="$1"
-	local SPECDIR
-	set_specdir
-	# FIXME: move get rules file to separate function
-	local BASESPECNAME=$(basename "$SPECNAME")
-	local ALTGEARRULESFILE=.gear/rules-${BASESPECNAME/.spec/}
-	local ALTGEARRULES=$(get_root_git_dir $SPECDIR)/$ALTGEARRULESFILE
-	local GEARRULES=
-	if [ -r "$ALTGEARRULES" ] ; then
-		#echo "Build with alternate rules $ALTGEARRULESFILE"
-		GEARRULES="--rules=$ALTGEARRULESFILE"
-	fi
-	echo "$GEARRULES"
-}
+load_mod gear
 
 # Universal rpmbuild function
 # 1st: spec name(s) (only one if git, we will skip it)

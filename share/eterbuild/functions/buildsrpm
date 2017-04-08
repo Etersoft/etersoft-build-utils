@@ -3,6 +3,7 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
+load_mod gear
 
 # 1st: spec name(s) (only one if git, we will skip it)
 # other parameters

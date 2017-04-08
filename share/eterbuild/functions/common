@@ -277,69 +277,10 @@ get_root_git_dir()
         # FIXME: 1) can return / with good status 2) no one check status later
 }
 
-# TODO: move to separate gear file
-# TODO: rewrite with get_gear_rules_by_spec in mind
-get_gear_rules()
-{
-	local DIR="$1"
-	[ -z "$IGNOREGEAR" ] || return 1
-	[ -f "$DIR" ] && DIR=$(dirname "$DIR")
-	local GITDIR=$(get_root_git_dir $DIR)
-	local rules="$GITDIR/.gear/rules"
-	[ -r "$rules" ] || rules="$GITDIR/.gear-rules"
-	[ -r "$rules" ] || return
-	echo $rules
-}
-
-
 # Usage: is_gear [path_to_spec|dir_inside_git]
 is_gear()
 {
 	get_gear_rules $@ >/dev/null
-}
-
-print_gear_rules()
-{
-	is_gear || fatal "Can't get rules"
-	cat $(get_gear_rules) | sed -e "s|@name@|$BASENAME|g" | sed -e "s|@version@|$VERSION|g" | sed -e "s|@release@|$RELEASE|g"
-}
-
-# args: tar_format, packaging_name
-# uses: version
-get_tardir_from_rules()
-{
-	local tar="$1"
-	local packname="$(basename "$2" .$tar)"
-	local dir
-	dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
-	if [ -z "$dir" ] ; then
-		if ! print_gear_rules | grep "$tar *:" | grep -q "name=" ; then
-			dir=$(print_gear_rules | grep "$tar *:" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
-$(print_gear_rules | grep "$tar *:")"
-		else
-			fatal "no $tar rules found in $(get_gear_rules) between
-		fi
-	fi
-	if [ "$dir" = "." ] || [ -z "$dir" ] || echo "$dir" | grep -q ":" ; then
-		return 1
-	fi
-	realpath "$(get_root_git_dir)/$dir"
-}
-
-filter_gear_name()
-{
-	sed -e "s|\+|plus|g"
-}
-
-# FIXME: use in rpmbs, fix for package name from spec
-get_gear_name()
-{
-	local gn
-	local gitdir=$(get_root_git_dir)
-	[ -n "$gitdir" ] || return
-	gn=$(basename "$gitdir" | filter_gear_name)
-	echo "$gn"
-	[ -n "$gn" ]
 }
 
 get_packager()
@@ -362,7 +303,7 @@ load_mod()
 	done
 }
 
-load_mod config gettext alt spec strings outformat
+load_mod config gettext alt spec gear strings outformat
 
 
 # check for needed version
