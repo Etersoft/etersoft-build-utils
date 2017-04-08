@@ -183,33 +183,41 @@ is_gear_sources()
 	#fatal "missed tar:.gear/gear-sources in $(get_root_git_dir)/.gear/rules"
 }
 
+# Args: file dir
+# Uses: RPMSOURCEDIR FORCEDOWNLOAD
+commit_tarball()
+{
+	local TARBALL="$RPMSOURCEDIR/$1"
+	local CURNAME="$2"
+
+	if [ -d "$RPMSOURCEDIR" ] && [ -f "$TARBALL" ] ; then
+		gear_update_from_tarball "$TARBALL" "$CURNAME" $FORCEDOWNLOAD && rm -fv "$TARBALL"
+		# force commit ever files from .gitignore
+		docmd git add -f "$CURNAME"
+		docmd git commit -m "just import $TARBALL with rpmgs script"
+	else
+		echo "Skip missed $TARBALL tarball commiting"
+		return 1
+	fi
+	return 0
+}
+
 # TODO: rewrite for any tarball commit
 # $nn $FTB
-commit_tarball()
+commit_tarballs()
 {
 	#rhas "$GETSOURCE" "ps?://" || GETSOURCE=""
 	CURNAME=$(get_tardir_from_rules) || fatal "There is no correct 'tar:' line in gear rules file, needed for commit tarball"
 
+	# FIXME:
 	# use real path for download
 	is_gear_sources && CURNAME=
 
-	# FIXME: hack to unpack to correct place.
-	[ $(basename `pwd`) = ".gear" ] && cd ..
-
 	# hack: try detect dir for unpacking
-	test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
-	test -d "$CURNAME" || CURNAME=$BASENAME
+	test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$(get_tarballname "$spec")
+	test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$BASENAME
 
-	if [ -d "$RPMSOURCEDIR" ] && [ -f "$RPMSOURCEDIR/$FTB" ] ; then
-		gear_update_from_tarball "$RPMSOURCEDIR/$FTB" "$CURNAME" $FORCEDOWNLOAD
-		rm -fv "$RPMSOURCEDIR/$FTB"
-		# force commit ever files from .gitignore
-		docmd git add -f "$CURNAME"
-		docmd git commit -m "just import $FTB with rpmgs script"
-	else
-		echo "Skip missed tarball commiting"
-		return 1
-	fi
+	commit_tarball $FTB $CURNAME
 }
 
 # update .gear/@name@-postsubmodules if needed
@@ -433,7 +441,7 @@ do
 			#docmd git commit -m "merge $FTB with rpmgs script"
 		elif is_gear ; then
 			# TODO: realize above
-			commit_tarball
+			commit_tarballs
 			# TODO: make plugins
 			update_gear_sources
 		fi
