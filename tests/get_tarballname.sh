@@ -61,7 +61,13 @@ check_get_version python-larch
 
 rm -f $SPEC
 
-echo "Tarball"
-get_tardir_from_rules || echo "No tarball"
+[ -s $SPEC ] || SPEC="$1"
+
+build_rpms_name $SPEC
+
+echo "Tarball from rules"
+#get_tardir_from_rules tar wine-staging-2.4.0.tar || echo "No tarball"
+get_tardir_from_rules tar || echo "No tarball"
+get_tardir_from_rules tar.gz || echo "No tarball"
 
 echo "DONE"

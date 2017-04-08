@@ -298,13 +298,31 @@ is_gear()
 	get_gear_rules $@ >/dev/null
 }
 
+print_gear_rules()
+{
+	is_gear || fatal "Can't get rules"
+	cat $(get_gear_rules) | sed -e "s|@name@|$BASENAME|g" | sed -e "s|@version@|$VERSION|g" | sed -e "s|@release@|$RELEASE|g"
+}
+
+# args: tar_format, packaging_name
+# uses: version
 get_tardir_from_rules()
 {
-	local rules=$(get_gear_rules)
-	assert_var rules
-	local dir=$(grep "tar.*: " $rules | sed -e "s|tar.*: *||g
-s| .*||g")
-	[ "$dir" = "." ] || [ -z "$dir" ] && return 1
+	local tar="$1"
+	local packname="$(basename "$2" .$tar)"
+	local dir
+	dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
+	if [ -z "$dir" ] ; then
+		if ! print_gear_rules | grep "$tar *:" | grep -q "name=" ; then
+			dir=$(print_gear_rules | grep "$tar *:" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
+$(print_gear_rules | grep "$tar *:")"
+		else
+			fatal "no $tar rules found in $(get_gear_rules) between
+		fi
+	fi
+	if [ "$dir" = "." ] || [ -z "$dir" ] || echo "$dir" | grep -q ":" ; then
+		return 1
+	fi
 	realpath "$(get_root_git_dir)/$dir"
 }
 
