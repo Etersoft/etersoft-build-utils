@@ -6,9 +6,12 @@ alt              ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/files
 #altp7           ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/p7/branch/files/SRPMS
 altautoimports  http://autoimports.altlinux.org/pub/ALTLinux/autoimports/Sisyphus/files/SRPMS
 altfcimport     http://autoimports.altlinux.org/pub/ALTLinux/fcimport/Sisyphus/files/SRPMS
-fedora25        http://mirror.yandex.ru/fedora/linux/development/25/source/SRPMS
+#fedora25        http://mirror.yandex.ru/fedora/linux/development/25/source/SRPMS
 #fedora-test     http://mirror.yandex.ru/fedora/linux/releases/test/Fedora/source/SRPMS
-fedora-rawhide  http://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS
+#fedora-rawhide  http://mirror.yandex.ru/fedora/linux/development/rawhide/source/SRPMS
+fedora-rawhide-s   http://mirror.yandex.ru/fedora/linux/development/rawhide/Server/source/tree/Packages/
+fedora-rawhide-d   http://mirror.yandex.ru/fedora/linux/development/rawhide/Workstation/source/tree/Packages/
+fedora-rawhide-e   http://mirror.yandex.ru/fedora/linux/development/rawhide/Everything/source/tree/Packages/
 fedora-ccrma    http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
 edumandriva      ftp://ftp.linuxcenter.ru/pub/Mandriva/EduMandriva/educontrib/2010.1/SRCRPM/free
 #rosa2012        ftp://mirror.yandex.ru/rosa/rosa2012lts/repository/SRPMS/main/release
