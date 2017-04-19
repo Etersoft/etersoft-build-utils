@@ -101,12 +101,24 @@ LISTRPMARGS=$@
 
 }
 
+# Uses: FORCE, BASENAME, VERSION, RELEASE
+# Arg: [pipe] args
+__gear_create_tag()
+{
+	local GEARCTAG=gear-create-tag
+	if [ "$1" = "pipe" ] ; then
+		shift
+		$GEARCTAG $FORCE -n "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@" 2>&1
+	else
+		docmd $GEARCTAG $FORCE -n "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@"
+	fi
+}
+
 # check and create tag according to package release
 # used: SPECDIR, LISTNAMES, FORCE
 check_gear_and_tag()
 {
 	local RESULT=0
-	local GEARCTAG=gear-create-tag
 
 	# set SPECDIR from LISTNAMES if empty
 	[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
@@ -132,11 +144,11 @@ check_gear_and_tag()
 
 	cd $SPECDIR >/dev/null
 
-	docmd $GEARCTAG $FORCE || RESULT=1
+	__gear_create_tag || RESULT=1
 	if [ "$RESULT" = 1 ] ; then
-		if $GEARCTAG $FORCE 2>&1 | grep -q "Too many specfiles found"; then
-			docmd $GEARCTAG $FORCE -r .gear/$(readlink .gear/rules) && RESULT=0
-		elif $GEARCTAG $FORCE 2>&1 | grep -q "already exists"; then
+		if __gear_create_tag pipe | grep -q "Too many specfiles found"; then
+			__gear_create_tag -r .gear/$(readlink .gear/rules) && RESULT=0
+		elif __gear_create_tag pipe | grep -q "already exists"; then
 			is_last_commit_tag || fatal "Tag is set NOT on the last commit! Use -f key for override tag"
 			RESULT=1
 		fi
