@@ -1,0 +1,7 @@
+# Package repository URLs
+#
+# You can add [alt] after rpm for digital signature check
+
+rpm file:/var/ftp/ pub/ALTLinux/cert6/i586 classic
+rpm file:/var/ftp/ pub/ALTLinux/cert6/noarch classic
+
