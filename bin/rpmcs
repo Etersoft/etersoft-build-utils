@@ -197,7 +197,7 @@ do
 # use in cases
 #	subst "s|%mdkversion||g" $i
 
-
+	# TODO: drop it
 	# If it was PLD spec
 	if grep "^%define date" $i ; then
 		# with dummy spec we can't have any parsing problems
@@ -206,11 +206,11 @@ do
 			subst "s|^%changelog.*|`stamp_spec $i.dummy`|" $i
 			rm -f $i.dummy
 			subst "s|^%define date.*|%changelog|" $i
-			subst "s|* %{date} PLD Team\(.*\)|- initial build for ALT Linux Sisyphus (spec from PLD Team)|" $i
+			subst "s|* %{date} PLD Team\(.*\)|- initial build for ALT Sisyphus (spec from PLD Team)|" $i
 		else
 			echo "PLD spec..."
 			awk '{if ( ! /^%define date/){print}else{exit}}' $i > $i.tmp && mv -f $i.tmp $i
-			add_changelog $i -e "- initial build for ALT Linux Sisyphus (spec from PLD)"
+			add_changelog $i -e "- initial build for ALT Sisyphus (spec from PLD)"
 		fi
 	fi
 
@@ -507,7 +507,7 @@ do
 	# if there is no altlinux in changelog yet
 	if ! grep -v "Packager" $SPEC | grep -q "@altlinux" ; then
 			echo "Add changelog with initial build"
-			add_changelog $SPEC -e "- initial build for ALT Linux Sisyphus"
+			add_changelog $SPEC -e "- initial build for ALT Sisyphus"
 	fi
 
 
