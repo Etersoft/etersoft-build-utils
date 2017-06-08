@@ -48,18 +48,21 @@ get_tardir_from_rules()
 	local tar="$1"
 	local packname="$(basename "$2" .$tar)"
 	local dir
-	dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
+	if print_gear_rules | grep "$tar *:" | grep -q -v "name=" ; then
+		dir=$(print_gear_rules | grep "$tar *:" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
+	else
+		dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
+	fi
+
 	if [ -z "$dir" ] ; then
-		if ! print_gear_rules | grep "$tar *:" | grep -q "name=" ; then
-			dir=$(print_gear_rules | grep "$tar *:" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g")
-		else
 			fatal "no $tar rules found in $(get_gear_rules) between
 $(print_gear_rules | grep "$tar *:")"
 		fi
-	fi
+
 	if [ "$dir" = "." ] || [ -z "$dir" ] || echo "$dir" | grep -q ":" ; then
 		return 1
 	fi
+
 	realpath "$(get_root_git_dir)/$dir"
 }
 

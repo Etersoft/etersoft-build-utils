@@ -68,7 +68,7 @@ check_tarball()
 
 get_ext()
 {
-	rhas "$1" "\." && echo "$1" | sed -e "s|.*\.||"
+	rhas "$1" "\." && echo "$1" | sed -e "s|.*\.||" | grep -v "/"
 }
 
 # Args: URL TARGET
@@ -130,8 +130,9 @@ function source_ext()
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		# TODO: use special field before %build
-		cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|g" > $TMPSPEC
+		cat $1 | sed -e "s|^Summary:.*||g" | sed -e "s|^\(\%description.*\)|Summary: $NEWSOURCE\n\1|g" > $TMPSPEC
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
+		#rhas "$GETSOURCEEXT" "%" && fatal "some macro unexpanded in URL. Check $TMPSPEC"
 		rm -f "$TMPSPEC"
 	fi
 	
@@ -158,6 +159,7 @@ function get_source_git()
 function get_source_url()
 {
 	GETSOURCEURL=$(source_ext "$1" url "$2")
+	#rhas "$GETSOURCEURL" "%" && fatal "some macro unexpanded in URL. Check $TMPSPEC"
 }
 
 function print_error()
@@ -208,6 +210,7 @@ commit_tarball_to_dir()
 		gear_update_from_tarball "$TARBALL" "$CURNAME" $FORCEDOWNLOAD || { warning "Error with update tarball in repo" ; return 1 ; }
 		# force commit ever files from .gitignore
 		docmd git add -f "$CURNAME"
+		# TODO: add GETSOURCEURL url
 		docmd git commit -m "just import $(basename $TARBALL) with rpmgs script"
 		rm -fv "$TARBALL"
 	else
@@ -246,7 +249,7 @@ update_post_git_submodules()
 
 	info "Detected post git submodules hook"
 
-	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*-postsubmodules" || fatal "missed tar:.gear/$BASENAME-posmodules in $(get_root_git_dir)/.gear/rules"
+	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*-postsubmodules" || fatal "missed tar:.gear/$BASENAME-postmodules in $(get_root_git_dir)/.gear/rules"
 	[ -s $(get_root_git_dir)/.gitmodules ] || fatal "there is no .gitmodules file in repo root"
 
 	docmd git submodule init
@@ -365,7 +368,7 @@ do
 
 		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
 		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN
-
+		#[ "$SN" = "Source1" ] && exit
 		#if ! rhas "$GETSOURCE" ".tar$" ; then
 		#	warning "It is recommended to use .tar tarballs for sources ($FTB now)"
 		#fi
@@ -391,7 +394,8 @@ do
 					continue
 				else
 					# only for main source
-					fatal "$SN $GETSOURCE has no URL"
+					warning "$SN $GETSOURCE has no URL"
+					continue
 				fi
 			fi
 			download_any_tarball "$GETSOURCE" "$FTB"

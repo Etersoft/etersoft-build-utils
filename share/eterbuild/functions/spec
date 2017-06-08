@@ -229,7 +229,7 @@ add_changelog_helper()
 		return 1
 	fi
 	[ -z "$SPECS" ] && fatal "run add_changelog without spec(s)"
-	add_changelog -e "$DESC" $SPECS
+	LANG=C add_changelog -e "$DESC" $SPECS
 	R=$?
 
 	[ -n "$QUIET" ] && return

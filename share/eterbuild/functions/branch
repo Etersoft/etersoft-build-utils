@@ -72,6 +72,7 @@ checkout_bpbranch()
 		if ! git branch -a | grep -q "remotes/$PGEAR/$USEBRANCH" ; then
 			# if we have no fetched branch
 			docmd gremote $GIRARHOST -o
+			docmd git fetch $PGEAR
 		fi
 		# if we successful with gear
 		if git branch -a | grep -q "remotes/$PGEAR/$USEBRANCH" ; then
