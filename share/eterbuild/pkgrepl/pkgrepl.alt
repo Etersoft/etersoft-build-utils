@@ -16,3 +16,5 @@ apt-repo|
 
 # due broken req in polkit
 systemd-devel|
+lua-devel|liblua5-devel
+liblua-devel|liblua5-devel

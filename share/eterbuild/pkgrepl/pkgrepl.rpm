@@ -85,6 +85,9 @@ libgtkmm2-devel|gtkmm24-devel
 libgtk+2-devel|gtk2-devel
 libgtk+2|gtk2
 
+libgtk+3-devel|gtk3-devel
+libgtk+3|gtk3
+
 sysvinit-utils|SysVinit
 menu-devel|
 rpm-build-fonts|rpm-build-altlinux-compat
