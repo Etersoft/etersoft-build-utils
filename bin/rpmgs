@@ -195,7 +195,7 @@ gear_update_from_tarball()
 
 is_gear_sources()
 {
-	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*\.gear/gear-sources"
+	cat $(get_root_git_dir)/.gear/rules | grep -q "^tar:.*\.gear/gear-sources"
 	#fatal "missed tar:.gear/gear-sources in $(get_root_git_dir)/.gear/rules"
 }
 

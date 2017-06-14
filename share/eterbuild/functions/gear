@@ -38,7 +38,7 @@ get_gear_rules_by_spec()
 print_gear_rules()
 {
 	is_gear || fatal "Can't get rules"
-	cat $(get_gear_rules) | sed -e "s|@name@|$BASENAME|g" | sed -e "s|@version@|$VERSION|g" | sed -e "s|@release@|$RELEASE|g"
+	cat $(get_gear_rules) | grep -v "^#" | sed -e "s|@name@|$BASENAME|g" | sed -e "s|@version@|$VERSION|g" | sed -e "s|@release@|$RELEASE|g"
 }
 
 # args: tar_format, packaging_name
