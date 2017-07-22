@@ -72,7 +72,7 @@ if [ -n "$PRINTBINPKG" ] ; then
 		BINPACKAGES="$BINPACKAGES $($EPMCMD print binpkgfilelist $RPMHASHERDIR $i)"
 	done
 	
-	test -n "$BINPACKAGES" || fatal "Can't find any binary packages for $LISTNAMES in $(ls -l $RPMHASHERDIR)"
+	estrlist isempty "$BINPACKAGES" && fatal "Can't find any binary packages for $LISTNAMES in $(ls -l $RPMHASHERDIR)"
 	echo "$BINPACKAGES"
 	exit
 fi
