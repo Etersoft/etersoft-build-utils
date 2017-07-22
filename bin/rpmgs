@@ -56,8 +56,11 @@ LISTRPMARGS=$@
 
 repack_tarball()
 {
+	# TODO: move it into repack
 	[ "$(realpath "$1")" = "$(realpath "$2")" ] && return
 	docmd erc -f repack "$1" "$2"
+	# remove original
+	rm -f "$1"
 }
 
 check_tarball()
@@ -76,7 +79,7 @@ download_to()
 		download_url "$URL" && repack_tarball "$DF" "$TARGET"
 		local RET=$?
 		# TODO: repack need remove origin
-		rm -fv "$DF"
+		#rm -fv "$DF"
 		[ "$RET" = "0" ] || rm -fv "$DF" "$TARGET"
 	popd
 	return $RET
