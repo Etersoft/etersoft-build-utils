@@ -66,11 +66,6 @@ check_tarball()
 	erc -q check "$1"
 }
 
-get_ext()
-{
-	rhas "$1" "\." && echo "$1" | sed -e "s|.*\.||" | grep -v "/"
-}
-
 # Args: URL TARGET
 download_to()
 {

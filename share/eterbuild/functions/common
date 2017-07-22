@@ -158,6 +158,9 @@ DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_v
 EPMCMD=$(realpath $ETERBUILDBIN/../../eepm/bin/epm 2>/dev/null)
 [ -x "$EPMCMD" ] || EPMCMD=epm
 
+ERCCMD=$(realpath $ETERBUILDBIN/../../erc/bin/erc 2>/dev/null)
+[ -x "$ERCCMD" ] || ERCCMD=erc
+
 print_list()
 {
 	local i
@@ -431,6 +434,14 @@ check_ssh_key()
 check_key()
 {
 	check_ssh_key
+}
+
+get_ext()
+{
+	# first check if it is archive
+	$ERCCMD type "$1" && return
+	# default code, it broken sequenced extensions (like .tar.gz)
+	rhas "$1" "\." && echo "$1" | sed -e "s|.*\.||" | grep -v "/"
 }
 
 make_temp_file()
