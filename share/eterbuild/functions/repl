@@ -217,7 +217,7 @@ print_pkgrepl_list()
 
 print_grprepl_list()
 {
-	print_replbased_list $(realpath -f $PKGREPLBASE/../grprepl/grprepl)
+	print_replbased_list $(realpath $PKGREPLBASE/../grprepl/grprepl)
 }
 
 
