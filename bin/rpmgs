@@ -349,7 +349,7 @@ do
 		GETSOURCE=$(eval_spec $spec | get_var "$SN")
 		[ -n "$GETSOURCE" ] || fatal "Problem with empty $SN"
 
-		echo "Updating $SN:$GETSOURCE ..."
+		echo "Updating $SN: $GETSOURCE ..."
 
 		# for get RPMSOURCEDIR and BASENAME/VERSION/RELEASE
 		build_rpms_name $spec

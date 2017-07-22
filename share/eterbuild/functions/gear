@@ -38,6 +38,7 @@ get_gear_rules_by_spec()
 print_gear_rules()
 {
 	is_gear || fatal "Can't get rules"
+	# hack with @var@ replacement
 	cat $(get_gear_rules) | grep -v "^#" | sed -e "s|@name@|$BASENAME|g" | sed -e "s|@version@|$VERSION|g" | sed -e "s|@release@|$RELEASE|g"
 }
 
@@ -45,6 +46,7 @@ print_gear_rules()
 # uses: version
 get_tardir_from_rules()
 {
+	# TODO: use get_gear_rules only once
 	local tar="$1"
 	local packname="$(basename "$2" .$tar)"
 	local dir

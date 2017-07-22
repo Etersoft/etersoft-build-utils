@@ -141,13 +141,13 @@ get_version()
 	eval_spec $1 | get_var "Version"
 }
 
-# Args: specname, sourceN
+# Args: specname, source_number
 get_tarballname()
 {
-	local SOURCE=$(eval_spec $1 | get_var "Source$2")
-	[ -n "$SOURCE" ] || SOURCE=$(eval_spec $1 | get_var "Source0")
+	local SOURCE=$(eval_spec "$1" | get_var "Source$2")
+	[ -n "$SOURCE" ] || SOURCE=$(eval_spec "$1" | get_var "Source0")
 	[ -n "$SOURCE" ] || fatal "Can't grep Source$2 from spec $1"
-	basename $(basename $SOURCE | sed -e "s|-$(get_version $1).*||g") .tar
+	basename $(basename "$SOURCE" | sed -e "s|-$(get_version "$1").*||g") .tar
 }
 
 
