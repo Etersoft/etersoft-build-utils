@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2009-2010, 2012 Etersoft www.etersoft.ru
+# 2009-2010, 2012, 2017 Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -35,6 +35,11 @@ filter_strip_spaces()
 strip_spaces()
 {
         echo "$*" | filter_strip_spaces
+}
+
+isempty()
+{
+        [ "$(strip_spaces "$*")" = "" ]
 }
 
 list()
@@ -173,6 +178,7 @@ help()
         echo "  reg_wordexclude <PATTERN> [word list] - print only words not matched with PATTERN"
         echo "  has <PATTERN> string              - check the string for a match to the regular expression given in PATTERN (grep notation)"
         echo "  match <PATTERN> string            - check the string for a match to the regular expression given in PATTERN (egrep notation)"
+        echo "  isempty [string]                  - true if string has no any symbols (only zero or more spaces)"
         echo "  union [word list]                 - sort and remove duplicates"
         echo "  uniq [word list]                  - alias for union"
         echo "  list [word list]                  - just list words line by line"
@@ -186,6 +192,8 @@ help()
         example reg_wordexclude "wo.* er" "work were more else"
         example union "1 2 2 3 3"
         example count "1 2 3 4 10"
+        example_res isempty "  "
+        #example_res isempty " 1 "
         example_res has ex "exactly"
         example_res has exo "exactly"
         example_res match "M[0-9]+" "M250"
