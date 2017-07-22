@@ -347,6 +347,7 @@ do
 		SOURCELIST=$(grep "^Source0\?:" $spec | sed -e "s|:.*||g")
 	fi
 
+	DOWNLOADSOME=''
 	for SN in $SOURCELIST
 	do
 		GETSOURCE=$(eval_spec $spec | get_var "$SN")
@@ -384,6 +385,7 @@ do
 			else
 				echog "Try to load ${GETSOURCEURL} for $spec"
 				download_to "$GETSOURCEURL" "$FTB" || fatal "Can't download $GETSOURCEURL"
+				DOWNLOADSOME=1
 			fi
 		else
 			if ! rhas "$GETSOURCE" "ps?://" ; then
@@ -397,6 +399,7 @@ do
 				fi
 			fi
 			download_any_tarball "$GETSOURCE" "$FTB"
+			DOWNLOADSOME=1
 		# TODO: fix download single packed file
 		#else
 		#		download_to "$GETSOURCE" "$FTB"
@@ -413,6 +416,7 @@ do
 			docmd git svn clone $GETSOURCESVN $(get_root_git_dir)
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
+			DOWNLOADSOME=1
 		elif [ -n "${GETSOURCEGIT}" ] ; then
 			echog "Try to fetch ${GETSOURCEGIT} for $spec"
 			#TODO check upstream
@@ -442,15 +446,19 @@ do
 
 			#docmd gammit
 			#docmd git commit -m "merge $FTB with rpmgs script"
+			DOWNLOADSOME=1
 		elif is_gear ; then
 			commit_tarball "$FTB"
 			# TODO: make plugins
 			update_gear_sources
+			DOWNLOADSOME=1
 		fi
 
 		echog "DONE with $FTB"
 
 	done
+
+	[ -n "$DOWNLOADSOME" ] || fatal "No upstream code is updated for nev version $GSSETVERSION."
 
 	if [ -z "$GSSKIPADDCHANGELOG" ] ; then
 		# Write changelog if all done
