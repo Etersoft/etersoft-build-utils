@@ -5,12 +5,14 @@
 
 # $1 - needed VERSION of etersoft-build-utils. f.i. 162
 
-# TODO: remove it and use appropriate command directly
-# for systems without realpath command
+# add realpath if missed
+if ! which realpath 2>/dev/null >/dev/null ; then
 realpath()
 {
+        [ -n "$*" ] || return
         readlink -f "$@"
 }
+fi
 
 colorify()
 {
@@ -271,8 +273,8 @@ get_root_git_dir()
         fi
 
         DIR=$(git rev-parse --git-dir 2>/dev/null)/../ || DIR=
-        readlink -f "$DIR" 2>/dev/null || realpath "$DIR"
- 
+        realpath "$DIR" 2>/dev/null
+
         if [ -n "$LOCDIR" ] ; then
             cd - >/dev/null
         fi
@@ -396,7 +398,7 @@ do
 	# Если файл или каталог существует, то добавляем, иначе считаем аргумент параметром.
 	if [ -e "$i" ]; then
 		# echo is workaround for missed readlink
-		LISTNAMES="$LISTNAMES $(readlink -f "$i" 2>/dev/null || realpath "$i" || echo "$i")"
+		LISTNAMES="$LISTNAMES $(realpath "$i" 2>/dev/null || echo "$i")"
 	else
 		# set target type if -M?? in param
 		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
