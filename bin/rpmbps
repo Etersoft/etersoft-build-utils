@@ -133,6 +133,7 @@ else
 	docmd $ETERBUILDBIN/rpmcs --skip-reqs $SPECNAME
 
 	BUILDREQ="BuildRequires:"
+	# Korinf hack
 	if [ $(basename $SPECNAME) != "eepm.spec" ] ; then
 		if ! grep -q "BuildRequires:.*rpm-build-altlinux-compat" $SPECNAME ; then
 			# Need our compat package and disable strong patch checking
