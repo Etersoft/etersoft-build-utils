@@ -40,9 +40,9 @@ fi
 # TODO --short
 #PACKAGE=$(epmqf --quiet --short "$1")
 COMMAND="$1"
-PACKAGE=$(epmqf --quiet "$COMMAND" 2>/dev/null)
+PACKAGE=$($EPMCMD qf --quiet "$COMMAND" 2>/dev/null)
 if [ -n "$PACKAGE" ] ; then
-	PACKAGE=$(echo "$PACKAGE" | epm print name for package)
+	PACKAGE=$(echo "$PACKAGE" | $EPMCMD print name for package)
 else
 	PACKAGE="$COMMAND"
 fi

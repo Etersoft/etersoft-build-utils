@@ -69,7 +69,7 @@ if [ -n "$PRINTBINPKG" ] ; then
 	RPMHASHERDIR=$HASHERDIR/repo/$BUILDARCH/RPMS.hasher
 	for i in $LISTNAMES ; do
 		#echog "Find binary packages for '$(basename $i)' in $RPMHASHERDIR ..."
-		BINPACKAGES="$BINPACKAGES $(epm print binpkgfilelist $RPMHASHERDIR $i)"
+		BINPACKAGES="$BINPACKAGES $($EPMCMD print binpkgfilelist $RPMHASHERDIR $i)"
 	done
 	
 	test -n "$BINPACKAGES" || fatal "Can't find any binary packages for $LISTNAMES in $(ls -l $RPMHASHERDIR)"

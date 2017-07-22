@@ -134,7 +134,7 @@ echog "Prepare hasher in $HASHERDIR ..."
 UTILPKG="mc eepm"
 
 # GNOME program needs dbus-tools-gui
-if epm requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
+if $EPMCMD requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
 	echo "dbus using detected, add dbus-tools-gui"
 	UTILPKG="$UTILPKG dbus-tools-gui"
 fi
