@@ -50,10 +50,12 @@ get_tardir_from_rules()
 	local tar="$1"
 	local packname="$(basename "$2" .$tar)"
 	local dir
-	if print_gear_rules | grep "$tar *:" | grep -q -v "name=" ; then
-		dir=$(print_gear_rules | grep "$tar *:" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
-	else
-		dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
+	assert_var tar packname
+	# firstly try get dir by name=
+	dir=$(print_gear_rules | grep "$tar *:" | grep "name=$packname" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
+	# if can't get by name, use first rule without name=
+	if [ -z "$dir" ] ; then
+		dir=$(print_gear_rules | grep "$tar *:" | grep -v "name=" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
 	fi
 
 	if [ -z "$dir" ] ; then
