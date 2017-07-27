@@ -381,6 +381,7 @@ fi
 
 # lists packages for build
 if [ -n "$LISTREQS" ] ; then
+	detect_target_env
 	print_target_buildreq "$PKGNAME"
 	exit $?
 fi
