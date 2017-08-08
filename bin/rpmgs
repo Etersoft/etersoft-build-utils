@@ -202,7 +202,15 @@ is_gear_sources()
 commit_tarball_to_dir()
 {
 	local TARBALL="$1"
-	local CURNAME="$2"
+	local EXTTARBALL="$2"
+	local CURNAME="$3"
+
+	if [ "$EXTTARBALL" = "copy" ] ; then
+		#local OLDFILE=$(echo "$CURNAME")
+		cp -v "$TARBALL" "$CURNAME"
+		docmd git add "$CURNAME"
+		return 0
+	fi
 
 	if [ -f "$TARBALL" ] ; then
 		gear_update_from_tarball "$TARBALL" "$CURNAME" $FORCEDOWNLOAD || { warning "Error with update tarball in repo" ; return 1 ; }
@@ -223,19 +231,24 @@ commit_tarball_to_dir()
 commit_tarball()
 {
 	local TARBALL="$1"
+	local EXTTARBALL="$(get_ext $TARBALL)"
 	local CURNAME
-	CURNAME=$(get_tardir_from_rules "$(get_ext $TARBALL)" $(basename "$TARBALL")) || fatal "There is no correct 'tar:' line in gear rules file, needed for commit tarball"
-	# "
+	CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
+	if [ -z "$CURNAME" ] ; then
+		EXTTARBALL="copy"
+		CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
+		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor copy: in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
+	fi
 	# FIXME:
 	# use real path for download
 	#is_gear_sources && CURNAME=
-	is_gear_sources && fatal "FIXME: is_gear_sources"
+	is_gear_sources && fatal "FIXME: fail with is_gear_sources in commit_tarball"
 
 	# hack: try detect dir for unpacking
 	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$(get_tarballname "$spec")
 	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$BASENAME
 
-	commit_tarball_to_dir $TARBALL $CURNAME
+	commit_tarball_to_dir "$TARBALL" "$EXTTARBALL" "$CURNAME"
 }
 
 # update .gear/@name@-postsubmodules if needed

@@ -59,9 +59,10 @@ get_tardir_from_rules()
 	fi
 
 	if [ -z "$dir" ] ; then
-			fatal "no $tar rules found in $(get_gear_rules) between
-$(print_gear_rules | grep "$tar *:")"
-		fi
+#			fatal "no $tar rules found in $(get_gear_rules) between
+#$(print_gear_rules | grep "$tar *:")"
+		return 1
+	fi
 
 	if [ "$dir" = "." ] || [ -z "$dir" ] || echo "$dir" | grep -q ":" ; then
 		return 1
