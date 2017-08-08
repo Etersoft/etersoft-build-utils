@@ -31,6 +31,7 @@ libwxGTK|libwxgtk2.8
 libwxGTK-devel|libwxgtk2.8-dev
 
 libXxf86misc-devel|
+libpng15|libpng12-0
 libpng16|libpng12-0
 libudev-devel|libudev-dev
 libudev1|libudev0

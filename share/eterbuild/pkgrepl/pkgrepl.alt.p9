@@ -1,4 +1,5 @@
 libgomp6-devel|libgomp6-devel
 liblua-devel|liblua-devel
 lua-devel|liblua-devel
+libpng15|libpng16
 libpng16|libpng16

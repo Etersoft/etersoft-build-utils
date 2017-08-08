@@ -65,6 +65,7 @@ libpython|python
 libreadline|aaa_elflibs
 postgresql-common|
 libpam|
+libpng15|libpng
 libpng16|libpng
 libaudiofile|audiofile
 docbook-utils|

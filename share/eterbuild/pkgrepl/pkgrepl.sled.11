@@ -64,6 +64,7 @@ libGLU|Mesa
 libGL|Mesa
 libGL-devel|Mesa-devel
 
+libpng15|libpng12-0
 libpng16|libpng12-0
 libgmp3|gmp
 liblzma|liblzma5
