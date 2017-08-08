@@ -232,9 +232,10 @@ LISTGROUP=`eval_spec $SPECNAME | grep "^Group" | sed -e "s|^.*:||g"  | xargs -n1
 
 # Build replacement rules for spec
 ALLREPLRULES=""
-[ -n "$VERBOSE" ] && echo "Checking req names for $LISTDEP"
 
 if [ -n "$VERBOSE" ] ; then
+	echo "Checking req names for"
+	echo "$LISTDEP"
 	echo -n "Use replacement file: "
 	print_pkgrepl_list
 	echo
