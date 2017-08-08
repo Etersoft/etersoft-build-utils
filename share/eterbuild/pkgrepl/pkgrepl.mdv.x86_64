@@ -40,7 +40,7 @@ libusb|lib64usb1.0_0
 libudev-devel|lib64dev0-devel
 libudev1|lib64dev0
 
-libpng15|lib64png3
+libpng16|lib64png3
 libpng-devel|lib64png3-devel
 libaudiofile|lib64audiofile0
 libaudiofile-devel|lib64audiofile0-devel

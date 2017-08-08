@@ -96,7 +96,7 @@ fonts-bitmap-misc|
 docbook-utils|docbook-xml
 groff-base|groff
 libjpeg|libjpeg-turbo
-libpng15|libpng
+libpng16|libpng
 libaudiofile|audiofile
 libpam|pam
 makedepend|imake

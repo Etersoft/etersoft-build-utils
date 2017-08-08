@@ -1,6 +1,6 @@
 libjpeg-devel|libjpeg8-devel
 libpng-devel|libpng15-devel
-libpng15|libpng15-15
+libpng16|libpng15-15
 libXmu|libXmu6
 libjpeg|libjpeg8
 libXfixes|libXfixes3

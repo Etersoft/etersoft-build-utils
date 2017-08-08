@@ -177,7 +177,7 @@ libwxGTK3.1|wxGTK
 
 perl-base|perl
 
-libpng15|libpng
+libpng16|libpng
 python-module-dbus|dbus-python
 python-module-xml|libxml2-python
 dbus-tools-gui|dbus-x11
