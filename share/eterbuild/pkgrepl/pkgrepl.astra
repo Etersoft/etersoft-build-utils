@@ -32,15 +32,17 @@ libwxGTK-devel|libwxgtk2.8-dev
 
 libXxf86misc-devel|
 libpng15|libpng12-0
-libpng16|libpng12-0
+libpng-devel|libpng-dev
+
 libudev-devel|libudev-dev
 libudev1|libudev0
 
 libjpeg|libjpeg8
 libjpeg8|libjpeg8
 libjpeg-devel|libjpeg8-dev
+#libjpeg-devel|libjpeg62-turbo-dev
 
-liblcms-devel|liblcms1-dev
+liblcms-devel|liblcms2-dev
 liblcms|liblcms1
 liblcms2|liblcms2-2
 liblcms2-devel|liblcms2-dev
@@ -53,13 +55,13 @@ libtiff-devel|libtiff5-dev
 libudev0|libudev1
 libudev1|libudev1
 
-libgnutls26|libgnutls26
-libgnutls28|libgnutls26
-libgnutls30|libgnutls26
+libgnutls26|libgnutls27
+libgnutls28|libgnutls27
+libgnutls30|libgnutls27
 libgnutls-devel|libgnutls-dev
 
 libgphoto2|libgphoto2-6
-libgphoto2-devel|libgphoto2-6-dev
+libgphoto2-devel|libgphoto2-dev
 libgphoto2|libgphoto2-6
 libgphoto2-6|libgphoto2-6
 libgphoto2_port-12|libgphoto2-6
@@ -70,7 +72,7 @@ fontconfig|libfontconfig1
 libicu56|libicu52
 
 prelink|
-gcc-c++|g++-4.7
+gcc-c++|g++-4.7 gcc-multilib
 
 #etercifs
 #glibc-devel-static|libc6-dev

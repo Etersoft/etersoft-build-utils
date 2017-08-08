@@ -1,0 +1,5 @@
+#libGLU-devel|Mesa-libGL-devel-32bit
+libGLU-devel|
+
+#To pass install questions
+libsmbclient|libsmbclient0
