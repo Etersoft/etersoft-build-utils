@@ -128,7 +128,8 @@ function source_ext()
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		# TODO: use special field before %build
-		cat $1 | sed -e "s|^Summary:.*||g" | sed -e "s|^\(\%description.*\)|Summary: $NEWSOURCE\n\1|g" > $TMPSPEC
+		#cat $1 | sed -e "s|^Summary:.*||g" | sed -e "s|^\(\%description.*\)|Summary: $NEWSOURCE\n\1|g" > $TMPSPEC
+		cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|" > $TMPSPEC
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
 		#rhas "$GETSOURCEEXT" "%" && fatal "some macro unexpanded in URL. Check $TMPSPEC"
 		rm -f "$TMPSPEC"
