@@ -87,6 +87,9 @@ assert_var PKGFORMAT
 # Set nodeps if run in non rpm system
 [ "$PKGFORMAT" = "rpm" ] && NODEPS="" || NODEPS="--nodeps"
 
+# assure we have only specs or src.rpm
+LISTNAMES=$(repodirs_to_specs $LISTNAMES)
+
 # instead cbuild req
 if [ -n "$BUILDREQ" ] ; then
 	uni_buildreq $BUILDREQ $LISTNAMES
@@ -104,9 +107,13 @@ if [ -n "$BUILDOPT" ] ; then
 fi
 
 
-for i in $LISTNAMES
+for ln in $LISTNAMES
 do
-	build_rpms_name "$i"
+	# force SPECDIR
+	set_specdir $ln
+
+	cd $SPECDIR || fatal
+	build_rpms_name "$ln"
 	if ! is_alt ; then
 		if ! build_buildroot ; then
 			LISTRPMARGS="--buildroot $BUILDROOT $LISTRPMARGS"
@@ -116,9 +123,9 @@ do
 		rm -rf "$BUILDROOT"
 	fi
 	LOGFILE="$LOGDIR/`basename $NAMESRPMIN .src.rpm`$MENVARG.log"
-	echo "Build in native system" >$LOGFILE
+	#echo "Build in native system" >$LOGFILE
 	rm -f $LOGFILE.ok
-	(uni_rpmbuild --commit $i -bb $LISTRPMARGS $NODEPS --target $BUILDARCH 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
+	(uni_rpmbuild --commit $ln -bb $LISTRPMARGS $NODEPS --target $BUILDARCH 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
 
 	[ -r "$LOGFILE.ok" ]
 	RET=$?
@@ -127,14 +134,14 @@ do
 	if [ "$RET" = "0" ] ; then
 		check_log $LOGFILE
 		RET=$?
-	fi
-
-	if [ "$RET" != "0" ]
-	then
+	else
 		echo
 		echog "!!!!!!!! ERROR !!!!!!!"
-		fatal "Build failed with $i"
+		fatal "Build failed with $ln"
 	fi
+
+	echog "Done with build $NAMESRPMIN"
+	date
+
+	cd - >/dev/null
 done
-echog "Build is done correctly"
-date
