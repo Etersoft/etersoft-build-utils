@@ -154,7 +154,7 @@ check_gear_and_tag()
 		fi
 	fi
 	local TAG=$(get_last_tag)
-	test -z "$TAG" || is_last_commit_tag || docmd git tag -v "$TAG" || fatal "Tag $TAG still missed in the repo"
+	test -z "$TAG" || is_last_commit_tag || fatal "Tag $TAG is not on the last commit"
 	cd - >/dev/null
 	echo "Tag $TAG is set"
 	return $RESULT
@@ -221,8 +221,27 @@ prepare_rpmdir
 LISTBUILT=""
 CURDIR=`pwd`
 
+# FIXME: need we it later?
+# set SPECDIR from LISTNAMES if empty
+[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
+
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
+
 if [ -n "$SIGNTAG" ] ; then
-	check_gear_and_tag
+	for ln in $LISTNAMES ; do
+		if set_usebranch ; then
+			checkout_usebranch || fatal
+		fi
+
+		# check release
+		build_rpms_name "$ln"
+		pkg_release_check $RELEASE
+
+		check_gear_and_tag
+
+		checkout_original_branch
+	done
 	exit $?
 fi
 
@@ -230,13 +249,6 @@ if [ -n "$NOSOURCE" ] ; then
 	docmd $RPMBUILD -bs --nosource 0 $LISTNAMES
 	exit $?
 fi
-
-# FIXME: need we it later?
-# set SPECDIR from LISTNAMES if empty
-[ -n "$SPECDIR" ] || set_specdir $LISTNAMES
-
-# see functions/alt:set_binaryrepo() for BINARYREPONAME
-set_binaryrepo $MENV
 
 # If we build from gear repo, run task
 if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
