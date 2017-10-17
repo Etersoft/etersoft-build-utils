@@ -119,19 +119,28 @@ SHELLHASHERARG="--mountpoints=/proc"
 
 check_locking
 
-UTILPKG=
-if [ -n "$ALLOWX" ] ; then
-	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
-fi
+UTILPKG=''
 
 if [ -n "$QUIETMODE" ] ; then
 	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
+
+	if [ -n "$RUNCOMMAND" ] ; then
+		docmd $HSH-run $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock -- $RUNCOMMAND
+		exit
+	fi
+
 	echog "Exiting (quiet mode)..."
 	exit
 fi
 
 echog "Prepare hasher in $HASHERDIR ..."
-UTILPKG="mc eepm"
+
+if [ -n "$ALLOWX" ] ; then
+	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
+fi
+
+UTILPKG="$UTILPKG mc eepm"
+UTILPKG="$UTILPKG etersoft-build-utils"
 
 # GNOME program needs dbus-tools-gui
 if $EPMCMD requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
@@ -139,12 +148,9 @@ if $EPMCMD requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
 	UTILPKG="$UTILPKG dbus-tools-gui"
 fi
 
-if [ -n "$ALLOWX" ] ; then
-	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
-	SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
-else
-	UTILPKG="$UTILPKG etersoft-build-utils"
-fi
+UTILPKG=""
+
+SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
 
 docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
 
