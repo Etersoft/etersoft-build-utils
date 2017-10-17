@@ -1,0 +1,46 @@
+#!/bin/sh
+#!/bin/sh
+# 2017 (c) Etersoft http://etersoft.ru
+# Author: Ivan Zakharyaschev <imz@altlinux.org>
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# Based on https://bugzilla.altlinux.org/show_bug.cgi?id=33972#c5
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+
+load_mod alt hasher
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "rpmck [-b REPONAME] <packages> - check build packages"
+	echo "Examples:"
+	echo "  $ rpmck -b p8 python-module-PyQt5"
+	exit 0
+fi
+
+BINARYREPONAME=""
+if [ "$1" = "-b" ] ; then
+	BINARYREPONAME="$2"
+	shift 2
+fi
+
+set_binary_repo
+
+set_hasherdir
+
+# export OURAPTCONF with temp. file contains correct path to sources.list
+# use MENV
+prepare_aptconfig
+#$OURAPTCONF
+
+# TODO: add support for test remote task
+#$ apt-repo --hsh-apt-config=/home/imz/.hasher/sisyphus/apt.conf add 190330
+#$ apt-repo --hsh-apt-config=/home/imz/.hasher/sisyphus/apt.conf test '' python3-module-sip python3-module-PyQt5
+
+# add local repo
+#hsh-run --mount=/proc,/dev/pts $HASHERDIR /usr/lib/rpm/check-python3-provs-importable.sh "$@"
+info "install $*"
+$ETERBUILDBIN/loginhsh -i -t -b $BINARYREPO -q "$@"
+info "run checking"
+$ETERBUILDBIN/loginhsh -i -t -b $BINARYREPO -q -r "/usr/lib/rpm/check-python3-provs-importable.sh $@"
