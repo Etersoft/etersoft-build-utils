@@ -101,7 +101,7 @@ if [ -z "$FROMTAG" ] ; then
 	# FIXME: if don't exists, use last tag?
 fi
 
-if is_last_commit_tag ; then
+if [ -z "$CHANGELOGADD" ] && is_last_commit_tag ; then
 	echo "There is no new commits after $(get_last_tag)"
 	exit 0
 fi
@@ -147,5 +147,5 @@ fi
 
 add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, do not commit anything"
 
-# TODO: use gear-commit ?
-git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
+#git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
+gammit --spec=$SPECNAME $SPECNAME
