@@ -33,14 +33,14 @@ phelp()
 	echog "You can run 'rpmgs 1.2' for set new version 1.2 and download it"
 	echo
 	echog "Options:"
-	echog "   -a  get all source (not only Source|Source0)"
+#	echog "   -a  get all source (not only Source|Source0)"
 	echog "   -f  force download and commit tarball(s) (remove source file before download)"
 }
 
-while getopts :haf opt; do
+while getopts :hf opt; do
     case $opt in
     h) phelp; exit 0;;
-    a) LOADALL=1 ;;
+#    a) LOADALL=1 ;;
     f) FORCEDOWNLOAD=-f ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
@@ -356,6 +356,7 @@ do
 		fi
 	fi
 
+	LOADALL=1
 	if [ -n "$LOADALL" ] ; then
 		SOURCELIST=$(grep "^Source[0-9]*:" $spec | sed -e "s|:.*||g")
 	else
