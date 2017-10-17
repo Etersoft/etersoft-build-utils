@@ -65,5 +65,5 @@ case $PACKAGE in
 		PACKAGES="$PACKAGES dbus"
 esac
 
-showcmd loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
-share_network=1 loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+showcmd $ETERBUILDBIN/loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+share_network=1 $ETERBUILDBIN/loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
