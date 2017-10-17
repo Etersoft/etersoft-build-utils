@@ -244,7 +244,8 @@ commit_tarball()
 	# FIXME:
 	# use real path for download
 	#is_gear_sources && CURNAME=
-	is_gear_sources && fatal "FIXME: fail with is_gear_sources in commit_tarball"
+	is_gear_sources && CURNAME=$(get_root_git_dir)/$BASENAME
+	#fatal "FIXME: fail with is_gear_sources in commit_tarball"
 
 	# hack: try detect dir for unpacking
 	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$(get_tarballname "$spec")
@@ -289,24 +290,42 @@ update_gear_sources()
 
 	# npm install section
 	local RGD=$(get_root_git_dir)
-	if [ -d $RGD/package ] && [ -s $RGD/package/package.json ] ; then
-		info "Detected npm install hook"
+
+	#if [ -d $PSM ] ; then
+	info "Detected npm install hook, run npm install --production"
+
+#	if [ -d $RGD/package ] && [ -s $RGD/package/package.json ] ; then
+#		info "Detected npm install hook"
 
 	# hack: try detect dir for unpacking
-	test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
-	test -d "$CURNAME" || CURNAME=$BASENAME
+	#test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
+	#test -d "$CURNAME" || CURNAME=$BASENAME
+	# see in commit_tarball also
+		CURNAME=$BASENAME
 
 		# TODO: add support for git
 		rm -rf $PSM
 		cp -a $RGD/$CURNAME $PSM || fatal
 
 		cd $PSM || fatal
+		# CHECKME: drop postinstall due run dev scripts during install --production
+		# replace with fake commands?
+		if [ -s $RGD/.gear/npm-preinstall-hook ] ; then
+			sh $RGD/.gear/npm-preinstall-hook
+		fi
+		#subst "s|.*postinstall.*||g" package.json
+		#a= npm install --production || fatal
 		a= npm install || fatal
+		# drop all exclude node_modules
+		# TODO: correct .* removing
+		rm -rf $(ls -1 | grep -v node_modules) .*
+		#epm assure jq || fatal
+		#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
 		cd - >/dev/null
 
 		docmd git add -f $PSM
-		docmd git commit $PSM -m "update source with npm install for $VERSION"
-	fi
+		docmd git commit $PSM -m "update node_modules with npm install for $VERSION"
+	#+fi
 }
 
 parse_cmd_pre_spec "$@"
