@@ -154,8 +154,9 @@ fi
 # lines before do the same as
 # assert_var ETERBUILDBIN
 
-DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
-[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_vendor
+#DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
+DISTRVENDOR=$(realpath $ETERBUILDBIN/../../eepm/bin/distr_info 2>/dev/null)
+[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distr_info
 
 EPMCMD=$(realpath $ETERBUILDBIN/../../eepm/bin/epm 2>/dev/null)
 [ -x "$EPMCMD" ] || EPMCMD=epm
