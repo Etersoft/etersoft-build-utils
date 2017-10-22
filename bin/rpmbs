@@ -25,6 +25,7 @@ SIGNTAG=
 FORCE=
 UPLOADNOW=
 CHECKONLY=
+TESTONLY=
 NOSOURCE=
 NOCHECK=
 UPDATES=
@@ -34,7 +35,7 @@ PREPARETASK=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [GIRAR] [-b REPONAME] [-p POCKET] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-b REPONAME] [-p POCKET] [-s|-t|-u|-a|-A|-c|-e] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -46,7 +47,7 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
-	echog "   -u           sign and run gear build task after build"
+	echog "   -u           sign and run gear build task"
 	echog "   -a TASK      sign package(s)/repo, push/upload it and add to (shared) task TASK"
 	echog "                -a TASKbeforeSUBTASK (f.i., 43122before90) for put task before SUBTASK in TASK"
 	echog "   -A           sign package(s)/repo, push/upload it and add to the last task"
@@ -57,6 +58,7 @@ phelp()
 	#echog " -k [TARGET] - generate src.rpm and publish to TARGET dir (from Source: by default)"
 	#echog " -r [RELEASE] - publish to RELEASE target dir version"
 	echog "Ext. options:"
+	echog "   -e           sigan and run gear test only task girar build"
 	echog "   -c           only sign package(s) with checking"
 	echog "   -f           force operation (overwrite tag)"
 	echog "   -s           sign package(s) (and move it to dir ETERDESTSRPM if defined)"
@@ -67,11 +69,12 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfstcudnop:a:Ab:z opt; do
+while getopts :hfstcudenop:a:Ab:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     t) SIGNTAG=1 ;;
+    e) TESTONLY="--test-only" ; UPLOADNOW=1 ; SIGN=1 ;;
     f) FORCE="-f" ;;
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
@@ -318,7 +321,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 			fi
 			docmd ssh $GEARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 		else
-			docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+			docmd ssh $GEARHOST build $TESTONLY $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 		fi
 
 		checkout_original_branch
