@@ -122,7 +122,9 @@ check_locking
 UTILPKG=''
 
 if [ -n "$QUIETMODE" ] ; then
-	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
+	if [ -n "$UTILPKG$LISTNAMES" ] ; then
+		docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
+	fi
 
 	if [ -n "$RUNCOMMAND" ] ; then
 		docmd $HSH-run $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock -- $RUNCOMMAND
@@ -152,7 +154,9 @@ UTILPKG=""
 
 SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
 
-docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
+if [ -n "$UTILPKG$LISTNAMES" ] ; then
+	docmd $HSH-install $HASHERDIR --wait-lock $UTILPKG $LISTNAMES || fatal "Error with install"
+fi
 
 if [ -n "$RUNCOMMAND" ] ; then
 	docmd $HSH-run $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock -- $RUNCOMMAND
