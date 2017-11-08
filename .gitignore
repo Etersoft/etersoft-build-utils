@@ -1,3 +1,4 @@
 po/etersoft-build-utils.mo
 tests/specpkgr.spec
+tests/get_ver.spec
 *~

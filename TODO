@@ -1,3 +1,12 @@
+Путь к корню репозитория: git rev-parse --show-cdup
+	[devel] I: gear-remotes-restore with git source comments support
+
+#build --test-only
+new p8
+add copy PKG
+run
+task ls
+acl
 
 rpmbb -i не пишет логи
 

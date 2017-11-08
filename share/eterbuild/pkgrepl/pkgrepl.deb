@@ -370,3 +370,4 @@ libpulseaudio|libpulse0
 
 xxd|vim-common
 bash4|bash
+perl-podlators|perl
