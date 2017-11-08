@@ -58,7 +58,7 @@ phelp()
 	#echog " -k [TARGET] - generate src.rpm and publish to TARGET dir (from Source: by default)"
 	#echog " -r [RELEASE] - publish to RELEASE target dir version"
 	echog "Ext. options:"
-	echog "   -e           sigan and run gear test only task girar build"
+	echog "   -e           sign and run gear test only task girar build"
 	echog "   -c           only sign package(s) with checking"
 	echog "   -f           force operation (overwrite tag)"
 	echog "   -s           sign package(s) (and move it to dir ETERDESTSRPM if defined)"

@@ -15,7 +15,7 @@ load_mod repl rpm git buildsrpm spec branch
 #############################
 
 # FIXME: CURRENTBRANCHNAME??
-Usage="Usage: $name [-r -u -U -n -i -m -v -q] [-b REPONAME] spec..."
+Usage="Usage: $name [-r -u -U -n -i -m -v -q -e] [-b REPONAME] spec..."
 function mygetopts()
 {
 name=${0##*/}
@@ -36,6 +36,7 @@ phelp()
 	echog "Ext. options:"
 	echog "   -v           more verbose"
 	echog "   -q           quiet"
+	echog "   -e           sign and run gear test only task girar build"
 	echog "   -z           create src.rpm with compatible gzip compression (obsoleted)"
 	echo
 	echog "Examples:"
@@ -46,11 +47,11 @@ phelp()
 
 FORCE=
 PASSEDARGS=
-while getopts :hnuaAfvqb: opt; do
+while getopts :hnuaeAfvqb: opt; do
     case $opt in
         h) phelp; exit 0 ;;
         n) NOBUILD=1 ;;
-        u|a|A) PASSEDARGS="$PASSEDARGS -$opt" ;;
+        u|e|a|A) PASSEDARGS="$PASSEDARGS -$opt" ;;
         f) FORCE=1 ; PASSEDARGS="$PASSEDARGS -$opt" ;;
         v) VERBOSE=1 ;;
         b) BINARYREPONAME=$OPTARG ;;

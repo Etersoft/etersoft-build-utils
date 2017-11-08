@@ -16,7 +16,7 @@ REMCOM=
 COMMIT=
 
 #############################
-Usage="Usage: $name [-r -s -u -m -i -c] [-f] [spec or src.rpm]..."
+Usage="Usage: $name [-r -s -u -m -i -c -e] [-f] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -35,6 +35,7 @@ phelp()
 	echog "Ext. options:"
 	echog "   -c  build without stuff (without previous built packages)"
 	echog "   -s  sign (and move to dir ETERDESTSRPM if defined) after build"
+	echog "   -e  sign and run gear test only task girar build"
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
 	echog "   -w  build with gear --hasher myhsh directly"
@@ -42,11 +43,11 @@ phelp()
 }
 
 PASSEDARGS=
-while getopts :hiufclstwb: opt; do
+while getopts :hieufclstwb: opt; do
     case $opt in
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
-    u|f|c|s|l) PASSEDARGS="$PASSEDARGS -$opt" ;;
+    u|f|c|e|s|l) PASSEDARGS="$PASSEDARGS -$opt" ;;
     w) THOROUGH=1 ;;
     i) INSTALLPKG=1 ;;
     b) BINARYREPONAME=$OPTARG ;;
@@ -91,7 +92,7 @@ if [ -n "$THOROUGH" ] ; then
 else
 	# We do not not pass args for myhsh here...
 	# FIXME: не обрабатывает два пропускаемых вместе параметра
-	pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c l f a A)
+	pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c e l f a A)
 
 	# build in hasher
 	docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
