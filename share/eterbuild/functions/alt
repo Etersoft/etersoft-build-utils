@@ -96,6 +96,8 @@ get_altdistr_mod()
 pkg_release_check()
 {
 	assert_var MENV
+	# FIXME: more correct way
+	[ -n "$KORINFSKIPRELEASECHECK" ] && return 0
 	local STREL=$(get_default_txtrelease)
 	# support alt in any case
 	local STRELDEF=alt
@@ -106,7 +108,7 @@ pkg_release_check()
 		for i in $@ ; do
 			if rhas "$i" "($STREL|$STRELDEF)[0-9]+\.M[0-9][0-9]\.[0-9]+" ; then
 				# Значит не тот релиз
-				fatal "Incorrect release in $i package: was prepared for Sisyphus"
+				fatal "Incorrect release in $i package: was prepared for Sisyphus. Check also for KORINFSKIPRELEASECHECK"
 			fi
 		done
 		return
