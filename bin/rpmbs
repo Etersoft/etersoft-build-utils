@@ -342,7 +342,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 
 	# if more then one spec, use common task
 	if [ "$PREPARETASK" = "internal" ] ; then
-		docmd ssh $GEARHOST task run $TASKNUMBER
+		docmd ssh $GEARHOST task run $TESTONLY $TASKNUMBER
 	fi
 
 	exit
