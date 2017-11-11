@@ -150,8 +150,6 @@ if $EPMCMD requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
 	UTILPKG="$UTILPKG dbus-tools-gui"
 fi
 
-UTILPKG=""
-
 SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
 
 if [ -n "$UTILPKG$LISTNAMES" ] ; then
