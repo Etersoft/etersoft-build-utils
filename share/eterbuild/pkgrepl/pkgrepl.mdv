@@ -158,7 +158,6 @@ libtool|libtool
 xkeyboard-config|x11-data-xkbdata
 fonts-bitmap-misc|x11-font-cursor-misc
 
-dbus-libs|libdbus
 libdbus|libdbus-1_3
 
 libldap-devel|libldap2.4_2-devel
