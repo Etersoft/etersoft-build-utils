@@ -69,7 +69,7 @@ if [ -z "$ETERDESTSRPM" ] ; then
 	[ -n "$ETERDESTSRPM" ] || fatal "Can't detect target dir from spec (Url in Source: field). Run rpmpub with TARGETDIR param"
 	echo "Prepare src.rpm to $ETERDESTSRPM"
 else
-	test -d "$ETERDESTSRPM" || fatal "You need run with exists dir to publish src.rpm project (I checked $ETERDESTSRPM, it is nonexist)"
+	test -d "$ETERDESTSRPM" || fatal "You need run with exists dir to publish src.rpm project (I have checked $ETERDESTSRPM, it does not exist)"
 fi
 export ETERDESTSRPM
 
