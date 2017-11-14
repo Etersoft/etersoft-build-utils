@@ -148,4 +148,4 @@ fi
 add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, do not commit anything"
 
 #git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
-gammit --spec=$SPECNAME $SPECNAME
+gammit $QUIET --spec=$SPECNAME $SPECNAME

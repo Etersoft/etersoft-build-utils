@@ -1,13 +1,21 @@
 #!/bin/sh
-# Do gear-commit -a
+# 2014, 2017 (c) Etersoft https://etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echo "gammit - make commit with description from last changelog entry in spec"
+	echo "gammit [-q] [files] - make commit with description from last changelog entry in spec"
 	echo "Use: gammit"
+	echo "     -q - skip editor"
 	exit 0
+fi
+
+if [ "$1" = "-q" ] ; then
+	shift
+	ARG="$ARG --no-edit"
 fi
 
 # If no args
@@ -15,4 +23,4 @@ if [ -z "$1" ] ; then
 	ARG="$ARG -a"
 fi
 
-docmd gear-commit $ARG $@
+docmd gear-commit $ARG "$@"
