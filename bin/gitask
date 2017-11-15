@@ -1,0 +1,21 @@
+#!/bin/sh
+# 2017 (c) Etersoft https://etersoft.ru
+# Author: Vitaly Lipatov <lav@etersoft.ru>
+# Public domain
+
+# load common functions, compatible with local and installed script
+. `dirname $0`/../share/eterbuild/functions/common
+load_mod git
+
+set_girar_host $1 && shift
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+	echo "gitask ssh gear.alt task wrapper"
+	echo "Use: gitask"
+	echo "     --help - help"
+	docmd ssh $GEARHOST task help
+	exit 0
+fi
+
+docmd ssh $GEARHOST task "$@"
+
