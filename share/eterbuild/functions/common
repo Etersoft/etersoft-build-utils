@@ -550,3 +550,5 @@ version_more_version()
 {
 	[ "$2" = "$(echo -e "$1\n$2" | sort -n | head -n1)" ]
 }
+
+HELP_GIRAR="   GIRAR - git.alt (ga, galt) or git.eter (ge, geter)"

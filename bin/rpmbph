@@ -32,6 +32,7 @@ phelp()
 	echog "   -n           do not build in hasher"
 	echog "   -i           install built packages in test hasher" # will pass to rpmbs/rpmbsh
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
+	echo  "$HELP_GIRAR"
 	echo
 	echog "Ext. options:"
 	echog "   -v           more verbose"

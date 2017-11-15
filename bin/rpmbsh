@@ -16,7 +16,7 @@ REMCOM=
 COMMIT=
 
 #############################
-Usage="Usage: $name [-r -s -u -m -i -c -e] [-f] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-r -s -u -m -i -c -e] [-f] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -31,6 +31,7 @@ phelp()
 	echog "   -u  sign and run gear build task after build"
 	echog "   -i  install built packages in test hasher (via loginhsh -t)"
 	echog "   -f  force tag set (see rpmbs --help)"
+	echo  "$HELP_GIRAR"
 	echo
 	echog "Ext. options:"
 	echog "   -c  build without stuff (without previous built packages)"
