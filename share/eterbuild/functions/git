@@ -52,6 +52,22 @@ get_remote_git_list()
         done
 }
 
+normalize_girar_name()
+{
+	case "$1" in
+		ga|galt)
+			echo "git.alt"
+			;;
+		ge|geter)
+			echo "git.eter"
+			;;
+		*)
+			echo "$1"
+			;;
+	esac
+	return 0
+}
+
 # Check if $1 like git.alt or git.eter, git.something
 is_girar_name()
 {
@@ -85,8 +101,9 @@ set_gear_host()
 # Try autodetect GIRARHOST. Return true, if get it from arg (need for shift args)
 set_girar_host()
 {
-	if is_girar_name "$1" ; then
-		GIRARHOST="$1"
+	local GN=$(normalize_girar_name "$1")
+	if is_girar_name "$GN" ; then
+		GIRARHOST="$GN"
 		set_gear_host
 		return 0
 	fi
