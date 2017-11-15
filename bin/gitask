@@ -11,10 +11,24 @@ set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gitask ssh gear.alt task wrapper"
-	echo "Use: gitask"
+	echo "Use: gitask [task|show]"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help
 	exit 0
+fi
+
+# TODO: acl
+
+if [ "$1" = "show" ] ; then
+	shift
+	showcmd "$GEARHOST>" girar-show "$@"
+	GIT_ALT=$GEARHOST girar-show "$@"
+	exit
+fi
+
+if [ "$1" = "task" ] ; then
+	# by default
+	shift
 fi
 
 docmd ssh $GEARHOST task "$@"
