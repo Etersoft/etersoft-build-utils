@@ -508,22 +508,29 @@ check_display()
 	$XSET -b
 }
 
-# Print command line and run command line
-docmd()
-{
-	SETCOLOR_SUCCESS
-	echo " \$ $@"
-	SETCOLOR_NORMAL
-	"$@"
-}
-
 # Print command line only
 showcmd()
 {
+	local i
 	SETCOLOR_SUCCESS
-	echo " \$ $@"
+	echo -n " \$"
+	for i in "$@" ; do
+		# print with qoutes if args have spaces
+		echo -n " "
+		echo -n "$i" | sed -e "s|\(.* .*\)|'\1'|g"
+	done
+	echo
 	SETCOLOR_NORMAL
+
 }
+
+# Print command line and run command line
+docmd()
+{
+	showcmd "$@"
+	"$@"
+}
+
 
 # Example:
 # $ command $(usearg -d "$PARAM")
