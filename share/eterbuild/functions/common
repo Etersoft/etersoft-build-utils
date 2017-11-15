@@ -220,7 +220,7 @@ debug_print_backtrace()
 	local i=1
 	while [ -n "${FUNCNAME[i]}" ]
 	do
-		echo "        Callback N${i} : ${FUNCNAME[i]}"
+		echo "        Callback N${i} : ${FUNCNAME[i]} : ${BASH_SOURCE[i]}"
 		let "i+=1"
 	done   
     
