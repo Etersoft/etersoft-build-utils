@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.5
+Version: 2.7.6
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Nov 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.6-alt1
+- introduce gitask (aliased as gita)
+- add support for ga/galt in addition to git.alt (ge for git.eter)
+- gitask: add show support
+
 * Wed Nov 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.5-alt1
 - rpmpub: fix grammar
 - add -q support to rpmlog and gammit
