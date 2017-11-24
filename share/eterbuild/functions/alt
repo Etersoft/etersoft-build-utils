@@ -32,7 +32,7 @@ set_target_type()
 get_type_by_git_branch_name()
 {
         # like p5
-        if echo $1 | egrep -q "^[pt][0-9].?$" ; then
+        if echo $1 | egrep -q "^[ptc][0-9].?$" ; then
                 get_altdistr_mod $1
                 return
         fi
