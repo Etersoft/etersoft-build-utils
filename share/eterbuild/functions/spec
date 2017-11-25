@@ -42,7 +42,7 @@ eval_spec()
 		$USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC
 	fi | iconv -f utf8 -r
 	# FIXME: hack for koi8-r in spec (grep will not work with it)
-	rm -f $SPECNAME.tmp $SPECNAME.changelog
+	[ -n "$DEBUG" ] || rm -f $SPECNAME.tmp $SPECNAME.changelog
 	remove_file_from_remove $SPECNAME.tmp $SPECNAME.changelog
 }
 

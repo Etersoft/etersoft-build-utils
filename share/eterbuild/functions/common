@@ -36,7 +36,7 @@ fatal()
 	SETCOLOR_FAILURE
 	print_message Error "$@"
 	SETCOLOR_NORMAL
-	if [ -n "$ETERSOFT_FATAL_REMOVE_FILES" ]; then
+	if [ -n "$ETERSOFT_FATAL_REMOVE_FILES" ] && [ -z "$DEBUG" ]; then
 		rm -rvf $ETERSOFT_FATAL_REMOVE_FILES
 	fi
 	exit 1
