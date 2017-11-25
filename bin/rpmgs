@@ -127,10 +127,11 @@ function source_ext()
 		test -n "$NEWSOURCE" || fatal "Can't extract URL from $SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
+		# TODO: move to separate function and rewrite
 		# TODO: use special field before %build
-		#cat $1 | sed -e "s|^Summary:.*||" | sed -e "s|^\(# $SN-$2:.*\)|Summary: $NEWSOURCE\n\1|" > $TMPSPEC
+		cat $1 | sed -e "s|^Summary:.*||1" | sed -e "s|^\(# $SN-$2:.*\)|Summary: $NEWSOURCE\n\1|1" > $TMPSPEC
 		# TODO: replace only first entry
-		cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|" > $TMPSPEC
+		#cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|1" > $TMPSPEC
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
 		#rhas "$GETSOURCEEXT" "%" && fatal "some macro unexpanded in URL. Check $TMPSPEC"
 		rm -f "$TMPSPEC"
