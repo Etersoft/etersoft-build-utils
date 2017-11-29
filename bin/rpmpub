@@ -81,7 +81,6 @@ if [ -n "$ETERDESTSRPM" ] && ! rhas "$ETERDESTSRPM" "/sources" ; then
 	ETERDESTSRPM=$ETERDESTSRPM/sources
 fi
 
-[ -d "$ETERDESTSRPM" ] || fatal "You need run with exists dir to publish src.rpm project (I have checked $ETERDESTSRPM, it does not exist)"
 echo "Prepare src.rpm to $ETERDESTSRPM"
 export ETERDESTSRPM
 
@@ -96,6 +95,8 @@ if [ -n "$ALPHA" ] && [ ! -d "$ETERDESTSRPM" ] && [ -d "$PREVPATH" ] ; then
 	find -H "$NEXTPATH" ! -group "$NAME_GR" -print0 | xargs -0 --no-run-if-empty chgrp -v $NAME_GR
 	find -H "$NEXTPATH" ! -perm 0664  -type f -print0 | xargs -0 --no-run-if-empty chmod -v 0664
 	find -H "$NEXTPATH" ! -perm 02775 -type d -print0 | xargs -0 --no-run-if-empty chmod -v 02775
+else
+	[ -d "$ETERDESTSRPM" ] || fatal "You need run with exists dir to publish src.rpm project (I have checked $ETERDESTSRPM, it does not exist)"
 fi
 
 # just for your information: rpmbs supports ssh-like target
