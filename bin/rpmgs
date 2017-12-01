@@ -113,6 +113,12 @@ download_any_tarball()
 	fatal "Cannot retrieve $GETSOURCE"
 }
 
+__replace_first_line()
+{
+	# https://unix.stackexchange.com/questions/250603/replace-only-on-the-first-matching-line-with-sed
+	sed -e "1,/$1/s/$1/$2/"
+}
+
 # param: spec name number (f.i., url for Source-url)
 function source_ext()
 {
@@ -129,7 +135,7 @@ function source_ext()
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
 		# TODO: move to separate function and rewrite
 		# TODO: use special field before %build
-		cat $1 | sed -e "s|^Summary:.*||1" | sed -e "s|^\(# $SN-$2:.*\)|Summary: $NEWSOURCE\n\1|1" > $TMPSPEC
+		cat $1 | __replace_first_line "^Summary:.*" "" | sed -e "s|^\(# $SN-$2:.*\)|Summary: $NEWSOURCE\n\1|" > $TMPSPEC
 		# TODO: replace only first entry
 		#cat $1 | sed -e "s|^Summary:.*|Summary: $NEWSOURCE|1" > $TMPSPEC
 		GETSOURCEEXT=$(eval_spec "$TMPSPEC" | get_var "Summary")
