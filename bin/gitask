@@ -11,7 +11,8 @@ set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gitask ssh gear.alt task wrapper"
-	echo "Use: gitask [task|show]"
+	echo "Use: gitask [GIRAR] [task|show]"
+	echo "$HELP_GIRAR"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help
 	exit 0
@@ -19,12 +20,35 @@ fi
 
 # TODO: acl
 
+if [ "$1" = "find" ] ; then
+	shift
+	#showcmd "$GEARHOST>" find-packages "$@"
+	docmd ssh $GITHOST find-package "$@"
+	exit
+fi
+
 if [ "$1" = "show" ] ; then
 	shift
+	# TODO: show last task without args
 	showcmd "$GEARHOST>" girar-show "$@"
 	GIT_ALT=$GEARHOST girar-show "$@"
 	exit
 fi
+
+if [ "$1" = "ls" ] ; then
+	shift
+	# TODO: with arg(s) — subtask
+	# TODO: add support ls -a (with subtasks)
+	showcmd "$GEARHOST>" girar-show "$@"
+	GIT_ALT=$GEARHOST girar-show "$@"
+	exit
+fi
+
+if [ "$1" = "quota" ] ; then
+	docmd ssh $GEARHOST quota
+	exit
+fi
+
 
 if [ "$1" = "task" ] ; then
 	# by default
