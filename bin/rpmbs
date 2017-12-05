@@ -311,11 +311,11 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		echo "Run build $PROJECTNAME at $GEARHOST"
 		# FIXME: tee hangup during first call with ssh ControlMaster
 		if [ -n "$PREPARETASK" ] ; then
-			showcmd "GIT_ALT=$GEARHOST girar-show $TASKNUMBER@"
-			SUBTASK="$(GIT_ALT=$GEARHOST girar-show $TASKNUMBER@ | grep "/$PROJECTNAME.git" | sed -e "s|.*#\([0-9]*\) .*|\1|g")"
-			# hack "
+			# TODO: can we use showcmd?
+			showcmd $ETERBUILDBIN/gita get subtask $TASKNUMBER $PROJECTNAME
+			SUBTASK=$($ETERBUILDBIN/gita get subtask $TASKNUMBER $PROJECTNAME)
 			if [ -n "$SUBTASK" ] && ! echo "$TASKNUMBER" | grep -q " " ; then
-				info "$PROJECTNAME already in task as subtask $SUBTASK, replacing"
+				info "$PROJECTNAME already present in the task $TASKNUMBER as subtask $SUBTASK, replacing"
 				docmd ssh $GEARHOST task delsub $TASKNUMBER $SUBTASK
 				TASKNUMBER="$TASKNUMBER $SUBTASK"
 			fi
