@@ -261,9 +261,8 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 
 	if [ -n "$PREPARETASK" ] ; then
 		if [ -z "$TASKNUMBER" ] ; then
-			showcmd "ssh $GEARHOST task ls"
-			TASKNUMBER="$(ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g")" || fatal
-		# hack "
+			showcmd $ETERBUILDBIN/gita get last task
+			TASKNUMBER=$($ETERBUILDBIN/gita get last task)
 		fi
 	else
 			NUMSPECS=$(estrlist count $LISTNAMES)

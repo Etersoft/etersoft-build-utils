@@ -29,6 +29,10 @@ if [ "$1" = "get" ] ; then
 		#"
 		echo "$SUBTASK"
 		exit
+	elif [ "$1 $2 $3" = "get last " ] || [ "$1 $2 $3" = "get last task" ] ; then
+		TASK="$(ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g")" || fatal
+		echo "$TASK"
+		exit
 	else
 		fatal "Unknown command $1 $2"
 	fi
