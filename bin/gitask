@@ -11,7 +11,7 @@ set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gitask ssh gear.alt task wrapper"
-	echo "Use: gitask [GIRAR] [task|show]"
+	echo "Use: gitask [GIRAR] [task|show|ls|quota]"
 	echo "$HELP_GIRAR"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help

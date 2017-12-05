@@ -1,3 +1,8 @@
+А в паре с rpm-build-ubt можно, например,
+%if_ver_gteq %ubt_id M90C
+Obsolete: kde4
+%endif
+
 Путь к корню репозитория: git rev-parse --show-cdup
 	[devel] I: gear-remotes-restore with git source comments support
 

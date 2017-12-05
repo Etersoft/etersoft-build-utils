@@ -53,6 +53,7 @@ phelp()
 	echog "   -A           sign package(s)/repo, push/upload it and add to the last task"
 	echog "   -p POCKET    build package in POCKET (supported on git.etersoft.ru only)"
 	echog "   -b REPONAME  binary repository name (p7, t7 and so on)"
+	echo  "$HELP_GIRAR"
 	echo
 	#echog "Korinf options:"
 	#echog " -k [TARGET] - generate src.rpm and publish to TARGET dir (from Source: by default)"
