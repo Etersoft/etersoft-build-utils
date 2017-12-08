@@ -106,6 +106,7 @@ fi
 
 # Skip checking for tar arg
 if [ -n "${LISTNAMES/*tar/}" ] ; then
+	$EPMCMD assure sisyphus_check || fatal
 	docmd sisyphus_check --no-check=$HASHER_NOCHECK --files $LISTNAMES || fatal "check for sisyphus failed"
 fi
 

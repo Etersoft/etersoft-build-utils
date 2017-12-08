@@ -395,6 +395,7 @@ CHECK_OPTIONS=""
 [ -n "${UPLOADNOW}" ] || CHECK_OPTIONS="--no-check=$HASHER_NOCHECK"
 
 if [ -z "$NOCHECK" ] ; then
+    $EPMCMD assure sisyphus_check || fatal
     docmd sisyphus_check $CHECK_OPTIONS --files $LISTBUILT || fatal "sisyphus check failed"
 fi
 
