@@ -12,7 +12,7 @@
 load_mod spec rpm etersoft
 
 # fast load Korinf config for BUILDFARMDIR
-test -f /etc/eterbuild/korinf && . /etc/eterbuild/korinf
+[ -n "$KORINFETC" ] || KORINFETC=/etc/eterbuild
 test -f $KORINFETC/korinf && . $KORINFETC/korinf
 test -f ~/.config/korinf  && . ~/.config/korinf
 
