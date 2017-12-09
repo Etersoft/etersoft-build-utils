@@ -105,21 +105,37 @@ reset_release()
 }
 
 # inc 2 release to 3
+# textMAJOR.middle.MINOR
 inc_release()
 {
 	local BASERELEASE=$(get_numrelease "$1")
 	local MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
-	set_release "$1" $(get_txtrelease "$1")$(($MAJOR + 1 ))
+	local MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
+	local m=$(echo "$BASERELEASE" | sed -e "s|$MAJOR\.\(.*\)\.$MINOR|\1|")
+	[ "$m" = "$BASERELEASE" ] && m=''
+	local am=''
+	# keep minor part
+	[ -z "$m" ] && rhas "$MINOR" "[a-zA-Z]" && am=".$MINOR"
+	# keep middle part
+	[ -n "$m" ] && am=".$m"
+	set_release "$1" "$(get_txtrelease "$1")$(($MAJOR + 1 ))$am"
 }
 
 # inc 2.x to 2.(x+1) or 2 to 2.1
+# textMAJOR.middle.MINOR
 inc_subrelease()
 {
 	local BASERELEASE=$(get_numrelease $1)
 	local MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
 	local MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
 	[ "$MINOR" = "$BASERELEASE" ] && MINOR="0"
-	set_release "$1" "$(get_txtrelease $1)${MAJOR}.$(($MINOR + 1 ))"
+	local m=$(echo "$BASERELEASE" | sed -e "s|$MAJOR\.\(.*\)\.$MINOR|\1|")
+	local am=''
+	# keep minor part
+	rhas "$MINOR" "[a-zA-Z]" && am=".$MINOR" && MINOR="0"
+	# keep middle part
+	[ -n "$m" ] && [ "$m" != "$BASERELEASE" ] && am=".$m"
+	set_release "$1" "$(get_txtrelease $1)${MAJOR}$am.$(($MINOR + 1 ))"
 }
 
 reset_subrelease()

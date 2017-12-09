@@ -5,7 +5,7 @@ load_mod spec
 
 check()
 {
-	[ "$2" != "$3" ] && echo "FATAL with '$1': result '$3' do not match with '$2'" || echo "OK for '$1' with '$2'"
+	[ "$2" != "$3" ] && echo "FATAL with '$1 $TESTREL': result '$3' do not match with '$2'" || echo "OK for '$1 $TESTREL' with '$2'"
 }
 
 
@@ -39,23 +39,42 @@ check inc_subrelease "alt6.3" `inc_subrelease ""`
 
 # FIXME: strange behaviour
 TESTREL=alt6.r5001
-check inc_subrelease "alt6.r5001" `inc_subrelease ""`
+check inc_release "alt7.r5001" `inc_release ""`
+check inc_subrelease "alt6.r5001.1" `inc_subrelease ""`
 
 
 TESTREL=alt5
 check inc_release "alt6" `inc_release ""`
+check inc_subrelease "alt5.1" `inc_subrelease ""`
 
 TESTREL=alt6.2
 check inc_release "alt7" `inc_release ""`
+check inc_subrelease "alt6.3" `inc_subrelease ""`
 
-TESTVER=1.5.7
-check inc_version "1.5.8" `inc_version ""`
+#TESTVER=1.5.7
+#check inc_version "1.5.8" `inc_version ""`
 
 TESTREL=alt6.eter51
-check inc_release "alt6.eter52" `inc_release ""`
+check inc_release "alt7.eter51" `inc_release ""`
+check inc_subrelease "alt6.eter51.1" `inc_subrelease ""`
 
 TESTREL=alt5.14f23
-check inc_release "alt6" `inc_release ""`
+check inc_release "alt6.14f23" `inc_release ""`
 
 TESTREL=alt4.ff
-check inc_release "alt5" `inc_release ""`
+check inc_release "alt5.ff" `inc_release ""`
+
+TESTREL=alt3.git20110916
+check inc_release "alt4.git20110916" `inc_release ""`
+check inc_subrelease "alt3.git20110916.1" `inc_subrelease ""`
+
+TESTREL=alt3.git20130916.2
+check inc_release "alt4.git20130916" `inc_release ""`
+check inc_subrelease "alt3.git20130916.3" `inc_subrelease ""`
+
+TESTREL=alt2.M80P.3
+check inc_release "alt3.M80P" `inc_release ""`
+check inc_subrelease "alt2.M80P.4" `inc_subrelease ""`
+
+TESTREL=alt3.git20110916
+check inc_release "alt4.git20110916" `inc_release ""`

@@ -120,6 +120,8 @@ get_mn_fromspec
 check MAJOR 27.5 $MAJOR
 check MINOR 2 $MINOR
 
+BASERELEASE=alt3.git20130916.2
+
 # from rpmbh:
 # General rule: alwars alt(N-1).MM.(N)
 set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
