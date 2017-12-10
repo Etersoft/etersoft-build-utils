@@ -460,6 +460,7 @@ do
 		s|%_sysconfdir/tmpfiles.d|%_tmpfilesdir|g
 		s|%_localstatedir/run|%_runtimedir|g
 		s|/var/run|%_runtimedir|g
+		s|%_sysconfdir/udev/rules.d|%_udevrulesdir|g
 		s|%__autoreconf|%autoreconf|g" $i
 
 	subst "s|%rpmcflags|%optflags|g" $i
