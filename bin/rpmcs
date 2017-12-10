@@ -109,6 +109,8 @@ do_repls()
 		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
 	done
 
+	# commented out: do incorrect replacement for clean ALT packages
+	if false ; then
 	echog "fix groups..."
 	for n in `print_grpreq $i` ; do
 		toalt_grprepl $n || continue
@@ -116,6 +118,7 @@ do_repls()
 			s|(^Group.*)$GRPREPLRULE1|\1$GRPREPLRULE2|g"
 		[ -n "$VERBOSE" ] && echo "Replace '$GRPREPLRULE1' with '$GRPREPLRULE2'"
 	done
+	fi
 
 	# Replace package names in source spec
 	sed -r -e "$ALLREPLRULES" <$i >$SPEC || { warning "Error with replacement" ; cat $i >$SPEC ; }
