@@ -102,6 +102,8 @@ fi
 # set SPECDIR from LISTNAMES if empty (need for is_gear below)
 [ -n "$SPECDIR" ] || set_specdir $LISTNAMES
 
+# FIXME: detected only by first arg?
+
 # if run for ALT inside gear repo, just create backported spec
 if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 
@@ -190,12 +192,15 @@ export IGNOREGEAR=1
 # NOTE: we can do cd to some other dir...
 
 for i in $LISTBUILT ; do
-	uni_rpminstall $i
-	# remove primary src.rpm only if src.rpm was not primary
-	rhas "$LISTNAMES" "$i" || rm -f $i
+	uni_rpminstall "$i"
 
-	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm $i)
-	test -f "$SPECNAME" || fatal "Spec $SPECNAME is not found"
+	# Note! Use $i package only before rm it
+	SPECNAME=$RPMTOPDIR/SPECS/$(spec_by_srpm "$i")
+	test -f "$SPECNAME" || fatal "Spec $SPECNAME (got from $i) is not found in $RPMTOPDIR/SPECS"
+
+	# remove primary src.rpm only if src.rpm was not primary
+	rhas "$LISTNAMES" "$i" || rm -f "$i"
+
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
 	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $SPECNAME || fatal "Can't build"
