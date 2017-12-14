@@ -460,8 +460,14 @@ do
 		s|%_sysconfdir/tmpfiles.d|%_tmpfilesdir|g
 		s|%_localstatedir/run|%_runtimedir|g
 		s|/var/run|%_runtimedir|g
+		s|%_sysconfdir/logrotate.d|%_logrotatedir|g
 		s|%_sysconfdir/udev/rules.d|%_udevrulesdir|g
 		s|%__autoreconf|%autoreconf|g" $i
+
+	if grep -q rpm-build-intro $i || grep -q rpm-macros-intro-conflicts $i ; then
+		subst "s|%_sysconfdir/sysconfig|%_sysconfigdir|g
+		s|||g" $i
+	fi
 
 	subst "s|%rpmcflags|%optflags|g" $i
 
