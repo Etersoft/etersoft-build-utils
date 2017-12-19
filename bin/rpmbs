@@ -443,6 +443,7 @@ cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/upload
 
 for i in $LISTBUILT ; do
 	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
+	# TODO: use cat <<EOF
 	echo >>$LOGFILE
 	date >>$LOGFILE
 	echo "uploaded">>$LOGFILE

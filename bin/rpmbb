@@ -123,8 +123,8 @@ do
 		rm -rf "$BUILDROOT"
 	fi
 	LOGFILE="$LOGDIR/`basename $NAMESRPMIN .src.rpm`$MENVARG.log"
+	rm -f $LOGFILE $LOGFILE.ok
 	#echo "Build in native system" >$LOGFILE
-	rm -f $LOGFILE.ok
 	(uni_rpmbuild --commit $ln -bb $LISTRPMARGS $NODEPS --target $BUILDARCH 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
 
 	[ -r "$LOGFILE.ok" ]
