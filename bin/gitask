@@ -20,6 +20,7 @@ fi
 
 # TODO: acl
 
+epm assure girar-show girar-utils
 
 if [ "$1" = "get" ] ; then
 	if [ "$1 $2" = "get subtask" ] ; then
@@ -55,6 +56,10 @@ fi
 
 if [ "$1" = "ls" ] ; then
 	shift
+	if [ "$1" = "--all" ] ; then
+		ssh $GEARHOST task ls "$@"
+		exit
+	fi
 	# TODO: with arg(s) — subtask
 	# TODO: add support ls -a (with subtasks)
 	showcmd "$GEARHOST>" girar-show "$@"
