@@ -4,6 +4,7 @@
 # load_mod spec
 
 ETERBUILDETC=/etc/eterbuild
+ETERBUILDBIN=/usr/bin
 ETERBUILDDIR=/usr/share/eterbuild
 
 . /usr/share/eterbuild/functions/common

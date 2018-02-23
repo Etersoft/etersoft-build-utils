@@ -43,7 +43,8 @@ regexp_exclude_list()
 
 estrlist()
 {
-        assert_var ETERBUILDBIN
+        # can't use fatal here due $(estrlist) using
+        [ -x "$ETERBUILDBIN/estrlist" ] || return
         $ETERBUILDBIN/estrlist "$@"
 }
 

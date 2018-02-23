@@ -83,12 +83,12 @@ info()
 
 mark_file_to_remove()
 {
-	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist union "$ETERSOFT_FATAL_REMOVE_FILES $@")
+	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist union "$ETERSOFT_FATAL_REMOVE_FILES $@") || fatal
 }
 
 remove_file_from_remove()
 {
-	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist exclude "$*" "$ETERSOFT_FATAL_REMOVE_FILES")
+	ETERSOFT_FATAL_REMOVE_FILES=$(estrlist exclude "$*" "$ETERSOFT_FATAL_REMOVE_FILES") || fatal
 }
 
 # copied from eepm (and modified)
@@ -136,7 +136,7 @@ set_eterbuilddir()
 		fi
 	fi
 	ETERBUILDBIN=$(realpath $ETERBUILDDIR/../../bin)
-	test -n "$ETERBUILDDIR" && PATH=$ETERBUILDDIR/functions/commands:$PATH
+	[ -d "$ETERBUILDDIR" ] && [ -d "$ETERBUILDBIN" ] && PATH=$ETERBUILDDIR/functions/commands:$PATH
 	# returns test result
 }
 
