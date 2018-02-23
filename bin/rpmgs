@@ -20,7 +20,7 @@ GETSOURCE=""
 LOADALL=''
 
 #############################
-Usage="Usage: $name [-a -f ] [spec] [new_version]"
+Usage="Usage: $name [-f] [spec] [new_version]"
 function mygetopts()
 {
 name=${0##*/}
@@ -252,6 +252,7 @@ commit_tarball()
 	local CURNAME
 	CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
 	if [ -z "$CURNAME" ] ; then
+		info "Can't get dir, just commit $(basename "$TARBALL") file"
 		EXTTARBALL="copy"
 		CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
 		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor copy: in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
