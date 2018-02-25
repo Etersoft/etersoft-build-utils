@@ -33,9 +33,9 @@ print_message()
 # Print error message and stop the program
 fatal()
 {
-	SETCOLOR_FAILURE
+	SETCOLOR_FAILURE 2>/dev/null
 	print_message Error "$@"
-	SETCOLOR_NORMAL
+	SETCOLOR_NORMAL 2>/dev/null
 	if [ -n "$ETERSOFT_FATAL_REMOVE_FILES" ] && [ -z "$DEBUG" ]; then
 		rm -rvf $ETERSOFT_FATAL_REMOVE_FILES
 	fi
