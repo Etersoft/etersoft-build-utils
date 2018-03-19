@@ -32,7 +32,7 @@ add_32bit_requires()
 			# http://www.rpm.org/wiki/PackagerDocs/ArchDependencies
 			# add (x86-32) to all -devel packages
 			for i in $* ; do
-				rhas "$GREP" "-devel$" && ! rhas "$i" "(x86-32)$" && echo "$i $i(x86-32)" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" "(x86-32)$" && echo "$i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7 ; then
