@@ -348,7 +348,7 @@ remove_bashism()
 	# {1,2} translation
 	# FIXME: miss first spaces
 	while read -r n ; do
-		echo "$n" | grep -v "{.*}" && continue
+		echo "$n" | grep -v "{.*,.*}" && continue
 		rs="$(echo "$n" | perl -pe "s|.*\s(.*?{.*?}.*?)\s.*|\1|g" )"
 		res=$(eval echo "$rs")
 		echo "$n" | perl -pe "s|$rs|$res|g"
