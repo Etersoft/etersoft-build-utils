@@ -68,7 +68,7 @@ hack_distr_requires()
 
 	case "$PKGFORMAT" in
 		"deb")
-			echo $GREP | filter_deb_pkgnames
+			echo "$GREP" | filter_deb_pkgnames
 			return
 			;;
 	esac
@@ -105,7 +105,7 @@ tolocal_anyrepl()
 {
 	assert_var PKGFORMAT DISTRNAME BUILDNAME
 	local i REPLRULE WARULES
-	local GREP=$1
+	local GREP="$1"
 	shift
 	# TODO: fix space removing
 	WARULES="s/^ *//g 
@@ -227,6 +227,7 @@ print_grprepl_list()
 convert_pkgreqs_to_target()
 {
 	assert_var DISTRVENDOR BUILDARCH PKGFORMAT
+	local repl_list
 	repl_list=$(print_pkgrepl_list)
 
 	local j
