@@ -39,8 +39,8 @@ libudev1|libudev0
 
 libjpeg|libjpeg8
 libjpeg8|libjpeg8
-libjpeg-devel|libjpeg8-dev
-#libjpeg-devel|libjpeg62-turbo-dev
+#libjpeg-devel|libjpeg8-dev
+libjpeg-devel|libjpeg62-turbo-dev
 
 liblcms-devel|liblcms2-dev
 liblcms|liblcms1
@@ -55,10 +55,10 @@ libtiff-devel|libtiff5-dev
 libudev0|libudev1
 libudev1|libudev1
 
-libgnutls26|libgnutls27
-libgnutls28|libgnutls27
-libgnutls30|libgnutls27
-libgnutls-devel|libgnutls-dev
+libgnutls26|libgnutls30
+libgnutls28|libgnutls30
+libgnutls30|libgnutls30
+libgnutls-devel|libgnutls28-dev
 
 libgphoto2|libgphoto2-6
 libgphoto2-devel|libgphoto2-dev
@@ -72,10 +72,13 @@ fontconfig|libfontconfig1
 libicu56|libicu52
 
 prelink|
-gcc-c++|g++-4.7 gcc-multilib
+#gcc-c++|g++-4.7 gcc-multilib
+gcc5-c++|g++-6.3 gcc-multilib
 
 #etercifs
 #glibc-devel-static|libc6-dev
 #pkg-config|pkg-config
 #rpm-build|rpm
+
+#ia32-libs|ia32-libs ia32-libs-dev lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
 

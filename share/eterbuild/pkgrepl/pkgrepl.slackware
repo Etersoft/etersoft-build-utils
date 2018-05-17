@@ -7,8 +7,8 @@ kernel-build-tools|
 mount|util-linux
 perl-XML-LibXML|
 perl-base|perl
-fonts-ttf-core|liberation-fonts-ttf
-fonts-ttf-liberation|liberation-fonts-ttf
+fonts-ttf-core|fonts-ttf-liberation
+fonts-ttf-liberation|fonts-ttf-liberation
 libGLU|mesa
 libGL|mesa libdrm
 libGLU|mesa
@@ -90,3 +90,6 @@ libtiff5|libtiff
 fontconfig-devel|fontconfig
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+coreutils|
+make|
+su|

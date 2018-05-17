@@ -345,6 +345,9 @@ libXinerama|libxinerama1
 # NX
 libXcomp|libxcomp3
 
+# hack due our nx package with -devel
+nx-devel|nx-devel
+
 mailx|mailutils
 libssh2-devel|libssh2-1-dev
 libssh2|libssh2-1

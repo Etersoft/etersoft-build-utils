@@ -1,6 +1,7 @@
 #NX troubles:
 libalsa-devel|libasound-devel
 libXext-devel|libxext-devel
+glibc-devel|glibc-devel libtirpc-devel
 
 #Wine troubles:
 libcups-devel|libcups-devel

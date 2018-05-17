@@ -9,5 +9,7 @@ libgphoto2|libgphoto2-6
 libgphoto2-6|libgphoto2-6
 libgphoto2_port-12|libgphoto2-6
 
+# NX
 libwxGTK|libwxgtk2.8-0
 libwxGTK-devel|libwxgtk2.8-dev
+nx-dev|nx-devel

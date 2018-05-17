@@ -7,3 +7,6 @@ liblcms2-devel|liblcms2-devel
 
 libwxGTK3.1|libwxGTK
 libwxGTK3.1-devel|libwxGTK-devel
+
+libpng15|libpng12
+libpng16|libpng12
