@@ -178,6 +178,22 @@ print_pkgrepl_list
 
 check_repl libportaudio2-devel "portaudio19-dev"
 
+############################# Debian ##########################
+BUILDNAME=wine
+
+DISTRNAME=Debian
+PKGVENDOR=debian
+DISTRVERSION=9
+#BUILDARCH=x86_64
+BUILDARCH=i586
+PKGFORMAT=deb
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libxml2-devel "libxml2-dev"
+
 ############################# Astralinux ##########################
 BUILDNAME=wine
 
@@ -192,7 +208,7 @@ echo
 echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 print_pkgrepl_list
 
-check_repl pkg-config "pkg-config"
+check_repl pkg-config "pkgconfig"
 
 ############################# ROSA ##########################
 BUILDNAME=wine

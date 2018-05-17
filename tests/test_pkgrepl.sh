@@ -25,7 +25,7 @@ check()
 
 
 LISTBUILDDEP=`print_buildreq $SPECNAME`
-check "BuildDep" "imake xorg-cf-files gccmakedep rpm-build-compat gcc4.1 gcc" "$LISTBUILDDEP"
+check "BuildDep" "imake xorg-cf-files libxml2-devel gccmakedep rpm-build-compat gcc4.1 gcc" "$LISTBUILDDEP"
 
 echo -
 LISTREQDEP=`print_pkgreq $SPECNAME`
