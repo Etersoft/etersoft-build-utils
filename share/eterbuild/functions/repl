@@ -135,8 +135,9 @@ tolocal_anyrepl()
 	# HACK: return if we get complex result
 	[ "$FIXNEWRESULT" != "$NEWRESULT" ] && return 0
 
+	# this recursive needs to be argumented
 	# try to resolve recursive
-	tolocal_anyrepl "$FIXNEWRESULT" $@
+	#tolocal_anyrepl "$FIXNEWRESULT" $@
 	return 0
 }
 
