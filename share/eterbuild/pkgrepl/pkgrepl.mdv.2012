@@ -24,6 +24,7 @@ libXv-devel|libxv-devel
 
 libalsa-devel|libasound-devel
 libicu56|libicutu49 libicule49 libiculx49
+libicu60|libicutu49 libicule49 libiculx49
 
 #libgphoto2-devel|libgphoto-devel
 libgphoto2|libgphoto6

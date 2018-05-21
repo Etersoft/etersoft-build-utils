@@ -2,3 +2,4 @@
 libssl-devel|lib64openssl1.0.0-devel
 libssl|lib64openssl1.0.0
 libicu56|lib64icu44
+libicu60|lib64icu44

@@ -70,6 +70,7 @@ fontconfig-devel|libfontconfig1-dev
 fontconfig|libfontconfig1
 
 libicu56|libicu52
+libicu60|libicu52
 
 prelink|
 #gcc-c++|g++-4.7 gcc-multilib

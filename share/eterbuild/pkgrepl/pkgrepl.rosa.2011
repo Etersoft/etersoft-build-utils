@@ -96,5 +96,6 @@ libssl10|libopenssl1.0.0
 libopenal1|libopenal1
 
 libicu56|libicu48
+libicu60|libicu48
 netcat|netcat-traditional
 libxslt|libxslt1

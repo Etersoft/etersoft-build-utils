@@ -1,6 +1,7 @@
 libjpeg-devel|libjpeg8-dev
 libjpeg|libjpeg8
 libicu56|libicu48
+libicu60|libicu48
 liblzma|liblzma5
 cups|cups cups-bsd cups-client
 libice|libzeroc-ice34

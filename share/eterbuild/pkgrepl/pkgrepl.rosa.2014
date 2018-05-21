@@ -23,12 +23,5 @@ libtiff5|libtiff3
 #postgres92
 python-devel|libpython-devel
 libpython|libpython2.7
-libicu56|libicudata53
-libicu56|libicui18n53
-libicu56|libicuio53
-libicu56|libicule53
-libicu56|libiculx53
-libicu56|libicutest53
-libicu56|libicutu53
-libicu56|libicuuc53
-
+libicu56|libicudata53 libicui18n53 libicuio53 libicule53 libiculx53 libicutest53 libicutu53 libicuuc53
+libicu60|libicudata53 libicui18n53 libicuio53 libicule53 libiculx53 libicutest53 libicutu53 libicuuc53
