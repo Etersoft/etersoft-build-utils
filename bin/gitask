@@ -14,9 +14,14 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "Use: gitask [GIRAR] [task|show|ls|quota]"
 	echo "$HELP_GIRAR"
 	echo "     --help - help"
-	docmd ssh $GEARHOST task help
+	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	exit 0
 fi
+
+get_last()
+{
+	ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g" || fatal
+}
 
 # TODO: acl
 
@@ -31,7 +36,7 @@ if [ "$1" = "get" ] ; then
 		echo "$SUBTASK"
 		exit
 	elif [ "$1 $2 $3" = "get last " ] || [ "$1 $2 $3" = "get last task" ] ; then
-		TASK="$(ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g")" || fatal
+		TASK="$(get_last)" || fatal
 		echo "$TASK"
 		exit
 	else
@@ -69,6 +74,13 @@ fi
 
 if [ "$1" = "quota" ] ; then
 	docmd ssh $GEARHOST quota
+	exit
+fi
+
+if [ "$1" = "cancel" ] ; then
+	shift
+	#TASK="$(get_last)" || fatal
+	docmd ssh $GEARHOST task abort "$@"
 	exit
 fi
 
