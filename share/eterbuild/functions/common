@@ -354,7 +354,7 @@ detect_target_env()
 MENVARG=""
 [ -n "$DISTRNAME" ] || DISTRNAME=$($DISTRVENDOR -d)
 [ -n "$DISTRVERSION" ] || DISTRVERSION=$($DISTRVENDOR -v)
-[ -n "$DISTRVERSION" ] || fatal "can't get distro version from $(DISTRVENDOR), write lav@etersoft.ru"
+[ -n "$DISTRVERSION" ] || fatal "can't get distro version from $DISTRVENDOR, write lav@etersoft.ru"
 set_target_pkg_env
 
 if [ "$PKGVENDOR" = "alt" ] && [ -n "$MENV" ] ; then
