@@ -31,7 +31,7 @@ if [ "$1" = "get" ] ; then
 	if [ "$1 $2" = "get subtask" ] ; then
 		[ -n "$3" ] || fatal "get subtask TASK PROJECTNMAE"
 		# get subtask number from TASKNUMBER for PROJECTNAME
-		SUBTASK="$(GIT_ALT=$GEARHOST girar-show $3@ | grep "/$4.git" | sed -e "s|.*#\([0-9]*\) .*|\1|g")" || fatal
+		SUBTASK="$(ssh $GEARHOST task show $3 | grep "/$4.git" | sed -e "s|^ \([0-9]*\):.*|\1|g")" || fatal
 		#"
 		echo "$SUBTASK"
 		exit
