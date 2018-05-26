@@ -204,6 +204,10 @@ for i in $LISTBUILT ; do
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
 	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $SPECNAME || fatal "Can't build"
+
+	# move results to common place
+	cp -fv $RPMTOPDIR/SRPMS/*.rpm $RPMDIR/SRPMS/ 2>/dev/null
+
 	uni_rpmrm $SPECNAME || true
 done
 
