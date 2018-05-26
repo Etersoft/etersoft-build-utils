@@ -1,3 +1,8 @@
+$ ssh gear.alt task check-git-inheritance --help
+task check-git-inheritance - manage subtask git inheritance
+
+Usage: task check-git-inheritance <task_id> <subtask_number> disable <commit_sha_id>
+
 А в паре с rpm-build-ubt можно, например,
 %if_ver_gteq %ubt_id M90C
 Obsolete: kde4
