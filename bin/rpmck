@@ -13,7 +13,7 @@
 load_mod alt hasher
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-	echo "rpmck [-b REPONAME] <packages> - check build packages"
+	echo "rpmck [-b REPONAME] <packages> - check built packages locally"
 	echo "Examples:"
 	echo "  $ rpmck -b p8 python-module-PyQt5"
 	exit 0
@@ -25,9 +25,12 @@ if [ "$1" = "-b" ] ; then
 	shift 2
 fi
 
-set_binary_repo
+# see functions/alt:set_binaryrepo() for BINARYREPONAME
+set_binaryrepo $MENV
 
 set_hasherdir
+
+info "This is an experimental code"
 
 # export OURAPTCONF with temp. file contains correct path to sources.list
 # use MENV
