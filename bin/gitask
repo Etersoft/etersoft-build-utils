@@ -15,6 +15,9 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "$HELP_GIRAR"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
+	echo
+	echo "Examples:"
+	echo "     share NNNN enable"
 	exit 0
 fi
 
