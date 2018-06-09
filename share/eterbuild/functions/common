@@ -515,6 +515,8 @@ showcmd()
 	SETCOLOR_SUCCESS
 	echo -n " \$"
 	for i in "$@" ; do
+		# hack against echo -n -n
+		[ "$i" = "-n" ] && echo -n " -n" && continue
 		# print with qoutes if args have spaces
 		echo -n " "
 		echo -n "$i" | sed -e "s|\(.* .*\)|'\1'|g"
