@@ -39,23 +39,25 @@ fi
 
 # TODO --short
 #PACKAGE=$(epmqf --quiet --short "$1")
-COMMAND="$1"
-PACKAGE=$($EPMCMD qf --quiet "$COMMAND" 2>/dev/null)
-if [ -n "$PACKAGE" ] ; then
-	PACKAGE=$(echo "$PACKAGE" | $EPMCMD print name for package)
+if [ -n "$2" ] ; then
+	PACKAGE="$1"
+	COMMAND="$2"
 else
-	PACKAGE="$COMMAND"
+	COMMAND="$1"
+	PACKAGE=$($EPMCMD qf --quiet "$COMMAND" 2>/dev/null)
+	if [ -n "$PACKAGE" ] ; then
+		PACKAGE=$(echo "$PACKAGE" | $EPMCMD print name for package)
+	else
+		PACKAGE="$COMMAND"
+	fi
 fi
-
-shift
-[ -n "$1" ] && COMMAND="$@"
 
 PACKAGES="$PACKAGE"
 OPTIONS=
 case $PACKAGE in
 	firefox*)
 		PACKAGES="$PACKAGES $PLUGINJAVA"
-		OPTIONS="$OPTIONS --no-remote"
+		#OPTIONS="$OPTIONS --no-remote"
 		;;
 #	"")
 #		echo "Can't find package for '$COMMAND'" >&2
@@ -65,5 +67,7 @@ case $PACKAGE in
 		PACKAGES="$PACKAGES dbus"
 esac
 
-showcmd $ETERBUILDBIN/loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
-share_network=1 $ETERBUILDBIN/loginhsh -Y -t -p $PACKAGE $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+HASHERNAME=$(echo "$COMMAND $PACKAGES" | md5sum)
+
+showcmd $ETERBUILDBIN/loginhsh -Y -t -p $HASHERNAME $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+share_network=1 $ETERBUILDBIN/loginhsh -Y -t -p $HASHERNAME $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
