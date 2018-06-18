@@ -17,7 +17,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	echo
 	echo "Examples:"
-	echo "     share NNNN enable"
+	echo "     share NNNN [enable]"
 	exit 0
 fi
 
@@ -84,6 +84,12 @@ if [ "$1" = "cancel" ] ; then
 	shift
 	#TASK="$(get_last)" || fatal
 	docmd ssh $GEARHOST task abort "$@"
+	exit
+fi
+
+if [ "$1" = "share" ] && [ -n "$2" ] ; then
+	#shift
+	docmd ssh $GEARHOST task share "$2" enable
 	exit
 fi
 
