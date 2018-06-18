@@ -532,7 +532,9 @@ do
 			if [ "$GSSETVERSION" = "HEAD" ] ; then
 				docmd git merge upstream/master
 			else
-				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION || fatal
+				local alternate_tag1
+				alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
+				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION || docmd git merge $alternate_tag1 || fatal
 			fi
 
 			# TODO: it is more clean detect that dir
