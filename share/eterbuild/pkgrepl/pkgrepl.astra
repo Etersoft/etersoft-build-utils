@@ -23,22 +23,22 @@ libreadline-devel|libreadline-gplv2-dev
 
 libssl10|libssl1.0.0
 
-libwxGTK3.0|libwxgtk2.8-0
-libwxGTK3.0-devel|libwxgtk2.8-dev
-libwxGTK3.1|libwxgtk2.8-0
-libwxGTK3.1-devel|libwxgtk2.8-dev
-libwxGTK|libwxgtk2.8
-libwxGTK-devel|libwxgtk2.8-dev
+libwxGTK3.0|libwxgtk3.0-0v5
+libwxGTK3.0-devel|libwxgtk3.0-dev
+libwxGTK3.1|libwxgtk3.0-0v5
+libwxGTK3.1-devel|libwxgtk3.0-dev
+libwxGTK|libwxgtk3.0
+libwxGTK-devel|libwxgtk3.0-dev
 
 libXxf86misc-devel|
-libpng15|libpng12-0
+libpng16|libpng16-16
 libpng-devel|libpng-dev
 
 libudev-devel|libudev-dev
 libudev1|libudev0
 
-libjpeg|libjpeg8
-libjpeg8|libjpeg8
+#libjpeg|libjpeg62-turbo
+#libjpeg8|libjpeg8
 #libjpeg-devel|libjpeg8-dev
 libjpeg-devel|libjpeg62-turbo-dev
 
@@ -81,5 +81,9 @@ gcc5-c++|g++-6.3 gcc-multilib
 #pkg-config|pkg-config
 #rpm-build|rpm
 
-#ia32-libs|ia32-libs ia32-libs-dev lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
+ia32-libs|ia32-libs ia32-libs-dev lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
 
+#NX
+xkbcomp|x11-xkb-utils
+xorg-font-utils|xfonts-utils
+sessreg|x11-xserver-utils

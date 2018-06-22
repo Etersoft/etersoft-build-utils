@@ -16,3 +16,4 @@ libgnutls30|libgnutls30
 libgomp6-devel|libgomp5-devel
 
 libicu60|libicu56
+libtiff5|libtiff5

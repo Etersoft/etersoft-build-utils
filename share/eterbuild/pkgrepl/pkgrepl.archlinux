@@ -71,7 +71,9 @@ rpm-build-intro|rpm-build-altlinux-compat
 libicu56|icu
 libicu60|icu
 libicu|icu
+libicu-devel|icu
 libreadline|readline
+libreadline-devel|readline
 gcc-c++|gcc
 gccmakedep|imake
 openssh-server|openssh
@@ -101,7 +103,9 @@ libjpeg|libjpeg-turbo
 libpng15|libpng
 libpng16|libpng
 libaudiofile|audiofile
+libaudiofile-devel|audiofile
 libpam|pam
+libpam-devel|pam
 makedepend|imake
 libgtk+2-devel|gtk2
 

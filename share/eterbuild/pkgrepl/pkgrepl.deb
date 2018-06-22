@@ -346,8 +346,14 @@ libXinerama|libxinerama1
 # NX
 libXcomp|libxcomp3
 
+#NX
+xkbcomp|x11-xkb-utils
+xorg-font-utils|xfonts-utils
+sessreg|x11-xserver-utils
+
 # hack due our nx package with -devel
 nx-devel|nx-devel
+nx-libs-devel|nx-libs-devel
 
 mailx|mailutils
 libssh2-devel|libssh2-1-dev
@@ -375,3 +381,6 @@ libpulseaudio|libpulse0
 xxd|vim-common
 bash4|bash
 perl-podlators|perl
+
+libpixman-devel|libpixman-1-dev
+xorg-proto-devel|x11proto-core-dev
