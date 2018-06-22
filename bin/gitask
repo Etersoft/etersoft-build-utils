@@ -11,13 +11,18 @@ set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gitask ssh gear.alt task wrapper"
-	echo "Use: gitask [GIRAR] [task|show|ls|quota]"
+	echo "Use: gitask [GIRAR] [task|log|show|ls|quota]"
 	echo "$HELP_GIRAR"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	echo
 	echo "Examples:"
-	echo "     share NNNN [enable]"
+	echo "     new    [p8]           - create new task [on p8]"
+	echo "     add del package       - add package remove command"
+	echo "     share  NNNN [enable]  - share task NNNN"
+	echo "     log    NNNN           - show build log for task NNNN"
+	echo "     show   NNNN           - show subtask list for task NNNN"
+	echo "     cancel NNNN           - cancel task NNNN"
 	exit 0
 fi
 
@@ -54,7 +59,7 @@ if [ "$1" = "find" ] ; then
 	exit
 fi
 
-if [ "$1" = "show" ] ; then
+if [ "$1" = "log" ] ; then
 	shift
 	# TODO: show last task without args
 	showcmd "$GEARHOST>" girar-show "$@"
