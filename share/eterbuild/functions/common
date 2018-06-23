@@ -360,6 +360,7 @@ set_target_pkg_env
 if [ "$PKGVENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	#[ -n "$APTCONF" ] && fatal "Internal error: APTCONF already defined as $APTCONF for $MENV"
 	APTCONF=${APTCONFBASE/.SS}.$MENV
+	[ "$MENV" = "SS" ] && [ ! -r "$APTCONF" ] && APTCONF=${APTCONFBASE/.SS}
 	
 	[ -n "$VERBOSE" ] && echog "Target ALT Linux system: `get_altdistr_version $MENV`, use \$APTCONF"
 	MENVARG="-$MENV"
