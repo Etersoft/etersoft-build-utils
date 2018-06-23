@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2017 (c) Etersoft https://etersoft.ru
+# 2017, 2018 (c) Etersoft https://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -17,18 +17,25 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	echo
 	echo "Examples:"
-	echo "     new    [p8]           - create new task [on p8]"
-	echo "     add del package       - add package remove command"
-	echo "     share  NNNN [enable]  - share task NNNN"
-	echo "     log    NNNN           - show build log for task NNNN"
-	echo "     show   NNNN           - show subtask list for task NNNN"
-	echo "     cancel NNNN           - cancel task NNNN"
+	echo "     new    [p8]                 - create new task [on p8]"
+	echo "     run    [NNNN] [--test-only] - run task NNNN"
+	echo "     add del package             - add package remove command"
+	echo "     share  NNNN [enable]        - share task NNNN"
+	echo "     find   PACKAGE              - do find-package of PACKAGE"
+	echo "     log    NNNN                 - show build log for task NNNN"
+	echo "     show   NNNN                 - show subtask list for task NNNN"
+	echo "     cancel NNNN                 - cancel task NNNN"
 	exit 0
 fi
 
 get_last()
 {
 	ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g" || fatal
+}
+
+get_test_status()
+{
+	ssh $GEARHOST task ls | grep -v "^$1 " || fatal
 }
 
 # TODO: acl
@@ -61,9 +68,10 @@ fi
 
 if [ "$1" = "log" ] ; then
 	shift
-	# TODO: show last task without args
-	showcmd "$GEARHOST>" girar-show "$@"
-	GIT_ALT=$GEARHOST girar-show "$@"
+	TASK="$1"
+	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
+	showcmd "$GEARHOST>" girar-show "$TASK"
+	GIT_ALT=$GEARHOST girar-show "$TASK"
 	exit
 fi
 
@@ -82,6 +90,16 @@ fi
 
 if [ "$1" = "quota" ] ; then
 	docmd ssh $GEARHOST quota
+	exit
+fi
+
+if [ "$1" = "run" ] ; then
+	shift
+	PARAM=''
+	TASK="$1"
+	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
+	get_test_status "$TASK" && echo "$@" | grep -qv -- "--test-only" && PARAM='--test-only'
+	docmd ssh $GEARHOST task run $PARAM "$@"
 	exit
 fi
 
