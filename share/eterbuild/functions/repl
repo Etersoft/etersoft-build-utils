@@ -112,7 +112,7 @@ tolocal_anyrepl()
 		s/ *\$//g 
 		s/ *|/|/g 
 		s/| */|/g"
-
+	USEDPKGREPL='scripted rules'
 	for i in $@ ; do
 		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "^ *$GREP *|" | sed -e "$WARULES" | head -n1`
 		# For broken rule
@@ -120,7 +120,7 @@ tolocal_anyrepl()
 		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
 		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
 		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
-		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$GREP" "$TARGETPKGNAME") && return 0
+		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$GREP" "$TARGETPKGNAME") && USEDPKGREPL="$(basename $i)" && return 0
 	done
 
 	local NEWRESULT=$(hack_distr_requires "$GREP")
@@ -230,10 +230,11 @@ convert_pkgreqs_to_target()
 	assert_var DISTRVENDOR BUILDARCH PKGFORMAT
 	local repl_list
 	repl_list=$(print_pkgrepl_list)
+	LISTUSEDPKGREPL=''
 
 	local j
 	for j in "$@" ; do
-		tolocal_anyrepl $j $repl_list && estrlist list "$TARGETPKGNAME" || echo $j
+		tolocal_anyrepl $j $repl_list && estrlist list "$TARGETPKGNAME" && LISTUSEDPKGREPL="$LISTUSEDPKGREPL\nUSEDPKGREPL" || echo $j
 	done | sort -u | sed -e "s|\\\\+|\+|g"
 }
 

@@ -101,12 +101,12 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 
 	# FIXME: use separate macro list
 	# FIXME: check for all rpm-build-compat macro list
-	if grep -q "\(_cupslibdir\|_sudoers\)" $SPECNAME ; then
+	if grep -q configure32 $SPECNAME ; then
+		BUILDREQ="BuildRequires: rpm-build-compat >= 1.9.0"
+	elif grep -q "\(_cupslibdir\|_sudoers\)" $SPECNAME ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.25"
 	elif grep -q _sharedstatedir $SPECNAME ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.24"
-	elif grep -q configure32 $SPECNAME ; then
-		BUILDREQ="BuildRequires: rpm-build-compat >= 1.9.0"
 	fi
 
 	# drop unsuported technologies
@@ -234,33 +234,36 @@ LISTGROUP=`eval_spec $SPECNAME | grep "^Group" | sed -e "s|^.*:||g"  | xargs -n1
 ALLREPLRULES=""
 
 if [ -n "$VERBOSE" ] ; then
+	echo
 	echo "Checking req names for"
 	echo "$LISTDEP"
-	echo -n "Use replacement file: "
-	print_pkgrepl_list
 	echo
+	echo "Used replacement files: "
+	print_pkgrepl_list
 fi
 
+[ -n "$VERBOSE" ] && echo && echo "Used rules:"
 pkgrepl_list=$(print_pkgrepl_list)
 for i in $LISTDEP ; do
 	tolocal_anyrepl $i $pkgrepl_list || continue
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	NRL="s!(.*Req.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
-	[ -n "$VERBOSE" ] && echo "Use req rule $NRL"
+	[ -n "$VERBOSE" ] && echo "    $NRL from $USEDPKGREPL"
 	ALLREPLRULES="$ALLREPLRULES $NRL;"
 done
 
 # Build replacement rules for spec
-[ -n "$VERBOSE" ] && echo "Checking group names for $LISTGROUP"
+[ -n "$VERBOSE" ] && echo && echo -e "Checking group names for\n$LISTGROUP"
 ALLGRPREPLRULES=""
 grprepl_list=$(print_grprepl_list)
 for i in $LISTGROUP ; do
 	tolocal_anyrepl $i $grprepl_list || continue
 	#NRL="s!\(Group.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	NRL="s!(Group.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
-	[ -n "$VERBOSE" ] && echo "Use group name rule $NRL"
+	[ -n "$VERBOSE" ] && echo && echo "Use group name rule $NRL from $USEDPKGREPL"
 	ALLGRPREPLRULES="$ALLGRPREPLRULES $NRL;"
 done
+echo
 #echo GRP: $LISTGROUP, ALLGRPREPLRULES: $ALLGRPREPLRULES
 
 # add %defattr to files sections
@@ -305,8 +308,7 @@ repl_groups()
 }
 
 if [ -n "$VERBOSE" ] ; then
-	echo "Requires rules: $ALLREPLRULES"
-	echo "Group rules: $ALLGRPREPLRULES"
+	echo "Replacing..."
 fi
 
 # apply all rules, awk excludes, remove empty tag lines
