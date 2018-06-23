@@ -283,15 +283,20 @@ update_post_git_submodules()
 	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*-postsubmodules" || fatal "missed tar:.gear/$BASENAME-postmodules in $(get_root_git_dir)/.gear/rules"
 	[ -s $(get_root_git_dir)/.gitmodules ] || fatal "there is no .gitmodules file in repo root"
 
+	cd $(get_root_git_dir) || fatal
 	docmd git submodule init
 	docmd git submodule sync
 	docmd git submodule update || fatal
 
 	rm -rfv $PSM/*
 	# echo * do not catch .names really
-	cp -a $(echo * | grep -v -E "(.gear|.git)") $PSM/ || fatal #"
-	find $PSM -name ".git" -type f -delete -print
-	find $PSM -name ".gitsubmodules" -type f -delete -print
+	#cp -a $(echo * | grep -v -E "(.gear|.git)") $PSM/ || fatal #"
+	#find $PSM -name ".git" -type f -delete -print
+	#find $PSM -name ".gitmodules" -type f -delete -print
+	local i
+	for i in $(grep "path = " .gitmodules | sed -e "s|.*path = \(.*\)|\1|") ; do #"
+		cp -a --parents $i $PSM/ || fatal
+	done
 	docmd git add -f $PSM
 	# TODO: put short commit id in a description
 	# git rev-parse --short HEAD
@@ -430,7 +435,7 @@ do
 	# Set version if needed
 	if [ -n "$GSSETVERSION" ] && [ "$GSSETVERSION" != "HEAD" ] ; then
 		CURVER=$(get_version $spec)
-		set_version $spec $GSSETVERSION
+		set_version $spec ${GSSETVERSION/-*/}
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
 			set_release $spec $GSSETRELEASE
 			if [ -n "$GSSETRELEASE" ] ; then
@@ -532,7 +537,7 @@ do
 			if [ "$GSSETVERSION" = "HEAD" ] ; then
 				docmd git merge upstream/master
 			else
-				local alternate_tag1
+				#local alternate_tag1
 				alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
 				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION || docmd git merge $alternate_tag1 || fatal
 			fi
