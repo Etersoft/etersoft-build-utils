@@ -70,7 +70,7 @@ install_packages()
 
 	docmd $SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
-	REQLIST="$(get_rpmpkg_requires $LIST)"
+	REQLIST="$($ETERBUILDBIN/rpmreqs $LIST)"
 	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }

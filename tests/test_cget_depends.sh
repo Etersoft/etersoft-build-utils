@@ -8,7 +8,7 @@ load_mod alt
 #testfile=$(echo /var/ftp/pub/Etersoft/RX@Etersoft/testing/CentOS/5/nxclient-*.i586.rpm)
 testfile=$(echo /var/ftp/pub/Etersoft/WINE@Etersoft/2.0-testing/WINE/ALTLinux/Sisyphus/wine-etersoft-*.i586.rpm)
 #testfile=$(echo /var/ftp/pub/Etersoft/RX@Etersoft/testing/ALTLinux/Sisyphus/rx-etersoft-*.i586.rpm)
-REQLIST="$(get_rpmpkg_requires -p "$testfile")"
+REQLIST="$($ETERBUILDBIN/rpmreqs -p "$testfile")"
 echo $REQLIST
 echo "---"
 trans_rpmdeps_to_pkgname $REQLIST
