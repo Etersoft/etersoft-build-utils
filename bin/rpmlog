@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2010, 2012, 2013, 2014 (c) Etersoft http://etersoft.ru
+# 2010, 2012, 2013, 2014, 2018 (c) Etersoft http://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 
 # Script for update changelog or increment release
@@ -11,18 +11,20 @@ load_mod spec rpm git etersoft spec
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmlog - update version/release and changelog"
-	echog "Usage: rpmlog [-q] [-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC] [fromTAG] [toTAG]"
+	echog "Usage: rpmlog [-q] [-a|-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC] [fromTAG] [toTAG]"
 	echo
 	echog "Options:"
+	echog "   -a increment version if code is changed or increment release if spec changed only"
 	echog "   -v  increment version"
 	echog "   -r  increment release"
 	echog "   -s  increment subrelease"
 	echog "   -l  add changelog from git log (since last release tag or TAG)"
-	echog "   -e  increment and add (empty) changelog entry"
+	echog "   -e  add (empty) changelog entry"
 	echo
 	echog "Ext. options:"
 	echog "   -t  test run (without change files and repo)"
 	echog "   -q  quiet mode (do not ask anything)"
+	echog "   -n VERSION  set version and reset release"
 	echo
 	echog "Example:"
 	echog "   $ rpmlog -v -l             - typical build new version"
@@ -43,8 +45,15 @@ if [ "$1" = "-q" ] ; then
 fi
 
 INCREMENTMODE=""
-if [ "$1" = "-r" ] || [ "$1" = "-s" ] || [ "$1" = "-v" ]; then
+if [ "$1" = "-r" ] || [ "$1" = "-s" ] || [ "$1" = "-v" ] || [ "$1" = "-a" ] ; then
 	INCREMENTMODE=$1
+	shift
+fi
+
+if [ "$1" = "-n" ] ; then
+	INCREMENTMODE=$1
+	shift
+	FORCEVERSION=$1
 	shift
 fi
 
@@ -121,17 +130,31 @@ if [ -n "$TESTRUN" ] ; then
 	INCREMENTMODE=""
 fi
 
+if [ "$INCREMENTMODE" = "-a" ] ; then
+    # print all files from commit exclude spec/rules
+    RELLINE=$(git log --name-status --pretty=oneline $FROMTAG..$TOTAG | grep "^[MAD]" | grep -v ".gear/rules" | grep -v "$(basename "$SPECNAME")")
+    if [ -z "$RELLINE" ] ; then
+        INCREMENTMODE="-r"
+    else
+        INCREMENTMODE="-v"
+    fi
+fi
+
 # increment release
 case "$INCREMENTMODE" in
         "-r")
                 inc_release $SPECNAME
                 ;;
+        "-n")
+                set_version $SPECNAME $FORCEVERSION
+                reset_release $SPECNAME
+                ;;
         "-s")
                 inc_subrelease $SPECNAME
                 ;;
         "-v")
-                set_release $SPECNAME
                 inc_version $SPECNAME
+                reset_release $SPECNAME
                 ;;
         *)
                 ;;
