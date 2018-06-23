@@ -18,7 +18,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo
 	echo "Examples:"
 	echo "     new    [p8]                 - create new task [on p8]"
-	echo "     run    [NNNN] [--test-only] - run task NNNN"
+	echo "     run    [NNNN] [--test-only] [--force] - run task NNNN (test only / force run)"
 	echo "     add del package             - add package remove command"
 	echo "     share  NNNN [enable]        - share task NNNN"
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
@@ -95,10 +95,16 @@ fi
 
 if [ "$1" = "run" ] ; then
 	shift
+	FORCERUN=''
+	if [ "$1" = "--force" ] ; then
+		shift
+		FORCERUN=1
+	fi
 	PARAM=''
 	TASK="$1"
 	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
 	get_test_status "$TASK" && echo "$@" | grep -qv -- "--test-only" && PARAM='--test-only'
+	[ -n "$FORCERUN" ] && PARAM=''
 	docmd ssh $GEARHOST task run $PARAM "$@"
 	exit
 fi
