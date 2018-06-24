@@ -30,12 +30,12 @@ fi
 
 get_last()
 {
-	ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g" || fatal
+	ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g"
 }
 
 get_test_status()
 {
-	ssh $GEARHOST task ls | grep -v "^$1 " || fatal
+	ssh $GEARHOST task ls | grep "^#$1 " | grep "\[test-only\]"
 }
 
 # TODO: acl
@@ -102,10 +102,15 @@ if [ "$1" = "run" ] ; then
 	fi
 	PARAM=''
 	TASK="$1"
-	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
+	[ -n "$TASK" ] || TASK="$(get_last)" || fatal "Can't get last task"
+	shift
+	if [ "$1" = "--force" ] ; then
+		shift
+		FORCERUN=1
+	fi
 	get_test_status "$TASK" && echo "$@" | grep -qv -- "--test-only" && PARAM='--test-only'
 	[ -n "$FORCERUN" ] && PARAM=''
-	docmd ssh $GEARHOST task run $PARAM "$@"
+	docmd ssh $GEARHOST task run $PARAM "$TASK"
 	exit
 fi
 
