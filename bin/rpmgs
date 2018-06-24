@@ -537,9 +537,14 @@ do
 			if [ "$GSSETVERSION" = "HEAD" ] ; then
 				docmd git merge upstream/master
 			else
-				#local alternate_tag1
+				# some heuristics
+				rc=1
 				alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
-				docmd git merge v$GSSETVERSION || docmd git merge $GSSETVERSION || docmd git merge $alternate_tag1 || fatal
+				alternate_tag2="$(echo "REL_$GSSETVERSION" | sed -e "s|\.|_|g")"
+				for i in  v$GSSETVERSION $alternate_tag1 $alternate_tag2 ; do
+					git rev-parse $i >/dev/null 2>/dev/null && docmd git merge $i && rc=0 && break
+				done
+				[ "$rc" = "0" ] || fatal "Can't find tag for $GSSETVERSION version"
 			fi
 
 			# TODO: it is more clean detect that dir
