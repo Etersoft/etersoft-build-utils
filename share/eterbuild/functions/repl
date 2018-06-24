@@ -202,6 +202,8 @@ print_replbased_list()
 		else
 			internal_repl_list $REPLBASE .x86_64 | uniq
 		fi
+	elif [ "$BUILDARCH" = "aarch64" ] ; then
+		internal_repl_list $REPLBASE .aarch64 | uniq
 	fi
 
         # general rules listing

@@ -19,7 +19,7 @@ OURTMPDIR=$TMPDIR
 
 # current arch
 SYSARCH=$(uname -m)
-[ "$SYSARCH" = "x86_64" ] || SYSARCH=i586
+uname -m | grep -q "i.86" && SYSARCH=i586
 
 # set default target arch
 [ -n "$BUILDARCH" ] || BUILDARCH=$SYSARCH
