@@ -391,7 +391,7 @@ chmod 644 -- $LISTBUILT || fatal "can't chmod"
 
 # TODO: check for ALT specific
 # skip some checking for src.rpm if it is local upload
-CHECK_OPTIONS=""
+CHECK_OPTIONS="--no-check-gpg"
 [ -n "${UPLOADNOW}" ] || CHECK_OPTIONS="--no-check=$HASHER_NOCHECK"
 
 if [ -z "$NOCHECK" ] ; then
