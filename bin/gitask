@@ -95,22 +95,32 @@ fi
 
 if [ "$1" = "run" ] ; then
 	shift
+
 	FORCERUN=''
-	if [ "$1" = "--force" ] ; then
+	PARAMTEST=''
+	TASK=''
+
+	while [ -n "$1" ] ; do
+		if echo "$1" | grep -qv "^--" ; then
+			TASK="$1"
+		elif [ "$1" = "--force" ] ; then
+			FORCERUN=1
+		elif [ "$1" = "--test" ] || [ "$1" = "--test-only" ] ; then
+			PARAMTEST='--test-only'
+		else
+			info "Unknown param $1"
+		fi
 		shift
-		FORCERUN=1
-	fi
-	PARAM=''
-	TASK="$1"
+	done
+
 	[ -n "$TASK" ] || TASK="$(get_last)" || fatal "Can't get last task"
-	shift
-	if [ "$1" = "--force" ] ; then
-		shift
-		FORCERUN=1
-	fi
-	get_test_status "$TASK" && echo "$@" | grep -qv -- "--test-only" && PARAM='--test-only'
-	[ -n "$FORCERUN" ] && PARAM=''
-	docmd ssh $GEARHOST task run $PARAM "$TASK"
+
+	# keep test status
+	get_test_status "$TASK" && PARAMTEST='--test-only'
+	# force reset test status
+	[ -n "$FORCERUN" ] && PARAMTEST=''
+
+	docmd ssh $GEARHOST task run $PARAMTEST "$TASK"
 	exit
 fi
 
