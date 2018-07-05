@@ -317,6 +317,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 			if [ -n "$SUBTASK" ] && ! echo "$TASKNUMBER" | grep -q " " ; then
 				info "$PROJECTNAME already present in the task $TASKNUMBER as subtask $SUBTASK, replacing"
 				docmd ssh $GEARHOST task delsub $TASKNUMBER $SUBTASK
+				# add task subtask - before subtask! (use next number?)
 				TASKNUMBER="$TASKNUMBER $SUBTASK"
 			fi
 			docmd ssh $GEARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
