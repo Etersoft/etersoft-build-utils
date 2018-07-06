@@ -386,9 +386,10 @@ if [ ! "$RET" = "0" ] ; then
 fi
 
 
+# Note: follow umask
 ############################################
-echog "Changing permissions..."
-chmod 644 -- $LISTBUILT || fatal "can't chmod"
+#echog "Changing permissions..."
+#chmod 644 -- $LISTBUILT || fatal "can't chmod"
 
 # TODO: check for ALT specific
 # skip some checking for src.rpm if it is local upload
