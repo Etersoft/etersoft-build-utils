@@ -207,19 +207,13 @@ gear_update_from_tarball()
 	fatal "can't import tarball '$TARBALL'"
 }
 
-# if we have rule for gear-sources
-is_gear_sources()
+# if we have named rule
+is_predownloaded_rule()
 {
-	cat $(get_root_git_dir)/.gear/rules | grep -q "^tar:.*\.gear/gear-sources"
+	cat $(get_root_git_dir)/.gear/rules | grep -q "^tar:.*\.gear/$1"
 	#fatal "missed tar:.gear/gear-sources in $(get_root_git_dir)/.gear/rules"
 }
 
-# if we have rule for gear-production
-is_gear_production()
-{
-	cat $(get_root_git_dir)/.gear/rules | grep -q "^tar:.*\.gear/gear-production"
-	#fatal "missed tar:.gear/gear-sources in $(get_root_git_dir)/.gear/rules"
-}
 
 # Args: tarball dir
 # Uses: RPMSOURCEDIR FORCEDOWNLOAD
@@ -281,6 +275,7 @@ commit_tarball()
 # uses: BASENAME VERSION
 update_post_git_submodules()
 {
+	# TODO: check for rules
 	local PSM=$(get_root_git_dir)/.gear/$BASENAME-postsubmodules
 	[ -d $PSM ] || return
 
@@ -309,13 +304,15 @@ update_post_git_submodules()
 	docmd git commit $PSM -m "update source prepared with submodules for version $VERSION"
 }
 
-update_gear_production()
+# param: development, production
+update_predownloaded()
 {
-	is_gear_production || return
-	PSM=$(get_root_git_dir)/.gear/gear-production
+	local MODE="$1"
+	local SDNAME=predownloaded-$MODE
+	is_predownloaded_rule $SDNAME || return
+	PSM=$(get_root_git_dir)/.gear/$SDNAME
 
 	local RGD=$(get_root_git_dir)
-	info "Detected npm install hook, run npm install --production ..."
 
 	# hack for subdir??
 	CURNAME=$BASENAME
@@ -332,81 +329,45 @@ update_gear_production()
 
 	cd $PSM || fatal
 
+	#### npm only part
+	info "Detected npm install hook, run npm install ..."
+
+	[ -s "./package.json" ] || fatal "$RGD/package.json is missed"
+
 	# CHECKME: drop postinstall due run dev scripts during install --production
 	# replace with fake commands?
-	if [ -s $RGD/.gear/npm-preinstall-hook ] ; then
-		sh $RGD/.gear/npm-preinstall-hook
+	if [ -s $RGD/.gear/predownloaded-preinstall-hook ] ; then
+		sh $RGD/.gear/predownloaded-preinstall-hook $MODE
 	fi
 
+	local COMMITMSG=''
 	#subst "s|.*postinstall.*||g" package.json
-	a= npm install --production || fatal
+	if [ "$MODE" = "production" ] ; then
+		a= npm install --production || fatal
+		COMMITMSG="update node_modules with npm install --production for $VERSION (see $SDNAME in .gear/rules)"
+	else
+		a= npm install || fatal
+		COMMITMSG="update node_modules with npm install for $VERSION (see $SDNAME in .gear/rules)"
+	fi
 
 	# drop all exclude node_modules
 	# TODO: correct .* removing
 	rm -rf $(ls -1 | grep -v node_modules) .*
+
+	if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+		sh $RGD/.gear/predownloaded-postinstall-hook $MODE
+	fi
+
 	#epm assure jq || fatal
 	#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
+
 	cd - >/dev/null
 
 	docmd git add -f $PSM
-	docmd git commit $PSM -m "update node_modules with npm install --production for $VERSION"
+	docmd git commit $PSM -m "$COMMITMSG"
 
 }
 
-# note: for tarball based only now
-# uses: BASENAME VERSION
-update_gear_sources()
-{
-	is_gear_sources || return
-	PSM=$(get_root_git_dir)/.gear/gear-sources
-
-	# npm install section
-	local RGD=$(get_root_git_dir)
-
-	#if [ -d $PSM ] ; then
-
-	# only npm supported now
-	info "Detected npm install hook, run npm install ..."
-
-#	if [ -d $RGD/package ] && [ -s $RGD/package/package.json ] ; then
-#		info "Detected npm install hook"
-
-	# hack: try detect dir for unpacking
-	#test -d "$CURNAME" || CURNAME=$(get_tarballname "$spec")
-	#test -d "$CURNAME" || CURNAME=$BASENAME
-	# see in commit_tarball also
-		CURNAME=$BASENAME
-
-		# TODO: add support for git
-		rm -rf $PSM
-		if [ -n "$GETSOURCEGIT" ] ; then
-			# cp -a exclude .dir
-			mkdir -p $PSM || fatal
-			cp -a $RGD/* $PSM || fatal
-		else
-			cp -a $RGD/$CURNAME $PSM || fatal
-		fi
-
-		cd $PSM || fatal
-		# CHECKME: drop postinstall due run dev scripts during install --production
-		# replace with fake commands?
-		if [ -s $RGD/.gear/npm-preinstall-hook ] ; then
-			sh $RGD/.gear/npm-preinstall-hook
-		fi
-		#subst "s|.*postinstall.*||g" package.json
-		#a= npm install --production || fatal
-		a= npm install || fatal
-		# drop all exclude node_modules
-		# TODO: correct .* removing
-		rm -rf $(ls -1 | grep -v node_modules) .*
-		#epm assure jq || fatal
-		#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
-		cd - >/dev/null
-
-		docmd git add -f $PSM
-		docmd git commit $PSM -m "update node_modules with npm install for $VERSION"
-	#+fi
-}
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
@@ -571,8 +532,8 @@ do
 
 			update_post_git_submodules
 			# TODO: make plugins
-			update_gear_sources
-			update_gear_production
+			update_predownloaded development
+			update_predownloaded production
 
 			#docmd gammit
 			#docmd git commit -m "merge $FTB with rpmgs script"
@@ -580,8 +541,8 @@ do
 		elif is_gear ; then
 			commit_tarball "$FTB"
 			# TODO: make plugins
-			update_gear_sources
-			update_gear_production
+			update_predownloaded development
+			update_predownloaded production
 			DOWNLOADSOME=1
 		fi
 
