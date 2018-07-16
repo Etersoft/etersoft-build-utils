@@ -130,7 +130,8 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 	fi
 else
 	# All non ALT Linux distros
-	docmd $ETERBUILDBIN/rpmcs --skip-reqs $SPECNAME
+	# disabled by Lav https://bugs.etersoft.ru/show_bug.cgi?id=13034
+	# docmd $ETERBUILDBIN/rpmcs --skip-reqs $SPECNAME
 
 	BUILDREQ="BuildRequires:"
 	# Korinf hack
