@@ -197,3 +197,9 @@ add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, do n
 
 #git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
 gammit $QUIET --spec=$SPECNAME $SPECNAME
+
+RGD=$(get_root_git_dir)
+hook=$RGD/.gear/new-build-postcommit-hook
+if [ -s $hook ] ; then
+	( cd $RGD && sh $hook $NEWREV ) || fatal "Failed with hook $hook"
+fi
