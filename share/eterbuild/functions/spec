@@ -359,3 +359,28 @@ remove_bashism()
 	rm -f $SPECNAME.main $SPECNAME.changelog
 }
 
+get_last_changelog()
+{
+	local SPEC="$1"
+	
+	local beg=
+	local wait_end=
+	while read line ; do
+	      
+		if echo $line | grep -q '%changelog'; then
+		    beg=1
+		    continue
+		fi
+		
+		[ -z "$beg" ] && continue
+
+		# check end of changelog (skip last changelog line)
+		if echo "$line" | grep '*' | grep -E '[<>]+' | grep -q -E "[0-9.]+.[0-9]+"; then
+		    [ -n "$wait_end" ] && return
+		    wait_end=1
+		fi
+		
+		echo "$line"
+		
+	done < $SPEC
+}
