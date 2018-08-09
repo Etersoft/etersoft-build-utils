@@ -26,6 +26,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "   -q  quiet mode (do not ask anything)"
 	echog "   -n VERSION  set version and reset release"
 	echo
+	echog "   --last-version  show current version of build"
+	echo
 	echog "Example:"
 	echog "   $ rpmlog -v -l             - typical build new version"
 	echog "   $ rpmlog -r -l HEAD~2      - build new version with last two commit message as changelog"
@@ -76,9 +78,15 @@ if [ "$1" = "-t" ] ; then
 	shift
 fi
 
+LASTVERCMD=
+if [ "$1" = "--last-version" ] ; then
+    LASTVERCMD=1
+    shift
+fi
+
 if [ -n "${1/*.spec/}" ] || [ -z "$1" ] ; then
 	SPECNAME=$(get_gear_spec)
-	echo "Using autodetected spec $SPECNAME..."
+	[ -z "$QUIET" ] && echo "Using autodetected spec $SPECNAME..."
 else
 	SPECNAME=$1
 	shift
@@ -100,7 +108,7 @@ if [ ! -r "$SPECNAME" ] ; then
 	fatal "Spec $SPECNAME does not found"
 fi
 
-[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -t param for test or with -h for help"
+[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN$LASTVERCMD" ] || fatal "Run with -t param for test or with -h for help"
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
@@ -139,6 +147,12 @@ if [ "$INCREMENTMODE" = "-a" ] ; then
         INCREMENTMODE="-v"
     fi
 fi
+
+if [ -n "$LASTVERCMD" ] ; then
+    echo $(get_version $SPECNAME)-$(get_release $SPECNAME)
+    exit 0
+fi
+
 
 # increment release
 case "$INCREMENTMODE" in
