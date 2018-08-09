@@ -350,13 +350,16 @@ update_predownloaded()
 		COMMITMSG="update node_modules with npm install for $VERSION (see $SDNAME in .gear/rules)"
 	fi
 
-	# drop all exclude node_modules
-	# TODO: correct .* removing
-	rm -rf $(ls -1 | grep -v node_modules) .*
-
 	if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
 		sh $RGD/.gear/predownloaded-postinstall-hook $MODE
 	fi
+
+	a= npm prune
+	a= npm dedup
+
+	# drop all exclude node_modules
+	# TODO: correct .* removing
+	rm -rf $(ls -1 | grep -v node_modules) .*
 
 	#epm assure jq || fatal
 	#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
