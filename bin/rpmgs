@@ -515,7 +515,7 @@ do
 				alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
 				alternate_tag2="$(echo "REL_$GSSETVERSION" | sed -e "s|\.|_|g")"
 				alternate_tag3="$(echo "version_$GSSETVERSION")"
-				for i in  v$GSSETVERSION $alternate_tag1 $alternate_tag2 $alternate_tag3 ; do
+				for i in  v$GSSETVERSION $alternate_tag1 $GSSETVERSION $alternate_tag2 $alternate_tag3 ; do
 					git rev-parse $i >/dev/null 2>/dev/null && docmd git merge $i && rc=0 && break
 				done
 				[ "$rc" = "0" ] || fatal "Can't find tag for $GSSETVERSION version"
