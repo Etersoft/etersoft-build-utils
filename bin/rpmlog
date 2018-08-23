@@ -115,7 +115,17 @@ if [ ! -r "$SPECNAME" ] ; then
 	fatal "Spec $SPECNAME does not found"
 fi
 
-[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN$LASTVERCMD$LASTCHANGELOGCMD" ] || fatal "Run with -t param for test or with -h for help"
+if [ -n "$LASTVERCMD" ] ; then
+    echo $(get_version $SPECNAME)-$(get_release $SPECNAME)
+    exit $?
+fi
+
+if [ -n "$LASTCHANGELOGCMD" ] ; then
+    get_last_changelog $SPECNAME
+    exit $?
+fi
+
+[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -t param for test or with -h for help"
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
@@ -153,16 +163,6 @@ if [ "$INCREMENTMODE" = "-a" ] ; then
     else
         INCREMENTMODE="-v"
     fi
-fi
-
-if [ -n "$LASTVERCMD" ] ; then
-    echo $(get_version $SPECNAME)-$(get_release $SPECNAME)
-    exit $?
-fi
-
-if [ -n "$LASTCHANGELOGCMD" ] ; then
-    get_last_changelog $SPECNAME
-    exit $?
 fi
 
 # increment release
