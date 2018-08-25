@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2005-2006, 2012, 2016 (c) Etersoft www.etersoft.ru
+# 2005-2006, 2012, 2016, 2018 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -41,11 +41,12 @@ phelp()
 	echo
 	echog "Extra options:"
 	echog "   -d           print hasher dir only"
+	echog "   -s           do not install stuffs (extra packages)"
 	echog "   -M??         binary repository name (obsoleted)"
 	echog "   -x           allow run X program (obsoleted)"
 }
 
-while getopts :chitodvqr:b:p:xXY opt; do
+while getopts :chitodvqr:b:p:sxXY opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
@@ -56,6 +57,7 @@ while getopts :chitodvqr:b:p:xXY opt; do
 	b) BINARYREPONAME="$OPTARG" ;;
 	r) RUNCOMMAND="$OPTARG" ;;
 	p) HASHERPOSTFIX="$OPTARG" ;;
+	s) SKIPSTUFFS=s ;;
 	X) ALLOWX=-X ;;
 	Y) ALLOWX=-Y ;;
 	x) ALLOWX=-Y ;;
@@ -137,17 +139,19 @@ fi
 
 echog "Prepare hasher in $HASHERDIR ..."
 
-if [ -n "$ALLOWX" ] ; then
-	UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
-fi
+if [ -z "$SKIPSTUFFS" ] ; then
+	if [ -n "$ALLOWX" ] ; then
+		UTILPKG="$UTILPKG xauth fonts-ttf-liberation"
+	fi
 
-UTILPKG="$UTILPKG mc eepm"
-UTILPKG="$UTILPKG etersoft-build-utils"
+	UTILPKG="$UTILPKG mc eepm"
+	UTILPKG="$UTILPKG etersoft-build-utils"
 
-# GNOME program needs dbus-tools-gui
-if $EPMCMD requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
-	echo "dbus using detected, add dbus-tools-gui"
-	UTILPKG="$UTILPKG dbus-tools-gui"
+	# GNOME program needs dbus-tools-gui
+	if $EPMCMD requires $LISTNAMES 2>/dev/null | grep -q dbus ; then
+		echo "dbus using detected, add dbus-tools-gui"
+		UTILPKG="$UTILPKG dbus-tools-gui"
+	fi
 fi
 
 SHELLHASHERARG="$SHELLHASHERARG $ALLOWX"
