@@ -7,6 +7,8 @@ libtiff5|libtiff3
 libudev-devel|libudev-devel
 libudev1|libudev
 
+libwxGTK3.0|wxGTK
+libwxGTK3.0-devel|wxGTK-devel
 libwxGTK3.1|wxGTK
 libwxGTK3.1-devel|wxGTK-devel
 

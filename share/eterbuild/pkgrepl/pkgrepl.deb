@@ -135,6 +135,8 @@ ImageMagick-tools|imagemagick
 libopensc-devel|opensc
 libopensc|opensc
 
+libwxGTK3.0|libwxgtk2.8-0
+libwxGTK3.0-devel|libwxgtk2.8-dev
 libwxGTK3.1|libwxgtk2.8-0
 libwxGTK3.1-devel|libwxgtk2.8-dev
 libtinfo-devel|libncurses5-dev

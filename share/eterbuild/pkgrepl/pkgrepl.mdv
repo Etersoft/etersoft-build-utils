@@ -103,6 +103,8 @@ libICE-devel|libice6-devel
 libICE|libice6
 libarts-devel|libarts1-devel
 libopensc-devel|libopensc-devel
+libwxGTK3.0-devel|libwxgtk2.8-devel
+libwxGTK3.0|libwxgtk2.8
 libwxGTK3.1-devel|libwxgtk2.8-devel
 libwxGTK3.1|libwxgtk2.8
 netcat|netcat

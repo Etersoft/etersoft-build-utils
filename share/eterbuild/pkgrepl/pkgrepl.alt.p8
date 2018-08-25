@@ -1,6 +1,8 @@
 cifs-utils|cifs-utils
 xorg-x11-proto-devel|
 
+libwxGTK3.0|libwxGTK3.1
+libwxGTK3.0-devel|libwxGTK3.1-devel
 libwxGTK3.1|libwxGTK3.1
 libwxGTK3.1-devel|libwxGTK3.1-devel
 

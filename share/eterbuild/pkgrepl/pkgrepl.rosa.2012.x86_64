@@ -1,5 +1,7 @@
 libreadline-devel|lib64readline-devel
 libreadline|lib64readline6
 
+libwxGTK3.0-devel|lib64wxgtku2.8-devel
+libwxGTK3.0|lib64wxgtku2.8
 libwxGTK3.1-devel|lib64wxgtku2.8-devel
 libwxGTK3.1|lib64wxgtku2.8

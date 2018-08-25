@@ -5,6 +5,8 @@ apt-repo|apt-repo
 liblcms2|liblcms2
 liblcms2-devel|liblcms2-devel
 
+libwxGTK3.0|libwxGTK
+libwxGTK3.0-devel|libwxGTK-devel
 libwxGTK3.1|libwxGTK
 libwxGTK3.1-devel|libwxGTK-devel
 

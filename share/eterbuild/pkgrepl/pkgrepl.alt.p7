@@ -2,9 +2,6 @@ libudev1|libudev1
 libpng15|libpng15
 libpng16|libpng15
 
-# semibroken 2.9
-#libwxGTK3.1|libwxGTK2.9
-#libwxGTK3.1-devel|libwxGTK2.9-devel
 libsrtp-devel|libsrtp
 libsrtp1|libsrtp
 libspeexdsp-devel|libspeex-devel

@@ -3,6 +3,8 @@
 #libalsa|alsa-lib
 python-modules-logging|
 
+libwxGTK3.0-devel|libwxgtku2.8-devel
+libwxGTK3.0|libwxgtku2.8
 libwxGTK3.1-devel|libwxgtku2.8-devel
 libwxGTK3.1|libwxgtku2.8
 libxslt|libxslt1
