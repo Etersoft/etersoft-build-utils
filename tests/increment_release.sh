@@ -73,8 +73,20 @@ check inc_release "alt4.git20130916" `inc_release ""`
 check inc_subrelease "alt3.git20130916.3" `inc_subrelease ""`
 
 TESTREL=alt2.M80P.3
-check inc_release "alt3.M80P" `inc_release ""`
-check inc_subrelease "alt2.M80P.4" `inc_subrelease ""`
+check inc_release "alt2.M80P.4" `inc_release ""`
+check inc_subrelease "alt2.M80P.3.1" `inc_subrelease ""`
 
 TESTREL=alt3.git20110916
 check inc_release "alt4.git20110916" `inc_release ""`
+
+TESTREL=alt3.S1
+check inc_release "alt4.S1" `inc_release ""`
+
+# FIXME: strange behaviour
+TESTREL=alt7.M70C.14
+check inc_release "alt7.M70C.15" `inc_release ""`
+check inc_subrelease "alt7.M70C.14.1" `inc_subrelease ""`
+
+TESTREL=alt7.M70C.14 is_backported_release $TESTREL && echo "backported: $TESTREL" || echo "FAILED: $TESTREL"
+TESTREL=alt7 is_backported_release $TESTREL && echo "not packported: $TESTREL" || echo "FAILED: $TESTREL"
+#TESTREL=alt7.SS.14 is_backported_release $TESTREL && echo "backported: $TESTREL" || echo "FAILED: $TESTREL"

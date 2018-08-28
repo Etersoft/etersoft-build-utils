@@ -104,14 +104,26 @@ reset_release()
 	set_var $1 Release $RELEASE
 }
 
+# TODO: SS/DD (did not pass test)
+is_backported_release()
+{
+	echo "$1" | grep -E -q "\.(M[0-9][0-9][CPT]|SS|DD)\."
+}
+
 # inc 2 release to 3
 # textMAJOR.middle.MINOR
 inc_release()
 {
 	local BASERELEASE=$(get_numrelease "$1")
+	if is_backported_release "$BASERELEASE" ; then
+		local MAJOR="$(echo "$BASERELEASE" | sed -e "s|.*\.M[0-9][0-9][CPT]\.||")"
+		local m="$(echo "$BASERELEASE" | sed -e "s|$MAJOR$||")"
+		set_release "$1" "$(get_txtrelease "$1")$m$(($MAJOR + 1))"
+		return
+	fi
 	local MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
 	local MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
-	local m=$(echo "$BASERELEASE" | sed -e "s|$MAJOR\.\(.*\)\.$MINOR|\1|")
+	local m=$(echo "$BASERELEASE" | sed -e "s|$MAJOR\.\(.*\)\.$MINOR|\1|") #"
 	[ "$m" = "$BASERELEASE" ] && m=''
 	local am=''
 	# keep minor part
@@ -125,11 +137,12 @@ inc_release()
 # textMAJOR.middle.MINOR
 inc_subrelease()
 {
+	#is_backported_release
 	local BASERELEASE=$(get_numrelease $1)
 	local MAJOR=`echo "$BASERELEASE" | sed -e "s|\..*||"`
 	local MINOR=`echo "$BASERELEASE" | sed -e "s|.*\.||"`
 	[ "$MINOR" = "$BASERELEASE" ] && MINOR="0"
-	local m=$(echo "$BASERELEASE" | sed -e "s|$MAJOR\.\(.*\)\.$MINOR|\1|")
+	local m=$(echo "$BASERELEASE" | sed -e "s|$MAJOR\.\(.*\)\.$MINOR|\1|") #"
 	local am=''
 	# keep minor part
 	rhas "$MINOR" "[a-zA-Z]" && am=".$MINOR" && MINOR="0"
