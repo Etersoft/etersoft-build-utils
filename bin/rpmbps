@@ -118,9 +118,15 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 			;;
 	esac
 
-	# Change release according to alt policy with extensions
-	# General rule: alwars alt(N-1).MM.(N)
-	docmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
+	if is_backported_release $RELEASE ; then
+		# TODO: do not use mask M00
+		docmd set_release $SPECNAME "$(echo "$RELEASE" | sed -e "s|M[0-9][0-9][PCT]|$MDISTR|")"
+	else
+		# Change release according to alt policy with extensions
+		# General rule: alwars alt(N-1).MM.(N)
+		docmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
+	fi
+
 	ADDDEF=""
 	CLEANTEXT=""
 	# due new libtool, affected on ALT Linux
@@ -168,7 +174,13 @@ else
 	TXTRELEASE=$(get_txtrelease $SPECNAME)
 	# HACK: Override release with KORINFTARGETRELEASE if set
 	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
-	docmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
+
+	if is_backported_release $RELEASE ; then
+		# TODO: do not use mask M00
+		docmd set_release $SPECNAME $TXTRELEASE"$(echo "$BASERELEASE" | sed -e "s|M[0-9][0-9][PCT].*||")"$PKGVENDOR
+	else
+		docmd set_release $SPECNAME $TXTRELEASE$BASERELEASE$PKGVENDOR
+	fi
 	test -z "$VERBOSE" || echo "Build package with release $TXTRELEASE"
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
