@@ -23,6 +23,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo
 	echog "Ext. options:"
 	echog "   -t  test run (without change files and repo)"
+	echog "   -o  print git log since last release tag or TAG"
 	echog "   -q  quiet mode (do not ask anything)"
 	echog "   -n VERSION  set version and reset release"
 	echo
@@ -79,6 +80,12 @@ if [ "$1" = "-t" ] ; then
 	shift
 fi
 
+GITLOG=
+if [ "$1" = "-o" ] ; then
+	GITLOG=$1
+	shift
+fi
+
 LASTVERCMD=
 if [ "$1" = "--last-version" ] ; then
     LASTVERCMD=1
@@ -125,7 +132,7 @@ if [ -n "$LASTCHANGELOGCMD" ] ; then
     exit $?
 fi
 
-[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN" ] || fatal "Run with -t param for test or with -h for help"
+[ -n "$CHANGELOGADD$CHANGELOGUPDATE$TESTRUN$GITLOG" ] || fatal "Run with -t param for test or with -h for help"
 
 if [ -z "$FROMTAG" ] ; then
 	build_rpms_name $SPECNAME
@@ -138,6 +145,11 @@ fi
 if [ -z "$CHANGELOGADD" ] && is_last_commit_tag ; then
 	echo "There is no new commits after $(get_last_tag)"
 	exit 0
+fi
+
+if [ -n "$GITLOG" ] ; then
+	git log $FROMTAG..$TOTAG --reverse --no-merges --pretty="%H %s"
+	exit
 fi
 
 if [ -n "$CHANGELOGADD" ] ; then
