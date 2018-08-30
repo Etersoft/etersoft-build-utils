@@ -144,6 +144,13 @@ get_pkgname_from_filename()
 		return
 	fi
 
+	# libgnustep-opal-r37181-alt3.svn20131001
+	local SR=$(echo $FN | sed -e "s|\(.*\)-[a-zA-Z][0-9][0-9][0-9a-zA-Z\.]*-[a-z]*[0-9][0-9\.a-zA-Z]*\.[a-z0-9_]*.*$|\1|g")
+	if [ "$SR" != "$FN" ] ; then
+		echo $SR
+		return
+	fi
+
 	echo ${FN/[-_][0-9]*/}
 }
 
