@@ -19,7 +19,7 @@ fi
 # moved from aptU
 get_rpm_package_requires()
 {
-	rpmquery --requires $@ | cut -f1 -d" " | sed -e "s|\(^lib.*\)(.*[0-9])|\1|g" | grep -v "^rpmlib" | sort -u
+	(rpmquery --requires "$@" || return ) | cut -f1 -d" " | sed -e "s|\(^lib.*\)(.*[0-9])|\1|g" | grep -v "^rpmlib" | sort -u
 }
 
 filter_pkgname()
@@ -203,6 +203,9 @@ passwdqc-control"
 	estrlist union $REQLIST | estrlist list -
 }
 
-REQLIST=$(get_rpm_package_requires $@) || fatal "can't get primary requires"
+if [ "$1" = "-p" ] ; then
+    [ -s "$2" ] || fatal "Missed file $2"
+fi
+REQLIST=$(get_rpm_package_requires "$@") || fatal "can't get primary requires"
 trans_rpmdeps_to_pkgname_lav $REQLIST
 
