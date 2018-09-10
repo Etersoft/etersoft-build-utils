@@ -1,6 +1,6 @@
 #!/bin/bash
-# (c) Etersoft 2003-2012, 2017
-# Author: Vitaly Lipatov <lav@etersoft.ru>, 2012, 2017
+# (c) Etersoft 2003-2012, 2017, 2018
+# Author: Vitaly Lipatov <lav@etersoft.ru>, 2012, 2017, 2018
 # Public domain
 #
 # BS - build source
@@ -22,6 +22,7 @@ load_mod rpm tarball alt git web buildsrpm branch
 
 SIGN=
 SIGNTAG=
+TAG=
 FORCE=
 UPLOADNOW=
 CHECKONLY=
@@ -64,17 +65,19 @@ phelp()
 	echog "   -f           force operation (overwrite tag)"
 	echog "   -s           sign package(s) (and move it to dir ETERDESTSRPM if defined)"
 	echog "   -t           set tag with sign"
+	echog "   -T           set tag"
 	echog "   -n           do not check with sisyphus_check before upload"
 	echog "   -o           create nosrc.rpm package"
 	echog "   -z           create src.rpm with compatible gzip compression (obsoleted)"
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfstcudenop:a:Ab:z opt; do
+while getopts :hfstTcudenop:a:Ab:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     t) SIGNTAG=1 ;;
+    T) TAG=1 ;;
     e) TESTONLY="--test-only" ; UPLOADNOW=1 ; SIGN=1 ;;
     f) FORCE="-f" ;;
 # FIXME: handle SIGN separately
@@ -112,8 +115,16 @@ __gear_create_tag()
 	local GEARCTAG=gear-create-tag
 	if [ "$1" = "pipe" ] ; then
 		shift
+		if [ -n "$TAG" ] ; then
+			a= git tag $FORCE "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@" 2>&1
+			return
+		fi
 		$GEARCTAG $FORCE -n "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@" 2>&1
 	else
+		if [ -n "$TAG" ] ; then
+			docmd git tag $FORCE "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@"
+			return
+		fi
 		docmd $GEARCTAG $FORCE -n "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@"
 	fi
 }
@@ -232,7 +243,7 @@ CURDIR=`pwd`
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 
-if [ -n "$SIGNTAG" ] ; then
+if [ -n "$SIGNTAG$TAG" ] ; then
 	for ln in $LISTNAMES ; do
 		if set_usebranch ; then
 			checkout_usebranch || fatal
