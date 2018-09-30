@@ -22,7 +22,7 @@ load_mod rpm tarball alt git web buildsrpm branch
 
 SIGN=
 SIGNTAG=
-TAG=
+SETTAG=
 FORCE=
 UPLOADNOW=
 CHECKONLY=
@@ -77,7 +77,7 @@ while getopts :hfstTcudenop:a:Ab:z opt; do
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     t) SIGNTAG=1 ;;
-    T) TAG=1 ;;
+    T) SETTAG=1 ;;
     e) TESTONLY="--test-only" ; UPLOADNOW=1 ; SIGN=1 ;;
     f) FORCE="-f" ;;
 # FIXME: handle SIGN separately
@@ -115,13 +115,13 @@ __gear_create_tag()
 	local GEARCTAG=gear-create-tag
 	if [ "$1" = "pipe" ] ; then
 		shift
-		if [ -n "$TAG" ] ; then
+		if [ -n "$SETTAG" ] ; then
 			a= git tag $FORCE "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@" 2>&1
 			return
 		fi
 		$GEARCTAG $FORCE -n "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@" 2>&1
 	else
-		if [ -n "$TAG" ] ; then
+		if [ -n "$SETTAG" ] ; then
 			docmd git tag $FORCE "$VERSION-$RELEASE" -m "$BASENAME $VERSION-$RELEASE" "$@"
 			return
 		fi
@@ -243,7 +243,7 @@ CURDIR=`pwd`
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 
-if [ -n "$SIGNTAG$TAG" ] ; then
+if [ -n "$SIGNTAG$SETTAG" ] ; then
 	for ln in $LISTNAMES ; do
 		if set_usebranch ; then
 			checkout_usebranch || fatal
