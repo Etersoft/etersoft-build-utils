@@ -90,6 +90,5 @@ libtiff5|libtiff
 fontconfig-devel|fontconfig
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
-coreutils|
-make|
-su|
+su|shadow
+libpulseaudio|pulseaudio

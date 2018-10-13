@@ -1,5 +1,6 @@
 # Base replacements rules
 
+/proc|
 # FIXME
 makedepend|
 gccmakedep|imake
@@ -286,3 +287,4 @@ libkrb5-devel|krb5-devel
 bash4|bash
 
 xxd|vim-common
+libtxc_dxtn|

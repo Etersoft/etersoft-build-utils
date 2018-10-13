@@ -1,4 +1,6 @@
-# Debian replacements (do not works during rpm build)
+# Debian replacements
+
+/proc|
 libe2fs|e2fslibs
 libe2fs-devel|e2fslibs-dev
 libgphoto2-devel|libgphoto2-2-dev
@@ -386,3 +388,4 @@ perl-podlators|perl
 
 libpixman-devel|libpixman-1-dev
 xorg-proto-devel|x11proto-core-dev
+libtxc_dxtn|
