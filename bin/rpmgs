@@ -130,7 +130,7 @@ function source_ext()
 	#[ "$SN" = "0" ] && SN="$SN\?"
 	if grep -q "^# $SN-$2:" "$1" ; then
 		local TMPSPEC=$1.tmpurl
-		local NEWSOURCE=$(grep --text "^# $SN-$2:" "$1" | sed -e "s/.*$2:[ \t]*//g" | tail -n1)
+		local NEWSOURCE=$(grep --text "^# $SN-$2:" "$1" | sed -e "s/.*$SN-$2:[ \t]*//g" | tail -n1)
 		test -n "$NEWSOURCE" || fatal "Can't extract URL from $SN-$2"
 		# Fake replace for correct subst variables
 		NEWSOURCE="$(echo "$NEWSOURCE" | sed -e 's|\&|\\&|g')"
