@@ -18,7 +18,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo
 	echo "Examples:"
 	echo "     new    [p8]                 - create new task [on p8]"
-	echo "     run    [NNNN] [--test-only] [--force] - run task NNNN (test only / force run)"
+	echo "     run    [NNNN] [--test|--test-only] [--commit]    - run task NNNN (no test-only with --commit)"
 	echo "     add del package             - add package remove command"
 	echo "     share  NNNN [enable]        - share task NNNN"
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
@@ -96,15 +96,17 @@ fi
 if [ "$1" = "run" ] ; then
 	shift
 
-	FORCERUN=''
+	COMMIT=''
 	PARAMTEST=''
 	TASK=''
 
 	while [ -n "$1" ] ; do
 		if echo "$1" | grep -qv "^--" ; then
 			TASK="$1"
+		elif [ "$1" = "--commit" ] ; then
+			COMMIT=1
 		elif [ "$1" = "--force" ] ; then
-			FORCERUN=1
+			COMMIT=1
 		elif [ "$1" = "--test" ] || [ "$1" = "--test-only" ] ; then
 			PARAMTEST='--test-only'
 		else
@@ -118,7 +120,7 @@ if [ "$1" = "run" ] ; then
 	# keep test status
 	get_test_status "$TASK" && PARAMTEST='--test-only'
 	# force reset test status
-	[ -n "$FORCERUN" ] && PARAMTEST=''
+	[ -n "$COMMIT" ] && PARAMTEST='--commit'
 
 	docmd ssh $GEARHOST task run $PARAMTEST "$TASK"
 	exit
