@@ -48,7 +48,8 @@ get_tardir_from_rules()
 {
 	# TODO: use get_gear_rules only once
 	local tar="$1"
-	local packname="$(basename "$2" .$tar)"
+	local tarname="$2"
+	local packname="$(basename "$tarname" .$tar)"
 	local dir
 	assert_var tar packname
 	# firstly try get dir by name=
@@ -56,6 +57,10 @@ get_tardir_from_rules()
 	# if can't get by name, use first rule without name=
 	if [ -z "$dir" ] ; then
 		dir=$(print_gear_rules | grep "$tar *:" | grep -v "name=" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
+	fi
+	# if copy, check for file equal
+	if [ "$tarname" = "copy" ] && [ "$tarname" != "$dir" ] ; then
+		return 1
 	fi
 
 	if [ -z "$dir" ] ; then
