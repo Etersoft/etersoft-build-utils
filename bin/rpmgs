@@ -253,10 +253,10 @@ commit_tarball()
 	local CURNAME
 	CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
 	if [ -z "$CURNAME" ] ; then
-		info "Can't get dir, just commit $(basename "$TARBALL") file"
+		info "Can't get dir (no $EXTTARBALL: line in rules file), just commit $(basename "$TARBALL") file"
 		EXTTARBALL="copy"
 		CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
-		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor copy: in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
+		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor 'copy:' in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
 	fi
 	# FIXME:
 	# use real path for download
@@ -296,7 +296,7 @@ update_post_git_submodules()
 	#find $PSM -name ".gitmodules" -type f -delete -print
 	local i
 	for i in $(grep "path = " .gitmodules | sed -e "s|.*path = \(.*\)|\1|") ; do #"
-		cp -a --parents $i $PSM/ || fatal
+		cp -al --parents $i $PSM/ || fatal
 	done
 	docmd git add -f $PSM
 	# TODO: put short commit id in a description
@@ -330,32 +330,33 @@ update_predownloaded()
 	cd $PSM || fatal
 
 	if [ -s $RGD/.gear/predownloaded-preinstall-hook ] ; then
+    		info "Detected .gear/predownloaded-preinstall-hook, run it ..."
 		sh $RGD/.gear/predownloaded-preinstall-hook $MODE
                 COMMITMSG="update predownloaded-$MODE with a hook script"
 	fi
 
 	#### npm only part
 	if [ -s "./package.json" ] ; then
-    		info "Detected npm install hook, run npm install ..."
 
 		# CHECKME: drop postinstall due run dev scripts during install --production
 		# replace with fake commands?
 
 		local COMMITMSG=''
-		#subst "s|.*postinstall.*||g" package.json
-		if [ "$MODE" = "production" ] ; then
-			a= npm install --production || fatal
-			COMMITMSG="update node_modules with npm install --production for $VERSION (see $SDNAME in .gear/rules)"
-		else
-			a= npm install || fatal
-			COMMITMSG="update node_modules with npm install for $VERSION (see $SDNAME in .gear/rules)"
-		fi
+                local PRODUCTION=''
+
+		[ "$MODE" = "production" ] && PRODUCTION='--production'
+
+      		info "Detected npm install hook, run npm install $PRODUCTION ..."
+		a= npm install $PRODUCTION || fatal
+		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+    		        info "Detected .gear/predownloaded-postinstall-hook, run it ..."
 			sh $RGD/.gear/predownloaded-postinstall-hook $MODE
 		fi
 
-		a= npm prune
+                # prune removes modules not listed in package.json
+		# a= npm prune $PRODUCTION
 		a= npm dedup
 
 		# drop all exclude node_modules
