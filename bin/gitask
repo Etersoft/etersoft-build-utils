@@ -19,6 +19,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "Examples:"
 	echo "     new    [p8]                 - create new task [on p8]"
 	echo "     run    [NNNN] [--test|--test-only] [--commit]    - run task NNNN (no test-only with --commit)"
+	echo "     commit [NNNN]               - commit task NNNN (the same as run --commit)"
 	echo "     add del package             - add package remove command"
 	echo "     share  NNNN [enable]        - share task NNNN"
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
@@ -90,6 +91,17 @@ fi
 
 if [ "$1" = "quota" ] ; then
 	docmd ssh $GEARHOST quota
+	exit
+fi
+
+if [ "$1" = "commit" ] ; then
+	shift
+	COMMIT=''
+	TASK="$1"
+
+	[ -n "$TASK" ] || TASK="$(get_last)" || fatal "Can't get last task"
+
+	docmd ssh $GEARHOST task run --commit "$TASK"
 	exit
 fi
 
