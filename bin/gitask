@@ -26,6 +26,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     log    NNNN                 - show build log for task NNNN"
 	echo "     show   NNNN                 - show subtask list for task NNNN"
 	echo "     cancel NNNN                 - cancel task NNNN"
+	echo "     rebuild --help              - rebuild package"
 	exit 0
 fi
 
@@ -64,6 +65,13 @@ if [ "$1" = "find" ] ; then
 	shift
 	#showcmd "$GEARHOST>" find-packages "$@"
 	docmd ssh $GITHOST find-package "$@"
+	exit
+fi
+
+if [ "$1" = "rebuild" ] ; then
+	shift
+	showcmd "$GEARHOST>" build rebuild "$@"
+	docmd ssh $GEARHOST build rebuild "$@"
 	exit
 fi
 
