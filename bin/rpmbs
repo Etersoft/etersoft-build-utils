@@ -273,8 +273,8 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 
 	if [ -n "$PREPARETASK" ] ; then
 		if [ -z "$TASKNUMBER" ] ; then
-			showcmd $ETERBUILDBIN/gita get last task
-			TASKNUMBER=$($ETERBUILDBIN/gita get last task)
+			showcmd $ETERBUILDBIN/gita $GIRARHOST get last task
+			TASKNUMBER=$($ETERBUILDBIN/gita $GIRARHOST get last task)
 		fi
 	else
 			NUMSPECS=$(estrlist count $LISTNAMES)
@@ -323,8 +323,8 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		# FIXME: tee hangup during first call with ssh ControlMaster
 		if [ -n "$PREPARETASK" ] ; then
 			# TODO: can we use showcmd?
-			showcmd $ETERBUILDBIN/gita get subtask $TASKNUMBER $PROJECTNAME
-			SUBTASK=$($ETERBUILDBIN/gita get subtask $TASKNUMBER $PROJECTNAME)
+			showcmd $ETERBUILDBIN/gita $GIRARHOST get subtask $TASKNUMBER $PROJECTNAME
+			SUBTASK=$($ETERBUILDBIN/gita $GIRARHOST get subtask $TASKNUMBER $PROJECTNAME)
 			if [ -n "$SUBTASK" ] && ! echo "$TASKNUMBER" | grep -q " " ; then
 				info "$PROJECTNAME already present in the task $TASKNUMBER as subtask $SUBTASK, replacing"
 				docmd ssh $GEARHOST task delsub $TASKNUMBER $SUBTASK
