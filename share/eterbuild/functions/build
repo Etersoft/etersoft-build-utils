@@ -49,7 +49,7 @@ uni_rpmbuild()
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			LANG=C docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$@" || RET=$?
+			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
