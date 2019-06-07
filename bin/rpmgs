@@ -309,7 +309,7 @@ source_postupdate_hook()
 	local RGD=$(get_root_git_dir)
 	if [ -s $RGD/.gear/source-postupdate-hook ] ; then
     		info "Detected .gear/source-postupdate-hook, run it ..."
-		sh $RGD/.gear/source-postupdate-hook
+		sh $RGD/.gear/source-postupdate-hook $VERSION
 	fi
 }
 
@@ -340,7 +340,7 @@ update_predownloaded()
 
 	if [ -s $RGD/.gear/predownloaded-preinstall-hook ] ; then
     		info "Detected .gear/predownloaded-preinstall-hook, run it ..."
-		sh $RGD/.gear/predownloaded-preinstall-hook $MODE
+		sh $RGD/.gear/predownloaded-preinstall-hook $MODE $VERSION
                 COMMITMSG="update predownloaded-$MODE with a hook script"
 	fi
 
@@ -361,7 +361,7 @@ update_predownloaded()
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
     		        info "Detected .gear/predownloaded-postinstall-hook, run it ..."
-			sh $RGD/.gear/predownloaded-postinstall-hook $MODE
+			sh $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
                 # prune removes modules not listed in package.json
