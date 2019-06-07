@@ -304,6 +304,15 @@ update_post_git_submodules()
 	docmd git commit $PSM -m "update source prepared with submodules for version $VERSION"
 }
 
+source_postupdate_hook()
+{
+	local RGD=$(get_root_git_dir)
+	if [ -s $RGD/.gear/source-postupdate-hook ] ; then
+    		info "Detected .gear/source-postupdate-hook, run it ..."
+		sh $RGD/.gear/source-postupdate-hook
+	fi
+}
+
 # param: development, production
 update_predownloaded()
 {
@@ -541,6 +550,7 @@ do
 			fi
 
 			update_post_git_submodules
+                        source_postupdate_hook
 			# TODO: make plugins
 			update_predownloaded development
 			update_predownloaded production
@@ -550,6 +560,7 @@ do
 			DOWNLOADSOME=1
 		elif is_gear ; then
 			commit_tarball "$FTB"
+                        source_postupdate_hook
 			# TODO: make plugins
 			update_predownloaded development
 			update_predownloaded production
