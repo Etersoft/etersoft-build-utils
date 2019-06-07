@@ -537,6 +537,10 @@ do
 				for i in  v$GSSETVERSION $alternate_tag1 $GSSETVERSION $alternate_tag2 $alternate_tag3 ; do
 					git rev-parse $i >/dev/null 2>/dev/null && docmd git merge $i && rc=0 && break
 				done
+                                if [ "$rc" = "1" ] ; then
+                                    i="$(git tag | grep "$GSSETVERSION\$")"
+   				    git rev-parse $i >/dev/null 2>/dev/null && docmd git merge $i && rc=0
+                                fi
 				[ "$rc" = "0" ] || fatal "Can't find tag for $GSSETVERSION version"
 			fi
 
