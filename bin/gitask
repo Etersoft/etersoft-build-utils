@@ -129,6 +129,33 @@ if [ "$1" = "copy" ] ; then
 	exit
 fi
 
+if [ "$1" = "add" ] ; then
+	if [ "$2" = "del" ] || [ "$3" = "del" ] ; then
+		shift
+		if [ "$1" = "del" ] ; then
+			shift
+			TASK="$(get_last)"
+		else
+			TASK="$1"
+			shift 2
+		fi
+
+		PACKAGELIST=''
+		while [ -n "$1" ] ; do
+			PACKAGELIST="$PACKAGELIST $1"
+			shift
+		done
+
+		[ -n "$PACKAGELIST" ] || fatal "no packages"
+		for PACKAGE in $PACKAGELIST ; do
+			docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR
+		done
+		exit
+	fi
+fi
+
+
+
 if [ "$1" = "commit" ] ; then
 	shift
 	COMMIT=''
