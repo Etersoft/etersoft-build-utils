@@ -24,6 +24,7 @@ SIGN=
 SIGNTAG=
 SETTAG=
 FORCE=
+RUNTASK=
 UPLOADNOW=
 CHECKONLY=
 TESTONLY=
@@ -63,6 +64,7 @@ phelp()
 	echog "   -e           sign and run gear test only task girar build"
 	echog "   -c           only sign package(s) with checking"
 	echog "   -f           force operation (overwrite tag)"
+	echog "   -F           force operation (overwrite tag) and run task after add"
 	echog "   -s           sign package(s) (and move it to dir ETERDESTSRPM if defined)"
 	echog "   -t           set tag with sign"
 	echog "   -T           set tag"
@@ -72,7 +74,7 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfstTcudenop:a:Ab:z opt; do
+while getopts :hfFstTcudenop:a:Ab:z opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
@@ -80,6 +82,7 @@ while getopts :hfstTcudenop:a:Ab:z opt; do
     T) SETTAG=1 ;;
     e) TESTONLY="--test-only" ; UPLOADNOW=1 ; SIGN=1 ;;
     f) FORCE="-f" ;;
+    F) FORCE="-f" ; RUNTASK=1 ;;
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
     u) UPLOADNOW=1 ; SIGN=1 ;;
@@ -319,6 +322,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		# TODO: add check for repo (as in rpmgp) and run ginit if needed
 		docmd gpush $GIRARHOST $FORCE || fatal "gpush failed. It is possible you need run '\$ ginit $GIRARHOST' to create remote repo."
 		echo
+		ATASKNUMBER="$TASKNUMBER"
 		echo "Run build $PROJECTNAME at $GEARHOST"
 		# FIXME: tee hangup during first call with ssh ControlMaster
 		if [ -n "$PREPARETASK" ] ; then
@@ -329,9 +333,9 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 				info "$PROJECTNAME already present in the task $TASKNUMBER as subtask $SUBTASK, replacing"
 				docmd ssh $GEARHOST task delsub $TASKNUMBER $SUBTASK
 				# add task subtask - before subtask! (use next number?)
-				TASKNUMBER="$TASKNUMBER $SUBTASK"
+				ATASKNUMBER="$TASKNUMBER $SUBTASK"
 			fi
-			docmd ssh $GEARHOST task add $TASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
+			docmd ssh $GEARHOST task add $ATASKNUMBER repo $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 		else
 			docmd ssh $GEARHOST build $TESTONLY $(usearg -b $BINARYREPO sisyphus) $(usearg -p $POCKET) $PROJECTNAME $TAG 2>&1 | tee $RPMDIR/uploaded.log.tmp
 		fi
@@ -346,14 +350,12 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	done
 
 	if [ -n "$TASKNUMBER" ] ; then
-		# TODO: separate TASKNUMBER and SUBTASKNUMBER
-		RTASKNUMBER=$(echo "$TASKNUMBER" | sed -e "s| .*||g")
-		showcmd "GIT_ALT=$GEARHOST girar-show $RTASKNUMBER@"
-		GIT_ALT=$GEARHOST girar-show "$RTASKNUMBER@"
+		showcmd "GIT_ALT=$GEARHOST girar-show $TASKNUMBER@"
+		GIT_ALT=$GEARHOST girar-show "$TASKNUMBER@"
 	fi
 
 	# if more then one spec, use common task
-	if [ "$PREPARETASK" = "internal" ] ; then
+	if [ "$PREPARETASK" = "internal" ] || [ -n "$RUNTASK" ] ; then
 		docmd ssh $GEARHOST task run $TESTONLY $TASKNUMBER
 	fi
 
