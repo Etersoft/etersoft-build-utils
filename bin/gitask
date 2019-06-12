@@ -102,6 +102,22 @@ if [ "$1" = "quota" ] ; then
 	exit
 fi
 
+if [ "$1" = "copy" ] ; then
+        shift
+        PACKAGE="$1"
+        shift
+        shift # to
+        TARGET="$1"
+        shift
+        FROMSTR=''
+        [ "$1" = "from" ] && FROMSTR="$1 $2"
+	docmd ssh $GEARHOST task new $TARGET
+        TASK="$(get_last)"
+	docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR
+	docmd ssh $GEARHOST task run $TASK
+	exit
+fi
+
 if [ "$1" = "commit" ] ; then
 	shift
 	COMMIT=''
