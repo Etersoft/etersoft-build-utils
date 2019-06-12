@@ -132,11 +132,13 @@ fi
 if [ "$1" = "commit" ] ; then
 	shift
 	COMMIT=''
-	TASK="$1"
-
-	[ -n "$TASK" ] || TASK="$(get_last)" || fatal "Can't get last task"
-
-	docmd ssh $GEARHOST task run --commit "$TASK"
+	TASKLIST="$*"
+	if [ -z "$TASKLIST" ] ; then
+		TASKLIST="$(get_last)" || fatal "Can't get last task"
+	fi
+	for TASK in $TASKLIST ; do
+		docmd ssh $GEARHOST task run --commit "$TASK"
+	done
 	exit
 fi
 
