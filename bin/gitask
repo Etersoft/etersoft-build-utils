@@ -103,17 +103,28 @@ if [ "$1" = "quota" ] ; then
 fi
 
 if [ "$1" = "copy" ] ; then
-        shift
-        PACKAGE="$1"
-        shift
-        shift # to
-        TARGET="$1"
-        shift
-        FROMSTR=''
-        [ "$1" = "from" ] && FROMSTR="$1 $2"
+	shift
+	PACKAGELIST=''
+	while [ -n "$1" ] ; do
+		[ "$1" = "to" ] && break
+		PACKAGELIST="$PACKAGELIST $1"
+		shift
+	done
+
+	[ "$1" = "to" ] || fatal "missed 'to' in your command"
+	shift # to
+	TARGET="$1"
+	shift
+
+	FROMSTR=''
+	[ "$1" = "from" ] && FROMSTR="$1 $2"
+
+	[ -n "$PACKAGELIST" ] || fatal "no packages"
 	docmd ssh $GEARHOST task new $TARGET
-        TASK="$(get_last)"
-	docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR
+	TASK="$(get_last)"
+	for PACKAGE in $PACKAGELIST ; do
+		docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR
+	done
 	docmd ssh $GEARHOST task run $TASK
 	exit
 fi
