@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2017, 2018 (c) Etersoft https://etersoft.ru
+# 2017, 2018, 2019 (c) Etersoft https://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -10,21 +10,26 @@ load_mod git
 set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echo "gitask ssh gear.alt task wrapper"
-	echo "Use: gitask [GIRAR] [task|log|show|ls|quota]"
+	echo "gitask — ssh gear.alt task wrapper"
+	echo "Use: gitask [GIRAR] [task|add|log|show|ls|quota]"
 	echo "$HELP_GIRAR"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	echo
 	echo "Examples:"
-	echo "     new    [p8]                 - create new task [on p8]"
-	echo "     run    [NNNN] [--test|--test-only] [--commit]    - run task NNNN (no test-only with --commit)"
-	echo "     commit [NNNN]               - commit task NNNN (the same as run --commit)"
-	echo "     add del package             - add package remove command"
+	echo "     new    [p8]                 - create new task [on p8 branch, Sisyphus by default]"
+	echo "     run    [NNNN]               - run task NNNN"
+	echo "     commit [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
+	echo "     add del package [package2]  - add package remove command"
+	echo "     add --help                  - show task add help"
+	echo "     task --help                 - show task help"
 	echo "     share  NNNN [enable]        - share task NNNN"
+	echo "     deps   NNNN add XXXX        - add deps from XXXX to task NNNN"
+	echo "     copy   NNNN to (p8|p9) [from XX]  - copy package from Sisyphus to (p8|p9) [from XX]"
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
 	echo "     log    NNNN                 - show build log for task NNNN"
 	echo "     show   NNNN                 - show subtask list for task NNNN"
+	echo "     quota                       - show quota on the build server"
 	echo "     cancel NNNN                 - cancel task NNNN"
 	echo "     rebuild --help              - rebuild package"
 	exit 0
