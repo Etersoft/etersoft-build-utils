@@ -210,7 +210,11 @@ fi
 if [ "$1" = "cancel" ] ; then
 	shift
 	#TASK="$(get_last)" || fatal
-	docmd ssh $GEARHOST task abort "$@"
+	if [ "$GEARHOST" = "git.eter" ]  || [ "$GEARHOST" = "git.office" ] ; then
+		docmd ssh $GEARHOST task cancel "$@"
+	else
+		docmd ssh $GEARHOST task abort "$@"
+	fi
 	exit
 fi
 
