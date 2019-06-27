@@ -14,3 +14,6 @@ qt5-base-devel|qt5-base-devel libEGL-devel
 libmozjs17-devel|libmozjs17-devel
 libsystemd-devel|libsystemd-devel
 
+libgnutls26|libgnutls26
+libgnutls28|libgnutls26
+libgnutls30|libgnutls26
