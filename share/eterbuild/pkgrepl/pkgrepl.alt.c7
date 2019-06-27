@@ -1,1 +1,17 @@
-pkgrepl.alt.p7
+#rpm-build-intro|rpm-build-altlinux-compat
+libudev1|libudev1
+libpng15|libpng15
+libpng16|libpng15
+
+libsrtp-devel|libsrtp
+libsrtp1|libsrtp
+libspeexdsp-devel|libspeex-devel
+qt5-base-devel|qt5-base-devel libEGL-devel
+
+# ignore the fact we have libgnutls28-devel on this branch
+
+# restore after p6
+libmozjs17-devel|libmozjs17-devel
+libsystemd-devel|libsystemd-devel
+
+libgnutls30|libgnutls26

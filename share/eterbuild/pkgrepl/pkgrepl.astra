@@ -1,32 +1,5 @@
 
 # is missed?
-#docbook-utils|
-glibc-utils|libc6
-diffutils|diffutils
-xz|xz-utils
-
-libusb-devel|libusb-1.0-0-dev
-libusb|libusb-1.0-0
-libudev-devel|libudev-dev
-liblzma|liblzma2
-libltdl7|libltdl7
-libv4l|libv4l-0
-libunistring|libunistring0
-libmpg123-devel|
-libmpg123|
-cifs-utils|cifs-utils
-
-glibc-utils|libc-bin
-
-libreadline|libreadline6
-libreadline-devel|libreadline-gplv2-dev
-
-libssl10|libssl1.0.0
-
-libwxGTK3.0|libwxgtk3.0-0v5
-libwxGTK3.0-devel|libwxgtk3.0-dev
-libwxGTK3.1|libwxgtk3.0-0v5
-libwxGTK3.1-devel|libwxgtk3.0-dev
 libwxGTK|libwxgtk3.0
 libwxGTK-devel|libwxgtk3.0-dev
 
@@ -35,15 +8,18 @@ libpng16|libpng16-16
 libpng-devel|libpng-dev
 
 libudev-devel|libudev-dev
-libudev1|libudev0
+#libudev1|libudev0
 
 #libjpeg|libjpeg62-turbo
 #libjpeg8|libjpeg8
 #libjpeg-devel|libjpeg8-dev
+diff|diffutils
+diffutils|
 libjpeg-devel|libjpeg62-turbo-dev
 
 liblcms-devel|liblcms2-dev
-liblcms|liblcms1
+liblcms|liblcms2-2
+liblcms1|liblcms2-2
 liblcms2|liblcms2-2
 liblcms2-devel|liblcms2-dev
 
@@ -81,9 +57,21 @@ gcc5-c++|g++-6.3 gcc-multilib
 #pkg-config|pkg-config
 #rpm-build|rpm
 
-ia32-libs|ia32-libs ia32-libs-dev lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
-
+libmpg123-devel|libmpg123-dev
 #NX
 xkbcomp|x11-xkb-utils
 xorg-font-utils|xfonts-utils
 sessreg|x11-xserver-utils
+numlockx|
+python-module-Cython|cython
+libwxGTK3.0|libwxgtk3.0-0v5
+libwxGTK3.0-devel|libwxgtk3.0-dev
+libwxGTK3.1|libwxgtk3.0-0v5
+libwxGTK3.1-devel|libwxgtk3.0-dev
+libwxGTK|libwxgtk3.0-0v5
+libwxGTK-devel|libwxgtk3.0-dev
+
+cifs-utils|cifs-utils
+bashrc|
+python-module-psutil|python-psutil
+libcrypto1.1|libssl1.1

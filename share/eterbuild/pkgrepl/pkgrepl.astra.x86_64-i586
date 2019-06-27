@@ -1,0 +1,5 @@
+zlib-devel|lib32z1-dev
+ia32-libs|ia32-libs ia32-libs-dev lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
+libcrypto1.1|ia32-libs
+diff|diffutils
+diffutils|

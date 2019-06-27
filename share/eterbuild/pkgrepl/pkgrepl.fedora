@@ -45,3 +45,5 @@ fonts-ttf-core|liberation-mono-fonts liberation-sans-fonts liberation-serif-font
 fonts-ttf-liberation|liberation-mono-fonts liberation-sans-fonts liberation-serif-fonts liberation-narrow-fonts
 libudev1|libudev
 
+xorg-proto-devel|xorg-x11-proto-devel
+libpixman-devel|pixman-devel

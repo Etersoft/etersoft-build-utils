@@ -1,6 +1,7 @@
 jackit|libjack
 
 # XOrg
+xorg-proto-devel|xorg-x11-proto-devel
 xorg-x11-proto-devel|xorg-x11-proto-devel
 libICE-devel|xorg-x11-libICE-devel
 libICE|xorg-x11-libICE
@@ -96,3 +97,10 @@ libv4l|
 libopenal1|
 libopenal-devel|
 liblcms2-devel|liblcms-devel
+
+# postgres
+libcrypt|
+libperl-5.22.so|libperl.so
+
+# nx
+libexpat-devel|libexpat-devel

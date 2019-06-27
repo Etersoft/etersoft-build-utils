@@ -1,2 +1,5 @@
 #libX11-devel|libX11-devel libXau-devel libNX_Xext-devel libXdamage-devel libNX_Xrender-devel libXxf86vm-devel
 libX11-devel|libX11-devel libXau-devel libXdamage-devel libXxf86vm-devel
+pkg-config|pkgconf-pkg-config
+
+libcrypto1.1|

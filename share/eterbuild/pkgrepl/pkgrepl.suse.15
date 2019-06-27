@@ -3,8 +3,7 @@ libGLU-devel|
 
 #To pass install questions
 libsmbclient|libsmbclient0
-libcrypto10|libopenssl1_0_0
-libssl10|libopenssl1_0_0
+libieee1284-devel|
 
 xorg-proto-devel|xorg-x11-proto-devel
 libpixman-devel|libpixman-1-0-devel
@@ -14,6 +13,14 @@ xorg-font-utils|font-util
 libX11-locales|libX11-data
 python-dev|python-devel
 python-module-Cython|python-Cython
-libkrb5|krb5
+#libXScrnSaver-devel-32bit|xorg-x11-devel
 
-libwxGTK3.0-devel|wxWidgets-3_0-devel
+
+libicu53_1|libicu60_2
+libcrypto10|libopenssl1_0_0
+libssl10|libopenssl1_0_0
+
+libunixODBC-devel|unixODBC-devel
+#unixODBC-devel|
+libwxGTK3.1-devel|wxWidgets-3_0-devel
+

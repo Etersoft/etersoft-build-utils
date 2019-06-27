@@ -1,16 +1,9 @@
-#libstdc++3.4-devel-precompiled|
 pkg-config|pkgconfig
 postgresql8.0|postgresql
 postgresql8.1|postgresql
-libpq4|libpq3
-#libSDL_sound-devel|libSDL-devel
-%python-dev|
-%python-base|
 linux-libc-headers|glibc-kernheaders
 #apt-repo-tools|apt-utils
 kernel-build-tools|kernel-build-tools kernel-headers-modules-ovz-smp kernel-headers-modules-std-def
-libpng15|libpng12
-libpng16|libpng12
 
 cifs-utils|samba-client
 apt-repo|

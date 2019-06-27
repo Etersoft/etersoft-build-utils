@@ -1,5 +1,6 @@
 libncurses|ncurses
 libncurses-devel|ncurses
+libncursesw-devel|ncurses
 terminfo|ncurses
 termutils|ncurses
 rpm-build-fonts|rpm-build-altlinux-compat

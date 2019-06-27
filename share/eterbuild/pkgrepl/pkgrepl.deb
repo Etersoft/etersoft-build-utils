@@ -94,7 +94,7 @@ rpm-macros-webserver-common|rpm-build-altlinux-compat
 
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
-
+rpm-macros-intro-conflicts|rpm-build-altlinux-compat
 menu-devel|
 
 libexpat|libexpat1
@@ -178,6 +178,8 @@ xinitrc|
 setup|
 service|
 glibc-utils|libc-bin
+ld-linux.so.2|libc6.i386
+libpthread.so.0|libc6.i386
 glibc-nss|libc6
 glibc-pthread|libc6
 dbus-tools-gui|dbus-x11

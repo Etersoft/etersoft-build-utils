@@ -13,6 +13,8 @@ libfreetype|libfreetype6 libpango-modules1.0
 
 #No more libopenssl
 libcrypto10|libcrypto1.0.0
+# How did this happen?
+libcrypto1.1|libcrypto1.0.0
 libssl10|libssl1.0.0
 libssl-devel|libdssl-devel
 

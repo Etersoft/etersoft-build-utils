@@ -1,6 +1,9 @@
 
+libldap-devel|lib64ldap2.4_2-devel
+libsmbclient-devel|lib64smbclient-devel
 libssl-devel|lib64dssl-devel
 libssl10|libssl1.0.0 #lib64ssl1.0.0
+libcups-devel|lib64cups-devel
 
 #postgres92
 python-devel|lib64python-devel

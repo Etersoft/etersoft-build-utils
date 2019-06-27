@@ -1,0 +1,7 @@
+# RX
+libX11-locales|libX11-common
+fonts-bitmap-misc|
+xorg-font-utils|xorg-x11-fonts-misc
+libkrb5|krb5-libs
+libcrypto1.1|openssl-libs
+python-dev|python2-devel

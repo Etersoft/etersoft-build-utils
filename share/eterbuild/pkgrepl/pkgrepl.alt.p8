@@ -19,3 +19,4 @@ libgomp6-devel|libgomp5-devel
 
 libicu60|libicu56
 libtiff5|libtiff5
+libpng16|libpng15

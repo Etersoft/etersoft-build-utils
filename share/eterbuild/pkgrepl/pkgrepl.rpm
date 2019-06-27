@@ -24,6 +24,7 @@ libarts-devel|arts-devel
 pkg-config|pkgconfig
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
+rpm-macros-intro-conflicts|rpm-build-altlinux-compat
 libntfs-devel|ntfsprogs-devel
 libntfs|ntfsprogs
 libe2fs-devel|e2fsprogs-devel
@@ -145,6 +146,7 @@ libgnutls30|gnutls
 rpm-build-licenses|rpm-build-altlinux-compat
 rpm-macros-tts|rpm-build-altlinux-compat
 rpm-macros-webserver-common|rpm-build-altlinux-compat
+rpm-build-python3|rpm-build-altlinux-compat
 
 libnatspec-devel|
 libnatspec|
