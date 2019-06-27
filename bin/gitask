@@ -21,6 +21,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     run    [NNNN]               - run task NNNN"
 	echo "     commit [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
 	echo "     add del package [package2]  - add package remove command"
+	echo "     add rebuild package [package2]  - add package rebuild"
 	echo "     add --help                  - show task add help"
 	echo "     task --help                 - show task help"
 	echo "     share  NNNN [enable]        - share task NNNN"
@@ -154,6 +155,30 @@ if [ "$1" = "add" ] ; then
 		[ -n "$PACKAGELIST" ] || fatal "no packages"
 		for PACKAGE in $PACKAGELIST ; do
 			docmd ssh $GEARHOST task add $TASK del $PACKAGE
+		done
+		exit
+	fi
+
+        # TODO: detect numeric task number, drop below
+	if [ "$2" = "rebuild" ] || [ "$3" = "rebuild" ] ; then
+		shift
+		if [ "$1" = "rebuild" ] ; then
+			shift
+			TASK="$(get_last)"
+		else
+			TASK="$1"
+			shift 2
+		fi
+
+		PACKAGELIST=''
+		while [ -n "$1" ] ; do
+			PACKAGELIST="$PACKAGELIST $1"
+			shift
+		done
+
+		[ -n "$PACKAGELIST" ] || fatal "no packages"
+		for PACKAGE in $PACKAGELIST ; do
+			docmd ssh $GEARHOST task add $TASK rebuild $PACKAGE
 		done
 		exit
 	fi
