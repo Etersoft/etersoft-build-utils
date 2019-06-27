@@ -48,11 +48,15 @@ add_32bit_requires()
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "SUSE" ] || [ "$DISTRNAME" = "SLED" ] || [ "$DISTRNAME" = "SLES" ]; then
-			# i386 on SUSE or SLED : # add -32bit to all lib packages
-			for i in $* ; do
-				rhas "$GREP" "^lib" && ! rhas "$i" "-32bit$" && echo "$i-32bit" && continue
-				echo "$i"
-			done | xargs -n 1000 echo
+                        if [ $DISTRVERSION != "42" ] && ! version_more_version $DISTRVERSION 15 ; then
+				# i386 on SUSE or SLED : # add -32bit to all lib packages
+				for i in $* ; do
+					rhas "$GREP" "^lib" && ! rhas "$i" "-32bit$" && ! rhas "$i" "-devel$" &&  echo "$i-32bit" && continue
+					echo "$i"
+				done | xargs -n 1000 echo
+                        else
+				echo "$@"
+			fi
 		else
 			echo "$@"
 		fi
