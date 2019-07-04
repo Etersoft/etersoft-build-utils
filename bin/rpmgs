@@ -407,14 +407,18 @@ test -z "$LISTNAMES" && print_error
 
 if $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
     docmd gear-rules-verify
-    gear-rules-verify 2>&1 | grep -q "gear-rules-verify should be run in clean repository" && fatal
-    if gear-rules-verify | grep "Ready for tarball update" ; then
+    gear-rules-verify 2>&1 | grep -q "gear-rules-verify should be run in clean repository" && warning "gear-rules-verify should be run in clean repository"
+    if gear-rules-verify | grep -q "Ready for tarball update" ; then
         [ -n "$GSSETVERSION" ] && warning "we will ignore version and update to the latest version from watch file"
+        # TODO: rpm-uscan 0.20.2.17.11 or above
         $EPMCMD assure rpm-uscan
         $EPMCMD assure gear-uupdate
-        docmd rpm-uscan --force-action gear-uupdate
-        #docmd gammit
-        exit 0
+	if ls $(get_root_git_dir)/.gear | grep \.watch$ ; then
+            docmd rpm-uscan --force-action gear-uupdate
+            exit 0
+        else
+            warning "there are no .watch files in (get_root_git_dir)/.gear, skip rpm-uscan"
+        fi
     fi
 fi
 
