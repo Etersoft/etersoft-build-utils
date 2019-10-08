@@ -14,7 +14,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "Usage: rpmlog [-q] [-a|-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC] [fromTAG] [toTAG]"
 	echo
 	echog "Options:"
-	echog "   -a increment version if code is changed or increment release if spec changed only"
+	echog "   -a  increment version if code is changed or increment release if spec changed only"
 	echog "   -v  increment version"
 	echog "   -r  increment release"
 	echog "   -s  increment subrelease"

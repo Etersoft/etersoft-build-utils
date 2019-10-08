@@ -48,7 +48,7 @@ get_test_status()
 
 # TODO: acl
 
-epm assure girar-show girar-utils
+$EPMCMD assure girar-show girar-utils
 
 if [ "$1" = "get" ] ; then
 	if [ "$1 $2" = "get subtask" ] ; then
@@ -123,7 +123,7 @@ if [ "$1" = "copy" ] ; then
 	shift
 
 	FROMSTR=''
-	[ "$1" = "from" ] && FROMSTR="$1 $2"
+	[ "$1" = "from" ] && FROMSTR="$2"
 
 	[ -n "$PACKAGELIST" ] || fatal "no packages"
 	docmd ssh $GEARHOST task new $TARGET
