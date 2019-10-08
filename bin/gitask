@@ -199,6 +199,17 @@ if [ "$1" = "commit" ] ; then
 	exit
 fi
 
+if [ "$1" = "show" ] ; then
+	shift
+	COMMIT=''
+	TASKLIST="$1"
+	if [ -z "$TASKLIST" ] ; then
+		TASKLIST="$(get_last)" || fatal "Can't get last task"
+	fi
+	docmd ssh $GEARHOST task show "$TASKLIST"
+	exit
+fi
+
 if [ "$1" = "run" ] ; then
 	shift
 
