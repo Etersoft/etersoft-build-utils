@@ -93,7 +93,9 @@ set_gear_host()
 	assert_var GIRARHOST
 	GITHOST="$GIRARHOST"
 	GEARHOST="$GITHOST"
-	[ "$GEARHOST" = "git.alt" ] && GEARHOST="gear.alt"
+	if [ ! "$GEARHOST" = "git.eter" ] ; then
+		GEARHOST="${GITHOST/git./gear.}"
+	fi
 	return 0
 }
 
