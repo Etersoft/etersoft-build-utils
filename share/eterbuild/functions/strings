@@ -3,12 +3,19 @@
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
+
 filter_strip_spaces()
 {
         # possible use just
         #xargs echo
         sed -e "s| \+| |g" | \
                 sed -e "s|^ ||" | sed -e "s| \$||"
+}
+
+# TODO: see etersoft-build-utils/tests/test_isnumber.sh
+isnumber()
+{
+	echo "$*" | filter_strip_spaces | grep -q "^[0-9]\+$"
 }
 
 strip_spaces()

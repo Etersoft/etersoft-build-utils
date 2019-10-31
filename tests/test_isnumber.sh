@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . `dirname $0`/../share/eterbuild/functions/common
-#load_mod spec
+load_mod strings
 
 check()
 {
@@ -9,12 +9,12 @@ check()
 }
 
 # TODO: move to lib
-isnumber()
-{
-	#local num="$(("$*"))"
-	echo "$*" | filter_strip_spaces | grep -q "^[0-9]\+$"
-	#[ "$num" != "0" ]
-}
+#isnumber()
+#{
+#	#local num="$(("$*"))"
+#	echo "$*" | filter_strip_spaces | grep -q "^[0-9]\+$"
+#	#[ "$num" != "0" ]
+#}
 
 check_arg()
 {
