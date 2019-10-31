@@ -136,40 +136,21 @@ if [ "$1" = "copy" ] ; then
 fi
 
 if [ "$1" = "add" ] ; then
-	if [ "$2" = "del" ] || [ "$3" = "del" ] ; then
-		shift
-		if [ "$1" = "del" ] ; then
-			shift
-			TASK="$(get_last)"
-		else
-			TASK="$1"
-			shift 2
-		fi
-
-		PACKAGELIST=''
-		while [ -n "$1" ] ; do
-			PACKAGELIST="$PACKAGELIST $1"
-			shift
-		done
-
-		[ -n "$PACKAGELIST" ] || fatal "no packages"
-		for PACKAGE in $PACKAGELIST ; do
-			docmd ssh $GEARHOST task add $TASK del $PACKAGE
-		done
-		exit
+	ADDCMD=''
+	ADDCMDLIST="del copy rebuild"
+	# add TASKNUMBER package
+	if isnumber "$2" && estrlist has "$3" $ADDCMDLIST ; then
+		TASK="$2"
+		ADDCMD="$3"
+		shift 3
+	elif estrlist has "$2" $ADDCMDLIST ; then
+		TASK="$(get_last)"
+		ADDCMD="$2"
+		shift 2
 	fi
 
-        # TODO: detect numeric task number, drop below
-	if [ "$2" = "rebuild" ] || [ "$3" = "rebuild" ] ; then
-		shift
-		if [ "$1" = "rebuild" ] ; then
-			shift
-			TASK="$(get_last)"
-		else
-			TASK="$1"
-			shift 2
-		fi
-
+	# allow package list for $ADDCMDLIST commands
+	if [ -n "$ADDCMD" ] ; then
 		PACKAGELIST=''
 		while [ -n "$1" ] ; do
 			PACKAGELIST="$PACKAGELIST $1"
@@ -178,7 +159,7 @@ if [ "$1" = "add" ] ; then
 
 		[ -n "$PACKAGELIST" ] || fatal "no packages"
 		for PACKAGE in $PACKAGELIST ; do
-			docmd ssh $GEARHOST task add $TASK rebuild $PACKAGE
+			docmd ssh $GEARHOST task add $TASK $ADDCMD $PACKAGE
 		done
 		exit
 	fi
