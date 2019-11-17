@@ -59,6 +59,12 @@ repack_tarball()
 {
 	# TODO: move it into repack
 	[ "$(realpath "$1")" = "$(realpath "$2")" ] && return
+	# skip repack for the same ext
+	if [ "$(get_ext "$1")" = "$(get_ext "$2")" ] ; then
+		echog "The same ext $(get_ext "$1"), skip repack"
+		mv -f "$1" "$2"
+		return
+	fi
 	docmd erc -f repack "$1" "$2"
 	# remove original
 	rm -f "$1"
