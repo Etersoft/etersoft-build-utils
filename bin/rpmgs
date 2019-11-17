@@ -240,12 +240,12 @@ commit_tarball_to_dir()
 		gear_update_from_tarball "$TARBALL" "$CURNAME" $FORCEDOWNLOAD || { warning "Error with update tarball in repo" ; return 1 ; }
 		# force commit ever files from .gitignore
 		docmd git add -f "$CURNAME"
-	if [ -s ./.gear/postdownload-hook ] ; then
-		info "Detected ./.gear/postdownload-hook, run it in $CURNAME dir ..."
-		cd $CURNAME || fatal
-		sh ../.gear/postdownload-hook
-		cd - >/dev/null
-	fi
+		if [ -s ./.gear/postdownload-hook ] ; then
+			info "Detected ./.gear/postdownload-hook, run it in $CURNAME dir ..."
+			cd $CURNAME || fatal
+			sh ../.gear/postdownload-hook
+			cd - >/dev/null
+		fi
 		# TODO: add GETSOURCEURL url
 		docmd git commit -m "just import $(basename $TARBALL) with rpmgs script"
 		rm -fv "$TARBALL"
