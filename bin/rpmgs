@@ -233,6 +233,7 @@ commit_tarball_to_dir()
 		#local OLDFILE=$(echo "$CURNAME")
 		cp -v "$TARBALL" "$CURNAME"
 		docmd git add "$CURNAME"
+		docmd git commit -m "just commit $(basename $CURNAME) with rpmgs script"
 		return 0
 	fi
 
@@ -265,7 +266,7 @@ commit_tarball()
 	local CURNAME
 	CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
 	if [ -z "$CURNAME" ] ; then
-		info "Can't get dir (no $EXTTARBALL: line in rules file), just commit $(basename "$TARBALL") file"
+		#info "Can't get dir (no $EXTTARBALL: line in rules file), just commit $(basename "$TARBALL") file"
 		EXTTARBALL="copy"
 		CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
 		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor 'copy:' in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
