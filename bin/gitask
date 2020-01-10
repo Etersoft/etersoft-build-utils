@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2017, 2018, 2019 (c) Etersoft https://etersoft.ru
+# 2017, 2018, 2019, 2020 (c) Etersoft https://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -18,8 +18,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo
 	echo "Examples:"
 	echo "     new    [p8]                 - create new task [on p8 branch, Sisyphus by default]"
-	echo "     run    [NNNN]               - run task NNNN"
-	echo "     commit [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
+	echo "     run    [-m <message>] [NNNN]               - run task NNNN"
+	echo "     commit [-m <message>] [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
 	echo "     add del package [package2]  - add package remove command"
 	echo "     add rebuild package [package2]  - add package rebuild"
 	echo "     add --help                  - show task add help"
@@ -170,12 +170,19 @@ fi
 if [ "$1" = "commit" ] ; then
 	shift
 	COMMIT=''
+	MESSAGE=''
+
+	if [ "$1" = "-m" ] ; then
+		MESSAGE="$1 $2"
+		shift 2
+	fi
+
 	TASKLIST="$*"
 	if [ -z "$TASKLIST" ] ; then
 		TASKLIST="$(get_last)" || fatal "Can't get last task"
 	fi
 	for TASK in $TASKLIST ; do
-		docmd ssh $GEARHOST task run --commit "$TASK"
+		docmd ssh $GEARHOST task run $MESSAGE --commit "$TASK"
 	done
 	exit
 fi
@@ -197,10 +204,14 @@ if [ "$1" = "run" ] ; then
 	COMMIT=''
 	PARAMTEST=''
 	TASK=''
+	MESSAGE=''
 
 	while [ -n "$1" ] ; do
-		if echo "$1" | grep -qv "^--" ; then
+		if echo "$1" | grep -qv "^-" ; then
 			TASK="$1"
+		elif [ "$1" = "-m" ] ; then
+			MESSAGE="$1 $2"
+			shift
 		elif [ "$1" = "--commit" ] ; then
 			COMMIT=1
 		elif [ "$1" = "--force" ] ; then
@@ -220,7 +231,7 @@ if [ "$1" = "run" ] ; then
 	# force reset test status
 	[ -n "$COMMIT" ] && PARAMTEST='--commit'
 
-	docmd ssh $GEARHOST task run $PARAMTEST "$TASK"
+	docmd ssh $GEARHOST task run $MESSAGE $PARAMTEST "$TASK"
 	exit
 fi
 
