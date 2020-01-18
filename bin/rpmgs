@@ -267,9 +267,9 @@ commit_tarball()
 	CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
 	if [ -z "$CURNAME" ] ; then
 		#info "Can't get dir (no $EXTTARBALL: line in rules file), just commit $(basename "$TARBALL") file"
-		EXTTARBALL="copy"
-		CURNAME=$(get_tardir_from_rules "$EXTTARBALL" $(basename "$TARBALL"))
+		CURNAME=$(get_tardir_from_rules "copy" $(basename "$TARBALL"))
 		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor 'copy:' in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
+		EXTTARBALL="copy"
 	fi
 	# FIXME:
 	# use real path for download
