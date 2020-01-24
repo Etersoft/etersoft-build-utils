@@ -385,6 +385,12 @@ update_predownloaded()
 		# TODO: correct .* removing
 		rm -rf $(ls -1 | grep -v node_modules) .*
 
+		# remove build related modules we have in system
+		#if [ -d node_modules/node-gyp/ ] ; then
+		rm -rfv node_modules/{npm,node-gyp}/
+		#	ln -s /usr/lib/node_modules/node-gyp node_modules/
+		#fi
+
 		#epm assure jq || fatal
 		#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
         fi
