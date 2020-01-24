@@ -531,15 +531,18 @@ do
 			if ! rhas "$GETSOURCE" "ps?://" ; then
 				if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
 					info "No URL. Skipping $GETSOURCE downloading"
-					continue
 				else
 					# only for main source
-					warning "$SN $GETSOURCE has no URL"
-					continue
+					warning "$SN $GETSOURCE has no URL. Skipping... "
 				fi
+				continue
+			else
+				download_any_tarball "$GETSOURCE" "$FTB"
+				DOWNLOADSOME=1
 			fi
-			download_any_tarball "$GETSOURCE" "$FTB"
-			DOWNLOADSOME=1
+
+		# TODO: detect tar: @version@:. in rule
+
 		# TODO: fix download single packed file
 		#else
 		#		download_to "$GETSOURCE" "$FTB"
