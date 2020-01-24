@@ -600,21 +600,18 @@ do
 
 			update_post_git_submodules
                         source_postupdate_hook
-			# TODO: make plugins
-			update_predownloaded development
-			update_predownloaded production
-
 			#docmd gammit
 			#docmd git commit -m "merge $FTB with rpmgs script"
 			DOWNLOADSOME=1
 		elif is_gear ; then
 			commit_tarball "$FTB"
                         source_postupdate_hook
-			# TODO: make plugins
-			update_predownloaded development
-			update_predownloaded production
 			DOWNLOADSOME=1
 		fi
+
+		# TODO: make plugins
+		update_predownloaded development
+		update_predownloaded production
 
 		echog "DONE with $FTB"
 
