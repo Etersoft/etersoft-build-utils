@@ -426,12 +426,24 @@ if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; 
         # TODO: rpm-uscan 0.20.2.17.11 or above
         $EPMCMD assure rpm-uscan
         $EPMCMD assure gear-uupdate
-	if ls $(get_root_git_dir)/.gear | grep \.watch$ ; then
+        if ls $(get_root_git_dir)/.gear | grep \.watch$ ; then
             docmd rpm-uscan --force-action gear-uupdate
             exit 0
         else
             warning "there are no .watch files in (get_root_git_dir)/.gear, skip rpm-uscan"
         fi
+    elif gear-rules-verify | grep -Eq "Ready for external VCS update" ; then
+        #[ -n "$GSSETVERSION" ] && warning "we will ignore version and update to the latest version from watch file"
+        # TODO: rpm-uscan 0.20.2.17.11 or above
+        # https://www.altlinux.org/Gear/remotes
+        $EPMCMD assure gear-remotes-uscan perl-Gear-Remotes
+        $EPMCMD assure gear-commit gear
+        docmd gear-remotes-restore
+        docmd gear-remotes-uscan
+        docmd gear-commit
+        # TODO: skip downloading for tarball for this branch
+    else
+        warning "skipping"
     fi
 fi
 
