@@ -294,7 +294,7 @@ update_post_git_submodules()
 
 	info "Detected post git submodules hook"
 
-	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*-postsubmodules" || fatal "missed tar:.gear/$BASENAME-postmodules in $(get_root_git_dir)/.gear/rules"
+	cat $(get_root_git_dir)/.gear/rules | grep -q "tar:.*-postsubmodules" || fatal "missed tar:.gear/$BASENAME-postsubmodules in $(get_root_git_dir)/.gear/rules"
 	[ -s $(get_root_git_dir)/.gitmodules ] || fatal "there is no .gitmodules file in repo root"
 
 	cd $(get_root_git_dir) || fatal
@@ -576,8 +576,9 @@ do
 			docmd git remote add upstream $GETSOURCEGIT
 			docmd git fetch --tags upstream || fatal
 			#TODO check tag: v%version or %version
-			[ -n "$GSSETVERSION" ] || fatal "Sorry, I don't know new version"
-			if [ "$GSSETVERSION" = "HEAD" ] ; then
+			if [ -z "$GSSETVERSION" ] ; then
+				warning "Empty new version variable"
+			elif [ "$GSSETVERSION" = "HEAD" ] ; then
 				docmd git merge upstream/master
 			else
 				# some heuristics
