@@ -432,8 +432,8 @@ if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; 
         # TODO: rpm-uscan 0.20.2.17.11 or above
         $EPMCMD assure rpm-uscan
         $EPMCMD assure gear-uupdate
-        if ls $(get_root_git_dir)/.gear | grep \.watch$ ; then
-            docmd rpm-uscan --force-action gear-uupdate
+        if ls $(get_root_git_dir)/.gear | grep \.watch$ || ls $(get_root_git_dir) | grep \.watch$ ; then
+            docmd rpm-uscan -v --force-action gear-uupdate
             exit 0
         else
             warning "there are no .watch files in (get_root_git_dir)/.gear, skip rpm-uscan"
