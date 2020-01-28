@@ -202,7 +202,7 @@ set_version()
 		VERMAJOR=
 	fi
 
-	MAJORMACROS=`grep "\%define[[:space:]]\(\|ver_\)major" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
+	MAJORMACROS=`grep "\%define[[:space:]]\(\|ver_\)major[[:space:]]" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
 	if [ -n "${MAJORMACROS}" ] ; then
 		# Change major define
 		test -n "$VERMAJOR" && subst "s|\(\%define[[:space:]]$MAJORMACROS[[:space:]]\).*|\1$VERMAJOR|" $SPEC
