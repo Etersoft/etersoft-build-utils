@@ -357,6 +357,24 @@ update_predownloaded()
                 COMMITMSG="update predownloaded-$MODE with a hook script"
 	fi
 
+	#### composer only part
+	if [ -s "./composer.json" ] ; then
+		local COMMITMSG=''
+                local PRODUCTION=''
+
+		[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
+
+		info "Detected composer install hook, running composer install $PRODUCTION ..."
+		a= composer install $PRODUCTION || fatal
+		COMMITMSG="update php modules with composer install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+    		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			sh $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		fi
+	fi
+	#### end of composer only part
+
 	#### npm only part
 	if [ -s "./package.json" ] ; then
 
