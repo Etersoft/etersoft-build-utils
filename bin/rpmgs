@@ -443,9 +443,13 @@ fi
 test -z "$LISTNAMES" && print_error
 
 if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
+    # need for gear-rules-verify
+    # TODO: why we have changed dir to a spec placement before?
+    cd $(get_root_git_dir)
     docmd gear-rules-verify
-    gear-rules-verify 2>&1 | grep -q "gear-rules-verify should be run in clean repository" && warning "gear-rules-verify should be run in clean repository"
-    if gear-rules-verify | grep -q "Ready for tarball update" ; then
+    if gear-rules-verify 2>&1 | grep -q "gear-rules-verify should be run in clean repository" ; then
+        warning "gear-rules-verify should be run in clean repository, skipping"
+    elif gear-rules-verify | grep -q "Ready for tarball update" ; then
         #[ -n "$GSSETVERSION" ] && warning "we will ignore version and update to the latest version from watch file"
         # TODO: rpm-uscan 0.20.2.17.11 or above
         $EPMCMD assure rpm-uscan
@@ -469,6 +473,7 @@ if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; 
     else
         warning "skipping"
     fi
+    cd - >/dev/null
 fi
 
 [ -z "$GSSETRELEASE" ] || GSSKIPADDCHANGELOG=1
@@ -555,11 +560,16 @@ do
 			if ! rhas "$GETSOURCE" "ps?://" ; then
 				if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
 					info "No URL. Skipping $GETSOURCE downloading"
+					continue
 				else
 					# only for main source
-					warning "$SN $GETSOURCE has no URL. Skipping... "
+					if [ -s $(get_root_git_dir)/.gear/upstream/remotes ] ; then
+						warning "$SN $GETSOURCE has no URL. We will try use existed .gear/upstream/remotes"
+					else
+						warning "$SN $GETSOURCE has no URL. Skipping... "
+						continue
+					fi
 				fi
-				continue
 			else
 				download_any_tarball "$GETSOURCE" "$FTB"
 				DOWNLOADSOME=1
@@ -584,21 +594,22 @@ do
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
 			DOWNLOADSOME=1
-		elif [ -n "${GETSOURCEGIT}" ] ; then
+		elif [ -n "${GETSOURCEGIT}" ] || [ -s $(get_root_git_dir)/.gear/upstream/remotes ] ; then
                         if [ -s $(get_root_git_dir)/.gear/upstream/remotes ] ; then
                             docmd gear-remotes-restore
+                        else
+				echog "Try to fetch ${GETSOURCEGIT} for $spec"
+				#TODO error if incompatible
+				docmd git remote add upstream $GETSOURCEGIT
                         fi
-			echog "Try to fetch ${GETSOURCEGIT} for $spec"
-			#TODO check upstream
-			#TODO error if incompatible
-			docmd git remote add upstream $GETSOURCEGIT
-			docmd git fetch --tags upstream || fatal
-			#TODO check tag: v%version or %version
+			docmd git fetch --tags upstream
+
 			if [ -z "$GSSETVERSION" ] ; then
 				warning "Empty new version variable"
 			elif [ "$GSSETVERSION" = "HEAD" ] ; then
 				docmd git merge upstream/master
 			else
+				# check for GSSETVERSION tag
 				# some heuristics
 				rc=1
 				alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
