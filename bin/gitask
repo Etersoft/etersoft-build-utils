@@ -173,7 +173,7 @@ if [ "$1" = "commit" ] ; then
 	MESSAGE=''
 
 	if [ "$1" = "-m" ] ; then
-		MESSAGE="$1 $2"
+		MESSAGE="$1 ${2/ /_}"
 		shift 2
 	fi
 
@@ -210,7 +210,7 @@ if [ "$1" = "run" ] ; then
 		if echo "$1" | grep -qv "^-" ; then
 			TASK="$1"
 		elif [ "$1" = "-m" ] ; then
-			MESSAGE="$1 $2"
+			MESSAGE="$1 ${2/ /_}"
 			shift
 		elif [ "$1" = "--commit" ] ; then
 			COMMIT=1
