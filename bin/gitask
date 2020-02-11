@@ -165,28 +165,6 @@ if [ "$1" = "add" ] ; then
 	fi
 fi
 
-
-
-if [ "$1" = "commit" ] ; then
-	shift
-	COMMIT=''
-	MESSAGE=''
-
-	if [ "$1" = "-m" ] ; then
-		MESSAGE="$1 ${2/ /_}"
-		shift 2
-	fi
-
-	TASKLIST="$*"
-	if [ -z "$TASKLIST" ] ; then
-		TASKLIST="$(get_last)" || fatal "Can't get last task"
-	fi
-	for TASK in $TASKLIST ; do
-		docmd ssh $GEARHOST task run $MESSAGE --commit "$TASK"
-	done
-	exit
-fi
-
 if [ "$1" = "show" ] ; then
 	shift
 	COMMIT=''
@@ -198,40 +176,32 @@ if [ "$1" = "show" ] ; then
 	exit
 fi
 
-if [ "$1" = "run" ] ; then
+if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
+	COMMIT=''
+        [ "$1" = "commit" ] && COMMIT="--commit"
 	shift
 
-	COMMIT=''
-	PARAMTEST=''
-	TASK=''
+	TASKLIST=''
 	MESSAGE=''
 
 	while [ -n "$1" ] ; do
+		# TODO: check for number?
 		if echo "$1" | grep -qv "^-" ; then
-			TASK="$1"
+			TASKLIST="$TASKLIST $1"
 		elif [ "$1" = "-m" ] ; then
-			MESSAGE="$1 ${2/ /_}"
+			MESSAGE="$1 ${2// /_}"
 			shift
-		elif [ "$1" = "--commit" ] ; then
-			COMMIT=1
-		elif [ "$1" = "--force" ] ; then
-			COMMIT=1
-		elif [ "$1" = "--test" ] || [ "$1" = "--test-only" ] ; then
-			PARAMTEST='--test-only'
 		else
-			info "Unknown param $1"
+			fatal "Unknown param $1"
 		fi
 		shift
 	done
 
-	[ -n "$TASK" ] || TASK="$(get_last)" || fatal "Can't get last task"
+	[ -n "$TASKLIST" ] || TASKLIST="$(get_last)" || fatal "Can't get last task"
 
-	# keep test status
-	get_test_status "$TASK" && PARAMTEST='--test-only'
-	# force reset test status
-	[ -n "$COMMIT" ] && PARAMTEST='--commit'
-
-	docmd ssh $GEARHOST task run $MESSAGE $PARAMTEST "$TASK"
+	for TASK in $TASKLIST ; do
+		docmd ssh $GEARHOST task run $MESSAGE $COMMIT "$TASK"
+	done
 	exit
 fi
 
