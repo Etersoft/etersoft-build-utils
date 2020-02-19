@@ -11,12 +11,13 @@ set_girar_host $1 && shift
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "gitask — ssh gear.alt task wrapper"
-	echo "Use: gitask [GIRAR] [task|add|log|show|ls|quota]"
+	echo "Use: gitask [GIRAR] [new|run|commit|add|deps|copy|find|log|show|ls]"
 	echo "$HELP_GIRAR"
 	echo "     --help - help"
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	echo
 	echo "Examples:"
+	echo "     ls                          - list tasks"
 	echo "     new    [p8]                 - create new task [on p8 branch, Sisyphus by default]"
 	echo "     run    [-m <message>] [NNNN]               - run task NNNN"
 	echo "     commit [-m <message>] [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
@@ -46,21 +47,24 @@ get_test_status()
 	ssh $GEARHOST task ls | grep "^#$1 " | grep "\[test-only\]"
 }
 
+# get subtask number from TASKNUMBER for PROJECTNAME
+get_subtask()
+{
+	ssh $GEARHOST task show $1 | grep "/$2.git" | sed -e "s|^ \([0-9]*\):.*|\1|g"
+}
+
 # TODO: acl
 
 $EPMCMD assure girar-show girar-utils
 
 if [ "$1" = "get" ] ; then
 	if [ "$1 $2" = "get subtask" ] ; then
-		[ -n "$3" ] || fatal "get subtask TASK PROJECTNMAE"
-		# get subtask number from TASKNUMBER for PROJECTNAME
-		SUBTASK="$(ssh $GEARHOST task show $3 | grep "/$4.git" | sed -e "s|^ \([0-9]*\):.*|\1|g")" || fatal
-		#"
-		echo "$SUBTASK"
+		[ -n "$3" ] || fatal "get subtask TASK PROJECTNAME"
+		[ -n "$4" ] || fatal "get subtask $3 PROJECTNAME"
+		get_subtask "$3" "$4"
 		exit
 	elif [ "$1 $2 $3" = "get last " ] || [ "$1 $2 $3" = "get last task" ] ; then
-		TASK="$(get_last)" || fatal
-		echo "$TASK"
+		get_last
 		exit
 	else
 		fatal "Unknown command $1 $2"
@@ -136,13 +140,19 @@ if [ "$1" = "copy" ] ; then
 fi
 
 if [ "$1" = "add" ] ; then
+	SUBTASK=''
 	ADDCMD=''
-	ADDCMDLIST="del copy rebuild"
+	ADDCMDLIST="del copy repo rebuild"
 	# add TASKNUMBER package
 	if isnumber "$2" && estrlist has "$3" $ADDCMDLIST ; then
 		TASK="$2"
 		ADDCMD="$3"
 		shift 3
+	elif isnumber "$2" && isnumber "$3" && estrlist has "$4" $ADDCMDLIST ; then
+		TASK="$2"
+		SUBTASK="$3"
+		ADDCMD="$4"
+		shift 4
 	elif estrlist has "$2" $ADDCMDLIST ; then
 		TASK="$(get_last)"
 		ADDCMD="$2"
@@ -159,7 +169,13 @@ if [ "$1" = "add" ] ; then
 
 		[ -n "$PACKAGELIST" ] || fatal "no packages"
 		for PACKAGE in $PACKAGELIST ; do
-			docmd ssh $GEARHOST task add $TASK $ADDCMD $PACKAGE
+			ST="$(get_subtask $TASK $PACKAGE)"
+			if [ -n "$ST" ] ; then
+				info "$PACKAGE already present in the task $TASK as subtask $ST, replacing ..."
+				docmd ssh $GEARHOST task delsub $TASK $ST
+				[ -n "$SUBTASK" ] || SUBTASK="$ST"
+			fi
+			docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
 		done
 		exit
 	fi
