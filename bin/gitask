@@ -130,8 +130,8 @@ if [ "$1" = "copy" ] ; then
 	[ "$1" = "from" ] && FROMSTR="$2"
 
 	[ -n "$PACKAGELIST" ] || fatal "no packages"
-	docmd ssh $GEARHOST task new $TARGET
-	TASK="$(get_last)"
+	showcmd ssh $GEARHOST task new $TARGET
+	TASK="$(ssh $GEARHOST task new $TARGET | head -n1)" || fatal
 	for PACKAGE in $PACKAGELIST ; do
 		docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR
 	done
