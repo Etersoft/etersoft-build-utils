@@ -157,28 +157,25 @@ if [ "$1" = "add" ] ; then
 		TASK="$(get_last)"
 		ADDCMD="$2"
 		shift 2
+	else
+		fatal "don't support $1 $2 command"
 	fi
 
-	# allow package list for $ADDCMDLIST commands
-	if [ -n "$ADDCMD" ] ; then
-		PACKAGELIST=''
-		while [ -n "$1" ] ; do
-			PACKAGELIST="$PACKAGELIST $1"
-			shift
-		done
+	[ -n "$1" ] || fatal "no packages"
 
-		[ -n "$PACKAGELIST" ] || fatal "no packages"
-		for PACKAGE in $PACKAGELIST ; do
-			ST="$(get_subtask $TASK $PACKAGE)"
-			if [ -n "$ST" ] ; then
-				info "$PACKAGE already present in the task $TASK as subtask $ST, replacing ..."
-				docmd ssh $GEARHOST task delsub $TASK $ST
-				[ -n "$SUBTASK" ] || SUBTASK="$ST"
-			fi
-			docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
-		done
-		exit
-	fi
+	while [ -n "$1" ] ; do
+		PACKAGE="$1"
+		[ "$ADDCMD" = "repo" ] && PACKAGE="$1 $2" && shift
+		shift
+		ST="$(get_subtask $TASK $PACKAGE)"
+		if [ -n "$ST" ] ; then
+			info "$PACKAGE already present in the task $TASK as subtask $ST, replacing ..."
+			docmd ssh $GEARHOST task delsub $TASK $ST
+			[ -n "$SUBTASK" ] || SUBTASK="$ST"
+		fi
+		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
+	done
+	exit
 fi
 
 if [ "$1" = "show" ] ; then
