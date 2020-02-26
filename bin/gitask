@@ -96,8 +96,8 @@ fi
 
 if [ "$1" = "ls" ] ; then
 	shift
-	if [ "$1" = "--all" ] ; then
-		ssh $GEARHOST task ls "$@"
+	if [ "$1" = "--all" ] || [ "$1" = "-a" ] ; then
+		docmd ssh $GEARHOST task ls --all
 		exit
 	fi
 	# TODO: with arg(s) — subtask
