@@ -339,14 +339,14 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		cd - >/dev/null
 	done
 
-	if [ -n "$TASKNUMBER" ] ; then
-		showcmd "GIT_ALT=$GEARHOST girar-show $TASKNUMBER@"
-		GIT_ALT=$GEARHOST girar-show "$TASKNUMBER@"
-	fi
-
 	# if more then one spec, use common task
 	if [ "$PREPARETASK" = "internal" ] || [ -n "$RUNTASK" ] ; then
 		docmd ssh $GEARHOST task run $TESTONLY $TASKNUMBER
+	fi
+
+	if [ -n "$TASKNUMBER" ] ; then
+		showcmd "GIT_ALT=$GEARHOST girar-show $TASKNUMBER@"
+		GIT_ALT=$GEARHOST girar-show "$TASKNUMBER@"
 	fi
 
 	exit
