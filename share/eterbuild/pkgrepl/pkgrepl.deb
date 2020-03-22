@@ -391,3 +391,8 @@ perl-podlators|perl
 libpixman-devel|libpixman-1-dev
 xorg-proto-devel|x11proto-core-dev
 libtxc_dxtn|
+python-module-psutil|python-psutil
+
+bashrc|
+libnetapi-devel|
+python-module-Cython|cython

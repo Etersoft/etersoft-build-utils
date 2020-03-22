@@ -1,10 +1,12 @@
+kernel-build-tools|kernel-build-tools kernel-headers-modules-un-def kernel-headers-modules-std-def
+
 cifs-utils|cifs-utils
 xorg-x11-proto-devel|
 
-libwxGTK3.0|libwxGTK3.1
-libwxGTK3.0-devel|libwxGTK3.1-devel
-libwxGTK3.1|libwxGTK3.1
-libwxGTK3.1-devel|libwxGTK3.1-devel
+libwxGTK3.0|libwxGTK3.0
+libwxGTK3.0-devel|libwxGTK3.0-devel
+libwxGTK3.1|libwxGTK3.0
+libwxGTK3.1-devel|libwxGTK3.0-devel
 
 libsrtp-devel|libsrtp-devel
 libsrtp1|libsrtp1

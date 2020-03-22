@@ -58,6 +58,7 @@ gcc5-c++|g++-6.3 gcc-multilib
 #rpm-build|rpm
 
 libmpg123-devel|libmpg123-dev
+libmpg123|libmpg123-0
 #NX
 xkbcomp|x11-xkb-utils
 xorg-font-utils|xfonts-utils
@@ -72,6 +73,4 @@ libwxGTK|libwxgtk3.0-0v5
 libwxGTK-devel|libwxgtk3.0-dev
 
 cifs-utils|cifs-utils
-bashrc|
-python-module-psutil|python-psutil
 libcrypto1.1|libssl1.1

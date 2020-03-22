@@ -260,6 +260,7 @@ libfontconfig|fontconfig
 
 # TODO: сделать замену всех python-module- на просто python-
 python-module-setuptools|python-setuptools
+python-module-psutil|python2-psutil
 
 xorg-util-macros|xorg-x11-util-macros
 
@@ -287,6 +288,8 @@ perl-podlators|perl
 libkrb5-devel|krb5-devel
 
 bash4|bash
+bashrc|
+libnetapi-devel|
 
 xxd|vim-common
 libtxc_dxtn|

@@ -1,5 +1,6 @@
 bashrc|
-python-module-psutil|python-psutil
 libreadline|libreadline8
 libreadline7|libreadline8
 libreadline-devel|libreadline-dev
+libicu|libicu63
+libicu64|libicu63

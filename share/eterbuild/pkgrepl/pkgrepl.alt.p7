@@ -2,6 +2,7 @@
 libudev1|libudev1
 libpng15|libpng15
 libpng16|libpng15
+libtiff5|libtiff3
 
 libsrtp-devel|libsrtp
 libsrtp1|libsrtp

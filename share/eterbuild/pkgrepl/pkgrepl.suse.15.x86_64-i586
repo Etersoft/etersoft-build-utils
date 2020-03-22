@@ -3,9 +3,9 @@
 libXScrnSaver-devel|
 libunixODBC-devel|unixODBC-devel
 #libunixODBC-devel|
-libssl-devel|libopenssl-1_1-devel
-
-
-
-
-
+#libssl-devel|libopenssl-devel
+libXpm-devel|libXpm-devel-32bit
+fontconfig-devel|fontconfig-devel-32bit
+libGLU-devel|glu-devel-32bit
+libgnutls30|libgnutls30
+libieee1284|

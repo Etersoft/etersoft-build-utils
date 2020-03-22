@@ -21,7 +21,3 @@ libgphoto2-devel|
 libgphoto2|libgphoto2-6
 libgphoto2-6|libgphoto2-6
 libgphoto2_port-12|libgphoto2-6
-
-libssl10|libopenssl1_0_0
-libcrypto10|libopenssl1_0_0
-libssl-devel|libopenssl-devel

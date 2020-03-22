@@ -16,10 +16,6 @@ python-module-Cython|python-Cython
 #libXScrnSaver-devel-32bit|xorg-x11-devel
 
 
-libicu53_1|libicu60_2
-libcrypto10|libopenssl1_0_0
-libssl10|libopenssl1_0_0
-
 libunixODBC-devel|unixODBC-devel
 #unixODBC-devel|
 libwxGTK3.1-devel|wxWidgets-3_0-devel

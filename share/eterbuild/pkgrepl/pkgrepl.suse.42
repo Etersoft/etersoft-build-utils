@@ -5,6 +5,8 @@ libGLU-devel|
 libsmbclient|libsmbclient0
 libcrypto10|libopenssl1_0_0
 libssl10|libopenssl1_0_0
+libcrypto1.1|libopenssl1_0_0
+libssl1.1|libopenssl1_0_0
 
 xorg-proto-devel|xorg-x11-proto-devel
 libpixman-devel|libpixman-1-0-devel

@@ -1,3 +1,4 @@
+kernel-build-tools|kernel-build-tools kernel-headers-modules-std-def
 #rpm-build-intro|rpm-build-altlinux-compat
 libudev1|libudev1
 libpng15|libpng15
