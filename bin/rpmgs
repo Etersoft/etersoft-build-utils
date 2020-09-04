@@ -233,7 +233,7 @@ commit_tarball_to_dir()
 		#local OLDFILE=$(echo "$CURNAME")
 		cp -v "$TARBALL" "$CURNAME"
 		docmd git add "$CURNAME"
-		docmd git commit -m "just commit $(basename $CURNAME) with rpmgs script"
+		docmd git commit -m "just commit $(basename "$CURNAME") with rpmgs script"
 		return 0
 	fi
 
@@ -271,6 +271,7 @@ commit_tarball()
 		[ -n "$CURNAME" ] || fatal "There is no correct '$EXTTARBALL:' line nor 'copy:' in gear rules file for $(basename "$TARBALL"), needed for commit tarball"
 		EXTTARBALL="copy"
 	fi
+	echo "$CURNAME" | grep -q "[\*\?]" && fatal "$CURNAME for $TARBALL got incorrectly"
 	# FIXME:
 	# use real path for download
 	#is_gear_sources && CURNAME=
@@ -370,7 +371,7 @@ update_predownloaded()
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
     		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
-			sh $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+			sh -x $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 	fi
 	#### end of composer only part
@@ -387,12 +388,12 @@ update_predownloaded()
 		[ "$MODE" = "production" ] && PRODUCTION='--production'
 
       		info "Detected npm install hook, running npm install $PRODUCTION ..."
-		a= npm install $PRODUCTION || fatal
+		a= npm install --verbose --ignore-scripts $PRODUCTION || fatal
 		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
     		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
-			sh $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+			sh -x $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
                 # prune removes modules not listed in package.json
@@ -405,7 +406,7 @@ update_predownloaded()
 
 		# remove build related modules we have in system
 		#if [ -d node_modules/node-gyp/ ] ; then
-		rm -rfv node_modules/{npm,node-gyp}/
+		rm -rfv node_modules/{npm,node-gyp}/ node_modules/.bin/{npm,npx,node-gyp}
 		#	ln -s /usr/lib/node_modules/node-gyp node_modules/
 		#fi
 
