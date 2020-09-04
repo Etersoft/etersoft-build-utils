@@ -254,7 +254,7 @@ if [ -n "$SIGNTAG$SETTAG" ] ; then
 
 		# check release
 		build_rpms_name "$ln"
-		pkg_release_check $RELEASE
+		#pkg_release_check $RELEASE
 
 		check_gear_and_tag
 
@@ -306,7 +306,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 
 		# check release
 		build_rpms_name "$ln"
-		pkg_release_check $RELEASE
+		#pkg_release_check $RELEASE
 
 		PROJECTNAME=$(get_repo_name)
 
@@ -369,7 +369,7 @@ fi
 ######## Sign src.rpm and upload it
 
 # check package releases according to ALT
-pkg_release_check $LISTBUILT
+#pkg_release_check $LISTBUILT
 
 # if only one file
 if [ -r "$LISTBUILT" ] ; then
