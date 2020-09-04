@@ -50,10 +50,16 @@ get_tardir_from_rules()
 	local tar="$1"
 	local tarname="$2"
 	local packname="$(basename "$tarname" .$tar)"
+	# FIXME: hack (drop version)
+	local packnamewov="$(echo $packname | sed -e "s|-[0-9].*||")"
 	local dir
 	assert_var tar packname
 	# firstly try get dir by name=
-	dir=$(print_gear_rules | grep "$tar *:" | egrep "name=$packname([[:space:]]|$)" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
+	dir=$(print_gear_rules | grep "$tar *:" | egrep "name=$packname([[:space:]]|$)" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1) #"
+	# if can't get by name, try get by name from rule without name=
+	if [ -z "$dir" ] ; then
+		dir=$(print_gear_rules | egrep "$tar *: *$packnamewov([[:space:]]|$)" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1) #"
+	fi
 	# if can't get by name, use first rule without name=
 	if [ -z "$dir" ] ; then
 		dir=$(print_gear_rules | grep "$tar *:" | grep -v "name=" | sed -e "s|$tar *: *||g" | sed -e "s| .*||g" | head -n1)
