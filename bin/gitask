@@ -196,13 +196,16 @@ if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
 
 	TASKLIST=''
 	MESSAGE=''
+	MESSAGETEXT=''
 
 	while [ -n "$1" ] ; do
 		# TODO: check for number?
 		if echo "$1" | grep -qv "^-" ; then
 			TASKLIST="$TASKLIST $1"
 		elif [ "$1" = "-m" ] ; then
-			MESSAGE="$1 ${2// /_}"
+			#MESSAGE="$1 ${2// /_}"
+			MESSAGE="-m -"
+			MESSAGETEXT="$2"
 			shift
 		else
 			fatal "Unknown param $1"
@@ -213,7 +216,7 @@ if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
 	[ -n "$TASKLIST" ] || TASKLIST="$(get_last)" || fatal "Can't get last task"
 
 	for TASK in $TASKLIST ; do
-		docmd ssh $GEARHOST task run $MESSAGE $COMMIT "$TASK"
+		echo "$MESSAGETEXT" | docmd ssh $GEARHOST task run $MESSAGE $COMMIT "$TASK"
 	done
 	exit
 fi
