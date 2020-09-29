@@ -31,7 +31,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
 	echo "     log    NNNN                 - show build log for task NNNN"
 	echo "     show   NNNN                 - show subtask list for task NNNN"
-	echo "     quota                       - show quota on the build server"
+	echo "     quota                       - show quota on the git server"
 	echo "     cancel NNNN                 - cancel task NNNN"
 	echo "     rebuild --help              - rebuild package"
 	exit 0
@@ -108,7 +108,7 @@ if [ "$1" = "ls" ] ; then
 fi
 
 if [ "$1" = "quota" ] ; then
-	docmd ssh $GEARHOST quota
+	docmd ssh $GIRARHOST quota
 	exit
 fi
 
