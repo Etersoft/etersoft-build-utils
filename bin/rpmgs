@@ -244,7 +244,7 @@ commit_tarball_to_dir()
 		if [ -s ./.gear/postdownload-hook ] ; then
 			info "Detected ./.gear/postdownload-hook, running it in $CURNAME dir ..."
 			cd $CURNAME || fatal
-			sh ../.gear/postdownload-hook
+			sh -x ../.gear/postdownload-hook
 			cd - >/dev/null
 		fi
 		# TODO: add GETSOURCEURL url
@@ -354,7 +354,7 @@ update_predownloaded()
 
 	if [ -s $RGD/.gear/predownloaded-preinstall-hook ] ; then
     		info "Detected .gear/predownloaded-preinstall-hook, running it ..."
-		sh $RGD/.gear/predownloaded-preinstall-hook $MODE $VERSION
+		sh -x $RGD/.gear/predownloaded-preinstall-hook $MODE $VERSION
                 COMMITMSG="update predownloaded-$MODE with a hook script"
 	fi
 
