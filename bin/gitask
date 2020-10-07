@@ -18,7 +18,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo
 	echo "Examples:"
 	echo "     ls                          - list tasks"
-	echo "     new    [p8]                 - create new task [on p8 branch, Sisyphus by default]"
+	echo "     new    [branch]             - create new task on branch (Sisyphus by default)"
 	echo "     run    [-m <message>] [NNNN]               - run task NNNN"
 	echo "     commit [-m <message>] [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
 	echo "     add del package [package2]  - add package remove command"
@@ -33,6 +33,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     show   NNNN                 - show subtask list for task NNNN"
 	echo "     quota                       - show quota on the git server"
 	echo "     cancel NNNN                 - cancel task NNNN"
+	echo "     acl [branch] show PACKAGE            - show acl "
+	echo "     acl [branch] show PACKAGE add maintainer - add acl "
 	echo "     rebuild --help              - rebuild package"
 	exit 0
 fi
@@ -75,6 +77,36 @@ if [ "$1" = "find" ] ; then
 	shift
 	#showcmd "$GEARHOST>" find-packages "$@"
 	docmd ssh $GITHOST find-package "$@"
+	exit
+fi
+
+set_if_matched()
+{
+    local i
+    local m="$1"
+    shift
+    for i in $* ; do
+        echo "$m" | grep "^$i$" && return
+    done
+    echo "Sisyphus"
+    return 1
+}
+
+# acl [p9] show mc | add mc lav
+if [ "$1" = "acl" ] ; then
+	shift
+	BINARYREPO=$(set_if_matched $1 "Sisyphus [ptc][6-9] [ptc][6-9]\.[0-9]") && shift
+	COMMAND="$1"
+	PROJECTNAME="$2"
+	[ -z "$PROJECTNAME" ] && PROJECTNAME="$COMMAND" && COMMAND="show"
+	OPERAND="$3"
+	showcmd ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $OPERAND
+	echo "$GEARHOST:$BINARYREPO ACL for $PROJECTNAME:"
+	if [ "$COMMAND" = "show" ] ; then
+		ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND | sed -e "s|^$PROJECTNAME||"
+	else
+		ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $OPERAND
+	fi
 	exit
 fi
 
