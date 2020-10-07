@@ -4,58 +4,13 @@
 # Public domain
 
 
-filter_strip_spaces()
-{
-        # possible use just
-        #xargs echo
-        sed -e "s| \+| |g" | \
-                sed -e "s|^ ||" | sed -e "s| \$||"
-}
-
 # TODO: see etersoft-build-utils/tests/test_isnumber.sh
 isnumber()
 {
-	echo "$*" | filter_strip_spaces | grep -q "^[0-9]\+$"
+	echo "$*" | estrlist filter_strip_spaces | grep -q "^[0-9]\+$"
 }
 
-strip_spaces()
-{
-        echo "$*" | filter_strip_spaces
-}
-
-# remove_from_list "1." "11 12 21 22" -> "21 22"
-remove_from_list()
-{
-        local i
-        local RES=
-        for i in $2 ; do
-                echo "$i" | grep -q -w "$1" || RES="$RES $i"
-        done
-        strip_spaces "$RES"
-}
-
-# Args: LIST1 LIST2
-# do_exclude_list print LIST2 exclude fields contains also in LIST1
-# Example: do_exclude_list "1 3" "1 2 3 4" -> "2 4"
-do_exclude_list()
-{
-        estrlist exclude "$@"
-}
-
-# regexp_exclude_list "22 1." "11 12 21 22" -> "21"
-regexp_exclude_list()
-{
-        estrlist reg_wordexclude "$@"
-}
-
-estrlist()
-{
-        # can't use fatal here due $(estrlist) using
-        [ -x "$ETERBUILDBIN/estrlist" ] || return
-        $ETERBUILDBIN/estrlist "$@"
-}
-
-# CHECKME: the same like estrlist has ?
+# the same like estrlist match (reg_has)
 # Note: used egrep! write '[0-9]+(first|two)', not '[0-9]\+...'
 rhas()
 {
@@ -71,7 +26,7 @@ drop_args()
     local ARGS="$1"
     shift
     local LISTIGNORE="$@"
-    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | filter_strip_spaces
+    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | estrlist filter_strip_spaces
     #echo "$ARGS" | \
     #    ( for i in $LISTIGNORE ; do sed -e "s|-$i||g" ;  done ) #| sed -e "s| +| |g"
 }

@@ -37,7 +37,7 @@ rpmreqs_to_apt()
 {
 	local REQLIST="$@"
 	local PACKAGES=`$SUDO apt-get install --print-uris $REQLIST | grep "is already the newest version" | cut -f1 -d" " | sort -u`
-	do_exclude_list "$ALREADYHANDLEDAPT" "$PACKAGES"
+	estrlist exclude "$ALREADYHANDLEDAPT" "$PACKAGES"
 }
 
 install_by_requires()
@@ -54,7 +54,7 @@ install_by_requires()
 		fi
 
 		echog "Autoskip $SKIPPACKAGES, try again..."
-		RLIST=$(do_exclude_list "$SKIPPACKAGES" "$RLIST")
+		RLIST=$(estrlist exclude "$SKIPPACKAGES" "$RLIST")
 		install_by_requires "$RLIST"
 	fi
 }
@@ -71,7 +71,7 @@ install_packages()
 	docmd $SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
 	REQLIST="$($ETERBUILDBIN/rpmreqs $LIST)"
-	REQLIST=$(regexp_exclude_list "$ALREADYHANDLEDRPM" "$REQLIST")
+	REQLIST=$(estrlist regexp_exclude "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }
 	install_by_requires $REQLIST

@@ -160,7 +160,7 @@ clean_pkgreq()
 		echo "$i" | grep "[()<=>]" >/dev/null && continue
 		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
 		echo -n "$i " | sed -e "s|[,}]||g"
-	done | filter_strip_spaces
+	done | estrlist filter_strip_spaces
 }
 
 # Print list of all build requires in ALT notation
@@ -178,7 +178,7 @@ print_pkgreq()
 # Print list of all groups
 print_grpreq()
 {
-	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | filter_strip_spaces
+	eval_spec ${1} | grep "^Group" | sed -e "s|^.*:||g" | sort -u | estrlist filter_strip_spaces
 }
 
 # FIXME: need improvement

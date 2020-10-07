@@ -414,8 +414,8 @@ do
 		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
 	fi
 done
-LISTNAMES=$(strip_spaces "$LISTNAMES")
-LISTARGS=$(strip_spaces "$LISTARGS")
+LISTNAMES=$(estrlist strip_spaces "$LISTNAMES")
+LISTARGS=$(estrlist strip_spaces "$LISTARGS")
 [ -n "$VERBOSE" ] && echo "LISTNAMES=$LISTNAMES LISTARGS=$LISTARGS" || :
 }
 

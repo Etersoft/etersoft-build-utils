@@ -263,7 +263,7 @@ if [ -n "$UPDATECACHE" ] ; then
     exit 0
 fi
 
-PKGNAME=$(strip_spaces $LISTRPMARGS $LISTNAMES)
+PKGNAME=$(estrlist strip_spaces $LISTRPMARGS $LISTNAMES)
 
 if [ -z "$ALLSYSTEM$UPDATECACHE" ] ; then
 	test -z "$PKGNAME" && fatal "Please run with spec/package name"
