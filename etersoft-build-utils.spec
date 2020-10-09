@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.9.6
+Version: 3.0.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,17 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- gitask: use improved message
+- rpmbs: disable obsoleted checking
+- rpmgs: improve node modules support
+- gear: fix tar_dir_from_rules
+- gitask: fix quota command
+- rpmbs: don't change branch for upload
+- gitask: add acl command (in favor of gacl)
+- rpmgs: verbose preinstall-hook
+- use external estrlist
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.6-alt1
 - gitask: add ls -a support
 - rpmbs: show task always after creating
