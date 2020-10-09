@@ -25,6 +25,7 @@ BuildArchitectures: noarch
 Requires: giter >= 1.10
 Requires: eepm >= 2.1.0
 Requires: erc >= 0.9.2
+Requires: estrlist >= 0.1
 
 Requires: rpm-build
 #Requires: rpm-build-compat >= %altcompat_ver

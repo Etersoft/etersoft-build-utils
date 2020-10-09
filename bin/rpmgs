@@ -388,7 +388,7 @@ update_predownloaded()
 		[ "$MODE" = "production" ] && PRODUCTION='--production'
 
       		info "Detected npm install hook, running npm install $PRODUCTION ..."
-		a= npm install --verbose --ignore-scripts $PRODUCTION || fatal
+		a= npm install --verbose --no-optional --ignore-scripts $PRODUCTION || fatal
 		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
