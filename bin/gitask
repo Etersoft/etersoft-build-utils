@@ -28,6 +28,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     share  NNNN [enable]        - share task NNNN"
 	echo "     deps   NNNN add XXXX        - add deps from XXXX to task NNNN"
 	echo "     copy   NNNN to (p8|p9) [from XX]  - copy package from Sisyphus to (p8|p9) [from XX]"
+	echo "     delsub NNNN (package|subtask)  - remove subtask by number or by package name"
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
 	echo "     log    NNNN                 - show build log for task NNNN"
 	echo "     show   NNNN                 - show subtask list for task NNNN"
@@ -52,7 +53,7 @@ get_test_status()
 # get subtask number from TASKNUMBER for PROJECTNAME
 get_subtask()
 {
-	ssh $GEARHOST task show $1 | grep "/$2.git" | sed -e "s|^ \([0-9]*\):.*|\1|g"
+	ssh $GEARHOST task show $1 | egrep "(/$2.git|:package=$2$)" | sed -e "s|^ \([0-9]*\):.*|\1|g"
 }
 
 # TODO: acl
@@ -141,6 +142,26 @@ fi
 
 if [ "$1" = "quota" ] ; then
 	docmd ssh $GIRARHOST quota
+	exit
+fi
+
+if [ "$1" = "delsub" ] ; then
+	shift 
+	TASK="$1"
+	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
+	shift
+	while [ -n "$1" ] ; do
+		SUBTASK="$1"
+		shift
+		if isnumber $SUBTASK ; then
+			NUMTASK="$1"
+		else
+			NUMTASK="$(get_subtask $TASK $SUBTASK)"
+			info "$SUBTASK -> $NUMTASK"
+		fi
+		[ -z "$NUMTASK" ] && warning "can't find subtask for $SUBTASK, skipped" && continue
+		docmd ssh $GEARHOST task delsub "$TASK" "$NUMTASK"
+	done
 	exit
 fi
 
