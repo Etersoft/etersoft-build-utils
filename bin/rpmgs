@@ -352,9 +352,12 @@ update_predownloaded()
 
 	cd $PSM || fatal
 
+	local RUNHOOK="sh"
+	[ -n "$VERBOSE" ] && RUNHOOK="sh -x"
+
 	if [ -s $RGD/.gear/predownloaded-preinstall-hook ] ; then
-    		info "Detected .gear/predownloaded-preinstall-hook, running it ..."
-		sh -x $RGD/.gear/predownloaded-preinstall-hook $MODE $VERSION
+		info "Detected .gear/predownloaded-preinstall-hook, running it ..."
+		$RUNHOOK $RGD/.gear/predownloaded-preinstall-hook $MODE $VERSION
                 COMMITMSG="update predownloaded-$MODE with a hook script"
 	fi
 
@@ -370,8 +373,8 @@ update_predownloaded()
 		COMMITMSG="update php modules with composer install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
-    		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
-			sh -x $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
 		# drop all exclude vendor
@@ -396,8 +399,8 @@ update_predownloaded()
 		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
-    		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
-			sh -x $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
                 # prune removes modules not listed in package.json
