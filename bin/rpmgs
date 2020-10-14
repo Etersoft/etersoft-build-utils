@@ -373,6 +373,10 @@ update_predownloaded()
     		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
 			sh -x $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
+
+		# drop all exclude vendor
+		# TODO: correct .* removing
+		rm -rf $(ls -1 | grep -v vendor) .*
 	fi
 	#### end of composer only part
 
