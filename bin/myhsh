@@ -26,7 +26,7 @@ phelp()
 	echog "Options:"
 	echog "   -c  build without stuff (without previous built packages)"
 	echog "   -r  remove packages from test hasher"
-	echog "   -b  print binary packages by built list"
+	echog "   -p  print binary packages by built list"
 	echog "   -l  lazy cleanup (before build, not after)"
 
 }
@@ -34,7 +34,7 @@ phelp()
 while getopts :hbclr opt; do
     case $opt in
     h) phelp; exit 0;;
-    b) PRINTBINPKG=1;;
+    p) PRINTBINPKG=1;;
     r) REMOVEPKG=1;;
     l) HASHERARG="$HASHERARG --lazy-cleanup";;
     c) WITHSTUFF="--without-stuff";;
