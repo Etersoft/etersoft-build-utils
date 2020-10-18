@@ -109,15 +109,6 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 		BUILDREQ="BuildRequires: rpm-build-compat >= 1.7.24"
 	fi
 
-	# drop unsuported technologies
-	case $DISTRVERSION in
-		4.0|4.1|5.1|p5|p6)
-			# these systems doesn't support systemd
-			subst "s|^install.*%_unitdir.*|# removed install to _unitdir by rpmbph|g" $SPECNAME
-			subst "s|^%_unitdir.*|# removed pack _unitdir by rpmbph|g" $SPECNAME
-			;;
-	esac
-
 	if is_backported_release $RELEASE ; then
 		# TODO: do not use mask M00
 		docmd set_release $SPECNAME "$(echo "$RELEASE" | sed -e "s|M[0-9][0-9][PCT]|$MDISTR|")"
@@ -129,11 +120,6 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 
 	ADDDEF=""
 	CLEANTEXT=""
-	# due new libtool, affected on ALT Linux
-	if echo "$MDISTR" | egrep -q "M24|M30|M40|M41|M50" ; then
-		ADDFIXCOMMAND="$ADDFIXCOMMAND
-%undefine __libtoolize"
-	fi
 else
 	# All non ALT Linux distros
 	# disabled by Lav https://bugs.etersoft.ru/show_bug.cgi?id=13034
@@ -186,17 +172,6 @@ else
 	CLEANTEXT=""
 fi
 
-
-# FIXME 05.05.2012: it is needed now?
-if [ "$PKGVENDOR" = "mdv" ] || [ "$PKGVENDOR" = "pclinux" ] || [ "$PKGVENDOR" = "rosa" ] ; then
-	# due new libtool, affected on Mandriva 2009.0
-	test -z "$VERBOSE" || echo "Disable libtoolize"
-	# FIXME
-	#RECONFT="%define _disable_libtoolize 1"
-	ADDFIXCOMMAND="$ADDFIXCOMMAND
-%define __libtoolize true"
-fi
-
 # Do not add BuildReq if already exist
 cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
 
@@ -227,15 +202,6 @@ if [ "$PKGVENDOR" = "mcbc" ] ; then
 %__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
 fi
 
-# Too old problem
-TOCHANGELOG=
-if [ "$MDISTR" = "M23" ] ; then
-	if grep "%configure" $SPECNAME >/dev/null && ! grep "^autoreconf" $i >/dev/null && ! grep "^%__autoreconf" $i >/dev/null ; then
-		ADDFIXCOMMAND="$ADDFIXCOMMAND
-%__autoreconf"
-		TOCHANGELOG="add __autoreconf macros in build section for fix so name problem (by script)"
-	fi
-fi
 
 LISTBUILDDEP=`print_buildreq $SPECNAME`
 LISTREQDEP="`print_pkgreq $SPECNAME` $ADDREQUIRES"
@@ -358,20 +324,9 @@ if [ "$PKGVENDOR" != "alt" ] ; then
 	subst "s|^BuildRequires(pre):|BuildRequires:|g" $SPECNAME
 fi
 
-# Auto*=yes,nomingw32 works only since ALT 4.1
-if [ "$PKGVENDOR" = "alt" ] ; then
-	if echo "$MDISTR" | egrep -q "M24|M30|M40" ; then
-		subst "s|^\(Auto[RP].*\),nomingw32|\1|g" $SPECNAME
-		subst "s|^\(Auto[RP].*\), nomingw32|\1|g" $SPECNAME
-	fi
-else
+if [ "$PKGVENDOR" != "alt" ] ; then
 	# for systems with (d)ash as sh (f.i., Ubuntu)
 	remove_bashism $SPECNAME
-fi
-
-if [ "$DISTRNAME/$DISTRVERSION" = "CentOS/5" ] ; then
-	test -z "$VERBOSE" || echo "Remove egg-info from file list"
-	subst "s|.*\.egg-info.*||g" $SPECNAME
 fi
 
 #TODO:
@@ -386,10 +341,6 @@ rm -f $SPECNAME.old
 
 if [ "$PKGVENDOR" = "alt" ] ; then
 	subst "1i#" $SPECNAME
-	# use old compress method for the src.rpm on ALT 4.0 and 4.1
-	if [ "$DISTRVERSION" = "4.0" ] || [ "$DISTRVERSION" = "4.1" ] ; then
-		export USE_LEGACY_COMPRESSION=1
-	fi
 
 	subst "1i# This spec is backported to $DISTRNAME $DISTRVERSION automatically by rpmbph script from etersoft-build-utils." $SPECNAME
 	ENTRY="- backport to $DISTRNAME $DISTRVERSION (by rpmbph script)"
