@@ -12,7 +12,7 @@ load_mod hasher check
 WITHSTUFF="--with-stuff"
 
 #############################
-Usage="Usage: $name [-i -c -l] src.rpm..."
+Usage="Usage: $name [-l -r -c -l -p] src.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -28,13 +28,14 @@ phelp()
 	echog "   -r  remove packages from test hasher"
 	echog "   -p  print binary packages by built list"
 	echog "   -l  lazy cleanup (before build, not after)"
-
+	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
 while getopts :hbclr opt; do
     case $opt in
     h) phelp; exit 0;;
     p) PRINTBINPKG=1;;
+    b) BINARYREPONAME=$OPTARG ;;
     r) REMOVEPKG=1;;
     l) HASHERARG="$HASHERARG --lazy-cleanup";;
     c) WITHSTUFF="--without-stuff";;
