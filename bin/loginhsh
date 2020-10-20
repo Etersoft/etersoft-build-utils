@@ -42,11 +42,11 @@ phelp()
 	echog "Extra options:"
 	echog "   -d           print hasher dir only"
 	echog "   -s           do not install stuffs (extra packages)"
-	echog "   -M??         binary repository name (obsoleted)"
-	echog "   -x           allow run X program (obsoleted)"
+	echog "   -n           disable network"
 }
 
-while getopts :chitodvqr:b:p:sxXY opt; do
+SHARENETWORK="1"
+while getopts :chitondvqr:b:p:sXY opt; do
     case $opt in
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
@@ -57,10 +57,10 @@ while getopts :chitodvqr:b:p:sxXY opt; do
 	b) BINARYREPONAME="$OPTARG" ;;
 	r) RUNCOMMAND="$OPTARG" ;;
 	p) HASHERPOSTFIX="$OPTARG" ;;
+	n) SHARENETWORK="" ;;
 	s) SKIPSTUFFS=s ;;
 	X) ALLOWX=-X ;;
 	Y) ALLOWX=-Y ;;
-	x) ALLOWX=-Y ;;
 	v) VERBOSE="-v" ;;
 	o) ROOTER="--rooter" ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -117,9 +117,11 @@ if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] ; then
 	docmd $HSH $VERBOSE $HASHERARG --initroot-only $HASHERDIR || fatal "Cannot initialize hasher"
 fi
 
-SHELLHASHERARG="--mountpoints=/proc"
+SHELLHASHERARG="--mountpoints=/proc,/dev/shm"
 
 check_locking
+
+[ -n "$SHARENETWORK" ] && export share_network=1
 
 UTILPKG=''
 
@@ -163,6 +165,11 @@ fi
 if [ -n "$RUNCOMMAND" ] ; then
 	docmd $HSH-run $HASHERDIR $SHELLHASHERARG $ROOTER --wait-lock -- $RUNCOMMAND
 	exit
+fi
+
+
+if [ -n "$SHARENETWORK" ] ; then
+	$HSH-run $HASHERDIR --rooter -- sh -c 'cat >/etc/resolv.conf' </etc/resolv.conf
 fi
 
 echog "You are in hasher shell"
