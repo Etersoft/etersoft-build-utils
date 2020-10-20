@@ -6,7 +6,7 @@
 # convert pkg names to Debian style
 filter_deb_pkgnames()
 {
-	sed -e "s|^ *\(.*\)-devel *\$|\1-dev|g" | tr "[A-Z]" "[a-z]"
+	sed -e "s|_|-|g" -e "s|^ *\(.*\)-devel *\$|\1-dev|g" | tr "[A-Z]" "[a-z]"
 }
 
 build32on64()
@@ -159,7 +159,7 @@ clean_pkgreq()
 		#echo "$i" | egrep "gcc\$|cpp\$|gcc-c++\$" >/dev/null && continue
 		echo "$i" | grep "[()<=>]" >/dev/null && continue
 		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
-		echo -n "$i " | sed -e "s|[,}]||g"
+		echo -n "$i " | sed -e "s|[,}]| |g"
 	done | estrlist filter_strip_spaces
 }
 
