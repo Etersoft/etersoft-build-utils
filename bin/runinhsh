@@ -19,7 +19,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	exit 0
 fi
 
-PLATFORM=
+PLATFORM=''
 
 # firefox plugin hack
 PLUGINJAVA=mozilla-plugin-java-1.8.0-openjdk
@@ -67,7 +67,7 @@ case $PACKAGE in
 		PACKAGES="$PACKAGES dbus"
 esac
 
-HASHERNAME=$(echo "$COMMAND $PACKAGES" | md5sum)
+HASHERNAME=$(echo "$COMMAND $PACKAGES" | md5sum | cut -f1 -d" ")
 
-showcmd $ETERBUILDBIN/loginhsh -Y -t -p $HASHERNAME $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
+showcmd "$ETERBUILDBIN/loginhsh -Y -t -p $HASHERNAME $PLATFORM -r '$COMMAND $OPTIONS' $PACKAGES"
 $ETERBUILDBIN/loginhsh -Y -t -p $HASHERNAME $PLATFORM -r "$COMMAND $OPTIONS" $PACKAGES
