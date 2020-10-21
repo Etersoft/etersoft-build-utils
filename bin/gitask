@@ -17,7 +17,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	docmd ssh $GEARHOST task help | sed -e "s|abort|cancel|g"
 	echo
 	echo "Examples:"
-	echo "     ls                          - list tasks"
+	echo "     ls [-a|--all]               - list tasks (--all for all users)"
 	echo "     new    [branch]             - create new task on branch (Sisyphus by default)"
 	echo "     run    [-m <message>] [NNNN]               - run task NNNN"
 	echo "     commit [-m <message>] [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
@@ -130,7 +130,7 @@ fi
 if [ "$1" = "ls" ] ; then
 	shift
 	if [ "$1" = "--all" ] || [ "$1" = "-a" ] ; then
-		docmd ssh $GEARHOST task ls --all
+		docmd ssh $GEARHOST task ls --user=ALL --state=ALL
 		exit
 	fi
 	# TODO: with arg(s) — subtask
