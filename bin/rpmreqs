@@ -38,7 +38,8 @@ filter_multiple_provides()
 		s|/usr/bin/wine||g
 		s|/usr/bin/jconsole|java-1.7.0-openjdk-devel|g
 		s|/sbin/modprobe||g
-		s|gcc-c++|gcc5-c++|g
+		s|gcc-c++|gcc9-c++|g
+		s|clang10.0-devel|clang-devel|g
 		s|libXcomp.so.3|nx-libs|g
 		s|libwine.so.1||g"
 }
@@ -189,6 +190,10 @@ control
 libbeecrypt7
 libX11-locales
 gcc-c++
+clang-devel
+clang-devel-static
+llvm-devel
+llvm-devel-static
 glib2-locales
 libtic
 libpasswdqc
