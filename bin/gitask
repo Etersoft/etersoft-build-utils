@@ -40,6 +40,18 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	exit 0
 fi
 
+# with support for #NUM
+is_task_number()
+{
+	echo "$*" | estrlist filter_strip_spaces | grep -q "^#\?[0-9]\+$"
+}
+
+# clean from possible #
+get_task_number()
+{
+	echo "$*" | estrlist filter_strip_spaces | sed -e "s|^#||"
+}
+
 get_last()
 {
 	ssh $GEARHOST task ls | head -n1 | sed -e "s|^#\([0-9]*\) .*|\1|g"
@@ -64,7 +76,7 @@ if [ "$1" = "get" ] ; then
 	if [ "$1 $2" = "get subtask" ] ; then
 		[ -n "$3" ] || fatal "get subtask TASK PROJECTNAME"
 		[ -n "$4" ] || fatal "get subtask $3 PROJECTNAME"
-		get_subtask "$3" "$4"
+		get_subtask "$(get_task_number $3)" "$4"
 		exit
 	elif [ "$1 $2 $3" = "get last " ] || [ "$1 $2 $3" = "get last task" ] ; then
 		get_last
@@ -120,7 +132,7 @@ fi
 
 if [ "$1" = "log" ] ; then
 	shift
-	TASK="$1"
+	TASK="$(get_task_number $1)"
 	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
 	showcmd "$GEARHOST>" girar-show "$TASK"
 	GIT_ALT=$GEARHOST girar-show "$TASK"
@@ -147,7 +159,7 @@ fi
 
 if [ "$1" = "delsub" ] ; then
 	shift 
-	TASK="$1"
+	TASK="$(get_task_number $1)"
 	[ -n "$TASK" ] || TASK="$(get_last)" || fatal
 	shift
 	while [ -n "$1" ] ; do
@@ -197,12 +209,12 @@ if [ "$1" = "add" ] ; then
 	ADDCMD=''
 	ADDCMDLIST="del copy repo rebuild"
 	# add TASKNUMBER package
-	if isnumber "$2" && estrlist has "$3" $ADDCMDLIST ; then
-		TASK="$2"
+	if is_task_number "$2" && estrlist has "$3" $ADDCMDLIST ; then
+		TASK="$(get_task_number $2)"
 		ADDCMD="$3"
 		shift 3
-	elif isnumber "$2" && isnumber "$3" && estrlist has "$4" $ADDCMDLIST ; then
-		TASK="$2"
+	elif is_task_number "$2" && isnumber "$3" && estrlist has "$4" $ADDCMDLIST ; then
+		TASK="$(get_task_number $2)"
 		SUBTASK="$3"
 		ADDCMD="$4"
 		shift 4
@@ -234,11 +246,11 @@ fi
 if [ "$1" = "show" ] ; then
 	shift
 	COMMIT=''
-	TASKLIST="$1"
-	if [ -z "$TASKLIST" ] ; then
-		TASKLIST="$(get_last)" || fatal "Can't get last task"
+	TASK="$(get_task_number $1)"
+	if [ -z "$TASK" ] ; then
+		TASK="$(get_last)" || fatal "Can't get last task"
 	fi
-	docmd ssh $GEARHOST task show "$TASKLIST"
+	docmd ssh $GEARHOST task show "$TASK"
 	exit
 fi
 
@@ -254,7 +266,8 @@ if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
 	while [ -n "$1" ] ; do
 		# TODO: check for number?
 		if echo "$1" | grep -qv "^-" ; then
-			TASKLIST="$TASKLIST $1"
+			TASK="$(get_task_number $1)"
+			TASKLIST="$TASKLIST $TASK"
 		elif [ "$1" = "-m" ] ; then
 			#MESSAGE="$1 ${2// /_}"
 			MESSAGE="-m -"
@@ -276,18 +289,19 @@ fi
 
 if [ "$1" = "cancel" ] ; then
 	shift
-	#TASK="$(get_last)" || fatal
+	TASK="$(get_task_number $1)"
 	if [ "$GEARHOST" = "git.eter" ]  || [ "$GEARHOST" = "git.office" ] ; then
-		docmd ssh $GEARHOST task cancel "$@"
+		docmd ssh $GEARHOST task cancel "$TASK"
 	else
-		docmd ssh $GEARHOST task abort "$@"
+		docmd ssh $GEARHOST task abort "$TASK"
 	fi
 	exit
 fi
 
 if [ "$1" = "share" ] && [ -n "$2" ] ; then
-	#shift
-	docmd ssh $GEARHOST task share "$2" enable
+	shift
+	TASK="$(get_task_number $1)"
+	docmd ssh $GEARHOST task share "$TASK" enable
 	exit
 fi
 
