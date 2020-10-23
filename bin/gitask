@@ -154,7 +154,7 @@ if [ "$1" = "delsub" ] ; then
 		SUBTASK="$1"
 		shift
 		if isnumber $SUBTASK ; then
-			NUMTASK="$1"
+			NUMTASK="$SUBTASK"
 		else
 			NUMTASK="$(get_subtask $TASK $SUBTASK)"
 			info "$SUBTASK -> $NUMTASK"
