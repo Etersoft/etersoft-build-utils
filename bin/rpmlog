@@ -205,7 +205,7 @@ if [ -n "$TESTRUN" ] ; then
 	exit
 fi
 
-add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, do not commit anything"
+add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, leave all uncommitted"
 
 #git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
 gammit $QUIET --spec=$SPECNAME $SPECNAME

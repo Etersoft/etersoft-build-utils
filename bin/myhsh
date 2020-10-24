@@ -1,5 +1,5 @@
 #!/bin/bash
-# 2003-2006, 2008-2010, 2013, 2016 (c) Etersoft www.etersoft.ru
+# 2003-2006, 2008-2010, 2013, 2016, 2020 (c) Etersoft www.etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 #
@@ -12,7 +12,7 @@ load_mod hasher check
 WITHSTUFF="--with-stuff"
 
 #############################
-Usage="Usage: $name [-l -r -c -l -p] src.rpm..."
+Usage="Usage: $name [-b -l -r -c -l -p] src.rpm..."
 function mygetopts()
 {
 name=${0##*/}
@@ -31,7 +31,7 @@ phelp()
 	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
-while getopts :hbclr opt; do
+while getopts :hbpclr opt; do
     case $opt in
     h) phelp; exit 0;;
     p) PRINTBINPKG=1;;

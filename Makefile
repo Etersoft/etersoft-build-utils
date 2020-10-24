@@ -19,8 +19,6 @@ install:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/functions/
 	mkdir -p $(DESTDIR)$(pkgdatadir)/pkgrepl $(DESTDIR)$(pkgdatadir)/grprepl/
 	install -m 755 bin/* $(DESTDIR)$(bindir)
-	# do not pack anymore
-	rm -f  $(DESTDIR)$(bindir)/mkpatch
 	install -m 644 etc/apt/* $(DESTDIR)$(sysconfdir)/eterbuild/apt/
 	install -m 644 etc/config $(DESTDIR)$(sysconfdir)/eterbuild/
 	install -m 644 etc/repos/* $(DESTDIR)$(sysconfdir)/eterbuild/repos/
