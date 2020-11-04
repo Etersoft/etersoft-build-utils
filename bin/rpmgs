@@ -409,7 +409,7 @@ update_predownloaded()
 
 		# drop all exclude node_modules
 		# TODO: correct .* removing
-		rm -rf $(ls -1 | grep -v node_modules) .*
+		rm -rf $(ls -1 | grep -v node_modules) .[a-zA-Z0-9]*
 
 		# remove build related modules we have in system
 		#if [ -d node_modules/node-gyp/ ] ; then
