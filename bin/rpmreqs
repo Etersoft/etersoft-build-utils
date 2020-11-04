@@ -39,7 +39,9 @@ filter_multiple_provides()
 		s|/usr/bin/jconsole|java-1.7.0-openjdk-devel|g
 		s|/sbin/modprobe||g
 		s|gcc-c++|gcc9-c++|g
-		s|clang10.0-devel|clang-devel|g
+		s|libltdl-devel|libltdl7-devel|g
+		s|liblua5-devel|liblua5.3-devel|g
+		s|clang-devel|clang10.0-devel|g
 		s|libXcomp.so.3|nx-libs|g
 		s|libwine.so.1||g"
 }
@@ -194,6 +196,8 @@ clang-devel
 clang-devel-static
 llvm-devel
 llvm-devel-static
+liblua5-devel
+libltdl-devel
 glib2-locales
 libtic
 libpasswdqc
