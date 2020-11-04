@@ -166,6 +166,13 @@ function get_source_svn()
 # Source-git: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
 function get_source_git()
 {
+	local SN="$2"
+	# hack for git url under Source
+	local HGIT="$(grep -B1 "^$SN:" "$1" | head -n1 | grep "^# " | sed -e "s|#[[:space:]]*||" -e "s|[[:space:]]*$||")"
+	if echo "$HGIT" | grep -q "https*://.*\.git$" || echo "$HGIT" | grep -q "https://github.com/.*" ; then
+		GETSOURCEGIT="$HGIT"
+		return
+	fi
 	GETSOURCEGIT=$(source_ext "$1" git "$2")
 }
 
@@ -561,7 +568,7 @@ if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; 
         update_predownloaded production
         DOWNLOADSOME=1
     else
-        warning "have no version, but skipped gear-rules-verify"
+        warning "have no version, but skipped gear-rules-verify (Check if you need run gear-remotes-save)"
     fi
 fi
 
