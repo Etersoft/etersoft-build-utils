@@ -285,6 +285,58 @@ commit_tarball()
 	commit_tarball_to_dir "$TARBALL" "$EXTTARBALL" "$CURNAME"
 }
 
+# check for tag for GSSETVERSION with some heuristics (see gear-remotes-uscan also)
+get_tag_by_version()
+{
+	local GSSETVERSION="$1"
+	local rc
+	rc=1
+
+	if [ "$GSSETVERSION" = "HEAD" ] ; then
+		echo "upstream/master"
+		return 0
+	fi
+
+	local i
+	alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
+	alternate_tag2="$(echo "REL_$GSSETVERSION" | sed -e "s|\.|_|g")"
+	alternate_tag3="$(echo "version_$GSSETVERSION")"
+	for i in v$GSSETVERSION $alternate_tag1 $GSSETVERSION $alternate_tag2 $alternate_tag3 ; do
+		git rev-parse $i >/dev/null 2>/dev/null && rc=0 && break
+	done
+
+	if [ "$rc" = "1" ] ; then
+		i="$(git tag | grep "$GSSETVERSION\$" | head -n1)"
+		[ -n "$i" ] && git rev-parse $i >/dev/null 2>/dev/null && rc=0
+	fi
+	echo "$i"
+	return $rc
+}
+
+# TODO: try gear-remotes-uscan here
+# merge from guessed tag (by version) or from HEAD
+update_master_branch_to()
+{
+	local GSSETVERSION="$1"
+	if [ -z "$GSSETVERSION" ] ; then
+		warning "Empty new version variable"
+		return
+	fi
+
+	local tag="$(get_tag_by_version "$GSSETVERSION")"
+	[ -n "$tag" ] || fatal "Can't find tag for $GSSETVERSION version"
+	docmd git merge $tag
+
+	# TODO: it is more clean detect that dir
+	if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
+		docmd gear-update-tag -a
+		cd $(get_root_git_dir)/.gear || fatal
+		docmd git add tags/* -f
+		docmd git commit -m "update .gear/tags"
+		cd - >/dev/null
+	fi
+}
+
 # update .gear/@name@-postsubmodules if needed
 # uses: BASENAME VERSION
 update_post_git_submodules()
@@ -450,10 +502,27 @@ fi
 
 test -z "$LISTNAMES" && print_error
 
+[ -z "$GSSETRELEASE" ] || GSSKIPADDCHANGELOG=1
+
+for spec in $LISTNAMES
+do
+	if [ -n "${spec/*spec/}" ] ; then
+		print_error
+	fi
+
+	DOWNLOADSOME=''
+	set_specdir $spec
+
+# Answer me:
+# for empty GSSETVERSION we do autoupdate to the latest version
+# or it is a reason to retrieve the latest version from spec?
+
+# firstly try modern autoupdate if version is empty
 if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
     # need for gear-rules-verify
     # TODO: why we have changed dir to a spec placement before?
     cd $(get_root_git_dir)
+
     docmd gear-rules-verify
     if gear-rules-verify 2>&1 | grep -q "gear-rules-verify should be run in clean repository" ; then
         warning "gear-rules-verify should be run in clean repository, skipping"
@@ -464,7 +533,13 @@ if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; 
         $EPMCMD assure gear-uupdate
         if ls $(get_root_git_dir)/.gear | grep \.watch$ || ls $(get_root_git_dir) | grep \.watch$ ; then
             docmd rpm-uscan -v --force-action gear-uupdate
-            exit 0
+
+            source_postupdate_hook
+
+            # TODO: make plugins
+            update_predownloaded development
+            update_predownloaded production
+            DOWNLOADSOME=1
         else
             warning "there are no .watch files in (get_root_git_dir)/.gear, skip rpm-uscan"
         fi
@@ -477,22 +552,45 @@ if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; 
         docmd gear-remotes-restore
         docmd gear-remotes-uscan
         docmd gear-commit
-        # TODO: skip downloading for tarball for this branch
+
+        # update_post_git_submodules
+        source_postupdate_hook
+
+        # TODO: make plugins
+        update_predownloaded development
+        update_predownloaded production
+        DOWNLOADSOME=1
     else
-        warning "skipping"
+        warning "have no version, but skipped gear-rules-verify"
     fi
-    cd - >/dev/null
 fi
 
-[ -z "$GSSETRELEASE" ] || GSSKIPADDCHANGELOG=1
+	# TODO: some duplication
+	# secondly check for new manner use separated upstream branch
+	# Note: gear-uupdate don't want work if package version is already changed
+	if [ -z "$DOWNLOADSOME" ] && [ -s $(get_root_git_dir)/.gear/upstream/remotes ] && $EPMCMD assure gear-remotes-restore perl-Gear-Remotes ; then
+		$EPMCMD assure gear-commit gear
+		$EPMCMD assure gear-uupdate
+		docmd gear-remotes-restore
+		# hack: if separated branch
+		#if grep -q "^diff:" $(get_root_git_dir)/.gear/rules ; then
+		#	update_master_branch_to "$GSSETVERSION"
+		#else
+		[ -n "$GSSETVERSION" ] || fatal "GSSETVERSION is empty here"
+		tag="$(get_tag_by_version "$GSSETVERSION")"
+		[ -n "$tag" ] || fatal "Can't find appropriate tag for $GSSETVERSION version"
+		docmd gear-uupdate --upstream-version "$GSSETVERSION" --tag $tag
+		docmd gear-commit
 
-for spec in $LISTNAMES
-do
-	if [ -n "${spec/*spec/}" ] ; then
-		print_error
+		# update_post_git_submodules
+		source_postupdate_hook
+
+		# TODO: make plugins
+		update_predownloaded development
+		update_predownloaded production
+		DOWNLOADSOME=1
+		#fi
 	fi
-
-	set_specdir $spec
 
 	# Set version if needed
 	if [ -n "$GSSETVERSION" ] && [ "$GSSETVERSION" != "HEAD" ] ; then
@@ -506,11 +604,12 @@ do
 				echo "Set new $GSSETVERSION version for $spec"
 			fi
 		else
-			echo "Version $GSSETVERSION already was set"
+			echo "Version $GSSETVERSION already is set"
 			GSSKIPADDCHANGELOG=1
 		fi
 	fi
 
+	# download from all possible sources
 	LOADALL=1
 	if [ -n "$LOADALL" ] ; then
 		SOURCELIST=$(grep "^Source[0-9]*:" $spec | sed -e "s|:.*||g")
@@ -518,7 +617,7 @@ do
 		SOURCELIST=$(grep "^Source0\?:" $spec | sed -e "s|:.*||g")
 	fi
 
-	DOWNLOADSOME=''
+	if [ -z "$DOWNLOADSOME" ] ; then
 	for SN in $SOURCELIST
 	do
 		GETSOURCE=$(eval_spec $spec | get_var "$SN")
@@ -566,24 +665,17 @@ do
 			fi
 		else
 			if ! rhas "$GETSOURCE" "ps?://" ; then
-				if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
-					info "No URL. Skipping $GETSOURCE downloading"
-					continue
-				else
-					# only for main source
-					if [ -s $(get_root_git_dir)/.gear/upstream/remotes ] ; then
-						warning "$SN $GETSOURCE has no URL. We will try use existed .gear/upstream/remotes"
-					else
-						warning "$SN $GETSOURCE has no URL. Skipping... "
-						continue
-					fi
-				fi
+				#if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
+				#	info "No URL. Skipping $GETSOURCE downloading"
+				#	continue
+				#else
+					warning "$SN $GETSOURCE has no URL. Skipping... "
+				#	continue
+				#fi
 			else
 				download_any_tarball "$GETSOURCE" "$FTB"
 				DOWNLOADSOME=1
 			fi
-
-		# TODO: detect tar: @version@:. in rule
 
 		# TODO: fix download single packed file
 		#else
@@ -602,54 +694,19 @@ do
 			echo "Run svn rebase from $GETSOURCESVN"
 			docmd git svn rebase
 			DOWNLOADSOME=1
-		elif [ -n "${GETSOURCEGIT}" ] || [ -s $(get_root_git_dir)/.gear/upstream/remotes ] ; then
-                        if [ -s $(get_root_git_dir)/.gear/upstream/remotes ] ; then
-                            docmd gear-remotes-restore
-                        else
-				echog "Try to fetch ${GETSOURCEGIT} for $spec"
-				#TODO error if incompatible
-				docmd git remote add upstream $GETSOURCEGIT
-                        fi
+		elif [ -n "${GETSOURCEGIT}" ] ; then
+			echog "Try to fetch ${GETSOURCEGIT} for $spec"
+			#TODO error if incompatible
+			docmd git remote add upstream $GETSOURCEGIT
 			docmd git fetch --tags upstream
-
-			if [ -z "$GSSETVERSION" ] ; then
-				warning "Empty new version variable"
-			elif [ "$GSSETVERSION" = "HEAD" ] ; then
-				docmd git merge upstream/master
-			else
-				# check for GSSETVERSION tag
-				# some heuristics
-				rc=1
-				alternate_tag1="$(echo "v$GSSETVERSION" | sed -e "s|\.|-|g")"
-				alternate_tag2="$(echo "REL_$GSSETVERSION" | sed -e "s|\.|_|g")"
-				alternate_tag3="$(echo "version_$GSSETVERSION")"
-				for i in  v$GSSETVERSION $alternate_tag1 $GSSETVERSION $alternate_tag2 $alternate_tag3 ; do
-					git rev-parse $i >/dev/null 2>/dev/null && docmd git merge $i && rc=0 && break
-				done
-                                if [ "$rc" = "1" ] ; then
-                                    i="$(git tag | grep "$GSSETVERSION\$")"
-   				    [ -n "$i" ] && git rev-parse $i >/dev/null 2>/dev/null && docmd git merge $i && rc=0
-                                fi
-				[ "$rc" = "0" ] || fatal "Can't find tag for $GSSETVERSION version"
-			fi
-
-			# TODO: it is more clean detect that dir
-			if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
-				docmd gear-update-tag -a
-				cd $(get_root_git_dir)/.gear || fatal
-				docmd git add tags/* -f
-				docmd git commit -m "update .gear/tags"
-				cd - >/dev/null
-			fi
+			update_master_branch_to "$GSSETVERSION"
 
 			update_post_git_submodules
-                        source_postupdate_hook
-			#docmd gammit
-			#docmd git commit -m "merge $FTB with rpmgs script"
+			source_postupdate_hook
 			DOWNLOADSOME=1
 		elif is_gear ; then
 			commit_tarball "$FTB"
-                        source_postupdate_hook
+			source_postupdate_hook
 			DOWNLOADSOME=1
 		fi
 
@@ -660,6 +717,7 @@ do
 		echog "DONE with $FTB"
 
 	done
+	fi
 
 	[ -n "$DOWNLOADSOME" ] || fatal "No upstream code is updated for new version $GSSETVERSION."
 
@@ -669,7 +727,11 @@ do
 		CURREL=$(get_release $spec)
 		EGEARME=""
 		is_gear && EGEARME=" with rpmgs script"
-		add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
+		if grep -q "^- new version $CURVER$" $spec ; then
+			subst "s|- new version $CURVER$|- new version ($CURVER)$EGEARME via gear-uupdate|" $spec && gamend $spec
+		else
+			add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
+		fi
 	fi
 
 done
