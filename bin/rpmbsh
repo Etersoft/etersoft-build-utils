@@ -116,8 +116,12 @@ if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
 	$ETERBUILDBIN/loginhsh -Y -t -i -b $BINARYREPO $BINPACKAGES
 	RESULT=$?
 
-	echog "Remove packages from test hasher dir ..."
-	docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
+	if [ "$RESULT" = "0" ] ; then
+		echog "Remove packages from test hasher dir ..."
+		docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
+	else
+		echog "Leave packages in the hasher due error result"
+	fi
 fi
 
 # remove generated src.rpm
