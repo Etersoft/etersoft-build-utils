@@ -258,7 +258,7 @@ commit_tarball_to_dir()
 		docmd git commit -m "just import $(basename $TARBALL) with rpmgs script"
 		rm -fv "$TARBALL"
 	else
-		echo "Skip missed $TARBALL tarball committing"
+		warning "Skip missed $TARBALL tarball committing"
 		return 1
 	fi
 	return 0
@@ -489,6 +489,17 @@ update_predownloaded()
 }
 
 
+will_commit()
+{
+    if [ -z "$GSSETVERSION" ] && [ -z "$FORCEDOWNLOAD" ]; then
+        echog "Skip $FTB committing (run without new version or without -f)"
+        return 1
+    fi
+    return 0
+}
+
+
+
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
 
@@ -579,6 +590,7 @@ fi
 		$EPMCMD assure gear-commit gear
 		$EPMCMD assure gear-uupdate
 		docmd gear-remotes-restore
+		docmd git fetch --tags upstream
 		# hack: if separated branch
 		#if grep -q "^diff:" $(get_root_git_dir)/.gear/rules ; then
 		#	update_master_branch_to "$GSSETVERSION"
@@ -651,23 +663,48 @@ fi
 
 		if [ -n "${GETSOURCESVN}" ] ; then
 			is_gear $SPECDIR || fatal "Source-svn works only with gear repo"
+			will_commit || continue
+			# clone svn repo to current dir
+			# FIXME: need to clone in git root dir
+			docmd git svn clone $GETSOURCESVN $(get_root_git_dir)
+			echo "Run svn rebase from $GETSOURCESVN"
+			docmd git svn rebase
+			DOWNLOADSOME=1
 
 		elif [ -n "${GETSOURCEGIT}" ] ; then
 			is_gear $SPECDIR || fatal "Source-git works only with gear repo"
+			will_commit || continue
+			echog "Try to fetch ${GETSOURCEGIT} for $spec"
+			#TODO error if incompatible
+			docmd git remote add upstream $GETSOURCEGIT
+			docmd git fetch --tags upstream
+			update_master_branch_to "$GSSETVERSION"
+
+			update_post_git_submodules
+			source_postupdate_hook
+			DOWNLOADSOME=1
 
 		elif [ -n "${GETSOURCESCRIPT}" ] ; then
 			is_gear $SPECDIR || fatal "Source-script works only with gear repo"
 			#[ -x "$GETSOURCESCRIPT" ] || fatal "Can't find executable $GETSOURCESCRIPT"
 			bash -x $(get_root_git_dir)/$GETSOURCESCRIPT $GSSETVERSION "$FTB" || fatal "fatal with $GETSOURCESCRIPT"
+			will_commit || continue
+			commit_tarball "$FTB" || fatal
+			source_postupdate_hook
 			DOWNLOADSOME=1
 
 		# TODO: rewrite code to use original file format and temp. download dir
 		elif [ -n "${GETSOURCEURL}" ] ; then
 			if [ -z "$FORCEDOWNLOAD" ] && check_tarball "$FTB" ; then
-				echo "$FTB already exists, skipping... "
+				echog "$FTB already exists, skipping... "
 			else
 				echog "Try to load ${GETSOURCEURL} for $spec"
 				download_to "$GETSOURCEURL" "$FTB" || fatal "Can't download $GETSOURCEURL"
+				will_commit || continue
+				if is_gear ; then
+					commit_tarball "$FTB" || fatal
+					source_postupdate_hook
+				fi
 				DOWNLOADSOME=1
 			fi
 		else
@@ -681,40 +718,17 @@ fi
 				#fi
 			else
 				download_any_tarball "$GETSOURCE" "$FTB"
+				will_commit || continue
+				if is_gear ; then
+					commit_tarball "$FTB" || fatal
+					source_postupdate_hook
+				fi
 				DOWNLOADSOME=1
 			fi
 
 		# TODO: fix download single packed file
 		#else
 		#		download_to "$GETSOURCE" "$FTB"
-		fi
-
-		if [ -z "$GSSETVERSION" ] && [ -z "$FORCEDOWNLOAD" ]; then
-			echog "Skip $FTB committing (run without new version or without -f)"
-			continue
-		fi
-
-		if [ -n "${GETSOURCESVN}" ] ; then
-			# clone svn repo to current dir
-			# FIXME: need to clone in git root dir
-			docmd git svn clone $GETSOURCESVN $(get_root_git_dir)
-			echo "Run svn rebase from $GETSOURCESVN"
-			docmd git svn rebase
-			DOWNLOADSOME=1
-		elif [ -n "${GETSOURCEGIT}" ] ; then
-			echog "Try to fetch ${GETSOURCEGIT} for $spec"
-			#TODO error if incompatible
-			docmd git remote add upstream $GETSOURCEGIT
-			docmd git fetch --tags upstream
-			update_master_branch_to "$GSSETVERSION"
-
-			update_post_git_submodules
-			source_postupdate_hook
-			DOWNLOADSOME=1
-		elif is_gear ; then
-			commit_tarball "$FTB"
-			source_postupdate_hook
-			DOWNLOADSOME=1
 		fi
 
 		# TODO: make plugins
