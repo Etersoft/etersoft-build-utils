@@ -536,9 +536,8 @@ do
 # or it is a reason to retrieve the latest version from spec?
 
 # firstly try modern autoupdate if version is empty
-if [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
+if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
     # need for gear-rules-verify
-    # TODO: why we have changed dir to a spec placement before?
     cd $(get_root_git_dir)
 
     docmd gear-rules-verify
@@ -586,7 +585,9 @@ fi
 	# TODO: some duplication
 	# secondly check for new manner use separated upstream branch
 	# Note: gear-uupdate don't want work if package version is already changed
-	if [ -z "$DOWNLOADSOME" ] && [ -s $(get_root_git_dir)/.gear/upstream/remotes ] && $EPMCMD assure gear-remotes-restore perl-Gear-Remotes ; then
+	if is_gear $SPECDIR && [ -z "$DOWNLOADSOME" ] && [ -s $(get_root_git_dir)/.gear/upstream/remotes ] && $EPMCMD assure gear-remotes-restore perl-Gear-Remotes ; then
+		# need for gear-rules-verify
+		cd $(get_root_git_dir)
 		$EPMCMD assure gear-commit gear
 		$EPMCMD assure gear-uupdate
 		docmd gear-remotes-restore
