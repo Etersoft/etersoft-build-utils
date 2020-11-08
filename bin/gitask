@@ -19,8 +19,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "Examples:"
 	echo "     ls [-a|--all]               - list tasks (--all for all users)"
 	echo "     new    [branch]             - create new task on branch (Sisyphus by default)"
-	echo "     run    [-m <message>] [NNNN]               - run task NNNN"
-	echo "     commit [-m <message>] [NNNN] [NNNN2]       - commit task(s) NNNN, [NNNN2]"
+	echo "     run [--test-only] [NNNN] [NNNN2] [-m <message>] - run task NNNN"
+	echo "     commit [NNNN] [NNNN2] [-m <message>]       - commit task(s) NNNN, [NNNN2]"
 	echo "     add del package [package2]  - add package remove command"
 	echo "     add rebuild package [package2]  - add package rebuild"
 	echo "     add --help                  - show task add help"
@@ -258,6 +258,8 @@ if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
 	COMMIT=''
         [ "$1" = "commit" ] && COMMIT="--commit"
 	shift
+	TESTONLY=''
+	[ "$1" = "--test-only" ] && TESTONLY="$1" && shift
 
 	TASKLIST=''
 	MESSAGE=''
@@ -282,7 +284,7 @@ if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
 	[ -n "$TASKLIST" ] || TASKLIST="$(get_last)" || fatal "Can't get last task"
 
 	for TASK in $TASKLIST ; do
-		echo "$MESSAGETEXT" | docmd ssh $GEARHOST task run $MESSAGE $COMMIT "$TASK"
+		echo "$MESSAGETEXT" | docmd ssh $GEARHOST task run $TESTONLY $MESSAGE $COMMIT "$TASK"
 	done
 	exit
 fi
