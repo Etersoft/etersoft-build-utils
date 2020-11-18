@@ -167,13 +167,15 @@ function get_source_svn()
 function get_source_git()
 {
 	local SN="$2"
+
+	GETSOURCEGIT=$(source_ext "$1" git "$2")
+	[ -n "$GETSOURCEGIT" ] && return
+
 	# hack for git url under Source
 	local HGIT="$(grep -B1 "^$SN:" "$1" | head -n1 | grep "^# " | sed -e "s|#[[:space:]]*||" -e "s|[[:space:]]*$||")"
-	if echo "$HGIT" | grep -q "https*://.*\.git$" || echo "$HGIT" | grep -q "https://github.com/.*" ; then
-		GETSOURCEGIT="$HGIT"
-		return
+	if echo "$HGIT" | grep -q -E "(git|https|http)://.*\.git$" || echo "$HGIT" | grep -q "https://github.com/.*" ; then
+		GETSOURCEGIT="$(echo "$HGIT" | sed -e "s|.*[[:space:]]\(.*://\)|\1|")" #"
 	fi
-	GETSOURCEGIT=$(source_ext "$1" git "$2")
 }
 
 # Source-url: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
