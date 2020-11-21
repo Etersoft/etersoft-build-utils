@@ -96,7 +96,7 @@ fi
 [ -n "$VERBOSE" ] && echo "DISTRVERSION=$DISTRVERSION LISTRPMARGS=$LISTRPMARGS"
 
 if [ -z "$BUILDCOMMAND" ] ; then
-	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST" || BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST"
+	[ -n "$NOBUILD" ] && BUILDCOMMAND="$ETERBUILDBIN/rpmbs $GIRARHOST -w" || BUILDCOMMAND="$ETERBUILDBIN/rpmbsh $GIRARHOST -w"
 fi
 
 # set SPECDIR from LISTNAMES if empty (need for is_gear below)
@@ -203,7 +203,7 @@ for i in $LISTBUILT ; do
 
 	docmd $ETERBUILDBIN/rpmbps -b $BINARYREPO $SPECNAME
 
-	docmd $BUILDCOMMAND -b $BINARYREPO -w $LISTRPMARGS $SPECNAME || fatal "Can't build"
+	docmd $BUILDCOMMAND -b $BINARYREPO $LISTRPMARGS $SPECNAME || fatal "Can't build"
 
 	# move results to common place
 	cp -fv $RPMTOPDIR/SRPMS/*.rpm $RPMDIR/SRPMS/ 2>/dev/null
