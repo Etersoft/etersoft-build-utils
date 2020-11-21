@@ -50,6 +50,7 @@ uni_rpmbuildsrpm()
 			NAMESRPMIN=${NAMESRPMIN/.src.rpm/.tar}
 			echog "Packing git repo with \$SPECNAME as \$NAMESRPMIN"
 			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES $RPMTOPDIR/SRPMS/$NAMESRPMIN
+			# TODO: use hsh --build-srpm-only to produce src.rpm when call from rpmbs -w
 		else
 			# build package without MENV checking
 			#if true || [ "$MENV" = "SS" ] ; then

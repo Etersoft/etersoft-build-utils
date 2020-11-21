@@ -70,6 +70,7 @@ phelp()
 	echog "   -T           set tag"
 	echog "   -n           do not check with sisyphus_check before upload"
 	echog "   -o           create nosrc.rpm package"
+	echog "   -w           build src.rpm in hasher"
 	echog "   -z           create src.rpm with compatible gzip compression (obsoleted)"
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
@@ -93,6 +94,7 @@ while getopts :hfFstTcudenop:a:Ab:z opt; do
     n) NOCHECK=1; ;;
     o) NOSOURCE=1; ;;
     p) UPLOADNOW=1 ; SIGN=1 ; POCKET=$OPTARG ;;
+    w) THOROUGH=1 ;;
     z) export USE_LEGACY_COMPRESSION=1;
        ;;
     d) DELETENOW=1 ;;
