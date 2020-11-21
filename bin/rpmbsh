@@ -49,7 +49,7 @@ while getopts :hieufclstwb: opt; do
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
     u|f|c|e|s|l) PASSEDARGS="$PASSEDARGS -$opt" ;;
-    w) THOROUGH=1 ;;
+    w) THOROUGH="-a" ;;
     i) INSTALLPKG=1 ;;
     b) BINARYREPONAME=$OPTARG ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -90,8 +90,9 @@ fi
 # FIXME: не обрабатывает два пропускаемых вместе параметра
 pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c e l f a A)
 
+# FIXME: we can't make pkg.tar from non gear repo, so just run myhsh with -a
 # build in hasher
-docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
+docmd time $ETERBUILDBIN/myhsh $MENVARG $THOROUGH $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
 RESULT=$?
 
 # if ok and test install is requested, do it
