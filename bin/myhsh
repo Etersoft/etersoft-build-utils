@@ -28,15 +28,17 @@ phelp()
 	echog "   -r  remove packages from test hasher"
 	echog "   -p  print binary packages by built list"
 	echog "   -l  lazy cleanup (before build, not after)"
+	echog "   -a  pass --query-repackage to hsh"
 	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
-while getopts :hbpclr opt; do
+while getopts :habpclr opt; do
     case $opt in
     h) phelp; exit 0;;
     p) PRINTBINPKG=1;;
     b) BINARYREPONAME=$OPTARG ;;
     r) REMOVEPKG=1;;
+    a) REPACKAGE="--query-repackage";;
     l) HASHERARG="$HASHERARG --lazy-cleanup";;
     c) WITHSTUFF="--without-stuff";;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
@@ -122,7 +124,7 @@ prepare_aptconfig
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
 # we do not need check cases for mount points, thanks ldv@ 
 HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target $BUILDARCH $HASHERARG"
-HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG"
+HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG $REPACKAGE"
 
 BUILDARGS=""
 
@@ -133,7 +135,7 @@ fi
 LISTBUILTSH=""
 for i in $LISTNAMES
 do
-	LOGFILE="$LOGDIR/`basename $i .src.rpm`$MENVARG.log"
+	LOGFILE="$LOGDIR/$(basename $(basename $i .src.rpm) .tar)$MENVARG.log"
 	echo "Build in hasher ($MENV) in $HASHERDIR dir" >$LOGFILE
 	rm -f $LOGFILE.ok
 	echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
