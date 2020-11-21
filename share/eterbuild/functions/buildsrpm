@@ -36,7 +36,7 @@ uni_rpmbuildsrpm()
 
 	cd $SPECDIR || fatal
 
-	if is_gear $SPECDIR ; then
+	if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
 
@@ -47,10 +47,15 @@ uni_rpmbuildsrpm()
 			# https://bugzilla.altlinux.org/show_bug.cgi?id=31673
 			# FIXME: workaround for case when gear not supported normal name for --hasher output (out_file can be set only when run without args)
 			mkdir -p $RPMTOPDIR/SRPMS
-			NAMESRPMIN=${NAMESRPMIN/.src.rpm/.tar}
-			echog "Packing git repo with \$SPECNAME as \$NAMESRPMIN"
-			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES $RPMTOPDIR/SRPMS/$NAMESRPMIN
-			# TODO: use hsh --build-srpm-only to produce src.rpm when call from rpmbs -w
+			if false && [ "$THOROUGH" = "2" ] ; then
+				# TODO: use hsh --build-srpm-only to produce src.rpm when call from rpmbs -w
+				echog "Packing git repo with \$SPECNAME as \$NAMESRPMIN"
+				#docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
+			else
+				NAMESRPMIN=${NAMESRPMIN/.src.rpm/.tar}
+				echog "Packing git repo with \$SPECNAME as \$NAMESRPMIN"
+				LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES $RPMTOPDIR/SRPMS/$NAMESRPMIN
+			fi
 		else
 			# build package without MENV checking
 			#if true || [ "$MENV" = "SS" ] ; then
@@ -65,8 +70,14 @@ uni_rpmbuildsrpm()
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
-		echog "Packing \$SPECNAME as \$NAMESRPMIN"
-		docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
+		if false && [ "$PKGVENDOR" = "alt" ] && [ -n "$THOROUGH" ] ; then
+			echog "Packing \$SPECNAME as \$NAMESRPMIN via hasher"
+			# TODO: use hsh --build-srpm-only to produce src.rpm when call from rpmbs -w
+			#docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
+		else
+			echog "Packing \$SPECNAME as \$NAMESRPMIN"
+			docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
+		fi
 	fi
 
 	cd - >/dev/null
