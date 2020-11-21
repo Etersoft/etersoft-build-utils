@@ -43,18 +43,28 @@ uni_rpmbuildsrpm()
 		# FIXME: use spec name as project name
 		GEARRULES=$(get_gear_rules_by_spec "$SPECNAME")
 
-		# build package without MENV checking
-		if true || [ "$MENV" = "SS" ] ; then
+		if [ -n "$THOROUGH" ] ; then
+			# https://bugzilla.altlinux.org/show_bug.cgi?id=31673
+			# FIXME: workaround for case when gear not supported normal name for --hasher output (out_file can be set only when run without args)
+			mkdir -p $RPMTOPDIR/SRPMS
+			NAMESRPMIN=${NAMESRPMIN/.src.rpm/.tar}
+			echog "Packing git repo with \$SPECNAME as \$NAMESRPMIN"
+			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES $RPMTOPDIR/SRPMS/$NAMESRPMIN
+		else
+			# build package without MENV checking
+			#if true || [ "$MENV" = "SS" ] ; then
+			echog "Packing git repo with \$SPECNAME as \$NAMESRPMIN"
 			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
-		else
-			fatal "Build backported src.rpm from git is unsupported now"
+#		else
+#			fatal "Build backported src.rpm from git is unsupported now"
 			# build src.rpm via hasher (on ALT)
 #			$NICE gear-hsh --build-args="-bs" --rpmbuild -- $COMMAND "$ONEPARAM" $@
 			#docmd $NICE $GEAR --hasher -- myhsh --build-prog=$ETERBUILDDIR/functions/rebuild $@ || RET=$?
 		fi
 	else
 		mkdir -p $RPMTOPDIR/BUILD $RPMTOPDIR/SRPMS
+		echog "Packing \$SPECNAME as \$NAMESRPMIN"
 		docmd $NICE $RPMBUILD "$ONEPARAM" "$TWOPARAM" "$THRPARAM" "$@" || RET=$?
 	fi
 
@@ -101,7 +111,7 @@ do
 		# BASENAME, RELEASE, VERSION, NAMESRPMIN, NAMERPMIN
 		build_rpms_name "$i" $ARGS
 		if [ -n "${SIGN}" ]; then
-			echog "Try to packing \$NAMESRPMIN package for sign"
+			#echog "Try to packing \$NAMESRPMIN package for sign"
 			add_changelog $i
 			if [ $? = "0" ]; then
 				echog "Spec file \$i had not ChangeLog entry. It have added now, check it and enter your command again."
@@ -109,8 +119,6 @@ do
 				sleep 10
 				exit 1
 			fi
-		else
-			echog "Just packing \$NAMESRPMIN"
 		fi
 
 		uni_rpmbuildsrpm $COMMIT $i -bs $ARGS $NODEPS --target $SYSARCH || fatal "Error with rpmbuild"

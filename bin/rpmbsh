@@ -39,7 +39,7 @@ phelp()
 	echog "   -e  sign and run gear test only task girar build"
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
-	echog "   -w  build with gear --hasher myhsh directly"
+	echog "   -w  use tar as immediate archive for myhsh"
 	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
@@ -86,19 +86,13 @@ if estrlist has spec "$LISTNAMES" ; then
 	add_changelog_helper "- new version" $LISTNAMES
 fi
 
-if [ -n "$THOROUGH" ] ; then
-	# TODO: use gear --hasher for fix macro problem (https://bugzilla.altlinux.org/show_bug.cgi?id=31673)
-	docmd time gear --hasher -- $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
-	exit
-else
-	# We do not not pass args for myhsh here...
-	# FIXME: не обрабатывает два пропускаемых вместе параметра
-	pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c e l f a A)
+# We do not not pass args for myhsh here...
+# FIXME: не обрабатывает два пропускаемых вместе параметра
+pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c e l f a A)
 
-	# build in hasher
-	docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
-	RESULT=$?
-fi
+# build in hasher
+docmd time $ETERBUILDBIN/myhsh $MENVARG $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
+RESULT=$?
 
 # if ok and test install is requested, do it
 if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
