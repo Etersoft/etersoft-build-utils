@@ -263,6 +263,8 @@ if [ -n "$UPDATECACHE" ] ; then
     exit 0
 fi
 
+detect_target_env
+
 PKGNAME=$(estrlist strip_spaces $LISTRPMARGS $LISTNAMES)
 
 if [ -z "$ALLSYSTEM$UPDATECACHE" ] ; then
@@ -381,7 +383,6 @@ fi
 
 # lists packages for build
 if [ -n "$LISTREQS" ] ; then
-	detect_target_env
 	print_target_buildreq "$PKGNAME"
 	exit $?
 fi

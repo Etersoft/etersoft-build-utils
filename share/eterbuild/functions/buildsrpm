@@ -9,6 +9,7 @@ load_mod gear
 # other parameters
 uni_rpmbuildsrpm()
 {
+	assert_var PKGVENDOR
 	local RET=0
 
 	local COMMIT=""
