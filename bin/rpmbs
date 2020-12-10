@@ -27,7 +27,7 @@ FORCE=
 RUNTASK=
 UPLOADNOW=
 CHECKONLY=
-TESTONLY=
+TESTONLY="--test-only"
 NOSOURCE=
 NOCHECK=
 UPDATES=
@@ -61,7 +61,6 @@ phelp()
 	#echog " -k [TARGET] - generate src.rpm and publish to TARGET dir (from Source: by default)"
 	#echog " -r [RELEASE] - publish to RELEASE target dir version"
 	echog "Ext. options:"
-	echog "   -e           sign and run gear test only task girar build"
 	echog "   -c           only sign package(s) with checking"
 	echog "   -f           force operation (overwrite tag)"
 	echog "   -F           force operation (overwrite tag) and run task after add"
@@ -81,12 +80,12 @@ while getopts :hfFstTcudenop:a:Ab:z opt; do
     s) SIGN=1 ;;
     t) SIGNTAG=1 ;;
     T) SETTAG=1 ;;
-    e) TESTONLY="--test-only" ; UPLOADNOW=1 ; SIGN=1 ;;
     f) FORCE="-f" ;;
     F) FORCE="-f" ; RUNTASK=1 ;;
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
-    u) UPLOADNOW=1 ; SIGN=1 ;;
+# e is obsoleted
+    e|u) UPLOADNOW=1 ; SIGN=1 ;;
     a) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER="$(echo $OPTARG | sed -e 's/before/ /g')" ;;
     A) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER= ;;
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
@@ -443,7 +442,7 @@ if [ -n "$PREPARETASK" ] ; then
 	docmd ssh $GEARHOST task add $TASKNUMBER $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 else
 	echo "Create task for $TASKLIST"
-	docmd ssh $GEARHOST build $(usearg -b $BINARYREPO sisyphus) $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
+	docmd ssh $GEARHOST build $TESTONLY $(usearg -b $BINARYREPO sisyphus) $TASKLIST 2>&1 | tee $RPMDIR/uploaded.log.tmp
 fi
 
 # FIXME: parse and incorporate
