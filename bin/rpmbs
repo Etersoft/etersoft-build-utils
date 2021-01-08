@@ -74,7 +74,7 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfFstTcudenop:a:Ab:z opt; do
+while getopts :hfFstTcudenop:a:Ab:wz opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
