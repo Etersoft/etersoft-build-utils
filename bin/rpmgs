@@ -388,6 +388,7 @@ source_postupdate_hook()
 	fi
 }
 
+# FIXME: run only for predownload, not for every source
 # param: development, production
 update_predownloaded()
 {
@@ -440,7 +441,7 @@ update_predownloaded()
 
 		# drop all exclude vendor
 		# TODO: correct .* removing
-		rm -rf $(ls -1 | grep -v vendor) .*
+		rm -rf $(ls -1 | grep -v vendor) .[a-zA-Z0-9]*
 	fi
 	#### end of composer only part
 
@@ -483,6 +484,8 @@ update_predownloaded()
         fi
         ### end of npm part
 
+	# some modules contains own .git
+	find -type d -name ".git" -print -exec rm -rvf "{}" \;
 	cd - >/dev/null
 
 	docmd git add -f $PSM
@@ -734,13 +737,13 @@ fi
 		#		download_to "$GETSOURCE" "$FTB"
 		fi
 
-		# TODO: make plugins
-		update_predownloaded development
-		update_predownloaded production
-
 		echog "DONE with $FTB"
-
 	done
+
+	# TODO: make plugins
+	update_predownloaded development
+	update_predownloaded production
+
 	fi
 
 	[ -n "$DOWNLOADSOME" ] || fatal "No upstream code is updated for new version $GSSETVERSION."
