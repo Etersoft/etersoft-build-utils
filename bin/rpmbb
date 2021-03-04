@@ -22,7 +22,7 @@ fi
 
 #############################
 
-Usage="Usage: rpmbb [-c -p -i -r -R] [spec]"
+Usage="Usage: rpmbb [--target BUILDARCH] [-c -p -i -r -R] [spec]"
 function mygetopts()
 {
 Descr="rpmbb (Build Binary) - build binary rpm from spec or from git"
@@ -46,6 +46,12 @@ if is_alt ; then
 fi
 	echog "   -d  build with dmake"
 }
+
+# first hack
+if [ "$1" = "--target" ] ; then
+    BUILDARCH="$2"
+    shift 2
+fi
 
 while getopts :hciprRd opt; do
     case $opt in

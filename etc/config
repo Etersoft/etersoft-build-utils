@@ -30,7 +30,7 @@
 #BUILDROOT=
 
 # Default arch for 32-bit packages (x86_64 will used for 64-bit packages)
-#DEFAULTARCH=i586
+#BUILDARCH=i586
 
 # Default ~/RPM path
 #RPMDIR=$HOME/RPM
