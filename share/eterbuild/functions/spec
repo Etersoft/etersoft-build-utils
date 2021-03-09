@@ -367,7 +367,8 @@ remove_bashism()
 		echo "$n" | perl -pe "s|$rs|$res|g"
 	done < $SPECNAME.main >$SPECNAME.tmp
 	[ -s "$SPECNAME.tmp" ] && mv -f $SPECNAME.tmp $SPECNAME
-	checkbashisms $SPECNAME
+	$EPMCMD assure checkbashisms
+	docmd checkbashisms $SPECNAME
 	cat $SPECNAME.changelog >>$SPECNAME
 	rm -f $SPECNAME.main $SPECNAME.changelog
 }

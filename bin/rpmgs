@@ -211,7 +211,7 @@ gear_update_from_tarball()
 	# TODO: check tarball ext. for unsupported arch and realize it here or in gear-update
 	echo "Commit tarball '$TARBALL' to git subdir '$CURNAME'..."
 	if ! docmd gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" ; then
-		if gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" 2>&1 | grep -q "More than one subdirectory specified" ; then
+		if a= gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" 2>&1 | grep -q "More than one subdirectory specified" ; then
 			info "Try unpack as is"
 			CREATEFLAG="$CREATEFLAG -a"
 			docmd gear-update $CREATEFLAG $@ "$TARBALL" "$CURNAME" && return
@@ -545,10 +545,11 @@ if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verif
     # need for gear-rules-verify
     cd $(get_root_git_dir)
 
-    docmd gear-rules-verify
-    if gear-rules-verify 2>&1 | grep -q "gear-rules-verify should be run in clean repository" ; then
+    GEAR_RULES_VERIFY=gear-rules-verify
+    docmd $GEAR_RULES_VERIFY
+    if $GEAR_RULES_VERIFY 2>&1 | grep -q "gear-rules-verify should be run in clean repository" ; then
         warning "gear-rules-verify should be run in clean repository, skipping"
-    elif gear-rules-verify | grep -q "Ready for tarball update" ; then
+    elif $GEAR_RULES_VERIFY | grep -q "Ready for tarball update" ; then
         #[ -n "$GSSETVERSION" ] && warning "we will ignore version and update to the latest version from watch file"
         # TODO: rpm-uscan 0.20.2.17.11 or above
         $EPMCMD assure rpm-uscan
@@ -565,7 +566,7 @@ if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verif
         else
             warning "there are no .watch files in (get_root_git_dir)/.gear, skip rpm-uscan"
         fi
-    elif gear-rules-verify | grep -Eq "Ready for external VCS update" ; then
+    elif $GEAR_RULES_VERIFY | grep -Eq "Ready for external VCS update" ; then
         #[ -n "$GSSETVERSION" ] && warning "we will ignore version and update to the latest version from watch file"
         # TODO: rpm-uscan 0.20.2.17.11 or above
         # https://www.altlinux.org/Gear/remotes
@@ -755,7 +756,7 @@ fi
 		EGEARME=""
 		is_gear && EGEARME=" with rpmgs script"
 		if grep -q "^- new version $CURVER$" $spec ; then
-			subst "s|- new version $CURVER$|- new version ($CURVER)$EGEARME via gear-uupdate|" $spec && gamend $spec
+			subst "s|- new version $CURVER$|- new version ($CURVER)$EGEARME via gear-uupdate|" $spec && git commit --amend $spec
 		else
 			add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
 		fi
