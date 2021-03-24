@@ -33,8 +33,14 @@ drop_args()
 
 initial_letter()
 {
-    echo "$1" | head -n1 | cut -c1
+    echo "$1" | head -c1
 }
+
+skip_initial_letter()
+{
+    echo "$1" | cut -c2-
+}
+
 
 is_dirpath()
 {
