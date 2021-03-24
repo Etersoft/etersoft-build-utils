@@ -69,9 +69,9 @@ trans_rpmdeps_to_pkgname_ldv()
 	local ALREADYHANDLEDRPM="rpmlib.* rtld libgcc_s\..* libstdc\+\+.* libc\.so.* ld-linux\.so.* libpthread\.so.* librt\.so.*"
 
 	local REQLIST="$@"
-	REQLIST=$(estrlist regexp_exclude "$ALREADYHANDLEDRPM" "$REQLIST")
+	REQLIST=$(estrlist reg_exclude "$ALREADYHANDLEDRPM" "$REQLIST")
 
-	REALPKGNAMELIST=$(estrlist regexp_exclude ". /*" "$REQLIST")
+	REALPKGNAMELIST=$(estrlist reg_exclude ". /*" "$REQLIST")
 	REQCONVLIST=$(estrlist exclude "$REALPKGNAMELIST" "$REQLIST")
 
 	set_hasherdir
@@ -117,7 +117,7 @@ common-licenses
 librpmbuild
 passwdqc-control"
 	REQLIST=$(estrlist union $(convert_pkgfile_to_pkgname $PKGFILES) $REALPKGNAMELIST)
-	REQLIST=$(estrlist regexp_exclude "$ALREADYHANDLEDRPM" "$REQLIST" )
+	REQLIST=$(estrlist reg_exclude "$ALREADYHANDLEDRPM" "$REQLIST" )
 	estrlist union $REQLIST
 }
 
@@ -142,7 +142,7 @@ trans_rpmdeps_to_pkgname_lav()
 	# partially copied from aptU
 	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
 	#FIXME: f.i., we got /usr/bin/lpstat in VIRTREQ (select cups or lprng package?). Skip now
-	#REQLIST=$(estrlist regexp_exclude "VIRTREQ" "$REQLIST")
+	#REQLIST=$(estrlist reg_exclude "VIRTREQ" "$REQLIST")
 	# TODO: we have store_output function
 	TFILE=$(make_temp_file)
 	PKGFILES=

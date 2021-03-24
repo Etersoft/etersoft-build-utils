@@ -71,7 +71,7 @@ install_packages()
 	docmd $SUDO apt-get install $LIST
 	ALREADYHANDLEDAPT="$ALREADYHANDLEDAPT $LIST"
 	REQLIST="$($ETERBUILDBIN/rpmreqs $LIST)"
-	REQLIST=$(estrlist regexp_exclude "$ALREADYHANDLEDRPM" "$REQLIST")
+	REQLIST=$(estrlist reg_exclude "$ALREADYHANDLEDRPM" "$REQLIST")
 
 	test -n "$REQLIST" || { echog "There is no more req packages to install" ; return ; }
 	install_by_requires $REQLIST
