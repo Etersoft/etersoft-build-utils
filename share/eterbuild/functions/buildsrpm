@@ -26,6 +26,8 @@ uni_rpmbuildsrpm()
 
 	local GEAR=gear
 
+	$EPMCMD assure gear
+
 	local ONEPARAM="--quiet"
 	[ -n "$USE_LEGACY_COMPRESSION" ] && ONEPARAM="--define=_source_payload w9.gzdio"
 

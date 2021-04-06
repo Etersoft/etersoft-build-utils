@@ -26,6 +26,8 @@ uni_rpmbuild()
 	local SPECDIR=`dirname $SPECNAME`
 	local GEAR="gear -v"
 
+	$EPMCMD assure gear
+
 	local THRPARAM="--quiet"
 	[ -n "$USE_VENDOR" ] && THRPARAM="--define=_vendor $USE_VENDOR"
 
