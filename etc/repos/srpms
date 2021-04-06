@@ -45,3 +45,5 @@ epel            http://mirror.yandex.ru/pub/epel/6/SRPMS
 elrepo          http://elrepo.org/linux/elrepo/el7/SRPMS
 elrepo-testing  http://elrepo.org/linux/testing/el7/SRPMS
 elrepo-fasttrack http://elrepo.org/linux/fasttrack/el7/SRPMS
+cauldron https://fr2.rpmfind.net/linux/mageia/distrib/cauldron/SRPMS/core/release
+cauldron-non-free https://fr2.rpmfind.net/linux/mageia/distrib/cauldron/SRPMS/nonfree/release
