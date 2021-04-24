@@ -174,7 +174,9 @@ do
 	fi
 
 	# Make backup copy
-	cp -f $SPEC ${SPEC}~ || fatal "Cannot find spec file '$SPEC'"
+	#cp -f $SPEC ${SPEC}~ || fatal "Cannot find spec file '$SPEC'"
+
+	test -s $SPEC || fatal "Cannot find spec file '$SPEC'"
 
 	# Add group
 	if ! grep "^Group" $SPEC ; then
