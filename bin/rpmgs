@@ -291,6 +291,9 @@ commit_tarball()
 	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$(get_tarballname "$spec")
 	#test -d "$CURNAME" || CURNAME=$(get_root_git_dir)/$BASENAME
 
+	# save first committed source dir
+	[ -z "$FIRSTSOURCEDIR" ] && FIRSTSOURCEDIR="$(basename "$CURNAME")"
+
 	commit_tarball_to_dir "$TARBALL" "$EXTTARBALL" "$CURNAME"
 }
 
@@ -399,8 +402,9 @@ update_predownloaded()
 
 	local RGD=$(get_root_git_dir)
 
+	CURNAME=$FIRSTSOURCEDIR
 	# hack for subdir??
-	CURNAME=$BASENAME
+	#CURNAME=$BASENAME
 
 	# TODO: add support for git
 	rm -rf $PSM
@@ -643,6 +647,7 @@ fi
 		SOURCELIST=$(grep "^Source0\?:" $spec | sed -e "s|:.*||g")
 	fi
 
+    FIRSTSOURCEDIR=''
 	if [ -z "$DOWNLOADSOME" ] ; then
 	for SN in $SOURCELIST
 	do
