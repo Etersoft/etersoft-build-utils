@@ -86,6 +86,12 @@ if [ "$1" = "get" ] ; then
 	fi
 fi
 
+eval lastarg=\${$#}
+if [ "$lastarg" = "--help" ] ; then
+	docmd ssh $GEARHOST "$@"
+	exit
+fi
+
 if [ "$1" = "find" ] ; then
 	shift
 	#showcmd "$GEARHOST>" find-packages "$@"
