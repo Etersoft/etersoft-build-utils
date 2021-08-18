@@ -87,10 +87,6 @@ if [ "$1" = "get" ] ; then
 fi
 
 eval lastarg=\${$#}
-if [ "$lastarg" = "--help" ] ; then
-	docmd ssh $GEARHOST "$@"
-	exit
-fi
 
 if [ "$1" = "find" ] ; then
 	shift
@@ -113,6 +109,10 @@ set_if_matched()
 
 # acl [p9] show mc | add mc lav
 if [ "$1" = "acl" ] ; then
+	if [ "$lastarg" = "--help" ] ; then
+		docmd ssh $GEARHOST "$@"
+		exit
+	fi
 	shift
 	BINARYREPO=$(set_if_matched $1 "Sisyphus [ptc][6-9] [ptc][6-9]\.[0-9]") && shift
 	COMMAND="$1"
@@ -145,6 +145,24 @@ if [ "$1" = "log" ] ; then
 	exit
 fi
 
+if [ "$1" = "quota" ] ; then
+	docmd ssh $GIRARHOST quota "$@"
+	exit
+fi
+
+if [ "$1 $2" = "cancel --help" ] ; then
+	echo "cancel a task"
+	echo "Usage: $ gita cancel <task id>"
+	exit
+fi
+
+if [ "$lastarg" = "--help" ] ; then
+	docmd ssh $GEARHOST task "$@"
+	exit
+fi
+
+# task command below
+
 if [ "$1" = "ls" ] ; then
 	shift
 	if [ "$1" = "--all" ] || [ "$1" = "-a" ] ; then
@@ -155,11 +173,6 @@ if [ "$1" = "ls" ] ; then
 	# TODO: add support ls -a (with subtasks)
 	showcmd "$GEARHOST>" girar-show "$@"
 	GIT_ALT=$GEARHOST girar-show "$@"
-	exit
-fi
-
-if [ "$1" = "quota" ] ; then
-	docmd ssh $GIRARHOST quota
 	exit
 fi
 
