@@ -179,8 +179,14 @@ if [ "$1" = "ls" ] ; then
 	fi
 	# TODO: with arg(s) — subtask
 	# TODO: add support ls -a (with subtasks)
-	showcmd "$GEARHOST>" girar-show "$@"
-	GIT_ALT=$GEARHOST girar-show "$@"
+	if [ -n "$1" ] || ! isatty ; then
+		showcmd "$GEARHOST>" girar-show "$@"
+		GIT_ALT=$GEARHOST girar-show "$@"
+	else
+		showcmd "$GEARHOST>" 'girar-show | head -n20'
+		GIT_ALT=$GEARHOST girar-show | head -n20
+		echo "(end of head -n20 output)"
+	fi
 	exit
 fi
 
