@@ -1,5 +1,5 @@
 #!/bin/sh
-# 2017, 2018, 2019, 2020 (c) Etersoft https://etersoft.ru
+# 2017, 2018, 2019, 2020, 2021 (c) Etersoft https://etersoft.ru
 # Author: Vitaly Lipatov <lav@etersoft.ru>
 # Public domain
 
@@ -24,6 +24,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     add del package [package2]  - add package remove command"
 	echo "     add rebuild package [package2]  - add package rebuild"
 	echo "     add --help                  - show task add help"
+	echo "     Add <args>                  - add and run the task"
 	echo "     task --help                 - show task help"
 	echo "     share  NNNN [enable]        - share task NNNN"
 	echo "     deps   NNNN add XXXX        - add deps from XXXX to task NNNN"
@@ -68,7 +69,8 @@ get_subtask()
 	ssh $GEARHOST task show $1 | egrep "(/$2.git|:package=$2$)" | sed -e "s|^ \([0-9]*\):.*|\1|g"
 }
 
-# TODO: acl
+
+NEXTCOMMAND=''
 
 $EPMCMD assure girar-show girar-utils
 
@@ -223,7 +225,8 @@ if [ "$1" = "copy" ] ; then
 	exit
 fi
 
-if [ "$1" = "add" ] ; then
+if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
+	[ "$1" = "Add" ] && NEXTCOMMAND="run"
 	SUBTASK=''
 	ADDCMD=''
 	ADDCMDLIST="del copy repo rebuild"
@@ -259,6 +262,7 @@ if [ "$1" = "add" ] ; then
 		fi
 		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
 	done
+	[ -n "$NEXTCOMMAND" ] && $0 $NEXTCOMMAND
 	exit
 fi
 
