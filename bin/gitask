@@ -274,7 +274,7 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 		fi
 		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
 	done
-	[ -n "$NEXTCOMMAND" ] && $0 $NEXTCOMMAND
+	[ -n "$NEXTCOMMAND" ] && sleep 2 && $0 $NEXTCOMMAND
 	exit
 fi
 
