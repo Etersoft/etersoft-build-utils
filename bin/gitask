@@ -33,7 +33,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
 	echo "     log    NNNN                 - show build log for task NNNN"
 	echo "     show   NNNN                 - show subtask list for task NNNN"
-	echo "     quota                       - show quota on the git server"
+	echo "     quota                       - show quota on the remote servers"
 	echo "     cancel NNNN                 - cancel task NNNN"
 	echo "     acl [branch] show PACKAGE            - show acl "
 	echo "     acl [branch] show PACKAGE add maintainer - add acl "
@@ -149,6 +149,7 @@ fi
 
 if [ "$1" = "quota" ] ; then
 	docmd ssh $GIRARHOST quota "$@"
+	docmd ssh $GEARHOST quota "$@"
 	exit
 fi
 
