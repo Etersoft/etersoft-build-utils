@@ -42,6 +42,9 @@ uni_rpmbuild()
 	local SIXPARAM="--quiet"
 	[ -n "$USEDMAKE" ] && SIXPARAM="--define=make_build dmake"
 
+	local SEVENPARAM=""
+	[ -n "ALLOW_ROOT_USER" ] && SEVENPARAM="--define=_allow_root_build 1"
+
 	if is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
@@ -51,7 +54,7 @@ uni_rpmbuild()
 
 		# build package without MENV checking
 		if true || [ "$MENV" = "SS" ] ; then
-			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$@" || RET=$?
+			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$SEVENPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
 			fatal "Build backported src.rpm from git is unsupported now"
