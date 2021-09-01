@@ -21,8 +21,10 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     new    [branch]             - create new task on branch (Sisyphus by default)"
 	echo "     run [--test-only] [NNNN] [NNNN2] [-m <message>] - run task NNNN"
 	echo "     commit [NNNN] [NNNN2] [-m <message>]       - commit task(s) NNNN, [NNNN2]"
-	echo "     add del package [package2]  - add package remove command"
-	echo "     add rebuild package [package2]  - add package rebuild"
+	echo "     add [NNNN] repo  <gear repo> <gear tag> ... - add package build from repo command"
+	echo "     add [NNNN] repo <gear repo>.git=<gear tag> ...  - add package build from repo command"
+	echo "     add [NNNN] del package [package2...]  - add package remove command"
+	echo "     add [NNNN] rebuild package [package2...]  - add package rebuild"
 	echo "     add --help                  - show task add help"
 	echo "     Add <args>                  - add and run the task"
 	echo "     task --help                 - show task help"
@@ -35,8 +37,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     show   NNNN                 - show subtask list for task NNNN"
 	echo "     quota                       - show quota on the remote servers"
 	echo "     cancel NNNN                 - cancel task NNNN"
-	echo "     acl [branch] show PACKAGE            - show acl "
-	echo "     acl [branch] show PACKAGE add maintainer - add acl "
+	echo "     acl [branch] show package   - show acl for the package"
+	echo "     acl [branch] package add|del <maintainer> - add/del acl for the package"
 	echo "     rebuild --help              - rebuild package"
 	exit 0
 fi
@@ -263,9 +265,17 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 
 	[ -n "$1" ] || fatal "no packages"
 
+	OADDCMD=$ADDCMD
 	while [ -n "$1" ] ; do
 		PACKAGE="$1"
-		[ "$ADDCMD" = "repo" ] && PACKAGE="$1 $2" && shift
+		if [ "$OADDCMD" = "repo" ] ; then
+			#<gear repo>.git=<gear tag>
+			if rhas "$1" "\.git=" ; then
+				ADDCMD=''
+			else
+				PACKAGE="$1 $2" && shift
+			fi
+		fi
 		shift
 		ST="$(get_subtask $TASK $PACKAGE)"
 		if [ -n "$ST" ] ; then
