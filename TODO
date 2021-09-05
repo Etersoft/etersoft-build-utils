@@ -1,7 +1,8 @@
-$ ssh gear.alt task check-git-inheritance --help
-task check-git-inheritance - manage subtask git inheritance
+For example, on Fedora 30 builds, %{fc30} is defined to 1.
+%{rhel}: This variable is only defined on Red Hat Enterprise Linux builds. 
+%{?dist} .fc31
 
-Usage: task check-git-inheritance <task_id> <subtask_number> disable <commit_sha_id>
+https://docs.fedoraproject.org/en-US/packaging-guidelines/DistTag/
 
 А в паре с rpm-build-ubt можно, например,
 %if_ver_gteq %ubt_id M90C
