@@ -282,6 +282,8 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 			info "$PACKAGE already present in the task $TASK as subtask $ST, replacing ..."
 			docmd ssh $GEARHOST task delsub $TASK $ST
 			[ -n "$SUBTASK" ] || SUBTASK="$ST"
+			# too much re add to the same place
+			[ "$SUBTASK" = "1" ] && SUBTASK=""
 		fi
 		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
 	done
