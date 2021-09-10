@@ -13,7 +13,7 @@ fedora-rawhide-s   http://mirror.yandex.ru/fedora/linux/development/rawhide/Serv
 fedora-rawhide-d   http://mirror.yandex.ru/fedora/linux/development/rawhide/Workstation/source/tree/Packages/
 fedora-rawhide-e   http://mirror.yandex.ru/fedora/linux/development/rawhide/Everything/source/tree/Packages/
 fedora-ccrma    http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/9/SRPMS
-edumandriva      ftp://ftp.linuxcenter.ru/pub/Mandriva/EduMandriva/educontrib/2010.1/SRCRPM/free
+#edumandriva      ftp://ftp.linuxcenter.ru/pub/Mandriva/EduMandriva/educontrib/2010.1/SRCRPM/free
 #rosa2012        ftp://mirror.yandex.ru/rosa/rosa2012lts/repository/SRPMS/main/release
 #rosa2012u       ftp://mirror.yandex.ru/rosa/rosa2012lts/repository/SRPMS/main/updates
 #rosa2012c       ftp://mirror.yandex.ru/rosa/rosa2012lts/repository/SRPMS/contrib/release
@@ -32,18 +32,18 @@ mandriva-cooker-non-free http://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non
 # it is mirrored
 #suse-factory   http://download.opensuse.org/factory/repo/src-oss/suse/src
 #suse-factory   http://ftp5.gwdg.de/pub/opensuse/source/factory/repo/oss/suse/src
-suse-current-nn-oss http://ftp5.gwdg.de/pub/opensuse/source/distribution/openSUSE-current/repo/non-oss/suse/src
-suse-current-oss http://ftp5.gwdg.de/pub/opensuse/source/distribution/openSUSE-current/repo/oss/suse/src
-suse-edu1       http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
+suse-current-nn-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/openSUSE-current/repo/non-oss/suse/src
+suse-current-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/openSUSE-current/repo/oss/suse/src
+#suse-edu1       http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2       http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
 #alt-obsolete    ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
 #alt-orphaned    ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned
-pld              ftp://ftp.pld-linux.org/branches/titanium/PLD/SRPMS/RPMS
+pld              http://ftp.pld-linux.org/dists/th/PLD/SRPMS/RPMS
 fedoraf         http://download1.rpmfusion.org/free/fedora/releases/14/Everything/source/SRPMS
 rpmfusion       http://download1.rpmfusion.org/free/fedora/development/source/SRPMS
 epel            http://mirror.yandex.ru/pub/epel/6/SRPMS
-elrepo          http://elrepo.org/linux/elrepo/el7/SRPMS
-elrepo-testing  http://elrepo.org/linux/testing/el7/SRPMS
-elrepo-fasttrack http://elrepo.org/linux/fasttrack/el7/SRPMS
+elrepo          http://elrepo.org/linux/elrepo/el8/SRPMS
+elrepo-testing  http://elrepo.org/linux/testing/el8/SRPMS
+elrepo-fasttrack http://elrepo.org/linux/fasttrack/el8/SRPMS
 cauldron https://fr2.rpmfind.net/linux/mageia/distrib/cauldron/SRPMS/core/release
 cauldron-non-free https://fr2.rpmfind.net/linux/mageia/distrib/cauldron/SRPMS/nonfree/release
