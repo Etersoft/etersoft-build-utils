@@ -449,6 +449,28 @@ update_predownloaded()
 	fi
 	#### end of composer only part
 
+	#### go only part
+	if [ -s "./go.mod" ] && [ ! -d "./vendor" ] ; then
+		local COMMITMSG=''
+		local PRODUCTION=''
+
+		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
+
+		info "Detected go.mod install hook, running go mod vendor $PRODUCTION ..."
+		a= go mod vendor $PRODUCTION || fatal
+		COMMITMSG="update vendored go modules with go mod vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		fi
+
+		# drop all exclude vendor
+		# TODO: correct .* removing
+		rm -rf $(ls -1 | grep -v vendor) .[a-zA-Z0-9]*
+	fi
+	#### end of composer only part
+
 	#### npm only part
 	if [ -s "./package.json" ] ; then
 
