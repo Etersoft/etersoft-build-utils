@@ -427,6 +427,7 @@ update_predownloaded()
                 COMMITMSG="update predownloaded-$MODE with a hook script"
 	fi
 
+
 	#### composer only part
 	if [ -s "./composer.json" ] ; then
 		local COMMITMSG=''
@@ -434,8 +435,8 @@ update_predownloaded()
 
 		[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
-		info "Detected composer install hook, running composer install $PRODUCTION ..."
-		a= composer install $PRODUCTION || fatal
+		info "Detected composer install hook, running ..."
+		docmd composer install $PRODUCTION || fatal
 		COMMITMSG="update php modules with composer install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -443,11 +444,17 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
+		info "Removing binaries ..."
+		find vendor -name "*.a" -type f -delete -print
+		find vendor -name "*.so" -type f -delete -print
+		find vendor -name "*.dll" -type f -delete -print
+
 		# drop all exclude vendor
 		# TODO: correct .* removing
 		rm -rf $(ls -1 | grep -v vendor) .[a-zA-Z0-9]*
 	fi
 	#### end of composer only part
+
 
 	#### go only part
 	if [ -s "./go.mod" ] && [ ! -d "./vendor" ] ; then
@@ -456,14 +463,19 @@ update_predownloaded()
 
 		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
-		info "Detected go.mod install hook, running go mod vendor $PRODUCTION ..."
-		a= go mod vendor $PRODUCTION || fatal
+		info "Detected go.mod install hook, running ..."
+		docmd go mod vendor $PRODUCTION || fatal
 		COMMITMSG="update vendored go modules with go mod vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
 		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
+
+		info "Removing binaries ..."
+		find vendor -name "*.a" -type f -delete -print
+		find vendor -name "*.so" -type f -delete -print
+		find vendor -name "*.dll" -type f -delete -print
 
 		# drop all exclude vendor
 		# TODO: correct .* removing
@@ -512,8 +524,8 @@ update_predownloaded()
 
 		[ "$MODE" = "production" ] && PRODUCTION='--production'
 
-      		info "Detected npm install hook, running npm install $PRODUCTION ..."
-		a= npm install --verbose --no-optional --ignore-scripts $PRODUCTION || fatal
+		info "Detected npm install hook, running ..."
+		docmd npm install --verbose --no-optional --ignore-scripts $PRODUCTION || fatal
 		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -521,9 +533,14 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
-                # prune removes modules not listed in package.json
+		# prune removes modules not listed in package.json
 		# a= npm prune $PRODUCTION
-		a= npm dedup
+		docmd npm dedup
+
+		info "Removing binaries ..."
+		find vendor -name "*.a" -type f -delete -print
+		find vendor -name "*.so" -type f -delete -print
+		find vendor -name "*.dll" -type f -delete -print
 
 		# drop all exclude node_modules
 		# TODO: correct .* removing
@@ -537,7 +554,7 @@ update_predownloaded()
 
 		#epm assure jq || fatal
 		#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
-        fi
+	fi
         ### end of npm part
 
 	# some modules contains own .git
