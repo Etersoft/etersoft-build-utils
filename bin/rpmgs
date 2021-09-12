@@ -471,6 +471,36 @@ update_predownloaded()
 	fi
 	#### end of composer only part
 
+
+	#### cargo only part
+	if [ -s "./Cargo.lock" ] && [ ! -d "./vendor" ] ; then
+		local COMMITMSG=''
+		local PRODUCTION=''
+
+		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
+
+		info "Detected 'Cargo.lock' install hook ..."
+		docmd cargo vendor $PRODUCTION || fatal
+		COMMITMSG="update vendored cargo modules with cargo vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		fi
+
+		info "Removing binaries (see https://github.com/rust-lang/cargo/issues/6179) ..."
+		find vendor -name "*.a" -type f -delete -print
+		find vendor -name "*.so" -type f -delete -print
+		find vendor -name "*.dll" -type f -delete -print
+
+		# drop all exclude vendor
+		# TODO: correct .* removing
+		# TODO: move from temp dir
+		rm -rf $(ls -1 | grep -v vendor | grep -v Cargo.lock) .[a-zA-Z0-9]* *.md
+	fi
+	#### end of cargo only part
+
+
 	#### npm only part
 	if [ -s "./package.json" ] ; then
 
