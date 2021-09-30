@@ -500,10 +500,14 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
-		info "Removing binaries (see https://github.com/rust-lang/cargo/issues/6179) ..."
-		find vendor -name "*.a" -type f -delete -print
-		find vendor -name "*.so" -type f -delete -print
-		find vendor -name "*.dll" -type f -delete -print
+		# TODO: can't just remove binaries (it is checked)
+		info "Check news about windows target: https://github.com/rust-lang/cargo/issues/6179"
+		#find vendor -name "*.a" -type f -delete -print
+		#find vendor -name "*.so" -type f -delete -print
+		#find vendor -name "*.dll" -type f -delete -print
+
+		# can remove binaries from definitely unused packages
+		rm -rv vendor/winapi-*-pc-windows-gnu/lib/*.a
 
 		# drop all exclude vendor
 		# TODO: correct .* removing
