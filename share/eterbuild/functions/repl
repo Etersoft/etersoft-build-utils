@@ -190,12 +190,33 @@ internal_repl_list()
 	local REPLBASE="$1"
 	local ARCHEXT="$2"
 	local FINDPKG=$REPLBASE.$PKGVENDOR.$DISTRVERSION$ARCHEXT
-	# sure we use our version firstly
-	echo $FINDPKG
-	#  Hack for sort by last numbers: sort -n -t . -k 3
-	( ls -1 $REPLBASE.$PKGVENDOR*$ARCHEXT 2>/dev/null | \
-			( test -n "$ARCHEXT" && grep -v "$PKGVENDOR$ARCHEXT\$" || grep -v "x86_64" ) ; echo $FINDPKG ) | \
-		sort -u | sort -n -t . -k 3 | grep "^$FINDPKG\$" -B1000 | sort -r -n -t . -k 3
+	local FINDPKGVERS=''
+	local FINDPKGGREP=$FINDPKG
+	# 7.3 -> 7, 20.04 -> 20
+	local BASEDISTRVERSION=${DISTRVERSION/\.*/}
+	if [ "$DISTRVERSION" != "$BASEDISTRVERSION" ] ;then
+		FINDPKGVERS="$REPLBASE.$PKGVENDOR.$BASEDISTRVERSION$ARCHEXT"
+		FINDPKGGREP="$FINDPKGVERS"
+	fi
+
+	if [ -n "$ARCHEXT" ] ; then
+	(
+		# sure we use our version firstly
+		echo $FINDPKG
+		echo $FINDPKGVERS
+		ls -1 $REPLBASE.$PKGVENDOR*$ARCHEXT 2>/dev/null | grep -v "$PKGVENDOR$ARCHEXT\$"
+	) | grep -v "^\$" | sed -e "s|$ARCHEXT\$||" | \
+		sort -u | sort -r -t . -k 3 | sed -e "s|$|$ARCHEXT|"
+	else
+	(
+		# sure we use our version firstly
+		echo $FINDPKG
+		echo $FINDPKGVERS
+		# skip all arches
+		ls -1 $REPLBASE.$PKGVENDOR* 2>/dev/null | grep -v "\.x86_64\$" | grep -v "\.aarch64\$" | grep -v "\.x86_64-i586\$"
+	) | grep -v "^\$" | \
+		sort -u | sort -r -t . -k 3
+	fi
 	echo $REPLBASE.$PKGVENDOR$ARCHEXT
 	[ "$PKGVENDOR" = "alt" ] || echo "$REPLBASE.$PKGFORMAT$ARCHEXT "
 }

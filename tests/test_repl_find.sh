@@ -36,7 +36,26 @@ check_repl()
 	check "$1" "`print_replace $1`" "$2"
 }
 
-# global
+
+
+############################# RedOS ##########################
+BUILDNAME=nx-libs
+
+DISTRNAME=RedOS
+PKGVENDOR=redos
+DISTRVERSION=7.3
+BUILDARCH=x86_64
+#BUILDARCH=i586
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libpixman-devel "pixman-devel"
+
+
+############################ Ubuntu ###########################
 BUILDNAME=wine
 
 
@@ -55,6 +74,7 @@ check_repl libusb-devel libusb-1.0-0-dev
 check_repl libstdc++ libstdc++
 check_repl perl-podlators perl
 
+# Mandriva
 
 DISTRNAME=Mandriva
 PKGVENDOR=mdv
@@ -213,7 +233,7 @@ check_repl pkg-config "pkgconfig"
 ############################# ROSA ##########################
 BUILDNAME=wine
 
-DISTRNAME=rosa
+DISTRNAME=Rosa
 PKGVENDOR=rosa
 DISTRVERSION=2014
 BUILDARCH=x86_64
@@ -225,3 +245,4 @@ echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 print_pkgrepl_list
 
 check_repl libicu-devel "lib64icu-devel"
+
