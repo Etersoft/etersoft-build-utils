@@ -92,12 +92,12 @@ pack_src_rpm $COMMIT $(drop_args "$LISTRPMARGS" s u c e l f a A)
 
 # FIXME: we can't make pkg.tar from non gear repo, so just run myhsh with -a
 # build in hasher
-docmd time $ETERBUILDBIN/myhsh $MENVARG $THOROUGH $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
+docmd time $ETERBUILDBIN/myhsh -b $BINARYREPO $THOROUGH $(drop_args "$LISTRPMARGS" f u a A) $LISTBUILT
 RESULT=$?
 
 # if ok and test install is requested, do it
 if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
-	BINPACKAGES=$($ETERBUILDBIN/myhsh $MENVARG -p $LISTBUILT | estrlist reg_exclude ".*debuginfo.*" -) || fatal "Can't get binary packages for $LISTBUILT"
+	BINPACKAGES=$($ETERBUILDBIN/myhsh -b $BINARYREPO -p $LISTBUILT | estrlist reg_exclude ".*debuginfo.*" -) || fatal "Can't get binary packages for $LISTBUILT"
 
 	estrlist isempty "$BINPACKAGES" && fatal "There is no binary packages after build"
 
@@ -113,7 +113,7 @@ if [ "$RESULT" = "0" ] && [ -n "$INSTALLPKG" ] ; then
 
 	if [ "$RESULT" = "0" ] ; then
 		echog "Remove packages from test hasher dir ..."
-		docmd $ETERBUILDBIN/myhsh -r $MENVARG $BINPACKAGES
+		docmd $ETERBUILDBIN/myhsh -r -b $BINARYREPO $BINPACKAGES
 	else
 		echog "Leave packages in the hasher due error result"
 	fi

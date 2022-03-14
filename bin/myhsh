@@ -33,7 +33,7 @@ phelp()
 	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
-while getopts :habpnclr opt; do
+while getopts :hab:pnclr opt; do
     case $opt in
     h) phelp; exit 0;;
     p) PRINTBINPKG=1;;
