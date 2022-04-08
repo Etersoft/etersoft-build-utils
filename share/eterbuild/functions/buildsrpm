@@ -24,10 +24,6 @@ uni_rpmbuildsrpm()
 	local SPECDIR
 	set_specdir $SPECNAME || fatal "Dir for $SPECNAME does not exists"
 
-	local GEAR=gear
-
-	$EPMCMD assure gear
-
 	local ONEPARAM="--quiet"
 	[ -n "$USE_LEGACY_COMPRESSION" ] && ONEPARAM="--define=_source_payload w9.gzdio"
 
@@ -42,6 +38,9 @@ uni_rpmbuildsrpm()
 	if [ "$PKGVENDOR" = "alt" ] && is_gear $SPECDIR ; then
 		[ -f "$SPECNAME" ] || fatal "run uni_rpmbuild with spec as 2nd parameter"
 		shift # skip spec name
+
+		local GEAR=gear
+		$EPMCMD assure gear || fatal
 
 		# FIXME: use spec name as project name
 		GEARRULES=$(get_gear_rules_by_spec "$SPECNAME")
