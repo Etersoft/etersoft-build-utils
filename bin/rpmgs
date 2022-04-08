@@ -528,10 +528,10 @@ update_predownloaded()
 		local COMMITMSG=''
                 local PRODUCTION=''
 
-		[ "$MODE" = "production" ] && PRODUCTION='--production'
+		[ "$MODE" = "production" ] && PRODUCTION='--omit=dev'
 
 		info "Detected npm install hook, running ..."
-		docmd npm install --verbose --no-optional --ignore-scripts $PRODUCTION || fatal
+		docmd npm install $VERBOSE --omit=optional --ignore-scripts $PRODUCTION || fatal
 		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -541,12 +541,15 @@ update_predownloaded()
 
 		# prune removes modules not listed in package.json
 		# a= npm prune $PRODUCTION
-		docmd npm dedup
+		# dedup restores removed modules!
+		#docmd npm dedup
 
 		info "Removing binaries ..."
-		find vendor -name "*.a" -type f -delete -print
-		find vendor -name "*.so" -type f -delete -print
-		find vendor -name "*.dll" -type f -delete -print
+		if [ -d vendor ] ; then
+			find vendor -name "*.a" -type f -delete -print
+			find vendor -name "*.so" -type f -delete -print
+			find vendor -name "*.dll" -type f -delete -print
+		fi
 
 		# drop all exclude node_modules
 		# TODO: correct .* removing
