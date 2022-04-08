@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # load common functions, compatible with local and installed script
 . `dirname $0`/../share/eterbuild/functions/common
@@ -22,4 +22,4 @@ MAKEARG="-j$NPROCS"
 
 #make $MAKEARG "CC=$CC" "CXX=$CXX" "CPP=$CPP" "CXXCPP=$CXXCPP" $@
 cd_to_realcwd
-docmd $NICE time -p make $MAKEARG $@
+$NICE time -p make $MAKEARG "$@"
