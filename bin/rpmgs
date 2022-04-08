@@ -406,6 +406,7 @@ update_predownloaded()
 	# hack for subdir??
 	#CURNAME=$BASENAME
 
+	info "Preparing sources in $PSM for mode $MODE ..."
 	# TODO: add support for git
 	rm -rf $PSM
 	if [ -n "$GETSOURCEGIT" ] ; then
@@ -422,6 +423,7 @@ update_predownloaded()
 	[ -n "$VERBOSE" ] && RUNHOOK="sh -x"
 
 	if [ -s $RGD/.gear/predownloaded-preinstall-hook ] ; then
+		echo
 		info "Detected .gear/predownloaded-preinstall-hook, running it ..."
 		$RUNHOOK $RGD/.gear/predownloaded-preinstall-hook $MODE $VERSION
                 COMMITMSG="update predownloaded-$MODE with a hook script"
@@ -566,7 +568,7 @@ update_predownloaded()
 	cd - >/dev/null
 
 	docmd git add -f $PSM
-	docmd git commit $PSM -m "$COMMITMSG"
+	docmd git commit -m "$COMMITMSG"
 
 }
 
@@ -641,7 +643,7 @@ if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verif
             update_predownloaded production
             DOWNLOADSOME=1
         else
-            warning "there are no .watch files in (get_root_git_dir)/.gear, skip rpm-uscan"
+            warning "there are no .watch files in $(get_root_git_dir)/.gear, skip rpm-uscan"
         fi
     elif $GEAR_RULES_VERIFY | grep -Eq "Ready for external VCS update" ; then
         #[ -n "$GSSETVERSION" ] && warning "we will ignore version and update to the latest version from watch file"
