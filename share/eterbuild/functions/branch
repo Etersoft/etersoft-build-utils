@@ -12,9 +12,9 @@ set_usebranch()
 	USEBRANCH=$BINARYREPO
 
 	[ -n "$USEBRANCH" ] || return 1
-	[ "$USEBRANCH" = "sisyphus" ] && return 1
+    [ "$USEBRANCH" = "$(get_altdistr_mod "$DISTRVERSION")" ] && return 1
 
-	# TODO: drop support of it
+	# TODO: drop support of the legacy
 	# support for obsoleted M?? names
 	OLDBRANCH=$MDISTR
 

@@ -37,6 +37,12 @@ get_type_by_git_branch_name()
                 return
         fi
 
+        # like p10
+        if echo $1 | egrep -q "^[ptc]1[0-9].?$" ; then
+                get_altdistr_mod $1
+                return
+        fi
+
         # like cert6
         if echo $1 | egrep -q "^cert[0-9].?$" ; then
                 get_altdistr_mod $1
