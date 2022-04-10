@@ -28,7 +28,7 @@ NICE="nice"
 RPMBUILD=rpmbuild
 
 # CHECKME: works only on ALT?
-if [ -x /bin/rpm ] ; then
+if which rpm 2>/dev/null >/dev/null ; then
 RPMDIR=$(rpm --eval %_topdir) || fatal
 RPMTMPDIR=$(rpm --eval %_tmppath) || fatal
 
