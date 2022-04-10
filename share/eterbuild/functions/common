@@ -367,8 +367,8 @@ set_target_pkg_env
 
 if [ "$PKGVENDOR" = "alt" ] && [ -n "$MENV" ] ; then
 	#[ -n "$APTCONF" ] && fatal "Internal error: APTCONF already defined as $APTCONF for $MENV"
-	APTCONF=${APTCONFBASE/.SS}.$MENV
-	[ "$MENV" = "SS" ] && [ ! -r "$APTCONF" ] && APTCONF=${APTCONFBASE/.SS}
+	APTCONF=${APTCONFBASE/.sisyphus}.$MENV
+	[ "$MENV" = "sisyphus" ] && [ ! -r "$APTCONF" ] && APTCONF=${APTCONFBASE/.sisyphus}
 	
 	[ -n "$VERBOSE" ] && echog "Target ALT Linux system: `get_altdistr_version $MENV`, use \$APTCONF"
 	MENVARG="-$MENV"
@@ -410,8 +410,7 @@ do
 		# echo is workaround for missed readlink
 		LISTNAMES="$LISTNAMES $(realpath "$i" 2>/dev/null || echo "$i")"
 	else
-		# set target type if -M?? in param
-		set_target_type ${i/-/} || LISTARGS="$LISTARGS $i"
+		LISTARGS="$LISTARGS $i"
 	fi
 done
 LISTNAMES=$(estrlist strip_spaces "$LISTNAMES")

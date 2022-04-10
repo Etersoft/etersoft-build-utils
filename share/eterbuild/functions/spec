@@ -104,10 +104,9 @@ reset_release()
 	set_var $1 Release $RELEASE
 }
 
-# TODO: SS/DD (did not pass test)
 is_backported_release()
 {
-	echo "$1" | grep -E -q "\.(M[0-9][0-9][CPT]|SS|DD)\."
+	echo "$1" | grep -E -q "\.(M[0-9][0-9][CPT])\."
 }
 
 # inc 2 release to 3

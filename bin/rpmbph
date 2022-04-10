@@ -86,7 +86,7 @@ test -z "$LISTNAMES" && fatal "file not found in '$@'"
 
 if [ "$PKGVENDOR" = "alt" ] ; then
 	MDISTR=$MENV
-	[ "$MDISTR" = "SS" ] && fatal "It makes no sense to backport to Sisyphus (You need to try with -b $EXAMPLEALTDISTRVERSION)."
+	[ "$MDISTR" = "sisyphus" ] && fatal "It makes no sense to backport to Sisyphus (You need to try with -b $EXAMPLEALTDISTRVERSION)."
 	# override by defined target version
 	DISTRVERSION=$BINARYREPO
 else

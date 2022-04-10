@@ -16,7 +16,7 @@ REMCOM=
 COMMIT=
 
 #############################
-Usage="Usage: $name [GIRAR] [-r -s -u -m -i -c -e] [-f] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-r -s -u -m -i -c -e ] [-b REPONAME] [-f] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -40,7 +40,7 @@ phelp()
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
 	echog "   -w  use tar as immediate archive for myhsh"
-	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
+	echog "   -b REPONAME  binary repository name (p9, c8, sisyphus and so on)"
 }
 
 PASSEDARGS=

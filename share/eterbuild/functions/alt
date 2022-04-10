@@ -20,7 +20,7 @@ set_target_type()
 		return 0
 	fi
 	case "$1" in
-		("DD" | "SS" | "EE")
+		("DD" | "SS" | "EE" | "sisyphus")
 			MENV="$1"
 			return 0;
 			;;
@@ -94,7 +94,7 @@ get_altdistr_version()
 # p6 -> M60P
 get_altdistr_mod()
 {
-	echo "$1" | sed -e "s|Sisyphus|SS|gi" -e "s|p\([5-9]\)|M\10P|g" -e "s|c\([6-9]\)|M\10C|g" -e "s|t\([6-9]\)|M\10T|g"
+	echo "$1" | sed -e "s|Sisyphus|sisyphus|gi" -e "s|p\([5-9]\)|M\10P|g" -e "s|c\([6-9]\)|M\10C|g" -e "s|t\([6-9]\)|M\10T|g"
 }
 
 # TODO: include in sisyphus_check
@@ -110,7 +110,7 @@ pkg_release_check()
 	# can be set from korinf config
 	[ -z "$KORINFTARGETRELEASE" ] || STREL=$KORINFTARGETRELEASE
 # FIXME! broken for release more than 9
-	if [ "$MENV" = "SS" ] || [ "$MENV" = "DD" ] ; then
+	if [ "$MENV" = "sisyphus" ] ; then
 		for i in $@ ; do
 			if rhas "$i" "($STREL|$STRELDEF)[0-9]+\.M[0-9][0-9]\.[0-9]+" ; then
 				# Значит не тот релиз

@@ -52,7 +52,7 @@ uni_rpmbuild()
 		GEARRULES=$(get_gear_rules_by_spec "$SPECNAME")
 
 		# build package without MENV checking
-		if true || [ "$MENV" = "SS" ] ; then
+		if true || [ "$MENV" = "sisyphus" ] ; then
 			LANG=$NEULOCALE docmd $NICE $GEAR $COMMIT $GEARRULES --rpmbuild -- $RPMBUILD "$TWOPARAM" "$THRPARAM" "$FOURPARAM" "$FIVEPARAM" "$SIXPARAM" "$SEVENPARAM" "$@" || RET=$?
 			[ -z "$COMMANDAFTER" ] || docmd $COMMANDAFTER
 		else
