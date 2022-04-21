@@ -31,10 +31,11 @@ filter_pkgname()
 
 filter_multiple_provides()
 {
+	estrlist line |
 	sed -e "s|/usr/bin/lpstat|cups|g
-		s|libldap_r-2.4.so.2|libldap|g
-		s|liblber-2.4.so.2|libldap|g
-		s|libudev.so.1|libudev1|g
+		s|libldap_r-2.4.so.*|libldap|g
+		s|liblber-2.4.so.*|libldap|g
+		s|libudev.so.*|libudev1|g
 		s|/usr/bin/wine||g
 		s|/usr/bin/jconsole|java-1.7.0-openjdk-devel|g
 		s|/sbin/modprobe||g
@@ -42,8 +43,8 @@ filter_multiple_provides()
 		s|libltdl-devel|libltdl7-devel|g
 		s|liblua5-devel|liblua5.3-devel|g
 		s|clang-devel|clang10.0-devel|g
-		s|libXcomp.so.3|nx-libs|g
-		s|libwine.so.1||g"
+		s|libXcomp.so.3.*|nx-libs|g
+		s|libwine.so.1.*||g"
 }
 
 convert_pkgfile_to_pkgname()
