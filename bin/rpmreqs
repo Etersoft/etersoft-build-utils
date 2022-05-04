@@ -148,7 +148,7 @@ trans_rpmdeps_to_pkgname_lav()
 	TFILE=$(make_temp_file)
 	PKGFILES=
 	if [ -n "$REQCONVLIST" ] ; then
-	PKGFILES=$(LANG=C apt-get install --print-uris $REQCONVLIST 2>$TFILE | egrep "(^Selecting|.* is already the newest version.)" | sed -e "s|^Selecting ||g" | sed -e "s| is already the newest version.||g" | sed -e "s| .*||g" | sort -u | filter_pkgname) || warning "Error return code from apt-get install"
+	PKGFILES=$(LANG=C apt-get install --print-uris $REQCONVLIST 2>$TFILE | grep -E "(^Selecting|.* is already the newest version.)" | sed -e "s|^Selecting ||g" | sed -e "s| is already the newest version.||g" | sed -e "s| .*||g" | sort -u | filter_pkgname) || warning "Error return code from apt-get install"
 	if grep -q "is a virtual package provided by" $TFILE ; then
 		local INSTALLMARK="\[Installed\]"
 		if ! grep -q "$INSTALLMARK" $TFILE ; then

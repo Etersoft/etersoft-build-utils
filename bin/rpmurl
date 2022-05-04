@@ -82,8 +82,8 @@ check_spec()
 			#cat $SPEC | sed -e "s|^# Source-\(.*\):\([ \t]\)|%define rpmurl_source_\1\2|g" > $SPEC.rpmurl
 			#local NEWSOURCE=
 			#eval_spec $SPEC.rpmurl >$SPEC.rpmuuu
-			#if eval_spec $SPEC.rpmurl | egrep -q "%define rpmurl_source_(git|url)" ; then
-			#	NEWSOURCE=$(eval_spec $SPEC.rpmurl | egrep "%define rpmurl_source_(git|url)" | sed -e "s/.*[ \t]\(.*\)/\1/g")
+			#if eval_spec $SPEC.rpmurl | grep -E -q "%define rpmurl_source_(git|url)" ; then
+			#	NEWSOURCE=$(eval_spec $SPEC.rpmurl | grep -E "%define rpmurl_source_(git|url)" | sed -e "s/.*[ \t]\(.*\)/\1/g")
 			#	echo $NEWSOURCE
 			#fi
 			#rm -f $SPEC.rpmurl

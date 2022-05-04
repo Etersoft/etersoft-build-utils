@@ -68,7 +68,7 @@ get_test_status()
 # get subtask number from TASKNUMBER for PROJECTNAME
 get_subtask()
 {
-	ssh $GEARHOST task show $1 | egrep "(/$2.git|:package=$2$|:srpm=$2-.*src.rpm)" | sed -e "s|^ \([0-9]*\):.*|\1|g"
+	ssh $GEARHOST task show $1 | grep -E "(/$2.git|:package=$2$|:srpm=$2-.*src.rpm)" | sed -e "s|^ \([0-9]*\):.*|\1|g"
 }
 
 
