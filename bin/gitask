@@ -285,10 +285,14 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 			# too much re add to the same place
 			[ "$SUBTASK" = "1" ] && SUBTASK=""
 		fi
-		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE
+		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE || fatal
 	done
-	[ -n "$NEXTCOMMAND" ] && sleep 2 && $0 $NEXTCOMMAND
-	exit
+	if [ -n "$NEXTCOMMAND" ] ; then
+		sleep 2
+		$0 $NEXTCOMMAND
+		exit
+	fi
+	exit 0
 fi
 
 if [ "$1" = "show" ] ; then
