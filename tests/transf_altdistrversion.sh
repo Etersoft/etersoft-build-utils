@@ -24,29 +24,22 @@ check_GN()
 }
 
 echo "Check get_altdistr_version"
-check_AD M40 4.0
-check_AD M30 3.0
-check_AD M41 4.1
 check_AD M50P p5
 check_AD M60T t6
-check_AD M51 5.1
 check_AD  SS sisyphus
 
 echo "Check get_altdist_mod"
-check_MOD 2.4 M24
-check_MOD 3.0 M30
-check_MOD 4.0 M40
-check_MOD 4.1 M41
-check_MOD 5.0 M50
-check_MOD 5.1 M51
 check_MOD  p5 M50P
 check_MOD  p6 M60P
 check_MOD  t6 M60T
-check_MOD Sisyphus SS
-check_MOD sisyphuS SS
+check_MOD  p9 M90P
+check_MOD  c9f2 c9f2
+check_MOD  c9 c9
+check_MOD  p10 p10
+check_MOD Sisyphus sisyphus
+check_MOD sisyphuS sisyphus
 
 check_GN M50P M50P
-check_GN 5.0 M50
 check_GN p5 M50P
 check_GN p6 M60P
 check_GN t6 M60T

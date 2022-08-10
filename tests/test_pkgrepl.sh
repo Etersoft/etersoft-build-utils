@@ -25,8 +25,8 @@ check()
 
 
 LISTBUILDDEP=`print_buildreq $SPECNAME`
-check "BuildDep" "imake xorg-cf-files libxml2-devel gccmakedep rpm-build-compat gcc4.1 gcc" "$LISTBUILDDEP"
+check "BuildDep" "imake xorg-cf-files libxml2-devel gccmakedep python3-module-test rpm-build-compat gcc4.1 gcc" "$LISTBUILDDEP"
 
 echo -
 LISTREQDEP=`print_pkgreq $SPECNAME`
-check "Reqs" "binutils dbus-tools-gui expect foomatic-db-engine libkrb5-devel libstdc++ netcat nx openssl /usr/bin/xvt Xdialog" "$LISTREQDEP"
+check "Reqs" "binutils dbus-tools-gui expect foomatic-db-engine libcups libkrb5-devel libstdc++ libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr netcat nx openssl /usr/bin/xvt Xdialog" "$LISTREQDEP"

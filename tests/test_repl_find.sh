@@ -215,10 +215,10 @@ print_pkgrepl_list
 check_repl libxml2-devel "libxml2-dev"
 
 ############################# Astralinux ##########################
-BUILDNAME=wine
+BUILDNAME=wine-etersoft
 
 DISTRNAME=AstraLinux
-PKGVENDOR=AstraLinux
+PKGVENDOR=astra
 DISTRVERSION=orel
 BUILDARCH=x86_64
 #BUILDARCH=i586
@@ -229,6 +229,24 @@ echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
 print_pkgrepl_list
 
 check_repl pkg-config "pkgconfig"
+
+############################# Astralinux ##########################
+BUILDNAME=wine-etersoft
+
+DISTRNAME=AstraLinux
+PKGVENDOR=astra
+DISTRVERSION=orel
+BUILDARCH=x86_64
+TARGETARCH=i586
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl pkg-config "pkgconfig:any"
+check_repl libXrender "libxrender:i386"
+check_repl libX11 "libx11:i386"
 
 ############################# ROSA ##########################
 BUILDNAME=wine

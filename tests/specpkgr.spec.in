@@ -30,8 +30,19 @@ BuildRequires: imake, xorg-cf-files libxml2-devel gccmakedep
 
 %def_with krb
 
+Conflicts: wine-vanilla wine
+
+# FIXME:
+# Runtime linked
+Requires: libcups
+Requires: libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr
+
 %{?_with_krb:Requires: libkrb5-devel}
 #Requires: libkrb5-devel
+
+%if_with test
+BuildRequires: python3-module-test
+%endif
 
 
 Source: %name.source
