@@ -7,8 +7,7 @@ load_mod git hasher
 
 is_alt()
 {
-	test -f /etc/altlinux-release
-	return $?
+	[ "$($DISTRVENDOR -s)" = "alt" ]
 }
 
 # Internal
