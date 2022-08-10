@@ -135,3 +135,5 @@ libldap-devel|openldap
 libldap|openldap
 libtiff-devel|tiff
 libtiff5|tiff
+
+distro_info|rpm

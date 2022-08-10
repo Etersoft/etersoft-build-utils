@@ -1,5 +1,108 @@
-zlib-devel|lib32z1-dev
-ia32-libs|ia32-libs ia32-libs-dev lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
-libcrypto1.1|ia32-libs
-diff|diffutils
-diffutils|
+gcc|gcc:amd64
+perl-base|perl-base:amd64
+libssl-devel|libssl-dev:i386 libssl-dev:amd64
+
+#zlib-devel|lib32z1-dev
+zlib-devel|zlib1g
+glibc-devel|gcc-multilib:amd64 ia32-libs-dev:amd64
+# lib32gcc1 lib32xgcc1 lib32gcc-6-dev libx32gcc-6-dev lib32readline-dev lib32readline7
+libcrypto1.1|ia32-libs:amd64
+
+# skip conflicts
+libgtk+3-devel|
+libgtk+3|
+
+libGLU-devel|ia32-libs:amd64
+libGLU|ia32-libs:amd64
+libmesa-devel|ia32-libs:amd64
+
+# libgl-dev conflicts with ia32-libs-devel, so we use hack in Dockerfile
+libGL-devel|ia32-libs:amd64
+# dummy package
+#libGL|ia32-libs
+libGL|ia32-libs:amd64
+
+# wine-etersoft:i386 : Depends: ia32-libs:i386 (>= 20180423.2) but it is not installable
+#                      Depends: libc6-i386:i386 (>= 2.17) but it is not installable
+#                      Depends: libcairo2:i386 but it is not installable
+#                      Depends: libcap-ng-utils:i386 but it is not installable
+#                      Depends: libpcap0.8:i386 but it is not installable
+# ia32-libs:i386
+# libc6-i386:i386
+
+# missed packages:
+libvulkan-devel|
+libXpm-devel|
+libvulkan1|
+
+# not provides by ia32-libs-dev (missed .so)
+#E: Unable to locate package libattr1-dev:i386
+libattr-devel|
+
+#E: Unable to locate package libcairo2-dev:i386
+libcairo-devel|
+libcairo|
+
+#E: Unable to locate package libfontenc-dev:i386
+libfontenc-devel|
+
+#E: Unable to locate package libgcrypt20-dev:i386
+libgcrypt-devel|
+
+#E: Unable to locate package libpcap-dev:i386
+libpcap-devel|
+libcap-utils|
+#libpcap0.8|ia32-libs
+libpcap0.8|
+
+#E: Unable to locate package libunwind-dev:i386
+libunwind-devel|
+
+#E: Unable to locate package libva-dev:i386
+libva-devel|
+
+#E: Unable to locate package libxaw7-dev:i386
+libXaw-devel|
+#E: Unable to locate package libxcb1-dev:i386
+libxcb-devel|
+
+#E: Unable to locate package libxdamage-dev:i386
+libXdamage-devel|
+
+#E: Unable to locate package libxfont-dev:i386
+libXfont-devel|
+libXfont2-devel|
+
+#E: Unable to locate package libxft-dev:i386
+libXft-devel|
+
+#E: Unable to locate package libxml-simple-perl:i386
+perl-XML-Simple|
+
+#E: Unable to locate package libxmuu-dev:i386
+libXmu-devel|libxmu-dev
+
+#E: Unable to locate package libxres-dev:i386
+libXres-devel|
+
+#E: Unable to locate package libxv-dev:i386
+libXv-devel|
+
+#E: Unable to locate package libxvmc-dev:i386
+libXvMC-devel|
+
+# 5-nalog3
+libncursesw-devel|
+
+# HACK (исправить в rpm-macros-features)
+libfaudio0|
+libvkd3d1|
+
+glibc-devel|
+glibc-devel-static|
+
+# need fix link in /usr/lib32/i386-*
+## cat /usr/lib32/i386-linux-gnu/libusb-1.0.so 
+#GROUP ( /lib32/i386-linux-gnu/libusb-1.0.so.0.1.0 )
+libusb|
+libusb-devel|libusb-1.0-0-dev:amd64

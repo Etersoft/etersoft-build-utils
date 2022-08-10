@@ -13,9 +13,10 @@ libudev-devel|libudev-dev
 #libjpeg|libjpeg62-turbo
 #libjpeg8|libjpeg8
 #libjpeg-devel|libjpeg8-dev
-diff|diffutils
-diffutils|
 libjpeg-devel|libjpeg62-turbo-dev
+#libjpeg-devel|libjpeg-dev
+libjpeg|libjpeg62-turbo
+
 
 liblcms-devel|liblcms2-dev
 liblcms|liblcms2-2
@@ -74,3 +75,14 @@ libwxGTK-devel|libwxgtk3.0-dev
 
 cifs-utils|cifs-utils
 libcrypto1.1|libssl1.1
+
+# The following packages have unmet dependencies:
+# libsdl2-dev : Depends: libegl1-mesa-dev but it is not going to be installed
+#               Depends: libgl1-mesa-dev but it is not going to be installed
+#               Depends: libgles2-mesa-dev but it is not going to be installed
+#               Depends: libglu1-mesa-dev but it is not going to be installed
+libSDL2-devel|
+
+libGL|libgl1
+libGL-devel|libgl-dev
+patchelf|

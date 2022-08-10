@@ -37,8 +37,8 @@ libGL|lib64mesagl1
 libGLU|lib64mesaglu1
 libxml2|lib64xml2_2
 libusb|lib64usb1.0_0
-libudev-devel|lib64dev0-devel
-libudev1|lib64dev0
+#libudev-devel|lib64dev0-devel
+#libudev1|lib64dev0
 
 libpng15|lib64png3
 libpng16|lib64png3
@@ -67,8 +67,8 @@ libcups|lib64cups2
 libXft|lib64xft2
 libXrender|lib64xrender1
 
-libICE-devel|lib64ice6-devel
-libICE|lib64ice6
+#libICE-devel|lib64ice6-devel
+#libICE|lib64ice6
 
 libgphoto2-devel|lib64gphoto-devel
 libgphoto2|lib64gphoto2

@@ -1,0 +1,12 @@
+wine-etersoft-devel-tools|wine32-etersoft-devel-tools
+# W@E 2
+libwine-etersoft-devel|libwine-etersoft-devel
+libwine-devel|wine32-etersoft-devel-tools
+
+glibc-devel|libc6-dev gcc-multilib:amd64
+gcc|gcc:amd64
+perl-base|perl:any
+
+#diffutils|diffutils:amd64
+#eject|eject:amd64
+#gzip|gzip:amd64

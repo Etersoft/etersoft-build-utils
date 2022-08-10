@@ -9,6 +9,7 @@ libsmbclient|libsmbclient
 libsmbclient-devel|libsmbclient-devel
 xorg-proto-devel|xorg-x11-proto-devel
 libpixman-devel|pixman-devel
+libpixman|pixman
 
 #for haspd
 mount|util-linux
@@ -18,29 +19,51 @@ liblcms|
 liblcms-devel|
 liblcms2|lcms2
 liblcms2-devel|lcms2-devel
-libudev|libgudev1
-libudev-devel|libgudev1-devel
-libudev1|libgudev1
-libwine-devel|
-libwine-etersoft-devel|
+libudev|systemd
+libudev-devel|systemd-devel
+libudev1|systemd
+#libwine-devel|
+#libwine-etersoft-devel|
 libhal-devel|
 i586-libhal-devel|
+# RedOS/7 - libusbx
 libusb|libusbx
 libusb-devel|libusbx-devel
 libcrypto1.1|openssl-libs
 
 perl-XML-LibXML|
 
-libwxGTK-devel|wxGTK-devel
-libwxGTK|wxGTK
+#libwxGTK-devel|wxGTK3-devel
+#libwxGTK|wxGTK3
+
+libwxGTK3.0-devel|wxGTK3-devel
+libwxGTK3.0|wxGTK3
+libwxGTK3.1-devel|wxGTK-devel
+libwxGTK3.1|wxGTK
+
+libwxBase3.0|wxBase3
+libwxBase-devel|wxBase-devel
+libwxBase3.1-devel|wxBase-devel
+libwxBase3.1|wxBase
+
+
 python-module-Cython|Cython
 
 python3-dev|python36-devel
-python3-module-setuptools|python36-setuptools
+# FIXME: if_with test BRs do not converted!
+#python3-module-setuptools|python36-setuptools
+python3-module-setuptools|
 python3-module-pykwalify|python36-pykwalify
 python3-module-ruamel-yaml|python36-ruamel-yaml
 python3-module-redis-py|python3-redis
 python3-base|python3
 php7-redis|php-pecl-redis
-libcairo|cairo
-libcairo-devel|cairo-devel
+
+# REMOVE after fix prev redos issue:
+libX11-locales|libX11-common
+xorg-font-utils|xorg-x11-font-utils
+
+libcups-devel|cups-devel zlib-devel libcom_err-devel
+
+#libcap-utils|
+libpcap0.8|libpcap

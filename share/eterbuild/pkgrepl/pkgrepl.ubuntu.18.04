@@ -1,5 +1,18 @@
 libicu56|libicu60
 #libicu56|libicu55
-fonts-ttf-core|fonts-liberation
 libcrypt|
 bashrc|bash
+
+libcrypto1.1|libssl1.1
+
+libwxGTK3.0|libwxgtk3.0-gtk3-0v5
+libwxGTK3.0-devel|libwxgtk3.0-gtk3-dev
+libwxGTK3.1|libwxgtk3.0-gtk3-0v5
+libwxGTK3.1-devel|libwxgtk3.0-gtk3-dev
+libwxGTK|libwxgtk3.0-gtk3-0v5
+libwxGTK-devel|libwxgtk3.0-gtk3-dev
+
+fonts-ttf-core|fonts-liberation2
+fonts-ttf-liberation|fonts-liberation2
+# TODO
+perl-XML-LibXML|

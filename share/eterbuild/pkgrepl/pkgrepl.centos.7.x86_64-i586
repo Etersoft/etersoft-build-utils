@@ -1,4 +1,4 @@
-glibc|glibc glibc.i686
-perl-XML-LibXML|perl-XML-LibXML
-libpng|libpng libpng.i686
-libncurses|ncurses-libs ncurses-libs(x86-32)
+libtool|libtool(x86-64)
+glibc-nss|glibc(x86-32)
+glibc-thread|glibc(x86-32)
+fontconfig|fontconfig(x86-32)

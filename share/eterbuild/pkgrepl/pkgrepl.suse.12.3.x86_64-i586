@@ -21,6 +21,7 @@ libssl|
 libXaw-devel|libXaw-devel
 libXrandr-devel|libXrandr-devel
 libXfont-devel|libXfont-devel
+libXfont2-devel|libXfont2-devel
 libXft-devel|libXft-devel
 libXi-devel|libXi-devel
 libXres-devel|libXres-devel

@@ -1,0 +1,24 @@
+gettext-tools|gettext-devel.i686
+# hack for gettext-devel.i686 install
+glibc-devel|libpython3-devel libunbound-devel.i686 gettext-devel.i686 glibc-devel libgcc1.i686 libgcc-devel
+# gettext-devel.i686 manually preinstalled
+#glibc-devel|libunbound-devel.i686 glibc-devel
+rpm-build|libatomic-devel rpm-build
+
+# file /usr/bin/python3.8-config from install of libpython3-devel-3.8.11-8.i686 conflicts with file from package python3-3.8.11-8.x86_64
+#libcups-devel|
+# epm download libpython3-devel && epmi libpython3-devel-*.i686.rpm --force --nodeps
+
+# rpm -ev lib64EGL_mesa-devel
+# /usr/include/EGL/eglmesaext.h is needed by (installed) libglvnd-devel-1.3.4-3.i686
+libGLU-devel|libEGL_mesa-devel libglu-devel
+libGLU|libglu1
+
+libX11-devel|libsepol-devel libxtst-devel libwrap-devel libxft-devel libxrender-devel libxfixes-devel libxt-devel x11-proto-devel.i686 libx11-devel
+
+libgtk+3-devel|gettext-devel.i686 libglvnd-devel libxml2-devel libgtk+3.0-devel
+
+# pkgconfig(xfixes) is needed by (installed) libxi-devel-1.7.99.2-1.i686
+libpulseaudio-devel|libxfixes-devel libpulseaudio-devel
+
+valgrind-devel|valgrind-devel.i686

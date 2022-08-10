@@ -40,6 +40,9 @@ libXdmcp|libxdmcp6
 libXfixes-devel|libxfixes-devel
 libXfixes|libxfixes3
 libXfont-devel|libxfont-devel
+libXfont2-devel|libxfont2-devel
+libXfont|libxfont
+libXfont2|libxfont2
 libXft-devel|libxft-devel
 libXft|libxft2
 libXext-devel|libxext6-devel
@@ -155,7 +158,6 @@ libgphoto2-devel|libgphoto-devel
 libgphoto2|libgphoto
 libgphoto2-6|libgphoto
 libgphoto2_port-12|libgphoto
-libtool|libtool
 
 xkeyboard-config|x11-data-xkbdata
 fonts-bitmap-misc|x11-font-cursor-misc
@@ -187,3 +189,5 @@ libicu60|libicu40
 glibc-devel-static|glibc-static-devel
 
 libarts-devel|libarts1-devel
+# FIX epm
+#ed|

@@ -1,5 +1,5 @@
 # HACK to skip (x86-32) add
-libwine-etersoft-devel|
-libwine-devel|
-libwine-vanilla-devel|
+#libwine-etersoft-devel|wine32-etersoft-devel-tools
+#libwine-devel|wine32-etersoft-devel-tools
+#libwine-vanilla-devel|
 

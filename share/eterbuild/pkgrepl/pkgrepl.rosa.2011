@@ -27,12 +27,12 @@ libxorg-x11-devel|libxorg-x11-devel
 libICE-devel|libice-devel
 libFS-devel|libfs-devel
 libSM-devel|libsm-devel
-libX11-devel|libx11-devel
 libXau-devel|libxau-devel
 libXaw-devel|libxaw-devel
 libXdmcp-devel|libxdmcp-devel
 libXfixes-devel|libxfixes-devel
 libXfont-devel|libxfont-devel
+libXfont2-devel|libxfont-devel
 libXft-devel|libxft-devel
 libXext-devel|libxext6-devel
 libXext|libxext6

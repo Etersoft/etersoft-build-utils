@@ -4,3 +4,10 @@ libreadline7|libreadline8
 libreadline-devel|libreadline-dev
 libicu|libicu63
 libicu64|libicu63
+libtirpc|libtirpc3
+
+libncurses-devel|libncurses-dev
+libtinfo-devel|libncurses-dev
+libtinfo|libncurses6
+libncurses|libncurses6
+

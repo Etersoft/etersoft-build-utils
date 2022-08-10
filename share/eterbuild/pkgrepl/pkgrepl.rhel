@@ -8,16 +8,14 @@ libsmbclient-devel|samba-common
 
 perl-unicore|
 
-# missed on CentOS
-libopenal-devel|
-libopenal1|
+libopenal-devel|openal-soft-devel
+libopenal1|openal-soft
 
-libv4l-devel|
-libv4l|
 libgsm-devel|
 libgsm|
 
 rpm-build-python|python-devel
+python-dev|python-devel
 python-modules-compiler|python-devel
 
 libaudiofile-devel|audiofile-devel
@@ -43,3 +41,4 @@ liblcms2|
 libva-devel|
 
 numlockx|
+

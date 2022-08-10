@@ -3,10 +3,11 @@
 /proc|
 libe2fs|e2fslibs
 libe2fs-devel|e2fslibs-dev
-libgphoto2-devel|libgphoto2-2-dev
-libgphoto2|libgphoto2-2
-libgphoto2-6|libgphoto2-2
-libgphoto2_port-12|libgphoto2-2
+libgphoto2|libgphoto2-6
+libgphoto2-6|libgphoto2-6
+libgphoto2-devel|libgphoto2-dev
+libgphoto2_port-12|libgphoto2-6
+
 liblcms-devel|liblcms1-dev
 liblcms|liblcms1
 liblcms2|liblcms2-2
@@ -23,8 +24,8 @@ libxslt-devel|libxslt1-dev
 libncurses-devel|libncurses5-dev
 libncursesw-devel|libncursesw5-dev
 libldap-devel|libldap2-dev
-libjpeg-devel|libjpeg62-dev
-libjpeg|libjpeg62
+libjpeg-devel|libjpeg-dev
+libjpeg|libjpeg62-turbo
 libcups-devel|libcups2-dev
 libcups|libcups2
 cups|cups cups-bsd cups-client
@@ -72,7 +73,8 @@ gcc-c++|g++
 tcl-devel|tcl8.4-dev
 perl-devel|libperl-dev
 kernel-build-tools|
-libusb|libusb-0.1-4
+libusb|libusb-1.0-0
+libusb-devel|libusb-1.0-0-dev
 
 libpopt|libpopt0
 
@@ -95,6 +97,8 @@ rpm-macros-webserver-common|rpm-build-altlinux-compat
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
 rpm-macros-intro-conflicts|rpm-build-altlinux-compat
+rpm-macros-features|rpm-build-altlinux-compat
+rpm-build-python3|rpm-build-altlinux-compat
 menu-devel|
 
 libexpat|libexpat1
@@ -156,7 +160,7 @@ libalsa-devel|libasound2-dev
 libieee1284-devel|libieee1284-3-dev
 libieee1284|libieee1284-3
 
-libpng-devel|libpng12-dev
+libpng-devel|libpng-dev
 libtiff-devel|libtiff4-dev
 libtiff5|libtiff4
 zlib-devel|zlib1g-dev
@@ -245,7 +249,6 @@ libgstreamer|libgstreamer0.10-0
 libgst-plugins|libgstreamer-plugins-base0.10-0
 #libgstreamer-plugins0.8-0
 
-diffutils|diff
 # xz is missed, has only lzma
 xz|lzma
 
@@ -266,6 +269,8 @@ getopt|util-linux
 glib2|libglib2.0-0
 glib2-devel|libglib2.0-dev
 libattr|libattr1
+libattr-devel|libattr1-dev
+libjxr-devel|
 libcap|libcap2
 libsasl2|libsasl2-2
 libelf|libelf1
@@ -343,8 +348,10 @@ libspeex|libspeex1
 
 # hack due our wine package with -devel
 libwine-etersoft-devel|libwine-etersoft-devel
+wine-etersoft-devel|wine-etersoft-devel
+wine32-etersoft-devel|wine32-etersoft-devel
 # for W@E 1.0.12
-libwine-devel|libwine-etersoft-devel
+#libwine-devel|libwine-etersoft-devel
 
 libv4l|libv4l-0
 libXcursor|libxcursor1
@@ -388,11 +395,46 @@ xxd|vim-common
 bash4|bash
 perl-podlators|perl
 
+# libxfont-dev only 2
+libXfont-devel|libxfont-dev
+libXfont2-devel|libxfont-dev
+libXfont|libxfont2
+libXfont2|libxfont2
+libtirpc|libtirpc1
+libpixman|libpixman-1-0
 libpixman-devel|libpixman-1-dev
 xorg-proto-devel|x11proto-core-dev
 libtxc_dxtn|
 python-module-psutil|python-psutil
+python3-module-psutil|python3-psutil
+python3-base|python3
 
 bashrc|
 libnetapi-devel|
 python-module-Cython|cython
+iconv|
+
+# Vulkan
+#libfaudio0|
+#libvkd3d1|
+#vkd3d-devel|rpm
+# TODO: они будут добавляться для alt и придётся отовсюду выключать
+#libfaudio-devel|
+#libvulkan-devel|
+#libvulkan1|
+libva|
+
+distro_info|rpm
+librpm|librpm3
+
+libcap-utils|libcap-ng-utils
+libcairo|libcairo2
+
+libgcrypt-devel|libgcrypt20-dev
+libcairo-devel|libcairo2-dev
+
+valgrind-devel|valgrind
+p7zip|p7zip-full
+libkrb5-devel|libkrb5-dev krb5-multidev
+
+fonts-ttf-core|fonts-liberation

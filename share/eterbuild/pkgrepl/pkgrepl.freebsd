@@ -47,3 +47,5 @@ libhal|
 
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+
+distro_info|rpm

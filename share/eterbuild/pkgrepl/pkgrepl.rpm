@@ -25,6 +25,7 @@ pkg-config|pkgconfig
 rpm-build-compat|rpm-build-altlinux-compat
 rpm-build-intro|rpm-build-altlinux-compat
 rpm-macros-intro-conflicts|rpm-build-altlinux-compat
+rpm-macros-features|rpm-build-altlinux-compat
 libntfs-devel|ntfsprogs-devel
 libntfs|ntfsprogs
 libe2fs-devel|e2fsprogs-devel
@@ -40,11 +41,12 @@ packages-info-i18n-common|
 libpam-devel|pam-devel
 libpam0-devel|pam-devel
 # libssl???
-libssl|openssl
+libssl|openssl-libs
+libssl1.1|openssl-libs
 libssl-devel|openssl-devel
-libssl7|openssl
-libssl10|openssl
-libcrypto10|openssl
+libssl7|openssl-libs
+libssl10|openssl-libs
+libcrypto10|openssl-libs
 # for rpmcs
 openssl|openssl
 libfreetype|freetype
@@ -55,7 +57,7 @@ libcups-devel|cups-devel
 libcups|cups
 # for rpmcs
 cups|cups
-libalsa-devel|alsa-lib-devel
+libalsa-devel|alsa-lib-devel alsa-lib
 libalsa|alsa-lib
 libopenal1|openal-soft
 libopenal-devel|openal-soft-devel
@@ -74,7 +76,7 @@ liblcms2|lcms2
 #libgphoto2-6|gphoto2
 #libgphoto2_port-12|gphoto2
 libsane-devel|sane-backends-devel
-libsane|sane-backends
+libsane|sane-backends-libs
 jackit-devel|jack-audio-connection-kit-devel
 kernel-build-tools|
 libreadline-devel|readline-devel
@@ -85,10 +87,10 @@ libpopt-devel|popt
 libpopt|popt
 
 libgtkmm2-devel|gtkmm24-devel
-libgtk+2-devel|gtk2-devel
+libgtk+2-devel|gtk2-devel gtk2
 libgtk+2|gtk2
 
-libgtk+3-devel|gtk3-devel
+libgtk+3-devel|gtk3-devel gtk3
 libgtk+3|gtk3
 
 sysvinit-utils|SysVinit
@@ -114,7 +116,6 @@ GConf|GConf2
 libxml++2-devel|libxml++-devel
 
 glibc-devel-static|glibc-devel
-glibc-devel|glibc-devel
 
 libopensc-devel|opensc
 libopensc|opensc
@@ -224,7 +225,7 @@ vixie-cron|cron
 #vixie-cron|cronie
 
 # for W@E 1.0.12
-libwine-devel|libwine-etersoft-devel
+#libwine-devel|libwine-etersoft-devel
 
 # by CentOS
 libqt4-devel|qt4-devel
@@ -262,6 +263,8 @@ libfontconfig|fontconfig
 python-module-setuptools|python-setuptools
 python-module-psutil|python2-psutil
 
+python3-module-redis-py|python3-redis
+
 xorg-util-macros|xorg-x11-util-macros
 
 gcc4.6-c++|gcc-c++
@@ -285,11 +288,36 @@ libpulseaudio|pulseaudio-libs
 
 #for openssl
 perl-podlators|perl
-libkrb5-devel|krb5-devel
-
+libkrb5-devel|krb5-devel krb5-libs
+libkrb5|krb5-libs
 bash4|bash
 bashrc|
 libnetapi-devel|
 
 xxd|vim-common
 libtxc_dxtn|
+iconv|
+
+# Vulkan
+#libfaudio0|
+#libvkd3d1|
+#vkd3d-devel|rpm
+# TODO: они будут добавляться для alt и придётся отовсюду выключать
+#libfaudio-devel|
+libvulkan-devel|vulkan-loader-devel
+libvulkan1|vulkan-loader
+libva|
+
+distro_info|rpm
+libcap-utils|libcap-ng-utils
+
+libjxr-devel|jxrlib-devel
+libSDL2-devel|SDL2-devel
+libsasl2-devel|cyrus-sasl-devel
+
+libcairo|cairo
+libcairo-devel|cairo-devel
+
+# FIXME: unneeded and missed
+libXevie-devel|
+libXxf86misc-devel|

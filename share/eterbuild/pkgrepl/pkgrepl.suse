@@ -43,6 +43,9 @@ libXrandr-devel|xorg-x11-devel
 libXdmcp-devel|xorg-x11-devel
 libXfixes-devel|xorg-x11-devel
 libXfont-devel|xorg-x11-devel
+libXfont2-devel|xorg-x11-devel
+libXfont|
+libXfont2|
 libXft-devel|xorg-x11-devel
 libXi-devel|xorg-x11-devel
 libXi|xorg-x11-libs

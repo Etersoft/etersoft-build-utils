@@ -1,0 +1,26 @@
+# HACK due incorrect version sort (10 < 9)
+#gcc-c++|g++-6
+
+libgnutls-devel|libgnutls28-dev
+libgnutls30|libgnutls30
+libpng15|libpng16-16
+libpng16|libpng16-16
+libpng-devel|libpng-dev
+
+#NX
+libwxGTK3.0|libwxgtk3.0-0v5
+libwxGTK3.0-devel|libwxgtk3.0-dev
+libwxGTK3.1|libwxgtk3.0-0v5
+libwxGTK3.1-devel|libwxgtk3.0-dev
+libwxGTK|libwxgtk3.0-0v5
+libwxGTK-devel|libwxgtk3.0-dev
+libsigc++2|libsigc++-2.0-0v5
+
+libgphoto2|libgphoto2-6
+libgphoto2-6|libgphoto2-6
+libgphoto2-devel|libgphoto2-dev
+
+libXxf86misc-devel|
+#x11proto-xf86misc-dev
+
+prelink|

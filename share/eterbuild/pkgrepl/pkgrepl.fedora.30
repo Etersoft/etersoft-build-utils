@@ -1,2 +1,4 @@
 libreadline7|readline
 libicu64|libicu
+libusb|libusb1
+libusb-devel|libusb1-devel
