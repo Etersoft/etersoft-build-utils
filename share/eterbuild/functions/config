@@ -23,6 +23,7 @@ uname -m | grep -q "i.86" && SYSARCH=i586
 
 # set default target arch
 [ -n "$BUILDARCH" ] || BUILDARCH=$SYSARCH
+[ -n "$TARGETARCH" ] || TARGETARCH=$BUILDARCH
 
 NICE="nice"
 RPMBUILD=rpmbuild

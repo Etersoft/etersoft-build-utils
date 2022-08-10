@@ -12,7 +12,8 @@ filter_deb_pkgnames()
 build32on64()
 {
 	# FIXME: wine hack, use external replacement package list
-	[ "$BUILDARCH" = "x86_64" ] && rhas "$BUILDNAME" wine
+	#[ "$BUILDARCH" = "x86_64" ] && rhas "$BUILDNAME" wine
+	[ "$TARGETARCH" = "i586" ] && [ "$BUILDARCH" = "x86_64" ]
 }
 
 # Hack for improve requires for 32-bit build on 64-bit system
@@ -258,7 +259,7 @@ print_grprepl_list()
 # call with package list
 convert_pkgreqs_to_target()
 {
-	assert_var DISTRVENDOR BUILDARCH PKGFORMAT
+	assert_var DISTRVENDOR BUILDARCH TARGETARCH PKGFORMAT
 	local repl_list
 	repl_list=$(print_pkgrepl_list)
 	LISTUSEDPKGREPL=''
