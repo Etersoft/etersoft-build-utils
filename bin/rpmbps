@@ -236,7 +236,7 @@ done
 ALLGRPREPLRULES=""
 grprepl_list=$(print_grprepl_list)
 for i in $LISTGROUP ; do
-	tolocal_anyrepl $i $grprepl_list || continue
+	tolocal_anyrepl_group $i $grprepl_list || continue
 	#NRL="s!\(Group.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	NRL="s!(Group.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo && echo "Use group name rule $NRL from $USEDPKGREPL"
@@ -296,8 +296,10 @@ mv $SPECNAME $SPECNAME.old &&
 		repl_reqs | repl_groups | \
 		awk_e1 | awk_e2 | awk_e3 | awk_section_build | \
 		sed -e "s|^BuildRequires: *\$||g" | \
+		sed -e "s|^BuildRequires(pre): *\$||g" | \
 		sed -e "s|^BuildPreReq: *\$||g" | \
 		sed -e "s|^Requires: *\$||g" | \
+		sed -e "s|^Requires(pre): *\$||g" | \
 		sed -e "s|^Conflicts: *\$||g" | \
 		sed -e "s|^Provides: *\$||g" | \
 		sed -e "s|^Obsoletes: *\$||g" | \
@@ -322,12 +324,20 @@ if [ "$PKGVENDOR" != "alt" ] ; then
 
 	# not supported anywhere exclude ALT
 	subst "s|^BuildRequires(pre):|BuildRequires:|g" $SPECNAME
+	subst "s|^Requires(pre):|BuildRequires:|g" $SPECNAME
 fi
 
 if [ "$PKGVENDOR" != "alt" ] ; then
 	# for systems with (d)ash as sh (f.i., Ubuntu)
 	remove_bashism $SPECNAME
 fi
+
+if [ -n "$VERBOSE" ] ; then
+	echo
+	echo "cat $SPECNAME"
+	cat $SPECNAME
+fi
+
 
 #TODO:
 #%if %{undefined buildroot}
