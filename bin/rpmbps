@@ -28,7 +28,7 @@ phelp()
 	echo  "Usage: rpmbps -b $EXAMPLEALTDISTRVERSION for backport to ALT Linux $EXAMPLEALTDISTRVERSION and so on"
 	echo
 	echog "Options:"
-	echog "   -b REPONAME  binary repository name (p8, t7 and so on)"
+	echog "   -b REPONAME  binary repository name (p8, t7 and so on) (can be overrided with DISTRNAME)"
 #	echog "   -q           quiet"
 	echo
 	echog "Examples:"
@@ -149,7 +149,7 @@ else
 
 	# hack against very straight patch command
 	FIXPATCHFUZZ="%define _default_patch_fuzz 3"
-	# see install in Korinf, need concatenate
+	# TODO: see install in Korinf, need concatenate
 	BUILDREQ="$BUILDREQ make gcc\n$FIXPATCHFUZZ"
 	# (do not modify BUILDREQ anymore)
 
@@ -202,7 +202,7 @@ if [ "$PKGVENDOR" = "mcbc" ] ; then
 %__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
 fi
 
-
+# eval_spec print only enabled sections (be cafe with if_with)
 LISTBUILDDEP=`print_buildreq $SPECNAME`
 LISTREQDEP="`print_pkgreq $SPECNAME` $ADDREQUIRES"
 LISTDEP=`echo $LISTBUILDDEP $LISTREQDEP | xargs -n1 echo | sort -u`

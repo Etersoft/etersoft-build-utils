@@ -31,7 +31,7 @@ phelp()
 	echog "   -u           sign and upload after build" # will pass to rpmbs/rpmbsh
 	echog "   -n           skip build in hasher"
 	echog "   -i           install built packages in test hasher" # will pass to rpmbs/rpmbsh
-	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
+	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on) (can be overrided with DISTRNAME)"
 	echo  "$HELP_GIRAR"
 	echo
 	echog "Ext. options:"

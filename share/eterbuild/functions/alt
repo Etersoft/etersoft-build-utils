@@ -93,7 +93,7 @@ get_altdistr_version()
 # p6 -> M60P
 get_altdistr_mod()
 {
-	echo "$1" | sed -e "s|Sisyphus|sisyphus|gi" -e "s|p\([5-9]\)|M\10P|g" -e "s|c\([6-9]\)|M\10C|g" -e "s|t\([6-9]\)|M\10T|g"
+	echo "$1" | sed -e "s|Sisyphus|sisyphus|gi" -e "s|p\([5-9]\)|M\10P|g" -e "s|c\([6-8]\)|M\10C|g" -e "s|t\([6-9]\)|M\10T|g"
 }
 
 # TODO: include in sisyphus_check
