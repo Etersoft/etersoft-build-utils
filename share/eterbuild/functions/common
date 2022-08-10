@@ -102,9 +102,9 @@ remove_file_from_remove()
 store_output()
 {
     # use make_temp_file from etersoft-build-utils
-    RC_STDOUT=$(mktemp)
+    RC_STDOUT=$(make_temp_file)
     mark_file_to_remove $RC_STDOUT
-    #RC_STDERR=$(mktemp)
+    #RC_STDERR=$(make_temp_file)
     "$@" 2>&1 | tee $RC_STDOUT
     # http://tldp.org/LDP/abs/html/bashver3.html#PIPEFAILREF
     return $PIPESTATUS

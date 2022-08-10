@@ -21,9 +21,11 @@ eval_spec()
 
 	# Drop changelog and make spec copy
 	# see http://bugs.etersoft.ru/show_bug.cgi?id=6588
-	mark_file_to_remove $SPECNAME.tmp $SPECNAME.changelog
-	separate_changelog $SPECNAME $SPECNAME.tmp $SPECNAME.changelog
-	SPEC=$SPECNAME.tmp
+	SPECNAMETMP=$(make_temp_file)
+	SPECNAMECHANGELOG=$(make_temp_file)
+	mark_file_to_remove $SPECNAMETMP $SPECNAMECHANGELOG
+	separate_changelog $SPECNAME $SPECNAMETMP $SPECNAMECHANGELOG
+	SPEC=$SPECNAMETMP
 
 	USEARCH=
 	# FIXME: rpm on 64bit ALT has no macros for ix86 arch
@@ -39,11 +41,11 @@ eval_spec()
 		# on ALT we have to done without errors
 		$USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC | iconv -f utf8 -r || fatal "Check spec's fields"
 	else
-		( $USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC ) | iconv -f utf8 
+		( $USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC ) | iconv -f utf8
 	fi
 	# FIXME: hack for koi8-r in spec (grep will not work with it)
-	[ -n "$DEBUG" ] || rm -f $SPECNAME.tmp $SPECNAME.changelog
-	remove_file_from_remove $SPECNAME.tmp $SPECNAME.changelog
+	[ -n "$DEBUG" ] || rm -f $SPECNAMETMP $SPECNAMECHANGELOG
+	remove_file_from_remove $SPECNAMETMP $SPECNAMECHANGELOG
 }
 
 get_release()
@@ -351,11 +353,14 @@ remove_bashism()
 	local SPECNAME="$1"
 	test -w "$SPECNAME" || fatal "File '$SPECNAME' is missed or read only"
 
-	separate_changelog $SPECNAME $SPECNAME.main $SPECNAME.changelog
+	local SPECNAMETMP=$(make_temp_file)
+	local SPECNAMEMAIN=$(make_temp_file)
+	local SPECNAMECHANGELOG=$(make_temp_file)
+	separate_changelog $SPECNAME $SPECNAMEMAIN $SPECNAMECHANGELOG
 
-	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAME.main
-	subst "s|^popd|cd - >/dev/null|g" $SPECNAME.main
-	subst "s|^echo -e '\\\n'|echo ''|g" $SPECNAME.main
+	subst "s|^pushd \(.*\)|cd \1 >/dev/null|g" $SPECNAMEMAIN
+	subst "s|^popd|cd - >/dev/null|g" $SPECNAMEMAIN
+	subst "s|^echo -e '\\\n'|echo ''|g" $SPECNAMEMAIN
 
 	# {1,2} translation
 	# FIXME: miss first spaces
@@ -364,12 +369,12 @@ remove_bashism()
 		rs="$(echo "$n" | perl -pe "s|.*\s(.*?{.*?}.*?)\s.*|\1|g" )"
 		res=$(eval echo "$rs")
 		echo "$n" | perl -pe "s|$rs|$res|g"
-	done < $SPECNAME.main >$SPECNAME.tmp
-	[ -s "$SPECNAME.tmp" ] && mv -f $SPECNAME.tmp $SPECNAME
+	done < $SPECNAMEMAIN >$SPECNAMETMP
+	[ -s "$SPECNAMETMP" ] && mv -f $SPECNAMETMP $SPECNAME
 	$EPMCMD assure checkbashisms
 	docmd checkbashisms $SPECNAME
-	cat $SPECNAME.changelog >>$SPECNAME
-	rm -f $SPECNAME.main $SPECNAME.changelog
+	cat $SPECNAMECHANGELOG >>$SPECNAME
+	rm -f $SPECNAMEMAIN $SPECNAMECHANGELOG
 }
 
 get_last_changelog()

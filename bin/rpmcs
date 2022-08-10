@@ -178,10 +178,11 @@ do
 
 	test -s $SPEC || fatal "Cannot find spec file '$SPEC'"
 
+	SPECTMP=$(mktemp)
 	# Add group
 	if ! grep "^Group" $SPEC ; then
 		PACKAGT="Group: Unknown"
-		cat $SPEC | awk 'BEGIN{desk=0}{if(/^U[rR][lL]/&&desk==0){printf("%s\n", text);desk++};print}' text="$PACKAGT" >$SPEC.tmp && mv -f $SPEC.tmp $SPEC
+		cat $SPEC | awk 'BEGIN{desk=0}{if(/^U[rR][lL]/&&desk==0){printf("%s\n", text);desk++};print}' text="$PACKAGT" >$SPECTMP && mv -f $SPECTMP $SPEC
 	fi
 
 	# Prepare for fix only before changelog part

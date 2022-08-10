@@ -35,7 +35,7 @@ build_rpms_name()
 	shift
 	test -f "$NAMESPEC" || fatal "Spec $NAMESPEC does not exist"
 
-	tmprpm=`make_temp_file $NAME`
+	tmprpm=$(make_temp_file $NAME)
 	# Optimization
 	eval_spec $NAMESPEC $@ | grep ":"  >$tmprpm
 	BASENAME=$(cat $tmprpm | get_var "Name")
