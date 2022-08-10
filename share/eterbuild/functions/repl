@@ -18,9 +18,9 @@ build32on64()
 
 # Hack for improve requires for 32-bit build on 64-bit system
 # See rpmbph also
-add_32bit_requires()
+fix_arch_requires()
 {
-	assert_var DISTRNAME BUILDARCH BUILDNAME DISTRVERSION
+	assert_var DISTRNAME TARGETARCH BUILDARCH BUILDNAME DISTRVERSION
 
 	[ -z "$1" ] && return
 	[ -z "$2" ] && return
@@ -29,17 +29,44 @@ add_32bit_requires()
 	shift
 
 	if build32on64 ; then
-		if [ "$DISTRNAME" = "Fedora" ] || [ "$DISTRNAME" = "Scientific" ] || [ "$DISTRNAME" = "GosLinux" ] || [ "$DISTRNAME" = "CentOS" -a "$DISTRVERSION" != 5 ]; then
+		if [ "$DISTRNAME" = "Fedora" ] || [ "$DISTRNAME" = "Scientific" ] || [ "$DISTRNAME" = "GosLinux" ] || [ "$DISTRNAME" = "RedOS" ] || [ "$DISTRNAME" = "CentOS" -a "$DISTRVERSION" != 5 ]; then
 			# http://www.rpm.org/wiki/PackagerDocs/ArchDependencies
 			# add (x86-32) to all -devel packages
 			for i in $* ; do
-				rhas "$GREP" "-devel$" && ! rhas "$i" "(x86-32)$" && echo "$i(x86-32)" && continue
+				# FIXME: why not in repl file?
+				rhas "$i" "^libtool$" && continue
+				rhas "$i" "^lib.*-utils$" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" "\(x86-32\)$" && ! rhas "$i" "\(x86-64\)$" && echo "$i(x86-32)" && continue
+				rhas "$GREP" "^lib" && ! rhas "$i" "\(x86-32\)$" && ! rhas "$i" "\(x86-64\)$" && echo "$i(x86-32)" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
-		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 || [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7 ; then
+		# TODO
+		elif [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
-				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && echo "$i $i:i386" && continue
+				rhas "$i" "^libtool$" && continue
+				rhas "$i" "^lib.*-utils$" && continue
+				rhas "$GREP" "^lib" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				echo "$i"
+			done | xargs -n 1000 echo
+		elif [ "$DISTRNAME" = "AstraLinux" ] ; then
+			for i in $* ; do
+				rhas "$i" "^ia32-libs$" && continue
+				rhas "$i" "^libtool$" && continue
+				rhas "$i" "^lib" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				rhas "$i" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				#! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:any" && continue
+				echo "$i"
+			done | xargs -n 1000 echo
+		# TODO
+		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 ; then
+			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
+			for i in $* ; do
+				rhas "$i" "^libtool$" && continue
+				rhas "$i" "^lib.*-utils$" && continue
+				rhas "$GREP" "^lib" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "ArchLinux" ] ; then
@@ -66,6 +93,18 @@ add_32bit_requires()
 			echo "$@"
 		fi
 	else
+		case "$DISTRNAME" in
+			"Mandriva"|"ROSA")
+				if [ $TARGETARCH = "x86_64" ] ; then
+					for i in $* ; do
+						rhas "$GREP" "^libtool$" && echo "$i" && continue
+						rhas "$GREP" "^lib.*-utils$" && continue
+						echo "$i" | sed -e "s|^lib\([^6]\)|lib64\1|g"
+					done  | xargs -n 1000 echo
+					return
+				fi
+				;;
+		esac
 		echo "$@"
 	fi
 }
@@ -83,8 +122,9 @@ hack_distr_requires()
 	esac
 
 	case "$DISTRNAME" in
-		"Mandriva")
-			if [ $BUILDARCH = "x86_64" ] && ! build32on64 ; then
+		"Mandriva"|"ROSA")
+			if [ $TARGETARCH = "x86_64" ] ; then
+				rhas "$GREP" "^libtool$" && echo "$GREP" && return
 				echo "$GREP" | sed -e "s|^lib\([^6]\)|lib64\1|g"
 				return
 			fi
@@ -116,6 +156,7 @@ tolocal_anyrepl()
 	local i REPLRULE WARULES
 	local GREP="$1"
 	shift
+	rhas "$GREP" "^[0-9]" && FIXNEWRESULT="$GREP" && return 1
 	# TODO: fix space removing
 	WARULES="s/^ *//g 
 		s/ *\$//g 
@@ -129,12 +170,52 @@ tolocal_anyrepl()
 		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
 		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
 		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
-		test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$GREP" "$TARGETPKGNAME") && USEDPKGREPL="$(basename $i)" && return 0
+		test -n "$REPLRULE" && TARGETPKGNAME=$(fix_arch_requires "$GREP" "$TARGETPKGNAME") && USEDPKGREPL="$(basename $i)" && return 0
 	done
+
+	# if missed in repl files try transform by default
 
 	local NEWRESULT=$(hack_distr_requires "$GREP")
 
-	FIXNEWRESULT=$(add_32bit_requires "$GREP" $NEWRESULT)
+	FIXNEWRESULT=$(fix_arch_requires "$GREP" "$NEWRESULT")
+
+	ALTPKGNAME="$GREP"
+	TARGETPKGNAME="$FIXNEWRESULT"
+
+	# return if no chance to replace
+	[ "$FIXNEWRESULT" = "$GREP" ] && return 1
+	# HACK: return if we get complex result
+	[ "$FIXNEWRESULT" != "$NEWRESULT" ] && return 0
+
+	# this recursive needs to be argumented
+	# try to resolve recursive
+	#tolocal_anyrepl "$FIXNEWRESULT" $@
+	return 0
+}
+
+tolocal_anyrepl_group()
+{
+	assert_var PKGFORMAT DISTRNAME BUILDNAME
+	local i REPLRULE WARULES
+	local GREP="$1"
+	shift
+	# TODO: fix space removing
+	WARULES="s/^ *//g 
+		s/ *\$//g 
+		s/ *|/|/g 
+		s/| */|/g"
+	USEDPKGREPL='scripted rules'
+	for i in $@ ; do
+		REPLRULE=`grep -v "^#" "$i" 2>/dev/null | grep -- "^ *$GREP *|" | sed -e "$WARULES" | head -n1`
+		# For broken rule
+		rhas "$REPLRULE" "|" || REPLRULE=""
+		#REPLRULE=`echo $REPLRULE | sed -r -e 's,|,!,g'`
+		ALTPKGNAME=`echo $REPLRULE | cut -d"|" -f1 | sed -e "s|\+|\\\\\+|g"`
+		TARGETPKGNAME=`echo $REPLRULE | cut -d"|" -f2 | sed -e "s|\+|\\\\\+|g"`
+		#test -n "$REPLRULE" && TARGETPKGNAME=$(add_32bit_requires "$GREP" "$TARGETPKGNAME") && USEDPKGREPL="$(basename $i)" && return 0
+	done
+
+	FIXNEWRESULT="$GREP"
 
 	ALTPKGNAME="$GREP"
 	TARGETPKGNAME="$FIXNEWRESULT"
@@ -197,26 +278,26 @@ internal_repl_list()
 	local BASEDISTRVERSION=${DISTRVERSION/\.*/}
 	if [ "$DISTRVERSION" != "$BASEDISTRVERSION" ] ;then
 		FINDPKGVERS="$REPLBASE.$PKGVENDOR.$BASEDISTRVERSION$ARCHEXT"
-		FINDPKGGREP="$FINDPKGVERS"
+		#FINDPKGGREP="$FINDPKGVERS"
 	fi
 
 	if [ -n "$ARCHEXT" ] ; then
 	(
 		# sure we use our version firstly
 		echo $FINDPKG
-		echo $FINDPKGVERS
+		echo $FINDPKGGREP
 		ls -1 $REPLBASE.$PKGVENDOR*$ARCHEXT 2>/dev/null | grep -v "$PKGVENDOR$ARCHEXT\$"
 	) | grep -v "^\$" | sed -e "s|$ARCHEXT\$||" | \
-		sort -u | sort -t . -k 3 | grep "^$FINDPKGGREP\$" -A1000 | sort -r -t . -k 3  | sed -e "s|$|$ARCHEXT|"
+		sort -u | sort -r -t . -n -k 3 | grep "^$FINDPKGGREP\$" -A1000 | sed -e "s|$|$ARCHEXT|"
 	else
 	(
 		# sure we use our version firstly
 		echo $FINDPKG
-		echo $FINDPKGVERS
+		echo $FINDPKGGREP
 		# skip all arches
 		ls -1 $REPLBASE.$PKGVENDOR* 2>/dev/null | grep -v "\.x86_64\$" | grep -v "\.aarch64\$" | grep -v "\.x86_64-i586\$"
 	) | grep -v "^\$" | \
-		sort -u | sort -t . -k 3 | grep "^$FINDPKGGREP\$" -A1000 | sort -r -t . -k 3
+		sort -u | sort -r -t . -n -k 3 | grep "^$FINDPKGGREP\$" -A1000
 	fi
 	echo $REPLBASE.$PKGVENDOR$ARCHEXT
 	[ "$PKGVENDOR" = "alt" ] || echo "$REPLBASE.$PKGFORMAT$ARCHEXT "
