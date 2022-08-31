@@ -276,18 +276,30 @@ get_root_git_dir()
 {
         local DIR=
         local LOCDIR="$1"
+        local RES
+
+        # no path if we have no git
+        which git >/dev/null 2>/dev/null || return 0
 
         if [ -n "$LOCDIR" ] ; then
             cd "$LOCDIR" || fatal "Only dir arg allowed for get_root_git_dir"
         fi
 
-        DIR=$(git rev-parse --git-dir 2>/dev/null)/../ || DIR=
-        realpath "$DIR" 2>/dev/null
+        DIR=$(git rev-parse --git-dir 2>/dev/null)/../
+        RES=$?
+
+        if [ "$RES" = 0 ] ; then
+            realpath "$DIR" 2>/dev/null
+#        elif [ "$RES" = 128 ] ; then
+#            a= git rev-parse --git-dir
+#            fatal "Check the error above"
+        fi
 
         if [ -n "$LOCDIR" ] ; then
             cd - >/dev/null
         fi
 
+        return $RES
         # FIXME: 1) can return / with good status 2) no one check status later
 }
 
