@@ -21,8 +21,8 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     new    [branch]             - create new task on branch (Sisyphus by default)"
 	echo "     run [--test-only] [NNNN] [NNNN2] [-m <message>] - run task NNNN"
 	echo "     commit [NNNN] [NNNN2] [-m <message>]       - commit task(s) NNNN, [NNNN2]"
-	echo "     add [NNNN] repo  <gear repo> <gear tag> ... - add package build from repo command"
-	echo "     add [NNNN] repo <gear repo>.git=<gear tag> ...  - add package build from repo command"
+	echo "     add [NNNN] (repo|build) <gear repo> <gear tag> ... - add package build from repo command"
+	echo "     add [NNNN] (repo|build) <gear repo>.git=<gear tag> ...  - add package build from repo command"
 	echo "     add [NNNN] del package [package2...]  - add package remove command"
 	echo "     add [NNNN] rebuild package [package2...]  - add package rebuild"
 	echo "     add --help                  - show task add help"
@@ -232,9 +232,11 @@ if [ "$1" = "copy" ] ; then
 
 	[ -n "$PACKAGELIST" ] || fatal "no packages"
 	showcmd ssh $GEARHOST task new $TARGET
-	TASK="$(ssh $GEARHOST task new $TARGET | head -n1)" || fatal
+	# Note: | head hides status
+	TASK="$(ssh $GEARHOST task new $TARGET | head -n1)"
+	[ -n "$TASK" ] || fatal "Empty task"
 	for PACKAGE in $PACKAGELIST ; do
-		docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR
+		docmd ssh $GEARHOST task add $TASK copy $PACKAGE $FROMSTR || fatal
 	done
 	docmd ssh $GEARHOST task run $TASK
 	exit
@@ -244,7 +246,7 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 	[ "$1" = "Add" ] && NEXTCOMMAND="run"
 	SUBTASK=''
 	ADDCMD=''
-	ADDCMDLIST="del copy repo rebuild"
+	ADDCMDLIST="del copy repo build rebuild"
 	# add TASKNUMBER package
 	if is_task_number "$2" && estrlist has "$3" $ADDCMDLIST ; then
 		TASK="$(get_task_number $2)"
@@ -265,7 +267,10 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 
 	[ -n "$1" ] || fatal "no packages"
 
+	[ "$ADDCMD" = "build" ] && ADDCMD="repo"
+
 	OADDCMD=$ADDCMD
+
 	while [ -n "$1" ] ; do
 		PACKAGE="$1"
 		if [ "$OADDCMD" = "repo" ] ; then
