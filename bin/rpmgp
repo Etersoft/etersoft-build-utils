@@ -46,7 +46,7 @@ list_systems()
 
 html_filter()
 {
-	grep "src.rpm" | sed -e "s|.*href=\"||g" | sed -e "s|\".*||g"
+	grep "src.rpm" | sed -e "s|.*href=\"||g" | sed -e "s|\".*||g" | grep "rpm$"
 }
 
 list_filter()

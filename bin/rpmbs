@@ -344,6 +344,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 	# if more then one spec, use common task
 	if [ "$PREPARETASK" = "internal" ] || [ -n "$RUNTASK" ] ; then
 		docmd ssh $GEARHOST task run $TESTONLY $TASKNUMBER
+		res=$?
 	fi
 
 	if [ -n "$TASKNUMBER" ] ; then
@@ -351,7 +352,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		GIT_ALT=$GEARHOST girar-show "$TASKNUMBER@"
 	fi
 
-	exit
+	exit $res
 fi
 
 pack_src_rpm $LISTRPMARGS
@@ -374,9 +375,9 @@ fi
 #pkg_release_check $LISTBUILT
 
 # if only one file
-if [ -r "$LISTBUILT" ] ; then
-	check_gear_and_tag
-fi
+#if [ -r "$LISTBUILT" ] ; then
+#	check_gear_and_tag
+#fi
 
 
 echog "Will try to sign follow packages with GPG: \$LISTBUILT"
