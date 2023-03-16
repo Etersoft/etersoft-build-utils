@@ -14,6 +14,15 @@ realpath()
 }
 fi
 
+# add subst if missed
+if ! which subst 2>/dev/null >/dev/null ; then
+subst()
+{
+	sed -i -e "$@"
+}
+fi
+
+
 if which csed 2>/dev/null >/dev/null ; then
 colorify()
 {
