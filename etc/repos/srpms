@@ -22,6 +22,15 @@ rosa2014u       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/up
 rosa2014c       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/contrib/release
 rosa2014f       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/non-free
 rosa2014r       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/restricted
+rosa2021.1        http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/release
+rosa2021.1t        http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/testing
+rosa2021.1u       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/updates
+rosa-fresh.cr       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/contrib/release
+rosa-fresh.ct       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/contrib/testing
+rosa-fresh.cu       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/contrib/updates
+rosa-fresh.nfr       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/non-free/release
+rosa-fresh.nft       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/non-free/testing
+rosa-fresh.nfu       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/non-free/updates
 mandriva        http://mirror.yandex.ru/mandriva/official/current/SRPMS/main/release
 mandriva-contrib http://mirror.yandex.ru/mandriva/official/current/SRPMS/contrib/release
 mandriva-cooker-contrib http://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/contrib/release
@@ -34,6 +43,7 @@ mandriva-cooker-non-free http://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non
 #suse-factory   http://ftp5.gwdg.de/pub/opensuse/source/factory/repo/oss/suse/src
 suse-current-nn-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/openSUSE-current/repo/non-oss/suse/src
 suse-current-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/openSUSE-current/repo/oss/suse/src
+suse-tumbleweed https://download.opensuse.org/source/tumbleweed/repo/oss/src
 #suse-edu1       http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2       http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
 #alt-obsolete    ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
