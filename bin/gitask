@@ -30,7 +30,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     task --help                 - show task help"
 	echo "     share  NNNN [enable]        - share task NNNN"
 	echo "     deps   NNNN add XXXX        - add deps from XXXX to task NNNN"
-	echo "     copy   NNNN to (p8|p9) [from XX]  - copy package from Sisyphus to (p8|p9) [from XX]"
+	echo "     copy   NNNN to (p8|p9) [from XX]  - copy package to (p8|p9|p10) [from (p9|p10|Sisyphus)]"
 	echo "     delsub NNNN (package|subtask)  - remove subtask by number or by package name"
 	echo "     find   PACKAGE              - do find-package of PACKAGE"
 	echo "     log    NNNN                 - show build log for task NNNN"
