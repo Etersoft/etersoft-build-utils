@@ -72,6 +72,7 @@ normalize_girar_name()
 # Check if $1 like git.alt or git.eter, git.something
 is_girar_name()
 {
+	rhas "$1" "^gitery" && return
 	rhas "$1" "^git\."
 }
 
@@ -94,10 +95,18 @@ set_gear_host()
 	assert_var GIRARHOST
 	GITHOST="$GIRARHOST"
 	GEARHOST="$GITHOST"
+	[ "$GEARHOST" = "gitery" ] && GEARHOST="gyle" && return
 	if [ ! "$GEARHOST" = "git.eter" ] ; then
 		GEARHOST="${GITHOST/git./gear.}"
 	fi
 	return 0
+}
+
+# copied from giter
+get_girar_host_from_ssh()
+{
+	grep -i "host[\t ]\+" ~/.ssh/config 2>/dev/null | sed "s|.*host[\t ]*||gi" | grep -m1 "^gitery *$" && return
+	grep -i "host[\t ]\+" ~/.ssh/config 2>/dev/null | sed "s|.*host[\t ]*||gi" | grep -m1 "^git\."
 }
 
 

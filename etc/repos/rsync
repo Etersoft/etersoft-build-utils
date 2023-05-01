@@ -1,6 +1,8 @@
 
 # ALT Linux
 git.alt sisyphus rsync.altlinux.org::ALTLinux/Sisyphus
+git.alt p10 rsync.altlinux.org::ALTLinux/p10/branch
+git.alt p9 rsync.altlinux.org::ALTLinux/p9/branch
 git.alt p8 rsync.altlinux.org::ALTLinux/p8/branch
 git.alt p7 rsync.altlinux.org::ALTLinux/p7/branch
 git.alt p6 rsync.altlinux.org::ALTLinux/p6/branch

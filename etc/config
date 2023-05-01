@@ -73,6 +73,7 @@
 # GIRAR_USER=lav
 
 # default girar ssh alias
+# autodetect gitery, git.alt if not set here
 # GIRARHOST=git.alt
 
 # Skip error if there are unpackaged files in the build
