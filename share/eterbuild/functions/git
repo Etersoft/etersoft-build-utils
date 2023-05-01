@@ -92,7 +92,13 @@ is_one_girar_name()
 
 set_gear_host()
 {
-	assert_var GIRARHOST
+	# if no default, set default GIRARHOST from ~/.ssh/config
+	if [ -z "$GIRARHOST" ] ; then
+		GIRARHOST=$(get_girar_host_from_ssh)
+		#[ -n "$GIRARHOST" ] || fatal "Can't get default girar alias (like git.alt) from ~/.ssh/config"
+	fi
+
+	#assert_var GIRARHOST
 	GITHOST="$GIRARHOST"
 	GEARHOST="$GITHOST"
 	[ "$GEARHOST" = "gitery" ] && GEARHOST="gyle" && return
@@ -127,12 +133,6 @@ set_girar_host()
 		GIRARHOST="$REMOTELIST"
 		set_gear_host
 		return 1
-	fi
-
-	# if no default, set default GIRARHOST from ~/.ssh/config
-	if [ -z "$GIRARHOST" ] ; then
-		GIRARHOST=$(get_girar_host_from_ssh)
-		#[ -n "$GIRARHOST" ] || fatal "Can't get default girar alias (like git.alt) from ~/.ssh/config"
 	fi
 
 	set_gear_host
