@@ -351,7 +351,7 @@ if [ -n "$CLONEGIT" ] ; then
 
 	if [ -z "$PUBLICACCESS" ] ; then
 		echo "See other repos at $GIRARHOST:"
-		giter $GITHOST list packages $PKGNAME
+		gita $GITHOST find $PKGNAME
 	fi
 
 	exit 0
@@ -417,7 +417,7 @@ if [ -n "$CHECKONLINE" ] ; then
 		fi
 	fi
 	echo "Get repositories at $GIRARHOST:"
-	giter $GITHOST list packages $PKGNAME
+	gita $GITHOST find $PKGNAME
 
 	set_binaryrepo $MENV
 
