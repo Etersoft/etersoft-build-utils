@@ -93,6 +93,15 @@ echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR) ..."
 # # This spec is backported 
 # and by release
 
+TXTRELEASE=$(get_txtrelease $SPECNAME)
+if [ -n "$KORINFTARGETRELEASE" ] ; then
+	# HACK: Override release with KORINFTARGETRELEASE if set
+	TXTRELEASE=$KORINFTARGETRELEASE
+	subst "1iDistribution: Korinf" $SPECNAME
+	subst "1iVendor: Etersoft Korinf" $SPECNAME
+fi
+
+
 # Set buildreq
 if [ "$PKGVENDOR" = "alt" ] ; then
 	# FIXME: needed for some backport level...
@@ -111,11 +120,11 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 
 	if is_backported_release $RELEASE ; then
 		# TODO: do not use mask M00
-		docmd set_release $SPECNAME "$(echo "$RELEASE" | sed -e "s|M[0-9][0-9][PCT]|$MDISTR|")"
+		docmd set_release $SPECNAME $TXTRELEASE"$(echo "$BASERELEASE" | sed -e "s|M[0-9][0-9][PCT]|$MDISTR|")"
 	else
 		# Change release according to alt policy with extensions
 		# General rule: alwars alt(N-1).MM.(N)
-		docmd set_release $SPECNAME $(get_txtrelease $SPECNAME)$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
+		docmd set_release $SPECNAME $TXTRELEASE$(decrement_release $BASERELEASE).$MDISTR.$BASERELEASE
 	fi
 
 	ADDDEF=""
@@ -157,9 +166,6 @@ else
 	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
 
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
-	TXTRELEASE=$(get_txtrelease $SPECNAME)
-	# HACK: Override release with KORINFTARGETRELEASE if set
-	[ -z "$KORINFTARGETRELEASE" ] || TXTRELEASE=$KORINFTARGETRELEASE
 
 	if is_backported_release $RELEASE ; then
 		# TODO: do not use mask M00
