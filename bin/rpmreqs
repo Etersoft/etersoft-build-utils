@@ -36,6 +36,9 @@ filter_multiple_provides()
 		s|libldap_r-2.4.so.*|libldap|g
 		s|liblber-2.4.so.*|libldap|g
 		s|libudev.so.*|libudev1|g
+		s|/usr/bin/wineboot||g
+		s|/usr/bin/winetricks||g
+		s|/usr/bin/wineserver||g
 		s|/usr/bin/wine||g
 		s|/usr/bin/jconsole|java-1.7.0-openjdk-devel|g
 		s|/sbin/modprobe||g
@@ -138,7 +141,7 @@ trans_rpmdeps_to_pkgname_lav()
 	# FIXME: strange regexp for drop libNAME.so.NUM and perl(Package) and /bin/sh
 	REALPKGNAMELIST=$(estrlist reg_exclude ".*\.so\..* .*/.* .*(.*" "$REQLIST")
 	# FIXME: external list? Set priorities/
-	REQCONVLIST=$(estrlist exclude "$REALPKGNAMELIST" "$REQLIST" | filter_multiple_provides | sed -e "s|\([^)]\)(64bit)|\1.*(64bit)|g")
+	REQCONVLIST="$(estrlist exclude "$REALPKGNAMELIST" "$REQLIST" | filter_multiple_provides | sed -e "s|\([^)]\)(64bit)|\1.*(64bit)|g")"
 
 	# partially copied from aptU
 	#VIRTREQ=$(LANG=C apt-get install --print-uris $REQLIST 2>&1 | grep "is a virtual package provided by" | cut -f2 -d" " | sort -u)
@@ -171,7 +174,7 @@ trans_rpmdeps_to_pkgname_lav()
 	# remove ALT basesystem packages
 	ALREADYHANDLEDRPM="
 bash sh filesystem alt-gpgkeys glibc-core glibc-locales glibc-preinstall
-rpm apt apt-repo
+rpm apt apt-repo apt-scripts update-kernel
 tcb-utils nss_tcb libtcb chkconfig service setup
 shadow-utils shadow-convert module-init-tools kmod util-linux-control pam
 alternatives
