@@ -16,7 +16,7 @@ REMCOM=
 COMMIT=
 
 #############################
-Usage="Usage: $name [GIRAR] [-r -s -u -m -i -c -e ] [-b REPONAME] [-f] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-s -u -m -i -c -e ] [-b REPONAME] [-f] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -36,7 +36,7 @@ phelp()
 	echog "Ext. options:"
 	echog "   -c  build without stuff (without previous built packages)"
 	echog "   -s  sign (and move to dir ETERDESTSRPM if defined) after build"
-	echog "   -e  sign and run gear test only task girar build"
+	echog "   -e  build using hsh-rebuild (using chroot precreated with rpmbsh -l)"
 	echog "   -t  make temporary commit before build (rpmbb like behavior)"
 	echog "   -l  lazy cleanup (clean before build, not after)"
 	echog "   -w  use tar as immediate archive for myhsh"
@@ -128,7 +128,7 @@ date
 echo "-------------------------------"
 
 # make src.rpm if build OK and we have options for rpmbs
-RPMBSARGS=$(drop_args "$LISTRPMARGS" i c l)
+RPMBSARGS=$(drop_args "$LISTRPMARGS" i c l e)
 if [ ! "$RESULT" = "0" ] || [ -z "$RPMBSARGS" ]; then
 	exit $RESULT
 fi
