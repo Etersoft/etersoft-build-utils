@@ -22,9 +22,9 @@ rosa2014u       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/up
 rosa2014c       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/contrib/release
 rosa2014f       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/non-free
 rosa2014r       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/restricted
-rosa2021.1        http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/release
-rosa2021.1t        http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/testing
-rosa2021.1u       http://mirror.yandex.ru/rosa/rosa2014.1/repository/SRPMS/main/updates
+rosa2021.1        http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/main/release
+rosa2021.1t        http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/main/testing
+rosa2021.1u       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/main/updates
 rosa-fresh.cr       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/contrib/release
 rosa-fresh.ct       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/contrib/testing
 rosa-fresh.cu       http://mirror.yandex.ru/rosa/rosa2021.1/repository/SRPMS/contrib/updates
