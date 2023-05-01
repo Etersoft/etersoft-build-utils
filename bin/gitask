@@ -71,6 +71,15 @@ get_subtask()
 	ssh $GEARHOST task show $1 | grep -E "(/$2.git|:package=$2$|:srpm=$2-.*src.rpm)" | sed -e "s|^ \([0-9]*\):.*|\1|g"
 }
 
+_list_git_package()
+{
+	while read path date other; do
+		printf "%60s  " $GITHOST:$path
+		[ -n "$date" ] || { echo "[Date is missed]" ; continue ; }
+		date -d"@$date"
+	done
+}
+
 
 NEXTCOMMAND=''
 
@@ -94,8 +103,8 @@ eval lastarg=\${$#}
 
 if [ "$1" = "find" ] ; then
 	shift
-	#showcmd "$GEARHOST>" find-packages "$@"
-	docmd ssh $GITHOST find-package "$@"
+	showcmd ssh $GITHOST find-package "$@"
+	ssh $GITHOST find-package "$@" | _list_git_package
 	exit
 fi
 
