@@ -37,7 +37,7 @@ PREPARETASK=
 TASKNUMBER=
 
 #############################
-Usage="Usage: $name [GIRAR] [-b REPONAME] [-p POCKET] [-s|-t|-u|-a|-A|-c|-e] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
+Usage="Usage: $name [GIRAR] [-b REPONAME] [-p POCKET] [-s|-t|-u|-a|-A|-c] [-o -z -n -p --nodeps] [-k [TARGETDIR]] [spec or src.rpm]..."
 function mygetopts()
 {
 name=${0##*/}
@@ -84,8 +84,7 @@ while getopts :hfFstTcudenop:a:Ab:wz opt; do
     F) FORCE="-f" ; RUNTASK=1 ;;
 # FIXME: handle SIGN separately
     c) CHECKONLY=1 ; SIGN=1 ;;
-# e is obsoleted
-    e|u) UPLOADNOW=1 ; SIGN=1 ;;
+    u) UPLOADNOW=1 ; SIGN=1 ;;
     a) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER="$(echo $OPTARG | sed -e 's/before/ /g')" ;;
     A) UPLOADNOW=1 ; SIGN=1 ; PREPARETASK=yes ; TASKNUMBER= ;;
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
