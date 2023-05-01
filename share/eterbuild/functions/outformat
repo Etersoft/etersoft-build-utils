@@ -35,6 +35,7 @@ isatty()
 
 # Use color or no
 isatty && TERMOUTPUT=1 || TERMOUTPUT=
+[ -n "$TERMOUTPUT" ] && which tput 2>/dev/null >/dev/null && TERMOUTPUT=1 || TERMOUTPUT=
 
 # The cmd names and color codes used as arguments for tput(1)
 # were taken from terminfo(5).
