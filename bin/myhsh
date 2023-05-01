@@ -25,6 +25,7 @@ phelp()
 	echo
 	echog "Options:"
 	echog "   -c  build without stuff (without previous built packages)"
+	echog "   -e  build using hsh-rebuild (using chroot precreated with rpmbsh -l)"
 	echog "   -n  build src.rpm only"
 	echog "   -r  remove packages from test hasher"
 	echog "   -p  print binary packages by built list"
@@ -33,11 +34,12 @@ phelp()
 	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
-while getopts :hab:pnclr opt; do
+while getopts :hab:epnclr opt; do
     case $opt in
     h) phelp; exit 0;;
     p) PRINTBINPKG=1;;
     b) BINARYREPONAME=$OPTARG ;;
+    e) REBUILD=1;;
     n) BUILDSRCRPM="--build-srpm-only";;
     r) REMOVEPKG=1;;
     a) REPACKAGE="--query-repackage";;
@@ -125,7 +127,7 @@ prepare_aptconfig
 # FIXME: we override config value here?
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
 # we do not need check cases for mount points, thanks ldv@ 
-HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --apt-config=$OURAPTCONF --target $BUILDARCH $HASHERARG"
+HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --target $BUILDARCH $HASHERARG"
 HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG $REPACKAGE $BUILDSRCRPM"
 
 BUILDARGS=""
@@ -140,11 +142,16 @@ do
 	LOGFILE="$LOGDIR/$(basename $(basename $i .src.rpm) .tar)$MENVARG.log"
 	echo "Build in hasher ($MENV) in $HASHERDIR dir" >$LOGFILE
 	rm -f $LOGFILE.ok
-	echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
-
-	# Note: hasher is already use renice for low priority
-	showcmd $HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i
-	($HSH $HASHERARG --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
+	#echog "Build in hasher: $i (arg: $HASHERARG --build-args \"$BUILDARGS\", distro: $MENV, hasherdir: $HASHERDIR)"
+	if [ -n "$REBUILD" ] ; then
+		# Note: hasher is already use renice for low priority
+		showcmd $HSH-rebuild $HASHERARG -- $HASHERDIR $i
+		($HSH-rebuild $HASHERARG -- $HASHERDIR $i 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
+	else
+		# Note: hasher is already use renice for low priority
+		showcmd $HSH $HASHERARG --apt-config=$OURAPTCONF --build-args "$BUILDARGS" -- $HASHERDIR $i
+		($HSH $HASHERARG --apt-config=$OURAPTCONF --build-args "$BUILDARGS" -- $HASHERDIR $i 2>&1 && touch $LOGFILE.ok) | tee -a $LOGFILE | colorify
+	fi
 	test -L $HASHERDIR/BUILD || ln -s chroot/usr/src/RPM/BUILD $HASHERDIR/
 	if [ ! -f $LOGFILE.ok ] ; then
 		RESULT=1
