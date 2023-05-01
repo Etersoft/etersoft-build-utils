@@ -251,12 +251,13 @@ assert_var()
 {
 	local i re
 	
-	for i in $@ ; do
-		re=$(eval echo \$$i)
+	for i in "$@" ; do
+		re="$(eval echo \$$i)"
 		if [ -z "$re" ]
 		then
 			debug_print_backtrace
-			fatal "assert: $i nonexist"
+			echo "assert: $i variable nonexist" >&2
+			fatal "stop the program"
 # FIXME :
 # Strange behavior with echo
 # (may be erase etersoft-build-utils/bin catalog)
