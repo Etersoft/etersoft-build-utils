@@ -70,6 +70,7 @@ get_default_txtrelease()
 {
 	# assert GITHOST
 	# TODO: check for git.alt in ~/.ssh/config?
+	[ "$GITHOST" = "gitery" ] && echo "alt" && return
 	echo ${GITHOST/git./}
 }
 
