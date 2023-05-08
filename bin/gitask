@@ -25,6 +25,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     add [NNNN] (repo|build) <gear repo>.git=<gear tag> ...  - add package build from repo command"
 	echo "     add [NNNN] del package [package2...]  - add package remove command"
 	echo "     add [NNNN] rebuild package [package2...]  - add package rebuild"
+	echo "     add [NNNN] copy NNNN [from XX]  - copy package [from (p9|p10|Sisyphus)]"
 	echo "     add --help                  - show task add help"
 	echo "     Add <args>                  - add and run the task"
 	echo "     task --help                 - show task help"
@@ -80,6 +81,15 @@ _list_git_package()
 	done
 }
 
+get_last_from()
+{
+	local FROMSTR=''
+	while [ -n "$1" ] ; do
+		[ "$1" = "from" ] && FROMSTR="$2" && break
+		shift
+	done
+	echo "$FROMSTR"
+}
 
 NEXTCOMMAND=''
 
@@ -280,7 +290,10 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 
 	OADDCMD=$ADDCMD
 
+	[ "$ADDCMD" = "copy" ] && FROMSTR="$(get_last_from "$@")"
+
 	while [ -n "$1" ] ; do
+		[ "$1" = "from" ] && [ "$ADDCMD" = "copy" ] && break
 		PACKAGE="$1"
 		if [ "$OADDCMD" = "repo" ] ; then
 			#<gear repo>.git=<gear tag>
@@ -299,7 +312,7 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 			# too much re add to the same place
 			[ "$SUBTASK" = "1" ] && SUBTASK=""
 		fi
-		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE || fatal
+		docmd ssh $GEARHOST task add $TASK $SUBTASK $ADDCMD $PACKAGE $FROMSTR || fatal
 	done
 	if [ -n "$NEXTCOMMAND" ] ; then
 		sleep 2
@@ -312,7 +325,7 @@ fi
 if [ "$1" = "show" ] ; then
 	shift
 	COMMIT=''
-	TASK="$(get_task_number $1)"
+	TASK="$(get_task_number "$1")"
 	if [ -z "$TASK" ] ; then
 		TASK="$(get_last)" || fatal "Can't get last task"
 	fi
