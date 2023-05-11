@@ -43,7 +43,8 @@ mandriva-cooker-non-free http://mirror.yandex.ru/mandriva/devel/cooker/SRPMS/non
 #suse-factory   http://ftp5.gwdg.de/pub/opensuse/source/factory/repo/oss/suse/src
 suse-current-nn-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/openSUSE-current/repo/non-oss/suse/src
 suse-current-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/openSUSE-current/repo/oss/suse/src
-suse-tumbleweed https://download.opensuse.org/source/tumbleweed/repo/oss/src
+#suse-tumbleweed https://download.opensuse.org/source/tumbleweed/repo/oss/src
+suse-tumbleweed https://mirror.yandex.ru/opensuse/source/tumbleweed/repo/oss/src/
 #suse-edu1       http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2       http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
 #alt-obsolete    ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
