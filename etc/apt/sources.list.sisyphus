@@ -5,6 +5,6 @@
 rpm [alt] http://mirror.yandex.ru altlinux/Sisyphus/i586 classic
 rpm [alt] http://mirror.yandex.ru altlinux/Sisyphus/noarch classic
 
-rpm [alt] file:/var/ftp/ pub/ALTLinux/Sisyphus/i586 classic
-rpm [alt] file:/var/ftp/ pub/ALTLinux/Sisyphus/noarch classic
+#rpm [alt] file:/var/ftp/ pub/ALTLinux/Sisyphus/i586 classic
+#rpm [alt] file:/var/ftp/ pub/ALTLinux/Sisyphus/noarch classic
 #rpm file:/var/ftp/ pub/ALTLinux/Sisyphus/x86_64-i586 classic
