@@ -50,13 +50,15 @@ fix_arch_requires()
 				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
-		elif [ "$DISTRNAME" = "AstraLinux" ] ; then
+		elif [ "$DISTRNAME" = "AstraLinux" ] ||[ "$DISTRNAME" = "AstraLinuxCE" ] || [ "$DISTRNAME" = "AstraLinuxSE" ]  ; then
 			for i in $* ; do
 				rhas "$i" "^ia32-libs$" && continue
 				rhas "$i" "^libtool$" && continue
+				# AstraLinux have no :i386 devel packages (see https://bugs.etersoft.ru/show_bug.cgi?id=12955)
+				rhas "$i" "-dev$" && echo "$i" && continue
 				rhas "$i" "^lib" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
-				rhas "$i" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
-				#! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:any" && continue
+				# AstraLinux have no :i386 packages (see https://bugs.etersoft.ru/show_bug.cgi?id=12955)
+				#rhas "$i" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
 		# TODO
@@ -94,7 +96,7 @@ fix_arch_requires()
 		fi
 	else
 		case "$DISTRNAME" in
-			"Mandriva"|"ROSA")
+			"Mandriva"|"ROSA"|"ROSAFresh"|"Mageia")
 				if [ $TARGETARCH = "x86_64" ] ; then
 					for i in $* ; do
 						rhas "$GREP" "^libtool$" && echo "$i" && continue
@@ -122,7 +124,7 @@ hack_distr_requires()
 	esac
 
 	case "$DISTRNAME" in
-		"Mandriva"|"ROSA")
+		"Mandriva"|"ROSA"|"ROSAFresh"|"Mageia")
 			if [ $TARGETARCH = "x86_64" ] ; then
 				rhas "$GREP" "^libtool$" && echo "$GREP" && return
 				echo "$GREP" | sed -e "s|^lib\([^6]\)|lib64\1|g"
