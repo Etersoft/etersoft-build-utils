@@ -129,6 +129,8 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 
 	ADDDEF=""
 	CLEANTEXT=""
+	# HACK: remove after eepm update
+	subst "s|^%define pkgsystem .*|%define pkgsystem $($DISTRVENDOR -g $DISTRNAME/$DISTRVERSION)|" $SPECNAME
 else
 	# All non ALT Linux distros
 	# disabled by Lav https://bugs.etersoft.ru/show_bug.cgi?id=13034
@@ -136,7 +138,10 @@ else
 
 	BUILDREQ="BuildRequires:"
 	# Korinf hack
-	if [ $(basename $SPECNAME) != "eepm.spec" ] ; then
+	if [ $(basename $SPECNAME) = "eepm.spec" ] ; then
+		subst "s|^%define pkgsystem .*|%define pkgsystem $($DISTRVENDOR -g $DISTRNAME/$DISTRVERSION)|" $SPECNAME
+	fi
+	if [ $(basename $SPECNAME) != "rpm-build-altlinux-compat.spec" ] ; then
 		if ! grep -q "BuildRequires:.*rpm-build-altlinux-compat" $SPECNAME ; then
 			# Need our compat package and disable strong patch checking
 			BUILDREQ="$BUILDREQ rpm-build-altlinux-compat >= 0.95"
@@ -165,6 +170,9 @@ else
 	# Hack for allow repack on x86_64 packages with ExclusiveArch: %{ix586}
 	[ "$SYSARCH" = "x86_64" ] && subst "s|^ExclusiveArch:.*||g" $SPECNAME
 
+	# TODO? Where we need it?
+	subst 's|^%if %_vendor == "alt" &&.*|%if %_vendor == "alt" |' $SPECNAME
+
 	[ -z "$BUILDCOMMAND" ] && BUILDCOMMAND=$ETERBUILDBIN/rpmbb
 
 	if is_backported_release $RELEASE ; then
@@ -178,8 +186,11 @@ else
 	CLEANTEXT=""
 fi
 
+# configure32 is obsoleted
+subst "s|^%configure32|%configure|" $SPECNAME
+
 # Do not add BuildReq if already exist
-cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
+#cat $SPECNAME | grep rpm-build-compat &>/dev/null && BUILDREQ=""
 
 # fix readlink -m, introduced by new libtool and missed in RHEL4 (replace with readlink -f)
 if [ "$DISTRNAME/$DISTRVERSION" = "ASPLinux/11.2" ] ; then
