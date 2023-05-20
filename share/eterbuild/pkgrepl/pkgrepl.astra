@@ -1,8 +1,4 @@
 
-# is missed?
-libwxGTK|libwxgtk3.0
-libwxGTK-devel|libwxgtk3.0-dev
-
 libXxf86misc-devel|
 libpng16|libpng16-16
 libpng-devel|libpng-dev
@@ -61,7 +57,7 @@ gcc5-c++|g++-6.3 gcc-multilib
 libmpg123-devel|libmpg123-dev
 libmpg123|libmpg123-0
 #NX
-xkbcomp|x11-xkb-utils
+#xkbcomp|x11-xkb-utils
 xorg-font-utils|xfonts-utils
 sessreg|x11-xserver-utils
 numlockx|
@@ -72,6 +68,7 @@ libwxGTK3.1|libwxgtk3.0-0v5
 libwxGTK3.1-devel|libwxgtk3.0-dev
 libwxGTK|libwxgtk3.0-0v5
 libwxGTK-devel|libwxgtk3.0-dev
+libwxBase3.0|libwxbase3.0-0v5
 
 cifs-utils|cifs-utils
 libcrypto1.1|libssl1.1
@@ -82,6 +79,7 @@ libcrypto1.1|libssl1.1
 #               Depends: libgles2-mesa-dev but it is not going to be installed
 #               Depends: libglu1-mesa-dev but it is not going to be installed
 libSDL2-devel|
+libSDL2|
 
 libGL|libgl1
 libGL-devel|libgl-dev

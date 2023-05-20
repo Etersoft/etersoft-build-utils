@@ -8,6 +8,7 @@ liblcms-devel|liblcms-devel
 liblcms|liblcms
 libldap-devel|openldap2-devel
 libldap|openldap2-client
+libldap2|openldap2-client
 libsane|sane
 libsane-devel|sane
 # one package

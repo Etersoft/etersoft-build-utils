@@ -24,3 +24,7 @@ libtiff5|libtiff5
 llvm6.0-devel|llvm-devel
 llvm6.0|llvm
 clang6.0|clang
+
+# restore after c7
+libXfont2-devel|libXfont2-devel
+patchelf|patchelf

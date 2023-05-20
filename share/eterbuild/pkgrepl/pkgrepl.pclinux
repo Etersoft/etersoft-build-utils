@@ -20,6 +20,7 @@ libfreetype|libfreetype6
 libfreetype-devel|libfreetype6-devel
 libldap-devel|libldap2.3_0-devel
 libldap|libldap2.3_0
+libldap2|libldap2.3_0
 libsane-devel|libsane1-devel
 libsane|libsane1
 jackit-devel|libjack-devel

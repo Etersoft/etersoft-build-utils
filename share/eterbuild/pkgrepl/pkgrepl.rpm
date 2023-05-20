@@ -1,5 +1,6 @@
 # Base replacements rules
 
+update-kernel|
 /proc|
 # FIXME
 makedepend|
@@ -54,7 +55,7 @@ freetype2-devel|freetype-devel
 freetype2|freetype
 libfreetype-devel|freetype-devel
 libcups-devel|cups-devel
-libcups|cups
+libcups|cups-libs
 # for rpmcs
 cups|cups
 libalsa-devel|alsa-lib-devel alsa-lib
@@ -68,6 +69,7 @@ libcapi-devel|
 prelink|
 libldap-devel|openldap-devel
 libldap|openldap
+libldap2|openldap
 liblcms-devel|lcms-devel
 liblcms|lcms
 liblcms2-devel|lcms2-devel
@@ -258,10 +260,13 @@ docbook-style-dsssl-utils|docbook-utils
 
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+# new
+libfontconfig1|fontconfig
 
 # TODO: сделать замену всех python-module- на просто python-
 python-module-setuptools|python-setuptools
 python-module-psutil|python2-psutil
+python3-module-psutil|python3-psutil
 
 python3-module-redis-py|python3-redis
 
@@ -304,15 +309,14 @@ iconv|
 #vkd3d-devel|rpm
 # TODO: они будут добавляться для alt и придётся отовсюду выключать
 #libfaudio-devel|
-libvulkan-devel|vulkan-loader-devel
-libvulkan1|vulkan-loader
+libvulkan-devel|vulkan-devel
+libvulkan1|vulkan
 libva|
 
 distro_info|rpm
 libcap-utils|libcap-ng-utils
 
 libjxr-devel|jxrlib-devel
-libSDL2-devel|SDL2-devel
 libsasl2-devel|cyrus-sasl-devel
 
 libcairo|cairo
@@ -321,3 +325,13 @@ libcairo-devel|cairo-devel
 # FIXME: unneeded and missed
 libXevie-devel|
 libXxf86misc-devel|
+
+libdbus-glib-devel|dbus-glib-devel
+libdconf-devel|dconf-devel
+librsvg-devel|librsvg2-devel
+libgtk-layer-shell-devel|gtk-layer-shell-devel|
+
+libSDL2|SDL2
+libSDL2-devel|SDL2-devel
+
+libpcap0.8|libpcap

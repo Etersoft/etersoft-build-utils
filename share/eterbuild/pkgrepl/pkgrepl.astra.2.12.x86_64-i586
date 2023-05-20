@@ -1,0 +1,23 @@
+# wine-etersoft:i386 : Depends: ia32-libs:i386 (>= 20180423.2) but it is not installable
+#                      Depends: libc6-i386:i386 (>= 2.17) but it is not installable
+#                      Depends: libcairo2:i386 but it is not installable
+#                      Depends: libcap-ng-utils:i386 but it is not installable
+#                      Depends: libpcap0.8:i386 but it is not installable
+# ia32-libs:i386
+# libc6-i386:i386
+
+libvulkan-devel|
+libvulkan1|
+libXpm-devel|
+
+
+# need fix link in /usr/lib32/i386-*
+## cat /usr/lib32/i386-linux-gnu/libusb-1.0.so 
+#GROUP ( /lib32/i386-linux-gnu/libusb-1.0.so.0.1.0 )
+libusb|
+libusb-devel|libusb-1.0-0-dev:amd64
+
+# missed libv4l-0
+libv4l|
+# not for 32 bit
+samba-libs|

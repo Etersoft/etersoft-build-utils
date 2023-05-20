@@ -15,6 +15,7 @@ libalsa-devel|alsa-devel
 libalsa|libasound2
 libldap-devel|openldap2-devel
 libldap|openldap2-client
+libldap2|openldap2-client
 libieee1284-devel|libieee1284
 libsane|sane-backends
 libsane-devel|sane-backends

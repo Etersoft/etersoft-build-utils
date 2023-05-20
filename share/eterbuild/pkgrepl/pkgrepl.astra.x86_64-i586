@@ -12,28 +12,19 @@ libcrypto1.1|ia32-libs:amd64
 libgtk+3-devel|
 libgtk+3|
 
+# ia32-libs-dev have no headers!!!
+#libX11-devel|libx11-dev:amd64
+#fontconfig-devel|libfontconfig1-dev
+
 libGLU-devel|ia32-libs:amd64
 libGLU|ia32-libs:amd64
 libmesa-devel|ia32-libs:amd64
 
-# libgl-dev conflicts with ia32-libs-devel, so we use hack in Dockerfile
+# libgl-dev conflicts with ia32-libs-dev, so we use hack in Dockerfile
 libGL-devel|ia32-libs:amd64
 # dummy package
 #libGL|ia32-libs
 libGL|ia32-libs:amd64
-
-# wine-etersoft:i386 : Depends: ia32-libs:i386 (>= 20180423.2) but it is not installable
-#                      Depends: libc6-i386:i386 (>= 2.17) but it is not installable
-#                      Depends: libcairo2:i386 but it is not installable
-#                      Depends: libcap-ng-utils:i386 but it is not installable
-#                      Depends: libpcap0.8:i386 but it is not installable
-# ia32-libs:i386
-# libc6-i386:i386
-
-# missed packages:
-libvulkan-devel|
-libXpm-devel|
-libvulkan1|
 
 # not provides by ia32-libs-dev (missed .so)
 #E: Unable to locate package libattr1-dev:i386
@@ -101,8 +92,3 @@ libvkd3d1|
 glibc-devel|
 glibc-devel-static|
 
-# need fix link in /usr/lib32/i386-*
-## cat /usr/lib32/i386-linux-gnu/libusb-1.0.so 
-#GROUP ( /lib32/i386-linux-gnu/libusb-1.0.so.0.1.0 )
-libusb|
-libusb-devel|libusb-1.0-0-dev:amd64

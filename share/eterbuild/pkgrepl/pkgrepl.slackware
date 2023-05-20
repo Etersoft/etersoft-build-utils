@@ -46,6 +46,7 @@ libjpeg|libjpeg
 liblcms|lcms
 liblcms2|lcms2
 libldap|openldap-client
+libldap2|openldap-client
 libmpg123|mpg123
 libncursesw|
 libopenal-devel|
@@ -90,5 +91,6 @@ libtiff5|libtiff
 fontconfig-devel|fontconfig
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+libfontconfig1|fontconfig
 su|shadow
 libpulseaudio|pulseaudio

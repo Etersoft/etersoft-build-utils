@@ -133,6 +133,7 @@ libcups-devel|cups
 libcups|cups
 libldap-devel|openldap
 libldap|openldap
+libldap2|openldap
 libtiff-devel|tiff
 libtiff5|tiff
 

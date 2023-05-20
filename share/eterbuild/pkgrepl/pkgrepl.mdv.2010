@@ -13,6 +13,7 @@ libssl-devel|libopenssl-devel
 libXt-devel|libxt-devel
 libldap-devel|libldap2.4_2-devel
 libldap|libldap2.4_2
+libldap2|libldap2.4_2
 
 libsqlite3|libsqlite3_0
 #libsqlite3-devel|libsqlite3_0-devel

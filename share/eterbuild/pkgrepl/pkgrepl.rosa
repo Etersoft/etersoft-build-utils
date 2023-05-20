@@ -166,6 +166,7 @@ libdbus|libdbus-1_3
 
 libldap-devel|libldap2.4_2-devel
 libldap|libldap2.4_2
+libldap2|libldap2.4_2
 
 libxslt-devel|libxslt-devel
 libxslt|libxslt1

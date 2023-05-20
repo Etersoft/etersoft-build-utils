@@ -1,5 +1,4 @@
 # RedHat replacements rules
 gpm-devel|
 libungif-devel|
-libcups|cups-libs
 perl-devel|perl

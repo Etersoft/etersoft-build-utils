@@ -20,6 +20,7 @@ libjpeg|jpeg
 liblcms|lcms2
 liblcms2|lcms2
 libldap|
+libldap2|
 libpam|
 libmpg123|mpg123
 libncurses|ncurses
@@ -47,5 +48,7 @@ libhal|
 
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
+
+libfontconfig1|fontconfig
 
 distro_info|rpm

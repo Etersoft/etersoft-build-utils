@@ -16,3 +16,7 @@ libmozjs17-devel|libmozjs17-devel
 libsystemd-devel|libsystemd-devel
 
 libgnutls30|libgnutls26
+
+# missed
+libXfont2-devel|
+patchelf|

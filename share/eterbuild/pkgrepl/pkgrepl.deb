@@ -1,5 +1,6 @@
 # Debian replacements
 
+update-kernel|
 /proc|
 libe2fs|e2fslibs
 libe2fs-devel|e2fslibs-dev
@@ -14,6 +15,7 @@ liblcms2|liblcms2-2
 liblcms2-devel|liblcms2-dev
 libldap-devel|libldap2-dev
 libldap|libldap-2.4-2
+libldap2|libldap-2.4-2
 glibc-devel|libc6-dev
 glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
@@ -23,7 +25,6 @@ fontconfig-devel|libfontconfig1-dev
 libxslt-devel|libxslt1-dev
 libncurses-devel|libncurses5-dev
 libncursesw-devel|libncursesw5-dev
-libldap-devel|libldap2-dev
 libjpeg-devel|libjpeg-dev
 libjpeg|libjpeg62-turbo
 libcups-devel|libcups2-dev
@@ -145,6 +146,8 @@ libwxGTK3.0|libwxgtk2.8-0
 libwxGTK3.0-devel|libwxgtk2.8-dev
 libwxGTK3.1|libwxgtk2.8-0
 libwxGTK3.1-devel|libwxgtk2.8-dev
+libwxBase3.0|libwxbase3.0-0v5
+libwxBase3.0-devel|libwxbase3.0-dev
 libtinfo-devel|libncurses5-dev
 libtinfo|libncurses5
 terminfo|ncurses-term
@@ -400,7 +403,7 @@ libXfont-devel|libxfont-dev
 libXfont2-devel|libxfont-dev
 libXfont|libxfont2
 libXfont2|libxfont2
-libtirpc|libtirpc1
+libtirpc|libtirpc3
 libpixman|libpixman-1-0
 libpixman-devel|libpixman-1-dev
 xorg-proto-devel|x11proto-core-dev
@@ -408,6 +411,8 @@ libtxc_dxtn|
 python-module-psutil|python-psutil
 python3-module-psutil|python3-psutil
 python3-base|python3
+# TODO: autorule?
+python3-module-setuptools|python3-setuptools
 
 bashrc|
 libnetapi-devel|
@@ -424,6 +429,8 @@ iconv|
 #libvulkan1|
 libva|
 
+libunwind|libunwind8
+
 distro_info|rpm
 librpm|librpm3
 
@@ -438,3 +445,9 @@ p7zip|p7zip-full
 libkrb5-devel|libkrb5-dev krb5-multidev
 
 fonts-ttf-core|fonts-liberation
+
+libSDL2|libsdl2-2.0-0
+
+catch-devel|catch
+rpm-macros-cmake|
+ctest|cmake

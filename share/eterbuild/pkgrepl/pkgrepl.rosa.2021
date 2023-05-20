@@ -7,7 +7,7 @@ libvulkan-devel|libvulkan-devel
 libvulkan1|libvulkan1
 
 libgtk+2-devel|libgtk+2.0-devel
-libgtk+2|libgtk+2_0
+libgtk+2|lib64gtk+2.0_0
 
 libgtk+3-devel|libgtk+3.0-devel
 libgtk+3|libgtk+3_0
@@ -34,6 +34,7 @@ libkrb5-devel|libkrb5-devel
 libkrb5|libkrb5_3
 
 libSDL2-devel|libSDL2-devel
+#libSDL2|libSDL2
 
 libsasl2-devel|libsasl2-devel
 libsasl2|libsasl2
@@ -67,3 +68,11 @@ libGLU|libglu1
 
 libGL-devel|libGL-devel
 libGL|libGL1
+
+libSDL2|libSDL2_2.0_0
+libpcap0.8|libpcap1
+libunwind|libunwind8
+
+xorg-proto-devel|x11-proto-devel
+
+libexpat-devel|libexpat-devel

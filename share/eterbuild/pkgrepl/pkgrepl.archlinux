@@ -138,6 +138,8 @@ libtiff5|libtiff
 # obsoleted, needed for old wine packages
 libfontconfig|fontconfig
 
+libfontconfig1|fontconfig
+
 libunixODBC-devel|unixodbc
 libunixODBC1|unixodbc
 libunixODBC2|unixodbc

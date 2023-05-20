@@ -15,3 +15,5 @@ libgphoto2_port-12|libgphoto2-6
 libwxGTK|libwxgtk2.8-0
 libwxGTK-devel|libwxgtk2.8-dev
 nx-dev|nx-devel
+
+libXxf86misc-devel|

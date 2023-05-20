@@ -1,3 +1,11 @@
 wine-etersoft-devel-tools|wine32-etersoft-devel-tools
-libwine-etersoft-devel|wine32-etersoft-devel-tools
-libwine-devel|wine32-etersoft-devel-tools
+libwine-etersoft-devel|
+# breaks WINE@Etersoft 2.1
+#wine32-etersoft-devel-tools
+#libwine-devel|
+# breaks WINE@Etersoft 2.1
+#wine32-etersoft-devel-tools
+
+# missed internal deps, see https://bugs.etersoft.ru/show_bug.cgi?id=16241
+libgphoto2-devel|libgphoto2-devel libexif-devel
+libfreetype-devel|bzip2-devel libpng-devel brotli-devel
