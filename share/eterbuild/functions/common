@@ -171,13 +171,16 @@ fi
 # assert_var ETERBUILDBIN
 
 #DISTRVENDOR=$(realpath $ETERBUILDBIN/../../rpm-build-altlinux-compat/bin/distr_vendor 2>/dev/null)
-DISTRVENDOR=$(realpath $ETERBUILDBIN/../../distro_info/bin/distro_info 2>/dev/null)
-[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distro_info
-which $DISTRVENDOR >/dev/null 2>/dev/null || DISTRVENDOR=distr_info
+#DISTRVENDOR=$(realpath $ETERBUILDBIN/../../eepm/bin/distr_info 2>/dev/null)
+#[ -x "$DISTRVENDOR" ] || DISTRVENDOR=$(realpath $ETERBUILDBIN/../../distro_info/bin/distro_info 2>/dev/null)
+#[ -x "$DISTRVENDOR" ] || DISTRVENDOR=distro_info
+#which $DISTRVENDOR >/dev/null 2>/dev/null || DISTRVENDOR=distr_info
 
 EPMCMD=$(realpath $ETERBUILDBIN/../../eepm/bin/epm 2>/dev/null)
 [ -x "$EPMCMD" ] || EPMCMD=epm
+DISTRVENDOR="$EPMCMD print info"
 
+# TODO: ERCCMD="$EPMCMD tool erc"
 ERCCMD=$(realpath $ETERBUILDBIN/../../erc/bin/erc 2>/dev/null)
 [ -x "$ERCCMD" ] || ERCCMD=erc
 
@@ -352,7 +355,7 @@ fi
 
 set_gear_host
 
-
+# FIXME: use epm print info --print-eepm-env
 # Used DISTRNAME
 set_target_pkg_env()
 {
@@ -382,6 +385,7 @@ set_target_pkg_env()
 detect_target_env()
 {
 MENVARG=""
+# FIXME: use epm print info --print-eepm-env
 [ -n "$DISTRNAME" ] || DISTRNAME=$($DISTRVENDOR -d)
 [ -n "$DISTRVERSION" ] || DISTRVERSION=$($DISTRVENDOR -v)
 [ -n "$DISTRVERSION" ] || fatal "can't get distro version from $DISTRVENDOR, write lav@etersoft.ru"
