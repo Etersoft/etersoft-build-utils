@@ -189,7 +189,7 @@ function get_source_vcs()
 	local vcs="$(grep "^VCS:" $SPEC | head -n1 | sed -e 's|VCS:[[:space:]]*||')"
 	if [ -z "$vcs" ] ; then
 		# try hack with Url:
-		local vcs="$(grep "^Url:" $SPEC | head -n1 | sed -e 's|Url:[[:space:]]*||')"
+		local vcs="$(grep -i "^Url:" $SPEC | head -n1 | sed -e 's|Url:[[:space:]]*||I')"
 		[ -z "$vcs" ] && return 1
 		GETSOURCEGIT="$vcs"
 		echo "$vcs" | grep -q "\.git$" || GETSOURCEGIT="$vcs.git"
