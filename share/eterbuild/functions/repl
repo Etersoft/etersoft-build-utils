@@ -283,6 +283,9 @@ internal_repl_list()
 		#FINDPKGGREP="$FINDPKGVERS"
 	fi
 
+	echo $REPLBASE.$DISTRNAME$ARCHEXT
+	echo $REPLBASE.$DISTRNAME.$DISTRVERSION$ARCHEXT
+
 	if [ -n "$ARCHEXT" ] ; then
 	(
 		# sure we use our version firstly
@@ -315,6 +318,8 @@ print_replbased_list()
 		else
 			internal_repl_list $REPLBASE .x86_64 | uniq
 		fi
+	elif [ "$BUILDARCH" = "i586" ] ; then
+		internal_repl_list $REPLBASE .i586 | uniq
 	elif [ "$BUILDARCH" = "aarch64" ] ; then
 		internal_repl_list $REPLBASE .aarch64 | uniq
 	fi
