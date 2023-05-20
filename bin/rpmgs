@@ -180,6 +180,23 @@ function get_source_git()
 	fi
 }
 
+# VCS: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
+function get_source_vcs()
+{
+	local SPEC="$1"
+	local SN="$2"
+
+	local vcs="$(grep "^VCS:" $SPEC | head -n1 | sed -e 's|VCS:[[:space:]]*||')"
+	if [ -z "$vcs" ] ; then
+		# try hack with Url:
+		local vcs="$(grep "^Url:" $SPEC | head -n1 | sed -e 's|Url:[[:space:]]*||')"
+		[ -z "$vcs" ] && return 1
+		GETSOURCEGIT="$vcs"
+		echo "$vcs" | grep -q "\.git$" || GETSOURCEGIT="$vcs.git"
+	fi
+	GETSOURCEGIT="$vcs"
+}
+
 # Source-url: ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/last/sources/tarball/%name-%version.tar.gz
 function get_source_url()
 {
@@ -747,7 +764,7 @@ fi
 		#[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
 		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
-		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN || get_source_script $spec $SN
+		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN || get_source_script $spec $SN || get_source_vcs $spec $SN
 		#[ "$SN" = "Source1" ] && exit
 		#if ! rhas "$GETSOURCE" ".tar$" ; then
 		#	warning "It is recommended to use .tar tarballs for sources ($FTB now)"
