@@ -186,6 +186,9 @@ function get_source_vcs()
 	local SPEC="$1"
 	local SN="$2"
 
+	# only for first source
+	[ "$SN" = "Source" ] || return 1
+
 	local vcs="$(grep "^VCS:" $SPEC | head -n1 | sed -e 's|VCS:[[:space:]]*||')"
 	if [ -z "$vcs" ] ; then
 		# try hack with Url:
