@@ -1,3 +1,10 @@
+gitery sisyphus rsync.altlinux.org::ALTLinux/Sisyphus
+gitery p10 rsync.altlinux.org::ALTLinux/p10/branch
+gitery p9 rsync.altlinux.org::ALTLinux/p9/branch
+gitery p8 rsync.altlinux.org::ALTLinux/p8/branch
+gitery c8 rsync.altlinux.org::ALTLinux/c8/branch
+gitery c9f1 rsync.altlinux.org::ALTLinux/c9f1/branch
+gitery c9f2 rsync.altlinux.org::ALTLinux/c9f2/branch
 
 # ALT Linux
 git.alt sisyphus rsync.altlinux.org::ALTLinux/Sisyphus
