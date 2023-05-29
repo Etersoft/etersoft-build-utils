@@ -77,11 +77,48 @@ check_tarball()
 }
 
 # Args: URL TARGET
+git_to_tarball()
+{
+	local URL="$1"
+	local TARGET="$2"
+	local CHECKOUT=''
+
+	info "Create tarball $(basename $TARGET) from $URL ..."
+
+	# allow commit or version
+	if echo "$URL" | grep -q "github\.com.*/tree/" ; then
+		CHECKOUT="$(echo "$URL" | sed -e 's|.*/tree/||')"
+		URL="$(echo "$URL" | sed -e 's|/tree/.*||')"
+	fi
+
+	local d="$(basename "$URL" .git)"
+	git clone --recurse-submodules "$URL" "$d" || fatal
+
+	if [ -n "$CHECKOUT" ] ; then
+		cd "$d" || fatal
+		git checkout $CHECKOUT || fatal
+		cd - >/dev/null
+	fi
+
+	rm -rf "$d/.git/"
+	# note: TARGET can be various
+	docmd erc pack "$TARGET" "$d" || fatal
+	rm -rf "$d"
+}
+
+# Args: URL TARGET
 download_to()
 {
 	local URL="$1"
 	local TARGET="$2"
 	pushd $(dirname $TARGET)
+	# make tarball from remote git (with submodules)
+	if echo "$URL" | grep -q "\.git$" || echo "$URL" | grep -q "github\.com.*/tree/" ; then
+		git_to_tarball "$URL" "$TARGET"
+		local RET=$?
+		popd
+		return $RET
+	fi
 		local DF="$(basename "$URL")"
 		download_url "$URL" && repack_tarball "$DF" "$TARGET"
 		local RET=$?
