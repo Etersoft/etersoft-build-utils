@@ -301,7 +301,11 @@ commit_tarball_to_dir()
 		#local OLDFILE=$(echo "$CURNAME")
 		cp -v "$TARBALL" "$CURNAME"
 		docmd git add "$CURNAME"
-		docmd git commit -m "just commit $(basename "$CURNAME") with rpmgs script"
+		if [ -n "$CURRENTURL" ] ; then
+			docmd git commit -m "just import $CURRENTURL to $(basename $CURNAME) subdir with rpmgs script"
+		else
+			docmd git commit -m "just import $(basename $CURNAME) with rpmgs script"
+		fi
 		return 0
 	fi
 
@@ -315,8 +319,11 @@ commit_tarball_to_dir()
 			sh -x ../.gear/postdownload-hook
 			cd - >/dev/null
 		fi
-		# TODO: add GETSOURCEURL url
-		docmd git commit -m "just import $(basename $TARBALL) with rpmgs script"
+		if [ -n "$CURRENTURL" ] ; then
+			docmd git commit -m "just import $CURRENTURL to $(basename $CURNAME) subdir with rpmgs script"
+		else
+			docmd git commit -m "just import $(basename $TARBALL) with rpmgs script"
+		fi
 		rm -fv "$TARBALL"
 	else
 		warning "Skip missed $TARBALL tarball committing"
@@ -788,6 +795,7 @@ fi
 	if [ -z "$DOWNLOADSOME" ] ; then
 	for SN in $SOURCELIST
 	do
+		CURRENTURL=''
 		GETSOURCE=$(eval_spec $spec | get_var "$SN")
 		[ -n "$GETSOURCE" ] || fatal "Problem with empty $SN"
 
@@ -838,6 +846,7 @@ fi
 			#[ -x "$GETSOURCESCRIPT" ] || fatal "Can't find executable $GETSOURCESCRIPT"
 			bash -x $(get_root_git_dir)/$GETSOURCESCRIPT $GSSETVERSION "$FTB" || fatal "fatal with $GETSOURCESCRIPT"
 			will_commit || continue
+			CURRENTURL="${GETSOURCESCRIPT}"
 			commit_tarball "$FTB" || fatal
 			source_postupdate_hook
 			DOWNLOADSOME=1
@@ -850,6 +859,7 @@ fi
 				echog "Try to load ${GETSOURCEURL} for $spec"
 				download_to "$GETSOURCEURL" "$FTB" || fatal "Can't download $GETSOURCEURL"
 				will_commit || continue
+				CURRENTURL="${GETSOURCEURL}"
 				if is_gear ; then
 					commit_tarball "$FTB" || fatal
 					source_postupdate_hook
@@ -868,6 +878,7 @@ fi
 			else
 				download_any_tarball "$GETSOURCE" "$FTB"
 				will_commit || continue
+				CURRENTURL="${GETSOURCE}"
 				if is_gear ; then
 					commit_tarball "$FTB" || fatal
 					source_postupdate_hook
