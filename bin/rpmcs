@@ -502,11 +502,11 @@ do
 	test -n "$VERSION" && set_version $i $VERSION
 
 	# Add packager
-	if ! grep "^Packager" $i ; then
-		PACKAGT="Packager: $OWNERMAIL"
-		rhas "$OWNERMAIL" "packager" && fatal "Packager $OWNERMAIL is not defined correctly in ~/.rpmmacros"
-		cat $i | awk 'BEGIN{desk=0}{if(/^Source/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
-	fi
+	#if ! grep "^Packager" $i ; then
+	#	PACKAGT="Packager: $OWNERMAIL"
+	#	rhas "$OWNERMAIL" "packager" && fatal "Packager $OWNERMAIL is not defined correctly in ~/.rpmmacros"
+	#	cat $i | awk 'BEGIN{desk=0}{if(/^Source/&&desk==0){printf("%s\n\n", text);desk++};print}' text="$PACKAGT" >$i.tmp && mv -f $i.tmp $i
+	#fi
 
 	echog "DONE"
 
