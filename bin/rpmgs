@@ -808,10 +808,24 @@ fi
 		FTB=$RPMSOURCEDIR/$(basename "$GETSOURCE")
 
 		# TODO: do not use RPMSOURCEDIR for temp. tarballs
-		[ -n "$FORCEDOWNLOAD" ] && rm -f "$FTB"
+		[ -n "$FORCEDOWNLOAD" ] && rm -fv "$FTB"
 		#[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
-		# Test for eterbuild extensions (will set GETSOURCEURL or GETSOURCESVN)
+		if rhas "$GETSOURCE" "ps?://" ; then
+			download_any_tarball "$GETSOURCE" "$FTB"
+			will_commit || continue
+			CURRENTURL="${GETSOURCE}"
+			if is_gear ; then
+				commit_tarball "$FTB" || fatal
+				source_postupdate_hook
+			fi
+			DOWNLOADSOME=1
+			echog "DONE with $FTB"
+			continue
+		fi
+
+		# Test for eterbuild extensions like # Source-git
+		# (will set GETSOURCEURL or GETSOURCESVN)
 		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN || get_source_script $spec $SN || get_source_vcs $spec $SN
 		#[ "$SN" = "Source1" ] && exit
 		#if ! rhas "$GETSOURCE" ".tar$" ; then
@@ -866,32 +880,11 @@ fi
 				fi
 				DOWNLOADSOME=1
 			fi
-		else
-			if ! rhas "$GETSOURCE" "ps?://" ; then
-				#if [ "$SN" != "Source" ] && [ "$SN" != "Source0" ] ; then
-				#	info "No URL. Skipping $GETSOURCE downloading"
-				#	continue
-				#else
-					warning "$SN $GETSOURCE has no URL. Skipping... "
-				#	continue
-				#fi
-			else
-				download_any_tarball "$GETSOURCE" "$FTB"
-				will_commit || continue
-				CURRENTURL="${GETSOURCE}"
-				if is_gear ; then
-					commit_tarball "$FTB" || fatal
-					source_postupdate_hook
-				fi
-				DOWNLOADSOME=1
-			fi
 
-		# TODO: fix download single packed file
-		#else
-		#		download_to "$GETSOURCE" "$FTB"
+		else
+			warning "$SN $GETSOURCE has no URL. Skipping... "
 		fi
 
-		echog "DONE with $FTB"
 	done
 
 	# TODO: make plugins
