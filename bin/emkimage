@@ -19,6 +19,7 @@ if [ "$1" = "-b" ] ; then
 	shift 2
 fi
 
+# fill LISTARGS
 parse_cmd_pre "$@"
 
 #mygetopts $LISTARGS

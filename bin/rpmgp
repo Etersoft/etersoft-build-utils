@@ -319,7 +319,7 @@ git_clone()
 # clone remote git
 if [ -n "$CLONEGIT" ] ; then
 	if [ -z "$MIGRATEGIRAR" ] ; then
-		RREPO=$(giter $GITHOST print girar pubrepo $PKGNAME) || fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
+		RREPO=$(giter $GITHOST print girar pubrepo $PKGNAME) || fatal "$PKGNAME does not exist in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
 		git_clone $RREPO || fatal "Can't clone $RREPO for $PKGNAME"
 		if cd $PKGNAME ; then
 			docmd git remote rename origin gear
@@ -327,7 +327,7 @@ if [ -n "$CLONEGIT" ] ; then
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
-		RREPO=$(giter $GITHOST print girar pubrepo $PKGNAME) || fatal "$PKGNAME does not exists in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
+		RREPO=$(giter $GITHOST print girar pubrepo $PKGNAME) || fatal "$PKGNAME does not exist in $GIRARHOST:/gears, nor in $GIRARHOST:/srpms. Can't clone."
 
 		echo "Remote clone from $RREPO ..."
 		docmd ssh $GIRARHOST clone $RREPO packages/$PKGNAME.git || warning "Can't remote clone."
