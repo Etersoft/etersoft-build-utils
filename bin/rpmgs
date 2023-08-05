@@ -91,6 +91,12 @@ git_to_tarball()
 		URL="$(echo "$URL" | sed -e 's|/tree/.*||')"
 	fi
 
+	# allow commit
+	if echo "$URL" | grep -q "github\.com.*/commit/" ; then
+		CHECKOUT="$(echo "$URL" | sed -e 's|.*/commit/||')"
+		URL="$(echo "$URL" | sed -e 's|/commit/.*||')"
+	fi
+
 	local d="$(basename "$URL" .git)"
 	git clone --recurse-submodules "$URL" "$d" || fatal
 
@@ -113,7 +119,7 @@ download_to()
 	local TARGET="$2"
 	pushd $(dirname $TARGET)
 	# make tarball from remote git (with submodules)
-	if echo "$URL" | grep -q "\.git$" || echo "$URL" | grep -q "github\.com.*/tree/" ; then
+	if echo "$URL" | grep -q "\.git$" || echo "$URL" | grep -q -E "github\.com.*/(tree|commit)/" ; then
 		git_to_tarball "$URL" "$TARGET"
 		local RET=$?
 		popd
