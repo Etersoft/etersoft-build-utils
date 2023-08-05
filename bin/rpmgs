@@ -489,7 +489,7 @@ update_predownloaded()
 		cp -a $RGD/$CURNAME $PSM || fatal
 	fi
 
-	cd $PSM || fatal
+	pushd $PSM || fatal
 
 	local RUNHOOK="sh"
 	[ -n "$VERBOSE" ] && RUNHOOK="sh -x"
@@ -566,7 +566,7 @@ update_predownloaded()
 		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
 		info "Detected 'Cargo.lock' install hook ..."
-		docmd cargo vendor $PRODUCTION || fatal
+		docmd cargo vendor --verbose $PRODUCTION || fatal
 		COMMITMSG="update vendored cargo modules with cargo vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -588,6 +588,36 @@ update_predownloaded()
 		# TODO: move from temp dir
 		rm -rf $(ls -1 | grep -v vendor | grep -v Cargo.lock) .[a-zA-Z0-9]* *.md
 	fi
+
+	local i
+	local rust_dir=''
+	for i in */Cargo.lock ; do
+		[ -s "$i" ] || continue
+		rust_dir=$(dirname $i)
+		[ -d "./vendor" ] && continue
+
+		local COMMITMSG=''
+
+		info "Detected '$i' install hook ..."
+		cd $rust_dir || fatal
+		docmd cargo vendor --verbose ../vendor || fatal
+		COMMITMSG="update vendored cargo modules in $rust_dir dir with cargo vendor for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		fi
+
+		cd - >/dev/null
+
+		# can remove binaries from definitely unused packages
+		rm -rv vendor/winapi-*-pc-windows-gnu/lib/*.a
+
+		# drop all exclude vendor
+		# TODO: correct .* removing
+		# TODO: move from temp dir
+		rm -rf $(ls -1 | grep -v vendor | grep -v Cargo.lock) .[a-zA-Z0-9]* *.md
+	done
 	#### end of cargo only part
 
 
@@ -640,7 +670,7 @@ update_predownloaded()
 
 	# some modules contains own .git
 	find -type d -name ".git" -print -exec rm -rvf "{}" \;
-	cd - >/dev/null
+	popd
 
 	docmd git add -f $PSM
 	docmd git commit -m "$COMMITMSG"
