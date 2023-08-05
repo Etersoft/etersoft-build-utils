@@ -47,6 +47,7 @@ suse-current-oss https://ftp.lysator.liu.se/pub/opensuse/source/distribution/ope
 suse-tumbleweed https://mirror.yandex.ru/opensuse/source/tumbleweed/repo/oss/src/
 #suse-edu1       http://opensuse.unixheads.net/repositories/Education:/desktop/openSUSE_10.3/src
 suse-edu2       http://www.opensuse-education.org/download/repos/1.0/11.1/suse/src
+opensuse-leap https://ftp.lysator.liu.se/pub/opensuse/source/distribution/leap/15.5/repo/oss/
 #alt-obsolete    ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/obsolete
 #alt-orphaned    ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/Sisyphus/orphaned
 pld              http://ftp.pld-linux.org/dists/th/PLD/SRPMS/RPMS
