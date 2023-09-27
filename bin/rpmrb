@@ -13,7 +13,8 @@ load_mod spec git
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmrb (Re Build) - update spec to vermajor.verminor version, build %rel release"
-	echog "Usage: rpmrb [GIRAR] [spec] [vermajor][.verminor] [rel]"
+	echog "Usage: rpmrb [GIRAR] [-n] [spec] [vermajor][.verminor] [rel]"
+    echog "     -n - skip install built package in hasher for testing purposes"
 	echo  "$HELP_GIRAR"
 	echog "Example:"
 	echog "          $ rpmrb [name.spec] 22.6 alt2"
@@ -21,13 +22,18 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	exit 0
 fi
 
+INSTALLINHASHER='-i'
+
 parse_r()
 {
 	VER=$1
 
 	case "$2" in
+		-n)
+			INSTALLINHASHER=''
+			;;
 		-*)
-			fatal "No options are supported. See --help."
+			fatal "Unsupported option "$2". See --help."
 			;;
 		*)
 	esac
@@ -65,4 +71,4 @@ for SPEC in $LISTNAMES ; do
 	cd - >/dev/null
 done
 
-docmd $ETERBUILDBIN/rpmbsh $GIRARHOST -i -u $LISTNAMES
+docmd $ETERBUILDBIN/rpmbsh $GIRARHOST $INSTALLINHASHER -u $LISTNAMES
