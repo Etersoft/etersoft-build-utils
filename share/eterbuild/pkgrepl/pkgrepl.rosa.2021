@@ -76,3 +76,10 @@ libunwind|libunwind8
 xorg-proto-devel|x11-proto-devel
 
 libexpat-devel|libexpat-devel
+
+libnetapi-devel|libnetapi-devel
+pkgconfig(netapi)|pkgconfig(netapi)
+libnetapi|lib64netapi0
+
+libOSMesa-devel|libosmesa8-devel
+libOSMesa|libosmesa

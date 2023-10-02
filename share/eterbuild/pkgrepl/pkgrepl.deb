@@ -415,7 +415,12 @@ python3-base|python3
 python3-module-setuptools|python3-setuptools
 
 bashrc|
-libnetapi-devel|
+
+libnetapi-devel|samba-dev
+pkgconfig(netapi)|samba-dev
+# optional
+samba-libs|
+
 python-module-Cython|cython
 iconv|
 
@@ -432,7 +437,7 @@ libva|
 libunwind|libunwind8
 
 distro_info|rpm
-librpm|librpm3
+librpm|
 
 libcap-utils|libcap-ng-utils
 libcairo|libcairo2
@@ -451,3 +456,10 @@ libSDL2|libsdl2-2.0-0
 catch-devel|catch
 rpm-macros-cmake|
 ctest|cmake
+
+libOSMesa-devel|libosmesa6-dev
+libOSMesa|libosmesa6
+
+pulseaudio-daemon|pulseaudio
+
+libpcsclite|libpcsclite1

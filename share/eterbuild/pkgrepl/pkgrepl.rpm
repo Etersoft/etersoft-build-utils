@@ -297,7 +297,11 @@ libkrb5-devel|krb5-devel krb5-libs
 libkrb5|krb5-libs
 bash4|bash
 bashrc|
-libnetapi-devel|
+
+libnetapi-devel|pkgconfig(netapi)
+#pkgconfig(netapi)|
+# optional
+samba-libs|
 
 xxd|vim-common
 libtxc_dxtn|
@@ -335,3 +339,11 @@ libSDL2|SDL2
 libSDL2-devel|SDL2-devel
 
 libpcap0.8|libpcap
+
+libOSMesa-devel|mesa-libOSMesa-devel
+libOSMesa|mesa-libOSMesa
+
+libpcsclite|pcsc-lite-libs
+libpcsclite-devel|pcsc-lite-devel pcsc-lite-libs
+
+pulseaudio-daemon|pulseaudio

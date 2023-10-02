@@ -31,3 +31,6 @@ samba-libs|
 libunixODBC-devel|
 libunixODBC2|
 unixODBC|
+
+# он в ia32-libs
+libpcsclite|
