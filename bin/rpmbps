@@ -85,7 +85,7 @@ RELEASE=$(get_release $SPECNAME)
 BUILDNAME=$(get_name $SPECNAME)
 
 ADDFIXCOMMAND=
-ADDREQUIRES=
+ADDREQUIRES=$ETERADDREQUIRES
 
 echo "Converting spec $(basename $SPECNAME) to $DISTRVERSION ($MDISTR) ..."
 
@@ -242,6 +242,7 @@ fi
 pkgrepl_list=$(print_pkgrepl_list)
 for i in $LISTDEP ; do
 	tolocal_anyrepl $i $pkgrepl_list || continue
+	ALTPKGNAME="$(echo "$ALTPKGNAME" | sed -e 's|\([()]\)|\\\1|g' )"
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	NRL="s!(.*Req.*)$ALTPKGNAME( |,|}|\$)!\1$TARGETPKGNAME\2!g"
 	[ -n "$VERBOSE" ] && echo "    $NRL from $USEDPKGREPL"
