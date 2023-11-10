@@ -204,10 +204,10 @@ set_version()
 		VERMAJOR=
 	fi
 
-	MAJORMACROS=`grep "\%define[[:space:]]\(\|ver_\)major[[:space:]]" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
+	MAJORMACROS=`grep "%define[[:space:]]\(\|ver_\)major[[:space:]]" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
 	if [ -n "${MAJORMACROS}" ] ; then
 		# Change major define
-		test -n "$VERMAJOR" && subst "s|\(\%define[[:space:]]$MAJORMACROS[[:space:]]\).*|\1$VERMAJOR|" $SPEC
+		test -n "$VERMAJOR" && subst "s|\(%define[[:space:]]$MAJORMACROS[[:space:]]\).*|\1$VERMAJOR|" $SPEC
 		# Change version if VERMINOR is defined
 		if [ -n "$VERMINOR" ] ; then
 			set_var $SPEC Version %$MAJORMACROS.$VERMINOR || fatal "Error 1 with set version to spec"
