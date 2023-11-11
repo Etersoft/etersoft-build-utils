@@ -26,7 +26,7 @@ fi
 if which csed 2>/dev/null >/dev/null ; then
 colorify()
 {
-	csed '/(warning|WARNING|Warning|предупреждение):/ p magenta,bold' '/(error|ERROR|Error|ошибка):/ p red,bold' '/(Command not found):/ p red,bold'
+	a= csed '/(warning|WARNING|Warning|предупреждение):/ p magenta,bold' '/(error|ERROR|Error|ошибка):/ p red,bold' '/(Command not found):/ p red,bold'
 }
 else
 colorify()
