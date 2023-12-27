@@ -26,11 +26,24 @@ INSTALLINHASHER='-i'
 
 parse_r()
 {
-	VER=$1
+
+	case "$1" in
+		-n)
+			INSTALLINHASHER=''
+			shift
+			;;
+		-*)
+			fatal "Unsupported option "$1". See --help."
+			;;
+		*)
+	esac
+
+	VER="$1"
 
 	case "$2" in
 		-n)
 			INSTALLINHASHER=''
+			shift
 			;;
 		-*)
 			fatal "Unsupported option "$2". See --help."
@@ -39,10 +52,10 @@ parse_r()
 	esac
 
 	# need for rpmgs
-	GSSETRELEASE=$2
+	GSSETRELEASE="$2"
 }
 
-set_girar_host $1 && shift
+set_girar_host "$1" && shift
 
 parse_cmd_pre_spec "$@"
 
