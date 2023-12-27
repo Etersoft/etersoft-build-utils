@@ -448,6 +448,15 @@ parse_cmd_pre_spec()
 {
 	[ "$1" = "--help" ] && mygetopts -h
 
+	if [ -z "$1" ] ; then
+		local SPEC="$(echo /usr/src/RPM/SPECS/*.spec)"
+		if [ -f "$SPEC" ] ; then
+			info "Using spec $SPEC inside hasher..."
+			parse_cmd_pre "$SPEC"
+			return
+		fi
+	fi
+
 	# hack for check spec or src.rpm presence in command line: skip spec detecting
 	if rhas "$*" "\.(spec|src\.rpm)" ; then
 		parse_cmd_pre "$@"
