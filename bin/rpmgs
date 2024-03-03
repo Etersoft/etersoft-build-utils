@@ -581,7 +581,8 @@ update_predownloaded()
 		#find vendor -name "*.dll" -type f -delete -print
 
 		# can remove binaries from definitely unused packages
-		rm -rv vendor/winapi-*-pc-windows-gnu/lib/*.a
+		rm -rv vendor/winapi-*-pc-windows-gnu/lib/{*.lib,*.a}
+		rm -rv vendor/windows*/lib/{*.lib,*.a}
 
 		# drop all exclude vendor
 		# TODO: correct .* removing
