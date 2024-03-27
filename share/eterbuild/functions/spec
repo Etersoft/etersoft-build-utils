@@ -12,7 +12,6 @@ get_var()
 }
 
 # TODO: create temp spec, not just output: it masks specs problem now
-# FIXME: only ALT handled rpm -bE
 # Раскрывает макросы в спеке и выводит на стандартный вывод
 eval_spec()
 {
@@ -41,7 +40,7 @@ eval_spec()
 		# on ALT we have to done without errors
 		$USEARCH $RPMBUILD -bE --with=test --target $SYSARCH $RPMBUILDARG $SPEC | iconv -f utf8 -r || fatal "Check spec's fields"
 	else
-		( $USEARCH $RPMBUILD -bE --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC ) | iconv -f utf8
+		( a= $USEARCH rpmspec -P --target $SYSARCH $RPMBUILDARG $SPEC 2>/dev/null || cat $SPEC ) | iconv -f utf8
 	fi
 	# FIXME: hack for koi8-r in spec (grep will not work with it)
 	[ -n "$DEBUG" ] || rm -f $SPECNAMETMP $SPECNAMECHANGELOG
