@@ -37,6 +37,7 @@ filter_multiple_provides()
 		s|liblber-2.4.so.*|libldap|g
 		s|libudev.so.*|libudev1|g
 		s|/usr/bin/wineboot||g
+		s|/usr/bin/winepath||g
 		s|/usr/bin/winetricks||g
 		s|/usr/bin/wineserver||g
 		s|/usr/bin/wine||g
@@ -47,6 +48,7 @@ filter_multiple_provides()
 		s|liblua5-devel|liblua5.3-devel|g
 		s|clang-devel|clang10.0-devel|g
 		s|libXcomp.so.3.*|nx-libs|g
+		s|python3(samba.*||g
 		s|libwine.so.1.*||g"
 }
 
@@ -196,10 +198,6 @@ control
 libbeecrypt7
 libX11-locales
 gcc-c++
-clang-devel
-clang-devel-static
-llvm-devel
-llvm-devel-static
 liblua5-devel
 libltdl-devel
 glib2-locales
