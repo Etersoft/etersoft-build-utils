@@ -50,6 +50,15 @@ fix_arch_requires()
 				rhas "$GREP" "-devel$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
 				echo "$i"
 			done | xargs -n 1000 echo
+		elif [ "$DISTRNAME" = "OSNovaLinux" ] ; then
+			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
+			for i in $* ; do
+				rhas "$i" "^libtool$" && continue
+				rhas "$i" "^lib.*-utils$" && continue
+				rhas "$GREP" "^lib" && ! rhas "$i" "-i386$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				rhas "$GREP" "-devel$" && ! rhas "$i" "-i386$" && ! rhas "$i" ":i386$" && ! rhas "$i" ":amd64$" && echo "$i:i386" && continue
+				echo "$i"
+			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "AstraLinux" ] ||[ "$DISTRNAME" = "AstraLinuxCE" ] || [ "$DISTRNAME" = "AstraLinuxSE" ]  ; then
 			for i in $* ; do
 				rhas "$i" "^ia32-libs$" && continue
