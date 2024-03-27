@@ -65,7 +65,7 @@ repack_tarball()
 		mv -f "$1" "$2"
 		return
 	fi
-	docmd erc -f repack "$1" "$2"
+	docmd erc -f repack "$1" "$2" || return
 	# remove original
 	rm -f "$1"
 }
