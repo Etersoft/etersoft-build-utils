@@ -127,7 +127,7 @@ hack_distr_requires()
 
 	case "$PKGFORMAT" in
 		"deb")
-			echo "$GREP" | filter_deb_pkgnames
+			echo "$GREP" | filter_deb_pkgnames | sed -e "s|python3-module-|python3-|g"
 			return
 			;;
 	esac
@@ -250,6 +250,7 @@ clean_pkgreq()
 	for i in $VAR ; do
 		#echo "$i" | grep -E "^gcc[0-9]|^cpp[0-9]|^gcc-c++[0-9]" >/dev/null && continue
 		#echo "$i" | grep -E "gcc\$|cpp\$|gcc-c++\$" >/dev/null && continue
+		echo "$i" | grep "^%" >/dev/null && continue
 		echo "$i" | grep "[<=>]" >/dev/null && continue
 		echo "$i" | grep "^ *[0-9]\.[0-9]" >/dev/null && continue
 		echo -n "$i " | sed -e "s|[,}]| |g"
