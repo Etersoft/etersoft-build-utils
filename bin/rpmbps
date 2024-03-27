@@ -184,6 +184,20 @@ else
 	test -z "$VERBOSE" || echo "Build package with release $TXTRELEASE"
 	ADDDEF="%defattr(-, root, root)"
 	CLEANTEXT=""
+
+	if [ "$DISTRNAME" = "OSNovaLinux" ] ; then
+		subst "s|^Epoch: .*||g" $SPECNAME
+	fi
+
+	# TODO: move it to rpm-build-intro?
+	subst "s|^%filter_from_requires.*||" $SPECNAME
+
+	subst "s|^%def_enable man|%def_disable man|" $SPECNAME
+	subst "s|^%def_enable test|%def_disable test|" $SPECNAME
+
+	# https://bugzilla.altlinux.org/13937
+	subst "s|^%make_install|make INSTALL='install -p'|" $SPECNAME
+
 fi
 
 # configure32 is obsoleted
