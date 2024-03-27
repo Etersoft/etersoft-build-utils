@@ -7,6 +7,9 @@ libpng15|libpng16-16
 libpng16|libpng16-16
 libpng-devel|libpng-dev
 
+libcrypto1.1|libssl1.1
+libcrypto3|libssl1.1
+
 #NX
 libwxGTK3.0|libwxgtk3.0-0v5
 libwxGTK3.0-devel|libwxgtk3.0-dev
@@ -24,3 +27,9 @@ libXxf86misc-devel|
 #x11proto-xf86misc-dev
 
 prelink|
+
+# missed
+libXpresent|
+libXpresent-devel|
+archivemount|
+

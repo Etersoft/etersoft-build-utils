@@ -1,0 +1,7 @@
+gcc|gcc:amd64
+
+clang|clang:amd64
+lld|lld:amd64
+llvm|llvm:amd64
+
+#perl-base|perl-base:amd64

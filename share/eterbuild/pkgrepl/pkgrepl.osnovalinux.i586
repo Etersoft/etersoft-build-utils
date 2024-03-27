@@ -1,0 +1,7 @@
+# wine-etersoft-winetricks : Depends: cabextract but it is not installable
+#                            Depends: eject but it is not installable
+cabextract|
+mc|
+eject|
+alien|
+

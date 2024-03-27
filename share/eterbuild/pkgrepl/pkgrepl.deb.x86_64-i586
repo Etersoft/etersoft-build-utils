@@ -7,6 +7,10 @@ glibc-devel|libc6-dev gcc-multilib:amd64
 gcc|gcc:amd64
 perl-base|perl:any
 
-#diffutils|diffutils:amd64
+diffutils|diffutils:amd64
 #eject|eject:amd64
-#gzip|gzip:amd64
+gzip|gzip:amd64
+
+# skip samba-dev install
+libnetapi-devel|
+pkgconfig(netapi)|

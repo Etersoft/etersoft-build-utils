@@ -26,9 +26,11 @@ libgnutls30|libgnutls30
 libcap-ng|libcap-ng0
 
 libssl1.1|libssl1.1
+libssl3|libssl1.1
 libssl|libssl1.1
 libssl-devel|libopenssl-devel
 libcrypto1.1|libcrypto1.1
+libcrypto3|libcrypto1.1
 
 libkrb5-devel|libkrb5-devel
 libkrb5|libkrb5_3
@@ -81,5 +83,13 @@ libnetapi-devel|libnetapi-devel
 pkgconfig(netapi)|pkgconfig(netapi)
 libnetapi|lib64netapi0
 
-libOSMesa-devel|libosmesa8-devel
-libOSMesa|libosmesa
+libOSMesa-devel|libosmesa-devel
+libOSMesa|libosmesa8
+
+libXpresent-devel|libxpresent-devel
+libXpresent|libxpresent1
+
+libpcsclite|libpcsclite1
+libpcsclite-devel|libpcsclite-devel
+
+archivemount|

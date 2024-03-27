@@ -21,10 +21,9 @@ python-modules-compiler|python-devel
 libaudiofile-devel|audiofile-devel
 libaudiofile|audiofile
 
-libgphoto2-devel|gphoto2-devel
-libgphoto2|gphoto2
-libgphoto2-6|gphoto2
-libgphoto2_port-12|gphoto2
+libgphoto2-devel|libgphoto2-devel
+libgphoto2-6|libgphoto2
+libgphoto2_port-12|libgphoto2
 
 gettext-tools|gettext-devel
 lsb-release|redhat-lsb

@@ -21,10 +21,19 @@ libgomp6-devel|libgomp5-devel
 libicu60|libicu56
 libtiff5|libtiff5
 
-llvm6.0-devel|llvm-devel
-llvm6.0|llvm
-clang6.0|clang
+#llvm6.0-devel|llvm-devel
+#llvm6.0|llvm
+#clang6.0|clang
 
 # restore after c7
 libXfont2-devel|libXfont2-devel
 patchelf|patchelf
+
+libOSMesa-devel|
+libOSMesa|
+# why is required if skipped??
+#libvulkan-devel|
+#libvulkan1|
+
+libXpresent-devel|
+libXpresent|

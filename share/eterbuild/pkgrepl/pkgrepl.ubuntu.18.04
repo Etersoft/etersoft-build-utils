@@ -4,6 +4,7 @@ libcrypt|
 bashrc|bash
 
 libcrypto1.1|libssl1.1
+libcrypto3|libssl1.1
 
 libwxGTK3.0|libwxgtk3.0-gtk3-0v5
 libwxGTK3.0-devel|libwxgtk3.0-gtk3-dev

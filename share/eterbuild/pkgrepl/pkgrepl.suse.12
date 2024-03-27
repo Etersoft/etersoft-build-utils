@@ -14,7 +14,9 @@ libssl-devel|libopenssl-devel
 libcrypto10|libopenssl1_0_0
 libssl10|libopenssl1_0_0
 libcrypto1.1|libopenssl1_0_0
+libcrypto3|libopenssl1_0_0
 libssl1.1|libopenssl1_0_0
+libssl3|libopenssl1_0_0
 
 libgnutls-devel|libgnutls-devel
 libgnutls26|libgnutls28

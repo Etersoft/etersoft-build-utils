@@ -41,6 +41,7 @@ libgphoto2_port-12|libgphoto2-6
 
 fontconfig-devel|libfontconfig1-dev
 fontconfig|libfontconfig1
+libfontconfig1|libfontconfig1
 
 libicu56|libicu52
 libicu60|libicu52
@@ -72,6 +73,7 @@ libwxBase3.0|libwxbase3.0-0v5
 
 cifs-utils|cifs-utils
 libcrypto1.1|libssl1.1
+libcrypto3|libssl1.1
 
 # The following packages have unmet dependencies:
 # libsdl2-dev : Depends: libegl1-mesa-dev but it is not going to be installed
@@ -84,3 +86,9 @@ libSDL2|
 libGL|libgl1
 libGL-devel|libgl-dev
 patchelf|
+
+# RX
+# looks like all debian based distros have iputils-* packeges
+#iputils|iputils-ping
+
+fonts-ttf-liberation|fonts-liberation

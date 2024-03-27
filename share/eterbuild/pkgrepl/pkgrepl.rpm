@@ -44,10 +44,12 @@ libpam0-devel|pam-devel
 # libssl???
 libssl|openssl-libs
 libssl1.1|openssl-libs
+libssl3|openssl-libs
 libssl-devel|openssl-devel
 libssl7|openssl-libs
 libssl10|openssl-libs
 libcrypto10|openssl-libs
+libcrypto3|openssl-libs
 # for rpmcs
 openssl|openssl
 libfreetype|freetype

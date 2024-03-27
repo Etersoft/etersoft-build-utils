@@ -3,6 +3,8 @@ liblua-devel|liblua-devel
 lua-devel|liblua-devel
 libpng15|libpng16
 libpng16|libpng16
+libOSMesa-devel|libOSMesa-devel
+libOSMesa|libOSMesa
+libvulkan-devel|libvulkan-devel
+libvulkan1|libvulkan1
 
-libXpresent-devel|libXpresent-devel
-libXpresent|libXpresent

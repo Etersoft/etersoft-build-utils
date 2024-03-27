@@ -2,3 +2,6 @@ libldap|libldap-2.5-0
 libldap2|libldap-2.5-0
 libssl1.1|libssl3
 libcrypto1.1|libssl3
+libssl3|libssl3
+libcrypto3|libssl3
+libGL|libglx-mesa0

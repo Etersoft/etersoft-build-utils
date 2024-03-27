@@ -21,6 +21,8 @@ glibc-devel-static|libc6-dev
 libfreetype-devel|libfreetype6-dev
 libfreetype|libfreetype6
 fontconfig|libfontconfig1
+libfontconfig1|libfontconfig1
+libfontconfig|libfontconfig1
 fontconfig-devel|libfontconfig1-dev
 libxslt-devel|libxslt1-dev
 libncurses-devel|libncurses5-dev
@@ -392,7 +394,7 @@ unixODBC|unixodbc
 libunixODBC-devel|unixodbc-dev
 
 libpulseaudio-devel|libpulse-dev
-libpulseaudio|libpulse0
+libpulseaudio|libpulse0 libpulse-dev
 
 xxd|vim-common
 bash4|bash
@@ -403,6 +405,7 @@ libXfont-devel|libxfont-dev
 libXfont2-devel|libxfont-dev
 libXfont|libxfont2
 libXfont2|libxfont2
+libXpresent|libxpresent1
 libtirpc|libtirpc3
 libpixman|libpixman-1-0
 libpixman-devel|libpixman-1-dev
@@ -463,3 +466,25 @@ libOSMesa|libosmesa6
 pulseaudio-daemon|pulseaudio
 
 libpcsclite|libpcsclite1
+
+# RX
+iputils|iputils-ping
+
+nss_wrapper|libnss-wrapper
+
+#clang|clang llvm lld
+
+# libnss-role
+chrooted|
+chrooted-resolv|
+
+# gpupdate
+# for control
+local-policy|dash
+oddjob-gpupdate|dash
+
+python3-module-pygobject3|python3-gi
+python3-module-pyxdg|python3-xdg
+python3-module-sss_nss_idmap|python3-libsss-nss-idmap
+# ALT internal?
+python3-module-pytest-remove-stale-bytecode|

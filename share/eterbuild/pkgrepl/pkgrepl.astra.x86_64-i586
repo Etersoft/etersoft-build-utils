@@ -1,4 +1,9 @@
 gcc|gcc:amd64
+
+clang|clang:amd64
+lld|lld:amd64
+llvm|llvm:amd64
+
 perl-base|perl-base:amd64
 libssl-devel|libssl-dev:i386 libssl-dev:amd64
 
@@ -92,3 +97,6 @@ libvkd3d1|
 glibc-devel|
 glibc-devel-static|
 
+fonts-ttf-core|fonts-liberation:amd64
+fonts-ttf-liberation|fonts-liberation:amd64
+perl-XML-LibXML|
