@@ -59,14 +59,15 @@ print_tmp_sourceslist()
 {
 	local SLIST
 	test -r "$1" || fatal "$1 is missed"
+	# TODO add comments support
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
 	if rhas "$1" "^/etc" ; then
 		SLIST=`cat "$1" | \
-			grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
+			grep "/sources.list" | tail -n1 | sed -e 's|.*"\(.*\)".*|\1|g'`
 	else
 		SLIST=`cat "$1" | \
 			sed -e "s|\"/etc/.*apt/sources.list|\"$ETERBUILDETC/apt/sources.list|g" | \
-			grep "/sources.list" | sed -e 's|.*"\(.*\)".*|\1|g'`
+			grep "/sources.list" | tail -n1 | sed -e 's|.*"\(.*\)".*|\1|g'`
 	fi
 	[ -n "$SLIST" ] || SLIST="/etc/apt/sources.list"
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
@@ -92,6 +93,9 @@ $ETERBUILD_APTREPO
 EOF
 	fi
 	[ -n "$QUIETMODE" ] && return
+	echo
+	echog "Apt conf $APTCONF:"
+	cat $APTCONF
 	echo
 	echog "Apt sources from $APTCONF:"
 	cat $OURSOURCES | grep -v "^#" | grep -v "^\$" | grep rpm | sed -e "s|rpm|    rpm|"
