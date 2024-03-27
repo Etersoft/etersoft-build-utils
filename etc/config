@@ -83,7 +83,7 @@
 #GITREPODIR=.
 
 # Build for Sisyphus by default
-# MENV=SS
+# MENV=sisyphus
 
 # distcc support in jmake
 # https://wiki.office.etersoft.ru/devel/distrubutedcompilation
