@@ -264,3 +264,20 @@ print_pkgrepl_list
 
 check_repl libicu-devel "lib64icu-devel"
 
+
+############################# Osnova ##########################
+BUILDNAME=wine
+
+DISTRNAME=OsnovaLinux
+PKGVENDOR=osnovalinux
+DISTRVERSION=2.9
+BUILDARCH=x86_64
+#BUILDARCH=i586
+PKGFORMAT=rpm
+
+echo
+echo "Replacement files for $PKGVENDOR/$DISTRVERSION (target $PKGFORMAT):"
+print_pkgrepl_list
+
+check_repl libXpresent ""
+
