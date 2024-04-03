@@ -457,6 +457,24 @@ parse_cmd_pre_spec()
 		fi
 	fi
 
+	# Git bundle support
+	if rhas "$1" "\.bundle$" && file "$1" | grep -q "Git bundle" ; then
+		local abspath="$(realpath "$1")"
+		local name="$(basename "$1" .bundle | sed -e 's| .*||')"
+		local tdir="$(mktemp -d)" && mkdir $tdir/$name/ || fatal
+		local HEAD="$(git bundle list-heads "$abspath" | grep " HEAD$" | tail -n1 | sed -e 's| HEAD.*||')"
+		[ -n "$HEAD" ] || fatal "can't get HEAD commit from $1"
+		cd "$tdir/$name/" && git init || fatal
+		git bundle unbundle "$abspath" || { rm -rf $tdir/ ; fatal ; }
+		git checkout -b master $HEAD
+		cd - >/dev/null
+		local SPEC=$(get_gear_spec $tdir/$name)
+		shift
+		parse_cmd_pre "$SPEC" "$@"
+		EREMOVETMPGIT="$tdir"
+		return
+	fi
+
 	# hack for check spec or src.rpm presence in command line: skip spec detecting
 	if rhas "$*" "\.(spec|src\.rpm)" ; then
 		parse_cmd_pre "$@"

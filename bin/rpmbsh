@@ -124,6 +124,8 @@ for i in $LISTBUILT ; do
 	estrlist has $i $LISTNAMES || rm -fv $i
 done
 
+[ -n "$EREMOVETMPGIT" ] && rm -rf "$EREMOVETMPGIT"
+
 date
 echo "-------------------------------"
 
