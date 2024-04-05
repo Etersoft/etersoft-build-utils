@@ -65,7 +65,7 @@ repack_tarball()
 		mv -f "$1" "$2"
 		return
 	fi
-	docmd erc -f repack "$1" "$2" || return
+	docmd $ERCCMD -f repack "$1" "$2" || return
 	# remove original
 	rm -f "$1"
 }
@@ -73,7 +73,7 @@ repack_tarball()
 check_tarball()
 {
 	[ -s "$1" ] || return
-	erc -q check "$1"
+	$ERCCMD -q check "$1"
 }
 
 # Args: URL TARGET
@@ -108,7 +108,7 @@ git_to_tarball()
 
 	rm -rf "$d/.git/"
 	# note: TARGET can be various
-	docmd erc pack "$TARGET" "$d" || fatal
+	docmd $ERCCMD pack "$TARGET" "$d" || fatal
 	rm -rf "$d"
 }
 

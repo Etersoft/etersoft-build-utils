@@ -23,8 +23,9 @@ BuildArchitectures: noarch
 #BuildRequires: rpm-build-compat >= %altcompat_ver
 
 Requires: giter >= 1.20
-Requires: eepm >= 3.0
-Requires: erc >= 0.9.2
+Requires: eepm >= 3.62.1
+# use epm embedded
+#Requires: erc >= 0.9.2
 Requires: estrlist >= 0.2
 
 Requires: rpm-build

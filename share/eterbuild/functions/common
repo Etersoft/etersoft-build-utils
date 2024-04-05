@@ -182,7 +182,7 @@ DISTRVENDOR="$EPMCMD print info"
 
 # TODO: ERCCMD="$EPMCMD tool erc"
 ERCCMD=$(realpath $ETERBUILDBIN/../../erc/bin/erc 2>/dev/null)
-[ -x "$ERCCMD" ] || ERCCMD=erc
+[ -x "$ERCCMD" ] || ERCCMD="epm tool erc"
 
 print_list()
 {
