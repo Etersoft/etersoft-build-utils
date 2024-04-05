@@ -126,7 +126,7 @@ download_to()
 		return $RET
 	fi
 		local DF="$(basename "$URL")"
-		download_url "$URL" && repack_tarball "$DF" "$TARGET"
+		download_url "$URL" && DF="$DOWNLOADEDNAME" && repack_tarball "$DF" "$TARGET"
 		local RET=$?
 		# TODO: repack need remove origin
 		#rm -fv "$DF"
@@ -908,7 +908,8 @@ fi
 				echog "Try to load ${GETSOURCEURL} for $spec"
 				download_to "$GETSOURCEURL" "$FTB" || fatal "Can't download $GETSOURCEURL"
 				will_commit || continue
-				CURRENTURL="${GETSOURCEURL}"
+				# hack: override url from download_to
+				CURRENTURL="${DOWNLOADEDURL}"
 				if is_gear ; then
 					commit_tarball "$FTB" || fatal
 					source_postupdate_hook

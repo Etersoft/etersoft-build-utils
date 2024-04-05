@@ -11,9 +11,19 @@ which GET &>/dev/null && GET=GET || GET=false
 
 which rsync &>/dev/null && RSYNC=rsync || GET=false
 
+# will DOWNLOADEDNAME with real name
 download_url()
 {
-	local NAME="$(basename "$1")"
+	local URL="$1"
+
+	# if has_space
+	if [ "${URL/ //}" != "$URL" ] ; then
+		URL="$($EPMCMD tool eget --list --latest $URL)"
+		[ -n "$URL" ] || fatal "Can't find $1 tarball."
+	fi
+
+	local NAME="$(basename "$URL")"
+
 	# TODO
 	# do not download if already exists...
 	#[ -r "$NAME" ] && { echo "skipping $1, already exists..."; return; }
@@ -21,7 +31,7 @@ download_url()
 
 	# NOTE: disable cert checking
 	# use wget with try=1 and timeout = 30 sec
-	docmd epm tool eget -O "$NAME" "$1" && test -r "$NAME" && return
+	docmd $EPMCMD tool eget -O "$NAME" "$URL" && test -r "$NAME" && DOWNLOADEDNAME="$NAME" && DOWNLOADEDURL="$URL" && return
 
 	rm -f "$NAME"
 	return 1
