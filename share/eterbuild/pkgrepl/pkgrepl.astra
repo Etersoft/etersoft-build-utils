@@ -91,4 +91,8 @@ patchelf|
 # looks like all debian based distros have iputils-* packeges
 #iputils|iputils-ping
 
+# gio + gvfs
+libgio|libglib2.0-bin
+fuse-gvfs|gvfs-fuse
+
 fonts-ttf-liberation|fonts-liberation

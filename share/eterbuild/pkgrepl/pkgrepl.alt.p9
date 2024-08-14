@@ -3,4 +3,6 @@ liblua-devel|liblua-devel
 lua-devel|liblua-devel
 libpng15|libpng16
 libpng16|libpng16
-libOSMesa-devel|
+
+libXpresent-devel|libXpresent-devel
+libXpresent|libXpresent

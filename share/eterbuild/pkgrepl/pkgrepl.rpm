@@ -349,3 +349,5 @@ libpcsclite|pcsc-lite-libs
 libpcsclite-devel|pcsc-lite-devel pcsc-lite-libs
 
 pulseaudio-daemon|pulseaudio
+
+eepm-rpm-build|

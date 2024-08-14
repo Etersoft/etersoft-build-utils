@@ -394,7 +394,7 @@ unixODBC|unixodbc
 libunixODBC-devel|unixodbc-dev
 
 libpulseaudio-devel|libpulse-dev
-libpulseaudio|libpulse0 libpulse-dev
+libpulseaudio|libpulse0
 
 xxd|vim-common
 bash4|bash
@@ -488,3 +488,7 @@ python3-module-pyxdg|python3-xdg
 python3-module-sss_nss_idmap|python3-libsss-nss-idmap
 # ALT internal?
 python3-module-pytest-remove-stale-bytecode|
+
+eepm-rpm-build|
+ocl-icd-devel|ocl-icd-dev ocl-icd-opencl-dev
+ocl-icd|ocl-icd-libopencl1

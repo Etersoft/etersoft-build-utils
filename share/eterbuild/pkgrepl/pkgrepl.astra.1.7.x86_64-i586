@@ -38,6 +38,3 @@ libpcsclite|
 # нет в ia32-libs/ia32-libs-dev
 libXpresent|
 libXpresent-devel|
-
-#test for rxclient 
-libpulseaudio|libpulse0 libpulse-dev

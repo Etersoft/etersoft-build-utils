@@ -22,3 +22,12 @@ libgomp6-devel|libgomp5-devel
 libicu60|libicu56
 libtiff5|libtiff5
 libpng16|libpng15
+
+libOSMesa-devel|
+libOSMesa|
+# why is required if skipped??
+#libvulkan-devel|
+#libvulkan1|
+
+libXpresent-devel|
+libXpresent|
