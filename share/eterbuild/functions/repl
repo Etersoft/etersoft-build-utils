@@ -310,7 +310,7 @@ internal_repl_list()
 		echo $FINDPKG
 		echo $FINDPKGGREP
 		# skip all arches
-		ls -1 $REPLBASE.$PKGVENDOR* 2>/dev/null | grep -v "\.x86_64\$" | grep -v "\.aarch64\$" | grep -v "\.x86_64-i586\$"
+		ls -1 $REPLBASE.$PKGVENDOR* 2>/dev/null | grep -v "\.x86_64\$" | grep -v "\.aarch64\$" | grep -v "\.x86_64-i586\$" | grep -v "\.i586\$"
 	) | grep -v "^\$" | \
 		sort -u | sort -r -t . -n -k 3 | grep "^$FINDPKGGREP\$" -A1000
 	fi
