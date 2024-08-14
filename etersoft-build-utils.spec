@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.11
+Version: 3.2.12
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -13,7 +13,7 @@ Url: http://www.altlinux.org/Etersoft-build-utils
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # git-clone http://git.altlinux.org/people/lav/packages/etersoft-build-utils.git
-Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
+Source: ftp://updates.etersoft.ru/pub/Korinf/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
 
@@ -31,7 +31,7 @@ Requires: estrlist >= 0.2
 Requires: rpm-build
 #Requires: rpm-build-compat >= %altcompat_ver
 
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 Requires: sisyphus_check rsync openssh-clients srpmcmp
 %else
 # ALT has it in RPM
@@ -70,6 +70,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Aug 14 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.12-alt1
+- use erc embedded in epm
+- rpmgs: add support for url with mask
+- repl: add support for i586 only rules
+- hasher: add hack for support Korinf repos with WINE@Etersoft
+- pkgrepl: update rules
+
 * Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.11-alt1
 - config: fix MENV=sisyphus
 - rpmgs: use recursive submodule update
