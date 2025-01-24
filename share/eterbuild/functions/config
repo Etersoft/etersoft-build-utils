@@ -31,7 +31,7 @@ RPMBUILD=rpmbuild
 # CHECKME: works only on ALT?
 if which rpm 2>/dev/null >/dev/null ; then
 RPMDIR=$(rpm --eval %_topdir) || fatal
-[ "$RPMDIR" = "/usr/src/RPM" ] && fatal "Please, set %_topdir in ~/.rpmmacros.
+[ "$HOME" != "/usr/src" ] && [ "$RPMDIR" = "/usr/src/RPM" ] && fatal "Please, set %_topdir in ~/.rpmmacros.
 "
 RPMTMPDIR=$(rpm --eval %_tmppath) || fatal
 
