@@ -484,6 +484,7 @@ update_predownloaded()
 		mkdir -p $PSM || fatal
 		cp -a $RGD/* $PSM || fatal
 	else
+		[ -n "$CURNAME" ] || fatal "Main source is missed. Check Source: field."
 		cp -a $RGD/$CURNAME $PSM || fatal
 	fi
 
