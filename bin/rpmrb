@@ -78,7 +78,8 @@ for SPEC in $LISTNAMES ; do
 
 	if is_gear ; then
 		#git diff $SPEC
-		git_commit_ignore_nothing $SPEC -m "update spec to new build $(get_version $SPEC) (with rpmrb script)" || exit 1
+		#git_commit_ignore_nothing $SPEC -m "update spec to new build $(get_version $SPEC) (with rpmrb script)" || exit 1
+		gammit $QUIET --spec=$SPEC $SPEC
 	fi
 
 	cd - >/dev/null
