@@ -131,7 +131,7 @@ set_eterbuilddir()
 {
 	[ -z "$ETERBUILDDIR" ] || return 0
 
-	if dirname $0 | grep "^/usr" >/dev/null ; then
+	if dirname $0 | grep -E "^/(usr/bin|bin)" -q ; then
 		ETERBUILDETC=/etc/eterbuild
 		ETERBUILDDIR=/usr/share/eterbuild
 	else
