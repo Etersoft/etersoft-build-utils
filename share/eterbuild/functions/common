@@ -294,7 +294,8 @@ get_root_git_dir()
         which git >/dev/null 2>/dev/null || return 0
 
         if [ -n "$LOCDIR" ] ; then
-            cd "$LOCDIR" || fatal "Only dir arg allowed for get_root_git_dir"
+            [ -f "$LOCDIR" ] && LOCDIR=$(dirname "$LOCDIR")
+            cd "$LOCDIR" || fatal "get_root_git_dir: dir $LOCDIR does not exists"
         fi
 
         DIR=$(git rev-parse --git-dir 2>/dev/null)/../

@@ -8,8 +8,7 @@ get_gear_rules()
 {
 	local DIR="$1"
 	[ -z "$IGNOREGEAR" ] || return 1
-	[ -f "$DIR" ] && DIR=$(dirname "$DIR")
-	local GITDIR=$(get_root_git_dir $DIR)
+	local GITDIR=$(get_root_git_dir "$DIR")
 	local rules="$GITDIR/.gear/rules"
 	[ -r "$rules" ] || rules="$GITDIR/.gear-rules"
 	[ -r "$rules" ] || return
