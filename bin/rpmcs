@@ -237,16 +237,16 @@ do
 	build_rpms_name "$i"
 
 	
-	echog -n "fix obsoleted constructions..."
-	subst "s|Source0:|Source:|" $i
-	subst "s|Patch0:|Patch:|" $i
+	#echog -n "fix obsoleted constructions..."
+	#subst "s|Source0:|Source:|" $i
+	#subst "s|Patch0:|Patch:|" $i
 
 	set_specdir $i
-	if ! is_gear $SPECDIR && [ -n "$RENAME_SOURCE_TARBALL" ] ; then
-		# Use tar.bz2 for tarball if not git case.
-		subst "s|\(Source:.*\).tar.gz|\1.tar.bz2|" $i
-		subst "s|\(Source:.*\).tgz|\1.tar.bz2|" $i
-	fi
+	#if ! is_gear $SPECDIR && [ -n "$RENAME_SOURCE_TARBALL" ] ; then
+	#	# Use tar.bz2 for tarball if not git case.
+	#	subst "s|\(Source:.*\).tar.gz|\1.tar.bz2|" $i
+	#	subst "s|\(Source:.*\).tgz|\1.tar.bz2|" $i
+	#fi
 	
 
 	subst "s|\(%post.*-p *\)/sbin/ldconfig|\1%post_ldconfig|g" $i
@@ -360,14 +360,6 @@ do
 	#subst "s|^%_datadir/aclocal/|%_aclocaldir/|g" $i
 	#subst "s|^%_datadir/gtk-doc/html/|%_gtkdocdir/|g" $i
 
-	# TODO: not in expressions
-	subst  "s|/usr/sbin/|%_sbindir/|g
-		s|/usr/bin/|%_bindir/|g
-		s|%prefix/bin/|%_bindir/|g
-		s|/usr/lib/|%_libexecdir/|g
-		s|/usr/share/|%_datadir/|g
-		s|%_datadir/games|%_gamesdatadir|g" $i
-
 	subst "s|%pear_phpdir|%pear_dir|g" $i
 	# changes for rpm-build-pear 0.3
 	# FIXME: remove pear_install replacing in future
@@ -453,6 +445,8 @@ do
 		s|%_datadir/doc/|%_docdir/|g
 		s|%_datadir/omf|%_omfdir|g
 		s|%_defaultdocdir|%_docdir|g
+		s|/usr/lib/sysusers.d|%_sysusersdir|g
+		s|/usr/lib/tmp-files.d|%_tmpfilesdir|g
 		s|%_var/log|%_logdir|g
 		s|%_localstatedir/log|%_logdir|g
 		s|%_localstatedir/cache|%_cachedir|g
@@ -471,6 +465,14 @@ do
 		subst "s|%_sysconfdir/sysconfig|%_sysconfigdir|g
 		s|||g" $i
 	fi
+
+	# TODO: not in expressions
+	subst  "s|/usr/sbin/|%_sbindir/|g
+		s|/usr/bin/|%_bindir/|g
+		s|%prefix/bin/|%_bindir/|g
+		s|/usr/lib/|%_libexecdir/|g
+		s|/usr/share/|%_datadir/|g
+		s|%_datadir/games|%_gamesdatadir|g" $i
 
 	subst "s|%rpmcflags|%optflags|g" $i
 
