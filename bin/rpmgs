@@ -742,6 +742,7 @@ if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verif
             docmd rpm-uscan -v --force-action gear-uupdate
             GETSOURCEUUPDATE=1
 
+            # update_post_git_submodules
             source_postupdate_hook
 
             # TODO: make plugins
@@ -762,7 +763,6 @@ if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verif
         docmd gear-commit
         GETSOURCEUUPDATE=1
 
-        # update_post_git_submodules
         source_postupdate_hook
 
         # TODO: make plugins
@@ -795,7 +795,7 @@ fi
 		docmd gear-uupdate --upstream-version "$GSSETVERSION" --tag $tag
 		docmd gear-commit
 
-		# update_post_git_submodules
+		update_post_git_submodules
 		source_postupdate_hook
 
 		# TODO: make plugins
