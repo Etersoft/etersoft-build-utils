@@ -230,7 +230,7 @@ function get_source_vcs()
 	local SN="$2"
 
 	# only for first source
-	[ "$SN" = "Source" ] || return 1
+	[ "$SN" = "Source" ] || [ "$SN" = "Source0" ] || return 1
 
 	local vcs="$(grep -i "^VCS:" $SPEC | head -n1 | sed -e 's|VCS:[[:space:]]*||I')"
 	if [ -z "$vcs" ] ; then
