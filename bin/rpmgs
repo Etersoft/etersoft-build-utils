@@ -805,8 +805,14 @@ fi
 	# Set version if needed
 	if [ -n "$GSSETVERSION" ] && [ "$GSSETVERSION" != "HEAD" ] ; then
 		CURVER=$(get_version $spec)
-		set_version $spec ${GSSETVERSION/-*/}
 		if [ "$CURVER" != "$GSSETVERSION" ] ; then
+
+			CURRAWVER=$(get_raw_version $spec)
+			if echo "$CURRAWVER" | grep -q "%" && echo "$CURRAWVER" | grep -v -E "^(%ver_major|%major)$" ; then
+				fatal "Can't override macros in Version field, check it manually. Only %ver_major and %major is supported"
+			fi
+
+			set_version $spec ${GSSETVERSION/-*/}
 			set_release $spec $GSSETRELEASE
 			if [ -n "$GSSETRELEASE" ] ; then
 				echo "Set new $GSSETVERSION-$GSSETRELEASE version for $spec"

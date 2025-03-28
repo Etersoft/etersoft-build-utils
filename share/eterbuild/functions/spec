@@ -171,6 +171,11 @@ get_version()
 	eval_spec $1 | get_var "Version"
 }
 
+get_raw_version()
+{
+	cat $1 | get_var "Version"
+}
+
 # Args: specname, source_number
 get_tarballname()
 {
@@ -203,6 +208,7 @@ set_version()
 		VERMAJOR=
 	fi
 
+	# supports ver_major or major
 	MAJORMACROS=`grep "%define[[:space:]]\(\|ver_\)major[[:space:]]" $SPEC | sed -e "s|.*[[:space:]]\(.*major\).*|\1|"`
 	if [ -n "${MAJORMACROS}" ] ; then
 		# Change major define
