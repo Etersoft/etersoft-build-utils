@@ -341,12 +341,14 @@ if [ "$1" = "show" ] ; then
 	exit
 fi
 
-if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
-	COMMIT=''
-        [ "$1" = "commit" ] && COMMIT="--commit"
+# run --commit, run --test-only, commit, test
+if [ "$1" = "run" ] || [ "$1" = "commit" ] || [ "$1" = "test" ] ; then
+	VERB="$1"
+	COMMAND='--test-only'
+	[ "$VERB" = "commit" ] && COMMAND="--commit"
 	shift
-	TESTONLY=''
-	[ "$1" = "--test-only" ] && TESTONLY="$1" && shift
+	[ "$1" = "--test-only" ] && shift
+	[ "$VERB" = "run" ] && [ "$1" = "--commit" ] && COMMAND="--commit" && shift
 
 	TASKLIST=''
 	MESSAGE=''
@@ -371,7 +373,7 @@ if [ "$1" = "run" ] || [ "$1" = "commit" ] ; then
 	[ -n "$TASKLIST" ] || TASKLIST="$(get_last)" || fatal "Can't get last task"
 
 	for TASK in $TASKLIST ; do
-		echo "$MESSAGETEXT" | docmd ssh $GEARHOST task run $TESTONLY $MESSAGE $COMMIT "$TASK"
+		echo "$MESSAGETEXT" | docmd ssh $GEARHOST task run $COMMAND $MESSAGE "$TASK"
 	done
 	exit
 fi
