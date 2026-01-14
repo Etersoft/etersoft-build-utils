@@ -503,3 +503,7 @@ libxkbcommon|libxkbcommon0
 libxkbcommon-devel|libxkbcommon-dev
 libwayland-client-devel|libwayland-dev
 libwayland-egl-devel|libwayland-dev
+
+# RX dependencies
+fuse-gvfs|gvfs-fuse
+libgio|libglib2.0-0
