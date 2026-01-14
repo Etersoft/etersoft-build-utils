@@ -362,3 +362,4 @@ libavutil-devel|
 
 libwayland-client-devel|wayland-devel
 libwayland-egl-devel|wayland-devel
+qt5-tools|qt5-linguist
