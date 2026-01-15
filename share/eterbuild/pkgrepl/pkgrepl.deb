@@ -525,3 +525,4 @@ xorg-server|xserver-xorg-core
 xorg-server-common|xserver-common
 qt5-svg-devel|libqt5svg5-dev
 qt5-x11extras-devel|libqt5x11extras5-dev
+qt5-tools|qttools5-dev-tools
