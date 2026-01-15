@@ -521,3 +521,5 @@ libxcb-shape-devel|libxcb-shape0-dev
 libxcb-randr-devel|libxcb-randr0-dev
 libxcb-xkb-devel|libxcb-xkb-dev
 libxcb-xfixes-devel|libxcb-xfixes0-dev
+xorg-server|xserver-xorg-core
+xorg-server-common|xserver-common
