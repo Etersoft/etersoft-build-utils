@@ -7,3 +7,13 @@ libwxGTK-devel|libwxgtk3.0-gtk3-dev
 
 libxkbcommon|libxkbcommon0 libxkbregistry0
 libxkbcommon-devel|libxkbcommon-dev libxkbregistry-dev
+
+# RX kdrive BuildRequires
+xorg-util-macros|xutils-dev
+# RX kdrive BuildRequires - map from ALT Linux package names
+xorg-xtrans-devel|xtrans-dev
+libxcbutil-devel|libxcb-util0-dev
+libxcbutil-image-devel|libxcb-image0-dev
+libxcbutil-keysyms-devel|libxcb-keysyms1-dev
+libxcb-render-util-devel|libxcb-render-util0-dev
+libxcbutil-icccm-devel|libxcb-icccm4-dev
