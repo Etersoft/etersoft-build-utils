@@ -325,7 +325,7 @@ xkeyboard-config|xkb-data
 
 rpm-build|rpm
 phonon-devel|libphonon-dev phonon-backend-gstreamer qt4-qmake libqt4-dev
-qt5-base-devel|qt5-default
+qt5-base-devel|qtbase5-dev
 libqt5-core|libqt5core5a
 libqt5-gui|libqt5gui5
 libqt5-network|libqt5network5
@@ -523,3 +523,5 @@ libxcb-xkb-devel|libxcb-xkb-dev
 libxcb-xfixes-devel|libxcb-xfixes0-dev
 xorg-server|xserver-xorg-core
 xorg-server-common|xserver-common
+qt5-svg-devel|libqt5svg5-dev
+qt5-x11extras-devel|libqt5x11extras5-dev
