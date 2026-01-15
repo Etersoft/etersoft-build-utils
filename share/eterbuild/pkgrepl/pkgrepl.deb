@@ -294,7 +294,7 @@ libselinux|libselinux1
 libSM|libsm6
 libXau|libxau6
 libxcb|libxcb1
-libxcb-devel|libxcb1-dev
+libxcb-devel|libxcb1-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-xkb-dev libxcb-xfixes0-dev
 libXdmcp|libxdmcp6
 libXxf86vm|libxxf86vm1
 libpciaccess|libpciaccess0
@@ -517,3 +517,7 @@ libxcbutil-image-devel|libxcb-image0-dev
 libxcbutil-keysyms-devel|libxcb-keysyms1-dev
 libxcb-render-util-devel|libxcb-render-util0-dev
 libxcbutil-icccm-devel|libxcb-icccm4-dev
+libxcb-shape-devel|libxcb-shape0-dev
+libxcb-randr-devel|libxcb-randr0-dev
+libxcb-xkb-devel|libxcb-xkb-dev
+libxcb-xfixes-devel|libxcb-xfixes0-dev
