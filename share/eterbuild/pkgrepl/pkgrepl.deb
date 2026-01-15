@@ -509,3 +509,4 @@ fuse-gvfs|gvfs-fuse
 libgio|libglib2.0-0
 libwxBase3.2|libwxbase3.0-0v5
 libwxGTK3.2|libwxgtk3.0-gtk3-0v5
+libdrm-devel|libdrm-dev
