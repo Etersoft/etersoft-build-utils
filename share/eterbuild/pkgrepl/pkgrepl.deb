@@ -511,6 +511,7 @@ libwxBase3.2|libwxbase3.0-0v5
 libwxGTK3.2|libwxgtk3.0-gtk3-0v5
 libdrm-devel|libdrm-dev
 # RX kdrive BuildRequires - map from ALT Linux package names
+xorg-util-macros|xutils-dev
 xorg-xtrans-devel|xtrans-dev
 libxcbutil-devel|libxcb-util0-dev
 libxcbutil-image-devel|libxcb-image0-dev
