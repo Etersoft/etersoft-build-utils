@@ -526,3 +526,15 @@ xorg-server-common|xserver-common
 qt5-svg-devel|libqt5svg5-dev
 qt5-x11extras-devel|libqt5x11extras5-dev
 qt5-tools|qttools5-dev-tools
+
+# Qt5 runtime libraries for rxkdriveclient
+libqt5-core|libqt5core5a
+libqt5-gui|libqt5gui5
+libqt5-network|libqt5network5
+libqt5-widgets|libqt5widgets5
+libqt5-x11extras|libqt5x11extras5
+libdqt5-core|libqt5core5a
+libdqt5-gui|libqt5gui5
+libdqt5-network|libqt5network5
+libdqt5-widgets|libqt5widgets5
+libdqt5-x11extras|libqt5x11extras5
