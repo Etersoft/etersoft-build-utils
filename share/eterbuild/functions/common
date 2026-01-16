@@ -585,15 +585,15 @@ showcmd()
 	local i
 	{
 	SETCOLOR_SUCCESS
-	echo -n " \$"
+	echo -n " \$" >&2
 	for i in "$@" ; do
 		# hack against echo -n -n
-		[ "$i" = "-n" ] && echo -n " -n" && continue
+		[ "$i" = "-n" ] && echo -n " -n" >&2 && continue
 		# print with qoutes if args have spaces
-		echo -n " "
-		echo -n "$i" | sed -e "s|\(.* .*\)|'\1'|g"
+		echo -n " " >&2
+		echo -n "$i" | sed -e "s|\(.* .*\)|'\1'|g" >&2
 	done
-	echo
+	echo >&2
 	SETCOLOR_NORMAL
 	} >&2
 }
