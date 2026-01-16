@@ -542,3 +542,6 @@ libdqt5-x11extras|libqt5x11extras5
 
 # RPM-specific packages not needed on deb systems
 rpm-macros-systemd|
+libavcodec62|libavcodec58
+libavformat62|libavformat58
+libavutil60|libavutil56
