@@ -249,15 +249,9 @@ fi
 
 # TODO: тогда ломается упаковка на нашей стороне
 # error: %patchN is obsolete, use %patch N (or %patch -P N)
-if [ "$DISTRNAME/$DISTRVERSION" = "Fedora/41" ] || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Fedora/42" ] || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Fedora/43" ] || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Ubuntu/25.04" ] || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Ubuntu/25.10" ]  || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Ubuntu/26.04" ]  || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Debian/13" ] || \
-   [ "$DISTRNAME/$DISTRVERSION" = "Debian/14" ]
-   then
+if [ "$DISTRNAME" = "Fedora" ] && version_more_version "$DISTRVERSION" 40 || \
+   [ "$DISTRNAME" = "Ubuntu" ] && version_more_version "$DISTRVERSION" 25.03 || \
+   [ "$DISTRNAME" = "Debian" ] && version_more_version "$DISTRVERSION" 12 ; then
 	test -z "$VERBOSE" || echo "Replace %patchN with %patch N"
 	#subst 's|^%patch\([0-9][0-9]*\) |%patch \1 |g' $SPECNAME
 	subst 's|^%patch\([0-9][0-9]*\) |%patch -P \1 |g' $SPECNAME
