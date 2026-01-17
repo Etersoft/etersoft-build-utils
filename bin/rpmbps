@@ -277,6 +277,18 @@ if [ "$PKGVENDOR" = "mcbc" ] ; then
 %__subst 's|mktemp -dt|mktemp -d|g' configure ; %__subst 's|readlink -mv|ls -1|g' configure ltmain.sh"
 fi
 
+# fix -fms-hotpatch for Ubuntu 24.04 (wine packages)
+# https://bugs.etersoft.ru/show_bug.cgi?id=18766
+# TODO: -fpatchable-function-entry=16,16
+if [ "$DISTRNAME/$DISTRVERSION" = "Ubuntu/24.04" ] ; then
+	PKGNAME=$(basename "$SPECNAME" .spec)
+	if echo "$PKGNAME" | grep -qE "^wine-etersoft|^wine$|^wine-vanilla" ; then
+		test -z "$VERBOSE" || echo "Add subst -fms-hotpatch to -fnop-frames for wine configure"
+		ADDFIXCOMMAND="$ADDFIXCOMMAND
+%__subst 's|-fms-hotpatch|-fnop-frames|g' configure*"
+	fi
+fi
+
 # eval_spec print only enabled sections (be cafe with if_with)
 LISTBUILDDEP=`print_buildreq $SPECNAME`
 LISTREQDEP="`print_pkgreq $SPECNAME` $ADDREQUIRES"
