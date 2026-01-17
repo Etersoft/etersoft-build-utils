@@ -1,11 +1,26 @@
 libsane|libsane1
 
+libavcodec62|libavcodec60
 libavcodec61|libavcodec60
+libavcodec58|libavcodec60
+libavformat62|libavformat60
 libavformat61|libavformat60
+libavformat58|libavformat60
+libavutil60|libavutil58
 libavutil59|libavutil58
+libavutil56|libavutil58
 
 libalsa|libasound2t64
 
 libcrypto1.1|libssl3
 libcrypto3|libssl3
 libssl1.1|libssl3
+
+# wxWidgets 3.2 mapping for Ubuntu 24.04 (override pkgrepl.deb mappings)
+libwxBase3.2|libwxbase3.2-1t64
+libwxGTK3.2|libwxgtk3.2-1t64
+libwxbase3.0-0v5|libwxbase3.2-1t64
+libwxgtk3.0-gtk3-0v5|libwxgtk3.2-1t64
+
+# virtual package fix
+netcat|netcat-openbsd
