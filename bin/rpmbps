@@ -139,17 +139,17 @@ if [ "$PKGVENDOR" = "alt" ] ; then
 
 	# HACK: can't fix it with rpm-macros-features :(
 	# FIXME: for c9f2
-	if ! version_more_version $DISTRVERSION c9 ; then
+	if ! version_ge $DISTRVERSION c9 ; then
 		docmd subst "s|def_with opencl|def_without opencl|" $SPECNAME
 		docmd subst "s|def_with sdl|def_without sdl|" $SPECNAME
 	fi
 
-	if ! version_more_version $DISTRVERSION c9f2 ; then
+	if ! version_ge $DISTRVERSION c9f2 ; then
 		docmd subst "s|def_with vulkan|def_without vulkan|" $SPECNAME
 		docmd subst "s|def_with ffmpeg|def_without ffmpeg|" $SPECNAME
 	fi
 
-	if ! version_more_version $DISTRVERSION c10 ; then
+	if ! version_ge $DISTRVERSION c10 ; then
 		# libxkbcommon-devel have to provides pkgconfig(xkbregistry) for build with wayland
 		docmd subst "s|def_with wayland|def_without wayland|" $SPECNAME
 	fi
@@ -185,14 +185,14 @@ else
 			docmd subst "s|def_with opencl|def_without opencl|" $SPECNAME
 			#docmd subst "s|--with-pulse||" $SPECNAME
 		fi
-		[ "$DISTRNAME" = "Debian" ] && ! version_more_version $DISTRVERSION 8 && BUILDREQ="$BUILDREQ ia32-libs-dev"
+		[ "$DISTRNAME" = "Debian" ] && ! version_ge $DISTRVERSION 8 && BUILDREQ="$BUILDREQ ia32-libs-dev"
 		[ "$DISTRNAME" = "AstraLinuxSE" ] && BUILDREQ="$BUILDREQ ia32-libs-dev gcc-multilib" && subst "s|def_with sdl|def_without sdl|" $SPECNAME
-		[ "$DISTRNAME" = "Ubuntu" ] && ! version_more_version $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs-dev"
-		[ "$DISTRNAME" = "CentOS" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
-		[ "$DISTRNAME" = "Scientific" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
-		[ "$DISTRNAME" = "GosLinux" ] && version_more_version $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
-		[ "$DISTRNAME" = "SLED" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
-		[ "$DISTRNAME" = "SUSE" ] && version_more_version $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
+		[ "$DISTRNAME" = "Ubuntu" ] && ! version_ge $DISTRVERSION 12.04 && BUILDREQ="$BUILDREQ ia32-libs-dev"
+		[ "$DISTRNAME" = "CentOS" ] && version_ge $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "Scientific" ] && version_ge $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "GosLinux" ] && version_ge $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
+		[ "$DISTRNAME" = "SLED" ] && version_ge $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
+		[ "$DISTRNAME" = "SUSE" ] && version_ge $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 	fi
 
 	# hack against very straight patch command
@@ -249,9 +249,9 @@ fi
 
 # TODO: тогда ломается упаковка на нашей стороне
 # error: %patchN is obsolete, use %patch N (or %patch -P N)
-if [ "$DISTRNAME" = "Fedora" ] && version_more_version "$DISTRVERSION" 40 || \
-   [ "$DISTRNAME" = "Ubuntu" ] && version_more_version "$DISTRVERSION" 25.03 || \
-   [ "$DISTRNAME" = "Debian" ] && version_more_version "$DISTRVERSION" 12 ; then
+if [ "$DISTRNAME" = "Fedora" ] && version_ge "$DISTRVERSION" 40 || \
+   [ "$DISTRNAME" = "Ubuntu" ] && version_ge "$DISTRVERSION" 25.03 || \
+   [ "$DISTRNAME" = "Debian" ] && version_ge "$DISTRVERSION" 12 ; then
 	test -z "$VERBOSE" || echo "Replace %patchN with %patch N"
 	#subst 's|^%patch\([0-9][0-9]*\) |%patch \1 |g' $SPECNAME
 	subst 's|^%patch\([0-9][0-9]*\) |%patch -P \1 |g' $SPECNAME

@@ -33,30 +33,30 @@ setup() {
     [ "$result" = "-f hello" ]
 }
 
-# --- version_more_version ---
+# --- version_ge ---
 
-@test "version_more_version: equal versions" {
-    run version_more_version "c9" "c9"
+@test "version_ge: equal versions" {
+    run version_ge "c9" "c9"
     [ "$status" -eq 0 ]
 }
 
-@test "version_more_version: first greater" {
-    run version_more_version "c9f2" "c9f1"
+@test "version_ge: first greater" {
+    run version_ge "c9f2" "c9f1"
     [ "$status" -eq 0 ]
 }
 
-@test "version_more_version: first less" {
-    run version_more_version "c9f1" "c9f2"
+@test "version_ge: first less" {
+    run version_ge "c9f1" "c9f2"
     [ "$status" -ne 0 ]
 }
 
-@test "version_more_version: c10 > c9f2" {
-    run version_more_version "c10" "c9f2"
+@test "version_ge: c10 > c9f2" {
+    run version_ge "c10" "c9f2"
     [ "$status" -eq 0 ]
 }
 
-@test "version_more_version: c9f2 < c10" {
-    run version_more_version "c9f2" "c10"
+@test "version_ge: c9f2 < c10" {
+    run version_ge "c9f2" "c10"
     [ "$status" -ne 0 ]
 }
 

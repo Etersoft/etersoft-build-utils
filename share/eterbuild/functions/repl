@@ -41,7 +41,7 @@ fix_arch_requires()
 				echo "$i"
 			done | xargs -n 1000 echo
 		# TODO
-		elif [ "$DISTRNAME" = "Debian" ] && version_more_version $DISTRVERSION 7 ; then
+		elif [ "$DISTRNAME" = "Debian" ] && version_ge $DISTRVERSION 7 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
 				rhas "$i" "^libtool$" && continue
@@ -80,7 +80,7 @@ fix_arch_requires()
 				echo "$i"
 			done | xargs -n 1000 echo
 		# TODO
-		elif [ "$DISTRNAME" = "Ubuntu" ] && version_more_version $DISTRVERSION 12.04 ; then
+		elif [ "$DISTRNAME" = "Ubuntu" ] && version_ge $DISTRVERSION 12.04 ; then
 			# i386 on Debian/Ubuntu: # add :i386 to all -dev packages
 			for i in $* ; do
 				rhas "$i" "^libtool$" && continue
@@ -96,7 +96,7 @@ fix_arch_requires()
 				echo "$i"
 			done | xargs -n 1000 echo
 		elif [ "$DISTRNAME" = "SUSE" ] || [ "$DISTRNAME" = "SLED" ] || [ "$DISTRNAME" = "SLES" ]; then
-                        if version_more_version $DISTRVERSION 15 && [ $DISTRVERSION != "42" ] ; then
+                        if version_ge $DISTRVERSION 15 && [ $DISTRVERSION != "42" ] ; then
 				# i386 on SUSE or SLED : # add -32bit to all lib packages exclude -devel
 				for i in $* ; do
 					rhas "$GREP" "^lib" && ! rhas "$i" "-devel$" && ! rhas "$i" "-32bit$" && echo "$i-32bit" && continue
