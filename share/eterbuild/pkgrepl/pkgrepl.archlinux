@@ -150,3 +150,6 @@ libgphoto2_port-12|libgphoto2
 xxd|vim
 distro_info|rpm
 git-core|git
+alien|
+eepm-rpm-build|
+eepm|
