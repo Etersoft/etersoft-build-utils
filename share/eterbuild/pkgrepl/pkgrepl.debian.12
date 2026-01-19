@@ -69,3 +69,9 @@ libdrm-devel|libdrm-dev
 
 #virtualsmartcard
 python3-module-pyscard|python3-pyscard
+
+# wxWidgets 3.2 - override pkgrepl.deb mappings
+libwxGTK3.2|libwxgtk3.2-1
+libwxBase3.2|libwxbase3.2-1
+libwxbase3.0-0v5|libwxbase3.2-1
+libwxgtk3.0-gtk3-0v5|libwxgtk3.2-1
