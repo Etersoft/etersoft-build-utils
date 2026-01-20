@@ -196,8 +196,8 @@ libgsm-devel|libgsm-devel
 libgsm|libgsm1
 
 libunixODBC-devel|libunixODBC-devel
-libunixODBC1|libunixODBC2
-libunixODBC2|libunixODBC2
+libunixODBC1|lib64odbc2 lib64odbcinst2
+libunixODBC2|lib64odbc2 lib64odbcinst2
 
 fontconfig-devel|libfontconfig-devel
 fontconfig|libfontconfig1
@@ -231,9 +231,9 @@ libpcsclite-devel|libpcsclite-devel
 
 archivemount|
 
-libavcodec61|libavcodec59
-libavformat61|libavformat59
-libavutil59|libavutil56
+libavcodec61|lib64avcodec61
+libavformat61|lib64avformat61
+libavutil59|lib64avutil59
 
 libavcodec-devel|libffmpeg-devel
 libavformat-devel|libffmpeg-devel
@@ -245,9 +245,19 @@ libxkbcommon|libxkbcommon0 libxkbregistry0
 libxkbcommon-devel|libxkbregistry-devel libxkbcommon-devel
 
 libcups-devel|libcups-devel
-libcups|libcups
+libcups|lib64cups2
 
 libXext-devel|libxext-devel
 libXpresent-devel|
 libXpresent|
 libcap-utils|libcap-utils
+
+# ROSA 13 specific wine dependencies
+libEGL|lib64EGL1
+libavcodec59|lib64avcodec61
+libavformat59|lib64avformat61
+libavutil56|lib64avutil59
+libcups|lib64cups2
+libunixODBC2|lib64odbc2 lib64odbcinst2
+libwayland-client|lib64wayland-client0
+libwayland-egl|lib64wayland-egl1
