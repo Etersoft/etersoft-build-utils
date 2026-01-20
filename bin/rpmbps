@@ -289,6 +289,17 @@ if [ "$DISTRNAME/$DISTRVERSION" = "Ubuntu/24.04" ] ; then
 	fi
 fi
 
+# fix LTO for ROSA (wine packages)
+# ROSA ignores %define optflags_lto %nil and adds -flto anyway
+if [ "$DISTRNAME" = "ROSA" ] ; then
+	PKGNAME=$(basename "$SPECNAME" .spec)
+	if echo "$PKGNAME" | grep -qE "^wine-etersoft|^wine32-etersoft|^wine$|^wine-vanilla" ; then
+		test -z "$VERBOSE" || echo "Add remove_optflags -flto for ROSA wine"
+		ADDFIXCOMMAND="$ADDFIXCOMMAND
+%remove_optflags -flto"
+	fi
+fi
+
 # eval_spec print only enabled sections (be cafe with if_with)
 LISTBUILDDEP=`print_buildreq $SPECNAME`
 LISTREQDEP="`print_pkgreq $SPECNAME` $ADDREQUIRES"
