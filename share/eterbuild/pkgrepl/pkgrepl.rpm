@@ -168,8 +168,8 @@ libmpg123|
 # meta packages
 webclient|
 glibc-utils|glibc
-glibc-nss|glibc
-glibc-pthread|glibc
+glibc-nss|
+glibc-pthread|
 
 termutils|ncurses
 udev-rules|udev
@@ -352,9 +352,6 @@ pulseaudio-daemon|pulseaudio
 
 eepm-rpm-build|
 
-libavcodec61|
-libavformat61|
-libavutil59|
 
 libavcodec-devel|
 libavformat-devel|
@@ -367,3 +364,5 @@ qt5-tools|qt5-linguist
 libavcodec62|
 libavformat62|
 libavutil60|
+
+

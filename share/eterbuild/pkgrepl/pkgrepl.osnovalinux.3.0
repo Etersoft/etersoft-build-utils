@@ -21,13 +21,10 @@ libwxGTK-devel|libwxgtk3.2-dev
 libwxBase3.0|libwxbase3.2-1
 
 libavcodec62|libavcodec59
-libavcodec61|libavcodec59
 libavcodec58|libavcodec59
 libavformat62|libavformat59
-libavformat61|libavformat59
 libavformat58|libavformat59
 libavutil60|libavutil57
-libavutil59|libavutil57
 libavutil56|libavutil57
 
 libsane|libsane1

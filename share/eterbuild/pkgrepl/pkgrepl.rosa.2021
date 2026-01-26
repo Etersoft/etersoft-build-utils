@@ -95,9 +95,9 @@ libpcsclite-devel|libpcsclite-devel
 
 archivemount|
 
-libavcodec61|libavcodec58
-libavformat61|libavformat58
-libavutil59|libavutil56
+libavcodec62|libavcodec58
+libavformat62|libavformat58
+libavutil60|libavutil56
 
 libavcodec-devel|libffmpeg-devel
 libavformat-devel|libffmpeg-devel

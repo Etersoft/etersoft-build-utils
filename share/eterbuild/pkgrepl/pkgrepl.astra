@@ -132,12 +132,6 @@ libxcbutil-icccm-devel|libxcb-icccm4-dev libxcb-ewmh-dev
 
 
 # ffmpeg not available in AstraLinuxSE
-libavcodec58|
-libavformat58|
-libavutil56|
 libavcodec62|
 libavformat62|
 libavutil60|
-libavcodec61|
-libavformat61|
-libavutil59|

@@ -493,9 +493,6 @@ eepm-rpm-build|
 ocl-icd-devel|ocl-icd-dev ocl-icd-opencl-dev
 ocl-icd|ocl-icd-libopencl1
 
-libavcodec61|libavcodec58
-libavformat61|libavformat58
-libavutil59|libavutil56
 libEGL|libegl1
 libwayland-client|libwayland-client0
 libwayland-egl|libwayland-egl1

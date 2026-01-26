@@ -231,9 +231,9 @@ libpcsclite-devel|libpcsclite-devel
 
 archivemount|
 
-libavcodec61|lib64avcodec61
-libavformat61|lib64avformat61
-libavutil59|lib64avutil59
+libavcodec62|lib64avcodec61
+libavformat62|lib64avformat61
+libavutil60|lib64avutil59
 
 libavcodec-devel|libffmpeg-devel
 libavformat-devel|libffmpeg-devel
@@ -254,9 +254,6 @@ libcap-utils|libcap-utils
 
 # ROSA 13 specific wine dependencies
 libEGL|lib64EGL1
-libavcodec59|lib64avcodec61
-libavformat59|lib64avformat61
-libavutil56|lib64avutil59
 libcups|lib64cups2
 libunixODBC2|lib64odbc2 lib64odbcinst2
 libwayland-client|lib64wayland-client0

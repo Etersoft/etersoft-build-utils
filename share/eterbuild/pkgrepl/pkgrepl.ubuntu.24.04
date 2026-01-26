@@ -1,13 +1,10 @@
 libsane|libsane1
 
 libavcodec62|libavcodec60
-libavcodec61|libavcodec60
 libavcodec58|libavcodec60
 libavformat62|libavformat60
-libavformat61|libavformat60
 libavformat58|libavformat60
 libavutil60|libavutil58
-libavutil59|libavutil58
 libavutil56|libavutil58
 
 libalsa|libasound2t64
