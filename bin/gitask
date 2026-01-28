@@ -52,13 +52,13 @@ fi
 # with support for #NUM
 is_task_number()
 {
-	echo "$*" | estrlist filter_strip_spaces | grep -q "^#\?[0-9]\+$"
+	echo "$*" | estrlist strip - | grep -q "^#\?[0-9]\+$"
 }
 
 # clean from possible #
 get_task_number()
 {
-	echo "$*" | estrlist filter_strip_spaces | sed -e "s|^#||"
+	echo "$*" | estrlist strip - | sed -e "s|^#||"
 }
 
 get_last()

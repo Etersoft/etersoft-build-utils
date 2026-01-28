@@ -160,7 +160,7 @@ trans_rpmdeps_to_pkgname_lav()
 		if ! grep -q "$INSTALLMARK" $TFILE ; then
 			fatal "multiple provides: $(cat $TFILE)"
 		fi
-		PKGINSTALLED="$(grep "$INSTALLMARK" $TFILE | estrlist filter_strip_spaces | sed -e "s| .*||g")"
+		PKGINSTALLED="$(grep "$INSTALLMARK" $TFILE | estrlist strip - | sed -e "s| .*||g")"
 		if [ -z "$PKGINSTALLED" ] ; then
 			fatal "can't resolve multiple provides: $(cat $TFILE)"
 		fi

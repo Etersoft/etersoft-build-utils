@@ -7,7 +7,7 @@
 # TODO: see etersoft-build-utils/tests/test_isnumber.sh
 isnumber()
 {
-	echo "$*" | estrlist filter_strip_spaces | grep -q "^[0-9]\+$"
+	echo "$*" | estrlist strip - | grep -q "^[0-9]\+$"
 }
 
 # the same like estrlist match (reg_has)
@@ -26,7 +26,7 @@ drop_args()
     local ARGS="$1"
     shift
     local LISTIGNORE="$@"
-    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | estrlist filter_strip_spaces
+    echo "$ARGS" | sed -e "s|-[${LISTIGNORE/ /}]||g" | estrlist strip -
     #echo "$ARGS" | \
     #    ( for i in $LISTIGNORE ; do sed -e "s|-$i||g" ;  done ) #| sed -e "s| +| |g"
 }
