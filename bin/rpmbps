@@ -63,6 +63,10 @@ set_binaryrepo $MENV
 # TODO
 SPECNAME="$LISTNAMES"
 test -f "$SPECNAME" || fatal "file '$SPECNAME' is not found"
+# Ensure input is a spec file, not src.rpm (rpmbps modifies the file in place)
+if echo "$SPECNAME" | grep -q ".rpm$" || file "$SPECNAME" | grep -q "RPM" ; then
+	fatal "rpmbps requires a spec file, not src.rpm. Use rpmbph for src.rpm files."
+fi
 
 if [ "$PKGVENDOR" = "alt" ] ; then
 	MDISTR=$MENV
