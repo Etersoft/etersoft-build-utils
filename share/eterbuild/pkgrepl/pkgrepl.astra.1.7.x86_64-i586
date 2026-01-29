@@ -42,3 +42,8 @@ libXpresent-devel|
 # missed
 libSDL2-devel|
 libSDL2|
+
+# ffmpeg 61 not available in Astra 1.7 (has 58)
+libavcodec61|
+libavformat61|
+libavutil59|
