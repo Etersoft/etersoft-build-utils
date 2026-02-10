@@ -111,3 +111,5 @@ libxkbcommon|libxkbcommon0 libxkbregistry0
 libxkbcommon-devel|libxkbregistry-devel libxkbcommon-devel
 
 ocl-icd|libopencl1
+
+fzf|
