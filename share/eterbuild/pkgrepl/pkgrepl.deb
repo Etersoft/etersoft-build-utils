@@ -128,6 +128,7 @@ libsigc++2|libsigc++-2.0-0c2a
 #libsigc++2|libsigc++-2.0-0c2a
 libxml++2-devel|libxml++2.6-dev
 libxml++2|libxml++2.6
+libxml2_16|libxml2
 
 
 libglademm-devel|libglademm-2.4-dev

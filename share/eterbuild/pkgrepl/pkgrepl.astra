@@ -73,6 +73,7 @@ libwxGTK|libwxgtk3.0-0v5
 libwxGTK-devel|libwxgtk3.0-dev
 libwxBase3.0|libwxbase3.0-0v5
 libwxBase3.2|libwxbase3.0-0v5
+libxml2_16|libxml2
 
 cifs-utils|cifs-utils
 libcrypto1.1|libssl1.1

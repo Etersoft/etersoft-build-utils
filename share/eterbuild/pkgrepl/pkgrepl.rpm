@@ -118,6 +118,7 @@ libgtkspell-devel|gtkspell-devel
 libGConf-devel|GConf2-devel
 GConf|GConf2
 libxml++2-devel|libxml++-devel
+libxml2_16|libxml2
 
 glibc-devel-static|glibc-devel
 
@@ -347,8 +348,9 @@ libOSMesa|mesa-libOSMesa
 
 libpcsclite|pcsc-lite-libs
 libpcsclite-devel|pcsc-lite-devel pcsc-lite-libs
+# keep pulseaudio-daemon as is (provided by pipewire-pulseaudio in modern systems)
+pulseaudio-daemon|pulseaudio-daemon
 
-pulseaudio-daemon|pulseaudio
 
 eepm-rpm-build|
 
