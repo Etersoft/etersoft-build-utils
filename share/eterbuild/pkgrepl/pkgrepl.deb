@@ -543,3 +543,6 @@ rpm-macros-systemd|
 libavcodec62|libavcodec58
 libavformat62|libavformat58
 libavutil60|libavutil56
+libavcodec61|
+libavformat61|
+libavutil59|
