@@ -41,4 +41,7 @@ libva-devel|
 
 numlockx|
 
+#RX
 libxml2_16|libxml2
+liblz4-devel|lz4-devel
+liblz4|lz4-libs
