@@ -197,6 +197,8 @@ else
 		[ "$DISTRNAME" = "GosLinux" ] && version_ge $DISTRVERSION 6 && BUILDREQ="$BUILDREQ glibc-devel(x86-32)"
 		[ "$DISTRNAME" = "SLED" ] && version_ge $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
 		[ "$DISTRNAME" = "SUSE" ] && version_ge $DISTRVERSION 11 && BUILDREQ="$BUILDREQ glibc-devel-32bit gcc-32bit"
+		# no 32-bit ffmpeg-devel in RockyLinux/9+
+		[ "$DISTRNAME" = "RockyLinux" ] && version_ge $DISTRVERSION 9 && subst "s|def_with ffmpeg|def_without ffmpeg|" $SPECNAME
 	fi
 
 	# hack against very straight patch command
@@ -329,7 +331,11 @@ for i in $LISTDEP ; do
 	tolocal_anyrepl $i $pkgrepl_list || continue
 	ALTPKGNAME="$(echo "$ALTPKGNAME" | sed -e 's|\([()]\)|\\\1|g' )"
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
-	NRL="s!(.*Req.*)$ALTPKGNAME( |,|}|\$)!\${1}$TARGETPKGNAME\$2!g"
+	# BuildRequires rule (keeps .i686 arch qualifiers for dnf install)
+	NRL="s!(.*BuildReq.*)$ALTPKGNAME( |,|}|\$)!\${1}$TARGETPKGNAME\$2!g;"
+	# Requires rule (strip .i686/.i386 — not valid in RPM Requires, arch resolved by package manager)
+	TARGETPKGNAME_REQ=$(echo "$TARGETPKGNAME" | sed 's/\.i[36]86//g')
+	NRL="$NRL s!(.*Requires.*)$ALTPKGNAME( |,|}|\$)!\${1}$TARGETPKGNAME_REQ\$2!g"
 	[ -n "$VERBOSE" ] && echo "    $NRL from $USEDPKGREPL"
 	ALLREPLRULES="$ALLREPLRULES $NRL;"
 done
