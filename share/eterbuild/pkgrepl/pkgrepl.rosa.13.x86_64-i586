@@ -24,3 +24,17 @@ libpulseaudio-devel|libxfixes-devel libpulseaudio-devel
 valgrind-devel|valgrind-devel.i686
 
 libgphoto2-devel|libgphoto-devel
+
+# Override lib64* to lib* for 32-bit cross-build
+libEGL|libEGL1
+libcups|libcups2
+libunixODBC1|libodbc2 libodbcinst2
+libunixODBC2|libodbc2 libodbcinst2
+libwayland-client|libwayland-client0
+libwayland-egl|libwayland-egl1
+libnetapi|libnetapi1
+
+# Override ffmpeg lib64* versions to lib* for 32-bit
+libavcodec62|libavcodec60
+libavformat62|libavformat60
+libavutil60|libavutil58

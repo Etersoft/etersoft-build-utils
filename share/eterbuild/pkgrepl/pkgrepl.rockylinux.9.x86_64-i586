@@ -1,0 +1,4 @@
+# no 32-bit ffmpeg-free-devel in RockyLinux/9
+libavcodec-devel|
+libavformat-devel|
+libavutil-devel|
