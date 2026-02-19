@@ -19,7 +19,9 @@ fi
 # moved from aptU
 get_rpm_package_requires()
 {
-	(rpmquery --requires "$@" || return ) | cut -f1 -d" " | sed -e 's|\(^lib.*\)(.*[0-9])|\1|g' | grep -v "^rpmlib" | sort -u
+	# drop versioned symbol deps like (WXU_3.2)(64bit) or (GLIBC_2.14)(64bit) — they are
+	# always accompanied by unversioned () form, and can't be resolved by apt directly
+	(rpmquery --requires "$@" || return ) | cut -f1 -d" " | sed -e '/([A-Z][^)]*)(64bit)$/d' -e '/([A-Z][^)]*[0-9])$/d' | grep -v "^rpmlib" | sort -u
 }
 
 filter_pkgname()
