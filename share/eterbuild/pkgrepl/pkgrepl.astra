@@ -91,6 +91,8 @@ patchelf|
 #iputils|iputils-ping
 rpm-macros-systemd|
 libdrm-devel|libdrm-dev
+liblz4|liblz4-1
+libzstd|libzstd1
 
 # gio + gvfs
 libgio|libglib2.0-bin
