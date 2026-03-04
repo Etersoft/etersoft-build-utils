@@ -1,0 +1,10 @@
+# FFmpeg 7.x in Debian 13 (trixie)
+libavcodec62|libavcodec61
+libavformat62|libavformat61
+libavutil60|libavutil59
+
+# libgl1-mesa-glx removed in Debian 13
+libGL|libgl1
+
+# libsane renamed to libsane1
+libsane|libsane1

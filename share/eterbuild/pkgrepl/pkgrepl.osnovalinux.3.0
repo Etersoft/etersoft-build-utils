@@ -28,3 +28,6 @@ libavutil60|libavutil57
 libavutil56|libavutil57
 
 libsane|libsane1
+
+# libgl1-mesa-glx removed, use libgl1
+libGL|libgl1
