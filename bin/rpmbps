@@ -332,10 +332,11 @@ for i in $LISTDEP ; do
 	ALTPKGNAME="$(echo "$ALTPKGNAME" | sed -e 's|\([()]\)|\\\1|g' )"
 	#NRL="s!\(.*Req.*\)$REPLRULE1\( |,|\$\)!\1$REPLRULE2\2!g"
 	# BuildRequires rule (keeps .i686 arch qualifiers for dnf install)
-	NRL="s!(.*BuildReq.*)$ALTPKGNAME( |,|}|\$)!\${1}$TARGETPKGNAME\$2!g;"
+	# (?<![...]) prevents substring matching (e.g. libGL inside mesa-libGL)
+	NRL="s#(.*BuildReq.*)(?<![a-zA-Z0-9_.+-])$ALTPKGNAME( |,|}|\$)#\${1}$TARGETPKGNAME\$2#g;"
 	# Requires rule (strip .i686/.i386 — not valid in RPM Requires, arch resolved by package manager)
 	TARGETPKGNAME_REQ=$(echo "$TARGETPKGNAME" | sed 's/\.i[36]86//g')
-	NRL="$NRL s!(.*Requires.*)$ALTPKGNAME( |,|}|\$)!\${1}$TARGETPKGNAME_REQ\$2!g"
+	NRL="$NRL s#(.*Requires.*)(?<![a-zA-Z0-9_.+-])$ALTPKGNAME( |,|}|\$)#\${1}$TARGETPKGNAME_REQ\$2#g"
 	[ -n "$VERBOSE" ] && echo "    $NRL from $USEDPKGREPL"
 	ALLREPLRULES="$ALLREPLRULES $NRL;"
 done
