@@ -176,7 +176,8 @@ tolocal_anyrepl()
 	local i REPLRULE WARULES
 	local GREP="$1"
 	shift
-	rhas "$GREP" "^[0-9]" && FIXNEWRESULT="$GREP" && return 1
+	# skip version-only strings (digits and dots), but not package names like 7-zip
+	rhas "$GREP" "^[0-9][0-9.]*$" && FIXNEWRESULT="$GREP" && return 1
 	# TODO: fix space removing
 	WARULES="s/^ *//g 
 		s/ *\$//g 
