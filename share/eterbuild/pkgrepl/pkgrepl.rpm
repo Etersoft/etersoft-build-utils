@@ -374,3 +374,4 @@ libavutil59|
 # Мы не можем собрать с циклическими зависимостями из-за того, что пакеты собирается последовательно.
 wine-etersoft-gecko-req|wine-etersoft-gecko
 wine-etersoft-mono-req|wine-etersoft-mono
+7-zip|p7zip

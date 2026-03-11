@@ -451,6 +451,7 @@ libcairo-devel|libcairo2-dev
 
 valgrind-devel|valgrind
 p7zip|p7zip-full
+7-zip|p7zip-full
 libkrb5-devel|libkrb5-dev krb5-multidev
 
 fonts-ttf-core|fonts-liberation
