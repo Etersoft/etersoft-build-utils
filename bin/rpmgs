@@ -667,6 +667,41 @@ update_predownloaded()
 	done
 	#### end of cargo only part
 
+	#### zig only part
+	local i
+	local zig_dir=''
+	for i in */build.zig.zon ; do
+		[ -s "$i" ] || continue
+		[ -d "./zig-cache" ] && continue
+		zig_dir=$(dirname "$i")
+
+		local COMMITMSG=''
+
+		info "Detected '$i' install hook ..."
+		cd "$zig_dir" || fatal
+		docmd zig build --fetch=all --cache-dir ../zig-cache --global-cache-dir ../zig-cache || fatal
+		COMMITMSG="update vendored zig modules in $zig_dir dir with zig build --fetch=all for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+			info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		fi
+
+		# HACK: fix it for ALT (need fix for macros ?)
+		# [00:00:03] + /usr/bin/zig build --verbose --release=safe -Dtarget=native -Dcpu=baseline -Doptimize=ReleaseSafe --system zig-cache --cache-dir zig-cache --global-cache-dir zig-cache
+		# error: package not found at 'zig-cache/otter_conf-1.0.0-d7vdxEWbAQDN62X7TrhhqEVu2kk-7okjqoB_7jZlKq34'
+		if [ -d "../zig-cache/p" ] ; then
+			cp -a ../zig-cache/p/. ../zig-cache/ || fatal
+			rm -rf ../zig-cache/p
+		fi
+
+		cd - >/dev/null
+
+		# TODO: drop zigwin32 ?
+		KEEP_DIRS="$KEEP_DIRS zig-cache"
+	done
+	#### end of zig only part
+
 
 	#### dotnet only part
 	local sln_file
