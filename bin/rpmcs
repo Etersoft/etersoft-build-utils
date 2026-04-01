@@ -97,7 +97,7 @@ do_repls()
 	for n in `print_buildreq $i` ; do
 		toalt_pkgrepl $n || continue
 		ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+			s!(.*Req.*)$REPLRULE1( |,|}|\$)!\1$REPLRULE2\2!g"
 		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
 	done
 
@@ -105,7 +105,7 @@ do_repls()
 	for n in `print_pkgreq $i` ; do
 		toalt_pkgrepl $n || continue
 		ALLREPLRULES="$ALLREPLRULES
-			s|(.*Req.*)$REPLRULE1|\1$REPLRULE2|g"
+			s!(.*Req.*)$REPLRULE1( |,|}|\$)!\1$REPLRULE2\2!g"
 		[ -n "$VERBOSE" ] && echo "Replace '$REPLRULE1' with '$REPLRULE2'"
 	done
 
