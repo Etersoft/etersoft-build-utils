@@ -604,13 +604,13 @@ update_predownloaded()
 
 
 	#### cargo only part
-	if [ -s "./Cargo.lock" ] && [ ! -d "./vendor" ] ; then
+	if [ -s "./Cargo.toml" ] && [ ! -d "./vendor" ] ; then
 		local COMMITMSG=''
 		local PRODUCTION=''
 
 		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
-		info "Detected 'Cargo.lock' install hook ..."
+		info "Detected 'Cargo.toml' install hook ..."
 		docmd cargo vendor --verbose $PRODUCTION || fatal
 		COMMITMSG="update vendored cargo modules with cargo vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
@@ -630,7 +630,7 @@ update_predownloaded()
 		rm -rv vendor/windows*/lib/{*.lib,*.a}
 
 		HAS_CARGO=1
-		KEEP_DIRS="$KEEP_DIRS vendor Cargo.lock"
+		KEEP_DIRS="$KEEP_DIRS vendor Cargo.toml"
 	fi
 
 	local i
