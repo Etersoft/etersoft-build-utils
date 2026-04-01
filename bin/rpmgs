@@ -583,14 +583,21 @@ update_predownloaded()
 
 
 	#### go only part
-	if [ -s "./go.mod" ] && [ ! -d "./vendor" ] ; then
+	local i
+	local go_dir=''
+	for i in */go.mod ; do
+		[ -s "$i" ] || continue
+		go_dir=$(dirname "$i")
+		[ -d "./vendor" ] && continue
+
 		local COMMITMSG=''
 		local PRODUCTION=''
 
 		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
 		info "Detected go.mod install hook, running ..."
-		docmd go mod vendor $PRODUCTION || fatal
+		cd $go_dir || fatal
+		docmd go mod vendor -o ../vendor $PRODUCTION || fatal
 		COMMITMSG="update vendored go modules with go mod vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -598,8 +605,10 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
+		cd - >/dev/null
+
 		KEEP_DIRS="$KEEP_DIRS vendor"
-	fi
+	done
 	#### end of go only part
 
 
