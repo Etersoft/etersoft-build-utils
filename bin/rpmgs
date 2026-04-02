@@ -739,8 +739,51 @@ update_predownloaded()
 	#### end of dotnet only part
 
 
+	#### pnpm only part
+	# pnpm-lock.yaml may be in predownloaded dir or in source subdir
+	local pnpm_dir=""
+	if [ -s "./pnpm-lock.yaml" ] ; then
+		pnpm_dir="."
+	elif [ -s "$RGD/$CURNAME/pnpm-lock.yaml" ] ; then
+		pnpm_dir="$RGD/$CURNAME"
+	fi
+	if [ -n "$pnpm_dir" ] ; then
+		local COMMITMSG=''
+		local PRODUCTION=''
+
+		[ "$MODE" = "production" ] && PRODUCTION='--prod'
+
+		info "Detected pnpm-lock.yaml install hook in $pnpm_dir, running ..."
+		pushd "$pnpm_dir" >/dev/null
+
+		# Remove packageManager field to prevent pnpm from trying to self-update
+		if grep -q '"packageManager"' package.json 2>/dev/null ; then
+			info "Removing packageManager from package.json to use system pnpm ..."
+			python3 -c "import json; p='package.json'; d=json.load(open(p)); d.pop('packageManager',None); json.dump(d,open(p,'w'),indent=2)"
+		fi
+
+		docmd pnpm install --frozen-lockfile --ignore-scripts $PRODUCTION || fatal
+		popd >/dev/null
+
+		# move node_modules to predownloaded if installed in source dir
+		if [ "$pnpm_dir" != "." ] && [ -d "$pnpm_dir/node_modules" ] ; then
+			mv "$pnpm_dir/node_modules" ./node_modules
+		fi
+
+		COMMITMSG="update node_modules with pnpm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+			info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		fi
+
+		# remove build related modules we have in system
+		rm -rfv node_modules/{npm,node-gyp}/ node_modules/.bin/{npm,npx,node-gyp}
+
+		KEEP_DIRS="$KEEP_DIRS node_modules"
+
 	#### yarn only part
-	if [ -s "./yarn.lock" ] ; then
+	elif [ -s "./yarn.lock" ] ; then
 		local COMMITMSG=''
 		local PRODUCTION=''
 
