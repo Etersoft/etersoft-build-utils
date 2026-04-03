@@ -783,14 +783,25 @@ update_predownloaded()
 		KEEP_DIRS="$KEEP_DIRS node_modules"
 
 	#### yarn only part
-	elif [ -s "./yarn.lock" ] ; then
+	# yarn.lock may be in predownloaded dir or in source subdir/subdirs
+	elif [ -s "./yarn.lock" ] || [ -s "$RGD/$CURNAME/yarn.lock" ] ; then
+		local yarn_dir="."
+		[ -s "$RGD/$CURNAME/yarn.lock" ] && yarn_dir="$RGD/$CURNAME"
 		local COMMITMSG=''
 		local PRODUCTION=''
 
 		[ "$MODE" = "production" ] && PRODUCTION='--production'
 
-		info "Detected yarn.lock install hook, running ..."
+		info "Detected yarn.lock install hook in $yarn_dir, running ..."
+		pushd "$yarn_dir" >/dev/null
 		docmd yarn install --frozen-lockfile --ignore-scripts $PRODUCTION || fatal
+		popd >/dev/null
+
+		# move node_modules to predownloaded if installed in source dir
+		if [ "$yarn_dir" != "." ] && [ -d "$yarn_dir/node_modules" ] ; then
+			mv "$yarn_dir/node_modules" ./node_modules
+		fi
+
 		COMMITMSG="update node_modules with yarn install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -804,7 +815,21 @@ update_predownloaded()
 		KEEP_DIRS="$KEEP_DIRS node_modules"
 
 	#### npm only part
-	elif [ -s "./package.json" ] ; then
+	# package.json may be in predownloaded dir, source root, or source subdir (e.g. frontend/)
+	else
+		local npm_dir=""
+		if [ -s "./package.json" ] ; then
+			npm_dir="."
+		elif [ -s "$RGD/$CURNAME/package.json" ] ; then
+			npm_dir="$RGD/$CURNAME"
+		else
+			# search in subdirectories of source (e.g. frontend/, web/)
+			local found_pkg
+			found_pkg=$(find "$RGD/$CURNAME" -maxdepth 2 -name "package-lock.json" -not -path "*/node_modules/*" 2>/dev/null | head -1)
+			[ -n "$found_pkg" ] && npm_dir="$(dirname "$found_pkg")"
+		fi
+
+		if [ -n "$npm_dir" ] ; then
 
 		# CHECKME: drop postinstall due run dev scripts during install --production
 		# replace with fake commands?
@@ -814,8 +839,23 @@ update_predownloaded()
 
 		[ "$MODE" = "production" ] && PRODUCTION='--omit=dev'
 
-		info "Detected npm install hook, running ..."
+		info "Detected npm install hook in $npm_dir, running ..."
+		pushd "$npm_dir" >/dev/null
 		docmd npm install $VERBOSE --omit=optional --ignore-scripts $PRODUCTION || fatal
+		popd >/dev/null
+
+		# move node_modules to predownloaded if installed in source dir
+		if [ "$npm_dir" != "." ] && [ -d "$npm_dir/node_modules" ] ; then
+			local nm_dest="node_modules"
+			# preserve subdir path for monorepo projects
+			local rel_dir="${npm_dir#$RGD/$CURNAME/}"
+			if [ "$rel_dir" != "$npm_dir" ] && [ "$rel_dir" != "." ] ; then
+				nm_dest="$rel_dir/node_modules"
+				mkdir -p "$(dirname "$nm_dest")"
+			fi
+			mv "$npm_dir/node_modules" "$nm_dest"
+		fi
+
 		COMMITMSG="update node_modules with npm install $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -823,21 +863,13 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
-		# prune removes modules not listed in package.json
-		# a= npm prune $PRODUCTION
-		# dedup restores removed modules!
-		#docmd npm dedup
-
 		# remove build related modules we have in system
-		#if [ -d node_modules/node-gyp/ ] ; then
 		rm -rfv node_modules/{npm,node-gyp}/ node_modules/.bin/{npm,npx,node-gyp}
-		#	ln -s /usr/lib/node_modules/node-gyp node_modules/
-		#fi
+		[ -n "$rel_dir" ] && [ "$rel_dir" != "." ] && rm -rfv "$rel_dir/node_modules/{npm,node-gyp}/" "$rel_dir/node_modules/.bin/{npm,npx,node-gyp}" 2>/dev/null
 
-		#epm assure jq || fatal
-		#(cd node_modules && rm -rf $(jq -r -c '.devDependencies | keys[]' ../package.json))
+		KEEP_DIRS="$KEEP_DIRS ${nm_dest:-node_modules}"
 
-		KEEP_DIRS="$KEEP_DIRS node_modules"
+		fi
 	fi
         ### end of yarn/npm part
 
