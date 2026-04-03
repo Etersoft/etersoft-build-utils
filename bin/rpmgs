@@ -585,19 +585,39 @@ update_predownloaded()
 	#### go only part
 	local i
 	local go_dir=''
-	for i in */go.mod ; do
-		[ -s "$i" ] || continue
-		go_dir=$(dirname "$i")
-		[ -d "./vendor" ] && continue
+	# find the first (root) go.mod, skip e2e/test/docs subdirectories
+	local go_mod=""
+	# check current dir first (flat tarball extraction)
+	if [ -s "./go.mod" ] ; then
+		go_mod="./go.mod"
+	else
+		for i in */go.mod ; do
+			[ -s "$i" ] || continue
+			case "$(dirname "$i")" in */e2e|*/test|*/tests|*/docs|e2e|test|tests|docs) continue ;; esac
+			go_mod="$i"
+			break
+		done
+	fi
+
+	if [ -n "$go_mod" ] && [ ! -d "./vendor" ] ; then
+		go_dir=$(dirname "$go_mod")
 
 		local COMMITMSG=''
 		local PRODUCTION=''
 
 		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
-		info "Detected go.mod install hook, running ..."
+		local vendor_out="../vendor"
+		if [ "$go_dir" = "." ] ; then
+			vendor_out="./vendor"
+		fi
+
+		info "Detected $go_mod install hook in $(pwd)/$go_dir, running ..."
 		cd $go_dir || fatal
-		docmd go mod vendor -o ../vendor $PRODUCTION || fatal
+		# Disable Go workspace to avoid picking up e2e/test go.mod replace directives
+		export GOWORK=off
+		docmd go mod vendor -o $vendor_out $PRODUCTION || fatal
+		unset GOWORK
 		COMMITMSG="update vendored go modules with go mod vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -608,7 +628,7 @@ update_predownloaded()
 		cd - >/dev/null
 
 		KEEP_DIRS="$KEEP_DIRS vendor"
-	done
+	fi
 	#### end of go only part
 
 
@@ -824,8 +844,9 @@ update_predownloaded()
 			npm_dir="$RGD/$CURNAME"
 		else
 			# search in subdirectories of source (e.g. frontend/, web/)
+			# skip docs/test/e2e subdirectories (they may have package.json for documentation)
 			local found_pkg
-			found_pkg=$(find "$RGD/$CURNAME" -maxdepth 2 -name "package-lock.json" -not -path "*/node_modules/*" 2>/dev/null | head -1)
+			found_pkg=$(find "$RGD/$CURNAME" -maxdepth 2 -name "package-lock.json" -not -path "*/node_modules/*" -not -path "*/docs/*" -not -path "*/test/*" -not -path "*/e2e/*" 2>/dev/null | head -1)
 			[ -n "$found_pkg" ] && npm_dir="$(dirname "$found_pkg")"
 		fi
 
