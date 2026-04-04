@@ -61,7 +61,7 @@ get_task_number()
 get_last()
 {
 	local api_base user result
-	if api_base=$(_get_api_base) && user=$(_get_girar_user) ; then
+	if false && api_base=$(_get_api_base) && user=$(_get_girar_user) ; then
 		result=$(curl -sf "$api_base/tasks?user=$user&brief=true" 2>/dev/null | \
 			python3 -c 'import json,sys;t=json.load(sys.stdin);print(t[0] if t else "")' 2>/dev/null)
 		[ -n "$result" ] && echo "$result" && return
