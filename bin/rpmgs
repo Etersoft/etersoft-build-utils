@@ -860,7 +860,7 @@ update_predownloaded()
 
 		[ "$MODE" = "production" ] && PRODUCTION='--omit=dev'
 
-		info "Detected npm install hook in $npm_dir, running ..."
+		info "Detected npm install hook in $npm_dir (RGD=$RGD, CURNAME=$CURNAME), running ..."
 		pushd "$npm_dir" >/dev/null
 		docmd npm install $VERBOSE --omit=optional --ignore-scripts $PRODUCTION || fatal
 		popd >/dev/null
@@ -910,7 +910,11 @@ update_predownloaded()
 		info "Cleaning up, keeping:$KEEP_DIRS ..."
 		local grep_args=""
 		for i in $KEEP_DIRS ; do
+			# Match exact dir name; for subdir paths (web/node_modules) also keep parent dir
 			grep_args="$grep_args -e ^${i}$"
+			case "$i" in
+				*/*)  grep_args="$grep_args -e ^${i%%/*}$" ;;
+			esac
 		done
 		rm -rf $(ls -1 | grep -v $grep_args) .[a-zA-Z0-9]*
 	fi
