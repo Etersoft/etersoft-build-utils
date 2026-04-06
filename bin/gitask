@@ -760,7 +760,12 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 			fi
 		fi
 		shift
-		ST="$(get_subtask $TASK $PACKAGE)"
+		# Extract package name from repo.git=tag format for subtask lookup
+		PKGNAME="$PACKAGE"
+		if rhas "$PKGNAME" "\.git=" ; then
+			PKGNAME="$(echo "$PKGNAME" | sed 's/\.git=.*//')"
+		fi
+		ST="$(get_subtask $TASK $PKGNAME)"
 		if [ -n "$ST" ] ; then
 			info "$PACKAGE already present in the task $TASK as subtask $ST, replacing ..."
 			docmd ssh $GEARHOST task delsub $TASK $ST
