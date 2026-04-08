@@ -313,6 +313,15 @@ for i, t in enumerate(tasks):
             pkgs.append("(delete {})".format(pkg))
         elif pkg and tag:
             pkgs.append("{}.git={}".format(pkg, tag))
+        elif stype == "srpm":
+            srpm = st.get("srpm", "").removesuffix(".src.rpm")
+            if pkg and srpm.startswith(pkg + "-"):
+                ver = srpm[len(pkg) + 1:]
+                pkgs.append("{}={}".format(pkg, ver))
+            elif srpm:
+                pkgs.append(srpm)
+            elif pkg:
+                pkgs.append(pkg)
         elif pkg:
             pkgs.append(pkg)
     tid = str(t["id"])
