@@ -383,6 +383,10 @@ for num in sorted(task.get("subtasks", {}).keys(), key=int):
     elif stype == "copy":
         copy_from = st.get("copy_repo", "")
         line = " {}: copy {} from {}".format(num, pkg, copy_from)
+    elif stype == "srpm":
+        srpm = st.get("srpm", "")
+        copy_from = st.get("rebuild_from", "")
+        line = " {}: {} from {}".format(num, srpm or pkg, copy_from) if copy_from else " {}: {}".format(num, srpm or pkg)
     else:
         tag = st.get("tag_name", "")
         author = st.get("tag_author", "")
