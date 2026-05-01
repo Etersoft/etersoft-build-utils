@@ -38,7 +38,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     show   NNNN [-v]            - show subtask list for task NNNN (-v for full metadata)"
 	echo "     quota                       - show quota on the remote servers"
 	echo "     cancel NNNN                 - cancel task NNNN"
-	echo "     approve NNNN [SUBTASK] [-m <message>] - approve subtask (all subtasks if SUBTASK is omitted)"
+	echo "     approve NNNN [package|subtask] [-m <message>] - approve subtask by number or by package name (all subtasks if omitted)"
 	echo "     acl [branch] package        - show acl for the package"
 	echo "     acl [branch] package add|del <user> - add/del acl for the package"
 	echo "     wait   [NNNN] [-q|--quiet]  - wait for task build to complete"
@@ -926,7 +926,13 @@ if [ "$1" = "approve" ] ; then
 	[ -n "$TASK" ] || TASK="$(get_last)" || fatal "Can't get last task"
 
 	if [ -n "$SUBTASK" ] ; then
-		SUBTASKLIST="$SUBTASK"
+		if isnumber "$SUBTASK" ; then
+			SUBTASKLIST="$SUBTASK"
+		else
+			SUBTASKLIST="$(get_subtask "$TASK" "$SUBTASK")"
+			[ -n "$SUBTASKLIST" ] || fatal "can't find subtask for $SUBTASK"
+			info "$SUBTASK -> $SUBTASKLIST"
+		fi
 	else
 		SUBTASKLIST="$(get_all_subtasks "$TASK")"
 		[ -n "$SUBTASKLIST" ] || fatal "No subtasks found in task $TASK"
