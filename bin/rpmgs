@@ -187,10 +187,12 @@ download_any_tarball()
 
 	BASESOURCE=$(dirname "$BASESOURCE")/$(basename "$BASESOURCE" .$ORIGEXT)
 
+	# tarball already cached locally - use it instead of redownloading
+	[ -z "$FORCEDOWNLOAD" ] && check_tarball "$TARGET" && { echo "$TARGET already exists, using cached copy" ; return ; }
+
 	local ext
 	# try download by exts list
 	for ext in $FORMATS ; do
-		[ -z "$FORCEDOWNLOAD" ] && check_tarball "$TARGET" && { echo "$TARGET already exists, continue... " ; continue; }
 		download_to "$BASESOURCE.$ext" "$TARGET" || continue
 		return
 	done
