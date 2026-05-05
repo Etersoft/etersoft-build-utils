@@ -660,7 +660,9 @@ update_predownloaded()
 		#[ "$MODE" = "production" ] && PRODUCTION='--no-dev'
 
 		info "Detected 'Cargo.toml' install hook ..."
-		docmd cargo vendor --verbose $PRODUCTION || fatal
+		showcmd cargo vendor $PRODUCTION '>' $RGD/.gear/config.toml
+		a= cargo vendor $PRODUCTION > $RGD/.gear/config.toml || fatal
+		info "Cargo vendor source override saved to .gear/config.toml"
 		COMMITMSG="update vendored cargo modules with cargo vendor $PRODUCTION for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -679,7 +681,7 @@ update_predownloaded()
 		rm -rv vendor/windows*/lib/{*.lib,*.a}
 
 		HAS_CARGO=1
-		KEEP_DIRS="$KEEP_DIRS vendor Cargo.toml"
+		KEEP_DIRS="$KEEP_DIRS vendor Cargo.toml config.toml"
 	fi
 
 	local i
@@ -698,7 +700,9 @@ update_predownloaded()
 
 		info "Detected '$i' install hook ..."
 		cd $rust_dir || fatal
-		docmd cargo vendor --verbose $vendor_rel || fatal
+		showcmd cargo vendor $vendor_rel '>' $RGD/.gear/config.toml
+		a= cargo vendor $vendor_rel > $RGD/.gear/config.toml || fatal
+		info "Cargo vendor source override saved to .gear/config.toml"
 		COMMITMSG="update vendored cargo modules in $rust_dir dir with cargo vendor for $VERSION (see $SDNAME in .gear/rules)"
 
 		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
@@ -712,7 +716,7 @@ update_predownloaded()
 		rm -rv vendor/winapi-*-pc-windows-gnu/lib/*.a
 
 		HAS_CARGO=1
-		KEEP_DIRS="$KEEP_DIRS vendor Cargo.lock"
+		KEEP_DIRS="$KEEP_DIRS vendor Cargo.lock config.toml"
 	done
 	#### end of cargo only part
 
@@ -944,6 +948,8 @@ update_predownloaded()
 	popd
 
 	docmd git add -f $PSM
+	# also stage cargo source-override config if rpmgs generated it
+	[ -n "$HAS_CARGO" ] && [ -f "$RGD/.gear/config.toml" ] && docmd git -C "$RGD" add -f .gear/config.toml
 	docmd git commit -m "$COMMITMSG"
 
 }
