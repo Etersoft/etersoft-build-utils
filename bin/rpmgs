@@ -125,9 +125,27 @@ git_to_tarball()
 	local d="$(basename "$URL" .git)"
 	git clone --recurse-submodules "$URL" "$d" || fatal
 
-	if [ -n "$CHECKOUT" ] ; then
+	# No explicit checkout from URL: try to checkout tag matching spec Version,
+	# so we don't silently ship HEAD content under a fixed version label.
+	# Use HEAD intentionally by passing 'HEAD' as version.
+	if [ -z "$CHECKOUT" ] && [ -n "$VERSION" ] && [ "$VERSION" != "HEAD" ] ; then
+		cd "$d" || fatal
+		if git rev-parse --verify --quiet "refs/tags/v$VERSION" >/dev/null ; then
+			CHECKOUT="v$VERSION"
+		elif git rev-parse --verify --quiet "refs/tags/$VERSION" >/dev/null ; then
+			CHECKOUT="$VERSION"
+		else
+			cd - >/dev/null
+			rm -rf "$d"
+			fatal "git_to_tarball: no tag matching version '$VERSION' (tried v$VERSION, $VERSION) in $URL. Use # Source-url with /tree/<ref> for explicit checkout, or pass HEAD as version."
+		fi
+		cd - >/dev/null
+	fi
+
+	if [ -n "$CHECKOUT" ] && [ "$CHECKOUT" != "HEAD" ] ; then
 		cd "$d" || fatal
 		git checkout $CHECKOUT || fatal
+		git submodule update --init --recursive
 		cd - >/dev/null
 	fi
 
