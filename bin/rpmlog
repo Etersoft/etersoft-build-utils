@@ -161,7 +161,7 @@ if [ -n "$CHANGELOGADD" ] ; then
 else
 	# TODO: найти параметр для упрощения истории. пока - sort?
 	# Делает первую букву маленькой, убирает точку в конце строки
-	CHANGELOG="$(git --no-pager log $FROMTAG..$TOTAG --reverse --simplify-merges --dense --pretty="- %s" | sed -e "s|\.\$||g" -e "s|- \([A-Z]\)\([a-z]\)|- \l\1\2|g" -e "s|%||g" -e "s|  +|\n  +|g")"
+	CHANGELOG="$(git --no-pager log $FROMTAG..$TOTAG --reverse --simplify-merges --dense --pretty="- %s" | sed -e "s|\.\$||g" -e "s|- \([A-Z]\)\([a-z]\)|- \l\1\2|g" -e "s|%||g" -e "s|  +|\n  +|g" -e "s|  -|\n  -|g")"
 	[ -n "$CHANGELOG" ] || fatal "git log was failed. Probably, you have no tag $FROMTAG in your repo. Check the source repository."
 fi
 
