@@ -59,6 +59,8 @@ libmpg123-devel|libmpg123-dev
 libmpg123|libmpg123-0
 #NX
 #xkbcomp|x11-xkb-utils
+libxkbfile|libxkbfile1
+libXres|libxres1
 xorg-font-utils|xfonts-utils
 sessreg|x11-xserver-utils
 numlockx|
