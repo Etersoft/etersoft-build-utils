@@ -375,3 +375,6 @@ libavutil59|
 wine-etersoft-gecko-req|wine-etersoft-gecko
 wine-etersoft-mono-req|wine-etersoft-mono
 7-zip|p7zip
+
+# Надо убрать из зависимостей пакета
+kubo|
