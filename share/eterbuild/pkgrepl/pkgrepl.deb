@@ -557,3 +557,8 @@ wine-etersoft-mono-req|wine-etersoft-mono
 
 # Надо убрать из зависимостей пакета
 kubo|
+
+# hack for eepm-full
+aria2|
+fzf|
+pigz|
