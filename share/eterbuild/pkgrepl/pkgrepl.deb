@@ -73,6 +73,8 @@ libGL-devel|libgl1-mesa-dev mesa-common-dev
 libGL|libgl1-mesa-glx
 
 gcc-c++|g++
+# Sisyphus libgccN-devel -> distro default libgcc-dev (pulled by gcc metapackage)
+libgcc15-devel|gcc
 tcl-devel|tcl8.4-dev
 perl-devel|libperl-dev
 kernel-build-tools|

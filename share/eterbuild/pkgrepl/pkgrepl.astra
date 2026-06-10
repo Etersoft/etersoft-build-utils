@@ -103,6 +103,7 @@ fonts-ttf-liberation|fonts-liberation
 # ИХ НЕТ в 1.7
 #libxkbcommon|libxkbcommon0 libxkbregistry0
 #libxkbcommon-devel|libxkbcommon-dev libxkbregistry-dev
+libgcc15-devel|libgcc-8-dev
 
 # rxkdriveclient
 qt5-base-devel|qt5-qmake-bin qttools5-dev-tools
