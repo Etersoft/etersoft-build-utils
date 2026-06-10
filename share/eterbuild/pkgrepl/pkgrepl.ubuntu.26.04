@@ -1,0 +1,7 @@
+# FFmpeg 7.x libraries in Ubuntu 26.04 match Sisyphus versions, override remap from 25.10
+libavcodec62|libavcodec62
+libavformat62|libavformat62
+libavutil60|libavutil60
+
+# gcc-15 dev package: real name uses dash before version
+libgcc15-devel|libgcc-15-dev
