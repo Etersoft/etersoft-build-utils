@@ -8,3 +8,5 @@ libOSMesa|libOSMesa
 libvulkan-devel|libvulkan-devel
 libvulkan1|libvulkan1
 
+#RX
+libgirepository1.0-devel|gobject-introspection-devel

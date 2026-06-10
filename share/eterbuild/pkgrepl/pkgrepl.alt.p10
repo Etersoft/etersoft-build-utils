@@ -10,3 +10,4 @@ libOSMesa-devel|libOSMesa-devel
 #libwxGTK3.2|libwxGTK3.0
 #libwxGTK3.2-devel|libwxGTK3.0-devel
 #libwxBase3.2|libwxBase3.0
+libgirepository1.0-devel|gobject-introspection-devel

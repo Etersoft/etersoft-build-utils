@@ -20,3 +20,4 @@ opencl-headers|opencl-headers
 libwxGTK3.2|libwxGTK3.0
 libwxGTK3.2-devel|libwxGTK3.0-devel
 libwxBase3.2|libwxBase3.0
+python3-module-Cython|python-module-Cython

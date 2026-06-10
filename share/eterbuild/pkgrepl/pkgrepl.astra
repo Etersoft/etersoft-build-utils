@@ -63,6 +63,11 @@ xorg-font-utils|xfonts-utils
 sessreg|x11-xserver-utils
 numlockx|
 python-module-Cython|cython
+python3-module-Cython|cython3
+python3-module-cython|cython3
+python3-module-pycairo-devel|python3-cairo-dev
+python3-module-pycairo|python3-cairo
+python3-module-pygobject3-devel|python-gi-dev
 libwxGTK3.0|libwxgtk3.0-0v5
 libwxGTK3.0-devel|libwxgtk3.0-dev
 libwxGTK3.1|libwxgtk3.0-0v5

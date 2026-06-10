@@ -428,6 +428,7 @@ pkgconfig(netapi)|samba-dev
 samba-libs|
 
 python-module-Cython|cython
+python3-module-Cython|cython3
 iconv|
 
 # Vulkan
