@@ -469,12 +469,7 @@ update_master_branch_to()
 
 	local tag="$(get_tag_by_version "$GSSETVERSION")"
 	[ -n "$tag" ] || fatal "Can't find tag for $GSSETVERSION version"
-	if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
-		info "Using 'ours' merge strategy for .gear/tags-based package"
-		docmd git merge -s ours $tag || fatal "Failed to merge tag $tag (ours strategy)"
-	else
-		docmd git merge $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
-	fi
+	docmd git merge $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
 
 	# TODO: it is more clean detect that dir
 	if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
