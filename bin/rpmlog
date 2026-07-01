@@ -181,14 +181,6 @@ if [ "$INCREMENTMODE" = "-a" ] ; then
     fi
 fi
 
-# overload func
-reset_release()
-{
-    local SPECNAME="$1"
-    old="$(get_release $SPECNAME)"
-    echo "${old/[0-9]/}1"
-}
-
 # increment release
 case "$INCREMENTMODE" in
         "-r")
@@ -196,14 +188,16 @@ case "$INCREMENTMODE" in
                 ;;
         "-n")
                 set_version $SPECNAME $FORCEVERSION
-                reset_release $SPECNAME
+                # reset release to <prefix>1 (e.g. eter2 -> eter1)
+                set_release $SPECNAME
                 ;;
         "-s")
                 inc_subrelease $SPECNAME
                 ;;
         "-v")
                 inc_version $SPECNAME
-                reset_release $SPECNAME
+                # reset release to <prefix>1 (e.g. eter2 -> eter1)
+                set_release $SPECNAME
                 ;;
         *)
                 ;;

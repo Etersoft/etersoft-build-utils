@@ -125,4 +125,3 @@ $ a=qqq
 $ while read l; do a="$l"; done < <(echo "$list")
 $ echo $a
 line3
-
