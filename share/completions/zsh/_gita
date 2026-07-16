@@ -1,0 +1,114 @@
+#compdef gita gitask
+# zsh completion for gita (gitask)
+# https://etersoft.ru
+
+_gita() {
+	local curcontext="$curcontext" state line
+	typeset -A opt_args
+
+	_arguments -C \
+		'1:subcommand:->subcmd' \
+		'*::arg:->args'
+
+	case $state in
+		subcmd)
+			local -a subcommands=(
+				'new:Create new task'
+				'run:Run task (test-only by default)'
+				'commit:Commit task'
+				'test:Run task with --test-only'
+				'add:Add package to task'
+				'Add:Add package and run task'
+				'deps:Add dependency'
+				'copy:Copy package to another branch'
+				'find:Find package in repo'
+				'log:Show build log'
+				'show:Show task subtasks'
+				'ls:List tasks'
+				'quota:Show quota'
+				'cancel:Cancel task'
+				'approve:Approve subtask'
+				'acl:Manage package ACL'
+				'wait:Wait for task build'
+				'share:Share task'
+				'delsub:Remove subtask'
+				'rebuild:Rebuild package'
+				'get:Get task info'
+				'task:Pass-through to ssh task'
+			)
+			_describe 'subcommand' subcommands
+			;;
+		args)
+			case $line[1] in
+				ls)
+					_arguments -s \
+						'(-a --all)'{-a,--all}'[List all users, all states]' \
+						'(-u --user)'{-u,--user}'[List tasks for USER]:user:' \
+						'(-s --state)'{-s,--state}'[Filter by state]:state:(NEW AWAITING PENDING BUILDING COMMITTING TESTED FAILED DONE EPERM POSTPONED ALL)' \
+						'(-r --repo)'{-r,--repo}'[Filter by repo]:repo:(sisyphus p10 p11 c10f2)' \
+						'-w[Watch mode, refresh every N seconds]:interval:' \
+					;;
+				run)
+					_arguments -s \
+						'--test-only[Test only]' \
+						'--commit[Commit]' \
+						'-m[Message]:message:' \
+					;;
+				commit|test)
+					_arguments -s \
+						'-m[Message]:message:' \
+					;;
+				add|Add)
+					_arguments -s \
+						'(-h --help)'{-h,--help}'[Show help]' \
+						'1:add subcommand:(del copy repo build rebuild)' \
+						'*:args:' \
+					;;
+				copy)
+					_arguments -s \
+						'*:package:' \
+						'to:target branch:(p10 p11 sisyphus)' \
+						'from:source branch:' \
+					;;
+				acl)
+					_arguments -s \
+						'1:branch:(Sisyphus p10 p11 c10f2)' \
+						'2:package:' \
+						'3:command:(show add del leader)' \
+						'4:user:' \
+					;;
+				approve)
+					_arguments -s \
+						'-m[Message]:message:' \
+						'1:task number:' \
+						'2:subtask or package:' \
+					;;
+				wait)
+					_arguments -s \
+						'(-q --quiet)'{-q,--quiet}'[Quiet mode, no spinner]' \
+						'1:task number:' \
+					;;
+				get)
+					_arguments -s \
+						'1:subcommand:(subtask last)' \
+					;;
+				cancel|delsub|log|show|share)
+					_arguments -s \
+						'1:task number:' \
+					;;
+				deps)
+					_arguments -s \
+						'1:task number:' \
+						'2:command:(add)' \
+						'3:dependency task:' \
+					;;
+				find)
+					_arguments -s \
+						'1:package name:' \
+					;;
+			esac
+			;;
+	esac
+}
+
+_gita "$@"

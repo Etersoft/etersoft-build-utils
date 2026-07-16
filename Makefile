@@ -27,3 +27,7 @@ install:
 	install -m 644 share/eterbuild/grprepl/grprepl.* $(DESTDIR)$(pkgdatadir)/grprepl/
 	install -m 644 share/eterbuild/eterbuild $(DESTDIR)$(pkgdatadir)/
 	install -m 644 share/eterbuild/functions/* $(DESTDIR)$(pkgdatadir)/functions/
+	mkdir -p $(DESTDIR)$(datadir)/fish/vendor_completions.d
+	install -m 644 share/completions/fish/gita.fish $(DESTDIR)$(datadir)/fish/vendor_completions.d/
+	mkdir -p $(DESTDIR)$(datadir)/zsh/site-functions
+	install -m 644 share/completions/zsh/_gita $(DESTDIR)$(datadir)/zsh/site-functions/

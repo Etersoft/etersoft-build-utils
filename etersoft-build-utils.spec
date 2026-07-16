@@ -61,6 +61,8 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %_bindir/*
 %_datadir/eterbuild/
 %attr(0755,root,root) %_sysconfdir/bashrc.d/*
+%_datadir/fish/vendor_completions.d/gita.fish
+%_datadir/zsh/site-functions/_gita
 %dir %_sysconfdir/eterbuild/
 %dir %_sysconfdir/eterbuild/apt/
 %dir %_sysconfdir/eterbuild/repos/
