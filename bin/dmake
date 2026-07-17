@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "dmake [-t] [-p] - make with distcc using (distributed build)"

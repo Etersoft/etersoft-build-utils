@@ -8,7 +8,7 @@
 # - название спек-файла
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod rpm repl spec
 
 set_gear_host
@@ -150,7 +150,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 fi
 
 # pass other options to RPM:
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 }
 
 if [ "$1" = "--skip-reqs" ] ; then

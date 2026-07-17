@@ -17,7 +17,7 @@
 # TODO: -r
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod rpm tarball alt git web buildsrpm branch
 
 SIGN=
@@ -113,7 +113,7 @@ if [ $# -gt 0 ]; then
 	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 
 }
 
@@ -167,7 +167,7 @@ check_gear_and_tag()
 
 	[ -n "$FORCE" ] && echo "Force create tag..." || echo "Create tag..."
 
-	cd $SPECDIR >/dev/null
+	cd "$SPECDIR" >/dev/null || exit
 
 	__gear_create_tag || RESULT=1
 	if [ "$RESULT" = 1 ] ; then
@@ -180,7 +180,7 @@ check_gear_and_tag()
 	fi
 	local TAG=$(get_last_tag)
 	test -z "$TAG" || is_last_commit_tag || fatal "Tag $TAG is not on the last commit"
-	cd - >/dev/null
+	cd - >/dev/null || exit
 	echo "Tag $TAG is set"
 	return $RESULT
 }
@@ -189,7 +189,7 @@ check_gear_and_tag()
 extract_tarball_to_dest()
 {
 	local TDIR=$(mktemp -d || fatal "can't create tmp dir")
-	cd $TDIR
+	cd "$TDIR" || exit
 		cat "$1" | rpm2cpio | cpio -i "*.tar*"
 		local TARNAME=$(querypackage $1 "" "%{NAME}-%{VERSION}")
 		# FIXME: hack to replace alt release to eter
@@ -201,7 +201,7 @@ extract_tarball_to_dest()
 			cp -fv $i $2/
 			make_md5sum $2 $(basename $i)
 		done
-	cd -
+	cd - || exit
 	rm -f $TDIR/*
 	rmdir $TDIR
 }
@@ -386,7 +386,7 @@ if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
 		cat $RPMDIR/uploaded.log.tmp | grep task | head -n2 | tail -n1 >> $RPMDIR/uploaded.log
 		echo "     run $TASKNUMBER task $PROJECTNAME with tag $TAG at $GEARHOST (in $BINARYREPO) at `date "+%c"`" >>$RPMDIR/uploaded.log
 		rm -f $RPMDIR/uploaded.log.tmp
-		cd - >/dev/null
+		cd - >/dev/null || exit
 	done
 
 	# if more then one spec, use common task

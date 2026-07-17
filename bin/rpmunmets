@@ -9,7 +9,7 @@
 # Tests unmets in built int hasher packages
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod hasher
 
 MKAPTBOX=/usr/bin/mkaptbox
@@ -61,7 +61,7 @@ if [ $# -gt 0 ]; then
 fi
 
 # pass other options to RPM:
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 }
 
 # FIXME: needs no args now

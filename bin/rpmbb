@@ -10,13 +10,13 @@
 # - название спек-файла
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod rpm check
 
 # Start as helper
 if [ "$1" = "--helper" ]; then
 	shift
-	cd $RPMTOPDIR/SPECS && rpmbb "$@"
+	cd "$RPMTOPDIR"/SPECS || exit; rpmbb "$@"
 	exit $?
 fi
 
@@ -75,7 +75,7 @@ if [ $# -gt 0 ]; then
 fi
 
 # pass other options to RPM:
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 }
 
 parse_cmd_pre_spec "$@"
@@ -152,5 +152,5 @@ do
 	echog "Done with build $NAMESRPMIN"
 	date
 
-	cd - >/dev/null
+	cd - >/dev/null || exit
 done

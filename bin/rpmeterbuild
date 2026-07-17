@@ -7,7 +7,7 @@
 # Allows running build functions as external commands (e.g., via faketty)
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod build buildsrpm
 
 # Force colored compiler output (for GCC/Clang) when running via faketty

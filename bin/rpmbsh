@@ -8,7 +8,7 @@
 # Создаёт пакет(ы) по указанным спекам и собирает в hasher
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod rpm git buildsrpm
 
 RESULT=0

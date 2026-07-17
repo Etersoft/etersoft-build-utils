@@ -12,7 +12,7 @@
 # check for the same file with other compression
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod rpm tarball web buildsrpm
 
 WEXT=""
@@ -51,7 +51,7 @@ done
 # remove args that were options
 [ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 
 }
 
@@ -135,18 +135,18 @@ git_to_tarball()
 		elif git rev-parse --verify --quiet "refs/tags/$VERSION" >/dev/null ; then
 			CHECKOUT="$VERSION"
 		else
-			cd - >/dev/null
+			cd - >/dev/null || exit
 			rm -rf "$d"
 			fatal "git_to_tarball: no tag matching version '$VERSION' (tried v$VERSION, $VERSION) in $URL. Use # Source-url with /tree/<ref> for explicit checkout, or pass HEAD as version."
 		fi
-		cd - >/dev/null
+		cd - >/dev/null || exit
 	fi
 
 	if [ -n "$CHECKOUT" ] && [ "$CHECKOUT" != "HEAD" ] ; then
 		cd "$d" || fatal
 		git checkout $CHECKOUT || fatal
 		git submodule update --init --recursive
-		cd - >/dev/null
+		cd - >/dev/null || exit
 	fi
 
 	rm -rf "$d/.git/"
@@ -160,12 +160,12 @@ download_to()
 {
 	local URL="$1"
 	local TARGET="$2"
-	pushd $(dirname $TARGET)
+	pushd "$(dirname "$TARGET")" || exit
 	# make tarball from remote git (with submodules)
 	if echo "$URL" | grep -q "\.git$" || echo "$URL" | grep -q -E "github\.com.*/(tree|commit)/" ; then
 		git_to_tarball "$URL" "$TARGET"
 		local RET=$?
-		popd
+		popd || exit
 		return $RET
 	fi
 	# handle src.rpm: extract Source tarball from it
@@ -174,7 +174,7 @@ download_to()
 		download_url "$URL" && DF="$DOWNLOADEDNAME" && extract_from_srcrpm "$DF" "$TARGET"
 		local RET=$?
 		[ "$RET" = "0" ] || rm -fv "$DF" "$TARGET"
-		popd
+		popd || exit
 		return $RET
 	fi
 		local DF="$(basename "$URL")"
@@ -183,7 +183,7 @@ download_to()
 		# TODO: repack need remove origin
 		#rm -fv "$DF"
 		[ "$RET" = "0" ] || rm -fv "$DF" "$TARGET"
-	popd
+	popd || exit
 	return $RET
 }
 
@@ -377,7 +377,7 @@ commit_tarball_to_dir()
 			info "Detected ./.gear/postdownload-hook, running it in $CURNAME dir ..."
 			cd $CURNAME || fatal
 			sh -x ../.gear/postdownload-hook
-			cd - >/dev/null
+			cd - >/dev/null || exit
 		fi
 		local commit_msg
 		if [ -n "$CURRENTURL" ] ; then
@@ -477,7 +477,7 @@ update_master_branch_to()
 		cd $(get_root_git_dir)/.gear || fatal
 		docmd git add tags/* -f
 		docmd git commit -m "update .gear/tags"
-		cd - >/dev/null
+		cd - >/dev/null || exit
 	fi
 }
 
@@ -640,7 +640,7 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
-		cd - >/dev/null
+		cd - >/dev/null || exit
 
 		KEEP_DIRS="$KEEP_DIRS vendor"
 	fi
@@ -684,7 +684,7 @@ update_predownloaded()
 	# search Cargo.lock at any depth (e.g. bindings/python/Cargo.lock for HuggingFace projects)
 	for i in $(find . -name Cargo.lock -not -path "./vendor/*" 2>/dev/null | sed 's|^\./||') ; do
 		[ -s "$i" ] || continue
-		rust_dir=$(dirname $i)
+		rust_dir=$(dirname "$i")
 		[ "$rust_dir" = "." ] && continue
 		[ -d "./vendor" ] && continue
 
@@ -705,7 +705,7 @@ update_predownloaded()
 			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
-		cd - >/dev/null
+		cd - >/dev/null || exit
 
 		# can remove binaries from definitely unused packages
 		rm -rv vendor/winapi-*-pc-windows-gnu/lib/*.a
@@ -743,7 +743,7 @@ update_predownloaded()
 			rm -rf ../zig-cache/p
 		fi
 
-		cd - >/dev/null
+		cd - >/dev/null || exit
 
 		# TODO: drop zigwin32 ?
 		KEEP_DIRS="$KEEP_DIRS zig-cache"
@@ -793,7 +793,7 @@ update_predownloaded()
 		[ "$MODE" = "production" ] && PRODUCTION='--prod'
 
 		info "Detected pnpm-lock.yaml install hook in $pnpm_dir, running ..."
-		pushd "$pnpm_dir" >/dev/null
+		pushd "$pnpm_dir" >/dev/null || exit
 
 		# Remove packageManager field to prevent pnpm from trying to self-update
 		if grep -q '"packageManager"' package.json 2>/dev/null ; then
@@ -802,7 +802,7 @@ update_predownloaded()
 		fi
 
 		docmd pnpm install --frozen-lockfile --ignore-scripts $PRODUCTION || fatal
-		popd >/dev/null
+		popd >/dev/null || exit
 
 		# move node_modules to predownloaded if installed in source dir
 		if [ "$pnpm_dir" != "." ] && [ -d "$pnpm_dir/node_modules" ] ; then
@@ -832,9 +832,9 @@ update_predownloaded()
 		[ "$MODE" = "production" ] && PRODUCTION='--production'
 
 		info "Detected yarn.lock install hook in $yarn_dir, running ..."
-		pushd "$yarn_dir" >/dev/null
+		pushd "$yarn_dir" >/dev/null || exit
 		docmd yarn install --frozen-lockfile --ignore-scripts $PRODUCTION || fatal
-		popd >/dev/null
+		popd >/dev/null || exit
 
 		# move node_modules to predownloaded if installed in source dir
 		if [ "$yarn_dir" != "." ] && [ -d "$yarn_dir/node_modules" ] ; then
@@ -880,9 +880,9 @@ update_predownloaded()
 		[ "$MODE" = "production" ] && PRODUCTION='--omit=dev'
 
 		info "Detected npm install hook in $npm_dir (RGD=$RGD, CURNAME=$CURNAME), running ..."
-		pushd "$npm_dir" >/dev/null
+		pushd "$npm_dir" >/dev/null || exit
 		docmd npm install $VERBOSE --omit=optional --ignore-scripts $PRODUCTION || fatal
-		popd >/dev/null
+		popd >/dev/null || exit
 
 		# move node_modules to predownloaded if installed in source dir
 		if [ "$npm_dir" != "." ] && [ -d "$npm_dir/node_modules" ] ; then
@@ -940,7 +940,7 @@ update_predownloaded()
 
 	# some modules contains own .git
 	find -type d -name ".git" -print -exec rm -rvf "{}" \;
-	popd
+	popd || exit
 
 	docmd git add -f $PSM
 	# also stage cargo source-override config if rpmgs generated it
@@ -999,7 +999,7 @@ do
 # firstly try modern autoupdate if version is empty
 if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
     # need for gear-rules-verify
-    cd $(get_root_git_dir)
+    cd "$(get_root_git_dir)" || fatal
 
     GEAR_RULES_VERIFY=gear-rules-verify
     docmd $GEAR_RULES_VERIFY
@@ -1051,7 +1051,7 @@ fi
 	# Note: gear-uupdate don't want work if package version is already changed
 	if is_gear $SPECDIR && [ -z "$DOWNLOADSOME" ] && [ -s $(get_root_git_dir)/.gear/upstream/remotes ] && $EPMCMD assure gear-remotes-restore perl-Gear-Remotes ; then
 		# need for gear-rules-verify
-		cd $(get_root_git_dir)
+		cd "$(get_root_git_dir)" || fatal
 		$EPMCMD assure gear-commit gear
 		$EPMCMD assure gear-uupdate
 		docmd gear-remotes-restore

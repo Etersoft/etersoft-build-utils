@@ -8,7 +8,7 @@
 # Used ROOTDIR if defined (for non ALT systems)
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod repl rpm git buildsrpm spec branch
 
 

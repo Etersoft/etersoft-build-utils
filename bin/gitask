@@ -4,7 +4,7 @@
 # Public domain
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod git
 
 set_girar_host $1 && shift
@@ -385,6 +385,10 @@ if task["state"] in ("TESTED", "EPERM", "DONE"):
 
 for num in sorted(task.get("subtasks", {}).keys(), key=int):
     st = task["subtasks"][num]
+    # Skip empty subtask slots (no package, only userid present)
+    if not (st.get("type") or st.get("dir") or st.get("pkgname")
+            or st.get("srpm") or st.get("tag_name") or st.get("copy_repo")):
+        continue
     stype = st.get("type", "repo")
     pkg = st.get("pkgname", "")
     if stype == "delete":

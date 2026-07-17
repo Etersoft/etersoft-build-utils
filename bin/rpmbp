@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 
 # workaround for last passed through options
 case "$1" in
@@ -14,4 +14,4 @@ case "$1" in
         ;;
 esac
 
-docmd $(dirname $0)/rpmbph $FIRST -n "$@"
+docmd "$(dirname "$0")"/rpmbph $FIRST -n "$@"

@@ -8,7 +8,7 @@
 # версия может быть указана как 2.6.1 (полная), 2.6 (major) или .1 (minor)
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod spec git
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then

@@ -8,7 +8,7 @@
 # Based on https://bugzilla.altlinux.org/show_bug.cgi?id=33972#c5
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 
 load_mod alt hasher
 

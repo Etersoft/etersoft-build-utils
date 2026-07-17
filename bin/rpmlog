@@ -5,7 +5,7 @@
 # Script for update changelog or increment release
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 
 load_mod spec rpm git etersoft spec
 

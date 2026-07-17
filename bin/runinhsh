@@ -8,7 +8,7 @@
 # TODO: run the same binary like in host system with autodetected package
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then

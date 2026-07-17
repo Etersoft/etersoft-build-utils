@@ -6,7 +6,7 @@
 # Пересборка указанных SRPM-пакетов в hasher
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod hasher check
 
 WITHSTUFF="--with-stuff"
@@ -55,7 +55,7 @@ if [ $# -gt 0 ]; then
 	[ "$OPTIND" -gt 0 ] && shift $(($OPTIND - 1))
 fi
 
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 }
 
 

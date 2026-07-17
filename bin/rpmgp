@@ -9,7 +9,7 @@
 # -c - checkonline
 
 # load common functions, compatible with local and installed script
-. `dirname $0`/../share/eterbuild/functions/common
+. "$(dirname "$0")"/../share/eterbuild/functions/common
 load_mod rpm repl git rpm web repos buildsrpm
 
 # loads repos file and fill SYSNAME and SYSURL arrays
@@ -302,7 +302,7 @@ done
 
 
 # pass other options to RPM:
-LISTRPMARGS=$@
+LISTRPMARGS="$*"
 }
 
 set_girar_host $1 && shift
@@ -382,7 +382,7 @@ if [ -n "$CLONEGIT" ] ; then
 		git_clone $RREPO || fatal "Can't clone $RREPO for $PKGNAME"
 		if cd $PKGNAME ; then
 			docmd git remote rename origin gear
-			cd - >/dev/null
+			cd - >/dev/null || exit
 		fi
 	else
 		[ -z "$PUBLICACCESS" ] || fatal "Can't remote clone via public access"
@@ -398,14 +398,14 @@ if [ -n "$CLONEGIT" ] ; then
 		if cd $PKGNAME ; then
 			# add remotes
 			docmd git remote rename origin $GIRARHOST && docmd gremote $GIRARHOST -o
-			cd - >/dev/null
+			cd - >/dev/null || exit
 		fi
 	fi
 
 	if cd $PKGNAME ; then
 		# get or update all branches
 		get_all_remote_branches
-		cd - >/dev/null
+		cd - >/dev/null || exit
 	fi
 
 	if [ -z "$PUBLICACCESS" ] ; then
