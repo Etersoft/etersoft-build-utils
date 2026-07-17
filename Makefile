@@ -1,3 +1,4 @@
+.PHONY: test test-verbose install
 
 pkgdatadir=$(datadir)/eterbuild
 
@@ -9,6 +10,12 @@ QuickHelp.utf8.txt:
 
 QuickHelp.txt:
 	for i in bin/* ; do echo -e "\n\n---------------------------"; LANG=C $$i -h ; done | grep -v "^Note:" | grep -v "^Target" >$@
+
+test:
+	bats tests/bats/
+
+test-verbose:
+	bats --verbose-run tests/bats/
 
 install: 
 	$(MAKE) -C po install
