@@ -1,3 +1,4 @@
+#!/bin/bash
 # bash completion for gita (gitask)
 # https://etersoft.ru
 

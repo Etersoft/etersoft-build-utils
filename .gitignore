@@ -1,4 +1,7 @@
 po/etersoft-build-utils.mo
+po/messages.mo
 tests/specpkgr.spec
 tests/get_ver.spec
+*.orig
+CHECKME/
 *~
