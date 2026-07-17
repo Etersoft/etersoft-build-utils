@@ -16,6 +16,13 @@ fi
 
 if [ "$1" = "-q" ] ; then
 	shift
+	NOEDIT=1
+fi
+
+# Skip the commit-message editor when asked (-q) or in non-interactive runs
+# (no controlling terminal), otherwise gear-commit spawns $EDITOR (e.g. mcedit)
+# and hangs. Mirrors the ! tty -s guard in add_changelog_helper (spec module).
+if [ -n "$NOEDIT" ] || ! tty -s ; then
 	ARG="$ARG --no-edit"
 fi
 
