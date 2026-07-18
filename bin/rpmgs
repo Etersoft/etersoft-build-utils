@@ -20,7 +20,7 @@ GETSOURCE=""
 LOADALL=''
 
 #############################
-Usage="Usage: $name [-f] [spec] [new_version]"
+Usage="Usage: $name [-f] [-q] [spec] [new_version]"
 function mygetopts()
 {
 name=${0##*/}
@@ -36,13 +36,15 @@ phelp()
 	echog "Options:"
 #	echog "   -a  get all source (not only Source|Source0)"
 	echog "   -f  force download and commit tarball(s) (remove source file before download)"
+	echog "   -q  quiet mode, skip commit message editing (e.g. merge of upstream tag)"
 }
 
-while getopts :hf opt; do
+while getopts :hfq opt; do
     case $opt in
     h) phelp; exit 0;;
 #    a) LOADALL=1 ;;
     f) FORCEDOWNLOAD=-f ;;
+    q) QUIET=-q ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
     esac
@@ -469,7 +471,14 @@ update_master_branch_to()
 
 	local tag="$(get_tag_by_version "$GSSETVERSION")"
 	[ -n "$tag" ] || fatal "Can't find tag for $GSSETVERSION version"
-	docmd git merge $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
+	# Skip the merge-message editor when asked (-q) or in non-interactive runs
+	# (no controlling terminal), otherwise git merge spawns $EDITOR (e.g. mcedit)
+	# and hangs. Mirrors the ! tty -s guard in gammit / add_changelog_helper.
+	local MERGEOPT=""
+	if [ -n "$QUIET" ] || ! tty -s ; then
+		MERGEOPT="--no-edit"
+	fi
+	docmd git merge $MERGEOPT $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
 
 	# TODO: it is more clean detect that dir
 	if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then

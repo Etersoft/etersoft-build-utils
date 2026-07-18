@@ -88,7 +88,7 @@ for SPEC in $LISTNAMES ; do
 	test -n "$GSSETRELEASE" || GSSETRELEASE=$(get_txtrelease $SPEC)1
 	export GSSETRELEASE
 
-	docmd $ETERBUILDBIN/rpmgs $SPEC $VER || fatal "Error within rpmgs"
+	docmd $ETERBUILDBIN/rpmgs $QUIET $SPEC $VER || fatal "Error within rpmgs"
 	SIGNME=""
 	[ -n "$ETERBUILD_SIGN_CHANGELOG" ] && SIGNME=" (with rpmrb script)"
 	add_changelog_helper "- new version $(get_version $SPEC)$SIGNME" $SPEC || echog "Changelog entry already exists"
