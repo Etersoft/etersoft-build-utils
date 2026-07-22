@@ -7,17 +7,23 @@
 . "$(dirname "$0")"/../share/eterbuild/functions/common
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-	echo "gammit [-q] [-a] [files] - make commit with description from last changelog entry in spec"
+	echo "gammit [-q] [-a] [--amend] [files] - make commit with description from last changelog entry in spec"
 	echo "Use: gammit"
 	echo "     -q - skip editor"
 	echo "     -a - commit all files"
+	echo "     --amend - amend (rewrite) the last commit instead of making a new one"
 	exit 0
 fi
 
-if [ "$1" = "-q" ] ; then
-	shift
-	NOEDIT=1
-fi
+AMEND=
+# Parse leading flags (-q/--amend) in any order, leave file args in "$@".
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-q) NOEDIT=1; shift;;
+		--amend) AMEND="--amend"; shift;;
+		*) break;;
+	esac
+done
 
 # Skip the commit-message editor when asked (-q) or in non-interactive runs
 # (no controlling terminal), otherwise gear-commit spawns $EDITOR (e.g. mcedit)
@@ -26,9 +32,9 @@ if [ -n "$NOEDIT" ] || ! tty -s ; then
 	ARG="$ARG --no-edit"
 fi
 
-# If no args
+# If no args (no files specified), commit all tracked changes
 if [ -z "$1" ] ; then
 	ARG="$ARG -a"
 fi
 
-docmd gear-commit $ARG "$@"
+docmd gear-commit $AMEND $ARG "$@"
