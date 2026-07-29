@@ -97,3 +97,21 @@ get_gear_name()
 	[ -n "$gn" ]
 }
 
+# True if .gear/rules builds the main source tarball from the version tag
+# (e.g. 'tar: v@version@:.'), i.e. the upstream source is NOT tracked in the
+# packaging branch -- it is regenerated at build time. Such source-git packages
+# need the 'ours' merge strategy in rpmgs update_master_branch_to(): a regular
+# merge of the upstream tag either conflicts (modify/delete, since the branch
+# "deleted" the source) or leaks new upstream files into the tree. Packages that
+# track source in the branch (vendored/predownloaded, rule like 'tar: .gear/...')
+# do not match and keep getting a real merge.
+# NB: keying on the @version@ tar rule (not on the .gear/tags dir, as the
+# reverted d223e6c did) is what avoids breaking vendored packages (bd83b59).
+is_tar_from_version_tag_rule()
+{
+	local rules
+	rules=$(get_gear_rules) || return 1
+	[ -r "$rules" ] || return 1
+	grep -qE '^[[:space:]]*tar:.*@version@' "$rules"
+}
+
