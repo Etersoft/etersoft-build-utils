@@ -135,8 +135,9 @@ date
 echo "-------------------------------"
 
 # make src.rpm if build OK and we have options for rpmbs
+# (or a task to add to via -a TASK / -A, which are kept in TASKARG)
 RPMBSARGS=$(drop_args "$LISTRPMARGS" i c l e)
-if [ ! "$RESULT" = "0" ] || [ -z "$RPMBSARGS" ]; then
+if [ ! "$RESULT" = "0" ] || { [ -z "$RPMBSARGS" ] && [ -z "$TASKARG" ]; }; then
 	exit $RESULT
 fi
 
