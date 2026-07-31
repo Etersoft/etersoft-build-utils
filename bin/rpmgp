@@ -364,15 +364,20 @@ get_all_remote_branches()
 git_clone()
 {
 	local RREPO="$1"
-	# Test if ssh access is available
-	if [ -z "$PUBLICACCESS" ] && giter $GITHOST check girar access ; then
-		docmd git clone $GIRARHOST:$RREPO
-	else
-		local GIRARURL=$(get_git_url $GITHOST)
-		[ -n "$GIRARURL" ] || fatal "Can't get public URL for $GIRHOST"
+	# Public-first: if the girar exposes a public HTTPS URL (known up front from
+	# gitalias), clone over it -- no SSH and no password is needed for a read.
+	# Only when no public URL is configured do we fall back to (passwordless) SSH.
+	local GIRARURL=$(get_git_url $GITHOST)
+	if [ -n "$GIRARURL" ] ; then
 		PUBLICACCESS=1
 		docmd git clone $GIRARURL$RREPO
+		return
 	fi
+	# No public URL configured: -p (forced public) is impossible here.
+	[ -n "$PUBLICACCESS" ] && fatal "Can't get public URL for $GITHOST"
+	# Otherwise require passwordless SSH access (checked non-interactively).
+	giter $GITHOST check girar access || fatal "Can't access $GITHOST: no public URL and no passwordless SSH key"
+	docmd git clone $GIRARHOST:$RREPO
 }
 
 # clone remote git
