@@ -387,9 +387,9 @@ commit_tarball_to_dir()
 		else
 			commit_msg="just import $(basename $TARBALL) with rpmgs script"
 		fi
-		if ! docmd git commit -m "$commit_msg" ; then
+		if ! docmd git_commit_ignore_nothing -m "$commit_msg" ; then
 			rm -fv "$TARBALL"
-			fatal "Sources were not updated (nothing to commit). Check Source-url and version."
+			fatal "Can't commit sources. Check Source-url and version."
 		fi
 		rm -fv "$TARBALL"
 	else
@@ -1246,7 +1246,7 @@ fi
 		EGEARME=""
 		[ -n "$ETERBUILD_SIGN_CHANGELOG" ] && is_gear && EGEARME=" (with rpmgs script)"
 		if grep -q "^- new version $CURVER$" $spec ; then
-			subst "s|- new version $CURVER$|- new version ($CURVER)$EGEARME via gear-uupdate|" $spec && git commit --amend $spec
+			subst "s|- new version $CURVER$|- new version ($CURVER)$EGEARME via gear-uupdate|" $spec
 		else
 			add_changelog_helper "- new version ($CURVER)$EGEARME" $spec || echog "Changelog entry for $CURVER-$CURREL already exists"
 		fi
@@ -1255,4 +1255,3 @@ fi
 done
 
 exit 0
-
