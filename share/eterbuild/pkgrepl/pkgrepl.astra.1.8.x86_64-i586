@@ -36,7 +36,42 @@ libXpresent-devel|
 libSDL2-devel|
 libSDL2|
 
-libX11-devel|ia32-libs-dev
+libX11-devel|ia32-libs-dev:amd64
+
+# Astra 1.8 does not publish separate i386 runtime packages.  Their files are
+# bundled into ia32-libs:amd64, so do not let the generic deb rules produce
+# uninstallable dependencies such as libx11-6:i386 and libasound2:i386.
+libEGL|ia32-libs:amd64
+libX11|ia32-libs:amd64
+libXcomposite|ia32-libs:amd64
+libXcursor|ia32-libs:amd64
+libXext|ia32-libs:amd64
+libXfixes|ia32-libs:amd64
+libXi|ia32-libs:amd64
+libXinerama|ia32-libs:amd64
+libXrandr|ia32-libs:amd64
+libXrender|ia32-libs:amd64
+libXxf86vm|ia32-libs:amd64
+libalsa|ia32-libs:amd64
+libavcodec62|ia32-libs:amd64
+libavformat62|ia32-libs:amd64
+libavutil60|ia32-libs:amd64
+libcups|ia32-libs:amd64
+libfontconfig1|ia32-libs:amd64
+libfreetype|ia32-libs:amd64
+libgnutls30|ia32-libs:amd64
+libgphoto2-6|ia32-libs:amd64
+libgphoto2_port-12|ia32-libs:amd64
+libkrb5|ia32-libs:amd64
+libpulseaudio|ia32-libs:amd64
+libsane|ia32-libs:amd64
+libvulkan1|ia32-libs:amd64
+libwayland-client|ia32-libs:amd64
+libwayland-egl|ia32-libs:amd64
+ocl-icd|ia32-libs:amd64
+
+# libgcc_s.so.1 and the 32-bit development files are supplied by this package.
+libgcc15-devel|ia32-libs-dev:amd64
 
 libavcodec61|
 libavformat61|
