@@ -478,18 +478,7 @@ update_master_branch_to()
 	if [ -n "$QUIET" ] || ! tty -s ; then
 		MERGEOPT="--no-edit"
 	fi
-	# For source-git packages whose source is built from the version tag
-	# (see is_tar_from_version_tag_rule), the upstream source is not tracked in the
-	# packaging branch. Use the 'ours' strategy so the tag becomes an ancestor
-	# (needed for merge-base/changelog and gear-update-tag) without touching the
-	# packaging tree. Other packages (vendored/predownloaded, source tracked in the
-	# branch) get a regular real merge.
-	if is_tar_from_version_tag_rule ; then
-		info "Source is built from version tag; using 'ours' merge strategy for $tag"
-		docmd git merge $MERGEOPT -s ours $tag || fatal "Failed to merge tag $tag with 'ours' strategy."
-	else
-		docmd git merge $MERGEOPT $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
-	fi
+	docmd git merge $MERGEOPT $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
 
 	# TODO: it is more clean detect that dir
 	if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
