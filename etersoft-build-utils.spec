@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.5
+Version: 3.3.6
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -72,6 +72,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.6-alt1
+- rpmgs: leave spec changes uncommitted
+- rpmgs: restore upstream tree when merging tags
+
 * Sat Aug 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.5-alt1
 - rpmgs: skip merge-message editor when no controlling terminal
 - gammit: add --amend to rewrite the last commit from the changelog
