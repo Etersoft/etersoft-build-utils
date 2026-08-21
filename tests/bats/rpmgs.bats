@@ -40,4 +40,5 @@ teardown() {
 	update_master_branch_to 1.1
 
 	[ "$(cat source)" = new ]
+	[ "$(git rev-list --parents -n1 HEAD | wc -w)" -eq 3 ]
 }
