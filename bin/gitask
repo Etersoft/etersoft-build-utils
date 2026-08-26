@@ -109,6 +109,17 @@ for num, st in task.get("subtasks", {}).items():
 	ssh $GEARHOST task show $1 | grep -E "(/$2\.git|:package=$2$|:srpm=$2-[0-9])" | sed -e "s|^ \([0-9]*\):.*|\1|g"
 }
 
+# Extract the source package name from either supported repo form:
+#   /path/to/package.git=tag
+#   /path/to/package.git tag
+get_repo_pkgname()
+{
+	local repo="${1%% *}"
+	repo="${repo%%=*}"
+	repo="${repo%.git}"
+	basename "$repo"
+}
+
 # get all subtask numbers from TASKNUMBER
 get_all_subtasks()
 {
@@ -777,10 +788,10 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 			fi
 		fi
 		shift
-		# Extract package name from repo.git=tag format for subtask lookup
+		# Extract package name from either supported repo form for subtask lookup
 		PKGNAME="$PACKAGE"
-		if rhas "$PKGNAME" "\.git=" ; then
-			PKGNAME="$(echo "$PKGNAME" | sed 's/\.git=.*//')"
+		if [ "$OADDCMD" = "repo" ] ; then
+			PKGNAME="$(get_repo_pkgname "$PACKAGE")"
 		fi
 		ST="$(get_subtask $TASK $PKGNAME)"
 		if [ -n "$ST" ] ; then
