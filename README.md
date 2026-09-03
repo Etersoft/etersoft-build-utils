@@ -57,7 +57,7 @@ MENV=SS      # for Sisyphus
 | Command | Description |
 |---------|-------------|
 | `rpmcs [spec]` | Cleanup spec (foreign spec adoption) |
-| `rpmlog [spec]` | Update changelog from git log |
+| `rpmlog [spec ...]` | Update version and changelog in one or several spec files |
 | `rpmurl [spec]` | Open URL from spec in browser |
 | `rpmbugs [spec]` | Open bug list for package |
 

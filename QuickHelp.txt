@@ -274,7 +274,7 @@ Options:
 
 ---------------------------
 rpmlog - update version/release and changelog
-Usage: rpmlog [-q] [-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC] [fromTAG] [toTAG]
+Usage: rpmlog [-q] [-a|-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC ...] [fromTAG] [toTAG]
 
 Options:
    -v  increment version
@@ -290,6 +290,7 @@ Ext. options:
 Example:
    $ rpmlog -v -l             - typical build new version
    $ rpmlog -r -l HEAD~2      - build new version with last two commit message as changelog
+   $ rpmlog -a -l one.spec two.spec - update several specs with the same version and changelog
    $ rpmlog -r -e             - prepare new version build with empty changelog entry
    $ rpmlog -r -e 'new build' - prepare new version build with changelog entry 'new build'
 
