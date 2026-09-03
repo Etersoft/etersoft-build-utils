@@ -11,7 +11,7 @@ load_mod spec rpm git etersoft spec
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmlog - update version/release and changelog"
-	echog "Usage: rpmlog [-q] [-a|-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC] [fromTAG] [toTAG]"
+	echog "Usage: rpmlog [-q] [-a|-r|-s|-v] [-l|-t] [-e [changelog entry]] [SPEC ...] [fromTAG] [toTAG]"
 	echo
 	echog "Options:"
 	echog "   -a  increment version if code is changed or increment release if spec changed only"
@@ -33,6 +33,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "Example:"
 	echog "   $ rpmlog -v -l             - typical build new version"
 	echog "   $ rpmlog -r -l HEAD~2      - build new version with last two commit message as changelog"
+	echog "   $ rpmlog -a -l one.spec two.spec - update several specs with the same version and changelog"
 	echog "   $ rpmlog -r -e             - prepare new version build with empty changelog entry"
 	echog "   $ rpmlog -r -e 'new build' - prepare new version build with changelog entry 'new build'"
 	exit 0
@@ -98,13 +99,33 @@ if [ "$1" = "--last-changelog" ] ; then
     shift
 fi
 
-if [ -n "${1/*.spec/}" ] || [ -z "$1" ] ; then
+SPECNAMES=
+case "$1" in
+"" )
 	SPECNAME=$(get_gear_spec)
+	SPECNAMES=$SPECNAME
 	[ -z "$QUIET" ] && echo "Using autodetected spec $SPECNAME..."
-else
+	;;
+*.spec)
 	SPECNAME=$1
-	shift
-fi
+	while [ -n "$1" ] ; do
+		case "$1" in
+		*.spec)
+			SPECNAMES="$SPECNAMES $1"
+			shift
+			;;
+		*)
+			break
+			;;
+		esac
+	done
+	;;
+*)
+	SPECNAME=$(get_gear_spec)
+	SPECNAMES=$SPECNAME
+	[ -z "$QUIET" ] && echo "Using autodetected spec $SPECNAME..."
+	;;
+esac
 
 FROMTAG=
 if [ -n "$1" ] ; then
@@ -118,9 +139,18 @@ if [ -n "$1" ] ; then
 	shift
 fi
 
-if [ ! -r "$SPECNAME" ] ; then
-	fatal "Spec $SPECNAME does not found"
-fi
+for SPEC in $SPECNAMES ; do
+	[ -r "$SPEC" ] || fatal "Spec $SPEC does not exist or is not readable"
+done
+
+BASEVERSION=$(get_version "$SPECNAME")
+BASERELEASE=$(get_release "$SPECNAME")
+for SPEC in $SPECNAMES ; do
+	SPECVERSION=$(get_version "$SPEC")
+	SPECRELEASE=$(get_release "$SPEC")
+	[ "$SPECVERSION" = "$BASEVERSION" ] && [ "$SPECRELEASE" = "$BASERELEASE" ] || \
+		fatal "Spec $SPEC has revision $SPECVERSION-$SPECRELEASE, expected $BASEVERSION-$BASERELEASE from $SPECNAME"
+done
 
 if [ -n "$LASTVERCMD" ] ; then
     echo $(get_version $SPECNAME)-$(get_release $SPECNAME)
@@ -165,20 +195,35 @@ else
 	[ -n "$CHANGELOG" ] || fatal "git log was failed. Probably, you have no tag $FROMTAG in your repo. Check the source repository."
 fi
 
-[ -n "$(get_packager $SPECNAME)" ] || fatal "You need set packager in your spec (use $ rpmcs for it) or in ~/.rpmmacros file"
+for SPEC in $SPECNAMES ; do
+	[ -n "$(get_packager "$SPEC")" ] || fatal "You need set packager in spec $SPEC (use $ rpmcs for it) or in ~/.rpmmacros file"
+done
 
 if [ -n "$TESTRUN" ] ; then
 	INCREMENTMODE=""
 fi
 
 if [ "$INCREMENTMODE" = "-a" ] ; then
-    # print all files from commit exclude spec/rules
-    RELLINE=$(git log --name-status --pretty=oneline $FROMTAG..$TOTAG | grep "^[MAD]" | grep -v ".gear/rules" | grep -v "$(basename "$SPECNAME")")
-    if [ -z "$RELLINE" ] ; then
-        INCREMENTMODE="-r"
-    else
-        INCREMENTMODE="-v"
-    fi
+	# Treat changes to all managed specs and gear rules as packaging-only changes.
+	RELLINE=$(git log --name-only --pretty=format: "$FROMTAG..$TOTAG")
+	CODECHANGED=
+	for RELFILE in $RELLINE ; do
+		[ "$RELFILE" = ".gear/rules" ] && continue
+		ISSPEC=
+		for SPEC in $SPECNAMES ; do
+			[ "$RELFILE" = "${SPEC#./}" ] || [ "${RELFILE##*/}" = "${SPEC##*/}" ] || continue
+			ISSPEC=1
+			break
+		done
+		[ -n "$ISSPEC" ] && continue
+		CODECHANGED=1
+		break
+	done
+	if [ -z "$CODECHANGED" ] ; then
+		INCREMENTMODE="-r"
+	else
+		INCREMENTMODE="-v"
+	fi
 fi
 
 # increment release
@@ -203,7 +248,10 @@ case "$INCREMENTMODE" in
                 ;;
 esac
 
-NEWREV=$(get_version $SPECNAME)-$(get_release $SPECNAME)
+NEWVERSION=$(get_version "$SPECNAME")
+NEWRELEASE=$(get_release "$SPECNAME")
+NEWREV=$NEWVERSION-$NEWRELEASE
+
 echo "Add changelog to $NEWREV:"
 echo "$CHANGELOG"
 
@@ -211,10 +259,21 @@ if [ -n "$TESTRUN" ] ; then
 	exit
 fi
 
-add_changelog_helper "$CHANGELOG" $SPECNAME || fatal "add_changelog failed, leave all uncommitted"
+# The first spec determines the new revision. Apply it verbatim to the rest.
+FIRSTSPEC=1
+for SPEC in $SPECNAMES ; do
+	if [ -n "$FIRSTSPEC" ] ; then
+		FIRSTSPEC=
+		continue
+	fi
+	set_version "$SPEC" "$NEWVERSION"
+	set_release "$SPEC" "$NEWRELEASE"
+done
+
+add_changelog_helper "$CHANGELOG" $SPECNAMES || fatal "add_changelog failed, leave all uncommitted"
 
 #git_commit_ignore_nothing $SPECNAME -m "new build $NEWREV (with rpmlog script)"
-docmd gammit $QUIET --spec=$SPECNAME $SPECNAME
+docmd gammit $QUIET --spec="$SPECNAME" $SPECNAMES
 
 RGD=$(get_root_git_dir)
 hook=$RGD/.gear/new-build-postcommit-hook
