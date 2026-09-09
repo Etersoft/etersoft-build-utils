@@ -31,3 +31,8 @@ libsane|libsane1
 
 # libgl1-mesa-glx removed, use libgl1
 libGL|libgl1
+
+# FFmpeg runtime dependencies from ALT Sisyphus
+libavcodec63|libavcodec59
+libavformat63|libavformat59
+libavutil61|libavutil57
