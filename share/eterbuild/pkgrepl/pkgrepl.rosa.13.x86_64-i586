@@ -38,3 +38,8 @@ libnetapi|libnetapi1
 libavcodec62|libavcodec60
 libavformat62|libavformat60
 libavutil60|libavutil58
+
+# Optional eepm helpers unavailable in the 32-bit repositories
+aria2|
+fzf|
+alien|

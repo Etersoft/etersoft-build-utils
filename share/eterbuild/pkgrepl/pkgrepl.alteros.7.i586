@@ -2,3 +2,8 @@
 cabextract|
 
 libSDL2|
+
+# Optional eepm helpers unavailable in the 32-bit repositories
+7-zip|
+pigz|
+dpkg|
