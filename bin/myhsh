@@ -128,6 +128,10 @@ prepare_aptconfig
 # TODO: for add $LISTRPMARGS we need skip function for delete "our" params
 # we do not need check cases for mount points, thanks ldv@ 
 HASHERARG="--no-sisyphus-check=$HASHER_NOCHECK --target $BUILDARCH $HASHERARG"
+# Enable QEMU emulation for cross-arch builds (e.g. aarch64 on x86_64)
+case "$BUILDARCH" in
+	aarch64|armh|riscv64) [ "$BUILDARCH" = "$SYSARCH" ] || HASHERARG="$HASHERARG --with-qemu=$BUILDARCH" ;;
+esac
 HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG $REPACKAGE $BUILDSRCRPM"
 
 BUILDARGS=""
