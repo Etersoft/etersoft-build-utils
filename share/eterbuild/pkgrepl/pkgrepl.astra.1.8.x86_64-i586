@@ -56,6 +56,9 @@ libalsa|ia32-libs:amd64
 libavcodec62|ia32-libs:amd64
 libavformat62|ia32-libs:amd64
 libavutil60|ia32-libs:amd64
+libavcodec63|ia32-libs:amd64
+libavformat63|ia32-libs:amd64
+libavutil61|ia32-libs:amd64
 libcups|ia32-libs:amd64
 libfontconfig1|ia32-libs:amd64
 libfreetype|ia32-libs:amd64
