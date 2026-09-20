@@ -16,9 +16,10 @@ set_hasherdir()
 	#	fatal "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
 	#fi
 	HASHERDIR=$HASHERBASEDIR$MENVARG
-	if [ "$BUILDARCH" = "x86_64" ] ; then
-		HASHERDIR="$HASHERDIR-64"
-	fi
+	case "$BUILDARCH" in
+		x86_64)  HASHERDIR="$HASHERDIR-64" ;;
+		aarch64) HASHERDIR="$HASHERDIR-aarch64" ;;
+	esac
 }
 
 check_locking()
@@ -71,12 +72,19 @@ print_tmp_sourceslist()
 	fi
 	[ -n "$SLIST" ] || SLIST="/etc/apt/sources.list"
 	test -r "$SLIST" || fatal "'$SLIST' - sources.list path from $1 is missed"
-	if [ "$BUILDARCH" = "x86_64" ] ; then
-		cat "$SLIST" | sed -e "s|\([ /]\)i[56]86|\1$BUILDARCH|g"
-	else
-		# Note: drop biarch 32bit on real 32bit
-		cat "$SLIST" | sed -e "s|x86_64\([ /]\)|$BUILDARCH\1|g" -e "s|WINE/i586|WINE|" -e "s|WINE-Local/i586|WINE-Local|" -e "s|WINE-Network/i586|WINE-Network|" -e "s| i586/| |"  | grep -v "x86_32" | grep -v "x86_64-i586"
-	fi
+	case "$BUILDARCH" in
+		x86_64)
+			cat "$SLIST" | sed -e "s|\([ /]\)i[56]86|\1$BUILDARCH|g"
+			;;
+		aarch64)
+			# Replace i586/i686/x86_64 with aarch64, drop x86_64-i586 biarch suffix
+			cat "$SLIST" | sed -e "s|\([ /]\)x86_64-i586|\1$BUILDARCH|g" -e "s|\([ /]\)i[56]86|\1$BUILDARCH|g" -e "s|\([ /]\)x86_64|\1$BUILDARCH|g"
+			;;
+		*)
+			# Note: drop biarch 32bit on real 32bit
+			cat "$SLIST" | sed -e "s|x86_64\([ /]\)|$BUILDARCH\1|g" -e "s|WINE/i586|WINE|" -e "s|WINE-Local/i586|WINE-Local|" -e "s|WINE-Network/i586|WINE-Network|" -e "s| i586/| |"  | grep -v "x86_32" | grep -v "x86_64-i586"
+			;;
+	esac
 }
 
 prepare_aptconfig()
