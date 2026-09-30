@@ -670,7 +670,7 @@ update_predownloaded()
 
 
 	#### cargo only part
-	if [ -s "./Cargo.toml" ] && [ ! -d "./vendor" ] ; then
+	if [ -s "./Cargo.toml" ] ; then
 		local COMMITMSG=''
 		local PRODUCTION=''
 
