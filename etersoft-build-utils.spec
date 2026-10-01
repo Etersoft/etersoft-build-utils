@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -72,6 +72,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.8-alt1
+- hasher: add aarch64 cross-build support in set_hasherdir and print_tmp_sourceslist
+- myhsh: pass --with-qemu for aarch64 cross-builds
+- spec: add_changelog_helper: clarify messages when editing is skipped
+- rpmgs: add -C option to skip adding changelog entry
+
 * Thu Sep 03 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.7-alt1
 - rpmgs: test merge commit on source update
 - gita: replace existing repo subtasks by package name
