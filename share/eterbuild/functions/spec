@@ -266,24 +266,25 @@ add_changelog_helper()
 	fi
 	[ -z "$SPECS" ] && fatal "run add_changelog without spec(s)"
 	LANG=C add_changelog -e "$DESC" $SPECS
-	R=$?
+	local R=$?
 
-	[ -n "$QUIET" ] && return
-	[ -z "$EDITOR" ] && { echo "skip changelog editing without EDITOR var"; return 0 ; }
-	! tty -s && { echo "skip changelog editing without tty"; return 0 ; }
+	# Nothing to edit if the entry was not added
+	[ "$R" = "0" ] || return $R
 
-	# If changelog sucessfully added, let us to edit
-	if [ "$R" = "0" ]; then
-		local SPEC
-		for SPEC in $SPECS ; do
-			N=`grep --text -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
-			# +1 -- comment with date and packager name
-			# +2 -- place for edit comments
-			# +N works for mcedit and vi
-			${EDITOR} +$(($N + 2)) $SPEC
-		done
-	fi
-	return $R
+	[ -n "$QUIET" ] && return 0
+	[ -z "$EDITOR" ] && { echo "changelog entry added, skip editing it without EDITOR var"; return 0 ; }
+	! tty -s && { echo "changelog entry added, skip editing it without tty"; return 0 ; }
+
+	# Changelog sucessfully added, let us to edit
+	local SPEC
+	for SPEC in $SPECS ; do
+		N=`grep --text -n '^%changelog' $SPEC | head -n 1 | sed s!:.*!!g`
+		# +1 -- comment with date and packager name
+		# +2 -- place for edit comments
+		# +N works for mcedit and vi
+		${EDITOR} +$(($N + 2)) $SPEC
+	done
+	return 0
 }
 
 
