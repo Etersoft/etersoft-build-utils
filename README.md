@@ -36,6 +36,7 @@ MENV=SS      # for Sisyphus
 | Command | Description |
 |---------|-------------|
 | `rpmgs [spec]` | Download sources from spec file |
+| `rpmgs -C [spec] [version]` | Update to a new version without adding a changelog entry |
 | `rpmgp -g <name>` | Clone git repository with package |
 | `rpmgp -c <name>` | Check if package is published |
 

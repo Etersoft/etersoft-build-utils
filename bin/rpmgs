@@ -20,7 +20,7 @@ GETSOURCE=""
 LOADALL=''
 
 #############################
-Usage="Usage: $name [-f] [-q] [spec] [new_version]"
+Usage="Usage: $name [-f] [-q] [-C] [spec] [new_version]"
 function mygetopts()
 {
 name=${0##*/}
@@ -37,14 +37,16 @@ phelp()
 #	echog "   -a  get all source (not only Source|Source0)"
 	echog "   -f  force download and commit tarball(s) (remove source file before download)"
 	echog "   -q  quiet mode, skip commit message editing (e.g. merge of upstream tag)"
+	echog "   -C  do not add 'new version' changelog entry"
 }
 
-while getopts :hfq opt; do
+while getopts :hfqC opt; do
     case $opt in
     h) phelp; exit 0;;
 #    a) LOADALL=1 ;;
     f) FORCEDOWNLOAD=-f ;;
     q) QUIET=-q ;;
+    C) GSSKIPADDCHANGELOG=1 ;;
     +?) echog "$name: options should not be preceded by a '+'." 1>&2; exit 2;;
     ?)  echog "$name: $OPTARG: bad option.  Use -h for help." 1>&2 ; exit 2;;
     esac
