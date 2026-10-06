@@ -482,6 +482,17 @@ update_master_branch_to()
 	fi
 	docmd git merge $MERGEOPT $tag || fatal "Failed to merge tag $tag. Try 'git merge --allow-unrelated-histories $tag' manually."
 
+	# A merge of an upstream tag that leaves the tree unchanged while the tag
+	# differs means the upstream content was dropped (like the 'ours' strategy
+	# of rpmgs 3.3.1-3.3.2, ALT bug 60117): git will consider these upstream
+	# changes merged forever and later merges will bring only increments.
+	if git rev-parse -q --verify HEAD^2 >/dev/null && \
+	   [ "$(git rev-parse HEAD^2)" = "$(git rev-parse "$tag^{commit}")" ] && \
+	   git diff --quiet HEAD^1 HEAD && ! git diff --quiet HEAD^1 HEAD^2 ; then
+		warning "Merge of $tag did not change the tree although $tag differs: upstream changes were dropped."
+		warning "Check the branch content (see ALT bug 60117), e.g. git diff $tag HEAD -- . ':!.gear'"
+	fi
+
 	# TODO: it is more clean detect that dir
 	if [ -d "$(get_root_git_dir)/.gear/tags" ] ; then
 		docmd gear-update-tag -a
@@ -727,38 +738,65 @@ update_predownloaded()
 	#### end of cargo only part
 
 	#### zig only part
+	# rpm-macros-zig >= 5 runs zig build --system %_zig_vendor_dir (zig-pkg),
+	# earlier versions used %_zig_cache_dir (zig-cache)
+	local ZIGVENDORDIR="$(rpm --eval '%{?_zig_vendor_dir}' 2>/dev/null)"
+	[ -n "$ZIGVENDORDIR" ] || ZIGVENDORDIR=zig-pkg
+	local zig_zon=''
 	local i
-	local zig_dir=''
-	for i in */build.zig.zon ; do
-		[ -s "$i" ] || continue
-		[ -d "./zig-cache" ] && continue
-		zig_dir=$(dirname "$i")
+	if [ ! -d "./$ZIGVENDORDIR" ] ; then
+		# sources are either in the predownloaded dir root or in a subdir
+		for i in ./build.zig.zon */build.zig.zon ; do
+			[ -s "$i" ] || continue
+			zig_zon="$i"
+			break
+		done
+	fi
+	if [ -n "$zig_zon" ] ; then
+		local zig_dir=$(dirname "$zig_zon")
+		local ZIGVENDORPATH="$PWD/$ZIGVENDORDIR"
+		local ZIGFETCHPATH="$PWD/.zig-fetch"
 
 		local COMMITMSG=''
-
-		info "Detected '$i' install hook ..."
-		cd "$zig_dir" || fatal
-		docmd zig build --fetch=all --cache-dir ../zig-cache --global-cache-dir ../zig-cache || fatal
-		COMMITMSG="update vendored zig modules in $zig_dir dir with zig build --fetch=all for $VERSION (see $SDNAME in .gear/rules)"
-
-		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
-			info "Detected .gear/predownloaded-postinstall-hook, running it ..."
-			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
+		local ZIGOPTIONS=''
+		# Optional zig build options for the fetch, f.i. -fsys=ncurses -fsys=zstd
+		# to skip lazy dependencies we link with the system libraries instead
+		if [ -s $RGD/.gear/predownloaded-zig-options ] ; then
+			ZIGOPTIONS="$(cat $RGD/.gear/predownloaded-zig-options)"
+			info "Detected .gear/predownloaded-zig-options: $ZIGOPTIONS"
 		fi
 
-		# HACK: fix it for ALT (need fix for macros ?)
-		# [00:00:03] + /usr/bin/zig build --verbose --release=safe -Dtarget=native -Dcpu=baseline -Doptimize=ReleaseSafe --system zig-cache --cache-dir zig-cache --global-cache-dir zig-cache
-		# error: package not found at 'zig-cache/otter_conf-1.0.0-d7vdxEWbAQDN62X7TrhhqEVu2kk-7okjqoB_7jZlKq34'
-		if [ -d "../zig-cache/p" ] ; then
-			cp -a ../zig-cache/p/. ../zig-cache/ || fatal
-			rm -rf ../zig-cache/p
+		info "Detected '$zig_zon' install hook ..."
+		cd "$zig_dir" || fatal
+		# --fetch=needed skips lazy dependencies unused with these options
+		docmd zig build --fetch=needed $ZIGOPTIONS --cache-dir "$ZIGFETCHPATH" --global-cache-dir "$ZIGFETCHPATH" || fatal
+		COMMITMSG="update vendored zig modules in $zig_dir dir with zig build --fetch=needed for $VERSION (see $SDNAME in .gear/rules)"
+
+		if [ -s $RGD/.gear/predownloaded-postinstall-hook ] ; then
+		        info "Detected .gear/predownloaded-postinstall-hook, running it ..."
+			$RUNHOOK $RGD/.gear/predownloaded-postinstall-hook $MODE $VERSION
 		fi
 
 		cd - >/dev/null || exit
 
+		# zig build --system looks the packages up by hash right in the given dir,
+		# while the global cache keeps them in its p/ subdir, as tarballs since
+		# zig 0.16 (each one has the hash named dir inside) or as dirs before that
+		mkdir -p "$ZIGVENDORPATH" || fatal
+		local zp
+		for zp in "$ZIGFETCHPATH"/p/* ; do
+			[ -e "$zp" ] || continue
+			if [ -d "$zp" ] ; then
+				cp -a "$zp" "$ZIGVENDORPATH"/ || fatal
+			else
+				docmd tar -xf "$zp" -C "$ZIGVENDORPATH" || fatal
+			fi
+		done
+		rm -rf "$ZIGFETCHPATH"
+
 		# TODO: drop zigwin32 ?
-		KEEP_DIRS="$KEEP_DIRS zig-cache"
-	done
+		KEEP_DIRS="$KEEP_DIRS $ZIGVENDORDIR"
+	fi
 	#### end of zig only part
 
 
