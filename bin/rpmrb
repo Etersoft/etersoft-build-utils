@@ -13,11 +13,12 @@ load_mod spec git
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echog "rpmrb (Re Build) - update spec to vermajor.verminor version, build %rel release"
-	echog "Usage: rpmrb [GIRAR] [-n] [-f] [-q] [-a TASK | -A] [spec] [vermajor][.verminor] [rel]"
+	echog "Usage: rpmrb [GIRAR] [-n] [-f] [-q] [-a TASK | -A | -U] [spec] [vermajor][.verminor] [rel]"
 	echog "     -n      - skip install built package in hasher for testing purposes"
 	echog "     -f      - force tag overwrite"
 	echog "     -a TASK - add to existing (shared) task TASK after build"
 	echog "     -A      - add to the last task after build"
+	echog "     -U      - build only, do not upload to girar (for review before rpmbs -u)"
 	echog "     -q      - quiet mode, skip changelog and commit message editing"
 	echo  "$HELP_GIRAR"
 	echog "Example:"
@@ -54,6 +55,10 @@ parse_r()
 				;;
 			-A)
 				UPLOADARG='-A'
+				shift
+				;;
+			-U)
+				UPLOADARG=''
 				shift
 				;;
 			-*)
