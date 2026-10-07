@@ -15,6 +15,9 @@ which rsync &>/dev/null && RSYNC=rsync || GET=false
 download_url()
 {
 	local URL="$1"
+	# Cloudflare (e.g. git.pika-os.com) can reject wget/curl's default User-Agent.
+	# Use eget's browser User-Agent for downloads and URL discovery, preserving other options.
+	local -x EGET_OPTIONS="${EGET_OPTIONS:+$EGET_OPTIONS }-U"
 
 	# if has_space
 	if [ "${URL/ //}" != "$URL" ] ; then
