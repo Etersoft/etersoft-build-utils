@@ -41,6 +41,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     approve NNNN [package|subtask] [-m <message>] - approve subtask by number or by package name (all subtasks if omitted)"
 	echo "     acl [branch] package        - show acl for the package"
 	echo "     acl [branch] package add|del <user> - add/del acl for the package"
+	echo "     groups [user] [branch...]   - show acl groups of the user (current user by default)"
 	echo "     wait   [NNNN] [-q|--quiet]  - wait for task build to complete"
 	echo "     rebuild --help              - rebuild package"
 	exit 0
@@ -601,6 +602,36 @@ if [ "$1" = "acl" ] ; then
 		showcmd ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $OPERAND
 		ssh $GEARHOST acl $BINARYREPO $PROJECTNAME $COMMAND $OPERAND
 	fi
+	exit
+fi
+
+# groups [USER] [BRANCH...] - acl groups the user belongs to, by repository
+if [ "$1" = "groups" ] ; then
+	shift
+	if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+		echo "Usage: gita groups [USER] [BRANCH...]"
+		echo "  USER: girar user (current user by default)"
+		echo "  BRANCH: sisyphus p11 p10 c10f2 c11f1 by default"
+		echo "Example: gita groups lav p11"
+		exit
+	fi
+	GUSER=""
+	if [ -n "$1" ] && ! echo "$1" | grep -qiE '^(sisyphus|icarus|[ptc][0-9]+(\.[0-9]+)?([fm][0-9]+)?)$' ; then
+		GUSER="$1"
+		shift
+	fi
+	[ -n "$GUSER" ] || GUSER=$(_get_girar_user) || fatal "can't get girar user, set it: gita groups USER"
+	[ -n "$1" ] || set -- sisyphus p11 p10 c10f2 c11f1
+	echo "acl groups of $GUSER:"
+	for branch in "$@" ; do
+		branch=$(echo "$branch" | tr '[:upper:]' '[:lower:]')
+		if ! list=$(curl -sf "https://git.altlinux.org/acl/list.groups.$branch") ; then
+			printf "%-10s %s\n" "$branch" "(no list.groups.$branch)"
+			continue
+		fi
+		groups=$(echo "$list" | awk -v u="$GUSER" '{ for (i = 2; i <= NF; i++) if ($i == u) { print $1; break } }' | xargs)
+		printf "%-10s %s\n" "$branch" "${groups:--}"
+	done
 	exit
 fi
 
