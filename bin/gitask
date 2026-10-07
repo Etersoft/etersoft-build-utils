@@ -288,15 +288,8 @@ for t in tasks:
     it = t.get("iter", 0)
     tryiter = "#{}".format(ti) if it <= 1 else "#{}.{}".format(ti, it)
     approvals, denials = acl.get(t["id"], ({}, {}))
-    if approvals:
-        # collect unique approvers across all subtasks
-        approvers = set()
-        for users in approvals.values():
-            approvers.update(users)
-        flags.append(paint("[approved:{}]".format(",".join(sorted(approvers))), C_APPROVED, use_color))
-    # package names from subtasks
+    # package names from subtasks, prefixed by their approval status
     pkgs = []
-    need = []
     for num in sorted(t.get("subtasks", {}).keys(), key=lambda x: int(x)):
         st = t["subtasks"][num]
         pkg = st.get("pkgname", "")
@@ -307,8 +300,10 @@ for t in tasks:
             d = st.get("dir", "")
             if d:
                 pkg = d.rstrip("/").rsplit("/", 1)[-1].removesuffix(".git")
+        if num in approvals:
+            pkgs.append(paint("[approved:{}]".format(",".join(approvals[num])), C_APPROVED, use_color))
         if num in denials:
-            need.append("{}:{}".format(pkg or "#" + num, need_text(*denials[num])))
+            pkgs.append(paint("[need approve: {}]".format(need_text(*denials[num])), C_NEED, use_color))
         if stype == "delete":
             pkgs.append("(delete {})".format(pkg))
         elif pkg and tag:
@@ -324,8 +319,6 @@ for t in tasks:
                 pkgs.append(pkg)
         elif pkg:
             pkgs.append(pkg)
-    if need:
-        flags.append(paint("[need approve: {}]".format(" ".join(need)), C_NEED, use_color))
     tid = str(t["id"])
     if use_color:
         url = "https://packages.altlinux.org/ru/tasks/{}/".format(tid)
