@@ -281,6 +281,19 @@ function get_source_git()
 	fi
 }
 
+# VCS metadata can name a source archive rather than a Git repository.
+is_source_archive_url()
+{
+	case "$1" in
+		http://*|https://*|ftp://*) ;;
+		*) return 1 ;;
+	esac
+	case "${1%%[?#]*}" in
+		*.tar|*.tar.gz|*.tgz|*.tar.bz2|*.tbz2|*.tar.xz|*.txz|*.tar.zst|*.zip) return 0 ;;
+		*) return 1 ;;
+	esac
+}
+
 # VCS: http://git.altlinux.org/people/lav/packages/rpm-build-fonts.git
 function get_source_vcs()
 {
@@ -290,7 +303,12 @@ function get_source_vcs()
 	# only for first source
 	[ "$SN" = "Source" ] || [ "$SN" = "Source0" ] || return 1
 
-	local vcs="$(grep -i "^VCS:" $SPEC | head -n1 | sed -e 's|VCS:[[:space:]]*||I')"
+	local vcs="$(eval_spec "$SPEC" | get_var VCS)"
+	if is_source_archive_url "$vcs" ; then
+		GETSOURCEURL="$vcs"
+		GETSOURCEGIT=''
+		return 0
+	fi
 	if [ -z "$vcs" ] ; then
 		# try hack with Url:
 		local vcs="$(grep -i "^Url:" $SPEC | head -n1 | sed -e 's|Url:[[:space:]]*||I')"
@@ -1011,7 +1029,11 @@ prepare_watch_source()
 	[ "$GSSETVERSION" != HEAD ] || return 1
 	[ ! -s "$root/.gear/upstream/remotes" ] || return 1
 	# Preserve explicit VCS/script schemes, including repositories using merge.
-	grep -Eq '^(# Source[0-9]*-(git|svn|script):|[Vv][Cc][Ss]:)' "$spec" && return 1
+	grep -Eq '^# Source[0-9]*-(git|svn|script):' "$spec" && return 1
+	local vcs="$(grep -i '^VCS:' "$spec" | head -n1 | sed -e 's|^[^:]*:[[:space:]]*||')"
+	if [ -n "$vcs" ] && ! is_source_archive_url "$vcs" ; then
+		return 1
+	fi
 	local primary="$(grep -E '^Source(0)?:' "$spec" | head -n1 | cut -d: -f1)"
 	local GETSOURCEGIT GETSOURCEURL
 	if [ -n "$primary" ] && ! get_source_url "$spec" "$primary" ; then

@@ -73,6 +73,7 @@ parse_cmd_pre_spec() { LISTNAMES="${WATCH_TEST_NAMES:-fixture.spec}"; LISTARGS='
 mygetopts() { :; }
 GSSKIPADDCHANGELOG=1
 HARNESS
+sed -n '/^is_source_archive_url()/,/^# VCS:/p' "$topdir/bin/rpmgs" | sed '$d' >> "$tmpdir/run"
 sed -n '/^prepare_watch_source()/,/^will_commit()/p' "$topdir/bin/rpmgs" | sed '$d' >> "$tmpdir/run"
 sed -n '/^will_commit()/,$p' "$topdir/bin/rpmgs" >> "$tmpdir/run"
 
@@ -129,6 +130,14 @@ grep -q 'source-9.0.tar.gz' "$WATCH_TEST_LOG"
 if WATCH_TEST_MODE=warning bash "$tmpdir/run" > "$tmpdir/output" 2>&1; then exit 1; fi
 ! grep -Eq '^(download|direct|commit)' "$WATCH_TEST_LOG"
 
+# Archive-valued VCS metadata must not disable the configured watch scheme.
+printf 'Vcs: https://upstream/archive/%%version/fixture-%%version.tar.gz\n' >> fixture.spec
+: > "$WATCH_TEST_LOG"
+bash "$tmpdir/run" 3.5 > "$tmpdir/output"
+grep -q -- '--download-version 3.5' "$WATCH_TEST_LOG"
+grep -q 'source-3.5.tar.gz' "$WATCH_TEST_LOG"
+sed -i '/^Vcs:/d;s/^Version:.*/Version: 9.0/' fixture.spec
+
 # Watch failures and wrong versions stop before changing the spec or fallback.
 for mode in fail wrong; do
 	: > "$WATCH_TEST_LOG"
@@ -152,7 +161,8 @@ grep -q '^download https://fallback ' "$WATCH_TEST_LOG"
 mv .gear/disabled .gear/autobuild.watch
 
 # VCS schemes must decline the resolver even with a watch present.
-sed -n '/^prepare_watch_source()/,/^will_commit()/p' "$topdir/bin/rpmgs" | sed '$d' > "$tmpdir/helper"
+sed -n '/^is_source_archive_url()/,/^# VCS:/p' "$topdir/bin/rpmgs" | sed '$d' > "$tmpdir/helper"
+sed -n '/^prepare_watch_source()/,/^will_commit()/p' "$topdir/bin/rpmgs" | sed '$d' >> "$tmpdir/helper"
 get_root_git_dir() { pwd; }
 get_gear_rules() { echo .gear/rules; }
 is_gear() { return 0; }

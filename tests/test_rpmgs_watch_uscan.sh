@@ -24,6 +24,7 @@ class Releases(http.server.BaseHTTPRequestHandler):
 server = http.server.HTTPServer(('127.0.0.1', 0), Releases)
 threading.Thread(target=server.serve_forever, daemon=True).start()
 rpmgs = pathlib.Path(sys.argv[1], 'bin/rpmgs').read_text()
+archive_helper = rpmgs.split('\nis_source_archive_url()\n', 1)[1].split('\n# VCS:', 1)[0]
 helper = rpmgs.split('\nprepare_watch_source()\n', 1)[1].split('\nwill_commit()\n', 1)[0]
 with tempfile.TemporaryDirectory() as temp:
     root = pathlib.Path(temp)
@@ -32,7 +33,7 @@ with tempfile.TemporaryDirectory() as temp:
     (root / '.gear/autobuild.watch').write_text(
         'version=3\nhttp://127.0.0.1:%d/ source-([0-9.]+).tar.gz\n' % server.server_port)
     (root / 'fixture.spec').write_text('Source: fixture-%version.tar.gz\n')
-    script = '''
+    script = 'is_source_archive_url()\n' + archive_helper + '''
 get_root_git_dir() { pwd; }
 get_gear_rules() { echo .gear/rules; }
 is_gear() { return 0; }
