@@ -40,6 +40,13 @@ MENV=SS      # for Sisyphus
 | `rpmgp -g <name>` | Clone git repository with package |
 | `rpmgp -c <name>` | Check if package is published |
 
+For a gear package with a local tarball rule and a watch file (for example,
+`.gear/autobuild.watch`), `rpmgs` uses `rpm-uscan` to find the source archive.
+An explicit version selects that exact release with `--download-version`;
+without a version it selects the latest release. The archive is imported using
+existing gear rules and hooks. Watch errors stop the update. Explicit VCS/script
+schemes, upstream remotes and `HEAD` keep their existing update paths.
+
 ### Git/GIRAR operations
 
 | Command | Description |

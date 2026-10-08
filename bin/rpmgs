@@ -999,6 +999,79 @@ update_predownloaded()
 }
 
 
+# Resolve a local tarball/watch scheme without imposing gear-uupdate's history
+# restrictions. Import still follows .gear/rules through commit_tarball().
+prepare_watch_source()
+{
+	local spec="$1"
+	WATCHSOURCEURL=''
+	is_gear "$SPECDIR" || return 1
+	local root="$(get_root_git_dir)"
+	local rules="$(get_gear_rules)"
+	[ "$GSSETVERSION" != HEAD ] || return 1
+	[ ! -s "$root/.gear/upstream/remotes" ] || return 1
+	# Preserve explicit VCS/script schemes, including repositories using merge.
+	grep -Eq '^(# Source[0-9]*-(git|svn|script):|[Vv][Cc][Ss]:)' "$spec" && return 1
+	local primary="$(grep -E '^Source(0)?:' "$spec" | head -n1 | cut -d: -f1)"
+	local GETSOURCEGIT GETSOURCEURL
+	if [ -n "$primary" ] && ! get_source_url "$spec" "$primary" ; then
+		local source="$(eval_spec "$spec" | get_var "$primary")"
+		rhas "$source" "ps?://" || { get_source_git "$spec" "$primary" && return 1; }
+	fi
+	# A local source directory is required. Tagged/root tar rules belong to VCS.
+	grep -Eq '^tar(\.[a-z0-9]+)*:[[:space:]]+[^[:space:]:]+' "$rules" || return 1
+	grep -Eq '^tar(\.[a-z0-9]+)*:[[:space:]]+([^[:space:]]*:|\.([[:space:]]|$))' "$rules" && return 1
+	local watches=() watch
+	for watch in "$root"/.gear/*.watch "$root"/*.watch ; do
+		[ ! -f "$watch" ] || watches+=("$watch")
+	done
+	[ "${#watches[@]}" -gt 0 ] || return 1
+	[ "${#watches[@]}" -eq 1 ] || fatal "Multiple watch files: select one before updating sources"
+	grep -Eq '^Source(0)?:' "$spec" || fatal "Watch update requires Source or Source0"
+	$EPMCMD assure rpm-uscan || fatal "rpm-uscan is required for watch updates"
+	local report="$(make_temp_file rpmgs-watch)"
+	local args=(--dehs --no-download --package "$(get_name "$spec")"
+		--upstream-version "$(get_version "$spec")" --watchfile "${watches[0]}")
+	[ -z "$GSSETVERSION" ] || args+=(--download-version "$GSSETVERSION")
+	local scanstatus=0
+	rpm-uscan "${args[@]}" > "$report" || scanstatus=$?
+	# rpm-uscan exits 1 for a successful check with no newer release as well
+	# as for errors. Accept only its explicit, warning-free up-to-date report.
+	if [ "$scanstatus" -ne 0 ] && ! { [ "$scanstatus" -eq 1 ] &&
+		[ -z "$GSSETVERSION" ] && grep -qx '<status>up to date</status>' "$report" &&
+		! grep -Eq '<(errors|warnings)>' "$report"; } ; then
+		cat "$report" >&2
+		rm -f "$report"
+		fatal "rpm-uscan failed for ${watches[0]}"
+	fi
+	# DEHS has one URL/version pair per watch component. Multiple components
+	# need an explicit mapping to SourceN; never silently import just the first.
+	local resolved
+	resolved=$(perl -0777 -e '
+		my $xml = <>;
+		my @versions = $xml =~ m{<upstream-version>([^<]+)</upstream-version>}g;
+		my @urls = $xml =~ m{<upstream-url>([^<]+)</upstream-url>}g;
+		exit 1 if $xml =~ m{<errors>} || @versions != 1 || @urls != 1;
+		for (@versions, @urls) {
+			s/&amp;/&/g; s/&lt;/</g; s/&gt;/>/g;
+			exit 1 if /[\r\n]/;
+		}
+		print "$versions[0]\n$urls[0]\n";
+	' "$report")
+	local status=$?
+	rm -f "$report"
+	[ "$status" -eq 0 ] || fatal "Watch must resolve exactly one source URL and version"
+	local version="${resolved%%$'\n'*}"
+	WATCHSOURCEURL="${resolved#*$'\n'}"
+	[ -z "$GSSETVERSION" ] || [ "$version" = "$GSSETVERSION" ] || fatal "Watch returned $version instead of requested $GSSETVERSION"
+	case "$WATCHSOURCEURL" in
+		http://*|https://*|ftp://*) ;;
+		*) fatal "Watch did not return a tarball URL: $WATCHSOURCEURL" ;;
+	esac
+	GSSETVERSION="$version"
+}
+
+
 will_commit()
 {
     if [ -z "$GSSETVERSION" ] && [ -z "$FORCEDOWNLOAD" ]; then
@@ -1032,8 +1105,11 @@ test -z "$LISTNAMES" && print_error
 
 [ -z "$GSSETRELEASE" ] || GSSKIPADDCHANGELOG=1
 
+REQUESTEDVERSION="$GSSETVERSION"
+
 for spec in $LISTNAMES
 do
+	GSSETVERSION="$REQUESTEDVERSION"
 	if [ -n "${spec/*spec/}" ] ; then
 		print_error
 	fi
@@ -1044,6 +1120,8 @@ do
 # Answer me:
 # for empty GSSETVERSION we do autoupdate to the latest version
 # or it is a reason to retrieve the latest version from spec?
+
+prepare_watch_source "$spec"
 
 # firstly try modern autoupdate if version is empty
 if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verify perl-Gear-Rules ; then
@@ -1177,7 +1255,7 @@ fi
 		[ -n "$FORCEDOWNLOAD" ] && rm -fv "$FTB"
 		#[ -f "$RPMSOURCEDIR/$FTB" ] && { echog "Tarball $FTB already exists in $RPMSOURCEDIR dir, skipping." ; continue ; }
 
-		if rhas "$GETSOURCE" "ps?://" ; then
+		if rhas "$GETSOURCE" "ps?://" && { [ -z "$WATCHSOURCEURL" ] || { [ "$SN" != Source ] && [ "$SN" != Source0 ]; }; } ; then
 			download_any_tarball "$GETSOURCE" "$FTB"
 			will_commit || continue
 			CURRENTURL="${GETSOURCE}"
@@ -1192,7 +1270,12 @@ fi
 
 		# Test for eterbuild extensions like # Source-git
 		# (will set GETSOURCEURL or GETSOURCESVN)
-		get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN || get_source_script $spec $SN || get_source_vcs $spec $SN
+		if [ -n "$WATCHSOURCEURL" ] && { [ "$SN" = Source ] || [ "$SN" = Source0 ]; } ; then
+			GETSOURCEURL="$WATCHSOURCEURL"
+			GETSOURCEGIT='' GETSOURCESVN='' GETSOURCESCRIPT=''
+		else
+			get_source_url $spec $SN || get_source_git $spec $SN || get_source_svn $spec $SN || get_source_script $spec $SN || get_source_vcs $spec $SN
+		fi
 		#[ "$SN" = "Source1" ] && exit
 		#if ! rhas "$GETSOURCE" ".tar$" ; then
 		#	warning "It is recommended to use .tar tarballs for sources ($FTB now)"
@@ -1239,7 +1322,7 @@ fi
 
 		# TODO: rewrite code to use original file format and temp. download dir
 		elif [ -n "${GETSOURCEURL}" ] ; then
-			if [ -z "$FORCEDOWNLOAD" ] && check_tarball "$FTB" ; then
+			if { [ -z "$WATCHSOURCEURL" ] || { [ "$SN" != Source ] && [ "$SN" != Source0 ]; }; } && [ -z "$FORCEDOWNLOAD" ] && check_tarball "$FTB" ; then
 				echog "$FTB already exists, skipping... "
 			else
 				echog "Try to load ${GETSOURCEURL} for $spec"
