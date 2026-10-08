@@ -35,9 +35,9 @@ libwayland-egl|libwayland-egl1
 libnetapi|libnetapi1
 
 # Override ffmpeg lib64* versions to lib* for 32-bit
-libavcodec62|libavcodec60
-libavformat62|libavformat60
-libavutil60|libavutil58
+libavcodec63|libavcodec60
+libavformat63|libavformat60
+libavutil61|libavutil58
 
 # Optional eepm helpers unavailable in the 32-bit repositories
 aria2|

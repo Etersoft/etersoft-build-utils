@@ -53,9 +53,9 @@ libXrandr|ia32-libs:amd64
 libXrender|ia32-libs:amd64
 libXxf86vm|ia32-libs:amd64
 libalsa|ia32-libs:amd64
-libavcodec62|ia32-libs:amd64
-libavformat62|ia32-libs:amd64
-libavutil60|ia32-libs:amd64
+libavcodec63|ia32-libs:amd64
+libavformat63|ia32-libs:amd64
+libavutil61|ia32-libs:amd64
 libavcodec63|ia32-libs:amd64
 libavformat63|ia32-libs:amd64
 libavutil61|ia32-libs:amd64

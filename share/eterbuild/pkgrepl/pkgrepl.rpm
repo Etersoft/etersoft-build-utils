@@ -363,9 +363,9 @@ libwayland-client-devel|wayland-devel
 libwayland-egl-devel|wayland-devel
 qt5-tools|qt5-linguist
 
-libavcodec62|
-libavformat62|
-libavutil60|
+libavcodec63|
+libavformat63|
+libavutil61|
 libavcodec61|
 libavformat61|
 libavutil59|
