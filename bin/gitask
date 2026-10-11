@@ -39,6 +39,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     quota                       - show quota on the remote servers"
 	echo "     cancel NNNN                 - cancel task NNNN"
 	echo "     approve NNNN [package|subtask] [-m <message>] - approve subtask by number or by package name (all subtasks if omitted)"
+	echo "     disapprove NNNN [package|subtask] [-m <message>] - disapprove subtask(s), the same arguments as approve"
 	echo "     acl [branch] package        - show acl for the package"
 	echo "     acl [branch] package add|del <user> - add/del acl for the package"
 	echo "     groups [user] [branch...]   - show acl groups of the user (current user by default)"
@@ -910,7 +911,8 @@ if [ "$1" = "cancel" ] ; then
 	exit
 fi
 
-if [ "$1" = "approve" ] ; then
+if [ "$1" = "approve" ] || [ "$1" = "disapprove" ] ; then
+	ACTION="$1"
 	shift
 	TASK=''
 	SUBTASK=''
@@ -948,11 +950,12 @@ if [ "$1" = "approve" ] ; then
 	fi
 
 	for ST in $SUBTASKLIST ; do
-		showcmd ssh $GEARHOST task approve "$TASK" "$ST"
+		# girar reads the message from stdin, it has no -m option
+		showcmd ssh $GEARHOST task $ACTION "$TASK" "$ST"
 		if [ -n "$MESSAGETEXT" ] ; then
-			echo "$MESSAGETEXT" | ssh $GEARHOST task approve "$TASK" "$ST"
+			echo "$MESSAGETEXT" | ssh $GEARHOST task $ACTION "$TASK" "$ST"
 		else
-			ssh $GEARHOST task approve "$TASK" "$ST"
+			ssh $GEARHOST task $ACTION "$TASK" "$ST"
 		fi
 	done
 	exit
