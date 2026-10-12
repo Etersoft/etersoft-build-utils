@@ -55,6 +55,8 @@ phelp()
 	echog "   -a TASK      sign package(s)/repo, push/upload it and add to (shared) task TASK"
 	echog "                -a TASKbeforeSUBTASK (f.i., 43122before90) for put task before SUBTASK in TASK"
 	echog "   -A           sign package(s)/repo, push/upload it and add to the last task"
+	echog "   -S           upload as src.rpm (built from the gear repo) instead of pushing the repo,"
+	echog "                for packages maintained in Sisyphus from src.rpm (no /gears repo); use with -u/-a/-A"
 	echog "   -p POCKET    build package in POCKET (supported on git.etersoft.ru only)"
 	echog "   -b REPONAME  binary repository name (p7, t7 and so on)"
 	echo  "$HELP_GIRAR"
@@ -78,12 +80,13 @@ phelp()
 #	echog " -d - remove package(s) from SRPMS and Incoming"
 }
 
-while getopts :hfFstTcudenop:a:Ab:wzBG opt; do
+while getopts :hfFstTcudenop:a:Ab:wzBGS opt; do
     case $opt in
     h) phelp; exit 0;;
     s) SIGN=1 ;;
     B) BATCHSIGN=1 ;;
     G) CACHEGPGKEY=1 ;;
+    S) UPLOADSRPM=1 ;;
     t) SIGNTAG=1 ;;
     T) SETTAG=1 ;;
     f) FORCE="-f" ;;
@@ -320,8 +323,8 @@ if [ -n "$NOSOURCE" ] ; then
 	exit $?
 fi
 
-# If we build from gear repo, run task
-if [ -n "$UPLOADNOW" ] && is_gear $SPECDIR ; then
+# If we build from gear repo, run task (with -S the src.rpm is built from the repo and uploaded below)
+if [ -n "$UPLOADNOW" ] && [ -z "$UPLOADSRPM" ] && is_gear $SPECDIR ; then
 
 	if [ -n "$PREPARETASK" ] ; then
 		if [ -z "$TASKNUMBER" ] ; then
