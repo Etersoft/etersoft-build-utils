@@ -51,6 +51,15 @@ download_url()
 		else
 			DOWNLOADEDNAME="$NAME" && DOWNLOADEDURL="$URL" && return
 		fi
+	elif [ -n "$EGET_OPTIONS" ] ; then
+		# Other sites (e.g. SourceForge behind Cloudflare) answer the browser
+		# User-Agent with 403: retry once with the default User-Agent.
+		echo "Download of $NAME failed, retrying without the browser User-Agent ..."
+		rm -f "$NAME"
+		EGET_OPTIONS="${EGET_OPTIONS% -U}" ; EGET_OPTIONS="${EGET_OPTIONS%-U}"
+		docmd $EPMCMD tool eget -O "$NAME" "$URL" && test -r "$NAME" && \
+			! { is_archive_name "$NAME" && file -b --mime-type "$NAME" | grep -q '^text/html' ; } && \
+			DOWNLOADEDNAME="$NAME" && DOWNLOADEDURL="$URL" && return
 	fi
 
 	rm -f "$NAME"
