@@ -924,7 +924,10 @@ update_predownloaded()
 	# package.json may be in predownloaded dir, source root, or source subdir (e.g. frontend/)
 	else
 		local npm_dir=""
-		if [ -s "./package.json" ] ; then
+		if [ -s "$RGD/.gear/predownloaded-skip-npm" ] ; then
+			# explicit switch: never run npm install for this package
+			info "Detected .gear/predownloaded-skip-npm, skipping npm install"
+		elif [ -s "./package.json" ] ; then
 			npm_dir="."
 		elif [ -s "$RGD/$CURNAME/package.json" ] ; then
 			npm_dir="$RGD/$CURNAME"
@@ -933,7 +936,16 @@ update_predownloaded()
 			# skip docs/test/e2e subdirectories (they may have package.json for documentation)
 			local found_pkg
 			found_pkg=$(find "$RGD/$CURNAME" -maxdepth 2 -name "package-lock.json" -not -path "*/node_modules/*" -not -path "*/docs/*" -not -path "*/test/*" -not -path "*/e2e/*" 2>/dev/null | head -1)
-			[ -n "$found_pkg" ] && npm_dir="$(dirname "$found_pkg")"
+			if [ -n "$found_pkg" ] ; then
+				# a Go project (go.mod in the root or vendor/ from go mod vendor)
+				# builds from vendor/ only: package-lock.json in a subdir
+				# (web/ etc.) is an optional UI, do not run npm install for it
+				if [ -s "./go.mod" ] || [ -s "$RGD/$CURNAME/go.mod" ] || [ -d "./vendor" ] ; then
+					info "Go project detected, skipping npm install for $found_pkg"
+				else
+					npm_dir="$(dirname "$found_pkg")"
+				fi
+			fi
 		fi
 
 		if [ -n "$npm_dir" ] ; then
