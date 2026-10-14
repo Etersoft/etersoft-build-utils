@@ -24,6 +24,7 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
+	echog "   -S SLOT     use independent hasher build/test directories (or HASHER_SLOT)"
 	echog "   -c  build without stuff (without previous built packages)"
 	echog "   -e  build using hsh-rebuild (using chroot precreated with rpmbsh -l)"
 	echog "   -n  build src.rpm only"
@@ -34,8 +35,9 @@ phelp()
 	echog "   -b REPONAME  binary repository name (p6, t6, c7, p8 and so on)"
 }
 
-while getopts :hab:epnclr opt; do
+while getopts :S:hab:epnclr opt; do
     case $opt in
+    S) export HASHER_SLOT="$OPTARG" ;;
     h) phelp; exit 0;;
     p) PRINTBINPKG=1;;
     b) BINARYREPONAME=$OPTARG ;;
@@ -67,7 +69,11 @@ set_binaryrepo $MENV
 RESULT=0
 
 HASHERARG="$HASHERARG $WITHSTUFF"
-set_hasherdir
+if [ -n "$PRINTBINPKG$REMOVEPKG$REBUILD" ] ; then
+	acquire_hasher_slot fixed
+else
+	acquire_hasher_slot
+fi
 
 if [ -n "$PRINTBINPKG" ] ; then
 	BINPACKAGES=

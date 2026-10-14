@@ -77,6 +77,30 @@ schemes, upstream remotes and `HEAD` keep their existing update paths.
 | `myhsh` | Manage hasher environment |
 | `runinhsh` | Run command inside hasher |
 
+Additional hasher directories are disabled by default: concurrent builds wait
+for the usual directory. To enable them, set `HASHER_AUTO_SLOTS=yes` in
+`~/.config/eterbuild` (or the system configuration).
+Concurrent `rpmbsh` and `myhsh` builds then automatically use separate directories.
+The first build uses the usual directory; other active builds use `-slot-1`,
+`-slot-2`, and so on. A directory lock covers both the build and subsequent
+installation test, and is released when the processes exit. Child helpers
+reuse the selected directory. Hasher selects the available user pair itself.
+
+With `HASHER_AUTO_SLOTS=yes`, an explicit slot is optional, for example when
+inspecting a particular worker:
+
+```bash
+HASHER_SLOT=worker1 rpmbsh -t package.spec
+rpmbsh -S worker2 -t package.spec
+loginhsh -S worker1 -t
+```
+
+`rpmbsh`, `myhsh` and `loginhsh` accept `-S SLOT` (letters, digits, `_`, `-`)
+or `HASHER_SLOT`. An explicit slot waits for its directory to become free.
+Standalone `loginhsh`, `myhsh -p`, `myhsh -r`, and rebuilds with `-e` keep
+using the requested directory; they never select another worker's directory.
+The test directory adds `-test` after the selected build directory.
+
 ### Build helpers
 
 | Command | Description |

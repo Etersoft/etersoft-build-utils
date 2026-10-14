@@ -28,6 +28,7 @@ phelp()
 	echog "$Usage"
 	echo
 	echog "Options:"
+	echog "   -S SLOT     use independent hasher build/test directories (or HASHER_SLOT)"
 	echog "   -u  sign and run gear build task after build"
 	echog "   -a TASK  sign and add to existing (shared) task TASK after build"
 	echog "   -A  sign and add to the last task after build"
@@ -47,8 +48,9 @@ phelp()
 
 PASSEDARGS=
 TASKARG=
-while getopts :hieufclstwb:a:A opt; do
+while getopts :S:hieufclstwb:a:A opt; do
     case $opt in
+    S) export HASHER_SLOT="$OPTARG" ;;
     h) phelp; exit 0;;
     t) COMMIT="--commit" ;;
     u|f|c|e|s|l) PASSEDARGS="$PASSEDARGS -$opt" ;;
@@ -77,8 +79,15 @@ set_girar_host $1 && shift
 
 parse_cmd_pre_spec "$@"
 mygetopts $LISTARGS
+# Also propagate a slot selected in the user configuration to helpers.
+export HASHER_SLOT
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
+load_mod hasher
+case " $PASSEDARGS " in
+	*" -e "*) acquire_hasher_slot fixed ;;
+	*) acquire_hasher_slot ;;
+esac
 
 [ -n "$LISTNAMES" ] || fatal "Run with exists specs as arg"
 

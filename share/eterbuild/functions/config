@@ -51,6 +51,10 @@ COMPANYFTP=etersoft.ru
 TARGETFTPBASE="/var/ftp"
 LOGDIR="$RPMDIR/log"
 HASHERBASEDIR="$HOME/hasher"
+# Enable additional directories for concurrent builds (hasher selects user pairs).
+HASHER_AUTO_SLOTS=no
+# Optional fixed slot via -S SLOT when HASHER_AUTO_SLOTS=yes.
+# HASHER_SLOT=worker1
 HASHER_NOCHECK=nvr,gpg,packager,buildtime
 HASHERARG=""
 

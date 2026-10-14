@@ -11,6 +11,11 @@ set_hasherdir()
 	if [ ! -x "$HSH" ] ; then
 		fatal "Please install hasher package before use it"
 	fi
+	# Reuse the parent's directory even if loading userconfig reset HASHER_SLOT.
+	if hasher_slot_inherited ; then
+		HASHERDIR=$HASHER_LOCK_DIR
+		return
+	fi
 
 	#if [ -n "$HASHERDIR" ] ; then
 	#	fatal "Possible HASHERBASEDIR is not set correctly. Please replace HASHERDIR with HASHERBASEDIR in the config file"
@@ -20,6 +25,56 @@ set_hasherdir()
 		x86_64)  HASHERDIR="$HASHERDIR-64" ;;
 		aarch64) HASHERDIR="$HASHERDIR-aarch64" ;;
 	esac
+	# Directory isolation only: hasher-priv selects its own free user pair.
+	if [ "${HASHER_AUTO_SLOTS:-no}" != yes ] && [ -n "${HASHER_SLOT:-}" ] ; then
+		fatal "Enable HASHER_AUTO_SLOTS=yes in configuration before selecting a slot"
+	fi
+	case "${HASHER_SLOT:-}" in
+		*[!a-zA-Z0-9_-]*) fatal "Invalid HASHER_SLOT: use letters, digits, '_' or '-'" ;;
+	esac
+	[ -z "${HASHER_SLOT:-}" ] || HASHERDIR="$HASHERDIR-slot-$HASHER_SLOT"
+}
+
+hasher_slot_inherited()
+{
+	[ -n "${HASHER_LOCK_DIR:-}" ] &&
+		[ "$HASHER_LOCK_DIR.ebu-lock" -ef /proc/self/fd/9 ]
+}
+
+# Hold fd 9 until the build and its installation helpers have all exited.
+# The lock lives outside the chroot directory so cleanup cannot remove it.
+acquire_hasher_slot()
+{
+	set_hasherdir
+	hasher_slot_inherited && return
+	command -v flock >/dev/null 2>&1 || fatal "Please install flock before using hasher"
+	local base=$HASHERDIR slot=0 lock_status waited=
+	mkdir -p "$(dirname "$base")" || fatal "Cannot create hasher parent directory"
+	while : ; do
+		exec 9>"$HASHERDIR.ebu-lock" || fatal "Cannot open hasher directory lock"
+		# Explicit slots and operations on existing results must stay in place.
+		if [ "${HASHER_AUTO_SLOTS:-no}" != yes ] ||
+			[ -n "${HASHER_SLOT:-}" ] || [ "${1:-}" = fixed ] ; then
+			flock 9 || fatal "Cannot lock hasher directory"
+			break
+		fi
+		if flock -n 9 ; then
+			break
+		else
+			lock_status=$?
+		fi
+		[ "$lock_status" = 1 ] || fatal "Cannot lock hasher directory"
+		slot=$((slot + 1))
+		# HASHER_MAX_SLOTS bounds parallel builds (the base dir counts as one): wait for a free one
+		if [ -n "${HASHER_MAX_SLOTS:-}" ] && [ "$slot" -ge "$HASHER_MAX_SLOTS" ] ; then
+			[ "$slot" -eq "$HASHER_MAX_SLOTS" ] && [ -z "$waited" ] && info "All $HASHER_MAX_SLOTS hasher slots are busy, waiting..."
+			waited=1
+			slot=0
+			sleep 10
+		fi
+		[ "$slot" = 0 ] && HASHERDIR=$base || HASHERDIR=$base-slot-$slot
+	done
+	export HASHER_LOCK_DIR=$HASHERDIR
 }
 
 check_locking()
