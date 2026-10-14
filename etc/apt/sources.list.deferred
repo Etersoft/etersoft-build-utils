@@ -1,0 +1,18 @@
+# Package repository URLs
+#
+# You can add [alt] after rpm for digital signature check
+
+rpm [alt] file:/var/ftp/ pub/Etersoft/Sisyphus/Deferred/i586 classic
+rpm [alt] file:/var/ftp/ pub/Etersoft/Sisyphus/Deferred/noarch classic
+rpm [alt] file:/var/ftp/ pub/Etersoft/Sisyphus/Deferred/x86_64-i586 classic
+
+# /etc/apt/sources.list.d/ximper-additives.list:
+#rpm [ximper] https://download.etersoft.ru/pub/Etersoft/XimperLinux Devel/Additives/x86_64 addon
+#rpm [ximper] https://download.etersoft.ru/pub/Etersoft/XimperLinux Devel/Additives/noarch addon
+
+# /etc/apt/sources.list.d/ximper-substrates.list:
+#rpm [ximper] https://download.etersoft.ru/pub/Etersoft/XimperLinux Current/Substrates/x86_64 addon
+#rpm [ximper] https://download.etersoft.ru/pub/Etersoft/XimperLinux Current/Substrates/noarch addon
+
+#rpm file:/var/ftp/pub/download/ximper/ XimperLinuxRepository/x86_64 addon
+#rpm file:/var/ftp/pub/download/ximper/ XimperLinuxRepository/noarch addon
