@@ -480,6 +480,18 @@ get_tag_by_version()
 }
 
 # TODO: try gear-remotes-uscan here
+commit_upstream_tags()
+{
+	# gear-uupdate stages the spec too; leave it for rpmrb's release commit.
+	git diff --cached --quiet -- .gear/tags && return 0
+	local editopt=
+	if [ -n "$QUIET" ] || ! tty -s ; then
+		editopt=--no-edit
+	fi
+	docmd gear-commit $editopt -m "Update stored upstream tags" -- .gear/tags ||
+		fatal "Failed to commit stored upstream tags"
+}
+
 # merge from guessed tag (by version) or from HEAD
 update_master_branch_to()
 {
@@ -1191,9 +1203,9 @@ if is_gear $SPECDIR && [ -z "$GSSETVERSION" ] && $EPMCMD assure gear-rules-verif
         # https://www.altlinux.org/Gear/remotes
         $EPMCMD assure gear-remotes-uscan perl-Gear-Remotes
         $EPMCMD assure gear-commit gear
-        docmd gear-remotes-restore
-        docmd gear-remotes-uscan
-        docmd gear-commit
+        docmd gear-remotes-restore || fatal "Failed to restore upstream remotes"
+        docmd gear-remotes-uscan || fatal "Failed to update upstream remotes"
+        commit_upstream_tags
         GETSOURCEUUPDATE=1
 
         source_postupdate_hook
@@ -1215,8 +1227,8 @@ fi
 		cd "$(get_root_git_dir)" || fatal
 		$EPMCMD assure gear-commit gear
 		$EPMCMD assure gear-uupdate
-		docmd gear-remotes-restore
-		docmd git fetch --tags upstream
+		docmd gear-remotes-restore || fatal "Failed to restore upstream remotes"
+		docmd git fetch --tags upstream || fatal "Failed to fetch upstream tags"
 		# hack: if separated branch
 		#if grep -q "^diff:" $(get_root_git_dir)/.gear/rules ; then
 		#	update_master_branch_to "$GSSETVERSION"
@@ -1224,9 +1236,9 @@ fi
 		[ -n "$GSSETVERSION" ] || fatal "GSSETVERSION is empty here"
 		tag="$(get_tag_by_version "$GSSETVERSION")"
 		[ -n "$tag" ] || fatal "Can't find appropriate tag for $GSSETVERSION version"
+		docmd gear-uupdate --upstream-version "$GSSETVERSION" --tag "$tag" || fatal "Failed to update upstream sources"
+		commit_upstream_tags
 		GETSOURCEUUPDATE=1
-		docmd gear-uupdate --upstream-version "$GSSETVERSION" --tag $tag
-		docmd gear-commit
 
 		update_post_git_submodules
 		source_postupdate_hook
