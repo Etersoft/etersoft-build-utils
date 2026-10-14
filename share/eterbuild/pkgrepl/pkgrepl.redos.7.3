@@ -12,3 +12,14 @@ patchelf|patchelf
 p7zip|p7zip
 
 libgcc15-devel|gcc-x86_64-linux-gnu
+
+# FFmpeg runtime dependencies from ALT Sisyphus
+libavcodec63|
+libavformat63|
+libavutil61|
+
+# Wine is configured --without-ffmpeg on RedOS 7.3 and 8.0.
+# Drop inherited ALT runtime names, matching the existing disabled FFmpeg build deps.
+libavcodec62|
+libavformat62|
+libavutil60|
