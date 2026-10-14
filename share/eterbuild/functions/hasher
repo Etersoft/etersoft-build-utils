@@ -106,7 +106,7 @@ print_tmp_aptconf()
 	test -r "$1" || fatal "$1 is missed"
 	# Note: /etc/apt and /etc/eterbuild/apt is supported
 	cat "$1" | \
-		sed -e "s|\".*/sources.list|\"$OURTMPDIR/sources.list|g"
+		sed -e "s|\"[^\"]*/sources\\.list[^\"]*\"|\"$OURSOURCES\"|g"
 }
 
 # printout sources.list with filtering from apt.conf
@@ -144,10 +144,11 @@ print_tmp_sourceslist()
 
 prepare_aptconfig()
 {
-	export OURAPTCONF=$OURTMPDIR/apt.conf.$MENV
-	print_tmp_aptconf $APTCONF >$OURAPTCONF || fatal "Can't create apt.conf"
-	export OURSOURCES=$OURTMPDIR/sources.list.$MENV
-	print_tmp_sourceslist $APTCONF >$OURSOURCES || fatal "Can't create sources.list"
+	# Concurrent builds may use different architectures or extra repositories.
+	OURSOURCES=$(make_temp_file sources.list) || fatal "Can't create sources.list"
+	OURAPTCONF=$(make_temp_file apt.conf) || fatal "Can't create apt.conf"
+	export OURSOURCES OURAPTCONF
+	print_tmp_sourceslist "$APTCONF" >"$OURSOURCES" || fatal "Can't create sources.list"
 	if [ -n "$ETERBUILD_APTREPO" ] ; then
 		cat >>$OURSOURCES <<EOF
 
@@ -155,6 +156,7 @@ prepare_aptconfig()
 $ETERBUILD_APTREPO
 EOF
 	fi
+	print_tmp_aptconf "$APTCONF" >"$OURAPTCONF" || fatal "Can't create apt.conf"
 	[ -n "$QUIETMODE" ] && return
 	echo
 	echog "Apt conf $APTCONF:"
