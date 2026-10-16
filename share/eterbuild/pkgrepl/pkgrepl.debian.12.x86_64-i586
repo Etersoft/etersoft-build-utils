@@ -1,0 +1,4 @@
+# Build tools run on the amd64 host even when Wine targets i386.
+clang|clang:amd64
+llvm|llvm:amd64
+lld|lld:amd64
