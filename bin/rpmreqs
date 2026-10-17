@@ -54,6 +54,41 @@ filter_multiple_provides()
 		s|libwine.so.1.*||g"
 }
 
+# Optional newline-separated directories of published RPMs for this target.
+# Resolve file requirements only when the local provider name is unambiguous.
+# Named/soname dependencies continue through the existing APT resolver.
+resolve_local_file_requirements()
+{
+	local requirement directory package providers remaining=""
+	LOCALPKGNAMES=""
+	[ -n "$RPMREQS_PACKAGE_DIRS" ] || return 0
+	for requirement in $REQLIST ; do
+		case "$requirement" in
+			/*)
+				providers=$(
+					printf '%s\n' "$RPMREQS_PACKAGE_DIRS" |
+					while IFS= read -r directory ; do
+						[ -d "$directory" ] || continue
+						for package in "$directory"/*.rpm ; do
+							[ -f "$package" ] || continue
+							if rpm -qpl "$package" 2>/dev/null | grep -Fx -- "$requirement" >/dev/null ; then
+								rpm -qp --qf '%{NAME}\n' "$package" || return 1
+							fi
+						done
+					done | sort -u
+				)
+				set -- $providers
+				if [ "$#" = 1 ] ; then
+					LOCALPKGNAMES="$LOCALPKGNAMES $1"
+					continue
+				fi
+				;;
+		esac
+		remaining="$remaining $requirement"
+	done
+	REQLIST="$remaining"
+}
+
 convert_pkgfile_to_pkgname()
 {
 	for ni in $@ ; do
@@ -142,6 +177,9 @@ trans_rpmdeps_to_pkgname_lav()
 	local REQLIST="$@"
 	REQLIST=$(estrlist reg_exclude "$ALREADYHANDLEDRPM" "$REQLIST")
 
+	local LOCALPKGNAMES
+	resolve_local_file_requirements
+
 	# FIXME: strange regexp for drop libNAME.so.NUM and perl(Package) and /bin/sh
 	REALPKGNAMELIST=$(estrlist reg_exclude ".*\.so\..* .*/.* .*(.*" "$REQLIST")
 	# FIXME: external list? Set priorities/
@@ -212,7 +250,7 @@ ca-certificates
 common-licenses
 librpmbuild
 passwdqc-control"
-	REQLIST=$(estrlist union $PKGFILES $REALPKGNAMELIST)
+	REQLIST=$(estrlist union $PKGFILES $REALPKGNAMELIST $LOCALPKGNAMES)
 	REQLIST=$(estrlist reg_exclude "$ALREADYHANDLEDRPM" "$REQLIST" )
 	estrlist union $REQLIST | estrlist list -
 }
