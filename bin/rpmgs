@@ -860,7 +860,11 @@ update_predownloaded()
 	#### pnpm only part
 	# pnpm-lock.yaml may be in predownloaded dir or in source subdir
 	local pnpm_dir=""
-	if [ -s "./pnpm-lock.yaml" ] ; then
+	if [ -s "$RGD/.gear/predownloaded-skip-npm" ] ; then
+		# explicit switch: no npm/yarn/pnpm install for this package
+		# (f.i. the preinstall hook vendors node_modules itself)
+		info "Detected .gear/predownloaded-skip-npm, skipping npm/yarn/pnpm install"
+	elif [ -s "./pnpm-lock.yaml" ] ; then
 		pnpm_dir="."
 	elif [ -s "$RGD/$CURNAME/pnpm-lock.yaml" ] ; then
 		pnpm_dir="$RGD/$CURNAME"
@@ -902,7 +906,7 @@ update_predownloaded()
 
 	#### yarn only part
 	# yarn.lock may be in predownloaded dir or in source subdir/subdirs
-	elif [ -s "./yarn.lock" ] || [ -s "$RGD/$CURNAME/yarn.lock" ] ; then
+	elif [ ! -s "$RGD/.gear/predownloaded-skip-npm" ] && { [ -s "./yarn.lock" ] || [ -s "$RGD/$CURNAME/yarn.lock" ] ; } ; then
 		local yarn_dir="."
 		[ -s "$RGD/$CURNAME/yarn.lock" ] && yarn_dir="$RGD/$CURNAME"
 		local COMMITMSG=''
