@@ -26,6 +26,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	echo "     add [NNNN] del package [package2...]  - add package remove command"
 	echo "     add [NNNN] rebuild package [package2...]  - add package rebuild"
 	echo "     add [NNNN] copy NNNN [from XX]  - copy package [from (p9|p10|Sisyphus)]"
+	echo "     merge  NEW from TASK [TASK2...] - put all subtasks of TASK(s) into NEW (tags, src.rpm, del, copy)"
 	echo "     add --help                  - show task add help"
 	echo "     Add <args>                  - add and run the task"
 	echo "     task --help                 - show task help"
@@ -733,6 +734,53 @@ if [ "$1" = "copy" ] ; then
 	done
 	docmd ssh $GEARHOST task run --test-only $TASK
 	exit
+fi
+
+# merge NEW from TASK [TASK...]: put all subtasks of TASKs into NEW, in order
+# (gear tags, src.rpm re-uploaded from the task, del, copy)
+if [ "$1" = "merge" ] ; then
+	shift
+	TASK="$(get_task_number "$1")"
+	is_task_number "$TASK" && [ "$2" = "from" ] && [ -n "$3" ] || fatal "Use: merge NEW from TASK [TASK...]"
+	shift 2
+	TMPSRPM="$(mktemp -d)" || fatal
+	trap "rm -rf '$TMPSRPM'" EXIT
+	for FROMTASK in "$@" ; do
+		FROMTASK="$(get_task_number "$FROMTASK")"
+		SUBS="$(ssh $GEARHOST task show --json "$FROMTASK" | python3 -c '
+import json, sys
+for num, st in sorted(json.load(sys.stdin).get("subtasks", {}).items(), key=lambda x: int(x[0])):
+    kind = st.get("type")
+    if kind == "repo" and st.get("dir") and st.get("tag_name"):
+        print("repo", st["dir"], st["tag_name"])
+    elif kind == "srpm" and st.get("srpm"):
+        print("srpm", num, st["srpm"])
+    elif kind == "delete" and st.get("package"):
+        print("del", st["package"])
+    elif kind == "copy" and st.get("package"):
+        print("copy", st["package"], st.get("copy_repo", ""))
+    elif kind:
+        print("unknown", num, kind)
+')" || fatal "can't read task $FROMTASK"
+		[ -n "$SUBS" ] || fatal "no subtasks in task $FROMTASK"
+		echo "$SUBS" | while read -r KIND A B ; do
+			case "$KIND" in
+				repo)
+					docmd ssh -n $GEARHOST task add $TASK repo "$A" "$B" || exit 1 ;;
+				srpm)
+					docmd eget -q -O "$TMPSRPM/$B" "https://git.altlinux.org/tasks/$FROMTASK/gears/$A/$B" || exit 1
+					docmd rsync -vay --partial --checksum -e ssh "$TMPSRPM/$B" $GEARHOST: </dev/null || exit 1
+					docmd ssh -n $GEARHOST task add $TASK srpm "$B" || exit 1 ;;
+				del)
+					docmd ssh -n $GEARHOST task add $TASK del "$A" || exit 1 ;;
+				copy)
+					docmd ssh -n $GEARHOST task add $TASK copy "$A" ${B:+from $B} || exit 1 ;;
+				*)
+					warning "task $FROMTASK subtask $A: unsupported type $B" ; exit 1 ;;
+			esac
+		done || fatal "can't merge task $FROMTASK into $TASK"
+	done
+	exit 0
 fi
 
 if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
