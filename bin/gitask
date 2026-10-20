@@ -588,13 +588,28 @@ if [ "$1" = "acl" ] ; then
 		echo "  gita acl PACKAGE add USER     - add user to ACL"
 		echo "  gita acl PACKAGE del USER     - remove user from ACL"
 		echo "  gita acl PACKAGE leader USER  - set package leader"
+		echo "  (also: gita acl [BRANCH] show|add|del|leader PACKAGE [USER]; branch in any case: sisyphus, p11)"
 		exit
 	fi
+	# the branch in any case: sisyphus/Sisyphus, p11, c10f2...
+	[ "$1" = "sisyphus" ] && set -- Sisyphus "${@:2}"
 	BINARYREPO=$(set_if_matched $1 "Sisyphus [ptc][0-9] [ptc][0-9][0-9] [ptc][0-9][0-9]f[0-9]") && shift
-	PROJECTNAME="$1"
-	COMMAND="$2"
+	# both orders: gita acl [BRANCH] PACKAGE COMMAND [USER] and gita acl [BRANCH] COMMAND PACKAGE [USER]
+	case "$1" in
+		show|add|del|leader)
+			if [ -n "$2" ] ; then
+				COMMAND="$1"
+				PROJECTNAME="$2"
+				OPERAND="$3"
+			fi
+			;;
+	esac
+	if [ -z "$PROJECTNAME" ] ; then
+		PROJECTNAME="$1"
+		COMMAND="$2"
+		OPERAND="$3"
+	fi
 	[ -z "$COMMAND" ] && COMMAND="show"
-	OPERAND="$3"
 	# API: acl REPOSITORY PACKAGE COMMAND [USER]
 	echo "$GEARHOST:$BINARYREPO ACL for $PROJECTNAME:"
 	if [ "$COMMAND" = "show" ] ; then
