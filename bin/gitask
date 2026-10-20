@@ -838,9 +838,10 @@ if [ "$1" = "add" ] || [ "$1" = "Add" ] ; then
 		[ "$1" = "from" ] && [ "$ADDCMD" = "copy" ] && break
 		PACKAGE="$1"
 		if [ "$OADDCMD" = "repo" ] ; then
-			#<gear repo>.git=<gear tag>
+			#<gear repo>.git=<gear tag>: passed as `repo <gear repo>.git <gear tag>` - girar takes the short form
+			# of a name starting with a digit (7-zip.git=TAG) for a subtask number: «not enough arguments»
 			if rhas "$1" "\.git=" ; then
-				ADDCMD=''
+				PACKAGE="${1%%=*} ${1#*=}"
 			else
 				PACKAGE="$1 $2" && shift
 			fi
