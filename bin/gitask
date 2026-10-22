@@ -133,6 +133,11 @@ get_all_subtasks()
 import json, sys
 task = json.load(sys.stdin)
 for num in sorted(task.get("subtasks", {}).keys(), key=int):
+    st = task["subtasks"][num]
+    # Skip empty subtask slots (no package, only userid present)
+    if not (st.get("type") or st.get("dir") or st.get("pkgname")
+            or st.get("srpm") or st.get("tag_name") or st.get("copy_repo")):
+        continue
     print(num)
 ' 2>/dev/null)
 		[ -n "$result" ] && echo "$result" && return
