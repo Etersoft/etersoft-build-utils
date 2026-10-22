@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 
 class LocalFileRequirements(unittest.TestCase):
-    def run_resolver(self, packages, requirements):
+    def run_resolver(self, packages, requirements, installed=""):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp); repo=root/'repo with spaces'; repo.mkdir()
             for filename, (name, files) in packages.items():
@@ -14,14 +14,17 @@ class LocalFileRequirements(unittest.TestCase):
             source=(ROOT/'bin/rpmreqs').read_text()
             function=source.split('resolve_local_file_requirements()\n',1)[1].split('\nconvert_pkgfile_to_pkgname()',1)[0]
             stub='''rpm() {
-  if [ "$1" = -qpl ]; then tail -n +2 "$2";
+  if [ "$1" = -q ] && [ "$2" = --whatprovides ]; then
+    [ "${@: -1}" = /etc/bashrc ] && [ -n "$INSTALLED_PROVIDERS" ] || return 1
+    printf '%s\n' "$INSTALLED_PROVIDERS"
+  elif [ "$1" = -qpl ]; then tail -n +2 "$2";
   else head -n 1 "${@: -1}"; fi
 }
 '''
             result=subprocess.run(['bash'],input=stub+'resolve_local_file_requirements()\n'+function+
                                   '\nresolve_local_file_requirements\nprintf "%s\\n%s\\n" "$REQLIST" "$LOCALPKGNAMES"\n',
                                   text=True,capture_output=True,check=True,
-                                  env=dict(os.environ,RPMREQS_PACKAGE_DIRS=str(repo),REQLIST=requirements))
+                                  env=dict(os.environ,RPMREQS_PACKAGE_DIRS=str(repo),REQLIST=requirements,INSTALLED_PROVIDERS=installed))
             return [line.split() for line in result.stdout.splitlines()]
 
     def test_resolves_both_architectures_without_changing_other_requires(self):
@@ -37,5 +40,18 @@ class LocalFileRequirements(unittest.TestCase):
     def test_multiple_versions_of_same_provider_are_unambiguous(self):
         result=self.run_resolver({'a-1.rpm':('a',['/bin/example']),'a-2.rpm':('a',['/bin/example'])},'/bin/example')
         self.assertEqual(result,[[],['a']])
+
+    def test_resolves_installed_file_provider_without_apt_file_index(self):
+        result=self.run_resolver({}, '/etc/bashrc libfoo', installed='bashrc')
+        self.assertEqual(result, [['libfoo'], ['bashrc']])
+
+    def test_does_not_choose_between_installed_providers(self):
+        result=self.run_resolver({}, '/etc/bashrc', installed='a\nb')
+        self.assertEqual(result, [['/etc/bashrc'], []])
+
+    def test_published_provider_takes_priority_over_host(self):
+        result=self.run_resolver({'a.rpm':('product-bashrc',['/etc/bashrc'])},
+                                 '/etc/bashrc', installed='bashrc')
+        self.assertEqual(result, [[], ['product-bashrc']])
 
 if __name__=='__main__': unittest.main()

@@ -56,12 +56,12 @@ filter_multiple_provides()
 
 # Optional newline-separated directories of published RPMs for this target.
 # Resolve file requirements only when the local provider name is unambiguous.
+# If APT has no file index, an installed unambiguous provider is also usable.
 # Named/soname dependencies continue through the existing APT resolver.
 resolve_local_file_requirements()
 {
 	local requirement directory package providers remaining=""
 	LOCALPKGNAMES=""
-	[ -n "$RPMREQS_PACKAGE_DIRS" ] || return 0
 	for requirement in $REQLIST ; do
 		case "$requirement" in
 			/*)
@@ -77,6 +77,9 @@ resolve_local_file_requirements()
 						done
 					done | sort -u
 				)
+				if [ -z "$providers" ] ; then
+					providers=$(rpm -q --whatprovides --qf '%{NAME}\n' "$requirement" 2>/dev/null | sort -u)
+				fi
 				set -- $providers
 				if [ "$#" = 1 ] ; then
 					LOCALPKGNAMES="$LOCALPKGNAMES $1"
