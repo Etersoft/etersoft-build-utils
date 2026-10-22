@@ -211,3 +211,15 @@ EOF
 	cat $OURSOURCES | grep -v "^#" | grep -v "^\$" | grep rpm | sed -e "s|rpm|    rpm|"
 	echo
 }
+
+# Additional concrete providers to install alongside the default build tools.
+# A comma-separated list avoids shell word splitting in myhsh's argument string.
+hasher_build_packages_arg()
+{
+    [ -n "$ETERBUILD_HASHER_BUILD_PACKAGES" ] || return 0
+    if ! printf '%s\n' "$ETERBUILD_HASHER_BUILD_PACKAGES" | grep -qE '^[A-Za-z0-9][A-Za-z0-9_.+-]*(,[A-Za-z0-9][A-Za-z0-9_.+-]*)*$' ; then
+        error "Invalid ETERBUILD_HASHER_BUILD_PACKAGES"
+        return 1
+    fi
+    printf '%s\n' "--pkg-build-list=+$ETERBUILD_HASHER_BUILD_PACKAGES"
+}

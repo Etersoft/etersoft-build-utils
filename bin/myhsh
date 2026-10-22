@@ -68,7 +68,8 @@ set_binaryrepo $MENV
 
 RESULT=0
 
-HASHERARG="$HASHERARG $WITHSTUFF"
+HASHERARG="$HASHERARG $WITHSTUFF $(hasher_build_packages_arg)"
+[ "$?" = 0 ] || fatal "Invalid additional hasher build packages"
 if [ -n "$PRINTBINPKG$REMOVEPKG$REBUILD" ] ; then
 	acquire_hasher_slot fixed
 else
