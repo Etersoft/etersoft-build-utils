@@ -129,15 +129,8 @@ get_all_subtasks()
 	local api_base result
 	if api_base=$(_get_api_base) ; then
 		result=$(curl -sf "$api_base/tasks/$1" 2>/dev/null | \
-			python3 -c '
-import json, sys
-task = json.load(sys.stdin)
-for num in sorted(task.get("subtasks", {}).keys(), key=int):
-    st = task["subtasks"][num]
-    # Skip empty subtask slots (no package, only userid present)
-    if not (st.get("type") or st.get("dir") or st.get("pkgname")
-            or st.get("srpm") or st.get("tag_name") or st.get("copy_repo")):
-        continue
+			python3 -c "$_GITA_PY_TASKINFO"'
+for num, st in task_subtasks(json.load(sys.stdin)):
     print(num)
 ' 2>/dev/null)
 		[ -n "$result" ] && echo "$result" && return
@@ -262,6 +255,14 @@ C_APPROVED, C_NEED, C_DIM, C_BOLD, C_RESET = "\033[32m", "\033[33m", "\033[2m", 
 
 def paint(text, color, use_color):
     return color + text + C_RESET if use_color and color else text
+
+def task_subtasks(task):
+    """(num, subtask) sorted by number, skipping empty slots of removed subtasks
+    (no package, only userid present)"""
+    for num, st in sorted(task.get("subtasks", {}).items(), key=lambda x: int(x[0])):
+        if (st.get("type") or st.get("dir") or st.get("pkgname")
+                or st.get("srpm") or st.get("tag_name") or st.get("copy_repo")):
+            yield num, st
 '
 
 # Format task list from JSON (stdin)
@@ -298,8 +299,7 @@ for t in tasks:
     approvals, denials = acl.get(t["id"], ({}, {}))
     # package names from subtasks, prefixed by their approval status
     pkgs = []
-    for num in sorted(t.get("subtasks", {}).keys(), key=lambda x: int(x)):
-        st = t["subtasks"][num]
+    for num, st in task_subtasks(t):
         pkg = st.get("pkgname", "")
         tag = st.get("tag_name", "")
         stype = st.get("type", "repo")
@@ -361,12 +361,7 @@ approvals, denials = {}, {}
 if task["state"] in ("TESTED", "EPERM", "DONE"):
     approvals, denials = get_task_acl(task)
 
-for num in sorted(task.get("subtasks", {}).keys(), key=int):
-    st = task["subtasks"][num]
-    # Skip empty subtask slots (no package, only userid present)
-    if not (st.get("type") or st.get("dir") or st.get("pkgname")
-            or st.get("srpm") or st.get("tag_name") or st.get("copy_repo")):
-        continue
+for num, st in task_subtasks(task):
     stype = st.get("type", "repo")
     pkg = st.get("pkgname", "")
     if stype == "delete":
