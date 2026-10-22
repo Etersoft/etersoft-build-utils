@@ -35,6 +35,8 @@ filter_multiple_provides()
 {
 	estrlist list - |
 	sed -e "s|/usr/bin/lpstat|cups|g
+		s|/usr/lib/cups/daemon/cups-driverd|cups|g
+		s|/usr/sbin/lpadmin|cups|g
 		s|libldap_r-2.4.so.*|libldap|g
 		s|liblber-2.4.so.*|libldap|g
 		s|libudev.so.*|libudev1|g
