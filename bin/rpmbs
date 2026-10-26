@@ -142,6 +142,27 @@ __gear_create_tag()
 	fi
 }
 
+# recreate the personal repo when the remote alias points to a removed one (gitery repo cleanup)
+# from /gears if the package is there (shares objects), else an empty one (as ginit)
+# used: GIRARHOST
+check_remote_repo()
+{
+	local url path name gears
+	url="$(git remote get-url $GIRARHOST 2>/dev/null)" || return 0
+	path="${url#*:}"
+	echo "$path" | grep -q "^/people/[^/]*/packages/[^/]*\.git$" || return 0
+	git ls-remote "$GIRARHOST" HEAD >/dev/null 2>&1 && return 0
+	name="$(basename "$path" .git)"
+	gears="$(git remote get-url gear 2>/dev/null | sed -n -e 's|.*\(/gears/[^/]*/[^/]*\.git\)$|\1|p')"
+	[ -n "$gears" ] || gears="/gears/$(echo "$name" | cut -c1 | tr '[:upper:]' '[:lower:]')/$name.git"
+	echo "Remote repo $url does not exist."
+	if git ls-remote "$GIRARHOST:$gears" HEAD >/dev/null 2>&1 ; then
+		docmd ssh $GIRARHOST clone "$gears" "packages/$name.git"
+	else
+		docmd ssh $GIRARHOST git-init-db "$path"
+	fi
+}
+
 # check and create tag according to package release
 # used: SPECDIR, LISTNAMES, FORCE
 check_gear_and_tag()
@@ -372,7 +393,7 @@ if [ -n "$UPLOADNOW" ] && [ -z "$UPLOADSRPM" ] && is_gear $SPECDIR ; then
 
 		TAG=$(get_last_tag)
 
-		# TODO: add check for repo (as in rpmgp) and run ginit if needed
+		check_remote_repo || fatal "Can't create remote repo for $PROJECTNAME at $GIRARHOST"
 		docmd gpush $GIRARHOST $FORCE || fatal "gpush failed. It is possible you need run '\$ ginit $GIRARHOST' to create remote repo."
 		echo
 		echo "Run build $PROJECTNAME at $GEARHOST"
