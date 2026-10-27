@@ -3,6 +3,8 @@ libncurses-devel|ncurses
 libncursesw-devel|ncurses
 terminfo|ncurses
 termutils|ncurses
+7-zip|7zip
+p7zip|7zip
 rpm-build-fonts|rpm-build-altlinux-compat
 kernel-build-tools|
 gettext-tools|gettext
