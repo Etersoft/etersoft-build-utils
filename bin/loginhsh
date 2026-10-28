@@ -31,7 +31,8 @@ phelp()
 	echog "   -S SLOT     use independent hasher build/test directories (or HASHER_SLOT)"
 	echog "   -i           initialize hasher"
 	echog "   -b REPONAME  binary repository name (4.1, p5, t6 and so on)"
-	echog "   -c           cleanup hasher"
+	echog "   -c           cleanup hasher (remove chroot and aptbox, keep the dir, repo and cache)"
+	echog "   -a           with -c: cleanup all hasher dirs (every distro and slot)"
 	echog "   -q           quiet mode (don't run anything)"
 	echog "   -r COMMAND   run command"
 	echog "   -o           log in as root user"
@@ -47,13 +48,14 @@ phelp()
 }
 
 SHARENETWORK="1"
-while getopts :S:chitondvqr:b:p:sXY opt; do
+while getopts :S:achitondvqr:b:p:sXY opt; do
     case $opt in
     S) export HASHER_SLOT="$OPTARG" ;;
 	h) phelp; exit 0;;
 	t) TESTMODE=1 ;;
 	i) INITIALIZE=1 ;;
 	c) CLEANUP=1 ;;
+	a) CLEANALL=1 ;;
 	d) PRINTHASHERDIR=1 ;;
 	q) QUIETMODE=1 ;;
 	b) BINARYREPONAME="$OPTARG" ;;
@@ -86,6 +88,25 @@ mygetopts "$@"
 # see functions/alt:set_binaryrepo() for BINARYREPONAME
 set_binaryrepo $MENV
 
+# before taking the slot: a directory in use is skipped, not waited for
+set_hasherdir
+if [ "$CLEANUP" = "1" ] ; then
+	RESULT=0
+	if [ -n "$CLEANALL" ] ; then
+		for dir in "$HASHERBASEDIR"*/ ; do
+			[ -d "$dir" ] && { cleanup_hasher_dir "${dir%/}" || RESULT=1 ; }
+		done
+	elif [ -n "$HASHERPOSTFIX" ] ; then
+		cleanup_hasher_dir "$HASHERDIR-$HASHERPOSTFIX" "$HASHERDIR.ebu-lock" || RESULT=1
+	elif [ -n "$TESTMODE" ] ; then
+		cleanup_hasher_dir "$HASHERDIR-test" || RESULT=1
+	else
+		cleanup_hasher_dir "$HASHERDIR" || RESULT=1
+		cleanup_hasher_dir "$HASHERDIR-test" || RESULT=1
+	fi
+	exit $RESULT
+fi
+
 # export OURAPTCONF with temp. file contains correct path to sources.list
 # use MENV
 prepare_aptconfig
@@ -93,6 +114,7 @@ prepare_aptconfig
 HASHERARG="$HASHERARG --apt-config=$OURAPTCONF --target $BUILDARCH --with-stuff"
 
 set_hasherdir
+
 if [ "$PRINTHASHERDIR" != "1" ] ; then
 	acquire_hasher_slot fixed
 fi
@@ -107,14 +129,6 @@ if [ "$PRINTHASHERDIR" = "1" ] ; then
 	exit
 fi
 
-
-if [ "$CLEANUP" = "1" ] ; then
-	echog "Cleanup hasher in $HASHERDIR..."
-	docmd $HSH --cleanup-only $HASHERDIR $HASHERARG || fatal "cleanup"
-	rm -fv $HASHERDIR/*
-	rmdir $HASHERDIR/
-	exit
-fi
 
 if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] ; then
 	echog "Initialize $HASHERDIR ..."

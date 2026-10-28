@@ -77,6 +77,25 @@ acquire_hasher_slot()
 	export HASHER_LOCK_DIR=$HASHERDIR
 }
 
+# Cleanup a hasher work directory: remove chroot and aptbox (hsh --cleanup-only),
+# keep the directory with its repo and cache. A directory in use (the build holds
+# LOCK, by default DIR without -test plus .ebu-lock) is skipped, never waited for.
+cleanup_hasher_dir()
+(
+	dir="$1"
+	lock="${2:-${1%-test}.ebu-lock}"
+	[ -d "$dir/chroot" ] || [ -d "$dir/aptbox" ] || [ -d "$dir/img-workdir" ] || return 0
+	if [ -e "$lock" ] ; then
+		exec 8<"$lock" || return 1
+		if ! flock -n 8 ; then
+			info "Skip $dir: it is in use"
+			return 0
+		fi
+	fi
+	echog "Cleanup hasher in $dir ..."
+	docmd $HSH --cleanup-only --no-wait-lock "$dir"
+)
+
 check_locking()
 {
 	test -f "$HASHERDIR/pid" || return
