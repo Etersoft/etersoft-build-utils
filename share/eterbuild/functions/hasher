@@ -77,6 +77,32 @@ acquire_hasher_slot()
 	export HASHER_LOCK_DIR=$HASHERDIR
 }
 
+
+# hsh-mkchroot can fail at chgrp before creating .out or installing helpers.
+# Preserve only that exact empty scaffold; never alter populated/unknown roots.
+recover_incomplete_hasher_root()
+(
+	local root="$HASHERDIR/chroot" entry backup
+	[ -d "$root" ] && [ ! -L "$root" ] && [ -O "$root" ] || return 0
+	enable -f /usr/lib/bash/lockf lockf || fatal "Cannot load hasher directory lock"
+	builtin lockf "$HASHERDIR" || fatal "Cannot lock hasher directory for recovery"
+	# Recheck under hasher's native lock, also respected by direct hsh users.
+	[ -d "$root" ] && [ ! -L "$root" ] && [ -O "$root" ] || return 0
+	shopt -s dotglob nullglob
+	local entries=("$root"/*)
+	[ "${#entries[@]}" = 3 ] || return 0
+	for entry in "${entries[@]}" ; do
+		case "${entry##*/}" in .host|.in|dev) ;; *) return 0 ;; esac
+		[ -d "$entry" ] && [ ! -L "$entry" ] && [ -O "$entry" ] || return 0
+		local contents=("$entry"/*)
+		[ "${#contents[@]}" = 0 ] || return 0
+	done
+	backup=$(mktemp -d "$HASHERDIR/chroot-incomplete.XXXXXX") || fatal "Cannot create recovery directory"
+	mv -- "$root" "$backup/chroot" || fatal "Cannot preserve incomplete hasher root"
+	warning "Preserved incomplete hasher root in $backup/chroot; initializing a new one" ||:
+	return 0
+)
+
 # Cleanup a hasher work directory: remove chroot and aptbox (hsh --cleanup-only),
 # keep the directory with its repo and cache. A directory in use (the build holds
 # LOCK, by default DIR without -test plus .ebu-lock) is skipped, never waited for.

@@ -107,6 +107,7 @@ fi
 
 mkdir -p $LOGDIR $HASHERDIR || fatal "cannot mkdir"
 check_locking
+recover_incomplete_hasher_root || fatal "Cannot recover incomplete hasher root"
 
 echog "List of packages for build:"
 print_list "$LISTNAMES"

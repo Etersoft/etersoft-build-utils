@@ -100,6 +100,14 @@ or `HASHER_SLOT`. An explicit slot waits for its directory to become free.
 Standalone `loginhsh`, `myhsh -p`, `myhsh -r`, and rebuilds with `-e` keep
 using the requested directory; they never select another worker's directory.
 The test directory adds `-test` after the selected build directory.
+Before a build (`myhsh`, `rpmbsh`) and when initializing (`loginhsh -i`) it recognizes the exact empty scaffold left by
+an interrupted `hsh-mkchroot` before its ownership setup completed. Under hasher's
+native directory lock it preserves that scaffold in `chroot-incomplete.XXXXXX`
+inside the work directory, then lets hasher choose a user pair and initialize
+normally. Populated, symlinked and unrecognized chroots are left to hasher.
+`loginhsh -c` cleans the work directory and its `-test` one (chroot and aptbox),
+keeping the directory with its repo and cache; `loginhsh -c -a` cleans every
+hasher directory. A directory in use by a build is skipped, not waited for.
 
 ### Build helpers
 

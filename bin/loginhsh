@@ -132,7 +132,8 @@ fi
 
 if [ ! -d $HASHERDIR ] || [ "$INITIALIZE" = "1" ] ; then
 	echog "Initialize $HASHERDIR ..."
-	mkdir -p $HASHERDIR || fatal "mkdir"
+	mkdir -p "$HASHERDIR" || fatal "mkdir"
+	recover_incomplete_hasher_root || fatal "Cannot recover incomplete hasher root"
 	docmd $HSH $VERBOSE $HASHERARG --initroot-only $HASHERDIR || fatal "Cannot initialize hasher"
 fi
 
