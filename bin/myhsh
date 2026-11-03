@@ -140,6 +140,8 @@ case "$BUILDARCH" in
 	aarch64|armh|riscv64) [ "$BUILDARCH" = "$SYSARCH" ] || HASHERARG="$HASHERARG --with-qemu=$BUILDARCH" ;;
 esac
 HASHERARG="--mountpoints=/proc,/dev/pts $HASHERARG $REPACKAGE $BUILDSRCRPM"
+# HASHER_NPROCS: CPUs for the build (%__nprocs in the chroot), e.g. chosen by the caller from free memory
+[ -n "$HASHER_NPROCS" ] && HASHERARG="$HASHERARG --nprocs=$HASHER_NPROCS"
 
 BUILDARGS=""
 
