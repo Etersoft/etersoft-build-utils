@@ -31,3 +31,8 @@ libOSMesa|
 
 libXpresent-devel|
 libXpresent|
+
+# SELTA: PostgreSQL for 1C of the branch (selta-server requires the Sisyphus one)
+postgresql18-1C-server|postgresql11-1C-server
+postgresql18-1C-contrib|postgresql11-1C-contrib
+postgresql18-1C|postgresql11-1C

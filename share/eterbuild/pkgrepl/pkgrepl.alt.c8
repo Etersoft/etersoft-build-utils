@@ -42,3 +42,8 @@ ocl-icd-devel|
 ocl-icd|
 
 opencl-headers|
+
+# SELTA: no PostgreSQL for 1C here: keep the name, do not inherit another branch
+postgresql18-1C-server|postgresql18-1C-server
+postgresql18-1C-contrib|postgresql18-1C-contrib
+postgresql18-1C|postgresql18-1C

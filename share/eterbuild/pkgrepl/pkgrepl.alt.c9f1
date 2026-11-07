@@ -1,0 +1,4 @@
+# SELTA: PostgreSQL for 1C of the branch (selta-server requires the Sisyphus one)
+postgresql18-1C-server|postgresql12-1C-server
+postgresql18-1C-contrib|postgresql12-1C-contrib
+postgresql18-1C|postgresql12-1C

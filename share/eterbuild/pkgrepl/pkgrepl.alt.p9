@@ -12,3 +12,8 @@ libXpresent|libXpresent
 libwxGTK3.2|libwxGTK3.0
 libwxGTK3.2-devel|libwxGTK3.0-devel
 libwxBase3.2|libwxBase3.0
+
+# SELTA: PostgreSQL for 1C of the branch (selta-server requires the Sisyphus one)
+postgresql18-1C-server|postgresql12-1C-server
+postgresql18-1C-contrib|postgresql12-1C-contrib
+postgresql18-1C|postgresql12-1C

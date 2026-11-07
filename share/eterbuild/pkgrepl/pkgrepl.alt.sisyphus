@@ -2,3 +2,8 @@ liblcms-devel|liblcms2-devel
 
 #RX 
 zenity|yad
+
+# SELTA: PostgreSQL for 1C of the branch (selta-server requires the Sisyphus one)
+postgresql18-1C-server|postgresql18-1C-server
+postgresql18-1C-contrib|postgresql18-1C-contrib
+postgresql18-1C|postgresql18-1C

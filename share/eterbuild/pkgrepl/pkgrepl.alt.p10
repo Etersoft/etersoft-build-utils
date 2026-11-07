@@ -11,3 +11,8 @@ libOSMesa-devel|libOSMesa-devel
 #libwxGTK3.2-devel|libwxGTK3.0-devel
 #libwxBase3.2|libwxBase3.0
 libgirepository1.0-devel|gobject-introspection-devel
+
+# SELTA: PostgreSQL for 1C of the branch (selta-server requires the Sisyphus one)
+postgresql18-1C-server|postgresql15-1C-server
+postgresql18-1C-contrib|postgresql15-1C-contrib
+postgresql18-1C|postgresql15-1C
