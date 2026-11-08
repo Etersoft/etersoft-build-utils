@@ -258,3 +258,9 @@ libcups|lib64cups2
 libunixODBC2|lib64odbc2 lib64odbcinst2
 libwayland-client|lib64wayland-client0
 libwayland-egl|lib64wayland-egl1
+
+# PostgreSQL (postgresql-mchar of SELTA@Etersoft): no default PostgreSQL,
+# only the versioned ones
+postgresql-server-devel|postgresql16-devel
+postgresql-server|postgresql16-server
+postgresql-contrib|postgresql16-contrib

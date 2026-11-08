@@ -116,3 +116,9 @@ libxkbcommon-devel|libxkbregistry-devel libxkbcommon-devel
 ocl-icd|libopencl1
 
 fzf|
+
+# PostgreSQL (postgresql-mchar of SELTA@Etersoft): the default PostgreSQL 12;
+# keep the names, pkgrepl.rosa.13 is after this one
+postgresql-server-devel|postgresql-devel
+postgresql-server|postgresql-server
+postgresql-contrib|postgresql-contrib
