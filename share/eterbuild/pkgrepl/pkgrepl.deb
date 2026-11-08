@@ -273,7 +273,7 @@ postgresql18-1C-server|
 postgresql18-1C-contrib|
 postgresql18-1C|
 postgresql-server|postgresql
-postgresql-server-devel|postgresql-server-dev-all
+postgresql-server-devel|postgresql-server-dev-all libpq-dev
 libqt3-devel|libqt3-mt-dev
 
 bzlib-devel|libbz2-dev
