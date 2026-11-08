@@ -23,3 +23,8 @@ libavutil61|
 libavcodec62|
 libavformat62|
 libavutil60|
+
+# server/utils/errcodes.h of the PostgreSQL server headers is in libpq-devel
+# here (as in Fedora; postgresql-mchar of SELTA@Etersoft). Not on EL9: there
+# libpq-devel conflicts with postgresql-private-devel of postgresql-server-devel
+postgresql-server-devel|postgresql-server-devel libpq-devel

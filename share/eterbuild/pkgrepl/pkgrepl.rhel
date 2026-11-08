@@ -46,7 +46,3 @@ libxml2_16|libxml2
 liblz4-devel|lz4-devel
 liblz4|lz4-libs
 rpm-macros-systemd|rpm
-
-# server/utils/errcodes.h of the PostgreSQL server headers is in libpq-devel
-# on RedOS 7.3 (as in Fedora; postgresql-mchar of SELTA@Etersoft)
-postgresql-server-devel|postgresql-server-devel libpq-devel

@@ -1,0 +1,4 @@
+# RedOS 8.0 (pkgrepl.redos.7.3 is after this one in its list)
+
+# postgresql-server-devel has the whole server headers (postgresql-mchar of SELTA@Etersoft)
+postgresql-server-devel|postgresql-server-devel
