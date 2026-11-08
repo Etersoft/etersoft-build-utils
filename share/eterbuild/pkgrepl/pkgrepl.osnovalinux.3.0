@@ -36,3 +36,9 @@ libGL|libgl1
 libavcodec63|libavcodec59
 libavformat63|libavformat59
 libavutil61|libavutil57
+
+# PostgreSQL of OSnova 3.0 is a PostgreSQL for 1C (with mchar, contrib is in
+# postgresql-17): selta-server of SELTA@Etersoft runs on it as on ALT
+postgresql18-1C-server|postgresql
+postgresql18-1C-contrib|
+postgresql18-1C|postgresql-client
