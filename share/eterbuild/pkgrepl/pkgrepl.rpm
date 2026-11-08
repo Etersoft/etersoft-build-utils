@@ -159,6 +159,14 @@ libnatspec|
 
 postgresql-common|
 
+# PostgreSQL for 1C of ALT is not in the distribution (SELTA@Etersoft):
+# selta-server runs on PostgreSQL for 1C installed by hand (epm play
+# postgrespro-1c) or on the PostgreSQL of the distribution with mchar of
+# postgresql-mchar, which requires it
+postgresql18-1C-server|
+postgresql18-1C-contrib|
+postgresql18-1C|
+
 # ananas
 libMySQL-devel|mysql-devel
 
